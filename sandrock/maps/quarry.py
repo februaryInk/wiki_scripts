@@ -1,8 +1,8 @@
-from sandrock.common import *
+from sandrock.common              import *
 from sandrock.lib.designer_config import DesignerConfig
-from sandrock.lib.generator import expand_generator
-from sandrock.lib.text import wiki
-from sandrock.preproc import get_terrain_trees
+from sandrock.lib.generator       import expand_generator
+from sandrock.lib.text            import wiki
+from sandrock.preproc             import get_terrain_trees
 
 @cache
 def find_tree_config(prefab):

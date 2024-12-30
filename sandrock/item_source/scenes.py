@@ -29,7 +29,9 @@ def update_resource(results: Results, scene: str, behaviour: Any) -> None:
     res_confs = [conf for conf in behaviour['weightConfigs'] if conf['weight'] > 0]
     res_ids = [conf['id'] for conf in res_confs if conf['id']]
 
-    catchables = get_catchable_resource_points()  # junk piles that yield items per hit
+    # junk piles that yield items per hit
+    # TODO: We using this?
+    catchables = get_catchable_resource_points()
 
     for res_id in res_ids:
         res = DesignerConfig.ResourcePoint.get(res_id)

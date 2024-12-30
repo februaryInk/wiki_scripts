@@ -50,15 +50,15 @@ class Asset:
             rel_path = f'_image_/{self.id}.png'
         return self.bundle.path / rel_path
 
+    # Script types are being used to determine how we handle their corresponding
+    # MonoBehaviours.
     @property
     def script(self) -> str:
-        # Many JSON asset files have this script property, but why? And what are 
-        # we using it for here?
         assert self.type == 'MonoBehaviour'
         script_id = self.data['m_Script']['m_PathID']
         return self.bundle.scripts.get(script_id)
 
-    # These too, why? What are we doing with GameObjects?
+    # What are we doing with GameObjects?
     @property
     def transform(self) -> Asset:
         assert self.type == 'GameObject'
