@@ -1,6 +1,6 @@
-from sandrock.common import *
+from sandrock.common              import *
 from sandrock.lib.designer_config import DesignerConfig
-from sandrock.preproc import get_config_paths
+from sandrock.preproc             import get_config_paths
 
 # ------------------------------------------------------------------------------
 
