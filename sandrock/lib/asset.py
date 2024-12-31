@@ -23,25 +23,27 @@ class Asset:
         if self._data is None:
             if self.type == 'TextAsset':
                 self._data = self.path.read_text()
-            else:
+            elif self.type == 'MonoBehaviour':
                 self._data = read_json(self.path)
+            else:
+                self._data = read_asset_dump(self.path) 
         return self._data
 
     # Why do we need this? Ah, for lazy loading the file.
     @property
     def path(self) -> Path:
-        if self.type == 'TextAsset':
-            ext = 'txt'
-        else:
+        if self.type == 'MonoBehaviour':
             ext = 'json'
+        else:
+            ext = 'txt'
         
         if self.name:
-            rel_path = f'{self.type}/{self.name} #{self.id}.{ext}'
+            rel_path = f'{self.type}/{self.name} @{self.id}.{ext}'
         else:
             rel_path = f'{self.type}/{self.id}.{ext}'
         return self.bundle.path / rel_path
 
-    # Is this an output path?
+    # Is this an output path? What assets have images associated?
     @property
     def image_path(self) -> Path:
         if self.name:
@@ -101,10 +103,20 @@ class Bundle:
         else:
             self.path = config.assets_root / path
 
-        manifest     = read_json(self.path / 'manifest.json', _ManifestJson)
-        self.assets  = [Asset(self, asset_info) for asset_info in manifest['assets'] if not asset_info.get('fail')]
-        # Scripts? How are these used?
-        self.scripts = {script['id']: script['name'] for script in manifest['scripts']}
+        # manifest     = read_json(self.path / 'manifest.json', _ManifestJson)
+        # self.assets  = [Asset(self, asset_info) for asset_info in manifest['assets'] if not asset_info.get('fail')]
+        # Scripts? How are these used? Oh...we don't need the script files, just
+        # inclusion in the manifest so we can check names.
+        # self.scripts = {script['id']: script['name'] for script in manifest['scripts']}
+        self.assets = []
+        self.scripts = {}
+
+        manifest = _ManifestXml(self.path / 'assets.xml')
+        for asset_info in manifest:
+            if asset_info['type'] == 'MonoScript':
+                self.scripts[asset_info['path_id']] = asset_info['name']
+            else:
+                self.assets.append(Asset(self, asset_info))
 
     def __iter__(self) -> Iterator[Asset]:
         return iter(self.assets)
@@ -115,7 +127,25 @@ class Bundle:
 
 # -- Private -------------------------------------------------------------------
 
-# What generates this manifest?
+class _ManifestXml():
+    def __init__(self, path: PathLike):
+        self.tree = ElementTree.parse(path)
+        self.root = self.tree.getroot()
+
+    def __iter__(self) -> Iterator[_AssetInfoJson]:
+        for asset in self.root.findall('Asset'):
+            asset_dict = {child.tag: child.text for child in asset}
+            asset_dict = {
+                'container': asset.find('Container').text,
+                'name': asset.find('Name').text,
+                'path_id': int(asset.find('PathID').text),
+                'type': asset.find('Type').text,
+                'type_id': int(asset.find('Type').get('id'))
+            }
+            yield asset_dict
+
+# What generates this manifest? The only one I can get from AssetStudioMod is 
+# XML.
 class _ManifestJson(TypedDict):
     assets:  list[_AssetInfoJson]
     scripts: list[_ScriptInfoJson]
@@ -126,6 +156,7 @@ class _AssetInfoJson(TypedDict):
     container: NotRequired[str]
     name:      NotRequired[str]
     fail:      NotRequired[bool]
+    type_id:   NotRequired[int]
 
 _ScriptInfoJson = TypedDict('_ScriptInfoJson', {
     'id':        int,
