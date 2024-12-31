@@ -32,10 +32,7 @@ class Asset:
     # Why do we need this? Ah, for lazy loading the file.
     @property
     def path(self) -> Path:
-        if self.type == 'MonoBehaviour':
-            ext = 'json'
-        else:
-            ext = 'txt'
+        ext = 'json' if self.type == 'MonoBehaviour' else 'txt'
         
         if self.name:
             rel_path = f'{self.type}/{self.name} @{self.id}.{ext}'
@@ -124,6 +121,13 @@ class Bundle:
     @property
     def behaviours(self) -> list[Asset]:
         return [asset for asset in self.assets if asset.type == 'MonoBehaviour']
+
+class BundleGroup:
+    def __init__(self, path: PathLike):
+        if Path(path).is_absolute():
+            self.path = Path(path)
+        else:
+            self.path = config.assets_root / path
 
 # -- Private -------------------------------------------------------------------
 
