@@ -4,6 +4,7 @@ of our own modules.
 '''
 
 import json
+import re
 import sys
 
 from collections     import defaultdict

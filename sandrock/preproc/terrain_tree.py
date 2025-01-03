@@ -13,10 +13,13 @@ def find_terrain_trees() -> list[TerrainTree]:
     trees = []
     scene_dir = (config.assets_root / 'scene/additive')
     for scene in sorted(scene_dir.iterdir()):
-        trees += find_scene_trees(scene)
+        if scene.is_dir():
+            trees += find_scene_trees(scene)
+    
     season_dir = (config.assets_root / 'season')
     for season in sorted(season_dir.iterdir()):
-        trees += find_scene_trees(season)
+        if scene.is_dir():
+            trees += find_scene_trees(season)
     return trees
 
 def find_scene_trees(scene_path: PathLike) -> list[TerrainTree]:

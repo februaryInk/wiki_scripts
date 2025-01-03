@@ -12,6 +12,8 @@ def update_scenes(results: Results) -> None:
             continue
         if interest['type'] == 'SpawnMono_Point':
             update_monster(results, interest['scene'], behav)
+            monster_id = behav['protoId']
+            print(json.dumps(interest, indent=2))
         if interest['type'] == 'ResourceArea':
             update_resource(results, interest['scene'], behav)
         if interest['type'] == 'SceneItemBox':

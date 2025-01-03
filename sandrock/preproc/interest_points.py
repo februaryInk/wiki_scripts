@@ -59,7 +59,8 @@ def find_interest_points() -> list[InterestPoint]:
     scenes     = sorted(scenes_dir.iterdir())
     #additional_areas = _get_additional_resource_areas()
     for scene in scenes:
-        interests += _find_scene_interests(scene)
+        if scene.is_dir():
+            interests += _find_scene_interests(scene)
     return interests
 
 class InterestPoint(TypedDict):
