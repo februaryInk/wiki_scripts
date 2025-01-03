@@ -57,17 +57,16 @@ def update_recycle(results: Results) -> None:
 
 def update_cooking(results: Results) -> None:
     for cook in DesignerConfig.Cooking:
-        for recipe_id in cook['formulaIds']:
-            recipe = DesignerConfig.CookingFormula[recipe_id]
-            if not recipe['isActive']:
-                continue
-            ready = True
-            for mat in recipe['materials']:
-                if mat not in results:
-                    ready = False
-            if ready:
-                source = ('crafting', '_cooking_', recipe['cookingType'])
-                results[cook['outItemId']].add(source)
+        recipe = DesignerConfig.CookingFormula[cook['formulaId']]
+        if not recipe['isActive']:
+            continue
+        ready = True
+        for mat in recipe['materials']:
+            if mat not in results:
+                ready = False
+        if ready:
+            source = ('crafting', '_cooking_', recipe['cookingType'])
+            results[cook['outItemId']].add(source)
 
 def update_restoring(results: Results) -> None:
     for recipe in DesignerConfig.Restore:

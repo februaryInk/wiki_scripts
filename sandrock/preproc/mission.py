@@ -34,8 +34,11 @@ def find_mission_names() -> dict[int, str | int]:
             for stmt in root.findall('.//STMT[@stmt="RUN MISSION"]'):
                 child_script_id = int(stmt.attrib['missionId'])
                 old_name_id     = mission_names.get(child_script_id)
-                assert not old_name_id or old_name_id == name_id
-                mission_names[child_script_id] = name_id
+                if old_name_id and name_id and old_name_id != name_id:
+                    print(f'{old_name_id} -> {name_id}')
+                # assert not old_name_id or old_name_id == name_id
+                if not old_name_id:
+                    mission_names[child_script_id] = name_id
 
     script_names.update(mission_names)
     return script_names

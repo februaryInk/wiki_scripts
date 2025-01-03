@@ -3,19 +3,23 @@ from sandrock.preproc import get_mission_names
 from sandrock.item_source.main import get_item_sources
 
 # Pathea.ScenarioNs.AdditiveScene & Pathea.ScenarioNs.ScenarioModule
+# AssetSceneConfigSceneConfig
 _scene_name_to_id = {
-    'gecko_dungeon': 32,
-    'green_house': 40,
-    'wild_cave': 51,
-    'metro_dungeon': 49,
-    'breach_dungeon': 53,
-    'wreck_dungeon': 63,
-    'voxel_dungeon_qiheng': 64,
-    'mysterious_cave_dungeon': 66,
-    'mole_dungeon': 70,
-    'logancave_dungeon': 71,
-    'warehouse_dungeon': 73,
-    'aviation_dungeon': 74,
+    'gecko_dungeon':           32, # Paradise Walk - really?
+    'green_house':             40, # Moisture Farm
+    'wild_cave':               51, # Cave
+    'metro_dungeon':           49, # Gecko Station
+    'breach_dungeon':          53, # The Breach
+    'wreck_dungeon':           63, # Shipwreck Ruins
+    'voxel_dungeon_qiheng':    64, # Eufaula Salvage Abandoned Ruins
+    'mysterious_cave_dungeon': 66, # Desert Cave
+    'portia_tunnel':           69, # Portia Tunnel
+    'mole_dungeon':            70, # Abandoned Mine
+    'logancave_dungeon':       71, # Logan's Hideout
+    'warehouse_dungeon':       73, # Sandrock Storage
+    'aviation_dungeon':        74, # Northern Starship Ruins
+    'reservoir_dungeon':       78, # Starship Ruins Reservoir
+    'grace_mission_cave':      92, # Cave
 }
 
 _manual_implemented = [

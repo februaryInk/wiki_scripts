@@ -32,7 +32,7 @@ V = TypeVar('V')
 def read_asset_dump(path: PathLike) -> dict:
     assert str(path).endswith('.txt')
     with open(path) as f:
-        asset_text = f.read_text()
+        asset_text = f.read()
         return(_parse_asset_dump(asset_text.splitlines()))
 
 # Overload with multiple call signatures.

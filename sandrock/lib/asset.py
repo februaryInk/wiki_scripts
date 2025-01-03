@@ -32,7 +32,12 @@ class Asset:
     # Why do we need this? Ah, for lazy loading the file.
     @property
     def path(self) -> Path:
-        ext = 'json' if self.type == 'MonoBehaviour' else 'txt'
+        if self.type == 'MonoBehaviour':
+            ext = 'json'
+        elif self.type == 'TextAsset':
+            ext = 'xml'
+        else:
+            ext = 'txt'
         
         if self.name:
             rel_path = f'{self.type}/{self.name} @{self.id}.{ext}'
@@ -61,7 +66,7 @@ class Asset:
     @property
     def transform(self) -> Asset:
         assert self.type == 'GameObject'
-        comp_ids = [comp['component']['m_PathID'] for comp in self.data['m_Component']]
+        comp_ids = [comp['component']['m_PathID'] for comp in self.data['m_Component']['Array']]
         for asset in self.bundle.assets:
             if asset.type == 'Transform' and asset.id in comp_ids:
                 return asset
@@ -69,7 +74,7 @@ class Asset:
     @property
     def components(self) -> list[Asset]:
         assert self.type == 'GameObject'
-        comp_ids = [comp['component']['m_PathID'] for comp in self.data['m_Component']]
+        comp_ids = [comp['component']['m_PathID'] for comp in self.data['m_Component']['Array']]
         comps = []
         for asset in self.bundle.assets:
             if asset.id in comp_ids:
@@ -82,7 +87,9 @@ class Asset:
         
         for asset in self.bundle.assets:
             if asset.type == 'GameObject' and asset.id == obj_id:
-                for comp in asset.data['m_Component']:
+                #print(asset.path)
+                #print(json.dumps(asset.data, indent=2))
+                for comp in asset.data['m_Component']['Array']:
                     comp_id = comp['component']['m_PathID']
                     if comp_id == self.id:
                         return asset
