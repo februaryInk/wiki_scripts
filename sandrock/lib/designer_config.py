@@ -18,7 +18,7 @@ def load_designer_config(key: str) -> _DesignerConfigData | None:
     configs      = data['configList']
     
     if not configs:
-        return None
+        return []# None
     if isinstance(configs[0].get('id'), int):
         return sorted_dict({conf['id']: conf for conf in configs})
     elif isinstance(configs[0].get('ID'), int):
@@ -35,6 +35,7 @@ class _DesignerConfigLoader:
     # Square bracket syntax.
     def __getitem__(self, key: str) -> _DesignerConfigWrapper:
         config = load_designer_config(key)
+        print(key)
         assert config is not None
         return _DesignerConfigWrapper(config)
 
