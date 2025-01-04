@@ -1,7 +1,7 @@
 from pathlib import Path
 
 # Version is used for caching.
-version = '1.4.2'
+version = '1.4.2.1'
 
 _root = Path(__file__).parent.resolve()
 assets_root = _root / 'extracted_assets/1.4.2'

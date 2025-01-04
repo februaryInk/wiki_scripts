@@ -23,31 +23,44 @@ def lua_dump(value, parent_indent: str, indent: str) -> str:
         return 'nil'
     raise TypeError('Cannot serialize value:', repr(value))
 
-def lua_dump_array(arr: list, parent_indent: str, indent: str) -> str:
-    if not arr:
-        return '{}'
+def lua_dump_array(arr: list, parent_indent: str, indent: str, compact_after: int = 2) -> str:
+    if not arr: return '{}'
+    
     child_indent = parent_indent + indent
-    lines = ['{']
+    lines        = ['{']
     for value in arr:
         s = lua_dump(value, child_indent, indent)
-        lines.append(f'{child_indent}{s},')
-    lines.append(parent_indent + '}')
-    return '\n'.join(lines)
+        lines.append(f'{s},')
+    lines.append('}')
 
-def lua_dump_object(obj: dict, parent_indent: str, indent: str) -> str:
-    if not obj:
-        return '{}'
+    if len(parent_indent) >= compact_after:
+        return lines[0] + ' '.join(lines[1:-1]) + lines[-1]
+    else:
+        indents = [''] + [child_indent] * (len(lines) - 2) + [parent_indent]
+        lines = [indent + line for indent, line in zip(indents, lines)]
+        return '\n'.join(lines)
+
+def lua_dump_object(obj: dict, parent_indent: str, indent: str, compact_after: int = 2) -> str:
+    if not obj: return '{}'
+
     child_indent = parent_indent + indent
-    lines = ['{']
+    lines        = ['{']
+    
     for key, value in obj.items():
         if not isinstance(key, str):
             key = f'[{key}]'
         elif not key.isidentifier():
             key = f'[{lua_dump_string(key)}]'
         s = lua_dump(value, child_indent, indent)
-        lines.append(f'{child_indent}{key} = {s},')
-    lines.append(parent_indent + '}')
-    return '\n'.join(lines)
+        lines.append(f'{key} = {s},')
+    lines.append('}')
+    #return '\n'.join(lines)
+    if len(parent_indent) >= compact_after:
+        return lines[0] + ' '.join(lines[1:-1]) + lines[-1]
+    else:
+        indents = [''] + [child_indent] * (len(lines) - 2) + [parent_indent]
+        lines = [indent + line for indent, line in zip(indents, lines)]
+        return '\n'.join(lines)
 
 def lua_dump_string(s: str) -> str:
     assert '\\' not in s
@@ -79,7 +92,8 @@ def yaml_dump_object(obj: dict, parent_indent: str, indent: str) -> str | list[s
     if not obj:
         return '{}'
     child_indent = parent_indent + indent
-    last = list(obj.keys())[-1]
+    last         = list(obj.keys())[-1]
+    lines        = []
     for key, value in obj.items():
         prefix = f'{parent_indent}{key}:'
         s = yaml_dump(value, child_indent, indent)

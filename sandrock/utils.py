@@ -71,7 +71,7 @@ def write_yaml(path: PathLike, data: Any) -> None:
     s = yaml_dump(data, '', '    ')
     if isinstance(s, list):
         s = '\n'.join(s)
-    _resolve_path(path).write_text(s)
+    _resolve_path(path).write_text(s, encoding='utf-8')
 
 # -- Private -------------------------------------------------------------------
 

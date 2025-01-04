@@ -1,4 +1,10 @@
+'''
+Decrypts the encoded Chinese strings in assets to make them readable... if
+you know Chinese. :D
+'''
+
 from sandrock import *
+from sandrock.lib.text import load_text
 from sandrock.preproc import get_config_paths
 
 import urllib.parse
@@ -12,18 +18,19 @@ def copy_designer_config() -> None:
     config_paths = get_config_paths()
     for key in config_paths['designer_config'].keys():
         out_path = config.output_dir / 'designer_config' / (key + '.yaml')
-        data = load_designer_config(key)
+        data = DesignerConfig[key]._data
         if data:
             write_yaml(out_path, data)
 
 def copy_text() -> None:
     out_path = config.output_dir / 'text.yaml'
     texts = defaultdict(dict)
-    for lang, code in zip(config.languages, config.language_codes):
+    
+    for lang in config.languages:
         lang_texts = load_text(lang)
         for id_, text in lang_texts.items():
-            texts[id_][code] = text
-    write_yaml(out_path, texts)
+            texts[id_] = text
+        write_yaml(out_path, texts)
 
 def copy_mission() -> None:
     bundle = Bundle('story_script')
