@@ -1,7 +1,9 @@
-from sandrock.common import *
-from sandrock.lib.asset import Bundle
+from sandrock.common              import *
+from sandrock.lib.asset           import Bundle
 from sandrock.lib.designer_config import DesignerConfig
-from .common import *
+from .common                      import *
+
+# ------------------------------------------------------------------------------
 
 def update_missions(results: Results) -> None:
     update_rewards(results)

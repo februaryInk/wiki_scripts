@@ -40,7 +40,8 @@ pages = {
     'AssetIllustrationConfigIllustration': [
         'id',
         'nameId',
-        'catalogId'
+        'catalogId',
+        'order'
     ],
     'AssetIllustrationCatalogConfigIllustrationCatalog': [
         'id',
@@ -88,6 +89,11 @@ def run() -> None:
             config_data = read_json(path)['configList']
             items       = []
 
+            # The order of Encyclopedia items is a mystery to me, I don't know
+            # how to match the in-game Encyclopedia.
+            # if key == 'Illustration':
+            #     config_data = [{**config, 'order': i + 1} for i, config in enumerate(config_data)]
+
             for element in config_data:
                 item = {}
 
@@ -102,10 +108,9 @@ def run() -> None:
 
                 items.append(item)
 
-            # The order of Encyclopedia items does matter, but Lua tables do not 
-            # keep order, so it is important to use a list instead.
-            if 'id' in items[0] and key != 'Illustration':
+            if 'id' in items[0]:
                 items = {item['id']: item for item in items}
+            items = dict(sorted(items.items()))
 
             data = {
                 'version': config.version,
