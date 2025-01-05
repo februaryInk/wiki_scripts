@@ -54,7 +54,7 @@ def lua_dump_object(obj: dict, parent_indent: str, indent: str, compact_after: i
         s = lua_dump(value, child_indent, indent)
         lines.append(f'{key} = {s},')
     lines.append('}')
-    #return '\n'.join(lines)
+    
     if len(parent_indent) >= compact_after:
         return lines[0] + ' '.join(lines[1:-1]) + lines[-1]
     else:
