@@ -2,7 +2,6 @@
 Classes for managing Sandrock's asset data.
 '''
 
-# Delayed type annotations. Can remove for recent Python versions?
 from __future__ import annotations
 
 from sandrock.common import *

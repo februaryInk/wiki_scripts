@@ -23,28 +23,34 @@ def lua_dump(value, parent_indent: str, indent: str) -> str:
         return 'nil'
     raise TypeError('Cannot serialize value:', repr(value))
 
-def lua_dump_array(arr: list, parent_indent: str, indent: str, compact_after: int = 2) -> str:
+def lua_dump_array(arr: list, parent_indent: str, indent: str, minimize: bool = True, compact_after: int = 2) -> str:
     if not arr: return '{}'
     
     child_indent = parent_indent + indent
+    compact      = len(parent_indent) >= compact_after
     lines        = ['{']
+    separation   = '' if minimize and compact else ' '
+
     for value in arr:
         s = lua_dump(value, child_indent, indent)
-        lines.append(f'{s},')
+        lines.append(s)
     lines.append('}')
 
-    if len(parent_indent) >= compact_after:
-        return lines[0] + ' '.join(lines[1:-1]) + lines[-1]
+    if compact:
+        return lines[0] + f'{separation},'.join(lines[1:-1]) + lines[-1]
     else:
         indents = [''] + [child_indent] * (len(lines) - 2) + [parent_indent]
-        lines = [indent + line for indent, line in zip(indents, lines)]
+        commas  = [''] + [','] * max(0, (len(lines) - 3)) + ['', '']
+        lines = [indent + line + comma for indent, line, comma in zip(indents, lines, commas)]
         return '\n'.join(lines)
 
-def lua_dump_object(obj: dict, parent_indent: str, indent: str, compact_after: int = 2) -> str:
+def lua_dump_object(obj: dict, parent_indent: str, indent: str, minimize: bool = True, compact_after: int = 2) -> str:
     if not obj: return '{}'
 
     child_indent = parent_indent + indent
+    compact      = len(parent_indent) >= compact_after
     lines        = ['{']
+    separation   = '' if minimize and len(parent_indent) >= compact_after - 1 else ' '
     
     for key, value in obj.items():
         if not isinstance(key, str):
@@ -52,14 +58,15 @@ def lua_dump_object(obj: dict, parent_indent: str, indent: str, compact_after: i
         elif not key.isidentifier():
             key = f'[{lua_dump_string(key)}]'
         s = lua_dump(value, child_indent, indent)
-        lines.append(f'{key} = {s},')
+        lines.append(f'{key}{separation}={separation}{s}')
     lines.append('}')
     
-    if len(parent_indent) >= compact_after:
-        return lines[0] + ' '.join(lines[1:-1]) + lines[-1]
+    if compact:
+        return lines[0] + f'{separation},'.join(lines[1:-1]) + lines[-1]
     else:
         indents = [''] + [child_indent] * (len(lines) - 2) + [parent_indent]
-        lines = [indent + line for indent, line in zip(indents, lines)]
+        commas  = [''] + [','] * max(0, (len(lines) - 3)) + ['', '']
+        lines = [indent + line + comma for indent, line, comma in zip(indents, lines, commas)]
         return '\n'.join(lines)
 
 def lua_dump_string(s: str) -> str:
