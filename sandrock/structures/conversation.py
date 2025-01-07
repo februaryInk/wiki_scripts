@@ -1,16 +1,22 @@
 '''
-A structure used to piece together conversations that occur in the game.
+Classes that piece together conversations that occur in the game.
 
-ConvSequence:
-ConvTalk:
-ConvSegment: Indivdual dialogue lines and delivery.
+Notable asset bundles:
+ConvSequence: Character behavior that occurs before (maybe?) a conversation 
+segment. Look here, walk there, emote. Not utilized here.
+ConvTalk: Series of dialogue segments that are delivered together. May end in a 
+player dialogue choice that leads to a "next talk".
+TODO: Is there ever a "next talk" in the absence of a dialogue choice?
+    - segmentIdList
+    - nextTalkId
+ConvSegement: Indivdual dialogue lines and delivery.
     - content (text id)
     - speakerId
     - sequenceId
 ConvChat: Speech bubbles.
     - npcId
     - bubbleId (text id for bubble content)
-InMissionTalk: Dialgue that select NPCs respond with while a mission is active.
+InMissionTalk: Dialogue that select NPCs respond with while a mission is active.
     - missionId
     - npcIds
     - dialog (ConvSegment id)
@@ -20,81 +26,184 @@ from __future__ import annotations
 
 from sandrock import *
 
+# -- Private -------------------------------------------------------------------
+
+_indents = [
+    'none',
+    'true',
+    'double',
+    '3',
+    '4',
+    '5'
+]
+
+_substitutions = {
+    '<color=#00ff78>': '{{textcolor|green|',
+    '<color=#3aa964>': '{{textcolor|green|',
+    '</color>': '}}',
+    '[ChildCallPlayer]': '\'\'Parent Name\'\'',
+    '[MarriageCall|Name]': '\'\'Pet Name\'\'',
+    '[NpcName|8121]': '\'\'Child 1\'\'',
+    '[NpcName|8122]': '\'\'Child 2\'\'',
+    '[Player|Name]': '\'\'Player\'\''
+}
+
+_conv_chats    = DesignerConfig.ConvChat
+_conv_segments = DesignerConfig.ConvSegement
+_conv_talks    = DesignerConfig.ConvTalk
+
+def _substitute(text):
+    pattern = re.compile('|'.join(re.escape(key) for key in _substitutions.keys()))
+    return pattern.sub(lambda match: _substitutions[match.group(0)], text)
+class _ConvOption:
+    def __init__(self, content_id, talk_id, parent_stack: list[Any] = []):
+        self._content_id   = content_id
+        self._talk_id      = talk_id
+        self._parent_stack = parent_stack
+    
+    @property
+    def _indent_count(self):
+        return sum(1 for item in self._parent_stack if isinstance(item, _ConvOption))
+    
+    @property
+    def content(self) -> str:
+        return _substitute(text.text(self._content_id))
+    
+    @property
+    def response_talk(self) -> ConvTalk:
+        if self._talk_id == -1: return None
+        return ConvTalk(self._talk_id, self._parent_stack + [self])
+    
+    @property
+    def line(self) -> list[str]:
+        indent = self._indent_count * ':'
+        return f'{indent}*\'\'{_substitute(self.content)}\'\''
+    
+    def read_response_talk(self) -> list[str]:
+        if self.response_talk:
+            return self.response_talk.read()
+        else:
+            return []
+
 # ------------------------------------------------------------------------------
 
-class _Mission:
-    def __init__(self, story: _Story, asset: Asset):
-        self.story = story 
-        self.tree  = asset.read_xml()
+class ConvChat:
+    def __init__(self, id: int):
+        self.id    = id
+        self._data = _conv_chats[id]
     
     @property
-    def children(self):
-        pass
-    
-    @property
-    def continuations(self):
-        pass
-    
-    @property
-    def id(self) -> int:
-        return int(self.root.get('missionId'))
-    
-    @property
-    def is_main(self) -> bool:
-        return self.root.get('isMain').lower == 'true'
-    
-    @property
-    def name(self) -> str:
-        return text.get_text(int(self.root.get('nameId')))
-    
-    @property
-    def parents(self):
-        pass
-    
-    @property
-    def root(self) -> ElementTree.Element:
-        assert self.tree
-        return self.tree.get_root()
-    
-    def get_children_ids(self) -> list[int]:
-        children_ids = []
-        for stmt in self.root.iter('STMT'):
-            if stmt.get('stmt') == 'RUN MISSION':
-                children_ids.append(int(stmt.get('missionId')))
-        return children_ids
-    
-    def read_dialogue(self) -> None:
-        json = {}
-        for trigger in self.root.findall('TRIGGER'):
-            procedure = int(trigger.get('procedure'))
-            step      = int(trigger.get('step'))
+    def content(self) -> str:
+        return text.text(self._data['bubbleId'])
 
-            if procedure not in json: json[procedure] = {}
-            assert step not in json[procedure]
-            json[procedure][step] = {
-                'events': [],
-                'conditions': {},
-                'dialogue': {}
-            }
-
+class ConvSegment:
+    def __init__(self, id, parent_stack: list[Any] = []):
+        self._id = id
+        self._data = _conv_segments[id]
+        self._parent_stack = parent_stack
     
-class _Story:
-    def __init__(self):
-        self.bundle            = Bundle('story_script')
-        self.missions          = {}
-        self.mission_parentage = {}
-
-        for asset in self.bundle.assets:
-            if asset.type == 'TextAsset':
-                mission = _Mission(self, asset)
-                self.missions[mission.id] = mission
-                self.mission_parentage[mission.id] = mission.get_children_ids()
+    @property
+    def _indent_count(self):
+        return sum(1 for item in self._parent_stack if isinstance(item, _ConvOption))
     
-    def get_children_for(self, id: int) -> list[_Mission]:
-        assert id in self.missions
-        assert id in self.mission_parentage
-        child_missions = [self.missions[child_id] for child_id in self.mission_parentage[id]]
-        return child_missions
+    @property
+    def _line(self) -> str:
+        args = ['dialogue', self.speaker_name]
+        if self._indent_count:
+            args.append(f'indent={_indents[self._indent_count]}')
+        if self.parent and self.parent.is_branch and self._id == self.parent.segment_ids[0]:
+            args.append(f'answer={self.parent.parent.content}\n')
+        args.append(self.content)
+        return '{{' + '|'.join(args) + '}}'
+    
+    @property
+    def content(self) -> str:
+        text_id = int(self._data['content'].split('|', 1)[0])
+        return _substitute(text.text(text_id))
+    
+    @property
+    def speaker_name(self) -> str:
+        speaker_id = int(self._data['speakerId'])
+        return text.npc(speaker_id)
+    
+    @property
+    def parent(self) -> ConvTalk:
+        if len(self._parent_stack) == 0: return None
+        return self._parent_stack[-1]
+    
+    @property
+    def conv_option_content_ids(self) -> list[int]:
+        split_content = self._data['content'].split('|', 1)
+        if len(split_content) > 1:
+            return [int(id) for id in split_content[1].split(',')]
+        else:
+            return []
+    
+    @property
+    def conv_options(self) -> list[_ConvOption]:
+        if not len(self.conv_option_content_ids):
+            return []
+        
+        assert isinstance(self.parent, ConvTalk)
+        assert self._id == self.parent.segment_ids[-1]
 
-    def get_mission(self, id: int) -> _Mission:
-        return self.missions[id]
+        if self.parent:
+            talk_ids = self.parent.next_talk_ids
+        else:
+            talk_ids = [-1] * len(self.conv_option_content_ids)
+        
+        assert len(talk_ids) == len(self.conv_option_content_ids)
+        return [_ConvOption(content_id, talk_id, self._parent_stack + [self]) for content_id, talk_id in zip(self.conv_option_content_ids, talk_ids)]
+    
+    def read(self) -> list[str]:
+        lines = [self._line]
+        if self.conv_options:
+            lines.append('')
+            for option in self.conv_options:
+                line = option.line
+                response = option.response_talk
+
+                if not response:
+                    line += ' (No unique dialogue)'
+                lines.append(line)
+            
+            lines.append('')
+            for option in self.conv_options:
+                lines += option.read_response_talk()
+        
+        return lines
+
+class ConvTalk:
+    def __init__(self, id, parent_stack: list[Any] = []):
+        self._data = _conv_talks[id]
+        self._parent_stack = parent_stack
+    
+    @property
+    def is_branch(self) -> bool:
+        return self.parent and isinstance(self.parent, _ConvOption)
+    
+    @property
+    def next_talk_ids(self) -> list[int]:
+        return self._data['nextTalkId']
+    
+    @property
+    def parent(self) -> ConvTalk:
+        if len(self._parent_stack) == 0: return None
+        return self._parent_stack[-1]
+
+    @property
+    def segment_ids(self) -> list[int]:
+        return self._data['segmentIdList']
+    
+    @property
+    def segments(self) -> list[ConvSegment]:
+        return [ConvSegment(id, self._parent_stack + [self]) for id in self.segment_ids]
+    
+    def read(self) -> list[str]:
+        lines = []
+        for segment in self.segments:
+            lines += segment.read()
+        return lines
+    
+    def print(self) -> None:
+        print('\n'.join(self.read()))

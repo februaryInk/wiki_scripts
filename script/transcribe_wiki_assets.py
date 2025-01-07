@@ -36,12 +36,19 @@ tag_translations = {
     # 12: 'Max'
 }
 
+mail_template_attachment_types = {
+    0: 'Money',
+    1: 'Item',
+    3: 'MissionAutoReceive',
+    5: 'Favor'
+}
+
 pages = {
     'AssetIllustrationConfigIllustration': [
         'id',
         'nameId',
         'catalogId',
-        'order'
+        # 'order'
     ],
     'AssetIllustrationCatalogConfigIllustrationCatalog': [
         'id',
@@ -64,6 +71,14 @@ pages = {
         'itemTag',
         'cantSold'
     ],
+    'AssetMailTemplateDataMailTemplate': [
+        'id',
+        'title',
+        'content',
+        'sender',
+        ('attachData', lambda item: [modify_attachment(att) for att in item['attachData']]),
+        'cover'
+    ],
     'AssetNpcProtoDataNpc': [
         'id',
         'templetID',
@@ -77,6 +92,10 @@ pages = {
         'backgrounds'
     ]
 }
+
+def modify_attachment(attachment: dict) -> dict:
+    attachment['type'] = mail_template_attachment_types[attachment['type']]
+    return attachment
 
 def run() -> None:
     config_paths = get_config_paths()
@@ -103,8 +122,8 @@ def run() -> None:
                         item[attribute] = element[attribute]
                     elif isinstance(attribute, tuple):
                         # If it's a transformation, apply it.
-                        key, transform = attribute
-                        item[key] = transform(element)
+                        attr, transform = attribute
+                        item[attr] = transform(element)
 
                 items.append(item)
 
