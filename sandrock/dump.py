@@ -70,7 +70,8 @@ def lua_dump_object(obj: dict, parent_indent: str, indent: str, minimize: bool =
         return '\n'.join(lines)
 
 def lua_dump_string(s: str) -> str:
-    assert '\\' not in s
+    # assert '\\' not in s
+    s = s.replace('\\', '\\\\')
     s = s.replace('\n', '\\n')
     s = s.replace('\r', '\\r')
     s = s.replace('"', '\\"')
