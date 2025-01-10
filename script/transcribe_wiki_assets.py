@@ -36,6 +36,13 @@ tag_translations = {
     # 12: 'Max'
 }
 
+cooking_types = [
+    'Steamer',
+    'Pot',
+    'FryingPan',
+    'Oven'
+]
+
 mail_template_attachment_types = {
     0: 'Money',
     1: 'Item',
@@ -44,6 +51,26 @@ mail_template_attachment_types = {
 }
 
 pages = {
+    'AssetCookingConfigCooking': [
+        'id',
+        ('isActive', lambda item: str(item['isActive'] == 1)),
+        'outItemId',
+        'costMinutes',
+        'gainExp',
+        ('formulaIds', lambda item: {1: item['formulaId']})
+    ],
+    'AssetCookingFormulaConfigCookingFormula': [
+        'id',
+        ('isActive', lambda item: str(item['isActive'] == 1)),
+        ('disableTrying', lambda item: str(item['disableTrying'] == 1)),
+        ('cookingType', lambda item: cooking_types[item['cookingType']]),
+        ('materials', lambda item: {i + 1: mat for i, mat in enumerate(item['materials'])})
+    ],
+    'AssetDlcConfigDlc': [
+        ('id', lambda item: item['dlc']),
+        'nameId',
+        'alwaysDisplay'
+    ],
     'AssetIllustrationConfigIllustration': [
         'id',
         'nameId',
@@ -90,6 +117,11 @@ pages = {
         'height',
         'weight',
         'backgrounds'
+    ],
+    'AssetSceneConfigSceneConfig': [
+        'id'
+        'nameId',
+        'scene'
     ]
 }
 

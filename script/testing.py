@@ -16,8 +16,31 @@ from pathvalidate import sanitize_filename
 
 
 def run() -> None:
-    conv = ConvTalk(25, [])
+    conv = ConvTalk(264, [])
     conv.print()
+
+    print('')
+    print('=====================')
+    print('')
+    
+    seg = ConvSegment(1290, [])
+    seg.print()
+
+    print('')
+    print('=====================')
+    print('')
+
+    seg = ConvSegment(1300, [])
+    seg.print()
+    
+    print('')
+    print('=====================')
+    print('')
+
+    seg = ConvSegment(1292, [])
+    seg.print()
+
+    print_scenes()
 
 def print_scenes() -> None:
     for scene in DesignerConfig.Scene:
