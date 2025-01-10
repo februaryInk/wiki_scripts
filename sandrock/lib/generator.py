@@ -1,5 +1,6 @@
 '''
-So, what is a generator? A dropper of items?
+A generator is like a loot table for item drops. Game objects like resources,
+monsters, and treasure chests all use these to determine drops.
 '''
 
 from sandrock.common              import *

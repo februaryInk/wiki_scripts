@@ -144,8 +144,9 @@ class ConvSegment:
         if not len(self.conv_option_content_ids):
             return []
         
-        assert isinstance(self.parent, ConvTalk)
-        assert self._id == self.parent.segment_ids[-1]
+        if self.parent:
+            assert isinstance(self.parent, ConvTalk)
+            assert self._id == self.parent.segment_ids[-1]
 
         if self.parent:
             talk_ids = self.parent.next_talk_ids
@@ -172,6 +173,9 @@ class ConvSegment:
                 lines += option.read_response_talk()
         
         return lines
+    
+    def print(self) -> None:
+        print('\n'.join(self.read()))
 
 class ConvTalk:
     def __init__(self, id, parent_stack: list[Any] = []):
