@@ -43,6 +43,14 @@ cooking_types = [
     'Oven'
 ]
 
+gen_grades = {
+    0: 'Grade_0',
+    1: 'Grade_1',
+    2: 'Grade_2',
+    3: 'Grade_3',
+    4: 'Max'
+}
+
 mail_template_attachment_types = {
     0: 'Money',
     1: 'Item',
@@ -50,7 +58,20 @@ mail_template_attachment_types = {
     5: 'Favor'
 }
 
+random_types = {
+    0: 'Num',
+    1: 'Uniform',
+    2: 'Normal',
+    3: 'UniformFloat'
+}
+
 pages = {
+    'AssetAbandonedDungeonRuleDataAbandonedDungeon': [
+        ('scene', lambda item: sceneinfo.scene_system_name(item['scene'])),
+        'keyLevel',
+        'treasureItem',
+        'treasureData'
+    ],
     'AssetCookingConfigCooking': [
         'id',
         ('isActive', lambda item: str(item['isActive'] == 1)),
@@ -71,6 +92,11 @@ pages = {
         'nameId',
         'alwaysDisplay'
     ],
+    'AssetGeneratorGroupConfigGeneratorGroup': [
+        'id',
+        ('elements', lambda item: transform_generator_group(item['elements'])),
+        ('Pathea.DesignerConfig.IIdConfig.Id', lambda item: item['id'])
+    ],
     'AssetIllustrationConfigIllustration': [
         'id',
         'nameId',
@@ -84,11 +110,21 @@ pages = {
         'iconName',
         ('Pathea.DesignerConfig.IIdConfig.Id', lambda item: item['id'])
     ],
+    'AssetItemGeneratorConfigGenerator_Item': [ # AssetItemGeneratorConfigs
+        'id',
+        'itemId',
+        ('randomType', lambda item: random_types[item['randomType']]),
+        'parameters',
+        ('parameters', lambda item: {i + 1: par for i, par in enumerate(item['parameters'])}),
+        ('genGrade', lambda item: gen_grades[item['genGrade']]),
+        ('Pathea.DesignerConfig.IIdConfig.Id', lambda item: item['id'])
+    ],
     'AssetItemPrototypeItem': [
         'id',
         'maleIconPath',   # Default icon path.
         'femaleIconPath', # Female variant icon path.
         'nameId',
+        # ('name', lambda item: text(item['nameId'])),
         'infoId',
         'gradeWeight',
         'orderIndex',
@@ -119,15 +155,27 @@ pages = {
         'backgrounds'
     ],
     'AssetSceneConfigSceneConfig': [
-        'id'
+        ('id', lambda item: item['scene']),
         'nameId',
-        'scene'
+        ('name', lambda item: text(item['nameId'])),
+        ('scene', lambda item: sceneinfo.scene_system_name(item['scene']))
     ]
 }
 
 def modify_attachment(attachment: dict) -> dict:
     attachment['type'] = mail_template_attachment_types[attachment['type']]
     return attachment
+
+def transform_generator_group(data):
+    return {
+        i + 1: {
+            "idWeights": {
+                j + 1: weight_entry
+                for j, weight_entry in enumerate(entry["idWeights"])
+            }
+        }
+        for i, entry in enumerate(data)
+    }
 
 def run() -> None:
     config_paths = get_config_paths()
@@ -161,7 +209,9 @@ def run() -> None:
 
             if 'id' in items[0]:
                 items = {item['id']: item for item in items}
-            items = dict(sorted(items.items()))
+                items = dict(sorted(items.items()))
+            else:
+                items = {i + 1: item for i, item in enumerate(items)}
 
             data = {
                 'version': config.version,

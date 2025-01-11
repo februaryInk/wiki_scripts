@@ -38,9 +38,9 @@ def run() -> None:
         for asset_info in manifest:
             source           = asset_info.find('Source').text
             source_file_name = source.rsplit('\\', 1)[-1]
-            bundle_name      = _extract_bundle_name(source_file_name)
+            normalized_bundle_name = _extract_bundle_name(source_file_name)
 
-            if bundle_name == bundle_directory.name:
+            if normalized_bundle_name == bundle_directory.name.lower().replace('_', ''):
                 name    = asset_info.find('Name').text
                 path_id = asset_info.find('PathID').text
                 type    = asset_info.find('Type').text
@@ -70,7 +70,7 @@ def _extract_bundle_name(bundle_file_name: str) -> str:
     assert match
     extracted = match.group(1)
     # Convert to snake_case.
-    return re.sub(r'(?<!^)(?<!_)(?=[A-Z])', '_', extracted).lower()
+    return extracted.lower().replace('_', '')
 
 def _create_or_read_manifest(xml_file: Path) -> tuple[ElementTree.ElementTree, ElementTree.Element]:
     if xml_file.exists():

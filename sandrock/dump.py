@@ -65,7 +65,7 @@ def lua_dump_object(obj: dict, parent_indent: str, indent: str, minimize: bool =
     lines.append('}')
     
     if compact:
-        return lines[0] + f'{separation},'.join(lines[1:-1]) + lines[-1]
+        return lines[0] + f',{separation}'.join(lines[1:-1]) + lines[-1]
     else:
         indents = [''] + [child_indent] * (len(lines) - 2) + [parent_indent]
         commas  = [''] + [','] * max(0, (len(lines) - 3)) + ['', '']

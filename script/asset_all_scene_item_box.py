@@ -21,8 +21,8 @@ def run() -> None:
 
     for interest in get_interest_points():
         behav = read_json(interest['behaviour'])
-        if not behav['m_Enabled']:
-            continue
+        if not behav['m_Enabled'] and interest['type'] == 'SceneItemBox':
+            print('We skipped this one before.')
         if interest['type'] == 'SceneItemBox':
             update_treasure(results, interest['scene'], behav)
 
@@ -37,8 +37,8 @@ def run() -> None:
     write_lua(config.output_dir / f'lua/{page_name}.lua', data)
 
 def update_treasure(results: Results, name: str, behaviour: Any) -> None:
-    scene_id        = scenes.scene_id(name)
-    scene_system_name = scenes.scene_system_name(scene_id)
+    scene_id          = sceneinfo.scene_id(name)
+    scene_system_name = sceneinfo.scene_system_name(scene_id)
     if scene_id not in results:
         results[scene_id] = {'value0': scene_system_name, 'value1': []}
     
