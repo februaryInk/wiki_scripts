@@ -43,7 +43,7 @@ def run() -> None:
     print_scenes()
 
 def print_scenes() -> None:
-    for scene in DesignerConfig.Scene:
+    for scene in sorted(DesignerConfig.Scene, key=lambda item: item['scene']):
         print(f'{scene['scene']}: {text.scene(scene['scene'])}')
 
 def test_dump_parsing() -> None:
