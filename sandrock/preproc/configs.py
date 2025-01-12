@@ -2,7 +2,6 @@
 Locate the asset files that we expect to have configList attributes.
 '''
 
-# Don't need it?
 from __future__ import annotations
 
 from sandrock.common    import *

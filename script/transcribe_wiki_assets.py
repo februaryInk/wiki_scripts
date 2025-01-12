@@ -94,8 +94,9 @@ pages = {
     ],
     'AssetGeneratorGroupConfigGeneratorGroup': [
         'id',
-        ('elements', lambda item: transform_generator_group(item['elements'])),
-        ('Pathea.DesignerConfig.IIdConfig.Id', lambda item: item['id'])
+        'elements'
+        # ('elements', lambda item: transform_generator_group(item['elements'])),
+        # ('Pathea.DesignerConfig.IIdConfig.Id', lambda item: item['id'])
     ],
     'AssetIllustrationConfigIllustration': [
         'id',
@@ -110,14 +111,16 @@ pages = {
         'iconName',
         ('Pathea.DesignerConfig.IIdConfig.Id', lambda item: item['id'])
     ],
-    'AssetItemGeneratorConfigGenerator_Item': [ # AssetItemGeneratorConfigs
+    'AssetItemGeneratorConfigGenerator_Item': [
         'id',
         'itemId',
-        ('randomType', lambda item: random_types[item['randomType']]),
+        'randomType',
+        # ('randomType', lambda item: random_types[item['randomType']]),
         'parameters',
-        ('parameters', lambda item: {i + 1: par for i, par in enumerate(item['parameters'])}),
-        ('genGrade', lambda item: gen_grades[item['genGrade']]),
-        ('Pathea.DesignerConfig.IIdConfig.Id', lambda item: item['id'])
+        # ('parameters', lambda item: {i + 1: par for i, par in enumerate(item['parameters'])}),
+        'genGrade',
+        # ('genGrade', lambda item: gen_grades[item['genGrade']]),
+        # ('Pathea.DesignerConfig.IIdConfig.Id', lambda item: item['id'])
     ],
     'AssetItemPrototypeItem': [
         'id',

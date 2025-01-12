@@ -8,20 +8,43 @@ from sandrock import *
 from sandrock.lib.asset import Asset
 from sandrock.structures.conversation import *
 
-# -- Private -------------------------------------------------------------------
+# -- STMT Classes --------------------------------------------------------------
 
 class _Stmt:
+    stmt: ElementTree.Element
+
     def __init__(self, stmt: ElementTree.Element):
         self._stmt = stmt
+        self.extract_properties()
     
     @property
-    def is_notable(self):
+    def is_notable(self) -> bool:
         return False
     
     @property
-    def stmt(self):
+    def stmt(self) -> str:
         return self._stmt.get('stmt')
-        
+    
+    def extract_properties(self) -> None:
+        pass
+    
+    def read(self) -> list[str]:
+        return [self.stmt]
+
+class _StmtActorShowBubble(_Stmt):
+    @property
+    def is_notable(self) -> bool:
+        return True
+    
+    def extract_properties(self) -> None:
+        self._text_id = self._stmt.get('transId')
+        self._npc_id = self._stmt.get('npc')
+
+class _StmtOnConversationEnd(_Stmt):
+    @property
+    def is_notable(self):
+        return True
+
 class _StmtShowConversation(_Stmt):
     @property
     def is_notable(self):

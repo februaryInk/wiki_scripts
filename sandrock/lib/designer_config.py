@@ -1,4 +1,3 @@
-# Go away?
 from __future__ import annotations
 
 from sandrock.common    import *
