@@ -21,7 +21,7 @@ class Asset:
     def data(self) -> Any:
         if self._data is None:
             if self.type == 'TextAsset':
-                self._data = self.path.read_text()
+                self._data = self.path.read_text(encoding='utf-8')
             elif self.type == 'MonoBehaviour':
                 self._data = read_json(self.path)
             else:

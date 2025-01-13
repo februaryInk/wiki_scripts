@@ -13,9 +13,12 @@ ConvSegement: Indivdual dialogue lines and delivery.
     - content (text id)
     - speakerId
     - sequenceId
-ConvChat: Speech bubbles.
+ConvChat: Speech bubbles. NOT in-mission bubbles.
     - npcId
     - bubbleId (text id for bubble content)
+EventBubbles: Series of speech bubbles for event speeches.
+    - ids (ConvChat id)
+EventTalk: !!! Special dialogues NPCs have after some occurrence.
 InMissionTalk: Dialogue that select NPCs respond with while a mission is active.
     - missionId
     - npcIds
@@ -87,18 +90,57 @@ class _ConvOption:
 
 # ------------------------------------------------------------------------------
 
-class ConvChat:
-    def __init__(self, id: int):
-        self.id    = id
-        self._data = _conv_chats[id]
+class Bubble:
+    def __init__(self, speaker_id: int, text_id: int):
+        self._speaker_id: int = speaker_id
+        self._text_id: int = text_id
+    
+    @property
+    def _line(self) -> str:
+        args = ['dialogue', self.speaker_name, self.content]
+        return '{{' + '|'.join(args) + '}}'
     
     @property
     def content(self) -> str:
-        return text.text(self._data['bubbleId'])
+        return _substitute(text(self._text_id))
+    
+    @property
+    def speaker_name(self) -> str:
+        return text.npc(self._speaker_id)
+
+    def read(self) -> list[str]:
+        return [
+            'In a speech bubble:'
+            '',
+            self._line
+        ]
+
+class ConvChat:
+    _bubble: Bubble
+    _data: dict
+    id: int
+
+    def __init__(self, id: int):
+        self.id    = id
+        self._data = _conv_chats[id]
+        self._bubble = Bubble(self.speaker_id, self.text_id)
+
+    @property
+    def speaker_id(self) -> int:
+        return self._data['npcId']
+    
+    @property
+    def text_id(self) -> int:
+        bubble_ids = self._data['bubbleId']
+        assert len(bubble_ids) == 1
+        return bubble_ids[0]
+    
+    def read(self) -> list[str]:
+        return self._bubble.read()
 
 class ConvSegment:
     def __init__(self, id, parent_stack: list[Any] = []):
-        self._id = id
+        self.id = id
         self._data = _conv_segments[id]
         self._parent_stack = parent_stack
     
@@ -111,7 +153,7 @@ class ConvSegment:
         args = ['dialogue', self.speaker_name]
         if self._indent_count:
             args.append(f'indent={_indents[self._indent_count]}')
-        if self.parent and self.parent.is_branch and self._id == self.parent.segment_ids[0]:
+        if self.parent and self.parent.is_branch and self.id == self.parent.segment_ids[0]:
             args.append(f'answer={self.parent.parent.content}\n')
         args.append(self.content)
         return '{{' + '|'.join(args) + '}}'
@@ -146,7 +188,7 @@ class ConvSegment:
         
         if self.parent:
             assert isinstance(self.parent, ConvTalk)
-            assert self._id == self.parent.segment_ids[-1]
+            assert self.id == self.parent.segment_ids[-1]
 
         if self.parent:
             talk_ids = self.parent.next_talk_ids
@@ -179,8 +221,9 @@ class ConvSegment:
 
 class ConvTalk:
     def __init__(self, id, parent_stack: list[Any] = []):
-        self._data = _conv_talks[id]
-        self._parent_stack = parent_stack
+        self.id: int       = id
+        self._data: dict   = _conv_talks[self.id]
+        self._parent_stack: list[ConvTalk | ConvSegment | _ConvOption] = parent_stack
     
     @property
     def is_branch(self) -> bool:
