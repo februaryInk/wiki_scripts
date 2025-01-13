@@ -1,25 +1,58 @@
 '''
 Classes that interpret missions from their XML.
+
+MISSION BEGIN
+    -> DELIVER MISSION: rtlm, rtl, stlm, stl - time limits?
+ON CONVERSATION CHOICE MADE 1290
+    -> SHOW CONVERSATION
+ON CONVERSATION END
+    -> START MISSION
+ON ACCEPT MISSION
+    -> RUN MISSION 1300039
+
+Meanwhile, Procedure 1:
+ON CONVERSATION CHOICE MADE
+    -> 
 '''
 
 from __future__ import annotations
 
-from sandrock import *
-from sandrock.lib.asset import Asset
+from sandrock                         import *
+from sandrock.lib.asset               import Asset
 from sandrock.structures.conversation import *
+
+import urllib.parse
+
+# -- Private -------------------------------------------------------------------
+
+def _recursive_unquote(element: ElementTree.Element) -> None:
+    for k, v in element.attrib.items():
+        if v and isinstance(v, str) and '%' in v:
+            element.attrib[k] = urllib.parse.unquote(v)
+    for child in element:
+        _recursive_unquote(child)
 
 # -- STMT Classes --------------------------------------------------------------
 
 class _Stmt:
-    stmt: ElementTree.Element
+    _stmt_matches: list[str] = []
+
+    @classmethod
+    def find_stmt_class(cls, stmt: ElementTree.Element) -> Type[_Stmt]:
+        for stmt_class in _Stmt.__subclasses__():
+            if stmt_class.is_type_match(stmt):
+                return stmt_class
+        
+        return cls
+
+    @classmethod
+    def is_type_match(cls, stmt: ElementTree.Element) -> bool:
+        val = stmt.get('stmt')
+        return val in cls._stmt_matches
 
     def __init__(self, stmt: ElementTree.Element):
-        self._stmt = stmt
+        self._stmt: ElementTree.Element = stmt
         self.extract_properties()
-    
-    @property
-    def is_notable(self) -> bool:
-        return False
     
     @property
     def stmt(self) -> str:
@@ -29,38 +62,102 @@ class _Stmt:
         pass
     
     def read(self) -> list[str]:
+        return []
+    
+    def read_debug(self) -> list[str]:
         return [self.stmt]
 
+class _StmtMissionProgress(_Stmt):
+    _stmt_matches = [
+        'MISSION BEGIN',
+        'DELIVER MISSION',
+        'START MISSION',
+        'ON ACCEPT MISSION',
+        'RUN MISSION',
+        'ACTION MISSION TRACE',
+        'UPDATE MISSION INFO',
+        'SUBMIT MISSION',
+        'END MISSION'
+    ]
+
+    def extract_properties(self) -> None:
+        self._mission_id: int = self._stmt.get('missionId')
+
+    def read_debug(self) -> list[str]:
+        return [f'{self.stmt} {self._mission_id}']
 class _StmtActorShowBubble(_Stmt):
-    @property
-    def is_notable(self) -> bool:
-        return True
-    
+    _stmt_matches = [
+        'SHOW ACTOR BUBBLE'
+    ]
+
     def extract_properties(self) -> None:
         self._text_id = self._stmt.get('transId')
         self._npc_id = self._stmt.get('npc')
+        self._bubble = Bubble(self._npc_id, self._text_id)
+    
+    def read(self) -> list[str]:
+        return self._bubble.read()
+    
+    def read_debug(self) -> list[str]:
+        return self._bubble.read_debug()
 
+# Choice with the given index is made in response to conversation segment with
+# given ID.
+class _StmtOnConversationChoiceMade(_Stmt):
+    _stmt_matches = [
+        'ON CONVERSATION CHOICE MADE'
+    ]
+
+    def extract_properties(self) -> None:
+        # cId?
+        self._conv_choice_index = self._stmt.get('selectIndex')
+        self._conv_segment_id = self._stmt.get('id')
+    
+    def read_debug(self) -> list[str]:
+        return [f'{self.stmt} for ConvSegment {self._conv_segment_id}: {self._conv_choice_index}']
+
+# Conversation in previous step finishes, regardless of outcome.
 class _StmtOnConversationEnd(_Stmt):
-    @property
-    def is_notable(self):
-        return True
+    _stmt_matches = [
+        'ON CONVERSATION END'
+    ]
 
 class _StmtShowConversation(_Stmt):
-    @property
-    def is_notable(self):
-        return True
+    _stmt_matches = [
+        'SHOW CONVERSATION'
+    ]
+    
+    def build_conversation(self, id_str: str) -> ConvSegment | ConvTalk:
+        print(self._dialogue_ids)
+        if '_' in id_str:
+            id = int(id_str.split('_', 1)[0])
+            return ConvTalk(id)
+        else:
+            return ConvSegment(int(id_str))
+    
+    def extract_properties(self) -> None:
+        self._dialogue_ids: list[str] = self._stmt.get('dialog').split(',')
+        self._conversation: list[ConvSegment | ConvTalk] = [self.build_conversation(id) for id in self._dialogue_ids]
+
+    def read(self) -> list[str]:
+        lines = []
+        for conv in self._conversation:
+            lines += conv.read()
+        return lines
+    
+    def read_debug(self):
+        return [f'{self.stmt} {", ".join([str(conv.id) for conv in self._conversation])}']
 
 # ------------------------------------------------------------------------------
 
+# properties: description_id|npc_id|opening_conversation_id?|??
 class _Mission:
-    _asset: Asset
-    story: Story
-    tree: ElementTree
-
     def __init__(self, story: Story, asset: Asset):
-        self._asset = asset
-        self.story  = story 
-        self.tree   = asset.read_xml()
+        self._asset: Asset             = asset
+        self.story: Story              = story 
+        self.root: ElementTree.Element = asset.read_xml()
+
+        _recursive_unquote(self.root)
     
     @property
     def children(self):
@@ -74,7 +171,7 @@ class _Mission:
     
     @property
     def id(self) -> int:
-        return int(self.root.get('missionId'))
+        return int(self.root.get('id'))
     
     @property
     def is_main(self) -> bool:
@@ -82,16 +179,11 @@ class _Mission:
     
     @property
     def name(self) -> str:
-        return text.get_text(int(self.root.get('nameId')))
+        return text(int(self.root.get('nameId')))
     
     @property
     def parents(self):
         pass
-    
-    @property
-    def root(self) -> ElementTree.Element:
-        assert self.tree
-        return self.tree.get_root()
     
     def get_children_ids(self) -> list[int]:
         children_ids = []
@@ -104,25 +196,63 @@ class _Mission:
         json = {}
         for trigger in self.root.findall('TRIGGER'):
             procedure = int(trigger.get('procedure'))
-            step      = int(trigger.get('step'))
+            step      = float(trigger.get('step'))
 
             if procedure not in json: json[procedure] = {}
             assert step not in json[procedure]
-            json[procedure][step] = {
-                'events': [],
-                'conditions': [],
-                'actions': []
-            }
+            json[procedure][step] = _Trigger(trigger)
+        
+        json = {k: dict(sorted(steps.items())) for k, steps in json.items()}
+        json = dict(sorted(json.items()))
+        return json
 
-            events = trigger.findall('EVENT')
-            assert len(events) == 1
-            for event in trigger.findall('EVENT'):
-                for stmt in event.findall('STMT'):
-                    val = stmt.get('stmt')
-                    json[procedure][step]['events'] += self.parse_event(stmt)
-
-    def read_dialogue(self) -> None:
+    def read(self) -> None:
         pass
+    
+    def read_debug(self) -> list[str]:
+        lines = [f'Reading mission {self.id}: {self.name}']
+        for procedure, triggers in self.parse().items():
+            for step, trigger in triggers.items():
+                lines += [f'Reading procedure {procedure}']
+                lines += trigger.read_debug()
+        return lines
+    
+    def print_debug(self) -> None:
+        lines = self.read_debug()
+        print('\n'.join(lines))
+
+class _Trigger:
+    def __init__(self, trigger: ElementTree.Element):
+        self._trigger   = trigger
+        self._procedure = self._trigger.get('procedure')
+        self._step      = self._trigger.get('step')
+
+        self._structure = {
+            'EVENTS': self.eval_stmts(trigger.findall('EVENTS')),
+            'CONDITIONS': self.eval_stmts(trigger.findall('CONDITIONS')),
+            'ACTIONS': self.eval_stmts(trigger.findall('ACTIONS'))
+        }
+    
+    def eval_stmts(self, element: list[ElementTree.Element]):
+        assert len(element) == 1
+        element = element[0]
+        stmts = []
+
+        assert len(element.findall('GROUP')) <= 1
+        
+        for stmt in element.iter('STMT'):
+            stmt_class = _Stmt.find_stmt_class(stmt)
+            stmts.append(stmt_class(stmt))
+        
+        return stmts
+    
+    def read_debug(self) -> list[str]:
+        lines = [f'TRIGGER procedure {self._procedure} step {self._step}']
+        for key, stmts in self._structure.items():
+            lines += [key]
+            for stmt in stmts:
+                lines += stmt.read_debug()
+        return lines
 
 class Story:
     def __init__(self):
@@ -144,3 +274,7 @@ class Story:
 
     def get_mission(self, id: int) -> _Mission:
         return self.missions[id]
+    
+    def get_mission_names(self) -> dict[int, str]:
+        name_dict = {mission.id: mission.name for mission in self._missions}
+        return dict(sorted(name_dict.items()))

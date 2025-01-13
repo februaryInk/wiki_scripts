@@ -8,6 +8,7 @@ from sandrock          import *
 from sandrock.lib.text import load_text
 from sandrock.preproc  import get_config_paths
 from sandrock.structures.conversation import *
+from sandrock.structures.story import *
 
 from pathvalidate import sanitize_filename
 
@@ -16,31 +17,17 @@ from pathvalidate import sanitize_filename
 
 
 def run() -> None:
-    conv = ConvTalk(264, [])
-    conv.print()
+    story = Story()
+    mission = story.get_mission(1300036)
+    mission.print_debug()
 
-    print('')
-    print('=====================')
-    print('')
-    
-    seg = ConvSegment(1290, [])
+def print_conv_segment(id: int) -> None:
+    seg = ConvSegment(id, [])
     seg.print()
 
-    print('')
-    print('=====================')
-    print('')
-
-    seg = ConvSegment(1300, [])
+def print_conv_talk(id: int) -> None:
+    seg = ConvTalk(id, [])
     seg.print()
-    
-    print('')
-    print('=====================')
-    print('')
-
-    seg = ConvSegment(1292, [])
-    seg.print()
-
-    print_scenes()
 
 def print_scenes() -> None:
     for scene in sorted(DesignerConfig.Scene, key=lambda item: item['scene']):
