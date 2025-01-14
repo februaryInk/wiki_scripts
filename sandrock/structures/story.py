@@ -62,10 +62,11 @@ class _Stmt:
         pass
     
     def read(self) -> list[str]:
-        return []
+        return self.read_debug()
     
     def read_debug(self) -> list[str]:
-        return [self.stmt]
+        attribs = ' | '.join([f'{k}: {v}' for k, v in self._stmt.attrib.items() if k not in ['identity', 'stmt']])
+        return [f'{self.stmt} || {attribs}']
 
 class _StmtMissionProgress(_Stmt):
     _stmt_matches = [
@@ -77,7 +78,8 @@ class _StmtMissionProgress(_Stmt):
         'ACTION MISSION TRACE',
         'UPDATE MISSION INFO',
         'SUBMIT MISSION',
-        'END MISSION'
+        'END MISSION',
+        'MISSION END BEFORE' # Mission timeout?
     ]
 
     def extract_properties(self) -> None:
@@ -85,6 +87,18 @@ class _StmtMissionProgress(_Stmt):
 
     def read_debug(self) -> list[str]:
         return [f'{self.stmt} {self._mission_id}']
+
+class _StmtQuiet(_Stmt):
+    _stmt_matches = [
+        'CAMERA NATURAL SET',
+        'CAMERA PATH START',
+        'CAMERA PATH STOP',
+        'NPC REMOVE IDLE'
+    ]
+
+    def read_debug(self) -> list[str]:
+        return []
+    
 class _StmtActorShowBubble(_Stmt):
     _stmt_matches = [
         'SHOW ACTOR BUBBLE'
@@ -207,16 +221,33 @@ class _Mission:
         return json
 
     def read(self) -> None:
-        pass
-    
-    def read_debug(self) -> list[str]:
-        lines = [f'Reading mission {self.id}: {self.name}']
+        lines = [f'Reading Mission {self.id}: {self.name}']
+        lines += ['']
         for procedure, triggers in self.parse().items():
+            lines += [f'Reading Procedure {procedure}']
+            lines += ['---------------------------------------------------------']
             for step, trigger in triggers.items():
-                lines += [f'Reading procedure {procedure}']
-                lines += trigger.read_debug()
+                lines += trigger.read()
+                lines += ['']
+            lines += ['']
         return lines
     
+    def read_debug(self) -> list[str]:
+        lines = [f'Reading Mission {self.id}: {self.name}']
+        lines += ['']
+        for procedure, triggers in self.parse().items():
+            lines += [f'Reading Procedure {procedure}']
+            lines += ['---------------------------------------------------------']
+            for step, trigger in triggers.items():
+                lines += trigger.read_debug()
+                lines += ['']
+            lines += ['']
+        return lines
+    
+    def print(self) -> None:
+        lines = self.read()
+        print('\n'.join(lines))
+
     def print_debug(self) -> None:
         lines = self.read_debug()
         print('\n'.join(lines))
@@ -246,12 +277,21 @@ class _Trigger:
         
         return stmts
     
-    def read_debug(self) -> list[str]:
-        lines = [f'TRIGGER procedure {self._procedure} step {self._step}']
+    def read(self) -> list[str]:
+        lines = [f'TRIGGER Step {self._step}']
         for key, stmts in self._structure.items():
             lines += [key]
             for stmt in stmts:
-                lines += stmt.read_debug()
+                lines += stmt.read()
+        return lines
+    
+    def read_debug(self) -> list[str]:
+        lines = [f'TRIGGER Step {self._step}']
+        for key, stmts in self._structure.items():
+            lines += [key]
+            for stmt in stmts:
+                stmt_lines = stmt.read_debug()
+                lines += ['  -> ' + line for line in stmt_lines]
         return lines
 
 class Story:

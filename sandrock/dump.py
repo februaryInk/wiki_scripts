@@ -1,13 +1,13 @@
 '''
-Methods for converting our script results.
+Methods for converting our script results to other formats.
 '''
 
 from sandrock.std import *
 
 # -- Lua -----------------------------------------------------------------------
 
-def_minimize = True# and 0
-def_compact_after = 2
+def_minimize = True and 0
+def_compact_after = 3
 
 def lua_dump(value, parent_indent: str, indent: str) -> str:
     if isinstance(value, dict):
@@ -40,7 +40,7 @@ def lua_dump_array(arr: list, parent_indent: str, indent: str, minimize: bool = 
     lines.append('}')
 
     if compact:
-        return lines[0] + f'{separation},'.join(lines[1:-1]) + lines[-1]
+        return lines[0] + f',{separation}'.join(lines[1:-1]) + lines[-1]
     else:
         indents = [''] + [child_indent] * (len(lines) - 2) + [parent_indent]
         commas  = [''] + [','] * max(0, (len(lines) - 3)) + ['', '']

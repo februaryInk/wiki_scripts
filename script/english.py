@@ -1,3 +1,10 @@
+'''
+Encode and chunk all of the game's English text.
+
+Requires:
+    - text
+'''
+
 
 # pip install lupa
 from lupa import LuaRuntime
@@ -20,6 +27,7 @@ chunk_ranges = [
     (90000000, float('inf'))
 ]
 
+# Counterpart to decode2 in the Encoding Lua module.
 lua_code = '''
 function encode2(str)
     local encoded_str = ''

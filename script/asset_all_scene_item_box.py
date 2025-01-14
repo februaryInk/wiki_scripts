@@ -1,7 +1,13 @@
 '''
 Find the generators (item spawners) for treasure chests in all scenes. This does
 not correspond to a single asset file, but rather is created by finding treasure
-chest game objects.
+chest game objects in scene bundles.
+
+Requires:
+    - designer_config
+    - scenes
+    - sceneinfo
+    - text
 '''
 
 from sandrock         import *
@@ -21,9 +27,7 @@ def run() -> None:
 
     for interest in get_interest_points():
         behav = read_json(interest['behaviour'])
-        if not behav['m_Enabled'] and interest['type'] == 'SceneItemBox':
-            print('We skipped this one before.')
-        if interest['type'] == 'SceneItemBox':
+        if interest['type'] == 'SceneItemBox' and behav['m_Enabled']:
             update_treasure(results, interest['scene'], behav)
 
     results = dict(sorted(results.items()))
