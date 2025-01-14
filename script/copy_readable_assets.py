@@ -1,6 +1,11 @@
 '''
-Decrypts the encoded Chinese strings in assets to make them readable... if
-you know Chinese. :D
+Decrypts the encoded strings in assets and reformats to make them more 
+readable...especially if you know Chinese. :)
+
+Requires:
+    - designer_config
+    - story
+    - text
 '''
 
 from sandrock import *

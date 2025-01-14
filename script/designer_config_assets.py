@@ -1,9 +1,21 @@
-from sandrock import *
-from sandrock.lib.text import load_text
+'''
+Output assets that correspond one-to-one with a designer_config file.
+
+Requires:
+    - designer_config
+    - sceneinfo
+    - text
+'''
+
+from sandrock         import *
 from sandrock.preproc import get_config_paths
 
-# Using the tag translations that are already used in the wiki. Can't find 
-# "official" interpretations of tag numbers in the game code.
+# ------------------------------------------------------------------------------
+
+# Using the number-to-word translations that are already used in the wiki. Can't 
+# find interpretations of these numbers in the game code; how did they know what
+# they represent?
+
 tag_translations = {
     # Assembly Station products, including Machines.
     0: 'Creation',
@@ -95,14 +107,12 @@ pages = {
     'AssetGeneratorGroupConfigGeneratorGroup': [
         'id',
         'elements'
-        # ('elements', lambda item: transform_generator_group(item['elements'])),
-        # ('Pathea.DesignerConfig.IIdConfig.Id', lambda item: item['id'])
     ],
     'AssetIllustrationConfigIllustration': [
         'id',
         'nameId',
         'catalogId',
-        # 'order'
+        # 'order' I give up. No idea how to produce the in-game encyclopedia order.
     ],
     'AssetIllustrationCatalogConfigIllustrationCatalog': [
         'id',
@@ -115,19 +125,15 @@ pages = {
         'id',
         'itemId',
         'randomType',
-        # ('randomType', lambda item: random_types[item['randomType']]),
         'parameters',
-        # ('parameters', lambda item: {i + 1: par for i, par in enumerate(item['parameters'])}),
-        'genGrade',
-        # ('genGrade', lambda item: gen_grades[item['genGrade']]),
-        # ('Pathea.DesignerConfig.IIdConfig.Id', lambda item: item['id'])
+        'genGrade'
     ],
     'AssetItemPrototypeItem': [
         'id',
         'maleIconPath',   # Default icon path.
         'femaleIconPath', # Female variant icon path.
         'nameId',
-        # ('name', lambda item: text(item['nameId'])),
+        ('name', lambda item: text(item['nameId'])),
         'infoId',
         'gradeWeight',
         'orderIndex',
@@ -169,17 +175,6 @@ def modify_attachment(attachment: dict) -> dict:
     attachment['type'] = mail_template_attachment_types[attachment['type']]
     return attachment
 
-def transform_generator_group(data):
-    return {
-        i + 1: {
-            "idWeights": {
-                j + 1: weight_entry
-                for j, weight_entry in enumerate(entry["idWeights"])
-            }
-        }
-        for i, entry in enumerate(data)
-    }
-
 def run() -> None:
     config_paths = get_config_paths()
 
@@ -190,12 +185,7 @@ def run() -> None:
 
             config_data = read_json(path)['configList']
             items       = []
-
-            # The order of Encyclopedia items is a mystery to me, I don't know
-            # how to match the in-game Encyclopedia.
-            # if key == 'Illustration':
-            #     config_data = [{**config, 'order': i + 1} for i, config in enumerate(config_data)]
-
+            
             for element in config_data:
                 item = {}
 

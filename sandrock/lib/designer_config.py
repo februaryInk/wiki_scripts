@@ -34,7 +34,6 @@ class _DesignerConfigLoader:
     # Square bracket syntax.
     def __getitem__(self, key: str) -> _DesignerConfigWrapper:
         config = load_designer_config(key)
-        print(key)
         assert config is not None
         return _DesignerConfigWrapper(config)
 

@@ -1,25 +1,49 @@
-from sandrock import *
-from sandrock.preproc import get_mission_names
+'''
+Find all the sources we know of for all items.
+
+In addtion to missing some items, we may be getting false positives. Some 
+generators seem to be present but turned off, e.g., Pen's diamond ring drop.
+And Logan drops rubber?
+
+And why do some resources like Poplar Wood not get the expected source? Mining
+and logging checks not working?
+
+Also, what is AssetFixMissionItemFixMissionItem doing?
+
+Account for BAG ADD ITEM REPLACE.
+
+Requires:
+    - designer_config
+    - resourcepoint
+    - scenes
+    - text
+'''
+
+from sandrock                  import *
+from sandrock.preproc          import get_mission_names
 from sandrock.item_source.main import get_item_sources
 
 # Pathea.ScenarioNs.AdditiveScene & Pathea.ScenarioNs.ScenarioModule
-# AssetSceneConfigSceneConfig
+# TODO: We could use sceneinfo to look these up now.
 _scene_name_to_id = {
-    'gecko_dungeon':           32, # Paradise Walk - really?
-    'green_house':             40, # Moisture Farm
-    'wild_cave':               51, # Cave
-    'metro_dungeon':           49, # Gecko Station
-    'breach_dungeon':          53, # The Breach
-    'wreck_dungeon':           63, # Shipwreck Ruins
-    'voxel_dungeon_qiheng':    64, # Eufaula Salvage Abandoned Ruins
-    'mysterious_cave_dungeon': 66, # Desert Cave
-    'portia_tunnel':           69, # Portia Tunnel
-    'mole_dungeon':            70, # Abandoned Mine
-    'logancave_dungeon':       71, # Logan's Hideout
-    'warehouse_dungeon':       73, # Sandrock Storage
-    'aviation_dungeon':        74, # Northern Starship Ruins
-    'reservoir_dungeon':       78, # Starship Ruins Reservoir
-    'grace_mission_cave':      92, # Cave
+    'gecko_dungeon':                32, # Paradise Walk
+    'green_house':                  40, # Moisture Farm
+    'wild_cave':                    51, # Cave
+    'metro_dungeon':                49, # Gecko Station
+    'breach_dungeon':               53, # The Breach
+    'wreck_dungeon':                63, # Shipwreck Ruins
+    'voxel_dungeon_qiheng':         64, # Eufaula Salvage Abandoned Ruins
+    'mysterious_cave_dungeon':      66, # Desert Cave
+    'portia_tunnel':                69, # Portia Tunnel
+    'mole_dungeon':                 70, # Abandoned Mine
+    'logancave_dungeon':            71, # Logan's Hideout
+    'logancave_1_dungeon':          83,
+    'warehouse_dungeon':            73, # Sandrock Storage
+    'aviation_dungeon':             74, # Northern Starship Ruins
+    'reservoir_dungeon':            78, # Starship Ruins Reservoir
+    'stoneforest_dungeon':          79,
+    'biologicallaboratory_dungeon': 80,
+    'grace_mission_cave':           92, # Cave
 }
 
 _manual_implemented = [

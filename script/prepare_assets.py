@@ -4,9 +4,7 @@ one by one. Easier to export the whole folder, but then it isn't organized by
 asset type. Is there a simpler way to fix it than this? Probably yes.
 '''
 
-from sandrock          import *
-from sandrock.lib.text import load_text
-from sandrock.preproc  import get_config_paths
+from sandrock import *
 
 import re
 import shutil
