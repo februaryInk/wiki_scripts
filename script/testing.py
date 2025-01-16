@@ -18,7 +18,7 @@ from pathvalidate import sanitize_filename
 
 def run() -> None:
     story = Story()
-    mission = story.get_mission(1300036)
+    mission = story.get_mission(1300039)
     mission.print()
 
 def print_conv_segment(id: int) -> None:

@@ -1,18 +1,8 @@
 '''
 Classes that interpret missions from their XML.
 
-MISSION BEGIN
-    -> DELIVER MISSION: rtlm, rtl, stlm, stl - time limits?
-ON CONVERSATION CHOICE MADE 1290
-    -> SHOW CONVERSATION
-ON CONVERSATION END
-    -> START MISSION
-ON ACCEPT MISSION
-    -> RUN MISSION 1300039
-
-Meanwhile, Procedure 1:
-ON CONVERSATION CHOICE MADE
-    -> 
+-> DELIVER MISSION: rtlm, rtl, stlm, stl - time limits?
+-> CHECK VAR: compare 3 is "equal to"? ref is value to check?
 '''
 
 from __future__ import annotations
@@ -76,7 +66,6 @@ class _StmtMissionProgress(_Stmt):
         'ON ACCEPT MISSION',
         'RUN MISSION',
         'ACTION MISSION TRACE',
-        'UPDATE MISSION INFO',
         'SUBMIT MISSION',
         'END MISSION',
         'MISSION END BEFORE' # Mission timeout?
@@ -161,6 +150,52 @@ class _StmtShowConversation(_Stmt):
     
     def read_debug(self):
         return [f'{self.stmt} {", ".join([str(conv.id) for conv in self._conversation])}']
+
+class _StmtUpdateMissionInfo(_Stmt):
+    _stmt_matches = [
+        'UPDATE MISSION INFO'
+    ]
+
+    def extract_properties(self) -> None:
+        self._desc       = int(self._stmt.get('desc'))
+        self._mission_id = int(self._stmt.get('missionId'))
+        self._npc        = int(self._stmt.get('npc'))
+        self._req_target = self._stmt.get('reqTarget')
+        self._target_id  = int(self._stmt.get('targetId'))
+        self._title      = int(self._stmt.get('title'))
+        self._type       = int(self._stmt.get('type'))
+    
+    @property
+    def description(self) -> str:
+        return text(self._desc)
+
+    @property
+    def npc(self) -> str:
+        if self._npc != 0:
+            return text.npc(self._npc)
+        
+    @property
+    def required(self) -> tuple[str, int]:
+        if self._type == 1: # Items
+            req_targets = [tar.split('_') for tar in self._req_target.split(',')]
+            return [(text.item(int(item_id), config.wiki_language), int(count)) for (item_id, count) in req_targets]
+        elif self._type == 4: # Go to scene
+            scene_sys_name, scene_name_id = self._req_target.split(',')
+            return [(scene_sys_name, int(scene_name_id))]
+    
+    @property
+    def title(self) -> str:
+        return text(self._title)
+    
+    def read(self) -> list[str]:
+        lines = ['{{mission_details', f'|desc = {self.description}', f'|details = {self.title}']
+        if self._type == 1:
+            for item_name, count in self.required:
+                lines += [f'*{{{{i2|{item_name}|0/{count}}}}}']
+        if self.npc:
+            lines += [f'*{{{{i2|{self.npc}|0/1}}}}']
+        lines += ['}}']
+        return lines
 
 # ------------------------------------------------------------------------------
 

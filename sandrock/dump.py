@@ -6,8 +6,8 @@ from sandrock.std import *
 
 # -- Lua -----------------------------------------------------------------------
 
-def_minimize = True and 0
-def_compact_after = 3
+default_minimize = True
+default_compact_after = 2
 
 def lua_dump(value, parent_indent: str, indent: str) -> str:
     if isinstance(value, dict):
@@ -26,7 +26,7 @@ def lua_dump(value, parent_indent: str, indent: str) -> str:
         return 'nil'
     raise TypeError('Cannot serialize value:', repr(value))
 
-def lua_dump_array(arr: list, parent_indent: str, indent: str, minimize: bool = def_minimize, compact_after: int = def_compact_after) -> str:
+def lua_dump_array(arr: list, parent_indent: str, indent: str, minimize: bool = default_minimize, compact_after: int = default_compact_after) -> str:
     if not arr: return '{}'
     
     child_indent = parent_indent + indent
@@ -47,7 +47,7 @@ def lua_dump_array(arr: list, parent_indent: str, indent: str, minimize: bool = 
         lines = [indent + line + comma for indent, line, comma in zip(indents, lines, commas)]
         return '\n'.join(lines)
 
-def lua_dump_object(obj: dict, parent_indent: str, indent: str, minimize: bool = def_minimize, compact_after: int = def_compact_after) -> str:
+def lua_dump_object(obj: dict, parent_indent: str, indent: str, minimize: bool = default_minimize, compact_after: int = default_compact_after) -> str:
     if not obj: return '{}'
 
     child_indent = parent_indent + indent
