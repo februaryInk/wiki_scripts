@@ -77,6 +77,13 @@ random_types = {
     3: 'UniformFloat'
 }
 
+weapon_types = {
+    0: 'Sword',
+    1: 'Hammer',
+    2: 'Lance',
+    3: 'Dagger'
+}
+
 pages = {
     'AssetAbandonedDungeonRuleDataAbandonedDungeon': [
         ('scene', lambda item: sceneinfo.scene_system_name(item['scene'])),
@@ -104,9 +111,32 @@ pages = {
         'nameId',
         'alwaysDisplay'
     ],
+    'AssetEquipmentProtoEquipment': [
+        'id',
+        'equipPart',
+        'accPart',
+        'equipMutexes',
+        'attachIDs'
+    ],
     'AssetGeneratorGroupConfigGeneratorGroup': [
         'id',
         'elements'
+    ],
+    'AssetGunDataItemGun': [
+        'id',
+        'ammoId',
+        'magazine',
+        'isSingleFire',
+        'fireInterval',
+        'cursorIndex',
+        'anim',
+        'aimMoveSpeed',
+        'emptyAmmoSound',
+        'accuracyMin',
+        'accuracyMax',
+        'accuracyReducePerFire',
+        'accuracyChangeTime',
+        'fireAimMove'
     ],
     'AssetIllustrationConfigIllustration': [
         'id',
@@ -151,6 +181,17 @@ pages = {
         ('attachData', lambda item: [modify_attachment(att) for att in item['attachData']]),
         'cover'
     ],
+    'AssetMeleeWeaponProtoMeleeWeapon': [
+        'id',
+        ('weaponType', lambda item: weapon_types[item['weaponType']]),
+        'maxCombo',
+        'comboIDs_2',
+        'comboIDs_3',
+        'comboIDs_4',
+        'comboIDs_5',
+        'dashAttachCpCost',
+        'dashAttackIDs'
+    ],
     'AssetNpcProtoDataNpc': [
         'id',
         'templetID',
@@ -162,6 +203,16 @@ pages = {
         'height',
         'weight',
         'backgrounds'
+    ],
+    'AssetRefineConfigRefine': [
+        'id',
+        'matsGradeUp',
+        'matsLevelUp',
+        'maxRefineLevel'
+    ],
+    'AssetRequireProtoRequire': [
+        'id',
+        'requireLevel'
     ],
     'AssetSceneConfigSceneConfig': [
         ('id', lambda item: item['scene']),
@@ -208,6 +259,7 @@ def run() -> None:
 
             data = {
                 'version': config.version,
+                'name': page_name,
                 'key': key,
                 'configList': items
             }
