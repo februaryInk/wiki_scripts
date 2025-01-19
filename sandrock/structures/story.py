@@ -3,6 +3,8 @@ Classes that interpret missions from their XML.
 
 -> DELIVER MISSION: rtlm, rtl, stlm, stl - time limits?
 -> CHECK VAR: compare 3 is "equal to"? ref is value to check?
+ON SENDGIFT END: When given special item.
+SET SPECIAL GIFT RULE STATE: AssetSpecialGiftRuleSpecialGiftRule
 '''
 
 from __future__ import annotations
@@ -99,7 +101,7 @@ class _StmtActorShowBubble(_Stmt):
         self._bubble = Bubble(self._npc_id, self._text_id)
     
     def read(self) -> list[str]:
-        return self._bubble.read()
+        return ['In a speech bubble:'] + self._bubble.read()
     
     def read_debug(self) -> list[str]:
         return self._bubble.read_debug()
@@ -248,8 +250,11 @@ class _Mission:
             step      = float(trigger.get('step'))
 
             if procedure not in json: json[procedure] = {}
-            assert step not in json[procedure]
-            json[procedure][step] = _Trigger(trigger)
+            if step in json[procedure]:
+                print(f'Repeat of Procedure {procedure}, Step {step}')
+                json[procedure][step].append(_Trigger(trigger))
+            else:
+                json[procedure][step] = [_Trigger(trigger)]
         
         json = {k: dict(sorted(steps.items())) for k, steps in json.items()}
         json = dict(sorted(json.items()))
@@ -258,24 +263,26 @@ class _Mission:
     def read(self) -> None:
         lines = [f'Reading Mission {self.id}: {self.name}']
         lines += ['']
-        for procedure, triggers in self.parse().items():
+        for procedure, steps in self.parse().items():
             lines += [f'Reading Procedure {procedure}']
             lines += ['---------------------------------------------------------']
-            for step, trigger in triggers.items():
-                lines += trigger.read()
-                lines += ['']
+            for step, triggers in steps.items():
+                for trigger in triggers:
+                    lines += trigger.read()
+                    lines += ['']
             lines += ['']
         return lines
     
     def read_debug(self) -> list[str]:
         lines = [f'Reading Mission {self.id}: {self.name}']
         lines += ['']
-        for procedure, triggers in self.parse().items():
+        for procedure, steps in self.parse().items():
             lines += [f'Reading Procedure {procedure}']
             lines += ['---------------------------------------------------------']
-            for step, trigger in triggers.items():
-                lines += trigger.read_debug()
-                lines += ['']
+            for step, triggers in steps.items():
+                for trigger in triggers:
+                    lines += trigger.read_debug()
+                    lines += ['']
             lines += ['']
         return lines
     

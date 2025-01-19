@@ -166,7 +166,10 @@ class ConvSegment:
     @property
     def speaker_name(self) -> str:
         speaker_id = int(self._data['speakerId'])
-        return text.npc(speaker_id)
+        if speaker_id == -1:
+            return ''
+        else:
+            return text.npc(speaker_id)
     
     @property
     def parent(self) -> ConvTalk:

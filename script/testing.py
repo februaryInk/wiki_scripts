@@ -18,8 +18,8 @@ from pathvalidate import sanitize_filename
 
 def run() -> None:
     story = Story()
-    mission = story.get_mission(1300039)
-    mission.print()
+    mission = story.get_mission(1800281)
+    mission.print_debug()
 
 def print_conv_segment(id: int) -> None:
     seg = ConvSegment(id, [])
