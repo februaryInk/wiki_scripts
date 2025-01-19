@@ -84,12 +84,106 @@ weapon_types = {
     3: 'Dagger'
 }
 
+attr_types = {
+    0: 'nodrop',
+    1: 'attack_l',
+    2: 'attack_u',
+    3: 'durability',
+    4: 'element_fire',
+    5: 'element_water',
+    6: 'element_acid',
+    7: 'element_electricity',
+    8: 'element_poison',
+    10: 'critical_rate',
+    11: 'critical_damage',
+    13: 'magazine',
+    14: 'armor',
+    15: 'resist_fire',
+    16: 'resist_water',
+    17: 'resist_acid',
+    18: 'resist_electricity',
+    19: 'resist_poison',
+    20: 'hp',
+    21: 'strength',
+    22: 'endurance',
+    23: 'lv',
+    24: 'beaten_ratio',
+    25: 'lucky',
+    26: 'machine_plugins_sand',
+    27: 'machine_plugins_temperature',
+    28: 'machine_plugins_water',
+    29: 'machine_plugins_power',
+    30: 'machine_plugins_powerstorage',
+    32: 'machine_plugins_gradechance',
+    33: 'machine_plugins_doublecount',
+    35: 'machine_plugins_reduceslot',
+    38: 'element_sword',
+    39: 'element_hammer',
+    40: 'element_blade',
+    41: 'element_lance',
+    42: 'element_hand',
+    43: 'resist_sword',
+    44: 'resist_hammer',
+    45: 'resist_blade',
+    46: 'resist_lance',
+    47: 'resist_hand',
+    48: 'endurance_recover',
+    49: 'attackEnhancement',
+    50: 'remoteEnhancement',
+    51: 'brokeStoicDam',
+    52: 'levelThreshold',
+    53: 'crushDam',
+    54: 'hpMinimal',
+    55: 'lifeDrainRatio',
+    56: 'invincible_ratio',
+    57: 'dashDis_ratio',
+    58: 'dodge_level',
+    59: 'cp_cd',
+    60: 'cp_cost_reduce_ratio',
+    63: 'voxel_dig_range',
+    64: 'voxel_dig_range_mul',
+    65: 'voxel_dig_count_mul',
+    66: 'gather_attack',
+    67: 'gather_attack_mul',
+    68: 'sand_attack',
+    69: 'sand_attack_mul',
+    72: 'product_queue_count',
+    73: 'product_count',
+    74: 'product_grade_Q_up',
+    75: 'product_speed_up',
+    76: 'product_count_up',
+    77: 'fuel',
+    78: 'fuel_cost_deduct',
+    79: 'water',
+    80: 'water_cost_deduct',
+    81: 'manure',
+    82: 'manure_cost_deduct',
+    83: 'manure_extra_up',
+    84: 'grow_speed_up',
+    87: 'fish_point',
+    88: 'fish_max',
+    89: 'fish_range'
+}
+
+gain_types = {
+    0: 'A',
+    1: 'B'
+}
+
 pages = {
     'AssetAbandonedDungeonRuleDataAbandonedDungeon': [
         ('scene', lambda item: sceneinfo.scene_system_name(item['scene'])),
         'keyLevel',
         'treasureItem',
         'treasureData'
+    ],
+    'AssetAttrGeneratorConfigGenerator_Attr': [
+        'id',
+        ('attrType', lambda item: attr_types[item['attrType']]),
+        ('randomType', lambda item: random_types[item['randomType']]),
+        ('parameters', lambda item: {i + 1: par for i, par in enumerate(item['parameters'])}),
+        ('gainType', lambda item: gain_types[item['gainType']]),
+        ('Pathea.DesignerConfig.IIdConfig.Id', lambda item: item['id'])
     ],
     'AssetCookingConfigCooking': [
         'id',
@@ -122,6 +216,19 @@ pages = {
         'id',
         'elements'
     ],
+    'AssetGrowthDataGrowthModelConfig': [
+        'id',
+		'startLevel',
+		'endLevel',
+		'startNum',
+		'endNum',
+		'enp'
+    ],
+    'AssetGrowthItemItemGrowth': [
+        'growthType',
+        'attrType',
+        'grade'
+    ],
     'AssetGunDataItemGun': [
         'id',
         'ammoId',
@@ -150,6 +257,14 @@ pages = {
         'nameId',
         'iconName',
         ('Pathea.DesignerConfig.IIdConfig.Id', lambda item: item['id'])
+    ],
+    'AssetItemAttrGrowthDataAttrGrowth': [
+        'id',
+        'growthType',
+        'itemLevel',
+        'baseSceneSlotGroupId',
+        'addSceneSlotGroupId',
+        'addSceneSlotLimits'
     ],
     'AssetItemGeneratorConfigGenerator_Item': [
         'id',
