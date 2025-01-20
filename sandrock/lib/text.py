@@ -58,6 +58,8 @@ class _TextEngine:
 
     @classmethod
     def npc(cls, id_: int) -> str:
+        if id_ == 8000:
+            return 'Player'
         return cls._designer_config_text('Npc', id_, 'nameID')
 
     #@classmethod

@@ -23,6 +23,21 @@ InMissionTalk: Dialogue that select NPCs respond with while a mission is active.
     - missionId
     - npcIds
     - dialog (ConvSegment id)
+
+
+                ConvTalk 1
+                ConvSeg  1
+                ConvSeg  2
+                ConvSeg  3|2,3,4
+    
+    Option 1    Option 2    Option 3
+    ConvTalk 2  ConvTalk 3  ConvTalk 4
+    ConvSeg 4   ConvSeg 7   ConvSeg 8
+    ConvSeg 5   ConvSeg 5   ConvSeg 5
+    ConvSeg 6   ConvSeg 6   ConvSeg 6
+
+Every time we have a set of options, we need to check if we can merge back into a single
+conversational branch.
 '''
 
 from __future__ import annotations
