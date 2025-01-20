@@ -18,8 +18,11 @@ from pathvalidate import sanitize_filename
 
 def run() -> None:
     story = Story()
-    mission = story.get_mission(1800281)
-    mission.print_debug()
+    mission = story.get_mission(1800373)
+    mission.print()
+    # print_mission_names()
+
+    print_conv_segment(16795)
 
 def print_conv_segment(id: int) -> None:
     seg = ConvSegment(id, [])
@@ -28,6 +31,11 @@ def print_conv_segment(id: int) -> None:
 def print_conv_talk(id: int) -> None:
     seg = ConvTalk(id, [])
     seg.print()
+
+def print_mission_names() -> None:
+    story = Story()
+    misson_names = story.get_mission_names()
+    print(json.dumps(misson_names, indent=2))
 
 def print_scenes() -> None:
     for scene in sorted(DesignerConfig.Scene, key=lambda item: item['scene']):
