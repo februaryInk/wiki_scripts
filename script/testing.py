@@ -17,12 +17,7 @@ from pathvalidate import sanitize_filename
 
 
 def run() -> None:
-    story = Story()
-    mission = story.get_mission(1800373)
-    mission.print()
-    # print_mission_names()
-
-    print_conv_segment(16795)
+    print_items_with_item_tag(212)
 
 def print_conv_segment(id: int) -> None:
     seg = ConvSegment(id, [])
@@ -31,6 +26,16 @@ def print_conv_segment(id: int) -> None:
 def print_conv_talk(id: int) -> None:
     seg = ConvTalk(id, [])
     seg.print()
+
+def print_items_with_item_tag(tag_id: int) -> None:
+    for item in sorted(DesignerConfig.ItemPrototype, key=lambda item: item['id']):
+        if tag_id in item['itemTag']:
+            print(f'{item["id"]}: {text.item(item["id"])}')
+
+def print_mission(id: int) -> None:
+    story = Story()
+    mission = story.get_mission(id)
+    mission.print()
 
 def print_mission_names() -> None:
     story = Story()

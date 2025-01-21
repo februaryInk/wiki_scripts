@@ -5,7 +5,7 @@ Classes that interpret missions from their XML.
 -> CHECK VAR: compare 3 is "equal to"? ref is value to check?
 ON SENDGIFT END: When given special item.
 SET SPECIAL GIFT RULE STATE: AssetSpecialGiftRuleSpecialGiftRule
-CHECK MISSION CURRENT STATE: state - 1 = not started, 2 = in progress, 3 = complete? 4? flag = 0 or 1n
+CHECK MISSION CURRENT STATE: state - 1 = not started, 2 = in progress, 3 = complete? 4? flag = 0 or 1
 '''
 
 from __future__ import annotations
@@ -19,7 +19,8 @@ import urllib.parse
 # -- Private -------------------------------------------------------------------
 
 _npc_mission_controllers = {
-    'Heidi': 1200124
+    'Heidi': 1200124,
+    'Qi': 1200112
 }
 
 def _recursive_unquote(element: ElementTree.Element) -> None:

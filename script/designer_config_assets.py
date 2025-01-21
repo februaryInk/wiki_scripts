@@ -48,12 +48,16 @@ tag_translations = {
     # 12: 'Max'
 }
 
-cooking_types = [
-    'Steamer',
-    'Pot',
-    'FryingPan',
-    'Oven'
-]
+cooking_types = {
+    0: 'Steamer',
+    1: 'Pot',
+    2: 'FryingPan',
+    3: 'Oven'
+}
+
+exhibition_types = {
+    0: 'Fossil' # ?
+}
 
 gen_grades = {
     0: 'Grade_0',
@@ -75,6 +79,13 @@ random_types = {
     1: 'Uniform',
     2: 'Normal',
     3: 'UniformFloat'
+}
+
+sizes = {
+    0: 'Small',
+    1: 'Medium',
+    2: 'Large',
+    3: 'None'
 }
 
 weapon_types = {
@@ -211,6 +222,14 @@ pages = {
         'accPart',
         'equipMutexes',
         'attachIDs'
+    ],
+    'AssetExhibitionItemBaseDataExhibitionItem': [
+        'id',
+        ('type', lambda item: exhibition_types[item['type']]),
+        ('size', lambda item: sizes[item['size']]),
+        'assetName',
+        'prizeReputation',
+        ('Id', lambda item: item['id']), # TODO: Remove redundancy.
     ],
     'AssetGeneratorGroupConfigGeneratorGroup': [
         'id',

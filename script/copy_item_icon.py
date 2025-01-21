@@ -3,7 +3,7 @@ from sandrock import *
 from PIL import Image
 
 items = [
-        'Grand Theater',
+    'Jane\'s Potted Plant'
 ]
 
 sprite_bundle = Bundle('uisystem_sprite')
