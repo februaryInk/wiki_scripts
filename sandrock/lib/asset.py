@@ -1,5 +1,5 @@
 '''
-Classes for managing Sandrock's asset data.
+Classes for managing Sandrock's asset bundles (Bundle) and files (Asset).
 '''
 
 from __future__ import annotations
@@ -48,9 +48,9 @@ class Asset:
     @property
     def image_path(self) -> Path:
         if self.name:
-            rel_path = f'_image_/{self.name} #{self.id}.png'
+            rel_path = f'{self.type}/{self.name} @{self.id}.png'
         else:
-            rel_path = f'_image_/{self.id}.png'
+            rel_path = f'{self.type}/{self.id}.png'
         return self.bundle.path / rel_path
 
     # Script types are being used to determine how we handle their corresponding
