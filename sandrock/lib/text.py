@@ -47,7 +47,7 @@ class _TextEngine:
         if isinstance(item, dict):
             item = item['id']
         name = cls._designer_config_text('ItemPrototype', item, 'nameId', language)
-        if language:
+        if True: # language:
             return name
         else:
             return f'({item}) {name}'
@@ -107,17 +107,6 @@ class _WikiTextEngine(_TextEngine):
         if id_ in manual:
             return manual[id_]
         return super().scene(id_)
-
-    #@classmethod
-    #def scene(cls, id_: int) -> str:
-    #    name = super().scene(id_)
-    #    manual_fix = {
-    #        'Paradise Walk': 'Paradise Lost',
-    #        'Shipwreck Hazardous Ruins': 'Shipwreck',
-    #        'Shipwreck Ruins': 'Shipwreck Hazardous Ruins',
-    #        'The Breach Hazardous Ruins': 'The Breach',
-    #    }
-    #    return manual_fix.get(name, name)
 
 text = _TextEngine()
 wiki = _WikiTextEngine()
