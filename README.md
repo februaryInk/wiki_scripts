@@ -50,6 +50,16 @@ Export **TextAsset** from `storyscript`.
 
 Export **MonoBehaviour**, **MonoScript**, **GameObject**, and **Transform** from `resourcepoint`.
 
+### Home
+
+From `home`, export:
+
+```
+MonoBehaviour HomeToolSetting
+MonoBehaviour HomeToolSettingExtra
+MonoScript    HomeToolSetting
+```
+
 ### Scenes
 
 There are over 90 scene bundles, and it's unreasonable to export them one-by-one. This is consequently more complicated. There are also a **lot** of assets here, as in, over a million files.

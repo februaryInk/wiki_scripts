@@ -60,7 +60,7 @@ def run() -> None:
 
             x = len(set([coord['row'] for coord in coords]))
             y = len(set([coord['column'] for coord in coords]))
-            z = x * y
+            z = len(set(coords))
             size_list.append([y, x, z])
     
         for item in asset.data['pairs']:

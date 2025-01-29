@@ -6,6 +6,10 @@ Classes that interpret missions from their XML.
 ON SENDGIFT END: When given special item.
 SET SPECIAL GIFT RULE STATE: AssetSpecialGiftRuleSpecialGiftRule
 CHECK MISSION CURRENT STATE: state - 1 = not started, 2 = in progress, 3 = complete? 4? flag = 0 or 1
+
+Compare:
+    2: >=
+    6: != ?
 '''
 
 from __future__ import annotations
@@ -19,7 +23,9 @@ import urllib.parse
 # -- Private -------------------------------------------------------------------
 
 _npc_mission_controllers = {
+    'Arvio': 1200107,
     'Heidi': 1200124,
+    'Jane': 1200333,
     'Qi': 1200112
 }
 

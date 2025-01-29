@@ -338,6 +338,11 @@ pages = {
         'weight',
         'backgrounds'
     ],
+    'AssetReadingConfigReadingBook': [
+        'id',
+        'bookId',
+        'translateId'
+    ],
     'AssetRefineConfigRefine': [
         'id',
         'matsGradeUp',
@@ -347,6 +352,15 @@ pages = {
     'AssetRequireProtoRequire': [
         'id',
         'requireLevel'
+    ],
+    'AssetRestoreConfig': [
+        'id',
+        'order',
+        'displayPrefabName',
+        ('sizeType', lambda item: sizes[item['sizeType']]),
+        ('partsItemIds', lambda item: {i + 1: part for i, part in enumerate(item['partsItemIds'])}),
+        'costTime',
+        'extraItemCost'
     ],
     'AssetSceneConfigSceneConfig': [
         ('id', lambda item: item['scene']),

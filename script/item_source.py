@@ -15,7 +15,9 @@ Account for BAG ADD ITEM REPLACE.
 Requires:
     - designer_config
     - resourcepoint
+    - sceneinfo
     - scenes
+    - season
     - text
 '''
 
@@ -24,27 +26,7 @@ from sandrock.preproc          import get_mission_names
 from sandrock.item_source.main import get_item_sources
 
 # Pathea.ScenarioNs.AdditiveScene & Pathea.ScenarioNs.ScenarioModule
-# TODO: We could use sceneinfo to look these up now.
-_scene_name_to_id = {
-    'gecko_dungeon':                32, # Paradise Walk
-    'green_house':                  40, # Moisture Farm
-    'wild_cave':                    51, # Cave
-    'metro_dungeon':                49, # Gecko Station
-    'breach_dungeon':               53, # The Breach
-    'wreck_dungeon':                63, # Shipwreck Ruins
-    'voxel_dungeon_qiheng':         64, # Eufaula Salvage Abandoned Ruins
-    'mysterious_cave_dungeon':      66, # Desert Cave
-    'portia_tunnel':                69, # Portia Tunnel
-    'mole_dungeon':                 70, # Abandoned Mine
-    'logancave_dungeon':            71, # Logan's Hideout
-    'logancave_1_dungeon':          83,
-    'warehouse_dungeon':            73, # Sandrock Storage
-    'aviation_dungeon':             74, # Northern Starship Ruins
-    'reservoir_dungeon':            78, # Starship Ruins Reservoir
-    'stoneforest_dungeon':          79,
-    'biologicallaboratory_dungeon': 80,
-    'grace_mission_cave':           92, # Cave
-}
+_scene_name_to_id = sceneinfo.get_scene_system_name_to_id()
 
 _manual_implemented = [
     "admiral salt's well-liked fringe group ensemble",
@@ -107,6 +89,9 @@ def get_name(s: str) -> str:
     type_, id_str = s.split(':')
     return getattr(wiki, type_)(int(id_str))
 
+def get_scene_id(name: str) -> int:
+    return sceneinfo.scene_id(name)
+
 def get_scene_name(s: str) -> str:
     type_, name_or_id = s.split(':')
     if type_ == 'scene':
@@ -114,7 +99,7 @@ def get_scene_name(s: str) -> str:
     assert type_ == 'scene_name'
     if name_or_id in ['main', 'chamber', 'company', 'guildhall', 'saloon']:
         return '_main_'
-    scene_id = _scene_name_to_id.get(name_or_id)
+    scene_id = sceneinfo.scene_id(name_or_id)
     assert scene_id, name_or_id
     return wiki.scene(scene_id)
 

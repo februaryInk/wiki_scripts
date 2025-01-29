@@ -4,6 +4,8 @@ one by one. Easier to export the whole folder, but then it isn't organized by
 asset type. Is there a simpler way to fix it than this? Probably yes.
 '''
 
+from __future__ import annotations
+
 from sandrock import *
 
 import re
@@ -14,9 +16,17 @@ from pathvalidate import sanitize_filename
 
 def run() -> None:
     scene_directory = config.assets_root / 'scene/additive'
-    manifest        = _ManifestXml(scene_directory / 'assets.xml')
+    scene_manifest  = _ManifestXml(scene_directory / 'assets.xml')
 
-    bundle_directories = [subdir for subdir in scene_directory.iterdir() if subdir.is_dir()]
+    # prepare_assets(scene_directory, scene_manifest)
+
+    season_directory = config.assets_root / 'season'
+    season_manifest  = _ManifestXml(season_directory / 'assets.xml')
+
+    prepare_season_assets(season_directory, season_manifest)
+
+def prepare_season_assets(directory: PathLike, manifest: _ManifestXml) -> None:
+    bundle_directories = [subdir for subdir in directory.iterdir() if subdir.is_dir()]
 
     # Iterating over the bundle directories and sorting just the files in that
     # one directory at a time is hugely faster than iterating over the asset
@@ -27,8 +37,56 @@ def run() -> None:
 
         if bundle_directory.name.endswith('_export'):
             new_name = bundle_directory.name.removesuffix('_export')
-            bundle_directory.rename(scene_directory / new_name)
-            bundle_directory = scene_directory / new_name
+            bundle_directory.rename(directory / new_name)
+            bundle_directory = directory / new_name
+        
+        xml_file = bundle_directory / 'assets.xml'
+        tree, root = _create_or_read_manifest(xml_file)
+
+        for asset_info in manifest:
+            source           = asset_info.find('Source').text
+            source_file_name = source.rsplit('\\', 1)[-1]
+        
+            name    = asset_info.find('Name').text
+            path_id = asset_info.find('PathID').text
+            type    = asset_info.find('Type').text
+            ext     = 'json' if type == 'MonoBehaviour' else 'txt'
+
+            print(directory)
+            print(source_file_name)
+            print(name)
+
+            file_path = directory / source_file_name / sanitize_filename(f'{name} @{path_id}.{ext}', replacement_text='_')
+
+            if file_path.exists():
+                file_new_directory = directory / source_file_name / type
+                file_new_directory.mkdir(parents=True, exist_ok=True)
+
+                shutil.move(str(file_path), str(file_new_directory / file_path.name))
+                root.append(asset_info)
+            else:
+                print(f'Warning: No file at {file_path.relative_to(config.assets_root)}')
+            
+        tree.write(bundle_directory / 'assets.xml', encoding='utf-8', xml_declaration=True)
+        for directory in bundle_directory.iterdir():
+            if directory.is_dir() and not any(directory.iterdir()):
+                print(f'Deleting empty directory {directory.relative_to(config.assets_root)}...')
+                directory.rmdir()
+        
+def prepare_assets(directory: PathLike, manifest: _ManifestXml) -> None:
+    bundle_directories = [subdir for subdir in directory.iterdir() if subdir.is_dir()]
+
+    # Iterating over the bundle directories and sorting just the files in that
+    # one directory at a time is hugely faster than iterating over the asset
+    # manifest as our main loop. Plus, we can target a specific bundle if we 
+    # want.
+    for bundle_directory in bundle_directories:
+        print(f'Processing {bundle_directory.relative_to(config.assets_root)}...')
+
+        if bundle_directory.name.endswith('_export'):
+            new_name = bundle_directory.name.removesuffix('_export')
+            bundle_directory.rename(directory / new_name)
+            bundle_directory = directory / new_name
         
         xml_file = bundle_directory / 'assets.xml'
         tree, root = _create_or_read_manifest(xml_file)
