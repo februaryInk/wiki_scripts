@@ -20,7 +20,33 @@ def run() -> None:
     # print_mission(1600392)
     # builder = ConvBuilder(1)
     # builder.print()
-    print_scenes()
+    # print_scenes()
+    print_generator_items(20900021)
+    print('\n')
+    print_generator_items(20940000)
+    print(text.npc(8002))
+    print(text.npc(8011))
+
+def read_gift_content(id: int) -> None:
+    gift = DesignerConfig.FestivalGift[id]
+    npc = text(gift['npcId'])
+    note = text(gift['dscId'])
+    drops = gift['drops'].split(',')
+    print(f'{npc}: {note}')
+    for drop in drops:
+        id_str, count_str = drop.split('_')
+        print(f'{text.item(int(id_str))} x{count_str}')
+
+def print_generator_items(id: int) -> None:
+    generator_group = DesignerConfig.GeneratorGroup[id]
+    generator_items = DesignerConfig.Generator_Item
+    elements = generator_group['elements']
+
+    for id_weights in [element['idWeights'] for element in elements]:
+        total_weight = sum([id_weight['weight'] for id_weight in id_weights])
+        for id_weight in id_weights:
+            generator_item = generator_items[id_weight['id']]
+            print(f'{text.item(generator_item['itemId'])} ({int(100 * id_weight["weight"] / total_weight)}%)')
 
 def print_party_table():
     party_services = DesignerConfig.PartyService
