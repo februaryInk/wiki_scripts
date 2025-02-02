@@ -11,6 +11,7 @@ from sandrock.lib.asset import Bundle
 
 def find_terrain_trees() -> list[TerrainTree]:
     trees = []
+
     scene_dir = (config.assets_root / 'scene/additive')
     for scene in sorted(scene_dir.iterdir()):
         if scene.is_dir():
@@ -18,8 +19,9 @@ def find_terrain_trees() -> list[TerrainTree]:
     
     season_dir = (config.assets_root / 'season')
     for season in sorted(season_dir.iterdir()):
-        if scene.is_dir():
+        if season.is_dir():
             trees += find_scene_trees(season)
+
     return trees
 
 def find_scene_trees(scene_path: PathLike) -> list[TerrainTree]:
@@ -37,8 +39,8 @@ def find_scene_trees(scene_path: PathLike) -> list[TerrainTree]:
             continue
 
         db         = asset.data['m_DetailDatabase']
-        prototypes = db['m_TreePrototypes']
-        instances  = db['m_TreeInstances']
+        prototypes = db['m_TreePrototypes']['Array']
+        instances  = db['m_TreeInstances']['Array']
 
         for instance in instances:
             proto     = prototypes[instance['index']]

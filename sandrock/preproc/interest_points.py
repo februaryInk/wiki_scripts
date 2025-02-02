@@ -2,13 +2,13 @@
 Find points of interest in each scene:
   - Destructibles
   - Resource areas
-  - Treasure chests?
-  - Enemy spawns?
+  - Treasure chests
+  - Enemy spawns
 '''
 
 from __future__ import annotations
 
-from sandrock.common import *
+from sandrock.common    import *
 from sandrock.lib.asset import Bundle
 
 # -- Private -------------------------------------------------------------------
@@ -40,6 +40,7 @@ def _find_scene_interests(scene_path: PathLike) -> list[InterestPoint]:
     
     return interests
 
+# Removed why?
 #def _get_additional_resource_areas():
 #    bundle = Bundle(config.assets_root / 'resourceareainfo')
 #    areas = {}
