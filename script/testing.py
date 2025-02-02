@@ -21,11 +21,13 @@ def run() -> None:
     # builder = ConvBuilder(1)
     # builder.print()
     # print_scenes()
-    print_generator_items(20900021)
-    print('\n')
-    print_generator_items(20940000)
-    print(text.npc(8002))
-    print(text.npc(8011))
+    print_items_with_item_tag(86)
+
+def read_blueprints() -> None:
+    blueprints = DesignerConfig.Creation
+    for blueprint in blueprints:
+        if blueprint['fromMachineLevel'] > 3:
+            print(f'{blueprint["id"]}: {text.item(blueprint["itemId"])}')
 
 def read_gift_content(id: int) -> None:
     gift = DesignerConfig.FestivalGift[id]

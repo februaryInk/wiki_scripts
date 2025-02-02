@@ -53,7 +53,7 @@ def update_abandoned_ruins(results: Results) -> None:
         for treasure in ruin['treasureData']:
             update_generator(results, source + ['treasure_room'], treasure)
         
-        # Seems like salvage piles, there aren't any in abandoned ruins?
+        # Salvage piles, but there aren't any in abandoned ruins?
         # resource_points = DesignerConfig.ResourcePoint
         # ruin_resource_points = [point['dataAry'] for point in ruin['resourcePoint']]
         # ruin_treasure_room_resource_points = [point['dataAry'] for point in ruin['treasureRoomResourcePoint']]
@@ -75,6 +75,8 @@ def update_developer_mails(results: Results) -> None:
         if market['operation'][0] == 'SendMail':
             source = ('developer', market['channelName'])
             update_mail(results, source, int(market['operation'][1]))
+    
+    # TODO: Check all mail for developer gifts and DLC. Also, KS rewards.
 
 def update_event_gifts(results: Results) -> None:
     festival_gifts = DesignerConfig.FestivalGift
@@ -86,14 +88,14 @@ def update_event_gifts(results: Results) -> None:
         wedding_gifts = [festival_gifts[gift_id] for gift_id in wedding_gift_ids]
 
         for gift in child_birth_gifts:
-            source = ('child_birth', f'npc:{text(gift["npcId"])}')
+            source = ('npc', 'child', f'npc:{text(gift["npcId"])}')
             drop_ids = [drop.split('_')[0] for drop in gift['drops'].split(',')]
 
             for drop_id in drop_ids:
                 results[int(drop_id)].add(source)
         
         for gift in wedding_gifts:
-            source = ('wedding', f'npc:{text(gift["npcId"])}')
+            source = ('npc', 'wedding', f'npc:{text(gift["npcId"])}')
             drop_ids = [drop.split('_')[0] for drop in gift['drops'].split(',')]
 
             for drop_id in drop_ids:
@@ -110,13 +112,13 @@ def update_event_gifts(results: Results) -> None:
             drop_ids = [drop.split('_')[0] for drop in gift['drops'].split(',')]
 
             for drop_id in drop_ids:
-                source = ('birthday', f'npc:{text(gift["npcId"])}')
+                source = ('npc', 'birthday', f'npc:{text(gift["npcId"])}')
                 results[int(drop_id)].add(source)
     
     # Day of Bright Sun gifts. See festivals (bundle)/FestivalSendGift (MonoBehavior).
     for i in range(1000, 1101):
         gift = DesignerConfig.FestivalGift[i]
-        source = ('bright_sun', f'npc:{text(gift["npcId"])}')
+        source = ('npc', 'day_of_bright_sun', f'npc:{text(gift["npcId"])}')
         drop_ids = [drop.split('_')[0] for drop in gift['drops'].split(',')]
 
         for drop_id in drop_ids:
@@ -125,9 +127,9 @@ def update_event_gifts(results: Results) -> None:
 def update_guild_ranking_rewards(results: Results) -> None:
     for reward in DesignerConfig.GuildRankingReward:
         for group in reward['monthRewards']:
-            update_generator(results, ['ranking'], group)
+            update_generator(results, ['guild_ranking'], group)
         for group in reward['annualAwards']:
-            update_generator(results, ['ranking'], group)
+            update_generator(results, ['guild_ranking'], group)
 
 def update_hazard_ruins(results: Results) -> None:
     for i, ruin in enumerate(DesignerConfig.TrialDungeonRule):
@@ -165,7 +167,7 @@ def update_party_services(results: Results) -> None:
     services = [service for service in DesignerConfig.PartyService if service['iconPath'] == 'I_Party_img_Food_00']
 
     for service in services:
-        source = ('party_service', f'service:{service["service"]}')
+        source = ('party_food_package', f'service:{service["service"]}')
         num_dishes, dish_ids_str = service['datas']
         dish_ids = [int(dish_id) for dish_id in dish_ids_str.split(',')]
         for dish_id in dish_ids:
@@ -173,17 +175,17 @@ def update_party_services(results: Results) -> None:
 
 def update_pet_dispatches(results: Results) -> None:
     for pet in DesignerConfig.PetDispatchConfig:
-        update_generator(results, ['pet'], pet['itemGroupId'])
+        update_generator(results, ['pet_dispatch'], pet['itemGroupId'])
 
 def update_sand_racing(results: Results) -> None:
     for prize in DesignerConfig.SandCarItem:
-        source = ('racing',)
+        source = ('sand_racing',)
         for item in prize['dropIdCounts']:
             results[item['id']].add(source)
 
 def update_sand_skiing(results: Results) -> None:
     for prize in DesignerConfig.SandSkiingItem:
-        source = ('skiing',)
+        source = ('sand_sledding',)
         for item in prize['dropIdCounts']:
             results[item['id']].add(source)
 
@@ -192,15 +194,15 @@ def update_spouse_gifts(results: Results) -> None:
 
     for mission in DesignerConfig.NormalMissionData:
         mission_name = mission['nameId']
-        # "A Gift from Your Spouse" or "Speak to your partner"
+        # "A Gift from Your Spouse" or "Speak to Your Partner"
         if mission_name == 80031295 or mission_name == 80031297:
-            npc = text.npc(mission['deliverNpc'])
+            npc = mission['deliverNpc']
             reward = next((obj for obj in mission_rewards if obj["proto"] == mission['rewardId']), None)
             reward_item_ids = [item['id'] for item in reward['rewardItems']]
             if mission_name == 80031295:
-                source = ('spouse_gift', f'npc:{npc}')
+                source = ('npc', 'spouse_gift', f'npc:{npc}')
             else:
-                source = ('spouse_gift_expecting', f'npc:{npc}')
+                source = ('npc', 'spouse_gift_expecting', f'npc:{npc}')
 
             for item_id in reward_item_ids:
                 # print(f'{npc} gives {text.item(item_id)}')

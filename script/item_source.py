@@ -3,14 +3,9 @@ Find all the sources we know of for all items.
 
 In addtion to missing some items, we may be getting false positives. Some 
 generators seem to be present but turned off, e.g., Pen's diamond ring drop.
-And Logan drops rubber?
-
-And why do some resources like Poplar Wood not get the expected source? Mining
-and logging checks not working?
+And Logan drops items when you defeat him?
 
 Also, what is AssetFixMissionItemFixMissionItem doing?
-
-Account for BAG ADD ITEM REPLACE.
 
 Requires:
     - designer_config
@@ -25,7 +20,8 @@ from sandrock                  import *
 from sandrock.preproc          import get_mission_names
 from sandrock.item_source.main import get_item_sources
 
-# Pathea.ScenarioNs.AdditiveScene & Pathea.ScenarioNs.ScenarioModule
+# ------------------------------------------------------------------------------
+
 _scene_name_to_id = sceneinfo.get_scene_system_name_to_id()
 
 _manual_implemented = [
@@ -38,7 +34,7 @@ _manual_implemented = [
     'mr. teddy',
     'no thanks, computer',
     'party invitation',
-    'pet management chip',  # ?
+    'pet management chip',
     'photo of mort and martle',
     'scarab wings',
     'shiny scorpion',

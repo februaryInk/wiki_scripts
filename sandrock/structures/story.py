@@ -22,6 +22,15 @@ import urllib.parse
 
 # -- Private -------------------------------------------------------------------
 
+# Events don't really have official in-game names, but they have internal names
+# that are recorded in Chinese in the XML. Seems like the best way to refer to
+# them on the wiki is to translate these internal names.
+_event_names = {
+    1600391: 'A Lonely Performance', # Literally: Heartbroken Solo Drama
+    # 1600392: 'Promise Me', # A Lonely Performance follow-up.
+    1800373: 'An Unexpected Outcome'
+}
+
 _npc_mission_controllers = {
     'Arvio': 1200107,
     'Heidi': 1200124,
@@ -280,7 +289,10 @@ class _Mission:
     
     @property
     def name_native(self) -> str:
-        return text(int(self.root.get('nameId')))
+        if self.root.get('nameId'):
+            return text(int(self.root.get('nameId')))
+        if self.id in _event_names:
+            return _event_names[self.id]
     
     # NPC you speak to in order to begin the mission?
     @property
@@ -327,6 +339,31 @@ class _Mission:
         
         parent_name = self.parents[0].get_name(stack_level + 1) if len(self.parents) else ''
         return parent_name
+    
+    def get_mail_ids(self) -> list[int]:
+        mail_ids = []
+
+        for stmt in self.root.iter('STMT'):
+            stmt_type = stmt.get('stmt')
+
+            if stmt_type == 'MAIL SEND TO BOX':
+                mail_ids.append(int(stmt.get('mailId')))
+        
+        return mail_ids
+
+    def get_received_item_ids(self) -> list[int]:
+        item_ids = []
+
+        for stmt in self.root.iter('STMT'):
+            stmt_type = stmt.get('stmt')
+
+            if stmt_type == 'BAG ADD ITEM REPLACE':
+                item_ids.append(int(stmt.get('itemId')))
+                
+            if (stmt_type == 'BAG MODIFY' and stmt.get('addRemove') == '0'):
+                item_ids.append(int(stmt.get('item')))
+        
+        return item_ids
     
     def parse(self) -> dict:
         if not self._content:
