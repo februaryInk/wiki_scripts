@@ -29,7 +29,7 @@ def update_scenes(results: Results) -> None:
 
 def update_monster(results: Results, scene: str, behaviour: Any) -> None:
     monster_id = behaviour['protoId']
-    source     = ['monster', f'scene_name:{scene}', f'monster:{monster_id}']
+    source     = ['monster', f'scene:{scene}', f'monster:{monster_id}']
     monster    = DesignerConfig.Monster.get(monster_id)
     if monster is not None:
         for drop in monster['dropDatas']:
@@ -45,7 +45,7 @@ def update_resource(results: Results, scene: str, behaviour: Any) -> None:
         if resource_point is None:
             continue
 
-        source = ['gathering', f'scene_name:{scene}', f'resource_point:{resource_point_id}']
+        source = ['gathering', f'scene:{scene}', f'resource_point:{resource_point_id}']
         groups = [resource_point['generatorGroup']]
 
         catch = _load_catchable(resource_point['prefabModel'])
@@ -63,7 +63,7 @@ def update_resource(results: Results, scene: str, behaviour: Any) -> None:
             update_generator(results, source, group)
 
 def update_treasure(results: Results, scene: str, behaviour: Any) -> None:
-    source = ['treasure', f'scene_name:{scene}']
+    source = ['treasure', f'scene:{scene}']
     update_generator(results, source, behaviour['generatorId'])
 
 @cache

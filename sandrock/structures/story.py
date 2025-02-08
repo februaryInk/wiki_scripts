@@ -7,16 +7,22 @@ ON SENDGIFT END: When given special item.
 SET SPECIAL GIFT RULE STATE: AssetSpecialGiftRuleSpecialGiftRule
 CHECK MISSION CURRENT STATE: state - 1 = not started, 2 = in progress, 3 = complete? 4? flag = 0 or 1
 
+# Successful mission completion:
+# stmt="CHECK MISSION CURRENT STATE" missionId="1600122" state="3" flag="1"
+
 Compare:
     2: >=
+    3: ==
     6: != ?
 '''
 
 from __future__ import annotations
 
-from sandrock                         import *
-from sandrock.lib.asset               import Asset
-from sandrock.structures.conversation import *
+from sandrock                              import *
+from sandrock.lib.asset                    import Asset
+from sandrock.structures.conversation      import *
+from sandrock.structures.story_xml.stmt    import *
+from sandrock.structures.story_xml.trigger import *
 
 import urllib.parse
 
@@ -26,16 +32,28 @@ import urllib.parse
 # that are recorded in Chinese in the XML. Seems like the best way to refer to
 # them on the wiki is to translate these internal names.
 _event_names = {
-    1600391: 'A Lonely Performance', # Literally: Heartbroken Solo Drama
+    1600391: 'A Lonely Performance', # Heartbroken Solo Drama
     # 1600392: 'Promise Me', # A Lonely Performance follow-up.
-    1800373: 'An Unexpected Outcome'
+    1700300: 'Community Service', # Logan Promoting
+    1800306: 'Follow-up Meeting',
+    1800354: 'Grandma Vivi\'s Guidance', # Seeking Grandma Vivi's Guidance
+    1800373: 'An Unexpected Outcome',
+    1800376: "Luna's Invitation",
+    1800484: 'End Marriage Loop',
 }
 
 _npc_mission_controllers = {
     'Arvio': 1200107,
+    'Grace': 1200133,
     'Heidi': 1200124,
     'Jane': 1200333,
-    'Qi': 1200112
+    'Qi': 1200112,
+    'Unsuur': 1200280,
+}
+
+_general_mission_controllers = {
+    1200127: 'Nia and Mom\'s Letters',
+    1200128: 'Mission Failure Follow-up',
 }
 
 def _recursive_unquote(element: ElementTree.Element) -> None:
@@ -45,202 +63,15 @@ def _recursive_unquote(element: ElementTree.Element) -> None:
     for child in element:
         _recursive_unquote(child)
 
-# -- STMT Classes --------------------------------------------------------------
-
-class _Stmt:
-    _stmt_matches: list[str] = []
-
-    @classmethod
-    def find_stmt_class(cls, stmt: ElementTree.Element) -> Type[_Stmt]:
-        for stmt_class in _Stmt.__subclasses__():
-            if stmt_class.is_type_match(stmt):
-                return stmt_class
-        
-        return cls
-
-    @classmethod
-    def is_type_match(cls, stmt: ElementTree.Element) -> bool:
-        val = stmt.get('stmt')
-        return val in cls._stmt_matches
-
-    def __init__(self, stmt: ElementTree.Element):
-        self._stmt: ElementTree.Element = stmt
-        self.extract_properties()
-    
-    @property
-    def stmt(self) -> str:
-        return self._stmt.get('stmt')
-    
-    def extract_properties(self) -> None:
-        pass
-    
-    def read(self) -> list[str]:
-        return self.read_debug()
-    
-    def read_debug(self) -> list[str]:
-        attribs = ' | '.join([f'{k}: {v}' for k, v in self._stmt.attrib.items() if k not in ['identity', 'stmt']])
-        return [f'{self.stmt} || {attribs}']
-
-class _StmtMissionProgress(_Stmt):
-    _stmt_matches = [
-        'MISSION BEGIN',
-        'DELIVER MISSION',
-        'START MISSION',
-        'ON ACCEPT MISSION',
-        'RUN MISSION',
-        'ACTION MISSION TRACE',
-        'SUBMIT MISSION',
-        'END MISSION',
-        'MISSION END BEFORE' # Mission timeout?
-    ]
-
-    def extract_properties(self) -> None:
-        self._mission_id: int = self._stmt.get('missionId')
-
-    def read_debug(self) -> list[str]:
-        return [f'{self.stmt} {self._mission_id}']
-
-class _StmtQuiet(_Stmt):
-    _stmt_matches = [
-        'CAMERA NATURAL SET',
-        'CAMERA PATH START',
-        'CAMERA PATH STOP',
-        'NPC REMOVE IDLE'
-    ]
-
-    def read_debug(self) -> list[str]:
-        return []
-    
-class _StmtActorShowBubble(_Stmt):
-    _stmt_matches = [
-        'SHOW ACTOR BUBBLE'
-    ]
-
-    def extract_properties(self) -> None:
-        self._text_id = self._stmt.get('transId')
-        self._npc_id = self._stmt.get('npc')
-        self._bubble = Bubble(self._npc_id, self._text_id)
-    
-    def read(self) -> list[str]:
-        return ['In a speech bubble:'] + self._bubble.read()
-    
-    def read_debug(self) -> list[str]:
-        return self._bubble.read_debug()
-
-# Choice with the given index is made in response to conversation segment with
-# given ID.
-class _StmtOnConversationChoiceMade(_Stmt):
-    _stmt_matches = [
-        'ON CONVERSATION CHOICE MADE'
-    ]
-
-    def extract_properties(self) -> None:
-        # cId?
-        self._conv_choice_index = self._stmt.get('selectIndex')
-        self._conv_segment_id = self._stmt.get('id')
-    
-    def read_debug(self) -> list[str]:
-        return [f'{self.stmt} for ConvSegment {self._conv_segment_id}: {self._conv_choice_index}']
-
-# Conversation in previous step finishes, regardless of outcome.
-class _StmtOnConversationEnd(_Stmt):
-    _stmt_matches = [
-        'ON CONVERSATION END'
-    ]
-
-class _StmtOnInteractWithNpc(_Stmt):
-    _stmt_matches = [
-        'ON INTERACT WITH NPC'
-    ]
-
-    def extract_properties(self) -> None:
-        self._npc   = int(self._stmt.get('npc'))
-        self._order = int(self._stmt.get('order'))
-    
-    def read(self) -> list[str]:
-        return [f'On speaking to {text.npc(self._npc)}']
-
-class _StmtShowConversation(_Stmt):
-    _stmt_matches = [
-        'SHOW CONVERSATION',
-        'SHOW CONVERSATION CACHED'
-    ]
-    
-    def build_conversation(self, id_str: str) -> ConvSegment | ConvTalk:
-        print(self._dialogue_ids)
-        if '_' in id_str:
-            id = int(id_str.split('_', 1)[0])
-            return ConvTalk(id)
-        else:
-            return ConvSegment(int(id_str))
-    
-    def extract_properties(self) -> None:
-        self._dialogue_ids: list[str] = self._stmt.get('dialog').split(',')
-        self._conversation: list[ConvSegment | ConvTalk] = [self.build_conversation(id) for id in self._dialogue_ids]
-
-    def read(self) -> list[str]:
-        lines = []
-        for conv in self._conversation:
-            lines += conv.read()
-        return lines
-    
-    def read_debug(self):
-        return [f'{self.stmt} {", ".join([str(conv.id) for conv in self._conversation])}']
-
-class _StmtUpdateMissionInfo(_Stmt):
-    _stmt_matches = [
-        'UPDATE MISSION INFO'
-    ]
-
-    def extract_properties(self) -> None:
-        self._desc       = int(self._stmt.get('desc'))
-        self._mission_id = int(self._stmt.get('missionId'))
-        self._npc        = int(self._stmt.get('npc'))
-        self._req_target = self._stmt.get('reqTarget')
-        self._target_id  = int(self._stmt.get('targetId'))
-        self._title      = int(self._stmt.get('title'))
-        self._type       = int(self._stmt.get('type'))
-    
-    @property
-    def description(self) -> str:
-        return text(self._desc)
-
-    @property
-    def npc(self) -> str:
-        if self._npc != 0:
-            return text.npc(self._npc)
-        
-    @property
-    def required(self) -> tuple[str, int]:
-        if self._type == 1: # Items
-            req_targets = [tar.split('_') for tar in self._req_target.split(',')]
-            return [(text.item(int(item_id), config.wiki_language), int(count)) for (item_id, count) in req_targets]
-        elif self._type == 4: # Go to scene
-            scene_sys_name, scene_name_id = self._req_target.split(',')
-            return [(scene_sys_name, int(scene_name_id))]
-    
-    @property
-    def title(self) -> str:
-        return text(self._title)
-    
-    def read(self) -> list[str]:
-        lines = ['{{mission_details', f'|desc = {self.description}', f'|details = {self.title}']
-        if self._type == 1:
-            for item_name, count in self.required:
-                lines += [f'*{{{{i2|{item_name}|0/{count}}}}}']
-        if self.npc:
-            lines += [f'*{{{{i2|{self.npc}|0/1}}}}']
-        lines += ['}}']
-        return lines
-
 # ------------------------------------------------------------------------------
 
-class _Mission:
+class Mission:
     def __init__(self, story: Story, asset: Asset):
         self._asset: Asset             = asset
         self.story: Story              = story 
         self.root: ElementTree.Element = asset.read_xml()
         self._content : dict           = None
+        self._vars_to_mission_id       = None
 
         _recursive_unquote(self.root)
     
@@ -280,8 +111,20 @@ class _Mission:
         return [text.npc(id) for id in self.involved_npc_ids]
     
     @property
+    def is_controller(self) -> bool:
+        return (
+            self.id in _npc_mission_controllers.values()
+            or self.id in _general_mission_controllers.keys()
+            or (self.is_main and not self.name)
+        )
+    
+    @property
+    def is_event(self) -> bool:
+        return self.name in _event_names.values()
+    
+    @property
     def is_main(self) -> bool:
-        return self.root.get('isMain').lower == 'true'
+        return self.root.get('isMain').lower() == 'true'
     
     @property
     def name(self) -> str:
@@ -289,9 +132,10 @@ class _Mission:
     
     @property
     def name_native(self) -> str:
-        if self.root.get('nameId'):
+        name_id = self.root.get('nameId')
+        if name_id and name_id not in ['0', '-1']:
             return text(int(self.root.get('nameId')))
-        if self.id in _event_names:
+        if self.id in _event_names.keys():
             return _event_names[self.id]
     
     # NPC you speak to in order to begin the mission?
@@ -313,11 +157,11 @@ class _Mission:
         return self.root.get('properties').split('|')
 
     @property
-    def triggers(self) -> list[_Trigger]:
+    def triggers(self) -> list[Trigger]:
         triggers = []
-        for procedure, steps in self.parse().items():
-            for step, triggers in steps.items():
-                triggers += triggers
+        for procedure, steps in self.get_content().items():
+            for step, step_triggers in steps.items():
+                triggers += step_triggers
         return triggers
     
     def get_children_ids(self) -> list[int]:
@@ -326,6 +170,36 @@ class _Mission:
             if stmt.get('stmt') == 'RUN MISSION':
                 children_ids.append(int(stmt.get('missionId')))
         return children_ids
+    
+    def get_content(self) -> dict:
+        if not self._content:
+            content = {}
+            for trigger in self.root.findall('TRIGGER'):
+                procedure = float(trigger.get('procedure'))
+                step      = float(trigger.get('step'))
+
+                if procedure not in content: content[procedure] = {}
+                if step in content[procedure]:
+                    # print(f'Repeat of Procedure {procedure}, Step {step}')
+                    content[procedure][step].append(Trigger(trigger, self))
+                else:
+                    content[procedure][step] = [Trigger(trigger, self)]
+            
+            content = {k: dict(sorted(steps.items())) for k, steps in content.items()}
+            content = dict(sorted(content.items()))
+            self._content = content
+
+        return self._content
+    
+    def get_initialized_vars_by_mission_id(self) -> dict[int, list[str]]:
+        vars_by_mission_id = {}
+        for trigger in self.triggers:
+            mission_id, var_stmts = trigger.get_initialized_vars_by_mission_id()
+            if mission_id not in vars_by_mission_id:
+                vars_by_mission_id[mission_id] = []
+            vars_by_mission_id[mission_id] += var_stmts
+        
+        return vars_by_mission_id
     
     def get_name(self, stack_level: int = 0) -> str:
         if self.name_native:
@@ -341,49 +215,50 @@ class _Mission:
         return parent_name
     
     def get_mail_ids(self) -> list[int]:
-        mail_ids = []
-
-        for stmt in self.root.iter('STMT'):
-            stmt_type = stmt.get('stmt')
-
-            if stmt_type == 'MAIL SEND TO BOX':
-                mail_ids.append(int(stmt.get('mailId')))
+        mail_ids_by_mission_id = {}
+        for trigger in self.triggers:
+            mission_id, mail_ids = trigger.get_mail_id_by_mission_id()
+            if mission_id not in mail_ids_by_mission_id:
+                mail_ids_by_mission_id[mission_id] = []
+            mail_ids_by_mission_id[mission_id] += mail_ids
         
-        return mail_ids
+        return mail_ids_by_mission_id
 
     def get_received_item_ids(self) -> list[int]:
-        item_ids = []
-
-        for stmt in self.root.iter('STMT'):
-            stmt_type = stmt.get('stmt')
-
-            if stmt_type == 'BAG ADD ITEM REPLACE':
-                item_ids.append(int(stmt.get('itemId')))
-                
-            if (stmt_type == 'BAG MODIFY' and stmt.get('addRemove') == '0'):
-                item_ids.append(int(stmt.get('item')))
+        item_ids_by_mission_id = {}
+        for trigger in self.triggers:
+            mission_id, item_ids = trigger.get_item_id_by_mission_id()
+            if mission_id not in item_ids_by_mission_id:
+                item_ids_by_mission_id[mission_id] = []
+            item_ids_by_mission_id[mission_id] += item_ids
         
-        return item_ids
+        return item_ids_by_mission_id
     
-    def parse(self) -> dict:
-        if not self._content:
-            content = {}
-            for trigger in self.root.findall('TRIGGER'):
-                procedure = int(trigger.get('procedure'))
-                step      = float(trigger.get('step'))
-
-                if procedure not in content: content[procedure] = {}
-                if step in content[procedure]:
-                    print(f'Repeat of Procedure {procedure}, Step {step}')
-                    content[procedure][step].append(_Trigger(trigger))
-                else:
-                    content[procedure][step] = [_Trigger(trigger)]
-            
-            content = {k: dict(sorted(steps.items())) for k, steps in content.items()}
-            content = dict(sorted(content.items()))
-            self._content = content
-
-        return self._content
+    def get_received_items(self) -> dict[tuple, list[int]]:
+        items_by_causal_event = {}
+        for trigger in self.triggers:
+            causal_event, items = trigger.get_received_items()
+            if len(items) == 0: continue
+            if causal_event not in items_by_causal_event:
+                items_by_causal_event[causal_event] = []
+            items_by_causal_event[causal_event] += items
+        
+        return items_by_causal_event
+    
+    def get_vars_to_mission_id(self) -> dict[str, int]:
+        # All variables are set with `scope="2"`, which seems to mean that they 
+        # are scoped to the script; therefore, I believe we can handle them 
+        # mission by mission rather than having to consider them over the whole 
+        # story. TODO: I should check this assumption later though.
+        if not self._vars_to_mission_id:
+            vars_to_mission_id = {}
+            for mission_id, vars in self.get_initialized_vars_by_mission_id().items():
+                if mission_id != self.id:
+                    for var in vars:
+                        vars_to_mission_id[var] = mission_id
+            self._vars_to_mission_id = vars_to_mission_id
+        
+        return self._vars_to_mission_id
     
     def read_parallel(self) -> list[str]:
         lines = [f'Reading Mission {self.id}: {self.name}']
@@ -394,7 +269,7 @@ class _Mission:
     def read(self) -> list[str]:
         lines = [f'Reading Mission {self.id}: {self.name}']
         lines += ['']
-        for procedure, steps in self.parse().items():
+        for procedure, steps in self.get_content().items():
             lines += [f'Reading Procedure {procedure}']
             lines += ['---------------------------------------------------------']
             for step, triggers in steps.items():
@@ -407,7 +282,7 @@ class _Mission:
     def read_debug(self) -> list[str]:
         lines = [f'Reading Mission {self.id}: {self.name}']
         lines += ['']
-        for procedure, steps in self.parse().items():
+        for procedure, steps in self.get_content().items():
             lines += [f'Reading Procedure {procedure}']
             lines += ['---------------------------------------------------------']
             for step, triggers in steps.items():
@@ -425,88 +300,51 @@ class _Mission:
         lines = self.read_debug()
         print('\n'.join(lines))
 
-
-class _Trigger:
-    def __init__(self, trigger: ElementTree.Element):
-        self._trigger   = trigger
-        self._procedure = self._trigger.get('procedure')
-        self._step      = self._trigger.get('step')
-
-        self._structure = {
-            'EVENTS': self.eval_stmts(trigger.findall('EVENTS')),
-            'CONDITIONS': self.eval_stmts(trigger.findall('CONDITIONS')),
-            'ACTIONS': self.eval_stmts(trigger.findall('ACTIONS'))
-        }
-    
-    def eval_stmts(self, element: list[ElementTree.Element]):
-        assert len(element) == 1
-        element = element[0]
-        stmts = []
-
-        assert len(element.findall('GROUP')) <= 1
-        
-        for stmt in element.iter('STMT'):
-            stmt_class = _Stmt.find_stmt_class(stmt)
-            stmts.append(stmt_class(stmt))
-        
-        return stmts
-    
-    def read(self) -> list[str]:
-        lines = [f'TRIGGER Step {self._step}']
-        for key, stmts in self._structure.items():
-            lines += [key]
-            for stmt in stmts:
-                lines += stmt.read()
-        return lines
-    
-    def read_debug(self) -> list[str]:
-        lines = [f'TRIGGER Step {self._step}']
-        for key, stmts in self._structure.items():
-            lines += [key]
-            for stmt in stmts:
-                stmt_lines = stmt.read_debug()
-                lines += ['  -> ' + line for line in stmt_lines]
-        return lines
-
 class Story:
     def __init__(self):
         self.bundle            = Bundle('story_script')
         self.missions          = {}
+        self.mission_flags     = defaultdict(set)
         self.mission_parentage = {}
+        self.mission_vars      = defaultdict(set)
 
         for asset in self.bundle.assets:
             if asset.type == 'TextAsset':
-                mission                            = _Mission(self, asset)
+                mission                            = Mission(self, asset)
                 self.missions[mission.id]          = mission
                 self.mission_parentage[mission.id] = mission.get_children_ids()
     
     def __contains__(self, mission_id) -> bool:
         return mission_id in self.missions
     
-    def __iter__(self) -> Iterator[_Mission]:
+    def __iter__(self) -> Iterator[Mission]:
         return iter(self.missions.items())
     
-    def get_children_for(self, id: int) -> list[_Mission]:
+    def get_children_for(self, id: int) -> list[Mission]:
         assert id in self.missions
         assert id in self.mission_parentage
         child_missions = [self.get_mission(child_id) for child_id in self.mission_parentage[id]]
         return child_missions
     
-    def get_parents_for(self, id: int) -> list[_Mission]:
+    def get_parents_for(self, id: int) -> list[Mission]:
         assert id in self.missions
         parent_ids = [par_id for par_id, child_ids in self.mission_parentage.items() if id in child_ids]
         parent_missions = [self.get_mission(parent_id) for parent_id in parent_ids]
-        assert len(parent_missions) or id in self.mission_parentage
+        assert len(parent_missions) or id in self.mission_parentage, f'Mission {id} has no parents and is not a parent itself.'
+
         return parent_missions
 
-    def get_mission(self, id: int) -> _Mission:
+    def get_mission(self, id: int) -> Mission:
         return self.missions[id]
+    
+    def get_mission_name(self, id: int) -> str:
+        return self.get_mission(id).name
     
     def get_mission_names(self) -> dict[int, str]:
         name_dict = {mission.id: mission.name for id, mission in self.missions.items()}
         return dict(sorted(name_dict.items()))
     
-    def get_missions_for_npc(self, npc_name: str) -> list[_Mission]:
+    def get_missions_for_npc(self, npc_name: str) -> list[Mission]:
         return [mission for id, mission in self if mission.npc == npc_name or npc_name in mission.involved_npcs]
     
     def print_mission_list_for_npc(self, npc_name: str) -> None:

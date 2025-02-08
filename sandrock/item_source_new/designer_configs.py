@@ -88,14 +88,14 @@ def update_event_gifts(results: Results) -> None:
         wedding_gifts = [festival_gifts[gift_id] for gift_id in wedding_gift_ids]
 
         for gift in child_birth_gifts:
-            source = ('npc', 'child', f'npc:{text(gift["npcId"])}')
+            source = ('npc', 'child', f'npc:{gift["npcId"]}')
             drop_ids = [drop.split('_')[0] for drop in gift['drops'].split(',')]
 
             for drop_id in drop_ids:
                 results[int(drop_id)].add(source)
         
         for gift in wedding_gifts:
-            source = ('npc', 'wedding', f'npc:{text(gift["npcId"])}')
+            source = ('npc', 'wedding', f'npc:{gift["npcId"]}')
             drop_ids = [drop.split('_')[0] for drop in gift['drops'].split(',')]
 
             for drop_id in drop_ids:
@@ -112,13 +112,13 @@ def update_event_gifts(results: Results) -> None:
             drop_ids = [drop.split('_')[0] for drop in gift['drops'].split(',')]
 
             for drop_id in drop_ids:
-                source = ('npc', 'birthday', f'npc:{text(gift["npcId"])}')
+                source = ('npc', 'birthday', f'npc:{gift["npcId"]}')
                 results[int(drop_id)].add(source)
     
     # Day of Bright Sun gifts. See festivals (bundle)/FestivalSendGift (MonoBehavior).
     for i in range(1000, 1101):
         gift = DesignerConfig.FestivalGift[i]
-        source = ('npc', 'day_of_bright_sun', f'npc:{text(gift["npcId"])}')
+        source = ('npc', 'day_of_bright_sun', f'npc:{gift["npcId"]}')
         drop_ids = [drop.split('_')[0] for drop in gift['drops'].split(',')]
 
         for drop_id in drop_ids:
@@ -212,7 +212,8 @@ def update_stores(results: Results) -> None:
     for store_id, store in DesignerConfig.StoreBaseData.items():
         # Second Myseterious Man store that sells only pet DLC items and is not 
         # accessible in-game.
-        if store_id == 18: continue
+        # Multiplayer Vending Machine?
+        if store_id in [18, 107]: continue
 
         source = ('store', f'store:{store_id}')
         goods = []
