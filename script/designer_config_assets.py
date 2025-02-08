@@ -367,6 +367,14 @@ pages = {
         'nameId',
         ('name', lambda item: text(item['nameId'])),
         ('scene', lambda item: sceneinfo.scene_system_name(item['scene']))
+    ],
+    'AssetScreeningConfigScreening': [
+        'id',
+        'inputCount',
+        ('generatorIds', lambda item: {i + 1: gen for i, gen in enumerate(item['generatorIds'])}),
+        ('itemResultDes', lambda item: {i + 1: des for i, des in enumerate(item['itemResultDes'])}),
+        'costMinutes',
+        'exp'
     ]
 }
 

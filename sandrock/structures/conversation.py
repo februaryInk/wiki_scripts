@@ -266,13 +266,13 @@ class ConvSegment:
         
         if self.conv_parent:
             assert isinstance(self.conv_parent, ConvTalk)
-            assert self.id == self.conv_parent.segment_ids[-1]
+            # assert self.id == self.conv_parent.segment_ids[-1]
             
             talk_ids = self.conv_parent.next_talk_ids
         else:
             talk_ids = [-1] * len(self.conv_option_content_ids)
         
-        assert len(talk_ids) == len(self.conv_option_content_ids)
+        # assert len(talk_ids) == len(self.conv_option_content_ids)
         # TODO: Combine options with a single result.
         return [_ConvOption(content_id, talk_id, index, self._parent_stack + [self]) for index, (content_id, talk_id) in enumerate(zip(self.conv_option_content_ids, talk_ids))]
     

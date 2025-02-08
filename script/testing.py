@@ -16,12 +16,16 @@ from pathvalidate import sanitize_filename
 
 def run() -> None:
     # print_mission(1600391)
-    # print_conv_talk(6885)
+    # print_conv_segment(18366)
     # print_mission(1600392)
     # builder = ConvBuilder(1)
     # builder.print()
     # print_scenes()
-    print_items_with_item_tag(86)
+    # print_items_with_item_tag(86)
+    story = Story()
+    m = story.get_mission(1800306)
+    m.get_received_items()
+    # breakpoint()
 
 def read_blueprints() -> None:
     blueprints = DesignerConfig.Creation

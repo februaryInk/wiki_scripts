@@ -5,8 +5,8 @@ id: {
     id: ,
     name: ,
     nominal_source: ,
-    primary_sources: ,
-    secondary_sources:
+    recipe_sources: ,
+    all_sources:
 }
 
 Requires:
@@ -21,6 +21,7 @@ Requires:
 from sandrock                        import *
 from sandrock.lib.designer_config    import DesignerConfig
 from sandrock.lib.text               import text
+from sandrock.structures.story       import Story
 
 from sandrock.item_source_new.main   import get_item_sources
 from sandrock.item_source_new.common import *
@@ -29,6 +30,13 @@ from sandrock.item_source_new.common import *
 
 item_prototypes = DesignerConfig.ItemPrototype
 scene_name_to_id = sceneinfo.get_scene_system_name_to_id()
+story = Story()
+
+_manual_additions = {
+}
+
+_manual_removals = {
+}
 
 def get_nominal_sources() -> dict[int, dict]:
     item_source_data = DesignerConfig.ItemSourceData
@@ -52,8 +60,18 @@ def main() -> None:
     nominal_sources = get_nominal_sources()
     item_sources    = get_item_sources()
 
+    # Cyfuls strikes: Grace
+    # The Protector: Pen's Last Words
+    # Portian war drum, all NPCs
+    # Magnesese ore, shipwreck ruins
+    # Recipe sources
+    #   - Cooking experiment
+    #   - Research center
+    #   - Machine unlocks
+
     results = format_results(item_sources, nominal_sources)
-    write_lua(config.output_dir / 'lua/AssetItemSources.lua', results)
+    results = dict(sorted(results.items()))
+    write_lua(config.output_dir / 'lua/AssetItemSource.lua', results)
 
 # -- Preparing Results ---------------------------------------------------------
 
@@ -97,7 +115,6 @@ def format_source(formatted: dict, source: ItemSource, item_id: int, sources: li
         'developer',
         'farming',
         'fishing',
-        'gathering',
         'guild_ranking',
         'kicking',
         'logging',
@@ -111,81 +128,98 @@ def format_source(formatted: dict, source: ItemSource, item_id: int, sources: li
         'sand_sledding'
     ]
 
-    if source[0] in no_arg:
-        formatted[source[0]] = True
-    
-    if source[0] == 'abandoned_ruin':
-        add_or_append(formatted, 'ruin_abandoned', scene_name_to_id[source[1]])
-    
-    if source[0] == 'container':
-        add_or_append(formatted, 'container', get_name(source[1]))
-    
-    if source[0] == 'crafting':
-        if source[1] == 'assemble':
-            add_or_append(formatted, 'assembly', assembly_stations[int(source[2])])
+    # print(source)
+
+    match source[0]:
+        case s if s in no_arg:
+            formatted[s] = True
+
+        case 'abandoned_ruin':
+            add_or_append(formatted, 'ruin_abandoned', get_name(source[1]))
+
+        case 'container':
+            add_or_append(formatted, 'container', get_name(source[1]))
+
+        case 'crafting':
+            match source[1]:
+                case 'assemble':
+                    add_or_append(formatted, 'assembly', assembly_stations[int(source[2])])
+                case 'cooking':
+                    add_or_append(formatted, 'cooking', cooking_stations[int(source[2])])
+                case s if s.startswith('item:'):
+                    add_or_append(formatted, 'crafting', get_name(source[1]))
+
+        case 'delivery':
+            _, id_str = source[1].split(':')
+            add_or_append(formatted, 'delivery', wiki(DesignerConfig.PreOrderPoint[int(id_str)]['nameId']))
+
+        case 'event':
+            add_or_append(formatted, 'event', get_name(source[2]))
         
-        if source[1] == 'cooking':
-            add_or_append(formatted, 'cooking', cooking_stations[int(source[2])])
+        case 'gathering':
+            add_or_append(formatted, 'gathering', get_name(source[1]))
+
+        case 'hazard_ruin':
+            add_or_append(formatted, 'ruin_hazard', get_name(source[1]))
         
-        if source[1].startswith('item:'):
-            add_or_append(formatted, 'crafting', get_name(source[1]))
-    
-    if source[0] == 'delivery':
-        _, id_str = source[1].split(':')
-        add_or_append(formatted, 'delivery', wiki(DesignerConfig.PreOrderPoint[int(id_str)]['nameId']))
-    
-    if source[0] == 'hazard_ruin':
-        add_or_append(formatted, 'ruin_hazard', scene_name_to_id[source[1]])
+        case 'mail':
+            add_or_append(formatted, 'mail', get_name(source[1]))
 
-    if source[0] == 'mission':
-        add_or_append(formatted, 'mission', get_name(source[1]))
-    
-    if source[0] == 'monster':
-        add_or_append(formatted, 'monster', get_name(source[1]))
-    
-    if source[0] == 'mort_photo':
-        add_or_append(formatted, 'mission', 'Gone with the Wind')
+        case 'mission':
+            add_or_append(formatted, 'mission', get_name(source[2]))
 
-    if source[0] == 'npc':
-        event = source[1]
-        npc = get_name(source[2])
+        case 'monster':
+            add_or_append(formatted, 'monster', get_name(source[2]))
 
-        if event == 'birthday':
-            add_or_append(formatted, 'npc', [npc, 'Birthday Gift'])
-        if event == 'child':
-            add_or_append(formatted, 'npc', [npc, 'New Child Gift'])
-        if event == 'day_of_bright_sun':
-            add_or_append(formatted, 'npc', [npc, 'Day of the Bright Sun'])
-        if event == 'marry':
-            add_or_append(formatted, 'npc', [npc, 'Marriage Gift'])
-        if event == 'wedding':
-            add_or_append(formatted, 'npc', [npc, 'Wedding Gift'])
-        if event in ['spouse_gift', 'spouse_gift_expecting']:
-            if all_spouses_in_source(sources, event):
-                npc = 'All Spouses'
-            else:
-                npc = get_name(source[2])
-            add_or_append(formatted, 'npc', [npc, 'Spouse Gift'])
-        else:
-            raise ValueError(f'Bad NPC source {source}')
+        case 'mort_photo':
+            add_or_append(formatted, 'mission', 'Gone with the Wind')
 
-    if source[0] == 'ore_refining':
-        add_or_append(formatted, 'ore_refining', get_name(source[1]))
+        case 'npc':
+            event = source[1]
+            npc = get_name(source[2])
 
-    if source[0] == 'relic':
-        add_or_append(formatted, 'crafting', 'Relic Restoration Machine')
+            match event:
+                case 'birthday':
+                    add_or_append(formatted, 'npc', [npc, 'Birthday Gift'])
+                case 'child':
+                    add_or_append(formatted, 'npc', [npc, 'New Child Gift'])
+                case 'conversation':
+                    add_or_append(formatted, 'npc', [npc, 'Conversation'])
+                case 'day_of_bright_sun':
+                    add_or_append(formatted, 'npc', [npc, 'Day of the Bright Sun'])
+                case 'marry':
+                    add_or_append(formatted, 'npc', [npc, 'Marriage Gift'])
+                case 'relationship':
+                    add_or_append(formatted, 'npc', [npc, source[3]])
+                case 'wedding':
+                    add_or_append(formatted, 'npc', [npc, 'Wedding Gift'])
+                case 'spouse_gift' | 'spouse_gift_expecting':
+                    if all_spouses_in_source(sources, event):
+                        npc = 'All Spouses'
+                    else:
+                        npc = get_name(source[2])
+                    add_or_append(formatted, 'npc', [npc, 'Spouse Gift'])
+                case _:
+                    raise ValueError(f'Bad NPC source {source}')
 
-    if source[0] == 'store':
-        add_or_append(formatted, 'store', get_name(source[1]))
+        case 'ore_refining':
+            add_or_append(formatted, 'ore_refining', get_name(source[1]))
 
-    if source[0] == 'treasure':
-        scene = scene_name_to_id[source[1]]
-        if scene == 'Cave':
-            if item_id in [10000105, 11000027]:
+        case 'relic':
+            add_or_append(formatted, 'crafting', 'Relic Restoration Machine')
+
+        case 'store':
+            add_or_append(formatted, 'store', get_name(source[1]))
+
+        case 'treasure':
+            scene = get_name(source[1])
+            if scene == 'Cave' and item_id in [10000105, 11000027]:
                 return
-        add_or_append(formatted, 'treasure', scene)
+            add_or_append(formatted, 'treasure', scene)
 
-    raise ValueError(f'Bad item source {source}')
+        case _:
+            raise ValueError(f'Bad item source {source}')
+
     
 def add_or_append(formatted: dict, key: str, value: str) -> None:
     if key in formatted:
@@ -207,10 +241,23 @@ def all_spouses_in_source(sources: list[ItemSource], event: str) -> bool:
 npc_name_ids = {npc['nameID']: npc['id'] for npc in DesignerConfig.Npc}
 def get_name(s: str) -> str:
     type_, id_str = s.split(':')
+
+    if type_ == 'scene':
+        if not id_str.isdigit():
+            id_str = sceneinfo.scene_id(id_str)
+        scene = text.scene(int(id_str))
+    
     id = int(id_str)
     if type_ == 'npc':
         if id in npc_name_ids:
             id = npc_name_ids[id]
+    if type_ == 'mission':
+        name = story.get_mission_name(id)
+        if name:
+            return name
+        else:
+            return f'Mission {id}'
+    
     return getattr(wiki, type_)(id)
 
 if __name__ == '__main__':

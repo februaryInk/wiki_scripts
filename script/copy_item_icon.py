@@ -3,7 +3,39 @@ from sandrock import *
 from PIL import Image
 
 items = [
-    'Jane\'s Potted Plant'
+    "Patterned Stone Floor",
+    "Old World Tiled Floor",
+    "Ceramic Green Tiled Floor",
+    "Ceramic Red Tiled Floor",
+    "Ceramic Blue Tiled Floor",
+    "Ceramic Brown Tiled Floor",
+    "Faded Brown Tiled Floor",
+    "Light Brick Floor",
+    "Dark Brick Floor",
+    "Brushed Ceramic Floor",
+    "Purple Tiled Floor",
+    "Gray Tiled Floor",
+    "Honeycomb Floor",
+    "Pink Tiled Floor",
+    "Grey Honeycomb Floor",
+    "Turquoise Tiled Floor",
+    "Sandy Floor",
+    "Cubic Floor",
+    "Patterned Brick Floor",
+    "Patterned Paved Floor",
+    "Wavy Brick Floor",
+    "Classic Wood Floor",
+    "Parquet Floor",
+    "Warm Parquet Floor",
+    "Concentric Wood Floor",
+    "Alternating Wood Floor",
+    "Warm Wood Floor",
+    "Supported Wood Floor",
+    "Looped Wood Floor",
+    "Knotted Wood Floor",
+    "Triangular Wood Floor",
+    "Patterned Wood Floor",
+    "Triangular Warm Wood Floor"
 ]
 
 sprite_bundle = Bundle('uisystem_sprite')
@@ -13,6 +45,8 @@ def main() -> None:
     for item in DesignerConfig.ItemPrototype:
         name = wiki.item(item['id'])
         all_names = text.item(item['id'])
+        print(name)
+        print(all_names)
         for target in items:
             if str(target).lower() in all_names.lower():
                 male_icon = item['maleIconPath']

@@ -56,7 +56,7 @@ def update_recycle(results: Results) -> None:
         # Material being recycled.
         if recipe['id'] not in results: continue
 
-        source = ('recycle', f'item:{recipe["id"]}')
+        source = ('recycling', f'item:{recipe["id"]}')
         for group in recipe['backGeneratorIds']:
             update_generator(results, source, group)
 
@@ -91,6 +91,8 @@ def update_ore_refining(results: Results) -> None:
         for gen in recipe['generatorIds']:
             update_generator(results, source, gen)
 
+# TODO: Record the sources of some of these unlockers too. We have research? Group
+# unlocks? Machine unlocks?
 @cache
 def _get_recipe_unlockers() -> dict[int, list[int]]:
     unlockers = defaultdict(list)
