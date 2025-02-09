@@ -42,6 +42,10 @@ _event_names = {
     1800484: 'End Marriage Loop',
 }
 
+_manual_mission_names = {
+    1300041: text(80001007) # In Trusses We Trust, donated gifts
+}
+
 _npc_mission_controllers = {
     'Arvio': 1200107,
     'Grace': 1200133,
@@ -137,6 +141,8 @@ class Mission:
             return text(int(self.root.get('nameId')))
         if self.id in _event_names.keys():
             return _event_names[self.id]
+        if self.id in _manual_mission_names.keys():
+            return _manual_mission_names[self.id]
     
     # NPC you speak to in order to begin the mission?
     @property
@@ -223,6 +229,16 @@ class Mission:
             mail_ids_by_mission_id[mission_id] += mail_ids
         
         return mail_ids_by_mission_id
+    
+    def get_received_gifts(self) -> dict[tuple, list[int]]:
+        gift_ids_by_mission_id = {}
+        for trigger in self.triggers:
+            mission_id, gift_ids = trigger.get_received_gifts()
+            if mission_id not in gift_ids_by_mission_id:
+                gift_ids_by_mission_id[mission_id] = []
+            gift_ids_by_mission_id[mission_id] += gift_ids
+        
+        return gift_ids_by_mission_id
 
     def get_received_item_ids(self) -> list[int]:
         item_ids_by_mission_id = {}
@@ -244,6 +260,12 @@ class Mission:
             items_by_causal_event[causal_event] += items
         
         return items_by_causal_event
+    
+    def get_unlocked_item_ids(self) -> list[int]:
+        item_ids = []
+        for trigger in self.triggers:
+            item_ids += trigger.get_unlocked_item_ids()
+        return item_ids
     
     def get_vars_to_mission_id(self) -> dict[str, int]:
         # All variables are set with `scope="2"`, which seems to mean that they 
