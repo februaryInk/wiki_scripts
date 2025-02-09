@@ -29,6 +29,15 @@ def update_story_script(results: Results) -> None:
             for item_id in item_ids:
                 results[item_id].add(item_causal_event)
         
+        source = ('mission', 'gift', f'mission:{mission_id}')
+        for gift_mission_id, gift_ids in mission.get_received_gifts().items():
+            for gift_id in gift_ids:
+                gift = DesignerConfig.FestivalGift[gift_id]
+                drop_ids = [drop.split('_')[0] for drop in gift['drops'].split(',')]
+
+                for drop_id in drop_ids:
+                    results[int(drop_id)].add(source)
+        
         for mail_mission_id, mail_ids in mission.get_mail_ids().items():
             mail_mission = story.get_mission(mail_mission_id)
             mail_mission_type = 'event' if mail_mission.is_event else 'mission'
@@ -39,13 +48,8 @@ def update_story_script(results: Results) -> None:
                 # This mail isn't directly related to a named mission, as far as
                 # our mission parsing can detect.
                 if mail_mission.is_controller:
-                    title_id = mail['title']
-                    source = ('mail', f'text:{title_id}', f'mail:{mail_id}')
+                    source = ('mail', f'text:{mail['title']}', f'mail:{mail_id}')
                 else:
                     source = (mail_mission_type, 'mail', f'mission:{mail_mission_id}', f'mail:{mail_id}')
                 
-                for attach in mail['attachData']:
-                    # Type 1 is an item.
-                    if attach['type'] == 1:
-                        item_id = attach['data']['id']
-                        results[item_id].add(source)
+                update_mail(results, source, mail_id)

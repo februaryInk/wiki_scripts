@@ -52,11 +52,19 @@ class Stmt:
         return False
     
     @property
+    def is_blueprint_unlock(self) -> bool:
+        return False
+    
+    @property
     def is_conversation_end(self) -> bool:
         return False
     
     @property
     def is_every_day(self) -> bool:
+        return False
+    
+    @property
+    def is_npc_send_gift(self) -> bool:
         return False
     
     @property
@@ -132,6 +140,31 @@ class _StmtBagModify(Stmt):
         # 1200128? Why?
         if self._add_remove == 0 and self._show_tips == 1:
             return True
+
+class _StmtBlueprintUnlock(Stmt):
+    _stmt_matches = [
+        'BLUEPRINT UNLOCK',
+        'BLUEPRINT UNLOCK GROUP'
+    ]
+
+    def extract_properties(self) -> None:
+        self._item_id: int = int(self._stmt.get('id') or '0')
+        self._item_tag: int = int(self._stmt.get('itemTag') or '0')
+        self._show_tips: int = int(self._stmt.get('showTips') or '0')
+    
+    @property
+    def is_blueprint_unlock(self) -> bool:
+        return True
+    
+    @property
+    def item_ids(self) -> list[int]:
+        if self._item_id:
+            return [self._item_id]
+        else:
+            return [item['id'] for item in DesignerConfig.ItemPrototype if self._item_tag in item['itemTag']]
+    
+    def read(self) -> list[str]:
+        return [f'Unlock blueprint {text.item(self._blueprint_id)} with {text.item(self._book_id)}']
 
 class _StmtCheckMissionState(Stmt):
     _stmt_matches = [
@@ -263,6 +296,24 @@ class _StmtActorShowBubble(Stmt):
     
     def read_debug(self) -> list[str]:
         return self._bubble.read_debug()
+
+class _StmtNpcSendGift(Stmt):
+    _stmt_matches = [
+        'ACTION NPC SEND GIFT'
+    ]
+
+    def extract_properties(self) -> None:
+        self._duration_hour: int = int(self._stmt.get('druationHour'))
+        self.gift_id: int        = int(self._stmt.get('giftId'))
+        self.npc: int            = int(self._stmt.get('npc'))
+        self._scene_pos: str     = self._stmt.get('scenePos')
+    
+    @property
+    def is_npc_send_gift(self) -> bool:
+        return True
+    
+    def read(self) -> list[str]:
+        return [f'{text.npc(self._npc_id)} leaves a gift: {self._gift_id}']
 
 # Choice with the given index is made in response to conversation segment with
 # given ID.

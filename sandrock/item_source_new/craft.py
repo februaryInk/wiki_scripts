@@ -5,6 +5,7 @@ Find all the items the player can craft through various means.
 from sandrock.common              import *
 from sandrock.lib.designer_config import DesignerConfig
 from sandrock.lib.text            import text
+from sandrock.structures.story    import Story
 from .common                      import *
 
 # ------------------------------------------------------------------------------
@@ -37,7 +38,9 @@ def update_crafting_stations(results: Results) -> None:
         item_id = recipe['itemId']
         ready = False
         for unlocker in _get_recipe_unlockers()[item_id]:
-            if unlocker in results:
+            # TODO: Temporary workround until we are more robust in finding
+            # blueprint sources.
+            if unlocker in results or unlocker == 'mission':
                 ready = True
         for mat in recipe['rawMaterials']:
             if mat['x'] not in results:
@@ -91,18 +94,20 @@ def update_ore_refining(results: Results) -> None:
         for gen in recipe['generatorIds']:
             update_generator(results, source, gen)
 
-# TODO: Record the sources of some of these unlockers too. We have research? Group
-# unlocks? Machine unlocks?
 @cache
 def _get_recipe_unlockers() -> dict[int, list[int]]:
     unlockers = defaultdict(list)
-    for item in DesignerConfig.ItemPrototype:
-        if 85 in item['itemTag']:
-            # Basic worktable recipes unlocked by 'BLUEPRINT UNLOCK GROUP' script.
-            unlockers[item['id']] = [13000001] # Worktable.
-        if 86 in item['itemTag']:
-            # Basic assembly station recipes unlocked by 'BLUEPRINT UNLOCK GROUP' script.
-            unlockers[item['id']] = [13000004]
+    # for item in DesignerConfig.ItemPrototype:
+    #     if 85 in item['itemTag']:
+    #         # Basic worktable recipes unlocked by 'BLUEPRINT UNLOCK GROUP' script.
+    #         unlockers[item['id']] = [13000001] # Worktable.
+    #     if 86 in item['itemTag']:
+    #         # Basic assembly station recipes unlocked by 'BLUEPRINT UNLOCK GROUP' script.
+    #         unlockers[item['id']] = [13000004]
+    story = Story()
+    for mission_id, mission in story:
+        for item in mission.get_unlocked_item_ids():
+            unlockers[item].append('mission')
     # Unlocked by machine aquisition.
     for machine in DesignerConfig.Machine:
         for product in machine['unlockBlueprintIds']:

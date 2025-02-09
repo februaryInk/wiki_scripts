@@ -25,6 +25,10 @@ def run() -> None:
     story = Story()
     m = story.get_mission(1800306)
     m.get_received_items()
+    print(json.dumps(story.get_mission_names(), indent=2))
+    print_scenes()
+    print_generator_items(11086)
+    print_npc_names()
     # breakpoint()
 
 def read_blueprints() -> None:
@@ -142,6 +146,10 @@ def print_mission_names() -> None:
     story = Story()
     misson_names = story.get_mission_names()
     print(json.dumps(misson_names, indent=2))
+
+def print_npc_names() -> None:
+    for npc in sorted(DesignerConfig.Npc, key=lambda npc: npc['id']):
+        print(f'{npc["id"]}: {text(npc["nameID"])}')
 
 def print_scenes() -> None:
     for scene in sorted(DesignerConfig.Scene, key=lambda item: item['scene']):

@@ -13,6 +13,7 @@ from .common                      import *
 
 def update_designer_configs(results: Results) -> None:
     update_abandoned_ruins(results)
+    update_biography_photos(results)
     update_delivery_services(results)
     update_developer_mails(results)
     update_event_gifts(results)
@@ -25,6 +26,7 @@ def update_designer_configs(results: Results) -> None:
     update_pet_dispatches(results)
     update_sand_racing(results)
     update_sand_skiing(results)
+    update_spouse_cooking(results)
     update_spouse_gifts(results)
     update_stores(results)
 
@@ -61,6 +63,11 @@ def update_abandoned_ruins(results: Results) -> None:
         #     point = resource_points[resource_point['id0']]
         #     update_generator(results, source + ['resource_point'], point['generatorGroup'])
 
+def update_biography_photos(results: Results) -> None:
+    for factory in DesignerConfig.BiographyFactory:
+        source = ('mission', 'biography', f'mission:{factory["startMission"]}')
+        results[factory['photoID']].add(source)
+
 def update_delivery_services(results: Results) -> None:
     for delivery_service in DesignerConfig.PreOrderPoint:
         for choice_id in delivery_service['choices']:
@@ -71,12 +78,25 @@ def update_delivery_services(results: Results) -> None:
 
 def update_developer_mails(results: Results) -> None:
     for market in DesignerConfig.MarketFKData:
-        print(market)
         if market['operation'][0] == 'SendMail':
-            source = ('developer', market['channelName'])
+            mail_id = int(market['operation'][1])
+            mail = DesignerConfig.MailTemplate[mail_id]
+            source = ('mail', f'text:{mail['title']}', f'mail:{mail_id}')
             update_mail(results, source, int(market['operation'][1]))
     
-    # TODO: Check all mail for developer gifts and DLC. Also, KS rewards.
+    for dlc_element in DesignerConfig.DlcElement:
+        if dlc_element['actionType'] == 0: # Send mail.
+            dlc = next((item for item in DesignerConfig.Dlc if item["dlc"] == dlc_element['dlc']), None)
+            # With the exception of the Alienware Package, the DLCs that are 
+            # hidden are Kickstarter rewards.
+            if dlc['alwaysDisplay'] == 1 or dlc['dlc'] == 19:
+                source = ('dlc', f'dlc:{dlc["dlc"]}')
+            else:
+                source = ('kickstarter', f'dlc:{dlc["dlc"]}')
+            
+            for action in dlc_element['actionDatas']:
+                update_mail(results, source, action)
+        
 
 def update_event_gifts(results: Results) -> None:
     festival_gifts = DesignerConfig.FestivalGift
@@ -146,6 +166,12 @@ def update_hazard_ruins(results: Results) -> None:
         for chest in chests:
             update_generator(results, source + ['treasure'], chest['id0'])
 
+def update_machine_upgrades(results: Results) -> None:
+    source = ('machine_upgrade',)
+    for upgrade in DesignerConfig.UpgradableUnitConfig:
+        if upgrade['level'] == 0: continue
+        results[upgrade['id']].add(source)
+
 def update_marriage_mails(results: Results) -> None:
     for npc in DesignerConfig.SocialNpcConfig:
         source = ('npc', 'marry', f'npc:{npc["npcId"]}')
@@ -167,7 +193,7 @@ def update_party_services(results: Results) -> None:
     services = [service for service in DesignerConfig.PartyService if service['iconPath'] == 'I_Party_img_Food_00']
 
     for service in services:
-        source = ('party_food_package', f'service:{service["service"]}')
+        source = ('party', f'service:{service["service"]}')
         num_dishes, dish_ids_str = service['datas']
         dish_ids = [int(dish_id) for dish_id in dish_ids_str.split(',')]
         for dish_id in dish_ids:
@@ -188,6 +214,27 @@ def update_sand_skiing(results: Results) -> None:
         source = ('sand_sledding',)
         for item in prize['dropIdCounts']:
             results[item['id']].add(source)
+
+def update_spouse_cooking(results: Results) -> None:
+    dish_possibilities = DesignerConfig.HomeTaskCookDishConfig
+    for cooking_data in DesignerConfig.HomeTaskCookDataConfig:
+        source = ('npc', 'spouse_cooking', f'npc:{cooking_data["npcId"]}')
+        result_ratio = cooking_data['resaultRatio']
+        bad_result_chance = result_ratio[0]
+        good_result_chance = result_ratio[1]
+        normal_result_chance = result_ratio[2]
+
+        for dish_id in cooking_data['normalDishes']:
+            possibilities = next((item for item in dish_possibilities if item["dishId"] == dish_id), None)
+            if possibilities is None:
+                results[dish_id].add(source)
+            else:
+                if bad_result_chance > 0 and possibilities['badDishId'] > 0:
+                    results[possibilities['badDishId']].add(source)
+                if good_result_chance > 0 and possibilities['goodDishId'] > 0:
+                    results[possibilities['goodDishId']].add(source)
+                if normal_result_chance > 0:
+                    results[possibilities['dishId']].add(source)
 
 def update_spouse_gifts(results: Results) -> None:
     mission_rewards = DesignerConfig.NormalMissionRewards

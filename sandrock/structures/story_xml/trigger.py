@@ -19,13 +19,26 @@ class Trigger:
         self._trigger: ElementTree.Element = trigger
         self._procedure: float             = float(self._trigger.get('procedure'))
         self._step: float                  = float(self._trigger.get('step'))
-        print(mission.id)
         self._structure = {
             'EVENTS': self.eval_stmts(trigger.findall('EVENTS')),
             'CONDITIONS': self.eval_stmts(trigger.findall('CONDITIONS')),
             'ACTIONS': self.eval_stmts(trigger.findall('ACTIONS'))
             # 'RELY' ?
         }
+
+    def get_unlocked_item_ids(self) -> list[int]:
+        unlock_stmts = [stmt for stmt in self._structure['ACTIONS'] if stmt.is_blueprint_unlock]
+        item_ids = sum([stmt.item_ids for stmt in unlock_stmts], [])
+
+        return item_ids
+    
+    def get_received_gifts(self) -> dict[tuple, list[int]]:
+        mission_id = self._mission.id
+        mission_type = 'event' if self._mission.is_event else 'mission'
+        gift_stmts = [stmt for stmt in self._structure['ACTIONS'] if stmt.is_npc_send_gift]
+        gift_ids = [stmt.gift_id for stmt in gift_stmts]
+
+        return (mission_id, gift_ids)
     
     # Sometimes a mission controller handles sending mail after a mission script 
     # is completed.

@@ -213,6 +213,7 @@ pages = {
     ],
     'AssetDlcConfigDlc': [
         ('id', lambda item: item['dlc']),
+        ('dlc', lambda item: text(item['nameId'])),
         'nameId',
         'alwaysDisplay'
     ],

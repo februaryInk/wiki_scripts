@@ -23,13 +23,13 @@ def _get_item_sources() -> dict[int, list[list[str]]]:
     results = defaultdict(set)
     print(json.dumps(results, indent=2))
     print('Analyzing stores, ruins, gifts, and other sources...')
-    # update_designer_configs(results)
+    update_designer_configs(results)
 
     print('Analyzing logging & quarrying...')
-    # update_terrain(results)
+    update_terrain(results)
 
     print('Analyzing gathering, monsters, treasure chests...')
-    # update_scenes(results)
+    update_scenes(results)
 
     print('Analyzing missions...')
     update_missions(results)
@@ -39,7 +39,7 @@ def _get_item_sources() -> dict[int, list[list[str]]]:
     # for crops or bait for fish, so we check them last and repeat until no new
     # accessible items are found.
     prev_total = -1
-    while False: # len(results) > prev_total:
+    while len(results) > prev_total:
         prev_total = len(results)
 
         update_crafting(results)
