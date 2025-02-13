@@ -15,13 +15,15 @@ from .missions         import update_missions
 from .scenes           import update_scenes
 from .terrain          import update_terrain
 
+# ------------------------------------------------------------------------------
+
 def get_item_sources(purge: bool = False) -> dict[int, list[ItemSource]]:
     results = _get_item_sources()
     return results
 
 def _get_item_sources() -> dict[int, list[list[str]]]:
     results = defaultdict(set)
-    print(json.dumps(results, indent=2))
+    
     print('Analyzing stores, ruins, gifts, and other sources...')
     update_designer_configs(results)
 
@@ -46,6 +48,7 @@ def _get_item_sources() -> dict[int, list[list[str]]]:
         update_farming(results)
         update_fishing(results)
         update_containers(results)
+        update_machine_upgrades(results)
     
     return results
 
@@ -55,3 +58,15 @@ def update_containers(results: Results) -> None:
         if container['id'] in results:
             source = ['container', f'item:{container["id"]}']
             update_generator(results, source, container['generatorGroupId'])
+
+def update_machine_upgrades(results: Results) -> None:
+    machines = DesignerConfig.Machine
+    source = ('machine_upgrade',)
+    for machine in machines:
+        if machine['level'] <= 1: continue
+        # Being lazy and not checking if the upgrade materials exist in results.
+        previous_level_machine = next((m for m in machines if m['tag'] == machine['tag'] and m['level'] == machine['level'] - 1), None)
+        if previous_level_machine is None or previous_level_machine['id'] not in results:
+            continue
+        if len(previous_level_machine['upgradeMaterials']) > 0:
+            results[machine['id']].add(source)

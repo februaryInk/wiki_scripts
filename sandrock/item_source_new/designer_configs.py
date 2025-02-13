@@ -14,11 +14,13 @@ from .common                      import *
 def update_designer_configs(results: Results) -> None:
     update_abandoned_ruins(results)
     update_biography_photos(results)
+    update_civil_corps_commissions(results)
     update_delivery_services(results)
     update_developer_mails(results)
     update_event_gifts(results)
     update_guild_ranking_rewards(results)
     update_hazard_ruins(results)
+    update_machine_upgrades(results)
     update_marriage_mails(results)
     update_mort_photos(results)
     update_museum_rewards(results)
@@ -55,6 +57,13 @@ def update_abandoned_ruins(results: Results) -> None:
         for treasure in ruin['treasureData']:
             update_generator(results, source + ['treasure_room'], treasure)
         
+        # The items displayed for each ruin level in the selection screen.
+        for item in ruin['mainDrop']:
+            # Not relics.
+            if item not in DesignerConfig.Restore:
+                item_source = tuple(source + ['main_drop'])
+                results[item].add(item_source)
+        
         # Salvage piles, but there aren't any in abandoned ruins?
         # resource_points = DesignerConfig.ResourcePoint
         # ruin_resource_points = [point['dataAry'] for point in ruin['resourcePoint']]
@@ -67,6 +76,11 @@ def update_biography_photos(results: Results) -> None:
     for factory in DesignerConfig.BiographyFactory:
         source = ('mission', 'biography', f'mission:{factory["startMission"]}')
         results[factory['photoID']].add(source)
+
+def update_civil_corps_commissions(results: Results) -> None:
+    for commission in DesignerConfig.DelegationDataBase:
+        source = ('civil_corps_commission',)
+        update_generator(results, source, commission['rewards'])
 
 def update_delivery_services(results: Results) -> None:
     for delivery_service in DesignerConfig.PreOrderPoint:
@@ -129,16 +143,17 @@ def update_event_gifts(results: Results) -> None:
             relationship_min, relationship_max, _prob, gift_str = gift_data.split(',')
             gifts = [festival_gifts[int(id)] for id in gift_str.split('_')]
 
-            drop_ids = [drop.split('_')[0] for drop in gift['drops'].split(',')]
+            for gift in gifts:
+                drop_ids = [drop.split('_')[0] for drop in gift['drops'].split(',')]
 
-            for drop_id in drop_ids:
-                source = ('npc', 'birthday', f'npc:{gift["npcId"]}')
-                results[int(drop_id)].add(source)
+                for drop_id in drop_ids:
+                    source = ('npc', 'birthday', f'npc:{gift["npcId"]}')
+                    results[int(drop_id)].add(source)
     
     # Day of Bright Sun gifts. See festivals (bundle)/FestivalSendGift (MonoBehavior).
     for i in range(1000, 1101):
         gift = DesignerConfig.FestivalGift[i]
-        source = ('npc', 'day_of_bright_sun', f'npc:{gift["npcId"]}')
+        source = ('day_of_bright_sun',) # ('npc', 'day_of_bright_sun', f'npc:{gift["npcId"]}')
         drop_ids = [drop.split('_')[0] for drop in gift['drops'].split(',')]
 
         for drop_id in drop_ids:
@@ -168,6 +183,8 @@ def update_hazard_ruins(results: Results) -> None:
 
 def update_machine_upgrades(results: Results) -> None:
     source = ('machine_upgrade',)
+    # Construction Junction upgrades. Interface upgrades are evaluated later,
+    # once we know what machines and materials are available.
     for upgrade in DesignerConfig.UpgradableUnitConfig:
         if upgrade['level'] == 0: continue
         results[upgrade['id']].add(source)

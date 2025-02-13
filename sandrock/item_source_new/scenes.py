@@ -19,16 +19,18 @@ def update_scenes(results: Results) -> None:
         behav = read_json(interest['behaviour'])
         if not behav['m_Enabled']:
             continue
+        if interest['type'] == 'MonsterArea_IMap':
+            update_monster(results, interest['scene'], behav)
         if interest['type'] == 'SpawnMono_Point':
             update_monster(results, interest['scene'], behav)
-            print(json.dumps(interest, indent=2))
         if interest['type'] == 'ResourceArea':
             update_resource(results, interest['scene'], behav)
         if interest['type'] == 'SceneItemBox':
             update_treasure(results, interest['scene'], behav)
 
 def update_monster(results: Results, scene: str, behaviour: Any) -> None:
-    monster_id = behaviour['protoId']
+    # protoId for SpawnMono_Point, monsterId for MonsterArea_IMap.
+    monster_id = behaviour.get('protoId', behaviour.get('monsterId'))
     source     = ['monster', f'scene:{scene}', f'monster:{monster_id}']
     monster    = DesignerConfig.Monster.get(monster_id)
     if monster is not None:

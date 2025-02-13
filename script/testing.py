@@ -17,19 +17,27 @@ from pathvalidate import sanitize_filename
 def run() -> None:
     # print_mission(1600391)
     # print_conv_segment(18366)
+    print_conv_segment(4544)
     # print_mission(1600392)
     # builder = ConvBuilder(1)
     # builder.print()
     # print_scenes()
     # print_items_with_item_tag(86)
     story = Story()
-    m = story.get_mission(1800306)
-    m.get_received_items()
+    m = story.get_mission(1100106)
     print(json.dumps(story.get_mission_names(), indent=2))
-    print_scenes()
+    # print_scenes()
     print_generator_items(11086)
-    print_npc_names()
+    print_generator_items(20990037)
+    print('----')
+    print_generator_items(20900021)
+    print_generator_items(13002)
+    print(m.name)
+    print_conv_segment(4544)
+    # print_npc_names()
     # breakpoint()
+
+    # sceneinfo.get_scene_system_name_to_id()
 
 def read_blueprints() -> None:
     blueprints = DesignerConfig.Creation
