@@ -15,6 +15,7 @@ from sandrock.lib.asset import Bundle
 
 _interest_scripts = [
     'DestroyableSceneItemPoint',
+    'MonsterArea_IMap',
     'ResourceArea',
     'SceneItemBox',
     'SpawnMono_Point',

@@ -7,7 +7,7 @@ from sandrock.std import *
 # -- Lua -----------------------------------------------------------------------
 
 default_minimize = True and False
-default_compact_after = 5
+default_compact_after = 4
 
 def lua_dump(value, parent_indent: str, indent: str) -> str:
     if isinstance(value, dict):

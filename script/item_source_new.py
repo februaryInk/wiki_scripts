@@ -21,6 +21,10 @@ Look into:
     - Wedding Candy
     - Civil Corps Medal of Honor
     - Ginger's Diary
+    - Lovely Seashell
+
+Add sources for NPC clothing articles, even though they're not able to be put in 
+the inventory?
 '''
 
 from sandrock                        import *
@@ -32,6 +36,10 @@ from sandrock.item_source_new.main   import get_item_sources
 from sandrock.item_source_new.common import *
 
 # Magnesese ore, shipwreck ruins
+# Civil Corps commissions
+# Tumbleweeds
+# Lovely Seashell is wrong?
+# No boxing jack
 
 # Recipe sources
 #   - Cooking experiment
@@ -62,7 +70,7 @@ _manual_additions = {
     # Party Invitation: Party
     15300007: [('party',)],
     # Portia War Drum: All NPCs
-    18000177: [('npc', 'showdown_at_high_noon', 'text:52005')],
+    18000177: [('showdown_at_high_noon',)],
     # Shiny Scorpion: Sandrock
     19600004: [('gathering', 'scene:3')],
     # Admiral Salt's Well-liked Fringe Group Ensemble: Once More into the Breach
@@ -123,10 +131,15 @@ def format_results(item_sources: dict[int, list[ItemSource]], nominal_sources: d
     for item_id, sources in item_sources.items():
         
         formatted = format_sources(sources, item_id)
+        item_nominal_sources = nominal_sources[item_id]
+        main_sources, secondary_sources = get_main_sources(item_id, formatted, item_nominal_sources)
+
         results[item_id] = {
-            'name':            text.item(item_id),
+            'name':              text.item(item_id),
             # 'nominal_source':  nominal_sources[item_id],
-            'sources':         formatted
+            'mainSources':      main_sources,
+            'secondarySources': secondary_sources,
+            # 'sources':           formatted
         }
     
     return results
@@ -154,6 +167,8 @@ def format_source(formatted: dict, source: ItemSource, item_id: int, sources: li
     ]
 
     no_arg = [
+        'civil_corps_commission',
+        'day_of_bright_sun',
         'default',
         'dlc',
         'farming',
@@ -170,7 +185,8 @@ def format_source(formatted: dict, source: ItemSource, item_id: int, sources: li
         'recycling',
         'salvaging',
         'sand_racing',
-        'sand_sledding'
+        'sand_sledding',
+        'showdown_at_high_noon'
     ]
 
     match source[0]:
@@ -206,7 +222,8 @@ def format_source(formatted: dict, source: ItemSource, item_id: int, sources: li
             add_or_append(formatted, 'ruin_hazard', get_name(source[1]))
         
         case 'mail':
-            add_or_append(formatted, 'mail', get_name(source[1]))
+            mail_id = int(source[2].split(':')[1])
+            add_or_append(formatted, 'mail', [get_name(source[1]), mail_id])
 
         case 'mission':
             add_or_append(formatted, 'mission', get_name(source[2]))
@@ -220,33 +237,31 @@ def format_source(formatted: dict, source: ItemSource, item_id: int, sources: li
         case 'npc':
             event = source[1]
             npc = get_name(source[2])
+            if 'npc' not in formatted:
+                formatted['npc'] = {}
+            formatted_npc = formatted['npc']
 
             match event:
                 case 'birthday':
-                    add_or_append(formatted, 'npc', [npc, 'Birthday Gift'])
+                    add_or_append(formatted_npc, 'birthday', npc)
                 case 'child':
-                    add_or_append(formatted, 'npc', [npc, 'New Child Gift'])
+                    add_or_append(formatted_npc, 'new_child', npc)
                 case 'conversation':
-                    add_or_append(formatted, 'npc', [npc, 'Conversation'])
-                case 'day_of_bright_sun':
-                    add_or_append(formatted, 'npc', [npc, 'Day of the Bright Sun'])
+                    add_or_append(formatted_npc, 'conversation', npc)
                 case 'marry':
-                    add_or_append(formatted, 'npc', [npc, 'Marriage Gift'])
+                    add_or_append(formatted_npc, 'marriage', npc)
                 case 'relationship':
-                    add_or_append(formatted, 'npc', [npc, source[3]])
-                case 'showdown_at_high_noon':
-                    add_or_append(formatted, 'npc', [npc, 'Showdown at High Noon'])
+                    if source[3] == 'Married':
+                        add_or_append(formatted_npc, 'marriage', npc)
+                    else:
+                        raise ValueError(f'Unhandled NPC source {source} with value {source[3]}')
                 case 'wedding':
-                    add_or_append(formatted, 'npc', [npc, 'Wedding Gift'])
+                    add_or_append(formatted_npc, 'wedding', npc)
                 case 'spouse_cooking':
-                    add_or_append(formatted, 'npc', [npc, 'Spouse Cooking'])
+                    add_or_append(formatted_npc, 'spouse_cooking', npc)
                 case 'spouse_gift' | 'spouse_gift_expecting':
-                    translation = {
-                        'spouse_gift': 80031295,
-                        'spouse_gift_expecting': 80031297
-                    }
                     npc = get_npc(sources, source, event)
-                    add_or_append(formatted, 'npc', [npc, text(translation[event])])
+                    add_or_append(formatted_npc, event, npc)
                 case _:
                     raise ValueError(f'Bad NPC source {source}')
 
@@ -261,8 +276,6 @@ def format_source(formatted: dict, source: ItemSource, item_id: int, sources: li
 
         case 'treasure':
             scene = get_name(source[1])
-            if scene == 'Cave' and item_id in [10000105, 11000027]:
-                return
             add_or_append(formatted, 'treasure', scene)
 
         case _:
@@ -283,6 +296,68 @@ def format_unimplemented_items(results: dict[int, dict]) -> list[str]:
     unimplemented = sorted(list(unimplemented))
     unimplemented = {item: True for item in unimplemented}
     return unimplemented
+
+def find_matches(item_id: int, formatted: dict, item_nominal_sources: dict) -> list[str]:
+    formatted_to_nominal = {
+        'event': 'mission',
+        'fang & x': 'clinic',
+        'fishing': 'fishing spots',
+        'game center shop': 'game center',
+        'gathering': 'gather',
+        'guild_ranking': 'workshop ranking',
+        'farming': 'planting',
+        'kicking': 'kick',
+        'logging': 'log',
+        'monster': 'monsters',
+        'ore_refining': 'ore refinery',
+        'quarrying': 'quarry',
+        'treasure': 'treasure chest',
+        'salvaging': 'junk pile',
+    }
+    
+    main_sources = {}
+    for nominal_source in item_nominal_sources:
+        nominal_source_description = nominal_source['description'].lower()
+
+        for key, value in formatted.items():
+            compare = formatted_to_nominal.get(key.lower(), key.lower())
+            if compare == nominal_source_description:
+                main_sources[key] = value
+                continue
+
+            if isinstance(value, list):
+                for item in value:
+                    if isinstance(item, str):
+                        compare = formatted_to_nominal.get(item.lower(), item.lower())
+                        if compare == nominal_source_description:
+                            if main_sources.get(key):
+                                main_sources[key].append(item)
+                            else:
+                                main_sources[key] = [item]
+            
+            if isinstance(value, dict):
+                sub_main_sources = find_matches(item_id, value, item_nominal_sources)
+                if sub_main_sources:
+                    main_sources[key] = sub_main_sources
+    
+    return main_sources
+
+def get_main_sources(item_id: int, formatted: dict, item_nominal_sources: dict) -> list[str]:
+    main_sources = find_matches(item_id, formatted, item_nominal_sources)
+
+    if not main_sources:
+        if len(item_nominal_sources):
+            print(f'No main sources for {item_id} {text.item(item_id)}')
+        main_sources = formatted
+    else:
+        # Stores are important sources; I say we always treat them as main 
+        # sources.
+        if 'store' in formatted:
+            main_sources['store'] = formatted['store']
+    
+    secondary_sources = sources_difference(formatted, main_sources)
+    
+    return (main_sources, secondary_sources)
 
 def get_npc(sources: list[ItemSource], source: tuple, event: str) -> str:
     all_female_spouses = all_spouses_in_source(sources, event, 1)
@@ -331,7 +406,7 @@ def get_name(s: str) -> str:
     if type_ == 'scene':
         if not id_str.isdigit():
             id_str = sceneinfo.scene_id(id_str)
-        scene = text.scene(int(id_str))
+        return text.scene(int(id_str))
     
     id = int(id_str)
     if type_ == 'npc':
@@ -345,6 +420,29 @@ def get_name(s: str) -> str:
             return f'Mission {id}'
     
     return getattr(wiki, type_)(id)
+
+def sources_difference(sources: dict, main_sources: dict) -> dict:
+    result = {}
+    
+    for key, value in sources.items():
+        if key not in main_sources:
+            result[key] = value
+        else:
+            main_value = main_sources[key]
+            if isinstance(value, set):
+                diff = value - main_value
+                if diff:
+                    result[key] = diff
+            elif isinstance(value, list):
+                diff = [item for item in value if item not in main_value]
+                if diff:
+                    result[key] = diff
+            elif isinstance(value, dict):
+                diff = sources_difference(value, main_value)
+                if diff:
+                    result[key] = diff
+    
+    return result
 
 if __name__ == '__main__':
     main()
