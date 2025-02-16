@@ -26,6 +26,7 @@ def update_designer_configs(results: Results) -> None:
     update_museum_rewards(results)
     update_party_services(results)
     update_pet_dispatches(results)
+    update_research(results)
     update_sand_racing(results)
     update_sand_skiing(results)
     update_spouse_cooking(results)
@@ -219,6 +220,13 @@ def update_party_services(results: Results) -> None:
 def update_pet_dispatches(results: Results) -> None:
     for pet in DesignerConfig.PetDispatchConfig:
         update_generator(results, ['pet_dispatch'], pet['itemGroupId'])
+
+def update_research(results: Results) -> None:
+    for research in DesignerConfig.ResearchItem:
+        source = ('research',)
+        blueprint = DesignerConfig.Blueprint[research['blueprintId']]
+        received_book_id = blueprint['bookId']
+        results[received_book_id].add(source)
 
 def update_sand_racing(results: Results) -> None:
     for prize in DesignerConfig.SandCarItem:

@@ -15,10 +15,24 @@ from .missions         import update_missions
 from .scenes           import update_scenes
 from .terrain          import update_terrain
 
+from .unlockers        import update_unlockers
+
 # ------------------------------------------------------------------------------
 
 def get_item_sources(purge: bool = False) -> dict[int, list[ItemSource]]:
     results = _get_item_sources()
+    return results
+
+def get_item_unlockers(purge: bool = False) -> dict[int, list[ItemSource]]:
+    results = _get_item_unlockers()
+    return results
+
+def _get_item_unlockers() -> dict[int, list[list[str]]]:
+    results = defaultdict(set)
+    
+    print('Analyzing unlockers...')
+    update_unlockers(results)
+    
     return results
 
 def _get_item_sources() -> dict[int, list[list[str]]]:

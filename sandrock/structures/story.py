@@ -39,6 +39,7 @@ _event_names = {
     1800354: 'Grandma Vivi\'s Guidance', # Seeking Grandma Vivi's Guidance
     1800373: 'An Unexpected Outcome',
     1800376: "Luna's Invitation",
+    1800398: 'Civil Corps Award Ceremony', # Militia Player Award
     1800484: 'End Marriage Loop',
 }
 
@@ -138,7 +139,8 @@ class Mission:
     def name_native(self) -> str:
         name_id = self.root.get('nameId')
         if name_id and name_id not in ['0', '-1']:
-            return text(int(self.root.get('nameId')))
+            name = text(int(self.root.get('nameId')))
+            if name != '￥not use￥': return name
         if self.id in _event_names.keys():
             return _event_names[self.id]
         if self.id in _manual_mission_names.keys():

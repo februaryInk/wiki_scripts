@@ -135,10 +135,12 @@ class _StmtBagModify(Stmt):
     @property
     def is_receive_item(self) -> bool:
         # If the game isn't letting the player know they got an item, we don't
-        # need to report it as an item source, right? Seems like it replaces
-        # items sometimes, like what is happening with 19810073 in mission 
-        # 1200128? Why?
-        if self._add_remove == 0 and self._show_tips == 1:
+        # need to report it as an item source, right?
+        # Answer: Actually, there are times when this is important, such as when 
+        # a mission is giving the player a recipe book silently in order to 
+        # unlock an item for crafting. There are failsafe items too, like the
+        # Filter Core 19810073 in mission 1200128.
+        if self._add_remove == 0: # and self._show_tips == 1:
             return True
 
 class _StmtBlueprintUnlock(Stmt):
@@ -268,7 +270,7 @@ class _StmtOnEveryDayStart(Stmt):
         return True
 
     def read(self):
-        return 'At the beginning of the day:'
+        return ['At the beginning of the day:']
 
 class _StmtQuiet(Stmt):
     _stmt_matches = [
@@ -431,7 +433,7 @@ class _StmtSetVar(Stmt):
         return self.action == 'Set'
     
     def read(self) -> list[str]:
-        return [f'Set {self._name} to {self._value}']
+        return [f'Set {self.name} to {self.value}']
 
 class _StmtShowConversation(Stmt):
     _stmt_matches = [

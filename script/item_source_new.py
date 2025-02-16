@@ -32,23 +32,12 @@ from sandrock.lib.designer_config    import DesignerConfig
 from sandrock.lib.text               import text
 from sandrock.structures.story       import Story
 
-from sandrock.item_source_new.main   import get_item_sources
+from sandrock.item_source_new.main   import get_item_sources, get_item_unlockers
 from sandrock.item_source_new.common import *
 
-# Magnesese ore, shipwreck ruins
-# Civil Corps commissions
+# Enraged Monsters
+# Scrooge McMole
 # Tumbleweeds
-# Lovely Seashell is wrong?
-# No boxing jack
-
-# Recipe sources
-#   - Cooking experiment
-#   - Research center
-#   - Machine unlocks
-#   - Owen and Mabel
-#   - Scripted unlocks
-#       - BLUEPRINT UNLOCK
-#       - BLUEPRINT UNLOCK GROUP
 
 # ------------------------------------------------------------------------------
 
@@ -69,6 +58,8 @@ _manual_additions = {
     13000016: [('default',)],
     # Party Invitation: Party
     15300007: [('party',)],
+    # Relic Bag: Desires
+    15500003: [('desires',)],
     # Portia War Drum: All NPCs
     18000177: [('showdown_at_high_noon',)],
     # Shiny Scorpion: Sandrock
@@ -79,6 +70,14 @@ _manual_additions = {
     19810016: [('mission', 'script', 'mission:1600122')],
     # The Protector: Pen's Last Words
     19810091: [('mission', 'script', 'mission:1700371')],
+    # Commerce Badge: Commissions
+    19999993: [('commissions',)],
+    # Festival Badge: Festivals
+    19999994: [('festivals',)],
+    # Token: Game Center
+    19999997: [('game_center',)],
+    # Gols: Commissions
+    19999999: [('commissions',)],
 }
 
 _manual_removals = {
@@ -88,9 +87,17 @@ _manual_removals = {
     19810091: [('treasure', 'scene:grace_mission_cave'), ('treasure', 'scene:wild_cave')]
 }
 
+_manual_nominal = {
+    19999993: {'description': 'commissions', 'machines': []},
+    19999994: {'description': 'festivals', 'machines': []},
+    19999995: {'description': 'ruin_hazard', 'machines': []},
+    19999997: {'description': 'game_center', 'machines': []},
+    19999999: {'description': 'commissions', 'machines': []}
+}
+
 def get_nominal_sources() -> dict[int, dict]:
     item_source_data = DesignerConfig.ItemSourceData
-    item_sources = {}
+    possible_sources = {}
     
     for id, source_data in item_source_data.items():
         description_id = source_data['itemFromDesId']
@@ -99,16 +106,24 @@ def get_nominal_sources() -> dict[int, dict]:
         description_name = text(description_id)
         machine_names = [text.item(machine_id) for machine_id in machine_ids]
 
-        item_sources[id] = {
+        possible_sources[id] = {
             'description': description_name,
             'machines': machine_names
         }
     
-    return {item_id: [item_sources[source_id] for source_id in item_data['itemFromTypes']] for item_id, item_data in item_prototypes.items()}
+    item_sources = {}
+    for item_id, item_data in item_prototypes.items():
+        nominal_sources = [possible_sources[source_id] for source_id in item_data['itemFromTypes']]
+        if item_id in _manual_nominal:
+            nominal_sources.append(_manual_nominal[item_id])
+        item_sources[item_id] = nominal_sources
+    
+    return item_sources
 
 def main() -> None:
-    nominal_sources = get_nominal_sources()
-    item_sources    = get_item_sources()
+    nominal_sources  = get_nominal_sources()
+    item_sources     = get_item_sources()
+    unlocker_sources = get_item_unlockers()
 
     for item_id, sources in _manual_additions.items():
         item_sources[item_id].update(sources)
@@ -116,21 +131,34 @@ def main() -> None:
     for item_id, sources in _manual_removals.items():
         item_sources[item_id].difference_update(sources)
 
-    results = format_results(item_sources, nominal_sources)
+    results = format_results(item_sources, nominal_sources, unlocker_sources)
     results = dict(sorted(results.items()))
+    output = {
+        'version': config.version,
+        'name': 'AssetItemSource',
+        'key': 'ItemSource',
+        'configList': results
+    }
 
     unimplemented = format_unimplemented_items(results)
 
-    write_lua(config.output_dir / 'lua/AssetItemSource.lua', results)
+    write_lua(config.output_dir / 'lua/AssetItemSource.lua', output)
     write_lua(config.output_dir / 'lua/AssetItemUnimplemented.lua', unimplemented)
 
 # -- Preparing Results ---------------------------------------------------------
 
-def format_results(item_sources: dict[int, list[ItemSource]], nominal_sources: dict[int, dict]) -> dict[int, dict]:
+def format_results(
+        item_sources: dict[int, list[ItemSource]], 
+        nominal_sources: dict[int, dict], 
+        unlocker_sources:  dict[int, list[ItemSource]]
+    ) -> dict[int, dict]:
+    formatted_sources = {item_id: format_sources(sources) for item_id, sources in item_sources.items()}
+    formatted_unlockers = {item_id: format_unlockers(sources, item_sources) for item_id, sources in unlocker_sources.items()}
+
     results = {}
-    for item_id, sources in item_sources.items():
+    for item_id in item_sources.keys():
         
-        formatted = format_sources(sources, item_id)
+        formatted = formatted_sources[item_id]
         item_nominal_sources = nominal_sources[item_id]
         main_sources, secondary_sources = get_main_sources(item_id, formatted, item_nominal_sources)
 
@@ -139,19 +167,64 @@ def format_results(item_sources: dict[int, list[ItemSource]], nominal_sources: d
             # 'nominal_source':  nominal_sources[item_id],
             'mainSources':      main_sources,
             'secondarySources': secondary_sources,
+            'recipeSources':    formatted_unlockers.get(item_id, {}),
             # 'sources':           formatted
         }
     
     return results
+
+def format_unlockers(sources: list[ItemSource], item_sources: dict[int, list[ItemSource]]) -> dict:
+    no_arg = [
+        'cooking_experimentation',
+    ]
+
+    with_book_sources = set()
+    for source in sources:
+        if source[0] == 'recipe_book':
+            book_id = source[1]
+            book_sources = item_sources.get(book_id)
+            if book_sources:
+                # good_book_sources = [source for source in book_sources if source[0] != 'machine']
+                if (len(sources) + len(book_sources)) > 2:
+                    formatted_book_sources = format_sources(book_sources)
+                    print(f'--- {text.item(book_id)} ---')
+                    print(f'Item learned with: {sources}')
+                    print(f'Raw book sources: {book_sources}')
+                    print(f'Formatted book sources: {formatted_book_sources}')
+                    print('\n')
+                with_book_sources.update(book_sources)
+            #else:
+             #   print(f'No sources for {text.item(book_id)}')
+        else:
+            with_book_sources.add(source)
+
+    formatted = {}
+    for source in with_book_sources:
+        match source[0]:
+            case s if s in no_arg:
+                formatted[s] = True
+            
+            case 'machine_acquired':
+                add_or_append(formatted, 'machine_acquired', get_name(source[1]))
+            
+            case 'share_recipe':
+                npcs = [get_name(npc) for npc in source[1]]
+                for npc in npcs:
+                    add_or_append(formatted, 'share_recipe', npc)
+
+            case _:
+                format_source(formatted, source, with_book_sources)
     
-def format_sources(sources: list[ItemSource], item_id: int) -> list[dict]:
+    return formatted
+    
+def format_sources(sources: list[ItemSource]) -> list[dict]:
     formatted = {}
     for source in sources:
-        format_source(formatted, source, item_id, sources)
+        format_source(formatted, source, sources)
     
     return formatted
 
-def format_source(formatted: dict, source: ItemSource, item_id: int, sources: list[ItemSource]) -> None:
+def format_source(formatted: dict, source: ItemSource, sources: list[ItemSource]) -> None:
     assembly_stations = [
         None,
         'Assembly Station',
@@ -168,11 +241,15 @@ def format_source(formatted: dict, source: ItemSource, item_id: int, sources: li
 
     no_arg = [
         'civil_corps_commission',
+        'commissions',
         'day_of_bright_sun',
         'default',
+        'desires',
         'dlc',
         'farming',
+        'festivals',
         'fishing',
+        'game_center',
         'guild_ranking',
         'kicking',
         'kickstarter',
@@ -183,6 +260,7 @@ def format_source(formatted: dict, source: ItemSource, item_id: int, sources: li
         'pet_dispatch',
         'quarrying',
         'recycling',
+        'research',
         'salvaging',
         'sand_racing',
         'sand_sledding',
@@ -270,6 +348,9 @@ def format_source(formatted: dict, source: ItemSource, item_id: int, sources: li
 
         case 'relic':
             add_or_append(formatted, 'crafting', 'Relic Restoration Machine')
+        
+        case 'scene':
+            add_or_append(formatted, 'scene', get_name(source[1]))
 
         case 'store':
             add_or_append(formatted, 'store', get_name(source[1]))
@@ -279,7 +360,6 @@ def format_source(formatted: dict, source: ItemSource, item_id: int, sources: li
             add_or_append(formatted, 'treasure', scene)
 
         case _:
-            breakpoint()
             raise ValueError(f'Bad item source {source}')
 
 def format_unimplemented_items(results: dict[int, dict]) -> list[str]:
@@ -322,8 +402,16 @@ def find_matches(item_id: int, formatted: dict, item_nominal_sources: dict) -> l
         for key, value in formatted.items():
             compare = formatted_to_nominal.get(key.lower(), key.lower())
             if compare == nominal_source_description:
-                main_sources[key] = value
-                continue
+                if compare == 'mission':
+                    good_missions = [value for value in value if not re.fullmatch(r"Mission \d+", value)]
+                    if len(good_missions) > 0:
+                        main_sources[key] = good_missions
+                    else:
+                        main_sources[key] = value
+                    continue
+                else:
+                    main_sources[key] = value
+                    continue
 
             if isinstance(value, list):
                 for item in value:
@@ -346,8 +434,8 @@ def get_main_sources(item_id: int, formatted: dict, item_nominal_sources: dict) 
     main_sources = find_matches(item_id, formatted, item_nominal_sources)
 
     if not main_sources:
-        if len(item_nominal_sources):
-            print(f'No main sources for {item_id} {text.item(item_id)}')
+        # if len(item_nominal_sources):
+        #     print(f'No main sources for {item_id} {text.item(item_id)}')
         main_sources = formatted
     else:
         # Stores are important sources; I say we always treat them as main 
@@ -367,9 +455,9 @@ def get_npc(sources: list[ItemSource], source: tuple, event: str) -> str:
     if all_spouses:
         npc = 'all spouses'
     elif all_female_spouses:
-        npc = 'all female spouses'
+        npc = 'female spouses'
     elif all_male_spouses:
-        npc = 'all male spouses'
+        npc = 'male spouses'
     else:
         npc = get_name(source[2])
     
