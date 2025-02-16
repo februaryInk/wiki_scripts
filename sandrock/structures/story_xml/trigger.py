@@ -107,7 +107,7 @@ class Trigger:
     
     def get_item_id_by_mission_id(self) -> tuple[int, list[int]]:
         mission_id = self._mission.id
-        item_stmts = [stmt for stmt in self._structure['ACTIONS'] if stmt.is_give_item]
+        item_stmts = [stmt for stmt in self._structure['ACTIONS'] if stmt.is_receive_item]
 
         if len(item_stmts) == 0: return (mission_id, [])
 

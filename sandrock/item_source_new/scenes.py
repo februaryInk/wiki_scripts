@@ -1,10 +1,11 @@
 '''
 Search scenes for monster spawn points, resource areas, and treasure chests.
 Some of this information can be discovered from the designer configs, but we go 
-to the trouble of pursing the scenes in order to discover what has actually been 
-implemented and what is just in the configs.
+to the trouble of parsing the scenes in order to discover what has actually been 
+implemented versus what is just in the configs.
 '''
 
+from sandrock.lib.sceneinfo                import sceneinfo
 from sandrock.common              import *
 from sandrock.lib.designer_config import DesignerConfig
 from sandrock.preproc             import get_interest_points, get_catchable_resource_points
@@ -27,10 +28,16 @@ def update_scenes(results: Results) -> None:
             update_resource(results, interest['scene'], behav)
         if interest['type'] == 'SceneItemBox':
             update_treasure(results, interest['scene'], behav)
+        if interest['type'] == 'VoxelSpawnerMarkHub':
+            update_voxel(results, interest['scene'], behav)
 
 def update_monster(results: Results, scene: str, behaviour: Any) -> None:
     # protoId for SpawnMono_Point, monsterId for MonsterArea_IMap.
     monster_id = behaviour.get('protoId', behaviour.get('monsterId'))
+    # TODO: This is the first fight against Logan, but it's impossible to 
+    # actually defeat him, so I do not believe he has any drops? Yet his monster 
+    # data has the same drop table as the caretaker.
+    if monster_id == 5044: return
     source     = ['monster', f'scene:{scene}', f'monster:{monster_id}']
     monster    = DesignerConfig.Monster.get(monster_id)
     if monster is not None:
@@ -65,8 +72,26 @@ def update_resource(results: Results, scene: str, behaviour: Any) -> None:
             update_generator(results, source, group)
 
 def update_treasure(results: Results, scene: str, behaviour: Any) -> None:
-    source = ['treasure', f'scene:{scene}']
+    source = ['treasure', f'scene:{scene}', f'generator:{behaviour["generatorId"]}']
     update_generator(results, source, behaviour['generatorId'])
+
+_voxel_types = {voxel['type']: voxel for voxel in DesignerConfig.VoxelTypeInfo}
+_static_scene_spawners = {scene['scene']: scene for scene in DesignerConfig.StaticSceneSpawner}
+_translate = {
+    'BaseVoxel': 'baseVoxel',
+}
+def update_voxel(results: Results, scene: str, behaviour: Any) -> None:
+    scene_id = sceneinfo.scene_id(scene)
+    source = ('scene', f'scene:{scene_id}', 'mining')
+    type_tag = _translate.get(behaviour['typeTag'], behaviour['typeTag'])
+    scene_voxel_data = _static_scene_spawners.get(scene_id, {})
+
+    if not scene_voxel_data: return
+
+    for type_weight in scene_voxel_data[type_tag].split(','):
+        type_id = int(type_weight.split('_')[0])
+        voxel = _voxel_types[type_id]
+        update_generator(results, source, voxel['itemDropId'])
 
 @cache
 def _load_catchable(key: str) -> dict | None:

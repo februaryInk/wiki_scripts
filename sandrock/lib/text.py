@@ -60,7 +60,10 @@ class _TextEngine:
     def npc(cls, id_: int) -> str:
         if id_ == 8000:
             return 'Player'
-        return cls._designer_config_text('Npc', id_, 'nameID')
+        if id_ in DesignerConfig.Npc:
+            return cls._designer_config_text('Npc', id_, 'nameID')
+        else:
+            return cls.text(id_)
 
     #@classmethod
     #def resource(cls, id_):

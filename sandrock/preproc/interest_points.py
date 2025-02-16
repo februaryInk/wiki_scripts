@@ -19,6 +19,7 @@ _interest_scripts = [
     'ResourceArea',
     'SceneItemBox',
     'SpawnMono_Point',
+    'VoxelSpawnerMarkHub',
 ]
 
 def _find_scene_interests(scene_path: PathLike) -> list[InterestPoint]:
