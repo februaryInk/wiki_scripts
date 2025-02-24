@@ -1,12 +1,16 @@
+'''
+Types and helper functions for cataloging item source.
+'''
+
+from sandrock.common              import *
+from sandrock.lib.designer_config import DesignerConfig
+
 __all__ = [
     'ItemSource',
     'Results',
     'update_generator',
-    'update_mail',
+    'update_mail'
 ]
-
-from sandrock.common import *
-from sandrock.lib.designer_config import DesignerConfig
 
 ItemSource: TypeAlias = tuple[str] | tuple[str, str] | tuple[str, str, str] | tuple[str, str, str, str]
 Results: TypeAlias = dict[int, list[ItemSource]]

@@ -44,7 +44,8 @@ _event_names = {
 }
 
 _manual_mission_names = {
-    1300041: text(80001007) # In Trusses We Trust, donated gifts
+    1300041: text(80001007), # In Trusses We Trust, donated gifts
+    1500403: text(80031199) # The Girl with the Umbrella, Ginger's Diary Easter egg
 }
 
 _npc_mission_controllers = {
@@ -59,6 +60,7 @@ _npc_mission_controllers = {
 _general_mission_controllers = {
     1200127: 'Nia and Mom\'s Letters',
     1200128: 'Mission Failure Follow-up',
+    1200364: 'Side Mission Controller (Chapter 3)',
 }
 
 def _recursive_unquote(element: ElementTree.Element) -> None:
