@@ -188,6 +188,9 @@ pages = {
         'treasureItem',
         'treasureData'
     ],
+    'AssetActorProtoActor': [
+        'id',
+    ],
     'AssetAttrGeneratorConfigGenerator_Attr': [
         'id',
         ('attrType', lambda item: attr_types[item['attrType']]),
@@ -210,6 +213,24 @@ pages = {
         ('disableTrying', lambda item: str(item['disableTrying'] == 1)),
         ('cookingType', lambda item: cooking_types[item['cookingType']]),
         ('materials', lambda item: {i + 1: mat for i, mat in enumerate(item['materials'])})
+    ],
+    'AssetCreationConfigCreation': [
+        'id',
+        'itemId',
+        'nameId',
+        'descriptionId',
+        'makeTime',
+        'fromMachineLevel',
+        ('partIds', lambda item: {i + 1: part for i, part in enumerate(item['partIds'])}),
+        ('page', lambda item: {i + 1: page for i, page in enumerate(item['page'])}),
+        'handbookPriority',
+        'rewardExp',
+        'rewardProficiencyExp',
+        'creationType'
+    ],
+    'AssetCreationPartConfigCreationPart': [
+        'id',
+        'material'
     ],
     'AssetDlcConfigDlc': [
         ('id', lambda item: item['dlc']),
@@ -327,10 +348,18 @@ pages = {
         'dashAttachCpCost',
         'dashAttackIDs'
     ],
+    'AssetMonsterProtoConfigMonster': [
+        'id',
+        'nameId',
+        ('name', lambda item: text(item['nameId'])),
+        'dropDatas',
+        'monsterType'
+    ],
     'AssetNpcProtoDataNpc': [
         'id',
         'templetID',
         'nameID',
+        ('name', lambda item: text(item['nameID'])),
         'identityID',
         'birthday',
         'homeScene',
@@ -338,6 +367,13 @@ pages = {
         'height',
         'weight',
         'backgrounds'
+    ],
+    'AssetNpcRandomProtoDataRandomNPCData': [
+        'id',
+        'instanceIds',
+        'initLevel',
+        'nameRange',
+        ('names', lambda item: [text(name_id) for name_id in range(item['nameRange']['x'], item['nameRange']['y'] + 1)]),
     ],
     'AssetReadingConfigReadingBook': [
         'id',

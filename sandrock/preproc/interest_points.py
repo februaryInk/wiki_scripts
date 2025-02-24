@@ -15,10 +15,12 @@ from sandrock.lib.asset import Bundle
 
 _interest_scripts = [
     'DestroyableSceneItemPoint',
-    'MonsterArea_IMap',
+    'MonsterArea_IMap', # Wrong? Is this just a map icon?
+    'MonsterMarkSpawnerExecutor',
     'ResourceArea',
     'SceneItemBox',
     'SpawnMono_Point',
+    'TumbleweedArea', # TODO
     'VoxelSpawnerMarkHub',
 ]
 

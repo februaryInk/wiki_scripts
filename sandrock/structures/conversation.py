@@ -34,12 +34,6 @@ conversational branch.
   ['T1', 'S1', 'S2', 'T3', 'S6', 'S7', 'S8', 'T8',       'S9']
 ]
 
-- Start from the last talk.
-- Branches with similar endings can only merge at a common ancestor. Lift the common elements to the ancestor for printing.
-- Branches with similar endings can only merge at a common ancestor. Lift the common elements to the ancestor for printing.
-- Common elements can only occur at the end of a ConvTalk, or as the entire ConvTalk.
-- How do you determine the "True" ending of a conversation, as opposed to a branch that terminates the conversation early?
-
 When the conversation encounters a choice, look for the nearest shared future common segments that all end in either another choice, or all end in a terminal segment.
 If a branch terminates without sharing any such common segments with other branches, then it is removed from the running for checks at the next choice.
 If an option leads to a terminating next talk while other branches are longer, the player probably turned something down. The other branch(es) are the important ones.
@@ -227,6 +221,8 @@ class ConvSegment:
     def identifier(self) -> str:
         if len(self.conv_option_content_ids):
             return f'ChoiceSegment|{self.id}'
+        if self.is_terminal:
+            return f'TerminalSegment|{self.id}'
         return f'Segment|{self.id}'
     
     @property
@@ -266,13 +262,13 @@ class ConvSegment:
         
         if self.conv_parent:
             assert isinstance(self.conv_parent, ConvTalk)
-            # assert self.id == self.conv_parent.segment_ids[-1]
+            assert self.id == self.conv_parent.segment_ids[-1]
             
             talk_ids = self.conv_parent.next_talk_ids
         else:
             talk_ids = [-1] * len(self.conv_option_content_ids)
         
-        # assert len(talk_ids) == len(self.conv_option_content_ids)
+        assert len(talk_ids) == len(self.conv_option_content_ids)
         # TODO: Combine options with a single result.
         return [_ConvOption(content_id, talk_id, index, self._parent_stack + [self]) for index, (content_id, talk_id) in enumerate(zip(self.conv_option_content_ids, talk_ids))]
     
@@ -302,20 +298,20 @@ class ConvSegment:
     def return_stack(self):
         if len(self._parent_stack) and isinstance(self._parent_stack[0], ConvBuilder):
             builder = self._parent_stack[0]
-            builder.add_stack([conv.identifier for conv in self._parent_stack + [self]])
+            builder.add_stack(self._parent_stack + [self])
     
     def print(self) -> None:
         print('\n'.join(self.read()))
 
 class ConvTalk:
     def __init__(self, id, parent_stack: list[Any] = []):
-        self.id: int                        = id
-        self._data: dict                    = _conv_talks[self.id]
+        self.id: int                                                   = id
+        self._data: dict                                               = _conv_talks[self.id]
         self._parent_stack: list[ConvTalk | ConvSegment | _ConvOption] = parent_stack
-        self._stack = self._parent_stack + [self]
+        self._stack                                                    = self._parent_stack + [self]
 
-        self.stacks = []
         self.segments = []
+
         self.parse()
 
     @property
@@ -367,9 +363,13 @@ class ConvTalk:
 
 class ConvBuilder:
     def __init__(self, entry_talk_id: int):
-        self._entry_talk_id: int = entry_talk_id
-        self._stack: list[ConvBuilder] = [self]
-        self._stacks: list[str] = []
+        self._entry_talk_id: int                                       = entry_talk_id
+        self._stack: list[ConvBuilder]                                 = [self]
+        self._stacks: list[list[ConvSegment | _ConvOption | ConvTalk]] = []
+        self._identifier_stacks: list[str]                             = []
+
+        self._common_series = []
+        self._common_series_counts = {}
 
         self.build()
 
@@ -381,10 +381,14 @@ class ConvBuilder:
             'talks': {}
         }
 
-        print(json.dumps(self._stacks, indent=2))
+        print(json.dumps(self._identifier_stacks, indent=2))
 
-        self.find_common_series()
-        self.count_common_series()
+        # self.find_common_series()
+        # self.count_common_series()
+    
+    @property
+    def common_series(self) -> list[ConvSegment]:
+        return [ConvSegment(id, [], self._stack) for id in self.segment_ids]
     
     @property
     def identifier(self) -> str:
@@ -392,16 +396,15 @@ class ConvBuilder:
     
     def add_stack(self, stack) -> None:
         self._stacks.append(stack)
+        self._identifier_stacks.append([item.identifier for item in stack])
     
     def build(self) -> None:
         self._entry_talk = ConvTalk(self._entry_talk_id, self._stack)
     
-    @property
-    def common_series(self) -> list[ConvSegment]:
-        return [ConvSegment(id, [], self._stack) for id in self.segment_ids]
-    
+    # Count how many times each common series appears in the stacks so we can
+    # print it only the last time we encounter it.
     def count_common_series(self) -> None:
-        stacks = self._stacks
+        stacks = self._identifier_stacks
         counts = {}
         for series in self._common_series:
             count = sum(1 for stack in stacks if is_subarray(series, stack))
@@ -409,7 +412,7 @@ class ConvBuilder:
         self._common_series_counts = counts
     
     def find_common_series(self) -> None:
-        stacks = self._stacks
+        stacks = self._identifier_stacks
         common_series = []
         while True:
             first_convergence = find_first_convergence(stacks)
@@ -430,10 +433,15 @@ class ConvBuilder:
         self._common_series = common_series
 
     def read(self) -> list[str]:
-        pass
+        lines = []
+        option_segment_identifiers = set(sum((conv.conv_options for conv in self._entry_talk.segments), []))
+
+        for common_series in self._common_series:
+            i = 0
+            converged_stacks = []
 
     def print(self) -> None:
-        # print(json.dumps(self._stacks, indent=2))
+        # print(json.dumps(self._identifier_stacks, indent=2))
         print(json.dumps(self._common_series, indent=2))
 
 def find_common_series(stacks: list[list[str]], convergence: str) -> list[str]:
@@ -458,7 +466,7 @@ def find_common_series(stacks: list[list[str]], convergence: str) -> list[str]:
 def find_first_convergence(stacks: list[list[str]]) -> str:
     choice_segment_stacks = []
     for stack in stacks:
-        choice_segment_stacks.append([item for item in stack if item.startswith('ChoiceSegment')])
+        choice_segment_stacks.append([item for item in stack if item.startswith('ChoiceSegment') or item.startswith('TerminalSegment')])
     print(choice_segment_stacks)
     max_stack_length = max(len(stack) for stack in choice_segment_stacks)
 

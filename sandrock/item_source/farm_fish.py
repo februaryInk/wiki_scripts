@@ -1,15 +1,18 @@
-from sandrock.common import *
+'''Check the source of farming and fishing products.'''
+
+from sandrock.common              import *
 from sandrock.lib.designer_config import DesignerConfig
-from .common import *
+from .common                      import *
 
 def update_farming(results: Results) -> None:
     for crop in DesignerConfig.PlantConfig:
         seed_id = crop['ID']
-        if seed_id in results:
-            source = ['farming', f'item:{seed_id}']
-            groups = crop['dropDestroyIds'] + [crop['harvestId']]
-            for group in groups:
-                update_generator(results, source, group)
+        if seed_id not in results: continue
+        
+        source = ['farming', f'item:{seed_id}']
+        groups = crop['dropDestroyIds'] + [crop['harvestId']]
+        for group in groups:
+            update_generator(results, source, group)
 
 def update_fishing(results: Results) -> None:
     for pond in DesignerConfig.FishpondInfos:
@@ -19,8 +22,8 @@ def update_fishing(results: Results) -> None:
             results[item_id].add(source)
 
         for bait_id in pond['validBaitIds']:
-            if bait_id not in results:
-                continue
+            if bait_id not in results: continue
+
             source = ('fishing', 'bait', f'item:{bait_id}')
             for bait in DesignerConfig.BaitInfos:
                 if bait['itemId'] != bait_id:

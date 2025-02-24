@@ -9,6 +9,7 @@ from sandrock.lib.text import load_text
 from sandrock.preproc  import get_config_paths
 from sandrock.structures.conversation import *
 from sandrock.structures.story import *
+from sandrock.preproc             import get_interest_points
 
 from pathvalidate import sanitize_filename
 
@@ -17,27 +18,64 @@ from pathvalidate import sanitize_filename
 def run() -> None:
     # print_mission(1600391)
     # print_conv_segment(18366)
-    print_conv_segment(4544)
-    # print_mission(1600392)
-    # builder = ConvBuilder(1)
-    # builder.print()
-    # print_scenes()
-    # print_items_with_item_tag(86)
+    # print_conv_segment(4544)
+    # # print_mission(1600392)
+    print_scenes()
+    # # print_items_with_item_tag(86)
     story = Story()
-    m = story.get_mission(1100106)
-    print(json.dumps(story.get_mission_names(), indent=2))
-    # print_scenes()
-    print_generator_items(11086)
-    print_generator_items(20990037)
-    print('----')
-    print_generator_items(20900021)
-    print_generator_items(13002)
-    print(m.name)
-    print_conv_segment(4544)
-    # print_npc_names()
-    # breakpoint()
+    # # # m = story.get_mission(1100106)
+    # print(json.dumps(story.get_mission_names(), indent=2))
+    # # # print_scenes()
+    # # print_generator_items(11086)
+    # # print_generator_items(20990037)
+    # # print('----')
+    # # print_generator_items(20900021)
+    # # print_generator_items(13002)
+    # # print_generator_items(20900034)
+    # # print_generator_items(12030)
+    # print_conv_segment(1708)
+    # m = story.get_mission(1800398)
+    # m.print()   
+    # m = story.get_mission(1500403)
+    # m.print()
+    # # print_npc_names()
+    # print_items_with_item_tag(1122)
+
+    # TODO: Loops infinitely; fix it.
+    # builder = ConvBuilder(13)
+    # builder.print()
+
+    # items = [
+    #     19600014,
+    #     16200004,
+    #     16300000,
+    #     19800039
+    #   ]
+    
+    # for item in items:
+    #     print(f'{item}: {text.item(item)}')
 
     # sceneinfo.get_scene_system_name_to_id()
+    print_generator_items(12501)
+    print_generator_items(20800000)
+
+
+def print_monster_spawns() -> None:
+    monsters = DesignerConfig.Monster
+    count = 0
+
+    for interest in get_interest_points():
+        behav = read_json(interest['behaviour'])
+        if interest['type'] == 'MonsterMarkSpawnerExecutor':
+            count += 1
+            for info in behav['spawnerMonsterInfos']:
+                monster = monsters[info['protoId']]
+                min_level = info['level']['x']
+                max_level = info['level']['y']
+                print(f'{text(monster["nameId"])}, {min_level}-{max_level}')
+    print(f'We have {count} MonsterMarkSpawnerExecutor interests')
+
+
 
 def read_blueprints() -> None:
     blueprints = DesignerConfig.Creation
