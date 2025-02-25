@@ -33,6 +33,7 @@ def run() -> None:
     # # print_generator_items(13002)
     # # print_generator_items(20900034)
     # # print_generator_items(12030)
+    print_generator_items(15105)
     # print_conv_segment(1708)
     # m = story.get_mission(1800398)
     # m.print()   
@@ -42,8 +43,8 @@ def run() -> None:
     # print_items_with_item_tag(1122)
 
     # TODO: Loops infinitely; fix it.
-    # builder = ConvBuilder(13)
-    # builder.print()
+    builder = ConvBuilder(13)
+    builder.print()
 
     # items = [
     #     19600014,
@@ -56,8 +57,6 @@ def run() -> None:
     #     print(f'{item}: {text.item(item)}')
 
     # sceneinfo.get_scene_system_name_to_id()
-    print_generator_items(12501)
-    print_generator_items(20800000)
 
 
 def print_monster_spawns() -> None:
