@@ -380,6 +380,17 @@ pages = {
         'bookId',
         'translateId'
     ],
+    'AssetRecycleConfigRecycle': [
+        'id',
+        'backCountPercent',
+        'backGeneratorIds',
+        ('itemResultDes', lambda item: {i + 1: des for i, des in enumerate(item['itemResultDes'])}),
+        'costMinutes',
+        'machineLevel',
+        'orderId',
+        'exp',
+        'proficiencyExp'
+    ],
     'AssetRefineConfigRefine': [
         'id',
         'matsGradeUp',

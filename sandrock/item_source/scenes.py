@@ -67,7 +67,7 @@ def update_resource(results: Results, scene: str, behaviour: Any) -> None:
             catch_groups = [group for group in catch_groups if group]
             if catch_groups:
                 groups = catch_groups
-
+                
         for group in groups:
             update_generator(results, source, group)
 

@@ -180,7 +180,7 @@ def merge_points(points):
 
     return ret
 
-@cache
+# @cache
 def get_gathering_points():
     catchables = get_catchable_resource_points()
     interests = get_interest_points()
@@ -194,8 +194,12 @@ def get_gathering_points():
             continue
 
         behav = read_json(interest['behaviour'])
-        trans = read_json(interest['transform'])
+        trans = read_asset_dump(interest['transform'])
         scene_area = read_json(interest['scene_area'])
+
+        if not behav or not trans or not scene_area:
+            print(f'Skipping {interest}')
+            continue
 
         positions = []
         for pos_rot in scene_area['points']:
@@ -212,13 +216,12 @@ def get_gathering_points():
             res = DesignerConfig.ResourcePoint.get(res_config['id'])
             if res is None:
                 continue
-
             if res['prefabModel'] in catchables:
                 continue
-
             if res['showNameID'] == 0:
                 continue
-
+            # Herbs with Cactus Flower fails this check.
+            # if res_config['id'] == 3037: print('Sad')
             if behav['maxCount'] == 0:
                 continue
 

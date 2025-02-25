@@ -43,7 +43,15 @@ def read_json(Path: PathLike) -> Any: ...
 @overload
 def read_json(Path: PathLike, json_type: Type[T]) -> T: ...
 def read_json(path, json_type=None):
-    with open(path, encoding='utf-8') as f:
+    if not Path(path).exists():
+        print(f"Warning: File '{path}' does not exist.")
+        return None
+    
+    if Path(path).stat().st_size == 0:
+        print(f"Warning: File '{path}' is empty.")
+        return None 
+
+    with open(path, encoding="utf-8") as f:
         return json.load(f)
 
 # Sort dictionary by its keys.
