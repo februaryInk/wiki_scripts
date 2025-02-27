@@ -235,7 +235,7 @@ class ConvSegment:
     @property
     def is_terminal(self) -> str:
         if self.conv_parent:
-            assert isinstance(self.conv_parent, ConvTalk)
+            assert isinstance(self.conv_parent, ConvTalk) or isinstance(self.conv_parent, _ConvTalkMimic)
             talk_ids = self.conv_parent.next_talk_ids
             if self.id == self.conv_parent.segment_ids[-1] and not any(x != -1 for x in talk_ids):
                 return True
@@ -253,7 +253,7 @@ class ConvSegment:
     def conv_parent(self) -> ConvTalk:
         # print([item.identifier for item in self._parent_stack])
         for item in reversed(self._parent_stack):
-            if isinstance(item, ConvTalk):
+            if isinstance(item, ConvTalk) or isinstance(item, _ConvTalkMimic):
                 return item
     
     @property
@@ -272,7 +272,10 @@ class ConvSegment:
         if self.conv_parent:
             print(self.conv_parent.identifier)
             print(self.conv_parent.next_talk_ids)
-            assert isinstance(self.conv_parent, ConvTalk)
+            print(f'Parent class: {self.conv_parent.__class__}')
+            print(f'Parent segment ids: {self.conv_parent.segment_ids}')
+            print(f'Current segment id: {self.id}')
+            assert isinstance(self.conv_parent, ConvTalk) or isinstance(self.conv_parent, _ConvTalkMimic)
             assert self.id == self.conv_parent.segment_ids[-1]
             
             talk_ids = self.conv_parent.next_talk_ids
@@ -283,17 +286,35 @@ class ConvSegment:
         # TODO: Combine options with a single result.
         return [_ConvOption(content_id, talk_id, index, self._parent_stack + [self]) for index, (content_id, talk_id) in enumerate(zip(self.conv_option_content_ids, talk_ids))]
     
+    def get_next_talk(self) -> ConvTalk:
+        if self.conv_parent and not len(self.conv_option_content_ids) and self.id == self.conv_parent.segment_ids[-1]:
+            print(self.conv_parent.identifier)
+            print(self.conv_parent.next_talk_ids)
+            assert len(self.conv_parent.next_talk_ids) == 1
+            next_talk_id = self.conv_parent.next_talk_ids[0]
+            if next_talk_id != -1:
+                return ConvTalk(next_talk_id, self._parent_stack)
+        
+        return None
+    
     def parse(self) -> None:
         self.conv_options = self.get_conv_options()
+        self.next_talk    = self.get_next_talk()
+
         if self.is_terminal:
+            assert not self.conv_options
+            assert not self.next_talk
             self.return_stack()
     
     def read_up_to(self, identifier: str, next_talk_ids_list: list[list]) -> list[str]:
+        lines = ['', self.identifier, '']
         if self.identifier == identifier:
             return []
         
-        lines = [self._line]
+        lines += [self._line]
         if self.conv_options:
+            assert not self.next_talk
+
             lines.append('')
             for option in self.conv_options:
                 line = option.line
@@ -306,6 +327,10 @@ class ConvSegment:
             lines.append('')
             for option in self.conv_options:
                 lines += option.read_response_talk_up_to(identifier, next_talk_ids_list)
+        
+        if self.next_talk:
+            lines += self.next_talk.read_up_to(identifier, next_talk_ids_list)
+
         return lines
 
     
@@ -373,11 +398,12 @@ class ConvTalk:
     
     def get_segments(self) -> list[ConvSegment]:
         segments = []
-        print(self.segment_ids)
+        
         for id in self.segment_ids:
             segment = ConvSegment(id, self._stack)
             segments.append(segment)
             self._stack.append(segment)
+        
         return segments
     
     def parse(self) -> None:
@@ -401,6 +427,22 @@ class ConvTalk:
     def print(self) -> None:
         print('\n'.join(self.read()))
 
+class _ConvTalkMimic:
+    def __init__(self, next_talk_ids: list[int]):
+        self.next_talk_ids = next_talk_ids
+        self.segment_ids = []
+    
+    @property
+    def identifier(self) -> str:
+        return 'TalkMimic|'
+    
+    @property
+    def is_branch(self) -> bool:
+        return False
+    
+    def set_segment_ids(self, segment_ids: list[int]) -> None:
+        self.segment_ids = segment_ids
+
 class ConvBuilder:
     def __init__(self, entry_talk_id: int):
         self._entry_talk_id: int                                       = entry_talk_id
@@ -412,19 +454,7 @@ class ConvBuilder:
         self._common_series_counts = {}
 
         self.build()
-
-        # Can't do this; different parent stacks make components unique by more
-        # than id.
-        self._components = {
-            'options': {},
-            'segments': {},
-            'talks': {}
-        }
-
-        print(json.dumps(self._identifier_stacks, indent=2))
-
         self.find_common_series()
-        # self.count_common_series()
     
     @property
     def common_series(self) -> list[ConvSegment]:
@@ -441,16 +471,6 @@ class ConvBuilder:
     def build(self) -> None:
         self._entry_talk = ConvTalk(self._entry_talk_id, self._stack)
     
-    # Count how many times each common series appears in the stacks so we can
-    # print it only the last time we encounter it.
-    def count_common_series(self) -> None:
-        stacks = self._identifier_stacks
-        counts = {}
-        for series in self._common_series:
-            count = sum(1 for stack in stacks if is_subarray(series, stack))
-            counts[series] = count
-        self._common_series_counts = counts
-    
     def find_common_series(self) -> None:
         stacks = self._identifier_stacks
         common_series = []
@@ -459,8 +479,7 @@ class ConvBuilder:
             first_convergence = find_first_convergence(stacks)
             if not first_convergence: break
 
-            print("First convergence:")
-            print(first_convergence)
+            # print(f'First convergence: {first_convergence}')
 
             common_series.append(find_common_elements(stacks, first_convergence))
             
@@ -480,11 +499,11 @@ class ConvBuilder:
 
     def read(self) -> list[str]:
         lines = []
+        talk = None
+
         assert self._common_series[0][0] == self.identifier
 
         for i, series in enumerate(self._common_series):
-            talk = None
-            
             for j, identifier in enumerate(series):
                 type, id = identifier.split('|', 1)
                 
@@ -493,34 +512,42 @@ class ConvBuilder:
                         assert i == 0 and j == 0
                         continue
                     case 'ChoiceSegment':
-                        if talk:
-                            print(talk.identifier)
+                        assert j == len(series) - 1
+                        if talk: print(talk.identifier)
+                        if isinstance(talk, _ConvTalkMimic):
+                            talk.set_segment_ids([int(id)])
                         segment = ConvSegment(int(id), [talk])
                         next_talk_ids_list = []
                         next_common = self._common_series[i + 1][0] if i + 1 < len(self._common_series) else None
                         # Is it beneficial to consider all common segments rather than only the next?
+                        # lines += ['', f'!!! Yielding control to the choice segment {identifier}. !!!', '']
                         lines += segment.read_up_to(next_common, next_talk_ids_list)
                         print(next_talk_ids_list)
-                        assert len(set(next_talk_ids_list)) < 2
+                        assert len(list(map(list, {tuple(i) for i in next_talk_ids_list}))) < 2
+                        if len(next_talk_ids_list):
+                            talk = _ConvTalkMimic(next_talk_ids_list[0])
+                        else:
+                            talk = _ConvTalkMimic([])
                     case 'Segment':
                         segment = ConvSegment(int(id))
                         lines += segment.read()
                     case 'Talk':
-                        assert talk is None
                         talk = ConvTalk(int(id))
                     case 'TerminalSegment':
                         segment = ConvSegment(int(id))
                         lines += segment.read()
                         lines += ['The conversation ends.']
                     case _:
-                        raise ValueError(f'Unhandled identifier type: {type}')
+                        raise ValueError(f'Unhandled identifier {identifier}')
         
         return lines
 
     def print(self) -> None:
-        # print(json.dumps(self._identifier_stacks, indent=2))
-        print(json.dumps(self._common_series, indent=2))
         print('\n'.join(self.read()))
+
+    def print_debug(self) -> None:
+        print(json.dumps(self._identifier_stacks, indent=2))
+        print(json.dumps(self._common_series, indent=2))
 
 # Get the common elements that lead up to a convergence point.
 def find_common_elements(stacks: list[list[str]], convergence: str) -> list[str]:
@@ -543,41 +570,46 @@ def find_common_elements(stacks: list[list[str]], convergence: str) -> list[str]
     return common_series[::-1]
 
 def find_first_convergence(stacks: list[list[str]]) -> str:
+    if len(stacks) == 0: return None
+    
     choice_segment_stacks = []
+    # print(stacks)
     for stack in stacks:
         choice_segment_stacks.append([item for item in stack if item.startswith('ChoiceSegment') or item.startswith('TerminalSegment')])
     # print(choice_segment_stacks)
     max_stack_length = max(len(stack) for stack in choice_segment_stacks)
 
-    # print("Max stack length:")
-    # print(range(max_stack_length))
+    print(f'Max stack length: {range(max_stack_length)}')
 
     sub_elements = []
     for i in range(max_stack_length):
         sub_stacks = [stack[:(i + 1)] for stack in choice_segment_stacks]
 
         # print("Sub stacks:")
-        # print(sub_stacks)
+        # print(json.dumps(sub_stacks, indent=2))
 
         for j in range(i + 1):
             for sub_stack in sub_stacks:
                 if j < len(sub_stack) and sub_stack[j] not in sub_elements:
                     sub_elements.append(sub_stack[j])
         
-        print("Sub elements:")
-        print(sub_elements)
+        # print("Sub elements:")
+        # print(sub_elements)
         
         for element in sub_elements:
             if all(element in sub_stack for sub_stack in sub_stacks):
-                print("Returning element:")
-                print(element)
+                # print("Returning element:")
+                # print(element)
                 return element
 
-    choice_segment_stacks_count = len(choice_segment_stacks)   
-    for element in sub_elements:
-        stacks_with_element_count = sum(1 for stack in choice_segment_stacks if element in stack)
-        if stacks_with_element_count > choice_segment_stacks_count / 2.0:
-            return element
+    # For now, only pick up convergence points that are shared by all 
+    # stacks. TODO: Should we consider a significant majority? If yes, we
+    # need to discard stacks that never reconverge.
+    # choice_segment_stacks_count = len(choice_segment_stacks)   
+    # for element in sub_elements:
+    #     stacks_with_element_count = sum(1 for stack in choice_segment_stacks if element in stack)
+    #     if stacks_with_element_count > choice_segment_stacks_count * 0.75:
+    #         return element
         
 def is_subarray(subarray, array):
     n, m = len(array), len(subarray)

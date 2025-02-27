@@ -20,9 +20,9 @@ def run() -> None:
     # print_conv_segment(18366)
     # print_conv_segment(4544)
     # # print_mission(1600392)
-    print_scenes()
+    # print_scenes()
     # # print_items_with_item_tag(86)
-    story = Story()
+    # story = Story()
     # # # m = story.get_mission(1100106)
     # print(json.dumps(story.get_mission_names(), indent=2))
     # # # print_scenes()
@@ -33,7 +33,7 @@ def run() -> None:
     # # print_generator_items(13002)
     # # print_generator_items(20900034)
     # # print_generator_items(12030)
-    print_generator_items(15105)
+    # print_generator_items(15105)
     # print_conv_segment(1708)
     # m = story.get_mission(1800398)
     # m.print()   
@@ -42,9 +42,10 @@ def run() -> None:
     # # print_npc_names()
     # print_items_with_item_tag(1122)
 
-    # TODO: Loops infinitely; fix it.
-    builder = ConvBuilder(13)
+    builder = ConvBuilder(5109)
     builder.print()
+
+    # print_conv_segment(1470)
 
     # items = [
     #     19600014,
