@@ -22,7 +22,7 @@ def run() -> None:
     # # print_mission(1600392)
     # print_scenes()
     # # print_items_with_item_tag(86)
-    # story = Story()
+    print_mission_names()
     # # # m = story.get_mission(1100106)
     # print(json.dumps(story.get_mission_names(), indent=2))
     # # # print_scenes()
@@ -42,8 +42,12 @@ def run() -> None:
     # # print_npc_names()
     # print_items_with_item_tag(1122)
 
-    builder = ConvBuilder(5109)
-    builder.print()
+    story = Story()
+    m = story.get_mission(1800502)
+    m.print()
+
+    # builder = ConvBuilder(5109)
+    # builder.print()
 
     # print_conv_segment(1470)
 
