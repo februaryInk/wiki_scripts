@@ -10,11 +10,6 @@ CHECK MISSION CURRENT STATE: state - 1 = not started, 2 = in progress, 3 = compl
 Seems like: Increase var by 1 6 days in a row.
 <TRIGGER name="%E5%A6%AE%E9%9B%85%E5%A4%A9%E6%95%B0" repeat="6" procedure="2" step="1">
 <STMT stmt="SET VAR" scope="2" name="NIASEED" set="1" value="1" identity="" />
-
-Compare:
-    2: >=
-    3: ==
-    6: != ?
 '''
 
 from __future__ import annotations
@@ -24,6 +19,22 @@ from sandrock.lib.asset               import Asset
 from sandrock.structures.conversation import *
 
 import urllib.parse
+
+# -- Private -------------------------------------------------------------------
+
+_compare_map = {
+    2: '>=',
+    3: '==',
+    6: '!=' # Maybe?
+}
+
+# Is Type or Option the important part?
+_intractive_map = {
+}
+
+_weather_map = {
+    1: 'Rainy',
+}
 
 # -- STMT Class ----------------------------------------------------------------
 
@@ -43,7 +54,8 @@ class Stmt:
         val = stmt.get('stmt')
         return val in cls._stmt_matches
 
-    def __init__(self, stmt: ElementTree.Element):
+    def __init__(self, stmt: ElementTree.Element, mission):
+        self._mission = mission
         self._stmt: ElementTree.Element = stmt
         self.extract_properties()
     
@@ -56,7 +68,19 @@ class Stmt:
         return False
     
     @property
+    def is_conversation_choice_made(self) -> bool:
+        return False
+    
+    @property
     def is_conversation_end(self) -> bool:
+        return False
+    
+    @property
+    def is_conversation_start(self) -> bool:
+        return False
+    
+    @property
+    def is_conversation_segment_end(self) -> bool:
         return False
     
     @property
@@ -64,7 +88,15 @@ class Stmt:
         return False
     
     @property
+    def is_npc_change_favor(self) -> bool:
+        return False
+    
+    @property
     def is_npc_send_gift(self) -> bool:
+        return False
+    
+    @property
+    def is_quiet(self) -> bool:
         return False
     
     @property
@@ -97,13 +129,24 @@ class Stmt:
     
     def extract_properties(self) -> None:
         pass
-    
-    def read(self) -> list[str]:
-        return self.read_debug()
-    
-    def read_debug(self) -> list[str]:
+
+    def read_default(self) -> list[str]:
         attribs = ' | '.join([f'{k}: {v}' for k, v in self._stmt.attrib.items() if k not in ['identity', 'stmt']])
         return [f'{self.stmt} || {attribs}']
+    
+    # Override.
+    def read(self) -> list[str]:
+        return self.read_default()
+    
+    # Do not override.
+    def read_debug(self) -> list[str]:
+        default = self.read_default()
+        actual  = self.read()
+
+        if actual == default:
+            return default
+        else:
+            return default + [''] + actual
 
 # -- STMT Types ----------------------------------------------------------------
 
@@ -127,9 +170,9 @@ class _StmtBagModify(Stmt):
 
     def extract_properties(self) -> None:
         self._add_remove: int = int(self._stmt.get('addRemove', '0'))
-        self._count: int      = int(self._stmt.get('count') or self._stmt.get('itemCount'))
+        self.count: int       = int(self._stmt.get('count') or self._stmt.get('itemCount'))
         self._item_grade: int = int(self._stmt.get('itemGrade'))
-        self.item_id: int    = int(self._stmt.get('item') or self._stmt.get('itemId'))
+        self.item_id: int     = int(self._stmt.get('item') or self._stmt.get('itemId'))
         self._show_tips: int  = int(self._stmt.get('showTips') or self._stmt.get('itemShowTip'))
     
     @property
@@ -194,6 +237,19 @@ class _StmtCheckMissionState(Stmt):
     @property
     def is_successfully_completed(self) -> bool:
         return self._state == 3 and self._flag == 1
+    
+    @property
+    def mission_name(self) -> str:
+        return self._mission.story.get_mission_name(self.mission_id)
+    
+    def read(self) -> list[str]:
+        if self.is_successfully_completed:
+            return [f'{self.mission_name} is successfully completed']
+        elif self.is_failed:
+            return [f'{self.mission_name} has failed']
+        else:
+            return [f'{self.mission_name} is in state {self._state} with flag {self._flag}']
+
 
 class _StmtCheckNpcRelationship(Stmt):
     _stmt_matches = [
@@ -235,6 +291,15 @@ class _StmtCheckVar(Stmt):
         self._ref: str     = self._stmt.get('ref')
     
     @property
+    def compare(self) -> str:
+        compare_map = {
+            2: '>=',
+            3: '==',
+            6: '!='
+        }
+        return compare_map[self._compare]
+    
+    @property
     def is_check_var(self) -> bool:
         return True
     
@@ -257,8 +322,53 @@ class _StmtMissionProgress(Stmt):
     def extract_properties(self) -> None:
         self._mission_id: int = self._stmt.get('missionId')
 
-    def read_debug(self) -> list[str]:
+    def read(self) -> list[str]:
         return [f'{self.stmt} {self._mission_id}']
+
+class _StmtNpcAddIdle(Stmt):
+    _stmt_matches = [
+        'NPC ADD IDLE',
+        'NPC ADD IDLE 2',
+    ]
+
+    def extract_properties(self) -> None:
+        self._flag_name: str      = self._stmt.get('flagName')
+        self._look_at_npc_id: int = int(self._stmt.get('lookAtActor', '-1'))
+        self._npc_id: int         = int(self._stmt.get('npc'))
+        self._order: int          = int(self._stmt.get('order', '-1'))
+        self._scene_name: str     = self._stmt.get('sceneName')
+    
+    @property
+    def look_at_npc(self) -> str:
+        if self._look_at_npc_id > 0:
+            return text.npc(self._look_at_npc_id)
+    
+    def read(self) -> list[str]:
+        line = f'{text.npc(self._npc_id)} idles in {self._scene_name}'
+        if self.look_at_npc:
+            line += f' and looks at {self.look_at_npc}'
+        
+        return [line]
+
+class _StmtNpcChangeFavor(Stmt):
+    _stmt_matches = [
+        'NPC CHANGE FAVOR'
+    ]
+
+    def extract_properties(self) -> None:
+        self.favor: int   = int(self._stmt.get('changeFavor'))
+        self.npc_id: int = int(self._stmt.get('npc'))
+    
+    @property
+    def is_npc_change_favor(self) -> bool:
+        return True
+    
+    @property
+    def npc(self) -> str:
+        return text.npc(self.npc_id)
+    
+    def read(self) -> list[str]:
+        return [f'{self.npc} gains {self.favor} favor']
 
 class _StmtOnEveryDayStart(Stmt):
     _stmt_matches = [
@@ -277,10 +387,14 @@ class _StmtQuiet(Stmt):
         'CAMERA NATURAL SET',
         'CAMERA PATH START',
         'CAMERA PATH STOP',
-        'NPC REMOVE IDLE'
+        'NPC CREATE SET POS ROT FLAG'
     ]
 
-    def read_debug(self) -> list[str]:
+    @property
+    def is_quiet(self) -> bool:
+        return True
+
+    def read(self) -> list[str]:
         return []
     
 class _StmtActorShowBubble(Stmt):
@@ -295,9 +409,6 @@ class _StmtActorShowBubble(Stmt):
     
     def read(self) -> list[str]:
         return ['In a speech bubble:'] + self._bubble.read()
-    
-    def read_debug(self) -> list[str]:
-        return self._bubble.read_debug()
 
 class _StmtNpcSendGift(Stmt):
     _stmt_matches = [
@@ -318,28 +429,36 @@ class _StmtNpcSendGift(Stmt):
         return [f'{text.npc(self._npc_id)} leaves a gift: {self._gift_id}']
 
 # Choice with the given index is made in response to conversation segment with
-# given ID.
+# given ID, during conversation with given cId.
 class _StmtOnConversationChoiceMade(Stmt):
     _stmt_matches = [
         'ON CONVERSATION CHOICE MADE'
     ]
 
     def extract_properties(self) -> None:
-        # cId?
-        self._conv_choice_index = self._stmt.get('selectIndex')
-        self._conv_segment_id = self._stmt.get('id')
+        self._c_id: int         = int(self._stmt.get('cId'))
+        self.conv_choice_index = self._stmt.get('selectIndex')
+        self.conv_segment_id   = self._stmt.get('id')
     
-    def read_debug(self) -> list[str]:
-        return [f'{self.stmt} for ConvSegment {self._conv_segment_id}: {self._conv_choice_index}']
+    @property
+    def is_conversation_choice_made(self) -> bool:
+        return True
+    
+    @property
+    def option_id(self) -> str:
+        return f'{self.conv_segment_id}_{self.conv_choice_index}'
+    
+    def read(self) -> list[str]:
+        return [f'{self.stmt} for ConvSegment {self.conv_segment_id}: {self.conv_choice_index}']
 
-# Conversation in previous step finishes, regardless of outcome.
+# Conversation with cId finishes, regardless of outcome.
 class _StmtOnConversationEnd(Stmt):
     _stmt_matches = [
         'ON CONVERSATION END'
     ]
 
     def extract_properties(self) -> None:
-        self._cId: int       = int(self._stmt.get('cId'))
+        self.c_id: int       = int(self._stmt.get('cId'))
         self.mission_id: int = int(self._stmt.get('missionId'))
         self.npc: int        = int(self._stmt.get('npc'))
         self._order: int     = int(self._stmt.get('order'))
@@ -357,8 +476,8 @@ class _StmtOnConversationEndSegment(Stmt):
     ]
 
     def extract_properties(self) -> None:
-        self._cId: int        = int(self._stmt.get('cId'))
-        self._id: int         = int(self._stmt.get('id'))
+        self.c_id: int        = int(self._stmt.get('cId'))
+        self.segment_id: int  = int(self._stmt.get('id'))
         self._mission_id: int = int(self._stmt.get('missionId'))
         self.npc: int         = int(self._stmt.get('npc'))
         self._order: int      = int(self._stmt.get('order'))
@@ -367,8 +486,12 @@ class _StmtOnConversationEndSegment(Stmt):
     def is_conversation_end(self) -> bool:
         return True
     
+    @property
+    def is_conversation_segment_end(self) -> bool:
+        return True
+    
     def read(self) -> list[str]:
-        return [f'After ConvSegment {self._id} ends:']
+        return [f'After ConvSegment {self.segment_id} ends:']
 
 class _StmtOnInteractWithNpc(Stmt):
     _stmt_matches = [
@@ -394,6 +517,20 @@ class _StmtOnPlayerWakeUp(Stmt):
     def read(self) -> list[str]:
         return ['When the player wakes up:']
 
+class _StmtOnSceneChange(Stmt):
+    _stmt_matches = [
+        'ON SCENE CHANGE END',
+        'ON SCENE CHANGE POST',
+        'ON SCENE CHANGE START',
+    ]
+
+    def extract_properties(self) -> None:
+        self._from_scene = self._stmt.get('fromScene')
+        self._to_scene   = self._stmt.get('toScene')
+    
+    def read(self) -> list[str]:
+        return [f'When the player moves from {self._from_scene} to the {self._to_scene}:']
+
 class _StmtSendMail(Stmt):
     _stmt_matches = [
         'MAIL SEND TO BOX'
@@ -406,6 +543,9 @@ class _StmtSendMail(Stmt):
     def is_mail_delivery(self) -> bool:
         return True
 
+    def read(self) -> list[str]:
+        return ['The player receives a letter:', f'{{{{mail|{self.mail_id}}}}}']
+
 class _StmtSetVar(Stmt):
     _stmt_matches = [
         'SET VAR'
@@ -415,7 +555,7 @@ class _StmtSetVar(Stmt):
         self.name: str   = self._stmt.get('name')
         self._scope: int = int(self._stmt.get('scope'))
         self._set: int   = int(self._stmt.get('set'))
-        self.value: int = int(self._stmt.get('value'))
+        self.value: int  = int(self._stmt.get('value'))
     
     @property
     def action(self) -> str:
@@ -433,36 +573,56 @@ class _StmtSetVar(Stmt):
         return self.action == 'Set'
     
     def read(self) -> list[str]:
-        return [f'Set {self.name} to {self.value}']
+        return [f'{self.action} {self.name} to {self.value}']
 
 class _StmtShowConversation(Stmt):
     _stmt_matches = [
         'SHOW CONVERSATION',
         'SHOW CONVERSATION CACHED'
     ]
+
+    @property
+    def is_conversation_start(self) -> bool:
+        return True
     
-    def build_conversation(self, id_str: str) -> ConvSegment | ConvTalk:
-        print(self._dialogue_ids)
+    def build_conversation(self, id_str: str) -> ConvSegment | ConvBuilder:
         if '_' in id_str:
             id = int(id_str.split('_', 1)[0])
-            return ConvTalk(id)
+            return ConvBuilder(id, self._mission.get_conversation_modifiers())
         else:
             return ConvSegment(int(id_str))
     
     def extract_properties(self) -> None:
+        self.c_id: int                = int(self._stmt.get('cId'))
         self._dialogue_ids: list[str] = self._stmt.get('dialog').split(',')
-        self._conversation: list[ConvSegment | ConvTalk] = []
+        self._conversation: list[ConvSegment | ConvBuilder] = []
 
     def read(self) -> list[str]:
         self._conversation = [self.build_conversation(id_str) for id_str in self._dialogue_ids]
-        lines = []
+        lines              = []
+
         for conv in self._conversation:
             lines += conv.read()
+
         return lines
+
+class _StmtStartInteractive(Stmt):
+    _stmt_matches = [
+        'START INTERACTIVE'
+    ]
+
+    def extract_properties(self) -> None:
+        self._inst_id: int  = int(self._stmt.get('instId'))
+        self._npc_id: int   = int(self._stmt.get('protoId'))
+        self.option_id: int = int(self._stmt.get('optionId'))
+        self.type: int      = int(self._stmt.get('type'))
     
-    def read_debug(self):
-        self._conversation = [self.build_conversation(id_str) for id_str in self._dialogue_ids]
-        return [f'{self.stmt} {", ".join([str(conv.id) for conv in self._conversation])}']
+    @property
+    def npc(self) -> str:
+        return text.npc(self._npc_id)
+    
+    def read(self) -> list[str]:
+        return [f'The player interacts (type {self.type}, option {self.option_id}) with {self.npc}']
 
 class _StmtUpdateMissionInfo(Stmt):
     _stmt_matches = [
@@ -484,7 +644,7 @@ class _StmtUpdateMissionInfo(Stmt):
 
     @property
     def npc(self) -> str:
-        if self._npc != 0:
+        if self._npc > 0:
             return text.npc(self._npc)
         
     @property
@@ -501,7 +661,13 @@ class _StmtUpdateMissionInfo(Stmt):
         return text(self._title)
     
     def read(self) -> list[str]:
-        lines = ['{{mission_details', f'|desc = {self.description}', f'|details = {self.title}']
+        lines = [
+            f'==={self.title}===',
+            '',
+            '{{mission_details', 
+            f'|desc = {self.description}', 
+            f'|details = {self.title}'
+        ]
         if self._type == 1:
             for item_name, count in self.required:
                 lines += [f'*{{{{i2|{item_name}|0/{count}}}}}']

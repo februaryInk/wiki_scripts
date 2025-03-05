@@ -14,10 +14,13 @@ if TYPE_CHECKING:
 # ------------------------------------------------------------------------------
 
 class Trigger:
-    def __init__(self, trigger: ElementTree.Element, mission: Mission):
+    def __init__(self, trigger: ElementTree.Element, order: int, mission: Mission):
         self._mission: Mission             = mission
+        self.order: int                    = order
         self._trigger: ElementTree.Element = trigger
-        self._procedure: float             = float(self._trigger.get('procedure'))
+
+        self.procedure: float              = float(self._trigger.get('procedure'))
+        self._repeat: int                  = int(self._trigger.get('repeat'))
         self._step: float                  = float(self._trigger.get('step'))
         self._structure = {
             'EVENTS': self.eval_stmts(trigger.findall('EVENTS')),
@@ -25,6 +28,57 @@ class Trigger:
             'ACTIONS': self.eval_stmts(trigger.findall('ACTIONS'))
             # 'RELY' ?
         }
+    
+    @property
+    def is_quiet(self) -> bool:
+        return all(action.is_quiet for action in self._structure['ACTIONS'])
+    
+    @property
+    def ended_conversation_c_id(self) -> int:
+        conversations = []
+
+        for event in self._structure['EVENTS']:
+            if event.is_conversation_end:
+                conversations.append(event.c_id)
+        
+        return conversations[0] if len(conversations) > 0 else None
+    
+    @property
+    def started_conversation_c_id(self) -> int:
+        conversations = []
+
+        for action in self._structure['ACTIONS']:
+            if action.is_conversation_start:
+                conversations.append(action.c_id)
+        
+        assert len(conversations) <= 1
+        return conversations[0] if len(conversations) > 0 else None
+    
+    def get_conversation_modifiers(self) -> dict[str, list[str]]:
+        modifiers = {
+            'option': {},
+            'segment': {}
+        }
+
+        for event in self._structure['EVENTS']:
+            if event.is_conversation_segment_end:
+                self.add_modifiers(modifiers, 'segment', str(event.segment_id))
+            if event.is_conversation_choice_made:
+                self.add_modifiers(modifiers, 'option', event.option_id)
+
+        return modifiers
+    
+    def add_modifiers(self, modifiers: dict[str, list[str]], type: str, id: str):
+        for action in self._structure['ACTIONS']:
+            if action.is_npc_change_favor:
+                if modifiers[type].get(id) is None:
+                    modifiers[type][id] = set()
+                modifiers[type][id].add(('npc_favor', action.npc_id, action.favor))
+            if action.is_receive_item:
+                if modifiers[type].get(id) is None:
+                    modifiers[type][id] = set()
+                modifiers[type][id].add(('item', action.item_id, action.count))
+                
 
     def get_unlocked_item_ids(self) -> list[int]:
         unlock_stmts = [stmt for stmt in self._structure['ACTIONS'] if stmt.is_blueprint_unlock]
@@ -114,7 +168,7 @@ class Trigger:
         if self._mission.is_controller:
             for stmt in self._structure['CONDITIONS']:
                 if stmt.is_check_mission_state and stmt.is_successfully_completed:
-                    assert mission_id == self._mission.id, f'Item source is ambiguous: Mission {self._mission.id}, Procedure {self._procedure}, Step {self._step}'
+                    assert mission_id == self._mission.id, f'Item source is ambiguous: Mission {self._mission.id}, Procedure {self.procedure}, Step {self._step}'
                     mission_id = stmt.mission_id
         
         return (mission_id, [stmt.item_id for stmt in item_stmts])
@@ -128,7 +182,7 @@ class Trigger:
         if self._mission.is_controller:
             for stmt in self._structure['CONDITIONS']:
                 if stmt.is_check_mission_state and stmt.is_successfully_completed:
-                    assert mission_id == self._mission.id, f'Var source is ambiguous: Mission {self._mission.id}, Procedure {self._procedure}, Step {self._step}'
+                    assert mission_id == self._mission.id, f'Var source is ambiguous: Mission {self._mission.id}, Procedure {self.procedure}, Step {self._step}'
                     mission_id = stmt.mission_id
         
         return (mission_id, [stmt.name for stmt in var_stmts])
@@ -143,12 +197,13 @@ class Trigger:
         
         for stmt in element.iter('STMT'):
             stmt_class = Stmt.find_stmt_class(stmt)
-            stmts.append(stmt_class(stmt))
+            stmts.append(stmt_class(stmt, self._mission))
         
         return stmts
     
     def read(self) -> list[str]:
-        lines = [f'TRIGGER Step {self._step}']
+        lines = [f'TRIGGER Procedure {self.procedure} Step {self._step} Order {self.order} Repeat {self._repeat}']
+        lines += ['------------------------------------------------------------']
         for key, stmts in self._structure.items():
             lines += [key]
             for stmt in stmts:

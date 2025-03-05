@@ -78,6 +78,7 @@ class Mission:
         self.story: Story              = story 
         self.root: ElementTree.Element = asset.read_xml()
         self._content : dict           = None
+        self._conversation_modifiers: dict = None
         self._vars_to_mission_id       = None
 
         _recursive_unquote(self.root)
@@ -165,6 +166,39 @@ class Mission:
     @property
     def properties(self):
         return self.root.get('properties').split('|')
+    
+    @property
+    def rewards_data(self) -> list[str]:
+        if not hasattr(self, '_rewards_data'):
+            self._rewards_data = next(
+                (entry for entry in DesignerConfig.MissionRewards if entry.get('missionId') == self.id),
+                {}
+            )
+
+        return self._rewards_data
+    
+    @property
+    def rewards_exp(self) -> int:
+        exp = self.rewards_data.get('exp', 0)
+        return exp if exp else None
+    
+    @property
+    def rewards_favor_list(self) -> list[dict[str, int]]:
+        return self.rewards_data.get('favorList', [])
+    
+    @property
+    def rewards_gols(self) -> int:
+        gols = self.rewards_data.get('money', 0)
+        return gols if gols else None
+    
+    @property
+    def rewards_item_list(self) -> list[dict[str, int]]:
+        return self.rewards_data.get('itemList', [])
+    
+    @property
+    def rewards_reputation(self) -> int:
+        reputation = self.rewards_data.get('reputation', 0)
+        return reputation if reputation else None
 
     @property
     def triggers(self) -> list[Trigger]:
@@ -174,16 +208,41 @@ class Mission:
                 triggers += step_triggers
         return triggers
     
+    @property
+    def type(self) -> str:
+        return 'Main' if self.is_main else 'Side'
+    
     def get_children_ids(self) -> list[int]:
         children_ids = []
         for stmt in self.root.iter('STMT'):
             if stmt.get('stmt') == 'RUN MISSION':
                 children_ids.append(int(stmt.get('missionId')))
+        
         return children_ids
+    
+    def get_conversation_modifiers(self) -> list[str]:
+        if not self._conversation_modifiers:
+            conversation_modifiers = {
+                'option': {},
+                'segment': {}
+            }
+            for trigger in self.triggers:
+                modifiers = trigger.get_conversation_modifiers()
+                for event_type, modifier in modifiers.items():
+                    event_type_modifiers = conversation_modifiers[event_type]
+                    for id, modifiers in modifier.items():
+                        if id not in event_type_modifiers:
+                            event_type_modifiers[id] = set()
+                        event_type_modifiers[id] |= modifiers
+            self._conversation_modifiers = conversation_modifiers
+        
+        return self._conversation_modifiers
     
     def get_content(self) -> dict:
         if not self._content:
             content = {}
+            order = defaultdict(int)
+
             for trigger in self.root.findall('TRIGGER'):
                 procedure = float(trigger.get('procedure'))
                 step      = float(trigger.get('step'))
@@ -191,9 +250,10 @@ class Mission:
                 if procedure not in content: content[procedure] = {}
                 if step in content[procedure]:
                     # print(f'Repeat of Procedure {procedure}, Step {step}')
-                    content[procedure][step].append(Trigger(trigger, self))
+                    content[procedure][step].append(Trigger(trigger, order[procedure], self))
                 else:
-                    content[procedure][step] = [Trigger(trigger, self)]
+                    content[procedure][step] = [Trigger(trigger, order[procedure], self)]
+                order[procedure] += 1
             
             content = {k: dict(sorted(steps.items())) for k, steps in content.items()}
             content = dict(sorted(content.items()))
@@ -286,44 +346,97 @@ class Mission:
         
         return self._vars_to_mission_id
     
-    def read_parallel(self) -> list[str]:
-        lines = [f'Reading Mission {self.id}: {self.name}']
-        lines += ['']
+    def read_infobox(self) -> list[str]:
+        character = ''
+        if self.npc: character = f'[[{self.npc}]]'
 
+        lines = [
+            '<onlyinclude>{{Infobox mission',
+            f'|name = {self.name}',
+            '|image =',
+            f'|description = {self.description}',
+            f'|type = {self.type}',
+            '|time =',
+            '|location =',
+            f'|characters = {character}',
+            '|condition =',
+            '|details =',
+            f'|exp = {self.rewards_exp}',
+            f'|reputation = {self.rewards_reputation}',
+            f'|gols = {self.rewards_gols}'
+        ]
 
+        for i, favor in enumerate(self.rewards_favor_list):
+            lines.append(f'|npc{i + 1} = {text.npc(favor["id"])}')
+            lines.append(f'|rp{i + 1} = {favor["count"]}')
+        
+        items = [f'{{{{i2|{text.item(item["id"])}}}|{item["count"]}}}' for item in self.rewards_item_list]
+        if items:
+            lines.append(f'|rewards = {"".join(items)}')
+            
 
+        lines.append('}}</onlyinclude>')
+
+        return lines
+    
+    def read_rewards(self) -> list[str]:
+        if not self.rewards_data: return []
+
+        lines = [
+            '==Rewards==',
+            '{{mission reward'
+        ]
+
+        for i, favor in enumerate(self.rewards_favor_list):
+            lines.append(f'|npc{i + 1} = {text.npc(favor["id"])}')
+            lines.append(f'|rp{i + 1} = {favor["count"]}')
+        
+        lines.append(f'|exp = {self.rewards_exp}')
+        lines.append(f'|reputation = {self.rewards_reputation}')
+        lines.append(f'|gols = {self.rewards_gols}')
+
+        items = [f'{{{{i2|{text.item(item["id"])}}}|{item["count"]}}}' for item in self.rewards_item_list]
+        if items:
+            lines.append(f'|rewards = {"".join(items)}')
+        
+        lines.append('}}')
+
+        return lines
+    
     def read(self) -> list[str]:
         lines = [f'Reading Mission {self.id}: {self.name}']
         lines += ['']
-        for procedure, steps in self.get_content().items():
-            lines += [f'Reading Procedure {procedure}']
-            lines += ['---------------------------------------------------------']
-            for step, triggers in steps.items():
-                for trigger in triggers:
-                    lines += trigger.read()
-                    lines += ['']
-            lines += ['']
-        return lines
-    
-    def read_debug(self) -> list[str]:
-        lines = [f'Reading Mission {self.id}: {self.name}']
+        lines += self.read_infobox()
         lines += ['']
-        for procedure, steps in self.get_content().items():
-            lines += [f'Reading Procedure {procedure}']
-            lines += ['---------------------------------------------------------']
-            for step, triggers in steps.items():
-                for trigger in triggers:
-                    lines += trigger.read_debug()
-                    lines += ['']
+        
+        ordered_triggers = sorted(self.triggers, key=lambda x: (x.procedure, x._step))
+        # Move the triggers that follow up on ended conversations to be right 
+        # after their respective conversations.
+        reordered_triggers = []
+        for trigger in ordered_triggers:
+            if trigger in reordered_triggers: continue
+
+            started_conversation_c_id = trigger.started_conversation_c_id
+            
+            if started_conversation_c_id:
+                reordered_triggers.append(trigger)
+                for followup_trigger in ordered_triggers:
+                    if followup_trigger.ended_conversation_c_id == started_conversation_c_id:
+                        reordered_triggers.append(followup_trigger)
+            else:
+                reordered_triggers.append(trigger)
+        
+        for trigger in reordered_triggers:
+            if trigger.is_quiet: continue
+            lines += trigger.read()
             lines += ['']
+
+        lines += self.read_rewards()
+        
         return lines
     
     def print(self) -> None:
         lines = self.read()
-        print('\n'.join(lines))
-
-    def print_debug(self) -> None:
-        lines = self.read_debug()
         print('\n'.join(lines))
 
 class Story:
