@@ -385,20 +385,24 @@ class ConvSegment:
             return [-1] * len(self.conv_option_content_ids)
     
     def get_conv_options(self) -> list[_ConvOption]:
-        if not len(self.conv_option_content_ids):
-            return []
+        if not len(self.conv_option_content_ids): return []
         
-        if self.conv_parent:
+        # If there is a dialogue choice with no effect on the conversation,
+        # it doesn't need to be the last segment in the talk. However, the
+        # parent's next talk ids are only for the last segment.
+        if self.conv_parent and (self.id == self.conv_parent.segment_ids[-1]):
             assert isinstance(self.conv_parent, ConvTalk) or isinstance(self.conv_parent, _ConvTalkMimic)
-            assert self.id == self.conv_parent.segment_ids[-1]
+
+            print(f'{self.id} is the last segment in parent talk')
             
             talk_ids = self.conv_parent.next_talk_ids
         else:
             talk_ids = [-1] * len(self.conv_option_content_ids)
         
+        assert len(talk_ids) == len(self.conv_option_content_ids), f'talks {talk_ids} not compatible with content {self.conv_option_content_ids}'
+
         choices = zip(self.conv_option_content_ids, talk_ids, self.choice_types)
         
-        assert len(talk_ids) == len(self.conv_option_content_ids)
         # TODO: Combine options with a single result?
         return [_ConvOption(content_id, talk_id, choice_type, index, self._parent_stack + [self]) for index, (content_id, talk_id, choice_type) in enumerate(choices)]
     
@@ -416,7 +420,7 @@ class ConvSegment:
         self.next_talk    = self.get_next_talk()
 
         if self.is_terminal:
-            assert not self.conv_options
+            # assert not self.conv_options
             assert not self.next_talk
             self.return_stack()
     
