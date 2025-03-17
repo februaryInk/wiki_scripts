@@ -32,15 +32,19 @@ import urllib.parse
 # that are recorded in Chinese in the XML. Seems like the best way to refer to
 # them on the wiki is to translate these internal names.
 _event_names = {
-    1600391: 'A Lonely Performance', # Heartbroken Solo Drama
+    1300026: 'Shonash Canyon Bridge Opening Ceremony',
+    1500337: 'A Lifetime of Growing', # Chinese idiom "It takes a hundred years to cultivate a person"
+    1600391: 'Heartbreak Drama', # Heartbroken Solo Drama
     # 1600392: 'Promise Me', # A Lonely Performance follow-up.
     1700300: 'Community Service', # Logan Promoting
     1800306: 'Follow-up Meeting',
+    1700315: 'A Secret Under the Tree', # A Secret Beneath a Tree
     1800354: 'Grandma Vivi\'s Guidance', # Seeking Grandma Vivi's Guidance
     1800373: 'An Unexpected Outcome',
     1800376: "Luna's Invitation",
     1800398: 'Civil Corps Award Ceremony', # Militia Player Award
     1800484: 'End Marriage Loop',
+    1900379: 'Grace\'s Return'
 }
 
 _manual_mission_names = {
@@ -49,6 +53,7 @@ _manual_mission_names = {
 }
 
 _npc_mission_controllers = {
+    'Amirah': 1200264,
     'Arvio': 1200107,
     'Grace': 1200133,
     'Heidi': 1200124,
@@ -346,6 +351,28 @@ class Mission:
         
         return self._vars_to_mission_id
     
+    @property
+    def in_mission_talks(self) -> list[dict]:
+        if not hasattr(self, '_in_mission_talks'):
+            in_mission_talks = []
+
+            for talk in DesignerConfig.InMissionTalk:
+                if talk.get('missionId') == self.id:
+                    in_mission_talks.append(talk)
+            
+            self._in_mission_talks = in_mission_talks
+        
+        return self._in_mission_talks
+    
+    def read_in_mission_talk(self) -> list[str]:
+        lines = []
+
+        for talk in self.in_mission_talks:
+            builder = ConvBuilder(int(talk.get('dialog')), self.get_conversation_modifiers())
+            lines += builder.read()
+        
+        return lines
+    
     def read_infobox(self) -> list[str]:
         character = ''
         if self.npc: character = f'[[{self.npc}]]'
@@ -403,11 +430,50 @@ class Mission:
 
         return lines
     
+    def get_run_mission_context(self, mission_id: int) -> list[Trigger]:
+        if mission_id not in self.get_children_ids(): 
+            raise ValueError(f'Mission {mission_id} is not a child of {self.id}')
+
+        previous_trigger = None
+        ordered_triggers = sorted(self.triggers, key=lambda x: (x.procedure, x._step))
+        for trigger in ordered_triggers:
+            if trigger.is_run_mission(mission_id):
+                return [previous_trigger, trigger]
+            previous_trigger = trigger
+    
+    def read_run_conditions(self) -> list[str]:
+        lines = ['==Overview==']
+
+        if not self.parents: 
+            lines.append(f'Parent not found; run conditions not available.')
+            return lines
+
+        for parent in self.parents:
+            if parent.name:
+                lines.append(f'Run conditions from {parent.name}:')
+            else:
+                lines.append(f'Run conditions from parent mission: {parent.id}')
+            
+            lines.append('')
+
+            context = parent.get_run_mission_context(self.id)
+
+            for trigger in context:
+                lines += trigger.read()
+                lines.append('')
+        
+        return lines
+    
     def read(self) -> list[str]:
         lines = [f'Reading Mission {self.id}: {self.name}']
         lines += ['']
         lines += self.read_infobox()
         lines += ['']
+
+        lines += self.read_run_conditions()
+
+        lines.append('==Conduct==')
+        lines.append('')
         
         ordered_triggers = sorted(self.triggers, key=lambda x: (x.procedure, x._step))
         # Move the triggers that follow up on ended conversations to be right 
@@ -422,13 +488,19 @@ class Mission:
                 reordered_triggers.append(trigger)
                 for followup_trigger in ordered_triggers:
                     if followup_trigger.ended_conversation_c_id == started_conversation_c_id:
-                        reordered_triggers.append(followup_trigger)
+                        if followup_trigger not in reordered_triggers:
+                            reordered_triggers.append(followup_trigger)
             else:
                 reordered_triggers.append(trigger)
         
         for trigger in reordered_triggers:
             if trigger.is_quiet: continue
             lines += trigger.read()
+            lines += ['']
+        
+        if self.in_mission_talks:
+            lines += ['NPC in-mission talks:', '']
+            lines += self.read_in_mission_talk()
             lines += ['']
 
         lines += self.read_rewards()

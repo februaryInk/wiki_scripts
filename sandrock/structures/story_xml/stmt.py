@@ -103,6 +103,9 @@ class Stmt:
     def is_receive_item(self) -> bool:
         return False
     
+    def is_run_mission(self, mission_id: int = None) -> bool:
+        return False
+    
     @property
     def is_initialize_var(self) -> bool:
         return False
@@ -211,6 +214,25 @@ class _StmtBlueprintUnlock(Stmt):
     def read(self) -> list[str]:
         return [f'Unlock blueprint {text.item(self._blueprint_id)} with {text.item(self._book_id)}']
 
+# Checks that an event script has played out, since event scripts do not have 
+# states in the same way that missions do.
+class _StmtCheckEndScript(Stmt):
+    _stmt_matches = [
+        'CHECK END SCRIPT'
+    ]
+
+    def extract_properties(self) -> None:
+        self.flag: int       = int(self._stmt.get('flag'))
+        self.mission_id: int = int(self._stmt.get('missionId'))
+        self.result: int     = int(self._stmt.get('result'))
+    
+    @property
+    def mission_name(self) -> str:
+        return self._mission.story.get_mission_name(self.mission_id)
+
+    def read(self) -> list[str]:
+        return [f'Check if mission {self.mission_name or self.mission_id} is result {self.result} flag {self.flag}']
+
 class _StmtCheckMissionState(Stmt):
     _stmt_matches = [
         'CHECK MISSION CURRENT STATE'
@@ -278,7 +300,7 @@ class _StmtCheckNpcRelationship(Stmt):
 
     
     def read(self) -> list[str]:
-        return [f'Check relationship with {text.npc(self.npc)}']
+        return [f'Check relationship with {text.npc(self.npc)} is {self.level}']
 
 class _StmtCheckVar(Stmt):
     _stmt_matches = [
@@ -292,19 +314,14 @@ class _StmtCheckVar(Stmt):
     
     @property
     def compare(self) -> str:
-        compare_map = {
-            2: '>=',
-            3: '==',
-            6: '!='
-        }
-        return compare_map[self._compare]
+        return _compare_map[self._compare]
     
     @property
     def is_check_var(self) -> bool:
         return True
     
     def read(self) -> list[str]:
-        return [f'Check if {self.name} is {self._compare} {self._ref}']
+        return [f'Check if {self.name} is {self.compare} {self._ref}']
 
 class _StmtMissionProgress(Stmt):
     _stmt_matches = [
@@ -312,7 +329,6 @@ class _StmtMissionProgress(Stmt):
         'DELIVER MISSION',
         'START MISSION',
         'ON ACCEPT MISSION',
-        'RUN MISSION',
         'ACTION MISSION TRACE',
         'SUBMIT MISSION',
         'END MISSION',
@@ -436,9 +452,13 @@ class _StmtOnConversationChoiceMade(Stmt):
     ]
 
     def extract_properties(self) -> None:
-        self._c_id: int         = int(self._stmt.get('cId'))
-        self.conv_choice_index = self._stmt.get('selectIndex')
-        self.conv_segment_id   = self._stmt.get('id')
+        self._c_id: int             = int(self._stmt.get('cId'))
+        self.conv_choice_index: int = int(self._stmt.get('selectIndex'))
+        self.conv_segment_id: int   = int(self._stmt.get('id'))
+    
+    @property
+    def conv_segment(self) -> ConvSegment:
+        return ConvSegment(self.conv_segment_id)
     
     @property
     def is_conversation_choice_made(self) -> bool:
@@ -449,7 +469,10 @@ class _StmtOnConversationChoiceMade(Stmt):
         return f'{self.conv_segment_id}_{self.conv_choice_index}'
     
     def read(self) -> list[str]:
-        return [f'{self.stmt} for ConvSegment {self.conv_segment_id}: {self.conv_choice_index}']
+        lines = [f'The player chooses option index {self.conv_choice_index} for conversation choice (id {self.conv_segment_id}):']
+        lines += self.conv_segment.read()
+
+        return lines
 
 # Conversation with cId finishes, regardless of outcome.
 class _StmtOnConversationEnd(Stmt):
@@ -483,6 +506,10 @@ class _StmtOnConversationEndSegment(Stmt):
         self._order: int      = int(self._stmt.get('order'))
     
     @property
+    def conv_segment(self) -> ConvSegment:
+        return ConvSegment(self.segment_id)
+    
+    @property
     def is_conversation_end(self) -> bool:
         return True
     
@@ -491,7 +518,9 @@ class _StmtOnConversationEndSegment(Stmt):
         return True
     
     def read(self) -> list[str]:
-        return [f'After ConvSegment {self.segment_id} ends:']
+        lines = [f'There is a conversation segment (id {self.segment_id}) that ends:']
+        lines += self.conv_segment.read()
+        return lines
 
 class _StmtOnInteractWithNpc(Stmt):
     _stmt_matches = [
@@ -531,6 +560,23 @@ class _StmtOnSceneChange(Stmt):
     def read(self) -> list[str]:
         return [f'When the player moves from {self._from_scene} to the {self._to_scene}:']
 
+class _StmtRunMission(Stmt):
+    _stmt_matches = [
+        'RUN MISSION'
+    ]
+
+    def extract_properties(self) -> None:
+        self.mission_id = int(self._stmt.get('missionId'))
+    
+    def is_run_mission(self, mission_id: int = None) -> bool:
+        if mission_id:
+            return self.mission_id == mission_id
+        else:
+            return True
+    
+    def read(self) -> list[str]:
+        return [f'Run mission {self._mission.story.get_mission_name(self.mission_id)}']
+
 class _StmtSendMail(Stmt):
     _stmt_matches = [
         'MAIL SEND TO BOX'
@@ -545,6 +591,99 @@ class _StmtSendMail(Stmt):
 
     def read(self) -> list[str]:
         return ['The player receives a letter:', f'{{{{mail|{self.mail_id}}}}}']
+
+class _StmtSetSpecialGiftRuleState(Stmt):
+    _stmt_matches = [
+        'SET SPECIAL GIFT RULE STATE'
+    ]
+
+    def extract_properties(self) -> None:
+        self._rule_id: int = int(self._stmt.get('ruleID'))
+        self._state: int   = int(self._stmt.get('state'))
+    
+    @property
+    def item(self) -> str:
+        return text.item(self.special_gift_rule['itemId'])
+    
+    @property
+    def npc(self) -> str:
+        return text.npc(self.special_gift_rule['npcID'])
+    
+    @cached_property
+    def special_gift_rule(self) -> dict:
+        return DesignerConfig.SpecialGiftRule[self._rule_id]
+    
+    def read_bad_reply(self) -> list[str]:
+        bad_reply_texts = self.special_gift_rule['badReplyText'].split(',')
+        lines = []
+
+        if bad_reply_texts == ['NULL']: return lines
+
+        for segment_id in bad_reply_texts:
+            conv_segment = ConvSegment(int(segment_id))
+            lines += conv_segment.read()
+        
+        return lines
+    
+    def read_items_with_tag(self, tag) -> list[str]:
+        item_data = sorted(DesignerConfig.ItemPrototype, key=lambda item: item['id'])
+        items = [item for item in item_data if tag in item['itemTag']]
+        return [f'{text.item(item["id"])}' for item in items]
+    
+    def read_normal_reply(self) -> list[str]:
+        normal_reply_texts = self.special_gift_rule['normalReplyText'].split(',')
+        lines = []
+
+        if normal_reply_texts == ['NULL']: return lines
+
+        for segment_id in normal_reply_texts:
+            conv_segment = ConvSegment(int(segment_id))
+            lines += conv_segment.read()
+        
+        return lines
+    
+    def read_special_results(self) -> list[str]:
+        special_results = self.special_gift_rule['specialResults']
+        lines = []
+
+        for i, result in enumerate(special_results):
+            lines += [f'Special result {i + 1}, type {result["resultType"]}:']
+            reply_texts = result['replyText'].split(',')
+            for segment_id in reply_texts:
+                conv_segment = ConvSegment(int(segment_id))
+                lines += conv_segment.read()
+            lines += ['Applied to the following items:']
+            for tag in result['itemTags']:
+                lines += [f'With tag {tag}:']
+                lines += self.read_items_with_tag(tag)
+        
+        return lines
+    
+    def read(self) -> list[str]:
+        if self._state == 1:
+            lines = [f'Special gift rule {self._rule_id} is set for giving {self.npc} {self.item}:']
+        else:
+            lines = [f'The special gift rule {self._rule_id} for giving {self.item} to {self.npc} is disabled. The rule was:']
+
+        bad_reply = self.read_bad_reply()
+        if bad_reply:
+            lines += ['The gift is rejected with:']
+            lines += bad_reply
+            lines += ['']
+        
+        normal_reply = self.read_normal_reply()
+        if normal_reply:
+            lines += ['The gift is accepted with:']
+            lines += normal_reply
+            lines += ['']
+
+        special_results = self.read_special_results()
+        if special_results:
+            lines += ['Special results:']
+            lines += special_results
+        
+        return lines
+        
 
 class _StmtSetVar(Stmt):
     _stmt_matches = [
@@ -611,6 +750,11 @@ class _StmtStartInteractive(Stmt):
         'START INTERACTIVE'
     ]
 
+    _option_map = {
+        0: 'hugs',
+        1: 'kisses',
+    }
+
     def extract_properties(self) -> None:
         self._inst_id: int  = int(self._stmt.get('instId'))
         self._npc_id: int   = int(self._stmt.get('protoId'))
@@ -618,11 +762,19 @@ class _StmtStartInteractive(Stmt):
         self.type: int      = int(self._stmt.get('type'))
     
     @property
+    def interaction(self) -> str:
+        default = f'interacts (type {self.type}, option {self.option_id}) with'
+        if type == 1:
+            return self._option_map.get(self.option_id, default)
+        
+        return default
+    
+    @property
     def npc(self) -> str:
         return text.npc(self._npc_id)
     
     def read(self) -> list[str]:
-        return [f'The player interacts (type {self.type}, option {self.option_id}) with {self.npc}']
+        return [f'The player {self.interaction} {self.npc}']
 
 class _StmtUpdateMissionInfo(Stmt):
     _stmt_matches = [

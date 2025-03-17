@@ -9,7 +9,7 @@ import sys
 
 from collections     import defaultdict
 from collections.abc import Iterator, Iterable
-from functools       import cache
+from functools       import cache, cached_property
 from pathlib         import Path
 from typing          import (
     Any,

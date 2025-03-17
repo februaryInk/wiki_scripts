@@ -33,6 +33,9 @@ class Trigger:
     def is_quiet(self) -> bool:
         return all(action.is_quiet for action in self._structure['ACTIONS'])
     
+    def is_run_mission(self, mission_id: int = None) -> bool:
+        return any(action.is_run_mission(mission_id) for action in self._structure['ACTIONS'])
+    
     @property
     def ended_conversation_c_id(self) -> int:
         conversations = []
@@ -208,6 +211,14 @@ class Trigger:
             lines += [key]
             for stmt in stmts:
                 lines += stmt.read()
+        return lines
+    
+    def read_conditions(self) -> list[str]:
+        lines = []
+        
+        for stmt in self._structure['CONDITIONS']:
+            lines += stmt.read()
+        
         return lines
     
     def read_debug(self) -> list[str]:

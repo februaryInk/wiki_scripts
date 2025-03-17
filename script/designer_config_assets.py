@@ -50,8 +50,8 @@ tag_translations = {
 
 cooking_types = {
     0: 'Steamer',
-    1: 'Pot',
-    2: 'FryingPan',
+    1: 'Cooking Pot',
+    2: 'Wok',
     3: 'Oven'
 }
 
@@ -423,8 +423,94 @@ pages = {
         ('itemResultDes', lambda item: {i + 1: des for i, des in enumerate(item['itemResultDes'])}),
         'costMinutes',
         'exp'
+    ],
+    'AssetSyntheticConfigSynthetics': [
+        'id',
+        'itemId',
+        'itemCount',
+        'rawMaterials',
+        'fromMachineType',
+        'fromMachineLevel',
+        'makeTime',
+        'orderId',
+        'exp',
+        'proficiencyExp'
+    ],
+    'AssetUseItemDataItemUse': [
+        'id',
+        ('name', lambda item: text(DesignerConfig.ItemPrototype[item['id']]['nameId'])),
+        ('buffs', lambda item: [parse_buff(buff_id) for buff_id in item['buffIds']]),
+        ('operators', lambda item: [parse_buff_string(op) for op in item['operators'].split(';') if op]),
     ]
 }
+
+buff_attributes = {
+    'Att_l': 'Min Damage',
+    'Att_u': 'Max Damage',
+    'Cp': 'Endurance',
+    'Def': 'Defense',
+    'Hp': 'Health Points',
+    'LevelCritical': 'Critical Rate',
+    'LevelCritiDam': 'Critical Damage',
+    'LuckyPoint': 'Luck',
+    'ResistPoison': 'Poison Resistance',
+    'Sp': 'Stamina',
+}
+
+buff_operators = {
+    'BasePlus': '+',
+    'FinalPlus': '+',
+    'Plus': '+',
+    'PlusByMaxPercent': '+%',
+    'PlusRatio': '+%',
+}
+
+def parse_buff(buff_id: int) -> dict:
+    buff = DesignerConfig.ActorBuff[buff_id]
+    lifetime = int(buff['lifeTime'])
+    interval = int(buff['interval'])
+    # Buffs in the traditional sense, where they modify a stat for a duration.
+    modifiers = buff['modifiers'].split(';') if buff['modifiers'] else []
+    # Effects that are applied once on use, like recovering health or stamina.
+    operators = buff['operators'].split(';') if buff['operators'] else []
+    icon_path = buff['iconPath']
+
+    return {
+        'lifetime': lifetime,
+        'interval': interval,
+        'icon_path': icon_path,
+        'modifiers': [parse_buff_string(mod) for mod in modifiers],
+        'operators': [parse_buff_string(op) for op in operators]
+    }
+
+# Critical Rate: +30%
+# Lasts for 30 seconds
+# Stamina: +50
+# Every 5 seconds
+# Critical Damage: +21%
+# Heath Points: +100
+# Endurance: +3 Every 2 seconds
+def parse_buff_string(buff_str: str) -> dict:
+    attr, oper, value = buff_str.split(',')
+
+    readable_attr = buff_attributes[attr]
+    readable_oper = buff_operators[oper]
+    value = float(value)
+
+    if readable_oper == '+%' or readable_attr in ['Critical Rate', 'Critical Damage']:
+        value = round(value * 100, 2)
+        if value.is_integer(): value = int(value)
+        value = f'{value}%'
+        readable_oper = '+'
+    else:
+        if value.is_integer(): value = int(value)
+    
+    return {
+        'attribute': readable_attr,
+        'operator': readable_oper,
+        'value': value
+    }
+
 
 def modify_attachment(attachment: dict) -> dict:
     attachment['type'] = mail_template_attachment_types[attachment['type']]
