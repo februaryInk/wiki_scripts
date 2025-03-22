@@ -4,7 +4,6 @@ Find all the sources we know of for all items.
 id: {
     id: ,
     name: ,
-    nominal_source: ,
     recipe_sources: ,
     main_sources: ,
     secondary_sources:
@@ -12,6 +11,7 @@ id: {
 
 Requires:
     - designer_config
+    - monsterspawnasset
     - resourcepoint
     - sceneinfo
     - scenes
@@ -160,8 +160,8 @@ def format_results(
     results = {}
     for item_id in item_sources.keys():
         
-        formatted = formatted_sources[item_id]
-        item_nominal_sources = nominal_sources[item_id]
+        formatted                       = formatted_sources[item_id]
+        item_nominal_sources            = nominal_sources[item_id]
         main_sources, secondary_sources = get_main_sources(item_id, formatted, item_nominal_sources)
 
         results[item_id] = {
@@ -221,6 +221,9 @@ def format_unlockers(sources: list[ItemSource], item_sources: dict[int, list[Ite
     
 def format_sources(sources: list[ItemSource]) -> list[dict]:
     formatted = {}
+
+    sources = sorted(sources, key=lambda source: (source[0], source[1] if len(source) > 1 else '', source[2] if len(source) > 2 else ''))
+
     for source in sources:
         format_source(formatted, source, sources)
     
@@ -248,6 +251,7 @@ def format_source(formatted: dict, source: ItemSource, sources: list[ItemSource]
         'default',
         'desires',
         'dlc',
+        'enraged_monsters',
         'farming',
         'festivals',
         'fishing',

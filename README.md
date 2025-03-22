@@ -60,6 +60,15 @@ MonoBehaviour HomeToolSettingExtra
 MonoScript    HomeToolSetting
 ```
 
+### Monsterspawnasset
+
+From `monsterspawnasset`, export:
+
+```
+MonoBehaviour SpawnMonsterAsset
+MonoScript    SpawnMonsterAsset
+```
+
 ### Scenes
 
 There are over 90 scene bundles, and it's unreasonable to export them one-by-one. This is consequently more complicated. There are also a **lot** of assets here, as in, over a million files.

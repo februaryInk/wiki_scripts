@@ -21,16 +21,23 @@ def update_unlockers(results: Results) -> None:
 def update_cooking_experimentation(results: Results) -> None:
     for dish in DesignerConfig.Cooking:
         source = ('cooking_experimentation',)
-        results[dish['outItemId']].add(source)
+        formula = DesignerConfig.CookingFormula[dish['formulaId']]
+
+        if formula['isActive'] == 1 and formula['disableTrying'] == 0:
+            results[dish['outItemId']].add(source)
 
 # Unlocked by item use. Somehow has a handful of items that aren't caught by the 
 # recipe book step.
 def update_item_use(results: Results) -> None:
     for use in DesignerConfig.ItemUse:
         source = ('recipe_book', use["id"])
+
         for unlocked in use['unLockIDs']:
             if unlocked not in results:
                 print(f'{text.item(unlocked)} unlocked by {text.item(use["id"])}')
+            results[unlocked].add(source)
+        
+        for unlocked in use['unlockCookingIDs']:
             results[unlocked].add(source)
 
 def update_machines(results: Results) -> None:
