@@ -10,6 +10,7 @@ from .common import *
 
 from .craft            import update_crafting
 from .designer_configs import update_designer_configs
+from .dynamic_monsters import update_dynamic_monsters
 from .farm_fish        import update_farming, update_fishing
 from .missions         import update_missions
 from .scenes           import update_scenes
@@ -40,6 +41,9 @@ def _get_item_sources() -> dict[int, list[list[str]]]:
     
     print('Analyzing stores, ruins, gifts, and other sources...')
     update_designer_configs(results)
+
+    print('Analyzing dynamic monster spawns...')
+    update_dynamic_monsters(results)
 
     print('Analyzing logging & quarrying...')
     update_terrain(results)

@@ -34,29 +34,33 @@ def update_scenes(results: Results) -> None:
 def update_monster(results: Results, scene: str, behaviour: Any) -> None:
     # protoId for SpawnMono_Point, monsterId for MonsterArea_IMap.
     monster_id = behaviour.get('protoId', behaviour.get('monsterId'))
-    # TODO: This is the first fight against Logan, but it's impossible to 
-    # actually defeat him, so I do not believe he has any drops? Yet his monster 
+    # This is the first fight against Logan, but it's impossible to 
+    # actually defeat him, so I do not believe he has any drops - yet, his monster 
     # data has the same drop table as the Caretaker.
     if monster_id == 5044: return
+
     source     = ['monster', f'scene:{scene}', f'monster:{monster_id}']
     monster    = DesignerConfig.Monster.get(monster_id)
+    
     if monster is not None:
         for drop in monster['dropDatas']:
             update_generator(results, source, drop['y'])
 
-# Junk piles that yield items per hit.
 def update_resource(results: Results, scene: str, behaviour: Any) -> None:
     resource_point_confs = [conf for conf in behaviour['weightConfigs'] if conf['weight'] > 0]
     resource_point_ids = [conf['id'] for conf in resource_point_confs if conf['id']]
 
     for resource_point_id in resource_point_ids:
+        # Herb resource point that never actually spawns. Too bad since it has a
+        # Cactus Flower drop.
+        if resource_point_id == 3037: continue
         resource_point = DesignerConfig.ResourcePoint.get(resource_point_id)
-        if resource_point is None:
-            continue
+        if resource_point is None: continue
 
         source = ['gathering', f'scene:{scene}', f'resource_point:{resource_point_id}']
         groups = [resource_point['generatorGroup']]
 
+        # Junk piles that yield items per hit.
         catch = _load_catchable(resource_point['prefabModel'])
         if catch:
             source[0] = 'salvaging'
