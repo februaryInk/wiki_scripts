@@ -25,7 +25,8 @@ import urllib.parse
 _compare_map = {
     2: '>=',
     3: '==',
-    6: '!=' # Maybe?
+    4: '<= (maybe?)',
+    6: '!= (maybe?)' # Maybe?
 }
 
 # Is Type or Option the important part?
@@ -322,6 +323,31 @@ class _StmtCheckVar(Stmt):
     
     def read(self) -> list[str]:
         return [f'Check if {self.name} is {self.compare} {self._ref}']
+
+class _StmtGlobalBlackBoardSet(Stmt):
+    _stmt_matches = [
+        'GLOBAL BLACK BOARD SET'
+    ]
+
+    def extract_properties(self) -> None:
+        self.key: str  = self._stmt.get('key')
+        self.info: str = self._stmt.get('info')
+    
+    @property
+    def event_talks(self) -> list[EventTalk]:
+        return EventTalk.global_str_talks(self.key)
+    
+    def read(self) -> list[str]:
+        lines = [f'Set global blackboard key {self.key} with info {self.info}.']
+
+        if self.event_talks:
+            lines += ['Townsfolk respond to the event:', '']
+            for talk in self.event_talks:
+                lines += talk.read()
+                lines += ['']
+        
+        return lines
+
 
 class _StmtMissionProgress(Stmt):
     _stmt_matches = [

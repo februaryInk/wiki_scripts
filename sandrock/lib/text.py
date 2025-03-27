@@ -4,6 +4,23 @@ from sandrock.preproc             import get_config_paths
 
 # ------------------------------------------------------------------------------
 
+_substitutions = {
+    '<color=#00ff78>': '{{textcolor|green|',
+    '<color=#3aa964>': '{{textcolor|green|',
+    '</color>': '}}',
+    '[ChildCallPlayer]': '\'\'Parent Name\'\'',
+    '[MarriageCall|Name]': '\'\'Pet Name\'\'',
+    '[NpcName|8121]': '\'\'Child 1\'\'',
+    '[NpcName|8122]': '\'\'Child 2\'\'',
+    '[Player|Name]': '\'\'Player\'\''
+}
+
+def _substitute(string: str) -> str:
+    pattern = re.compile('|'.join(re.escape(key) for key in _substitutions.keys()))
+    return pattern.sub(lambda match: _substitutions[match.group(0)], string)
+
+# ------------------------------------------------------------------------------
+
 @cache
 def load_text(language: str) -> dict[int, str]:
     config_paths = get_config_paths()
@@ -17,13 +34,15 @@ class _TextEngine:
     @staticmethod
     def text(text_id: int, language: str | None = None, sep: str = '  ') -> str:
         texts = []
+
         for lang, code in zip(config.languages, config.language_codes):
             if language and language != lang and language != code:
                 continue
             s = load_text(lang).get(text_id)
             if s:
                 texts.append(s)
-        return sep.join(texts)
+        
+        return _substitute(sep.join(texts))
 
     @classmethod
     def __call__(cls, text_id: int, lang_or_sep: str | None = None) -> str:

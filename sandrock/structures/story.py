@@ -368,8 +368,8 @@ class Mission:
         lines = []
 
         for talk in self.in_mission_talks:
-            builder = ConvBuilder(int(talk.get('dialog')), self.get_conversation_modifiers())
-            lines += builder.read()
+            segment = ConvSegment(int(talk.get('dialog')))
+            lines += segment.read()
         
         return lines
     
@@ -404,6 +404,29 @@ class Mission:
 
         lines.append('}}</onlyinclude>')
 
+        return lines
+    
+    def read_event_talks(self) -> list[str]:
+        lines = []
+        success_talks = EventTalk.accomplished_mission_talks(self.id)
+        failure_talks = EventTalk.failed_mission_talks(self.id)
+
+        if not len(success_talks) and not len(failure_talks): return lines
+
+        lines += ['==Post-conduct==', '']
+
+        if len(success_talks):
+            lines += ['If the player successfully completes the mission, some of the townsfolk will comment on it:', '']
+            for talk in success_talks:
+                lines += talk.read()
+            lines += ['']
+        
+        if len(failure_talks):
+            lines += ['If the player fails the mission, some of the townsfolk will comment on it:', '']
+            for talk in failure_talks:
+                lines += talk.read()
+            lines += ['']
+        
         return lines
     
     def read_rewards(self) -> list[str]:
@@ -504,6 +527,8 @@ class Mission:
             lines += ['']
 
         lines += self.read_rewards()
+
+        lines += self.read_event_talks()
         
         return lines
     
