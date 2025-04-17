@@ -5,7 +5,7 @@ is built by following the next talk IDs and segment IDs from the entry talk.
 
 from __future__ import annotations
 
-from sandrock                                      import *
+from sandrock                                       import *
 from sandrock.structures.conversation.conv_elements import *
 
 # -- Private Functions ---------------------------------------------------------
@@ -18,10 +18,14 @@ def _find_common_elements(stacks: list[list[str]], convergence: str) -> list[str
         for stack in stacks if convergence in stack
     ]
 
+    # print(f'Substacks: {json.dumps(substacks, indent=2)}')
+    # print(f'Convergence: {convergence}')
+
     # Iterate back from the convergence point to find the elements that all
     # substacks share.
     min_substack_length = min(len(stack) for stack in substacks)
     common_series       = []
+
     for i in range(min_substack_length):
         if all(substack[i] == substacks[0][i] for substack in substacks):
             common_series.append(substacks[0][i])
@@ -108,12 +112,12 @@ class ConvTalkMimic:
 
 class ConvBuilder:
     def __init__(self, entry_talk_id: int, modifiers: dict[str, list[str]] = {}):
-        self._entry_talk_id: int                                       = entry_talk_id
-        self._modifiers: dict[str, list[str]]                          = modifiers
+        self._entry_talk_id: int                                      = entry_talk_id
+        self._modifiers: dict[str, list[str]]                         = modifiers
 
-        self._stack: list[ConvBuilder]                                 = [self]
+        self._stack: list[ConvBuilder]                                = [self]
         self._stacks: list[list[ConvSegment | ConvOption | ConvTalk]] = []
-        self._identifier_stacks: list[str]                             = []
+        self._identifier_stacks: list[str]                            = []
 
         self._common_series = []
         self._common_series_counts = {}
@@ -205,12 +209,12 @@ class ConvBuilder:
                         # lines += ['', f'!!! Yielding control to the choice segment {identifier}. !!!', '']
                         lines += segment.read_up_to(next_common, parent_talks)
                         
-                        assert len(list(map(list, {tuple(i) for i.next_talk_ids in parent_talks}))) <= 1
+                        assert len(list(map(list, {tuple(i.next_talk_ids) for i in parent_talks}))) <= 1
                         
                         if len(parent_talks):
                             talk = parent_talks.pop()
-                        else:
-                            talk = ConvTalkMimic([])
+                        # else:
+                        #     talk = ConvTalkMimic([])
                     case 'Segment':
                         segment = ConvSegment(int(id), [self])
                         lines += segment.read()

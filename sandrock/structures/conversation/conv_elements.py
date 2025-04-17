@@ -54,6 +54,10 @@ class ConvOption:
         }
         
         return type_map[self._choice_type]
+    
+    @property
+    def first_parent(self) -> ConvBuilder | ConvTalk:
+        return self._parent_stack[0]
 
     @property
     def identifier(self) -> str:
@@ -62,6 +66,10 @@ class ConvOption:
     @property
     def is_builder(self) -> bool:
         return False
+    
+    @property
+    def is_independently_terminal(self) -> bool:
+        return self._talk_id == -1 and not self.parent.is_terminal
     
     @property
     def is_talk(self) -> bool:
@@ -86,15 +94,23 @@ class ConvOption:
         self.content       = text.text(self._content_id)
         self.response_talk = self.get_response_talk()
 
+        if self.is_independently_terminal:
+            self.return_stack()
+
     def read_response_talk(self) -> list[str]:
         if not self.response_talk: return []
         return self.response_talk.read()
     
-    def read_response_talk_up_to(self, identifier: str, parent_talks: list[list]) -> list[str]:
+    def read_response_talk_up_to(self, identifier: str, parent_talks: list[ConvTalk]) -> list[str]:
         if self.response_talk:
             return self.response_talk.read_up_to(identifier, parent_talks)
         else:
             return []
+
+    def return_stack(self):
+        if len(self._parent_stack) and self.first_parent.is_builder:
+            builder = self.first_parent
+            builder.add_stack(self._parent_stack + [self])
 
 # ------------------------------------------------------------------------------
 
@@ -139,6 +155,7 @@ class ConvSegment:
         if self.conv_builder is None: return set()
 
         native_modifiers = self.conv_builder.segment_modifiers.get(str(self.id), set())
+
         if self.option_parent:
             option_modifiers = self.conv_builder.option_modifiers.get(self.option_parent.id, set())
             
@@ -161,10 +178,17 @@ class ConvSegment:
             return f'ChoiceSegment|{self.id}'
         if self.is_terminal:
             return f'TerminalSegment|{self.id}'
+        
         return f'Segment|{self.id}'
     
     @property
     def is_builder(self) -> bool:
+        return False
+    
+    @property
+    def is_last_in_talk(self) -> bool:
+        if self.talk_parent:
+            return self.id == self.talk_parent.segment_ids[-1]
         return False
     
     @property
@@ -176,7 +200,7 @@ class ConvSegment:
         if self.talk_parent:
             talk_ids = self.talk_parent.next_talk_ids
             
-            if self.id == self.talk_parent.segment_ids[-1] and not any(x != -1 for x in talk_ids):
+            if self.is_last_in_talk and not any(x != -1 for x in talk_ids):
                 return True
         
         return False
@@ -196,7 +220,6 @@ class ConvSegment:
     
     @property
     def talk_parent(self) -> ConvTalk:
-        # print([item.identifier for item in self._parent_stack])
         for item in reversed(self._parent_stack):
             if item.is_talk:
                 return item
@@ -229,13 +252,14 @@ class ConvSegment:
         # If there is a dialogue choice with no effect on the conversation,
         # it doesn't need to be the last segment in the talk. However, the
         # parent's next talk ids are only for the last segment.
-        if self.talk_parent and (self.id == self.talk_parent.segment_ids[-1]):
+        if self.talk_parent and self.is_last_in_talk:
             print(f'{self.id} is the last segment in parent talk')
             
             talk_ids = []
             stack_talk_ids = [item.id for item in self._parent_stack if isinstance(item, ConvTalk)]
             
             next_talk_ids = self.talk_parent.next_talk_ids
+
             for talk_id in next_talk_ids:
                 if talk_id not in stack_talk_ids:
                     talk_ids.append(talk_id)
@@ -246,16 +270,21 @@ class ConvSegment:
         else:
             talk_ids = [-1] * len(self.conv_option_content_ids)
         
-        assert len(talk_ids) == len(self.conv_option_content_ids), f'talks {talk_ids} not compatible with content {self.conv_option_content_ids}'
+        assert len(talk_ids) == len(self.conv_option_content_ids), f'talks {talk_ids} not compatible with content {self.conv_option_content_ids} in segment {self.id}'
 
         choices = zip(self.conv_option_content_ids, talk_ids, self.choice_types)
         
-        return [ConvOption(content_id, talk_id, choice_type, index, self._parent_stack + [self]) for index, (content_id, talk_id, choice_type) in enumerate(choices)]
+        return [
+            ConvOption(content_id, talk_id, choice_type, index, self._parent_stack + [self]) 
+            for index, (content_id, talk_id, choice_type) in enumerate(choices)
+        ]
     
     def get_next_talk(self) -> ConvTalk:
-        if self.talk_parent and not len(self.conv_option_content_ids) and self.id == self.talk_parent.segment_ids[-1]:
+        if self.is_last_in_talk and not len(self.conv_option_content_ids):
             assert len(self.talk_parent.next_talk_ids) == 1
+            
             next_talk_id = self.talk_parent.next_talk_ids[0]
+            
             if next_talk_id != -1:
                 return ConvTalk(next_talk_id, self._parent_stack)
         
@@ -270,7 +299,7 @@ class ConvSegment:
             assert not self.next_talk
             self.return_stack()
     
-    def read_up_to(self, identifier: str, parent_talks: list[list]) -> list[str]:
+    def read_up_to(self, identifier: str, parent_talks: list[ConvTalk]) -> list[str]:
         if self.identifier == identifier:
             return []
         
@@ -382,14 +411,14 @@ class ConvTalk:
     def parse(self) -> None:
         self.segments = self.get_segments()
     
-    def read_up_to(self, identifier: str, parent_talks: list[list]) -> list[str]:
+    def read_up_to(self, identifier: str, parent_talks: list[ConvTalk]) -> list[str]:
         lines = []
         
         for segment in self.segments:
             if segment.identifier == identifier:
                 parent_talks.append(self)
                 break
-            
+
             lines += segment.read_up_to(identifier, parent_talks)
         
         return lines

@@ -26,7 +26,8 @@ _compare_map = {
     2: '>=',
     3: '==',
     4: '<= (maybe?)',
-    6: '!= (maybe?)' # Maybe?
+    5: '> (maybe?)',
+    6: '<'
 }
 
 # Is Type or Option the important part?
@@ -273,6 +274,26 @@ class _StmtCheckMissionState(Stmt):
         else:
             return [f'{self.mission_name} is in state {self._state} with flag {self._flag}']
 
+class _StmtCheckNpcLeaveTown(Stmt):
+    _stmt_matches = [
+        'CHECK NPC LEAVE TOWN'
+    ]
+
+    def extract_properties(self) -> None:
+        self.flag: int       = int(self._stmt.get('flag'))
+        self.npc_id: int = int(self._stmt.get('npc'))
+    
+    @property
+    def checking_for(self) -> str:
+        if self.flag == 1:
+            return 'has left town'
+        elif self.flag == 0:
+            return 'is in town'
+        else:
+            return f'unknown flag {self.flag}'
+
+    def read(self) -> list[str]:
+        return [f'Check if {text.npc(self.npc_id)} {self.checking_for}']
 
 class _StmtCheckNpcRelationship(Stmt):
     _stmt_matches = [
@@ -460,7 +481,7 @@ class _StmtNpcSendGift(Stmt):
     def extract_properties(self) -> None:
         self._duration_hour: int = int(self._stmt.get('druationHour'))
         self.gift_id: int        = int(self._stmt.get('giftId'))
-        self.npc: int            = int(self._stmt.get('npc'))
+        self.npc_id: int         = int(self._stmt.get('npc'))
         self._scene_pos: str     = self._stmt.get('scenePos')
     
     @property
@@ -468,7 +489,7 @@ class _StmtNpcSendGift(Stmt):
         return True
     
     def read(self) -> list[str]:
-        return [f'{text.npc(self._npc_id)} leaves a gift: {self._gift_id}']
+        return [f'{text.npc(self.npc_id)} leaves a gift: {self.gift_id}']
 
 # Choice with the given index is made in response to conversation segment with
 # given ID, during conversation with given cId.
@@ -593,6 +614,12 @@ class _StmtRunMission(Stmt):
 
     def extract_properties(self) -> None:
         self.mission_id = int(self._stmt.get('missionId'))
+
+    @property
+    def mission_name(self) -> str:
+        name = self._mission.story.get_mission_name(self.mission_id)
+        if not name: name = f'#{self.mission_id}'
+        return name
     
     def is_run_mission(self, mission_id: int = None) -> bool:
         if mission_id:
@@ -601,7 +628,7 @@ class _StmtRunMission(Stmt):
             return True
     
     def read(self) -> list[str]:
-        return [f'Run mission {self._mission.story.get_mission_name(self.mission_id)}']
+        return [f'Run mission {self.mission_name}']
 
 class _StmtSendMail(Stmt):
     _stmt_matches = [

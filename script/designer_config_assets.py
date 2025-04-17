@@ -67,6 +67,18 @@ gen_grades = {
     4: 'Max'
 }
 
+machine_types = {
+    1: 'SyntheticTable',
+    4: 'Furnace',
+    5: 'Cutting',
+    13: 'DryingStand',
+    14: 'Tailor',
+    15: 'Stirrer',
+    16: 'Weapons',
+    18: 'Jewelry',
+    22: 'Grinder',
+}
+
 mail_template_attachment_types = {
     0: 'Money',
     1: 'Item',
@@ -429,9 +441,9 @@ pages = {
         'itemId',
         'itemCount',
         'rawMaterials',
-        'fromMachineType',
+        ('fromMachineType', lambda item: machine_types[item['fromMachineType']]),
         'fromMachineLevel',
-        'makeTime',
+        ('makeTime', lambda item: int(item['makeTime'])),
         'orderId',
         'exp',
         'proficiencyExp'
