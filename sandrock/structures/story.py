@@ -49,7 +49,9 @@ _event_names = {
 
 _manual_mission_names = {
     1300041: text(80001007), # In Trusses We Trust, donated gifts
-    1500403: text(80031199) # The Girl with the Umbrella, Ginger's Diary Easter egg
+    1500403: text(80031199), # The Girl with the Umbrella, Ginger's Diary Easter egg
+    1800519: 'Private Prescription', # Little Fang's Heartfelt Easter egg
+    1800537: 'Late Bloomer', # The Continuation of Yimi's Love
 }
 
 _npc_mission_controllers = {
@@ -58,6 +60,7 @@ _npc_mission_controllers = {
     'Grace': 1200133,
     'Heidi': 1200124,
     'Jane': 1200333,
+    'Mi-an': 1200030,
     'Qi': 1200112,
     'Unsuur': 1200280,
 }
@@ -137,6 +140,11 @@ class Mission:
     
     @property
     def is_main(self) -> bool:
+        self_main = self.root.get('isMain').lower() == 'true'
+
+        if self.parents:
+            return self.parents[0].is_main and self_main
+        
         return self.root.get('isMain').lower() == 'true'
     
     @property
@@ -149,8 +157,10 @@ class Mission:
         if name_id and name_id not in ['0', '-1']:
             name = text(int(self.root.get('nameId')))
             if name != '￥not use￥': return name
+
         if self.id in _event_names.keys():
             return _event_names[self.id]
+        
         if self.id in _manual_mission_names.keys():
             return _manual_mission_names[self.id]
     
@@ -166,6 +176,22 @@ class Mission:
     @property
     def parents(self):
         return self.story.get_parents_for(self.id)
+    
+    @property
+    def opening_conv_id(self) -> int:
+        if len(self.properties) == 4:
+            return self.properties[2]
+        
+        return None
+    
+    @property
+    def opening_conv(self) -> ConvTalk:
+        if self.opening_conv_id and self.opening_conv_id not in ['0', '-1']:
+            if '_' in self.opening_conv_id:
+                return ConvTalk(int(self.opening_conv_id.split('_')[0]))
+            return ConvSegment(int(self.opening_conv_id))
+        
+        return None
     
     # properties: description_id|npc_id|opening_conversation_id?|-1 or 10&0: means what?
     @property
@@ -429,6 +455,17 @@ class Mission:
         
         return lines
     
+    def read_opening_conv(self) -> list[str]:
+        lines = []
+
+        if not self.opening_conv: return lines
+
+        lines += ['The player can begin the mission by speaking to the following character:', '']
+        lines += self.opening_conv.read()
+        lines += ['']
+
+        return lines
+    
     def read_rewards(self) -> list[str]:
         if not self.rewards_data: return []
 
@@ -459,9 +496,11 @@ class Mission:
 
         previous_trigger = None
         ordered_triggers = sorted(self.triggers, key=lambda x: (x.procedure, x._step))
+
         for trigger in ordered_triggers:
             if trigger.is_run_mission(mission_id):
-                return [previous_trigger, trigger]
+                return [previous_trigger, trigger] if previous_trigger else [trigger]
+        
             previous_trigger = trigger
     
     def read_run_conditions(self) -> list[str]:
@@ -521,6 +560,8 @@ class Mission:
             lines += trigger.read()
             lines += ['']
         
+        lines += self.read_opening_conv()
+        
         if self.in_mission_talks:
             lines += ['NPC in-mission talks:', '']
             lines += self.read_in_mission_talk()
@@ -571,6 +612,8 @@ class Story:
         return parent_missions
 
     def get_mission(self, id: int) -> Mission:
+        if id not in self.missions: return None
+
         return self.missions[id]
     
     def get_mission_name(self, id: int) -> str:
@@ -582,6 +625,16 @@ class Story:
     
     def get_missions_for_npc(self, npc_name: str) -> list[Mission]:
         return [mission for id, mission in self if mission.npc == npc_name or npc_name in mission.involved_npcs]
+    
+    def get_missions_for_npc_controller(self, npc_name: str) -> list[Mission]:
+        if npc_name in _npc_mission_controllers.keys():
+            mission_id = _npc_mission_controllers[npc_name]
+            return [
+                self.get_mission_name(mission.id)
+                for mission in self.get_mission(mission_id).children
+            ]
+        
+        return []
     
     def print_mission_list_for_npc(self, npc_name: str) -> None:
         print(f'Finding missions for {npc_name}...')

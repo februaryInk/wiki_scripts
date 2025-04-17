@@ -8,8 +8,9 @@ from sandrock          import *
 from sandrock.lib.text import load_text
 from sandrock.preproc  import get_config_paths
 from sandrock.structures.conversation import *
-from sandrock.structures.story import *
+from sandrock.structures.story    import *
 from sandrock.preproc             import get_interest_points
+from script.structures.generators import *
 
 from pathvalidate import sanitize_filename
 
@@ -43,13 +44,26 @@ def run() -> None:
     # print_items_with_item_tag(1122)
 
     story = Story()
-    m = story.get_mission(1800502)
+    m = story.get_mission(1700390)
+    # # m = story.get_mission(1100071)
     m.print()
 
-    # builder = ConvBuilder(5109)
-    # builder.print()
+    # # print_conv_talk(4163)
 
-    # print_conv_segment(1470)
+    # # builder = ConvBuilder(4163)
+    # # builder.print()
+
+    # print_generator_items(20930003)
+    # print('----')
+    # print_generator_items(20940022)
+    # print('----')
+    # print_generator_items(13409)
+    # print('----')
+    # print_generator_items(13410)
+
+    print_dialogue('Matilda')
+
+    # print_refine_type()
 
     # items = [
     #     19600014,
@@ -62,7 +76,117 @@ def run() -> None:
     #     print(f'{item}: {text.item(item)}')
 
     # sceneinfo.get_scene_system_name_to_id()
+    # print_affixes()
 
+    # print_generator(30000)
+
+def print_generator(id: int) -> None:
+    generator = GeneratorGroup(id)
+    generator.print()
+
+def print_affixes() -> None:
+    affixes = DesignerConfig.Generator_Affix
+    for id, affix in affixes.items():
+        description = text(affix['desId'])
+        print(f'{id}: {description}')
+
+def print_cutscene_photos() -> None:
+    cutscene_photos = DesignerConfig.CutscenePhotos
+
+    story = Story()
+
+    linkable_words = []
+    for id, npc in DesignerConfig.Npc.items():
+        linkable_words.append(text(npc['nameID']))
+    linkable_words = list(set(linkable_words))
+
+    main_mission_lines = ['===Main Missions===', '{{FlexContainer|']
+    side_mission_lines = ['===Side Missions===', '{{FlexContainer|']
+
+    for id, photo in cutscene_photos.items():
+        description = text(photo['descriptionId']).split(' - ', 1)
+        if len(description) != 2: description = ['', description[0]]
+        name, caption = description
+        mission = story.get_mission(photo['missionId'])
+
+        for word in linkable_words:
+            if word in caption:
+                caption = caption.replace(word, f'[[{word}]]')
+
+        if mission:
+            if mission.name:
+                image_name = mission.name
+            else:
+                image_name = f'{name} cutscene.png'
+            
+            if mission.is_event:
+                photo_from = f'{{{{e|{mission.name}}}}}'
+            else:
+                photo_from = f'{{{{m|{mission.name}}}}}'
+        else:
+            image_name = f'{name} cutscene.png'
+            'Unknown'
+
+        photo_lines = [
+            '{{CutscenePhoto',
+            f'|id = {id}',
+            f'|image = {name}.png',
+            f'|title = {name}',
+            f'|from = {photo_from}',
+            f'|description = {caption}',
+            '}}'
+        ]
+
+        if mission and mission.is_main:
+            main_mission_lines += photo_lines
+            main_mission_lines.append('')
+        else:
+            side_mission_lines += photo_lines
+            side_mission_lines.append('')
+    
+    main_mission_lines.append('}}')
+    side_mission_lines.append('}}')
+    lines = main_mission_lines
+    print('\n'.join(lines))
+
+def print_refine_type() -> None:
+    refines = DesignerConfig.Refine
+
+    for id, refine in refines.items():
+        if refine['refineType'] == -1:
+            print(f'{refine["refineType"]}: {text.item(id)}')
+    
+    for id, refine in refines.items():
+        if refine['refineType'] == 0:
+            print(f'{refine["refineType"]}: {text.item(id)}')
+    
+    equipment = DesignerConfig.Equipment
+    for id, equip in equipment.items():
+        print(f'{id}: {text.item(id)}')
+
+
+def print_dialogue(npc_name: str) -> None:
+    social_levels = DesignerConfig.SocialLevel
+    social_level_map = {level['level']: text(level['nameId']) for level in social_levels}
+    print(json.dumps(social_level_map, indent=2))
+    # Find the first match in DesignerConfig.Npc
+    npc_id = next((npc_id for npc_id, npc in DesignerConfig.Npc.items() if text(npc['nameID']) == npc_name), None)
+    print(f'NPC ID: {npc_id}')
+    talks = [talk for talk in DesignerConfig.GeneralDialog if talk['id']['id0'] <= npc_id <= talk['id']['id1']]
+
+    assert len(talks) == 1, f'Found {len(talks)} talks for {npc_name}'
+    talk = talks[0]
+
+    print('==General Dialog==')
+    normalTalkData = talk['normal']['talkData']
+
+    for talkData in normalTalkData:
+        relation = social_level_map[talkData['relation']]
+        print(f'==={relation}===')
+
+        for segment_id_str in talkData['dialogUnit'].split(';'):
+            segment_id = int(segment_id_str.split('*')[0])
+            print_conv_segment(segment_id)
 
 def print_monster_spawns() -> None:
     monsters = DesignerConfig.Monster
@@ -96,17 +220,6 @@ def read_gift_content(id: int) -> None:
     for drop in drops:
         id_str, count_str = drop.split('_')
         print(f'{text.item(int(id_str))} x{count_str}')
-
-def print_generator_items(id: int) -> None:
-    generator_group = DesignerConfig.GeneratorGroup[id]
-    generator_items = DesignerConfig.Generator_Item
-    elements = generator_group['elements']
-
-    for id_weights in [element['idWeights'] for element in elements]:
-        total_weight = sum([id_weight['weight'] for id_weight in id_weights])
-        for id_weight in id_weights:
-            generator_item = generator_items[id_weight['id']]
-            print(f'{text.item(generator_item['itemId'])} ({int(100 * id_weight["weight"] / total_weight)}%)')
 
 def print_party_table():
     party_services = DesignerConfig.PartyService

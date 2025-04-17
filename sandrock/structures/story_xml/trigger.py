@@ -8,8 +8,7 @@ from sandrock                           import *
 from sandrock.lib.asset                 import Asset
 from sandrock.structures.story_xml.stmt import *
 
-if TYPE_CHECKING:
-    from sandrock.structures.story import Mission
+if TYPE_CHECKING: from sandrock.structures.story import Mission
 
 # ------------------------------------------------------------------------------
 

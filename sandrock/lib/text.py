@@ -82,6 +82,22 @@ class _TextEngine:
         if id_ in DesignerConfig.Npc:
             return cls._designer_config_text('Npc', id_, 'nameID')
         else:
+            for random_npc in DesignerConfig.RandomNPCData:
+                id_low = random_npc['instanceIds']['x']
+                id_high = random_npc['instanceIds']['y']
+
+                if id_ >= id_low and id_ <= id_high:
+                    # There could be multiple names, but for simplicity we will 
+                    # use the first one.
+                    name_id = random_npc['nameRange']['x']
+                    return cls.text(name_id)
+            
+            # These names are assigned in story scripts.
+            if id_ == 85361:
+                return cls.text(80033738) # Linhua
+            if id_ == 85362:
+                return cls.text(80033737) # Polly-anne
+            
             return cls.text(id_)
 
     #@classmethod
