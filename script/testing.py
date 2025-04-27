@@ -23,7 +23,7 @@ def run() -> None:
     # # print_mission(1600392)
     # print_scenes()
     # # print_items_with_item_tag(86)
-    print_mission_names()
+    # print_mission_names()
     # # # m = story.get_mission(1100106)
     # print(json.dumps(story.get_mission_names(), indent=2))
     # # # print_scenes()
@@ -44,110 +44,14 @@ def run() -> None:
     # print_items_with_item_tag(1122)
 
     story = Story()
-    m = story.get_mission(1700390)
-    # # m = story.get_mission(1100071)
+    m = story.get_mission(1800528)
+    # m = story.get_mission(1100071)
     m.print()
-
-    # # print_conv_talk(4163)
-
-    # # builder = ConvBuilder(4163)
-    # # builder.print()
-
-    # print_generator_items(20930003)
-    # print('----')
-    # print_generator_items(20940022)
-    # print('----')
-    # print_generator_items(13409)
-    # print('----')
-    # print_generator_items(13410)
-
-    print_dialogue('Matilda')
-
-    # print_refine_type()
-
-    # items = [
-    #     19600014,
-    #     16200004,
-    #     16300000,
-    #     19800039
-    #   ]
     
-    # for item in items:
-    #     print(f'{item}: {text.item(item)}')
-
-    # sceneinfo.get_scene_system_name_to_id()
-    # print_affixes()
-
-    # print_generator(30000)
 
 def print_generator(id: int) -> None:
     generator = GeneratorGroup(id)
     generator.print()
-
-def print_affixes() -> None:
-    affixes = DesignerConfig.Generator_Affix
-    for id, affix in affixes.items():
-        description = text(affix['desId'])
-        print(f'{id}: {description}')
-
-def print_cutscene_photos() -> None:
-    cutscene_photos = DesignerConfig.CutscenePhotos
-
-    story = Story()
-
-    linkable_words = []
-    for id, npc in DesignerConfig.Npc.items():
-        linkable_words.append(text(npc['nameID']))
-    linkable_words = list(set(linkable_words))
-
-    main_mission_lines = ['===Main Missions===', '{{FlexContainer|']
-    side_mission_lines = ['===Side Missions===', '{{FlexContainer|']
-
-    for id, photo in cutscene_photos.items():
-        description = text(photo['descriptionId']).split(' - ', 1)
-        if len(description) != 2: description = ['', description[0]]
-        name, caption = description
-        mission = story.get_mission(photo['missionId'])
-
-        for word in linkable_words:
-            if word in caption:
-                caption = caption.replace(word, f'[[{word}]]')
-
-        if mission:
-            if mission.name:
-                image_name = mission.name
-            else:
-                image_name = f'{name} cutscene.png'
-            
-            if mission.is_event:
-                photo_from = f'{{{{e|{mission.name}}}}}'
-            else:
-                photo_from = f'{{{{m|{mission.name}}}}}'
-        else:
-            image_name = f'{name} cutscene.png'
-            'Unknown'
-
-        photo_lines = [
-            '{{CutscenePhoto',
-            f'|id = {id}',
-            f'|image = {name}.png',
-            f'|title = {name}',
-            f'|from = {photo_from}',
-            f'|description = {caption}',
-            '}}'
-        ]
-
-        if mission and mission.is_main:
-            main_mission_lines += photo_lines
-            main_mission_lines.append('')
-        else:
-            side_mission_lines += photo_lines
-            side_mission_lines.append('')
-    
-    main_mission_lines.append('}}')
-    side_mission_lines.append('}}')
-    lines = main_mission_lines
-    print('\n'.join(lines))
 
 def print_refine_type() -> None:
     refines = DesignerConfig.Refine

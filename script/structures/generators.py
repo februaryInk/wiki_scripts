@@ -1,5 +1,7 @@
 '''
-Parses generators for items, affixes, and attributes.
+Parses "generators" (GeneratorGroup), a data structure that determines 
+probabilities for a set of outcomes. This is used to randomize items, 
+equipment affixes, and equipment attributes.
 
 GeneratorGroup -> GeneratorGroupElement -> IdWeight: Affix, Attr, Item
 '''
@@ -157,6 +159,25 @@ class _IdWeight:
 
 class Affix(_IdWeight):
 
+    # Blue rarity, green affix
+    # When Mining minerals, 5% chance to drop extra Rare ore.
+    #
+    # Purple rarity, double purple affix
+    # Mining minerals When Stamina is consumed, there is a 5% chance to return 6 points.
+    # Use tools When Stamina is consumed, there is a 5% chance to return 6 points.
+    #
+    # Mining minerals efficiency +9%
+    #
+    # Blue affix
+    # Mining minerals When Stamina is consumed, there is a 5% chance to return 4 points.
+    #
+    # Purple affix
+    # When Quarry, 9% chance to drop extra Resources.
+    #
+    # Blue, purple
+    # When Quarry, 7% chance to drop extra Resources.
+    # Use tools When Stamina is consumed, there is a 5% chance to return 6 points.
+
     types = {
         1: 'Common',
         2: 'Outstanding',
@@ -178,7 +199,8 @@ class Affix(_IdWeight):
         super().__init__(element, data)
 
         self.id: int              = data['id']
-        self.asset_data: dict     = DesignerConfig.Generator_Affix[id]
+        self.asset_data: dict     = DesignerConfig.Generator_Affix[self.id]
+
         self.affix_type: int      = self.asset_data['affixType']
         self.default_lock: int    = self.asset_data['defaultLock']
         self.des_id: int          = self.asset_data['desId']
@@ -208,7 +230,7 @@ class Affix(_IdWeight):
         for match in matches:
             index, _, param_format = match
             index = int(index)
-            param = self.description_params[index] if index < len(self.description_params) else 'Unknown'
+            param = self.description_params[index] if index < len(self.description_params) else 0 # 'Unknown'
 
             if param_format:
                 full_match = f'{{{index}:{param_format}}}'
@@ -224,7 +246,7 @@ class Affix(_IdWeight):
                 full_match, str(formatted_param), 1
             )
 
-        return formatted_description
+        return f'{self.id}: {formatted_description}'
     
     @cached_property
     def description_params(self) -> str:
@@ -278,7 +300,7 @@ class Attr(_IdWeight):
         super().__init__(element, data)
 
         self.id: int              = data['id']
-        self.asset_data: dict     = DesignerConfig.GeneratorAttr[id]
+        self.asset_data: dict     = DesignerConfig.GeneratorAttr[self.id]
 
         self.attr_type: int       = self.asset_data['attrType']
         self.random_type: int     = self.asset_data['randomType']
