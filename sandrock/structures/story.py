@@ -33,9 +33,9 @@ import urllib.parse
 # them on the wiki is to translate these internal names.
 _event_names = {
     1300026: 'Shonash Canyon Bridge Opening Ceremony',
-    1500337: 'A Lifetime of Growing', # Chinese idiom "It takes a hundred years to cultivate a person"
+    # 1500337: 'A Lifetime of Growing', # Chinese idiom "It takes a hundred years to cultivate a person"; currently considered Builder Cruise x Operation Flowergate post-conduct in wiki.
     1600391: 'Heartbreak Drama', # Heartbroken Solo Drama
-    # 1600392: 'Promise Me', # A Lonely Performance follow-up.
+    # 1600392: 'Promise Me', # Heartbreak Drama follow-up.
     1700300: 'Community Service', # Logan Promoting
     1800306: 'Follow-up Meeting',
     1700315: 'A Secret Under the Tree', # A Secret Beneath a Tree
@@ -49,14 +49,18 @@ _event_names = {
 
 _manual_mission_names = {
     1300041: text(80001007), # In Trusses We Trust, donated gifts
+    1500337: 'Builder Cruise x Operation Flowergate', # It takes a hundred years to cultivate a person
     1500403: text(80031199), # The Girl with the Umbrella, Ginger's Diary Easter egg
     1800519: 'Private Prescription', # Little Fang's Heartfelt Easter egg
     1800537: 'Late Bloomer', # The Continuation of Yimi's Love
 }
 
+# Each character has their own mission controller that manages when their 
+# friendship and romance missions trigger.
 _npc_mission_controllers = {
     'Amirah': 1200264,
     'Arvio': 1200107,
+    'Fang': 1200106,
     'Grace': 1200133,
     'Heidi': 1200124,
     'Jane': 1200333,
@@ -71,10 +75,12 @@ _general_mission_controllers = {
     1200364: 'Side Mission Controller (Chapter 3)',
 }
 
+# Decode URL-encoded strings in the XML so we can read the properties properly.
 def _recursive_unquote(element: ElementTree.Element) -> None:
     for k, v in element.attrib.items():
         if v and isinstance(v, str) and '%' in v:
             element.attrib[k] = urllib.parse.unquote(v)
+    
     for child in element:
         _recursive_unquote(child)
 
@@ -85,15 +91,13 @@ class Mission:
         self._asset: Asset             = asset
         self.story: Story              = story 
         self.root: ElementTree.Element = asset.read_xml()
-        self._content : dict           = None
+        self.id: int                   = int(self.root.get('id'))
+
+        self._content : dict               = None
         self._conversation_modifiers: dict = None
-        self._vars_to_mission_id       = None
+        self._vars_to_mission_id: dict     = None
 
         _recursive_unquote(self.root)
-    
-    @property
-    def central_npc(self):
-        self.properties
     
     @property
     def children(self):
@@ -103,6 +107,7 @@ class Mission:
     def continuations(self):
         if self.name:
             return [child for child in self.children if not child.name]
+        
         return []
     
     @property
@@ -111,21 +116,11 @@ class Mission:
             description_id = int(self.properties[0])
             if description_id != -1:
                 return text(description_id)
+        
         return ''
     
-    @property
-    def id(self) -> int:
-        return int(self.root.get('id'))
-    
-    @property
-    def involved_npc_ids(self) -> list[int]:
-        npc_ids = set([int(elem.get('npc')) for elem in self.root.iter() if 'npc' in elem.attrib])
-        return [id for id in npc_ids if id > 8000 and id < 9000]
-    
-    @property
-    def involved_npcs(self) -> list[str]:
-        return [text.npc(id) for id in self.involved_npc_ids]
-    
+    # "Controllers" coordinate when missions, events, and other occurrences 
+    # happen.
     @property
     def is_controller(self) -> bool:
         return (
@@ -251,24 +246,6 @@ class Mission:
         
         return children_ids
     
-    def get_conversation_modifiers(self) -> list[str]:
-        if not self._conversation_modifiers:
-            conversation_modifiers = {
-                'option': {},
-                'segment': {}
-            }
-            for trigger in self.triggers:
-                modifiers = trigger.get_conversation_modifiers()
-                for event_type, modifier in modifiers.items():
-                    event_type_modifiers = conversation_modifiers[event_type]
-                    for id, modifiers in modifier.items():
-                        if id not in event_type_modifiers:
-                            event_type_modifiers[id] = set()
-                        event_type_modifiers[id] |= modifiers
-            self._conversation_modifiers = conversation_modifiers
-        
-        return self._conversation_modifiers
-    
     def get_content(self) -> dict:
         if not self._content:
             content = {}
@@ -291,6 +268,26 @@ class Mission:
             self._content = content
 
         return self._content
+    
+    # Items or reputation points that are given to the player for certain 
+    # dialogue lines.
+    def get_conversation_modifiers(self) -> list[str]:
+        if not self._conversation_modifiers:
+            conversation_modifiers = {
+                'option': {},
+                'segment': {}
+            }
+            for trigger in self.triggers:
+                modifiers = trigger.get_conversation_modifiers()
+                for event_type, modifier in modifiers.items():
+                    event_type_modifiers = conversation_modifiers[event_type]
+                    for id, modifiers in modifier.items():
+                        if id not in event_type_modifiers:
+                            event_type_modifiers[id] = set()
+                        event_type_modifiers[id] |= modifiers
+            self._conversation_modifiers = conversation_modifiers
+        
+        return self._conversation_modifiers
     
     def get_initialized_vars_by_mission_id(self) -> dict[int, list[str]]:
         vars_by_mission_id = {}
@@ -537,6 +534,8 @@ class Mission:
         lines.append('==Conduct==')
         lines.append('')
         
+        # This order usually makes the output follow the approximate order that
+        # mission events play out in, but could be improved.
         ordered_triggers = sorted(self.triggers, key=lambda x: (x.procedure, x._step))
         # Move the triggers that follow up on ended conversations to be right 
         # after their respective conversations.
@@ -623,9 +622,6 @@ class Story:
         name_dict = {mission.id: mission.name for id, mission in self.missions.items()}
         return dict(sorted(name_dict.items()))
     
-    def get_missions_for_npc(self, npc_name: str) -> list[Mission]:
-        return [mission for id, mission in self if mission.npc == npc_name or npc_name in mission.involved_npcs]
-    
     def get_missions_for_npc_controller(self, npc_name: str) -> list[Mission]:
         if npc_name in _npc_mission_controllers.keys():
             mission_id = _npc_mission_controllers[npc_name]
@@ -635,11 +631,3 @@ class Story:
             ]
         
         return []
-    
-    def print_mission_list_for_npc(self, npc_name: str) -> None:
-        print(f'Finding missions for {npc_name}...')
-        print('')
-        for mission in self.get_missions_for_npc(npc_name):
-            print(f'{mission.id}: {mission.name}')
-            print(mission.description)
-            print('')
