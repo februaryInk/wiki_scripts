@@ -1,5 +1,7 @@
 '''
-
+TRIGGER elements determine what ACTIONS happens in response to specific EVENTS, 
+if all CONDITIONS are met. (They also can occasionally have a RELY element, but
+not sure what that does yet.)
 '''
 
 from __future__ import annotations
@@ -9,6 +11,16 @@ from sandrock.lib.asset                 import Asset
 from sandrock.structures.story_xml.stmt import *
 
 if TYPE_CHECKING: from sandrock.structures.story import Mission
+
+# ------------------------------------------------------------------------------
+
+class _Actions:
+    def __init__(self, actions: list[ElementTree.Element], mission: Mission):
+        self._actions: list[Stmt] = []
+
+        for action in actions:
+            stmt_class = Stmt.find_stmt_class(action)
+            self._actions.append(stmt_class(action, mission))
 
 # ------------------------------------------------------------------------------
 
@@ -56,6 +68,17 @@ class Trigger:
         assert len(conversations) <= 1
         return conversations[0] if len(conversations) > 0 else None
     
+    def add_modifiers(self, modifiers: dict[str, list[str]], type: str, id: str):
+        for action in self._structure['ACTIONS']:
+            if action.is_npc_change_favor:
+                if modifiers[type].get(id) is None:
+                    modifiers[type][id] = set()
+                modifiers[type][id].add(('npc_favor', action.npc_id, action.favor))
+            if action.is_receive_item:
+                if modifiers[type].get(id) is None:
+                    modifiers[type][id] = set()
+                modifiers[type][id].add(('item', action.item_id, action.count))
+
     def get_conversation_modifiers(self) -> dict[str, list[str]]:
         modifiers = {
             'option': {},
@@ -69,18 +92,6 @@ class Trigger:
                 self.add_modifiers(modifiers, 'option', event.option_id)
 
         return modifiers
-    
-    def add_modifiers(self, modifiers: dict[str, list[str]], type: str, id: str):
-        for action in self._structure['ACTIONS']:
-            if action.is_npc_change_favor:
-                if modifiers[type].get(id) is None:
-                    modifiers[type][id] = set()
-                modifiers[type][id].add(('npc_favor', action.npc_id, action.favor))
-            if action.is_receive_item:
-                if modifiers[type].get(id) is None:
-                    modifiers[type][id] = set()
-                modifiers[type][id].add(('item', action.item_id, action.count))
-                
 
     def get_unlocked_item_ids(self) -> list[int]:
         unlock_stmts = [stmt for stmt in self._structure['ACTIONS'] if stmt.is_blueprint_unlock]
@@ -194,22 +205,42 @@ class Trigger:
         assert len(element) == 1
         element = element[0]
         stmts = []
+        
+        for child in element:
+            if child.tag == 'GROUP':
+                group_index = int(child.get('index'))
 
-        # TODO: assert len(element.findall('GROUP')) <= 1
-        
-        for stmt in element.iter('STMT'):
-            stmt_class = Stmt.find_stmt_class(stmt)
-            stmts.append(stmt_class(stmt, self._mission))
-        
+                for stmt in child.findall('STMT'):
+                    stmt_class = Stmt.find_stmt_class(stmt)
+                    stmts.append(stmt_class(stmt, group_index, self._mission))
+            elif child.tag == 'STMT':
+                stmt_class = Stmt.find_stmt_class(child)
+                stmts.append(stmt_class(child, None, self._mission))
+
         return stmts
     
     def read(self) -> list[str]:
         lines = [f'TRIGGER Procedure {self.procedure} Step {self._step} Order {self.order} Repeat {self._repeat}']
         lines += ['------------------------------------------------------------']
+        
         for key, stmts in self._structure.items():
             lines += [key]
+            grouped_stmts = defaultdict(list)
             for stmt in stmts:
-                lines += stmt.read()
+                grouped_stmts[stmt.group_index].append(stmt)
+
+            if len(grouped_stmts) > 1:
+                for group_index, group_stmts in grouped_stmts.items():
+                    lines += [f'GROUP {group_index}:']
+
+                    for stmt in group_stmts:
+                        lines += stmt.read()
+
+                    lines += ['']
+            else:
+                for stmt in stmts:
+                    lines += stmt.read()
+        
         return lines
     
     def read_conditions(self) -> list[str]:

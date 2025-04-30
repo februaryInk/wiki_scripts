@@ -1,19 +1,7 @@
 '''
-Classes that interpret missions from their XML.
-
--> DELIVER MISSION: rtlm, rtl, stlm, stl - time limits?
--> CHECK VAR: compare 3 is "equal to"? ref is value to check?
-ON SENDGIFT END: When given special item.
-SET SPECIAL GIFT RULE STATE: AssetSpecialGiftRuleSpecialGiftRule
-CHECK MISSION CURRENT STATE: state - 1 = not started, 2 = in progress, 3 = complete? 4? flag = 0 or 1
-
-# Successful mission completion:
-# stmt="CHECK MISSION CURRENT STATE" missionId="1600122" state="3" flag="1"
-
-Compare:
-    2: >=
-    3: ==
-    6: != ?
+Classes that interpret missions and events, and can be used to print a story 
+script in a more readable format with wiki-formatted dialogue. This lets me add 
+missions to the wiki without having to play through them.
 '''
 
 from __future__ import annotations
@@ -42,6 +30,7 @@ _event_names = {
     1800354: 'Grandma Vivi\'s Guidance', # Seeking Grandma Vivi's Guidance
     1800373: 'An Unexpected Outcome',
     1800376: "Luna's Invitation",
+    1800383: 'Clean Shave', # Logan - Smooth Face
     1800398: 'Civil Corps Award Ceremony', # Militia Player Award
     1800484: 'End Marriage Loop',
     1900379: 'Grace\'s Return'
@@ -64,6 +53,7 @@ _npc_mission_controllers = {
     'Grace': 1200133,
     'Heidi': 1200124,
     'Jane': 1200333,
+    'Logan': 1200332,
     'Mi-an': 1200030,
     'Qi': 1200112,
     'Unsuur': 1200280,

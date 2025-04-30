@@ -311,6 +311,17 @@ pages = {
         'iconName',
         ('Pathea.DesignerConfig.IIdConfig.Id', lambda item: item['id'])
     ],
+    'AssetInquiryDataBaseInquiry': [
+        'id',
+        'type',
+        'para',
+        ('npcId', lambda item: {i + 1: npc for i, npc in enumerate(item['npcId'])}),
+        'weight',
+        'missionRequire',
+        'favorRequire',
+        'cost',
+        'addFavorRequire'
+    ],
     'AssetItemAttrGrowthDataAttrGrowth': [
         'id',
         'growthType',
