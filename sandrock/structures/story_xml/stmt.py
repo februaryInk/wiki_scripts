@@ -1,5 +1,8 @@
 '''
-Classes for handling the many types of STMTs in the story scripts.
+Classes for handling the many types of STMTs in the story scripts. A STMT can be
+listening for an event, checking for a condition, or performing an action. In
+these classes, we check what the STMT is doing and try to print it in a more 
+human-readable form.
 
 -> DELIVER MISSION: rtlm, rtl, stlm, stl - time limits?
 -> CHECK VAR: compare 3 is "equal to"? ref is value to check?
@@ -10,6 +13,9 @@ CHECK MISSION CURRENT STATE: state - 1 = not started, 2 = in progress, 3 = compl
 Seems like: Increase var by 1 6 days in a row.
 <TRIGGER name="%E5%A6%AE%E9%9B%85%E5%A4%A9%E6%95%B0" repeat="6" procedure="2" step="1">
 <STMT stmt="SET VAR" scope="2" name="NIASEED" set="1" value="1" identity="" />
+
+# Successful mission completion:
+# stmt="CHECK MISSION CURRENT STATE" missionId="1600122" state="3" flag="1"
 '''
 
 from __future__ import annotations
@@ -20,6 +26,9 @@ from sandrock.structures.conversation import *
 
 import urllib.parse
 
+if TYPE_CHECKING:
+    from sandrock.structures.story import Mission
+
 # -- Private -------------------------------------------------------------------
 
 _compare_map = {
@@ -28,10 +37,6 @@ _compare_map = {
     4: '<= (maybe?)',
     5: '> (maybe?)',
     6: '<'
-}
-
-# Is Type or Option the important part?
-_intractive_map = {
 }
 
 _weather_map = {
@@ -56,7 +61,8 @@ class Stmt:
         val = stmt.get('stmt')
         return val in cls._stmt_matches
 
-    def __init__(self, stmt: ElementTree.Element, mission):
+    def __init__(self, stmt: ElementTree.Element, group_index: int | None, mission: Mission):
+        self.group_index = group_index
         self._mission = mission
         self._stmt: ElementTree.Element = stmt
         self.extract_properties()

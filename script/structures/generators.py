@@ -395,6 +395,28 @@ class Item(_IdWeight):
 # ------------------------------------------------------------------------------
 
 class GeneratorGroup:
+    @classmethod
+    def print_generators_for_item_id(cls, item_id: int) -> None:
+        lines = [f'== Item {text.item(item_id)} ==']
+        generator_item_ids = [id for id, gen_item in DesignerConfig.Generator_Item.items() if gen_item['itemId'] == item_id]
+        generator_group_ids = []
+
+        for id, gen_group in DesignerConfig.GeneratorGroup.items():
+            for element in gen_group['elements']:
+                for id_weight in element['idWeights']:
+                    if id_weight['id'] in generator_item_ids:
+                        generator_group_ids.append(id)
+                        break
+        
+        generator_group_ids = list(set(generator_group_ids))
+        for id in generator_group_ids:
+            generator = GeneratorGroup(id)
+            lines.append(f'== Generator {id} ==')
+            lines += generator.lines
+            lines.append('')
+        
+        print('\n'.join(lines))
+    
     def __init__(self, id: int) -> None:
         self.id: int              = id
         self.asset_data: dict     = DesignerConfig.GeneratorGroup[id]
@@ -412,4 +434,4 @@ class GeneratorGroup:
         return lines
     
     def print(self) -> None:
-        print('\n'.join(self.lines()))
+        print('\n'.join(self.lines))
