@@ -32,6 +32,7 @@ if TYPE_CHECKING:
 # -- Private -------------------------------------------------------------------
 
 _compare_map = {
+    1: '!= (maybe?)',
     2: '>=',
     3: '==',
     4: '<= (maybe?)',
@@ -468,12 +469,12 @@ class _StmtQuiet(Stmt):
     
 class _StmtActorShowBubble(Stmt):
     _stmt_matches = [
-        'SHOW ACTOR BUBBLE'
+        'ACTOR SHOW BUBBLE'
     ]
 
     def extract_properties(self) -> None:
-        self._text_id = self._stmt.get('transId')
-        self._npc_id = self._stmt.get('npc')
+        self._text_id = int(self._stmt.get('transId'))
+        self._npc_id = int(self._stmt.get('npc'))
         self._bubble = Bubble(self._npc_id, self._text_id)
     
     def read(self) -> list[str]:
