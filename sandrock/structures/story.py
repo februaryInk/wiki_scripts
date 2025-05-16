@@ -31,6 +31,7 @@ _event_names = {
     1800373: 'An Unexpected Outcome',
     1800376: "Luna's Invitation",
     1800383: 'Clean Shave', # Logan - Smooth Face
+    1800388: 'Redemption', # Miguel - Redemption 1
     1800398: 'Civil Corps Award Ceremony', # Militia Player Award
     1800484: 'End Marriage Loop',
     1900379: 'Grace\'s Return'
@@ -57,6 +58,7 @@ _npc_mission_controllers = {
     'Mi-an': 1200030,
     'Qi': 1200112,
     'Unsuur': 1200280,
+    'Venti': 1200387
 }
 
 _general_mission_controllers = {
@@ -364,25 +366,25 @@ class Mission:
         
         return self._vars_to_mission_id
     
-    @property
+    @cached_property
     def in_mission_talks(self) -> list[dict]:
-        if not hasattr(self, '_in_mission_talks'):
-            in_mission_talks = []
+        in_mission_talks = []
 
-            for talk in DesignerConfig.InMissionTalk:
-                if talk.get('missionId') == self.id:
-                    in_mission_talks.append(talk)
-            
-            self._in_mission_talks = in_mission_talks
-        
-        return self._in_mission_talks
+        for talk in DesignerConfig.InMissionTalk:
+            if talk.get('missionId') == self.id:
+                in_mission_talks.append(talk)
+                
+        return in_mission_talks
     
     def read_in_mission_talk(self) -> list[str]:
         lines = []
 
         for talk in self.in_mission_talks:
-            segment = ConvSegment(int(talk.get('dialog')))
-            lines += segment.read()
+            segment_ids = [int(id) for id in talk.get('dialog').split(',')]
+
+            for id in segment_ids:
+                segment = ConvSegment(id, [])
+                lines += segment.read()
         
         return lines
     

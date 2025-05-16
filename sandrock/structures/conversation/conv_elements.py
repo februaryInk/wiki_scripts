@@ -17,7 +17,10 @@ _indents = [
     'double',
     '3',
     '4',
-    '5'
+    '5',
+    '6',
+    '7',
+    '8',
 ]
 
 _conv_segments = DesignerConfig.ConvSegement
@@ -67,9 +70,10 @@ class ConvOption:
     def is_builder(self) -> bool:
         return False
     
+    # This option does nothing but end the conversation.
     @property
     def is_independently_terminal(self) -> bool:
-        return self._talk_id == -1 and not self.parent.is_terminal
+        return self._talk_id == -1 and not self.parent.is_terminal and self.parent.is_last_in_talk
     
     @property
     def is_talk(self) -> bool:
@@ -195,6 +199,7 @@ class ConvSegment:
     def is_talk(self) -> bool:
         return False
     
+    # There is nothing further to read after this segment.
     @property
     def is_terminal(self) -> str:
         if self.talk_parent:
@@ -270,6 +275,11 @@ class ConvSegment:
         else:
             talk_ids = [-1] * len(self.conv_option_content_ids)
         
+        if len(talk_ids) > len(self.conv_option_content_ids):
+            # If there are more talk ids than content ids, the extra talk ids
+            # are not used? I've only seen this once in So-Called "Rebellion".
+            talk_ids = talk_ids[:len(self.conv_option_content_ids)]
+        
         assert len(talk_ids) == len(self.conv_option_content_ids), f'talks {talk_ids} not compatible with content {self.conv_option_content_ids} in segment {self.id}'
 
         choices = zip(self.conv_option_content_ids, talk_ids, self.choice_types)
@@ -281,7 +291,7 @@ class ConvSegment:
     
     def get_next_talk(self) -> ConvTalk:
         if self.is_last_in_talk and not len(self.conv_option_content_ids):
-            assert len(self.talk_parent.next_talk_ids) == 1
+            # assert len(self.talk_parent.next_talk_ids) == 1
             
             next_talk_id = self.talk_parent.next_talk_ids[0]
             

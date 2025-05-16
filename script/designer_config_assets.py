@@ -12,6 +12,42 @@ from sandrock.preproc import get_config_paths
 
 # ------------------------------------------------------------------------------
 
+# I can't find the relationship between a pet NPC and its pet stats in the
+# MonoBehaviour asset files (maybe it's in MonoScripts?), so I'm just going to 
+# hand-code the pet IDs here.
+npc_pet_ids = {
+    1: 'Nemo',
+    2: 'CoCo',
+    3: 'Macchiato',
+    4: 'Meerkat',
+    5: 'Fennec Fox',
+    6: 'Banjo',
+    7: 'Gecko',
+    8: 'X',
+    100: 'Wild Yakmel',
+    101: 'Wild Alpha Yakmel',
+    102: 'Rocket Rooster',
+    103: 'Cock-a-doodle-Doom',
+    104: 'Boxing Jacks',
+    105: 'Tripion',
+    106: 'Punished Tripion',
+    107: 'Pensky',
+    108: 'Thorny Jumper',
+    109: 'Rockyenaroll',
+    110: 'Alpha Rockyenaroll',
+    111: 'Sandpony',
+    112: 'Bumble Ant',
+    113: 'Hot Honey BBQ Bumble Ant',
+    114: 'Spoiled Honey Bumble Ant',
+    115: 'Desert Hopper',
+    116: 'Desert Viper',
+    117: 'Supa Hot Hermicrab',
+    118: 'Starby-on-a-Horse',
+    119: 'SuperStarby',
+    120: 'Starby',
+    # ID + 1000 = Shiny variant.
+}
+
 # Using the number-to-word translations that are already used in the wiki. Can't 
 # find interpretations of these numbers in the game code; how did they know what
 # they represent?
@@ -265,6 +301,10 @@ pages = {
         'prizeReputation',
         ('Id', lambda item: item['id']), # TODO: Remove redundancy.
     ],
+    'AssetFavorRelationInfluenceDataFavor_Influence': [
+        'npcId',
+        ('relationParams', lambda item: [{'socialLevel': param['socialLevel'], 'textId': param['textId']} for param in item['relationParams']]),
+    ],
     'AssetGeneratorGroupConfigGeneratorGroup': [
         'id',
         'elements'
@@ -398,6 +438,27 @@ pages = {
         'nameRange',
         ('names', lambda item: [text(name_id) for name_id in range(item['nameRange']['x'], item['nameRange']['y'] + 1)]),
     ],
+    'AssetPetConfigPetConfig': [
+        'id',
+        ('npcId', lambda item: find_pet_npc_id(item['id'])[0]),
+        ('npcType', lambda item: find_pet_npc_id(item['id'])[1]),
+        ('nameId', lambda item: find_pet_npc_name_id(item['id'])),
+        'houseIds',
+        'skillIds',
+        'qualityWeights',
+        'enableFoodType'
+    ],
+    'AssetPetLevelItemConfigPetLevelItemConfig': [
+        'itemId',
+        'expValue',
+        'foodType'
+    ],
+    'AssetPetSkillConfigPetSkillConfig': [
+        'skillId',
+        'nameId',
+        'descId',
+        'level',
+    ],
     'AssetReadingConfigReadingBook': [
         'id',
         'bookId',
@@ -487,6 +548,33 @@ buff_operators = {
     'PlusByMaxPercent': '+%',
     'PlusRatio': '+%',
 }
+
+def find_pet_npc_id(pet_id: int) -> int:
+    npc_name = npc_pet_ids.get(pet_id, None)
+    if npc_name is None:
+        return (None, None)
+    
+    for id, npc in DesignerConfig.Npc.items():
+        if text.npc(id) == npc_name:
+            return (id, 'Npc')
+    
+    for id, npc in DesignerConfig.RandomNPCData.items():
+        print(text.npc(id))
+        if text.npc(npc['instanceIds']['x']) == npc_name:
+            return (id, 'RandomNpc')
+    
+    raise ValueError(f'NPC for pet ID {pet_id} not found.')
+
+def find_pet_npc_name_id(pet_id: int) -> str:
+    npc_id = find_pet_npc_id(pet_id)
+
+    if npc_id[0] is None:
+        return None
+    
+    if npc_id[1] == 'Npc':
+        return DesignerConfig.Npc[npc_id[0]]['nameID']
+    elif npc_id[1] == 'RandomNpc':
+        return DesignerConfig.RandomNPCData[npc_id[0]]['nameRange']['x']
 
 def parse_buff(buff_id: int) -> dict:
     buff = DesignerConfig.ActorBuff[buff_id]
