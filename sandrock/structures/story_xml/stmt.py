@@ -180,12 +180,29 @@ class _StmtBagModify(Stmt):
         'BAG MODIFY'
     ]
 
+    _item_grades = {
+        -1: 'Default',
+        1: 'Ordinary',
+        2: 'Outstanding',
+        3: 'Perfect',
+        4: 'Rare',
+    }
+
     def extract_properties(self) -> None:
         self._add_remove: int = int(self._stmt.get('addRemove', '0'))
         self.count: int       = int(self._stmt.get('count') or self._stmt.get('itemCount'))
         self._item_grade: int = int(self._stmt.get('itemGrade'))
         self.item_id: int     = int(self._stmt.get('item') or self._stmt.get('itemId'))
         self._show_tips: int  = int(self._stmt.get('showTips') or self._stmt.get('itemShowTip'))
+    
+    @property
+    def add_remove(self) -> str:
+        if self._add_remove == 0:
+            return 'Add'
+        elif self._add_remove == 1:
+            return 'Remove'
+        else:
+            return f'Unknown add/remove value {self._add_remove}'
     
     @property
     def is_receive_item(self) -> bool:
@@ -197,6 +214,26 @@ class _StmtBagModify(Stmt):
         # Filter Core 19810073 in mission 1200128.
         if self._add_remove == 0: # and self._show_tips == 1:
             return True
+    
+    @property
+    def item(self) -> str:
+        return text.item(self.item_id)
+    
+    @property
+    def item_grade(self) -> str:
+        return self._item_grades.get(self._item_grade, 'Unknown')
+    
+    @property
+    def show_tips(self) -> str:
+        if self._show_tips == 1:
+            return 'Notify player'
+        elif self._show_tips == 0:
+            return 'Do not notify player'
+        else:
+            return f'Unknown show tips value {self._show_tips}'
+        
+    def read(self) -> list[str]:
+        return [f'{self.add_remove} {self.count} {self.item} of {self.item_grade} quality ({self.show_tips})']
 
 class _StmtBlueprintUnlock(Stmt):
     _stmt_matches = [
@@ -280,6 +317,27 @@ class _StmtCheckMissionState(Stmt):
             return [f'{self.mission_name} has failed']
         else:
             return [f'{self.mission_name} is in state {self._state} with flag {self._flag}']
+
+class _StmtCheckNpcFavor(Stmt):
+    _stmt_matches = [
+        'CHECK NPC FAVOR'
+    ]
+
+    def extract_properties(self) -> None:
+        self._compare: int = int(self._stmt.get('compare'))
+        self.npc_id: int   = int(self._stmt.get('npc'))
+        self._value: int   = int(self._stmt.get('value'))
+
+    @property
+    def compare(self) -> str:
+        return _compare_map[self._compare]
+    
+    @property
+    def is_check_npc_favor(self) -> bool:
+        return True
+    
+    def read(self) -> list[str]:
+        return [f'Check if {text.npc(self.npc_id)} has favor {self.compare} {self._value}']
 
 class _StmtCheckNpcLeaveTown(Stmt):
     _stmt_matches = [
@@ -505,6 +563,16 @@ class _StmtOnConversationChoiceMade(Stmt):
         'ON CONVERSATION CHOICE MADE'
     ]
 
+    _index_to_text = {
+        0: 'first',
+        1: 'second',
+        2: 'third',
+        3: 'fourth',
+        4: 'fifth',
+        5: 'sixth',
+        6: 'seventh',
+    }
+
     def extract_properties(self) -> None:
         self._c_id: int             = int(self._stmt.get('cId'))
         self.conv_choice_index: int = int(self._stmt.get('selectIndex'))
@@ -523,7 +591,7 @@ class _StmtOnConversationChoiceMade(Stmt):
         return f'{self.conv_segment_id}_{self.conv_choice_index}'
     
     def read(self) -> list[str]:
-        lines = [f'The player chooses option index {self.conv_choice_index} for conversation choice (id {self.conv_segment_id}):']
+        lines = [f'(cId {self._c_id}) The player picks the {self._index_to_text.get(self.conv_choice_index, self.conv_choice_index)} option in conversation segment {self.conv_segment_id}:']
         lines += self.conv_segment.read()
 
         return lines
@@ -545,7 +613,7 @@ class _StmtOnConversationEnd(Stmt):
         return True
 
     def read(self):
-        return ['After the conversation ends:']
+        return [f'(cId {self.c_id}) After the conversation ends:']
 
 class _StmtOnConversationEndSegment(Stmt):
     _stmt_matches = [
@@ -572,7 +640,7 @@ class _StmtOnConversationEndSegment(Stmt):
         return True
     
     def read(self) -> list[str]:
-        lines = [f'There is a conversation segment (id {self.segment_id}) that ends:']
+        lines = [f'(cId: {self.c_id}) There is a conversation segment (id {self.segment_id}) that ends:']
         lines += self.conv_segment.read()
         return lines
 
@@ -663,6 +731,8 @@ class _StmtSetSpecialGiftRuleState(Stmt):
     
     @property
     def item(self) -> str:
+        if self.special_gift_rule['itemId'] == 0:
+            return 'No item'
         return text.item(self.special_gift_rule['itemId'])
     
     @property
@@ -798,7 +868,7 @@ class _StmtShowConversation(Stmt):
 
     def read(self) -> list[str]:
         self._conversation = [self.build_conversation(id_str) for id_str in self._dialogue_ids]
-        lines              = []
+        lines              = [f'(cId {self.c_id}) A conversation {", ".join(self._dialogue_ids)} starts:']
 
         for conv in self._conversation:
             lines += conv.read()

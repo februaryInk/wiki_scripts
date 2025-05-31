@@ -21,6 +21,7 @@ import urllib.parse
 # them on the wiki is to translate these internal names.
 _event_names = {
     1300026: 'Shonash Canyon Bridge Opening Ceremony',
+    1300392: 'Take a Guess', # Venti - Take a Guess
     # 1500337: 'A Lifetime of Growing', # Chinese idiom "It takes a hundred years to cultivate a person"; currently considered Builder Cruise x Operation Flowergate post-conduct in wiki.
     1600391: 'Heartbreak Drama', # Heartbroken Solo Drama
     # 1600392: 'Promise Me', # Heartbreak Drama follow-up.
