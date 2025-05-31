@@ -229,6 +229,11 @@ gain_types = {
     1: 'B'
 }
 
+gender_types = {
+    0: 'Male',
+    1: 'Female'
+}
+
 pages = {
     'AssetAbandonedDungeonRuleDataAbandonedDungeon': [
         ('scene', lambda item: sceneinfo.scene_system_name(item['scene'])),
@@ -238,6 +243,18 @@ pages = {
     ],
     'AssetActorProtoActor': [
         'id',
+        ('gender', lambda item: gender_types[item['gender']]),
+        'hp',
+        'cp',
+        'cpRecover',
+        'sp',
+        'ex',
+        'att_l',
+        'att_u',
+        'def',
+        'levelCritical',
+        'levelCritiDam',
+        'luckyPoint'
     ],
     'AssetAttrGeneratorConfigGenerator_Attr': [
         'id',

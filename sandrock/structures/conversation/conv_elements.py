@@ -263,15 +263,16 @@ class ConvSegment:
             talk_ids = []
             stack_talk_ids = [item.id for item in self._parent_stack if isinstance(item, ConvTalk)]
             
+            # Some dialogue options loop back to pose the same question again,
+            # which causes an infinite loop upon initialization of the 
+            # ConvOption. Make the next talk id -1 if it is already in the stack.
             next_talk_ids = self.talk_parent.next_talk_ids
 
             for talk_id in next_talk_ids:
                 if talk_id not in stack_talk_ids:
                     talk_ids.append(talk_id)
                 else:
-                    not_in_stack = [id for id in next_talk_ids if id not in stack_talk_ids]
-                    # assert len(not_in_stack) == 1, f'Found {not_in_stack} not in stack {stack_talk_ids}'
-                    talk_ids.append(not_in_stack[0])
+                    talk_ids.append(-1)
         else:
             talk_ids = [-1] * len(self.conv_option_content_ids)
         
@@ -283,11 +284,26 @@ class ConvSegment:
         assert len(talk_ids) == len(self.conv_option_content_ids), f'talks {talk_ids} not compatible with content {self.conv_option_content_ids} in segment {self.id}'
 
         choices = zip(self.conv_option_content_ids, talk_ids, self.choice_types)
-        
-        return [
+        options = [
             ConvOption(content_id, talk_id, choice_type, index, self._parent_stack + [self]) 
             for index, (content_id, talk_id, choice_type) in enumerate(choices)
         ]
+
+        # Some dialogue options loop back to pose the same question again,
+        # which can cause an infinite loop in this reading logic. If we have
+        # seen this exact choice before, exclude the previously chosen
+        # options.
+        parent_identifiers = [item.identifier for item in self._parent_stack]
+        if self.identifier in parent_identifiers:
+            unused_options = []
+
+            for option in options:
+                if option.identifier not in parent_identifiers:
+                    unused_options.append(option)
+
+            options = unused_options
+
+        return options
     
     def get_next_talk(self) -> ConvTalk:
         if self.is_last_in_talk and not len(self.conv_option_content_ids):
@@ -296,7 +312,7 @@ class ConvSegment:
             next_talk_id = self.talk_parent.next_talk_ids[0]
             
             if next_talk_id != -1:
-                return ConvTalk(next_talk_id, self._parent_stack)
+                return ConvTalk(next_talk_id, self._parent_stack + [self])
         
         return None
     
@@ -423,6 +439,9 @@ class ConvTalk:
     
     def read_up_to(self, identifier: str, parent_talks: list[ConvTalk]) -> list[str]:
         lines = []
+
+        if self.identifier == identifier:
+            return lines
         
         for segment in self.segments:
             if segment.identifier == identifier:
