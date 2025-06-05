@@ -23,20 +23,6 @@ InMissionTalk: Dialogue that select NPCs respond with while a mission is active.
     - missionId
     - npcIds
     - dialog (ConvSegment id)
-
-Every time we have a set of options, we need to check if we can merge back into a single
-conversational branch.
-
-[
-  ['T1', 'S1', 'S2', 'T2', 'S3',                         'S4', 'S5', 'T6', 'S10', 'S12'], 
-  ['T1', 'S1', 'S2', 'T3', 'S6', 'S7', 'S8', 'T4', 'S9', 'S4', 'S5', 'T7', 'S11', 'S12'],
-  ['T1', 'S1', 'S2', 'T3', 'S6', 'S7', 'S8', 'T5', 'S5', 'S9'],
-  ['T1', 'S1', 'S2', 'T3', 'S6', 'S7', 'S8', 'T8',       'S9']
-]
-
-When the conversation encounters a choice, look for the nearest shared future common segments that all end in either another choice, or all end in a terminal segment.
-If a branch terminates without sharing any such common segments with other branches, then it is removed from the running for checks at the next choice.
-If an option leads to a terminating next talk while other branches are longer, the player probably turned something down. The other branch(es) are the important ones.
 '''
 
 from __future__ import annotations
@@ -47,8 +33,9 @@ from sandrock.structures.conversation.conv_elements import *
 
 # -- Private -------------------------------------------------------------------
 
-_conv_chats = DesignerConfig.ConvChat
-_event_talks = DesignerConfig.EventTalk
+_conv_chats    = DesignerConfig.ConvChat
+_event_bubbles = DesignerConfig.EventBubbles
+_event_talks   = DesignerConfig.EventTalk
 
 # ------------------------------------------------------------------------------
 
@@ -95,6 +82,34 @@ class ConvChat:
     
     def read(self) -> list[str]:
         return self._bubble.read()
+
+class EventBubble:
+    def __init__(self, npc_id: int, tag: str):
+        self.npc_id: int     = npc_id
+        self.tag: str        = tag
+        # Event bubbles don't have unique IDs, though the combination of
+        # npc_id and tag should be unique.
+        self._data: dict = next(
+            data for data in _event_bubbles
+            if data['tag'] == tag and data['id'] == npc_id
+        )
+    
+    @cached_property
+    def bubbles(self) -> list[Bubble]:
+        return [Bubble(self.npc_id, text_id) for text_id in self.text_ids]
+    
+    @property
+    def text_ids(self) -> int:
+        return self._data['ids']
+    
+    def print(self) -> None:
+        print('\n'.join(self.read()))
+    
+    def read(self) -> list[str]:
+        lines = [f'Event bubble for {text.npc(self.npc_id)} with tag "{self.tag}":']
+        for bubble in self.bubbles:
+            lines += bubble.read()
+        return lines
 
 class EventTalk:
     @classmethod

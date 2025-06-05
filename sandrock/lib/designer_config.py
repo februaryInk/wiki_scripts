@@ -18,14 +18,27 @@ def load_designer_config(key: str) -> _DesignerConfigData | None:
     
     if not configs:
         return []# None
-    if isinstance(configs[0].get('id'), int):
+    if isinstance(configs[0].get('id'), int) and _is_unique_on_key(configs, 'id'):
         return sorted_dict({conf['id']: conf for conf in configs})
-    elif isinstance(configs[0].get('ID'), int):
+    elif isinstance(configs[0].get('ID'), int) and _is_unique_on_key(configs, 'ID'):
         return sorted_dict({conf['ID']: conf for conf in configs})
     else:
         return configs
 
 # -- Private -------------------------------------------------------------------
+
+def _is_unique_on_key(data: list[dict[str, Any]], key: str) -> bool:
+    '''
+    Check if the given key is unique across all dictionaries in the list.
+    Returns True if all values for the key are unique, False otherwise.
+    '''
+    seen = set()
+    for item in data:
+        value = item.get(key)
+        if value in seen:
+            return False
+        seen.add(value)
+    return True
 
 _DesignerConfigItem: TypeAlias = dict[str, Any]
 _DesignerConfigData: TypeAlias = dict[int, _DesignerConfigItem] | list[_DesignerConfigItem]
