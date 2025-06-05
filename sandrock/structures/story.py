@@ -39,6 +39,7 @@ _event_names = {
 }
 
 _manual_mission_names = {
+    1200055: 'Cover My Glass', # Pre-conduct, Justice questions the witnesses
     1300041: text(80001007), # In Trusses We Trust, donated gifts
     1500337: 'Builder Cruise x Operation Flowergate', # It takes a hundred years to cultivate a person
     1500403: text(80031199), # The Girl with the Umbrella, Ginger's Diary Easter egg

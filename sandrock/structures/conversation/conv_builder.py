@@ -109,8 +109,6 @@ def _find_first_convergence(stacks: list[list[str]]) -> str:
         ]
         if len(choice_segment_stacks) != previous_length:
             return _find_first_convergence(choice_segment_stacks)
-        
-    print('No common element found in any stack.')
 
 # ------------------------------------------------------------------------------
 
@@ -127,9 +125,6 @@ class ConvBuilder:
         self._common_series_counts = {}
 
         self.build()
-        print(f'Stacks: {json.dumps(self._identifier_stacks, indent=2)}')
-        self.find_common_series()
-        print(f'Common series: {json.dumps(self._common_series, indent=2)}')
     
     @property
     def common_series(self) -> list[ConvSegment]:
