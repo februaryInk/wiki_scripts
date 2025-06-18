@@ -1,4 +1,8 @@
 '''
+Monsters that spawn under certain circumstances, such as during sandstorms.
+
+MonsterSpawnAsset format:
+
 {
     'datas': [
         {

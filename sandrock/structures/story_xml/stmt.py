@@ -37,7 +37,7 @@ _compare_map = {
     3: '==',
     4: '<= (maybe?)',
     5: '> (maybe?)',
-    6: '<'
+    6: '<' # Definitely less than.
 }
 
 _weather_map = {
@@ -497,6 +497,23 @@ class _StmtNpcChangeFavor(Stmt):
     
     def read(self) -> list[str]:
         return [f'{self.npc} gains {self.favor} favor']
+    
+class _StmtNpcRemoveIdle(Stmt):
+    _stmt_matches = [
+        'NPC REMOVE IDLE',
+        'NPC REMOVE IDLE 2',
+    ]
+
+    def extract_properties(self) -> None:
+        self._id_name: str  = self._stmt.get('idName')
+        self._npc_id: int   = int(self._stmt.get('npc'))
+    
+    @property
+    def npc_name(self) -> str:
+        return text.npc(self._npc_id)
+    
+    def read(self) -> list[str]:
+        return [f'{self.npc_name} stops idling']
 
 class _StmtOnEveryDayStart(Stmt):
     _stmt_matches = [
