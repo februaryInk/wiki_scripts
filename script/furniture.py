@@ -58,18 +58,24 @@ def run() -> None:
             coords = size['localcoordinateList']
             coords.append({'row': 0, 'column': 0})
 
-            x = len(set([coord['row'] for coord in coords]))
-            y = len(set([coord['column'] for coord in coords]))
-            z = len(set(coords))
+            x = len(set([coord['column'] for coord in coords]))
+            y = len(set([coord['row'] for coord in coords]))
+            z = len(set((coord['row'], coord['column']) for coord in coords))
+            
             size_list.append([y, x, z])
     
         for item in asset.data['pairs']:
+            # A handful of furniture items are listed twice, and the one in 
+            # HomeToolSettingExtra tends to be the one that is incorrect.
+            if item['itemId'] in furniture_sizes and asset.name.endswith('Extra'): continue
             furniture_sizes[item['itemId']] = size_list[item['rangeIndex']]
 
     for item in unit_config:
         if item['ID'] in furniture_sizes:
             size = furniture_sizes[item['ID']]
         else:
+            if item['ID'] in furniture: continue
+
             print(f'Warning: No size data for {text.item(item["ID"])}')
             size = [1, 1, 1]
 
@@ -78,7 +84,6 @@ def run() -> None:
             'unitType': item['unitType'],
             'size': size
         }
-
     
     data = {
         'version': config.version,

@@ -156,26 +156,7 @@ class ConvBuilder:
     
     def build(self) -> None:
         self._entry_talk = ConvTalk(self._entry_talk_id, self._stack)
-    
-    # Some stacks repeat a choice segment twice for a looping dialogue option,
-    # which messes up our attempts to collapse the stacks into a single
-    # conversation thread. This function removes those duplicate choices.
-    def clean_stacks(self) -> None:
-        cleaned_stacks = []
-
-        for stack in self._identifier_stacks:
-            cleaned_stack = []
-
-            for identifier in stack:
-                if identifier.startswith('ChoiceSegment') or identifier.startswith('Option'):
-                    if identifier in cleaned_stack:
-                        continue
-                
-                cleaned_stack.append(identifier)
-            
-            cleaned_stacks.append(cleaned_stack)
-        
-        self._identifier_stacks = cleaned_stacks
+        self.find_common_series()
     
     def find_common_series(self) -> None:
         stacks = self._identifier_stacks
@@ -206,6 +187,8 @@ class ConvBuilder:
     def read(self) -> list[str]:
         lines = []
         talk = None
+
+        self.print_debug()
 
         assert self._common_series[0][0] == self.identifier
 
@@ -251,3 +234,4 @@ class ConvBuilder:
     def print_debug(self) -> None:
         print(json.dumps(self._identifier_stacks, indent=2))
         print(json.dumps(self._common_series, indent=2))
+        print(f'Entry talk ID: {self._entry_talk_id}')
