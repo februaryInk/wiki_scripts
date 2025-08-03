@@ -1,62 +1,18 @@
 '''
+Because wiki pages need to have unique names, we cannot always use exactly the 
+item name given in the game because the game has items with duplicate names. 
+This script assigns unique names to item ids so the wiki can identify the item 
+properly.
 '''
-
-from collections import defaultdict
-import re
-import sys
 
 from sandrock.common              import *
 from sandrock.lib.designer_config import DesignerConfig
+from sandrock.preproc             import get_config_paths
 
 # ------------------------------------------------------------------------------
 
-dlc_outfit_characters = [
-    'Amirah',
-    'Catori',
-    'Elsie',
-    'Ernest',
-    'Fang',
-    'Grace',
-    'Logan',
-    'Mi-an',
-    'Nia',
-    'Owen',
-    'Qi',
-    'Unsuur'
-]
-
-pets_with_accessories = {
-    'alpharockyenaroll': 'Alpha Rockyenaroll',
-    'banjo': 'Banjo',
-    'boxingjacks': 'Boxing Jacks',
-    'bbqant': 'Hot Honey BBQ Bumble Ant',
-    'bumbleant': 'Bumble Ant',
-    'coco': 'Coco',
-    'deserthopper': 'Desert Hopper',
-    'desertviper': 'Desert Viper',
-    'gecko': 'Gecko',
-    'fennecfox': 'Fennec Fox',
-    'hermicrabhomeowner': 'Supa Hot Hermicrab',
-    'macchiato': 'Macchiato',
-    'meerkat': 'Meerkat',
-    'nemo': 'Nemo',
-    'pensky': 'Pensky',
-    'ravenx': 'X',
-    'rocketrooster01': 'Rocket Rooster',
-    'rocketrooster02': 'Cock-a-Doodle-Doom',
-    'rockyenaroll': 'Rockyenaroll',
-    'sandpony': 'Sandpony',
-    'spoiledant': 'Spoiled Honey Bumble Ant',
-    'starby': 'Starby',
-    'thornyjumper': 'Thorny Jumper',
-    'tripionking': 'Punished Tripion',
-    'tripion': 'Tripion',
-    'yakmel101': 'Wild Yakmel',
-    'yakmel102': 'Wild Alpha Yakmel',
-}
-
-# Manual overrides to force an id for a given name, for situations where item
-# ids are not being resolved otherwise by this script. Use as minimally as
+# Manual overrides to force an id for a given name, for situations where item 
+# ids are not being resolved otherwise by this script. Use as minimally as 
 # possible; sometimes necessary for items seemingly duplicated.
 priori = {
     'Cistanche': 16200019,
@@ -69,33 +25,25 @@ priori = {
     'Tomato and Egg Soup': 15000012
 }
 
-# One-off name variants. Assigning an id a variant name here will remove the
+# One-off name variants. Assigning an id a variant name here will remove the 
 # item from the pool of items that qualify for the base name.
 non_standard_variant_names = {
-    12401027: 'Super Shock Shield Mk. II (Logan)',
-    12401028: 'Super Deputy Hat (Unsuur)',
-    12403002: 'Captain\'s Shoes (Captain)',
-    12403003: 'Sandy\'s Shoes (Sandy)',
     14000001: 'Water Tank (assembly)',
     14000044: 'Drill Arm (assembly)',
-    15000124: 'Spicy Bean Paste (Dish)',
-    15000170: 'Spicy Bean Paste (Ingredient)',
-    15600005: 'Passya Game Kid (Toy)',
-    19200004: 'Processor (Relic)',
-    19800034: 'Plasticizer (Material)',
-    19810052: 'Train Model (Crafted)',
-    85000124: 'Spicy Bean Paste (Book, Dish)',
-    85000170: 'Spicy Bean Paste (Book, Ingredient)'
+    15000124: 'Spicy Bean Paste (dish)',
+    15000170: 'Spicy Bean Paste (ingredient)',
+    15600005: 'Passya Game Kid (toy)',
+    19200004: 'Processor (material)',
+    19800034: 'Plasticizer (material)',
+    19810052: 'Train Model (crafted)',
+    85000124: 'Spicy Bean Paste (book for dish)',
+    85000170: 'Spicy Bean Paste (book for ingredient)'
 }
 
-item_file         = 'AssetItemPrototypeItem'
-localization_file = 'AssetItemEnglish'
-
-directory = Path() if len(sys.argv) == 1 else Path(sys.argv[1])
+# ------------------------------------------------------------------------------
 
 def main():
-    items  = load_asset(item_file)
-    texts  = load_asset(localization_file)
+    items = DesignerConfig.ItemPrototype
 
     name_to_items = defaultdict(list)
     for item in items.values():
@@ -122,16 +70,16 @@ def main():
         if len(name_items) == 1:
             item = name_items[0]
             result[name] = item['id']
-        # Multiple candidates for this item name.
+        # Multiple candidates for this item name. 
         else:
-            # Find out if some of these items are variants for which we can
+            # Find out if some of these items are variants for which we can 
             # programatically determine an alternative name, i.e., "Swan Necklace"
             # into "Swan Necklace (Fang)".
             items_by_variant_name = defaultdict(list)
             for item in name_items:
                 variant_name = choose_variant_name(item, name)
                 items_by_variant_name[variant_name].append(item)
-           
+            
             for variant_name, variant_items in items_by_variant_name.items():
                 if len(variant_items) == 1:
                     variant_item = variant_items[0]
@@ -148,6 +96,7 @@ def main():
                     else:
                         result[variant_name] = variant_item['id']
 
+    dump_result(result)
     print(f'Output results for {len(result.keys())} out of {len(items)} items.')
 
 # Names that the item should be assigned even if there isn't a conflict with another
@@ -158,10 +107,10 @@ def preemptively_choose_variant_name(item, base_name, texts):
 
     if item['id'] in non_standard_variant_names:
         return non_standard_variant_names[item['id']]
-   
+    
     if item['id'] > 70000000 and item['id'] < 80000000 and 5 in tags:
         return f'{texts[item['nameId']]['text']} (Style)'
-   
+    
     if item['id'] > 81000000 and 5 in tags:
         return f'{texts[item['nameId']]['text']} (Book)'
 
@@ -170,14 +119,14 @@ def preemptively_choose_variant_name(item, base_name, texts):
         for key in pets_with_accessories.keys():
             if key in mip:
                 return f'{base_name} ({pets_with_accessories[key]})'
-   
+    
     return base_name
 
 def choose_variant_name(item, base_name):
     # Chromium Steel Bearings, possibly mismarked with tag 5?
     if id == 19112011:
         return base_name
-   
+    
     mip = item['maleIconPath'].lower()
     if mip is None: return base_name
 
@@ -187,14 +136,14 @@ def choose_variant_name(item, base_name):
     if mip.startswith("item_book") or mip.startswith('book_') or mip == "item_instructionbook":
         if not base_name.lower().endswith('(book)'):
             return f'{base_name} (Book)'
-   
+    
     # DLC outfits for different NPCs often have the same names as each other, and as
     # the corresponding player outfits. Append the NPC name to resolve.
     if 'dlc' in mip:
         for character_name in dlc_outfit_characters:
             if character_name.lower() in mip:
                 return f'{base_name} ({character_name})'
-   
+    
     return base_name
 
 def choose_item(items, texts):
@@ -210,8 +159,8 @@ def choose_item(items, texts):
             return None
         if len(items) == 1:
             return items[0]
-   
-    # Items with color variants often use the same maleIconPath with a number
+    
+    # Items with color variants often use the same maleIconPath with a number 
     # appended. We'll use the base (lowest number) item to refer to all
     # color variants.
     lowest_version      = None
@@ -242,5 +191,5 @@ def choose_item(items, texts):
         if lowest_version is None or item_version < lowest_version:
             lowest_version = item_version
             lowest_version_item = item
-   
+    
     return lowest_version_item

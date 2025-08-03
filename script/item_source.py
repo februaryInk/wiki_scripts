@@ -84,9 +84,11 @@ _manual_additions = {
 
 _manual_removals = {
     # Cynfuls Strike: Cave
-    11000079: [('treasure', 'scene:grace_mission_cave')],
+    11000079: [('treasure', 'scene:grace_mission_cave', 'generator:15111')],
+    # Old World Alloy: Wild Cave
+    19112034: [('gathering', 'scene:wild_cave', 'resource_point:3038')],
     # The Protector: Cave, Wild Cave
-    19810091: [('treasure', 'scene:grace_mission_cave'), ('treasure', 'scene:wild_cave')]
+    19810091: [('treasure', 'scene:wild_cave', 'generator:13267'), ('treasure', 'scene:grace_mission_cave', 'generator:13267')]
 }
 
 _manual_nominal = {
@@ -158,8 +160,8 @@ def format_results(
     formatted_unlockers = {item_id: format_unlockers(sources, item_sources) for item_id, sources in unlocker_sources.items()}
 
     results = {}
+
     for item_id in item_sources.keys():
-        
         formatted                       = formatted_sources[item_id]
         item_nominal_sources            = nominal_sources[item_id]
         main_sources, secondary_sources = get_main_sources(item_id, formatted, item_nominal_sources)
@@ -281,6 +283,8 @@ def format_source(formatted: dict, source: ItemSource, sources: list[ItemSource]
             add_or_append(formatted, 'ruin_abandoned', get_name(source[1]))
 
         case 'container':
+            print(source)
+            print(get_name(source[1]))
             add_or_append(formatted, 'container', get_name(source[1]))
 
         case 'crafting':
@@ -294,7 +298,10 @@ def format_source(formatted: dict, source: ItemSource, sources: list[ItemSource]
 
         case 'delivery':
             _, id_str = source[1].split(':')
-            add_or_append(formatted, 'delivery', wiki(DesignerConfig.PreOrderPoint[int(id_str)]['nameId']))
+            pre_order_point = next(
+                (point for point in DesignerConfig.PreOrderPoint if point['id'] == int(id_str)), None
+            )
+            add_or_append(formatted, 'delivery', wiki(pre_order_point['nameId']))
 
         case 'event':
             add_or_append(formatted, 'event', get_name(source[2]))
@@ -373,10 +380,10 @@ def format_unimplemented_items(results: dict[int, dict]) -> list[str]:
 
     for item in DesignerConfig.ItemPrototype:
         if item['id'] < 20000000 and item['id'] not in results:
-            unimplemented.add(wiki.item(item['id']).lower())
-    
+            unimplemented.add((wiki.item(item['id']) or text.item(item['id'])).lower())
+
     for item_id in results.keys():
-        unimplemented.discard(wiki.item(item_id).lower())
+        unimplemented.discard((wiki.item(item_id) or text.item(item_id)).lower())
     
     unimplemented.discard('')
     unimplemented = sorted(list(unimplemented))
@@ -407,6 +414,7 @@ def find_matches(item_id: int, formatted: dict, item_nominal_sources: dict) -> l
 
         for key, value in formatted.items():
             compare = formatted_to_nominal.get(key.lower(), key.lower())
+
             if compare == nominal_source_description:
                 if compare == 'mission':
                     good_missions = [value for value in value if not re.fullmatch(r"Mission \d+", value)]

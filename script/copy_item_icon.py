@@ -3,8 +3,14 @@ from sandrock import *
 from PIL import Image
 
 items = [
-    "Yimi Planter"
+    "Pet Decoration Small Flower",
+	"Pet Collar Ornament",
+	"Pet Tail Decoration"
 ]
+
+start = 12700101
+end = 12702902
+ids = range(start, end)
 
 sprite_bundle = Bundle('uisystem_sprite')
 
@@ -15,7 +21,11 @@ def main() -> None:
         wiki_name = wiki.item(item['id'])
         
         for target in items:
-            if str(target).lower() == name.lower():
+            if id in ids: # str(target).lower() == name.lower():
+                if not wiki_name:
+                    print('No wiki name for', name, '(', id, ')')
+                    continue
+                
                 male_icon = item['maleIconPath']
                 female_icon = item['femaleIconPath']
 

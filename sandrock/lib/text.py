@@ -155,13 +155,21 @@ class _TextEngine:
     # Find the text for a particular asset (config_key), item id, and attribute.
     @classmethod
     def _designer_config_text(cls, config_key: str, id_: int, field_name: str, language: str | None = None) -> str:
-        return cls.text(DesignerConfig[config_key][id_][field_name], language)
+        designer_config = DesignerConfig[config_key]
+
+        if isinstance(designer_config._data, list):
+            return cls.text(next((item[field_name] for item in designer_config._data if item['id'] == id_), None), language)
+        
+        return cls.text(designer_config._data[id_][field_name], language)
 
     @classmethod
     def item(cls, item: int | dict[str, Any], language: str | None = None) -> str:
         if isinstance(item, dict):
             item = item['id']
         name = cls._designer_config_text('ItemPrototype', item, 'nameId', language)
+
+        # I'm only working in English and the language support was broken, so
+        # it's short-circuited for now...or always.
         if True: # language:
             return name
         else:
@@ -195,7 +203,7 @@ class _TextEngine:
             if id_ == 85362:
                 return cls.text(80033737) # Polly-anne
             
-            return cls.text(id_)
+            return str(id_)
 
     #@classmethod
     #def resource(cls, id_):
@@ -208,7 +216,8 @@ class _TextEngine:
 
     @classmethod
     def store(cls, id_: int) -> str:
-        return cls._designer_config_text('StoreBaseData', id_, 'shopName')
+        name = cls._designer_config_text('StoreBaseData', id_, 'shopName')
+        return name
 
     #@classmethod
     #def tree(cls, id_):
@@ -217,7 +226,7 @@ class _TextEngine:
 class _WikiTextEngine(_TextEngine):
     @classmethod
     def item(cls, item_id: int | dict[str, Any]) -> str:
-        return load_wiki_names().get(item_id, None)
+        return load_wiki_names().get(item_id, None) or super().item(item_id)
 
     @classmethod
     def scene(cls, id_: int) -> str:

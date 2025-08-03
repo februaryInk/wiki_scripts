@@ -243,6 +243,8 @@ def update_sand_skiing(results: Results) -> None:
 def update_spouse_cooking(results: Results) -> None:
     dish_possibilities = DesignerConfig.HomeTaskCookDishConfig
     for cooking_data in DesignerConfig.HomeTaskCookDataConfig:
+        if cooking_data["npcId"] == 8020: continue  # Skip Pen.
+        
         source = ('npc', 'spouse_cooking', f'npc:{cooking_data["npcId"]}')
         result_ratio = cooking_data['resaultRatio']
         bad_result_chance = result_ratio[0]
@@ -281,11 +283,15 @@ def update_spouse_gifts(results: Results) -> None:
                 results[item_id].add(source)
 
 def update_stores(results: Results) -> None:
-    for store_id, store in DesignerConfig.StoreBaseData.items():
+    for store in DesignerConfig.StoreBaseData:
+        store_id = store['id']
+        
         # Second Myseterious Man store that sells only pet DLC items and is not 
         # accessible in-game.
         # Multiplayer Vending Machine?
         if store_id in [18, 107]: continue
+        # During the Duvos invasion, Stev mans all the stores.
+        if store['npcId'] == 8094: continue
 
         source = ('store', f'store:{store_id}')
         goods = []
