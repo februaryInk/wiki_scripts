@@ -34,10 +34,10 @@ def update_scenes(results: Results) -> None:
 def update_monster(results: Results, scene: str, behaviour: Any) -> None:
     # protoId for SpawnMono_Point, monsterId for MonsterArea_IMap.
     monster_id = behaviour.get('protoId', behaviour.get('monsterId'))
-    # This is the first fight against Logan, but it's impossible to 
+    # These are the fights against Logan, but it's impossible to 
     # actually defeat him, so I do not believe he has any drops - yet, his monster 
     # data has the same drop table as the Caretaker.
-    if monster_id == 5044: return
+    if monster_id in [5044, 5054]: return
 
     source     = ['monster', f'scene:{scene}', f'monster:{monster_id}']
     monster    = DesignerConfig.Monster.get(monster_id)

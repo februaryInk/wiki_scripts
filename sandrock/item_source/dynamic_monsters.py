@@ -103,6 +103,8 @@ def update_spawn_sets(results: Results) -> None:
                 monster    = monsters.get(monster_id)
                 name       = text(monster['nameId'])
 
+                if monster_id in [5044, 5054]: continue  # Logan fights, no drops.
+
                 point_gen_mods = [mod for mod in point['modifiers'] if mod['modifierType'] == 4] + generator_mods
                 point_name_mods = [mod for mod in point['modifiers'] if mod['modifierType'] == 11] + name_mods
 

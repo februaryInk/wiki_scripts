@@ -6,7 +6,7 @@ from sandrock.preproc   import get_config_paths
 
 # ------------------------------------------------------------------------------
 
-# Shouldn't this be private? Only called in this file?
+# Should this be private? Only called in this file?
 # Load an asset file under designer_config that has the given key.
 @cache
 def load_designer_config(key: str) -> _DesignerConfigData | None:
@@ -17,13 +17,13 @@ def load_designer_config(key: str) -> _DesignerConfigData | None:
     configs      = data['configList']
     
     if not configs:
-        return []# None
+        return ([], [])
     if isinstance(configs[0].get('id'), int) and _is_unique_on_key(configs, 'id'):
-        return sorted_dict({conf['id']: conf for conf in configs})
+        return (sorted_dict({conf['id']: conf for conf in configs}), configs)
     elif isinstance(configs[0].get('ID'), int) and _is_unique_on_key(configs, 'ID'):
-        return sorted_dict({conf['ID']: conf for conf in configs})
+        return (sorted_dict({conf['ID']: conf for conf in configs}), configs)
     else:
-        return configs
+        return (configs, configs)
 
 # -- Private -------------------------------------------------------------------
 
@@ -46,9 +46,9 @@ _DesignerConfigData: TypeAlias = dict[int, _DesignerConfigItem] | list[_Designer
 class _DesignerConfigLoader:
     # Square bracket syntax.
     def __getitem__(self, key: str) -> _DesignerConfigWrapper:
-        config = load_designer_config(key)
+        config, raw_config = load_designer_config(key)
         assert config is not None
-        return _DesignerConfigWrapper(config)
+        return _DesignerConfigWrapper(config, raw_config)
 
     # Dot syntax.
     def __getattr__(self, key: str) -> _DesignerConfigWrapper:
@@ -56,13 +56,16 @@ class _DesignerConfigLoader:
 
 # Wraps the data and behaves essentially as though it IS the data.
 class _DesignerConfigWrapper:
-    def __init__(self, data: _DesignerConfigData):
+    def __init__(self, data: _DesignerConfigData, raw_data: _DesignerConfigData):
         self._data = data
+        # Raw data for debugging purposes, such as finding non-unique IDs when
+        # the data is expected to be a dict.
+        self._raw_data = raw_data
 
     def __getitem__(self, key: int) -> _DesignerConfigItem:
         return self._data[key]
 
-    # x in this?
+    # Is x in this?
     def __contains__(self, key: int | _DesignerConfigItem) -> bool:
         if isinstance(key, int):
             assert isinstance(self._data, dict)

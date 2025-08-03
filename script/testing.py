@@ -5,6 +5,7 @@ Scratch script for testing ad hoc output.
 from __future__ import annotations
 
 from sandrock          import *
+from sandrock.lib.designer_config import _DesignerConfigWrapper
 from sandrock.lib.text import load_text
 from sandrock.preproc  import get_config_paths
 from sandrock.structures.conversation import *
@@ -17,37 +18,67 @@ from pathvalidate import sanitize_filename
 # ------------------------------------------------------------------------------
 
 def run() -> None:
-    # print_mission(1600391)
-    # print_conv_segment(18366)
-    # print_conv_segment(4544)
-    # # print_mission(1600392)
     # print_scenes()
     # # print_items_with_item_tag(86)
     # print_mission_names()
-    # # # m = story.get_mission(1100106)
-    # print(json.dumps(story.get_mission_names(), indent=2))
     # # # print_scenes()
-    # # print_generator_items(11086)
-    # # print_generator_items(20990037)
-    # # print('----')
-    # # print_generator_items(20900021)
-    # # print_generator_items(13002)
-    # # print_generator_items(20900034)
-    # # print_generator_items(12030)
-    # print_generator_items(15105)
-    # print_conv_segment(1708)
-    # m = story.get_mission(1800398)
-    # m.print()   
-    # m = story.get_mission(1500403)
-    # m.print()
-    # # print_npc_names()
+    # print_npc_names()
     # print_items_with_item_tag(1122)
 
     story = Story()
-    m = story.get_mission(1800528)
+    m = story.get_mission(1700391)
     # m = story.get_mission(1100071)
     m.print()
-    
+
+    # id_to_pet_name = {}
+
+    # for id, item in DesignerConfig.PetConfig.items():
+    #     pet_name = item['iconPath1']
+    #     id_to_pet_name[id] = pet_name
+
+    # print_generator(11086)
+    # print_generator(20990037)
+
+    # print('---')
+
+    # print_conv_builder(6143)
+
+    # GeneratorGroup.print_generators_for_item_id(19210010)
+    # GeneratorGroup.print_generators_for_item_id(10000008)
+
+    # print_dialogue('Andy')
+
+    # print_npc_names()
+
+def find_duplicate_data_ids(designer_config: _DesignerConfigWrapper, id_key: str = 'id') -> None:
+    seen = set()
+    duplicates = set()
+
+    for item in designer_config._raw_data:
+        item_id = item.get(id_key)
+        if item_id in seen:
+            duplicates.add(item_id)
+        else:
+            seen.add(item_id)
+
+    if duplicates:
+        print(f'Duplicate {id_key}s found: {duplicates}')
+    else:
+        print(f'No duplicate {id_key}s found.')
+
+def print_resource_points() -> None:
+    resource_points = DesignerConfig.ResourcePoint
+
+    for id, point in resource_points.items():
+        print(f'{point["id"]}: {text(point["showNameID"])}')
+
+        group_id = point['generatorGroup']
+        if group_id == 0:
+            print('  No generator group')
+        else:
+            print_generator(group_id)
+        
+        print('')
 
 def print_generator(id: int) -> None:
     generator = GeneratorGroup(id)
@@ -68,29 +99,9 @@ def print_refine_type() -> None:
     for id, equip in equipment.items():
         print(f'{id}: {text.item(id)}')
 
-
-def print_dialogue(npc_name: str) -> None:
-    social_levels = DesignerConfig.SocialLevel
-    social_level_map = {level['level']: text(level['nameId']) for level in social_levels}
-    print(json.dumps(social_level_map, indent=2))
-    # Find the first match in DesignerConfig.Npc
-    npc_id = next((npc_id for npc_id, npc in DesignerConfig.Npc.items() if text(npc['nameID']) == npc_name), None)
-    print(f'NPC ID: {npc_id}')
-    talks = [talk for talk in DesignerConfig.GeneralDialog if talk['id']['id0'] <= npc_id <= talk['id']['id1']]
-
-    assert len(talks) == 1, f'Found {len(talks)} talks for {npc_name}'
-    talk = talks[0]
-
-    print('==General Dialog==')
-    normalTalkData = talk['normal']['talkData']
-
-    for talkData in normalTalkData:
-        relation = social_level_map[talkData['relation']]
-        print(f'==={relation}===')
-
-        for segment_id_str in talkData['dialogUnit'].split(';'):
-            segment_id = int(segment_id_str.split('*')[0])
-            print_conv_segment(segment_id)
+def print_npc_names() -> None:
+    for npc in sorted(DesignerConfig.Npc, key=lambda npc: npc['id']):
+        print(f'{npc["id"]}: {text(npc["nameID"])}')
 
 def print_monster_spawns() -> None:
     monsters = DesignerConfig.Monster
@@ -106,7 +117,6 @@ def print_monster_spawns() -> None:
                 max_level = info['level']['y']
                 print(f'{text(monster["nameId"])}, {min_level}-{max_level}')
     print(f'We have {count} MonsterMarkSpawnerExecutor interests')
-
 
 
 def read_blueprints() -> None:
@@ -191,13 +201,17 @@ def find_dirty_words(string: str) -> None:
     matches = [word['text'] for word in dirty_words_list if word['text'].lower() in lower_string]
     print(matches)
 
+def print_conv_builder(id: int) -> None:
+    builder = ConvBuilder(id)
+    builder.print()
+
 def print_conv_segment(id: int) -> None:
     seg = ConvSegment(id, [])
     seg.print()
 
 def print_conv_talk(id: int) -> None:
-    seg = ConvTalk(id, [])
-    seg.print()
+    talk = ConvTalk(id, [])
+    talk.print()
 
 def print_items_with_item_tag(tag_id: int) -> None:
     for item in sorted(DesignerConfig.ItemPrototype, key=lambda item: item['id']):

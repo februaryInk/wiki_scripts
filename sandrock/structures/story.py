@@ -26,7 +26,6 @@ _event_names = {
     1600391: 'Heartbreak Drama', # Heartbroken Solo Drama
     # 1600392: 'Promise Me', # Heartbreak Drama follow-up.
     1700300: 'Community Service', # Logan Promoting
-    1800306: 'Follow-up Meeting',
     1700315: 'A Secret Under the Tree', # A Secret Beneath a Tree
     1800354: 'Grandma Vivi\'s Guidance', # Seeking Grandma Vivi's Guidance
     1800373: 'An Unexpected Outcome',
@@ -40,11 +39,19 @@ _event_names = {
 
 _manual_mission_names = {
     1200055: 'Cover My Glass', # Pre-conduct, Justice questions the witnesses
+    1200167: 'The Makings of a Park', # This is actually handling post-conduct for many missions, but for the purpose of item sources, this is the important one.
+    1200202: 'Blessing in Disguise', # Post-conduct, Arvio's daily visits
+    1200260: 'Look Into It', # Magic Mirror visits
+    1200175: 'Relapse', # The doctor cannot heal himself
     1300041: text(80001007), # In Trusses We Trust, donated gifts
     1500337: 'Builder Cruise x Operation Flowergate', # It takes a hundred years to cultivate a person
     1500403: text(80031199), # The Girl with the Umbrella, Ginger's Diary Easter egg
+    1700391: '"Him"', # Pre-conduct
+    1800306: 'Sandrock Strikes Back', # Follow-up meeting
     1800519: 'Private Prescription', # Little Fang's Heartfelt Easter egg
     1800537: 'Late Bloomer', # The Continuation of Yimi's Love
+    1900221: 'Leaving the Nest', # Fang and Cooper talking follow-up
+    1900233: 'Leaving the Nest', # Fang and Owen talking follow-up
 }
 
 # Each character has their own mission controller that manages when their 
