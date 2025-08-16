@@ -1,0 +1,364 @@
+Reading Mission 1700148: Trial by Kiln
+
+<onlyinclude>{{Infobox mission
+|name = Trial by Kiln
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Trial by Kiln:
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 3618) that ends:
+{{dialogue|Amirah|Seeya.}}
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1700146
+Amirah stops standing still
+Amirah stops standing still
+CUTSCENE UI STATE EXIT || 
+Set TALK to 0
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Trial by Kiln is successfully completed
+ACTIONS
+ACTION DATE REMOVE FLAG || flag: DATE:TBK
+The player receives a letter:
+{{mail|256}}
+Run mission Trial by Kiln
+END MISSION 1700147
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700148
+CONDITIONS
+Always:
+ACTIONS
+ACTION DATE SET FLAG || flag: DATE:TBKafterstory
+Set MM to 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 171481 | path: Mission_ObjofAmirah5 | sceneName: Main | flagName: TBK_goods1 | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 171482 | path: Mission_ObjofAmirah4 | sceneName: Main | flagName: TBK_goods2 | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE FLAG || flag: DATE:TBKafterstory | compare: 2 | days: 30
+CHECK DATE || compare: 2 | year: -1 | month: -1 | day: 20
+CHECK DATE || compare: 5 | year: -1 | month: -1 | day: 21
+ACTIONS
+Set MM to 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 8 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE || compare: 2 | year: -1 | month: -1 | day: 22
+ACTIONS
+Set MM to 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 6 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if MM is == 1
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1700148 | id: 171480 | sceneName: Main | flagName: TBK_trigger3 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80005698
+
+TRIGGER Procedure 0.0 Step 3.5 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Check if MM is == 1
+ACTIONS
+AREA TRIGGER DELETE || id: 171480
+AREA TRIGGER CREATE || missionId: 1700148 | id: 171480 | sceneName: Main | flagName: TBK_trigger3 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80005698
+
+TRIGGER Procedure 0.0 Step 4.0 Order 7 Repeat -1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Check if MM is == 1
+ACTIONS
+AREA TRIGGER DELETE || id: 171480
+
+TRIGGER Procedure 0.0 Step 5.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 171480
+CONDITIONS
+CHECK SCENEITEM EXIST || sceneItemType: 0 | exist: 0 | id: 22651
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+DELAY MASK SET || maskId: 171481 | delayTime: 0 | durationTime: 1.5 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 171480
+
+TRIGGER Procedure 0.0 Step 6.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 171481 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Mysterious Man stands still in Main and looks at Arvio
+Arvio stands still in Main and looks at Mysterious Man
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: TBK_player3
+DELAY MASK SET || maskId: 171481 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: 0
+Amirah stands still in Main
+
+TRIGGER Procedure 0.0 Step 7.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 171481 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 989_0 starts:
+{{dialogue|Mysterious Man|Mr. Arvio, what's the meaning of all this? Suddenly Sandrock is full of expertly crafted, enamel colored ceramics!}}
+{{dialogue|Arvio|So? Shall I put you down for a dozen? Two?}}
+{{dialogue|Mysterious Man|Hm! First, I must have a bit more information. Where did you get these? My goodness, the patterns, they're exquisite! I could sell these for a pretty penny over in Walnut Groove...}}
+{{dialogue|Arvio|Hahaha! Why don't you take a guess? Get it right and maybe I'll give you a discount...}}
+{{dialogue|Mysterious Man|Is that so? You there, Builder! Trying to sneak up on me again, eh? Surely you know something on this matter. Give me a hint, why don't you?}}
+
+*''Must've been a delicate touch...''
+*''A real smooth operator...''
+*''T'was I!''
+*''Keep silent...''
+
+{{dialogue|Arvio|indent=true|answer=Must've been a delicate touch...
+|Haha! Hey, careful not to give away the stickball game, ''Player''...}}
+{{dialogue|Mysterious Man|indent=true|A delicate touch, eh? Then it must be none other than Ms. Amirah! Good, good! Very exquisite indeed!}}
+{{dialogue|Arvio|indent=true|answer=A real smooth operator...
+|Smooth operator? Are you... talking about me?}}
+{{dialogue|Mysterious Man|indent=true|Eh. Yeah, no. Odd choice of words, Builder. Not very helpful. No matter! It's all coming together for me now anyway... Clearly it was the sister! And she used that kiln you got through me, no?}}
+{{dialogue|Arvio|indent=true|answer=T'was I!
+|Hahah! Exactly, it's the work of ''Player''! What a twist!}}
+{{dialogue|Mysterious Man|indent=true|Poppy-cock! Though you tried to mislead me, it's becoming clearer now... It must be none other than Miss Amirah with the aid of the new kiln!}}
+{{dialogue|Arvio|indent=true|Oh, shoot, you got it... Nice try, ''Player'', but I guess it's not so easy to fool the Mysterious Man...}}
+{{dialogue|Mysterious Man|indent=true|answer=Keep silent...
+|Aw, Builder. Don't hold out on your old pal, the Mysterious Man! Ooh, wait, it's coming to me. The diagram must be complete, and it must be Ms. Amirah responsible for these!}}
+{{dialogue|Arvio|indent=true|Oh, shoot, you got it... Nice try, ''Player'', but I guess it's not so easy to fool the Mysterious Man...}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 3641) that ends:
+{{dialogue|Arvio|Hahaha! Why don't you take a guess? Get it right and maybe I'll give you a discount...}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 171481) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:TBK_player5)
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 3644) that ends:
+{{dialogue|Mysterious Man|A delicate touch, eh? Then it must be none other than Ms. Amirah! Good, good! Very exquisite indeed!}}
+(cId: 1) There is a conversation segment (id 3646) that ends:
+{{dialogue|Mysterious Man|Eh. Yeah, no. Odd choice of words, Builder. Not very helpful. No matter! It's all coming together for me now anyway... Clearly it was the sister! And she used that kiln you got through me, no?}}
+(cId: 1) There is a conversation segment (id 3649) that ends:
+{{dialogue|Arvio|Oh, shoot, you got it... Nice try, ''Player'', but I guess it's not so easy to fool the Mysterious Man...}}
+(cId: 1) There is a conversation segment (id 3651) that ends:
+{{dialogue|Arvio|Oh, shoot, you got it... Nice try, ''Player'', but I guess it's not so easy to fool the Mysterious Man...}}
+CONDITIONS
+Always:
+ACTIONS
+Mysterious Man stops standing still
+Mysterious Man stands still in Main and looks at Amirah
+
+TRIGGER Procedure 0.0 Step 8.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 3685) that ends:
+{{dialogue|Amirah|Hm. Alright. See you later, ''Player''.}}
+CONDITIONS
+Always:
+ACTIONS
+Amirah stops standing still
+Amirah stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 1714815) from Amirah
+Remove behavior CommanderMoveToFlagAndAction (idName: 17148152) from Amirah
+Remove behavior CommanderMoveToFlagAndAction (idName: 171481) from Player
+Arvio stops standing still
+CUTSCENE UI STATE EXIT || 
+GLOBAL BLACK BOARD REMOVE || key: TBKLENT
+ACTION DATE REMOVE FLAG || flag: DATE:TBKafterstory
+Remove behavior CommanderMoveToFlagAndAction (idName: 1714861) from Mysterious Man
+END MISSION 1700148
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 171482
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 3652, 3653 starts:
+{{dialogue|Arvio|And look who it is! How was your walk, dear sister?}}
+{{dialogue|Amirah|Fine.}}
+
+TRIGGER Procedure 1.0 Step 3.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 2) There is a conversation segment (id 3653) that ends:
+{{dialogue|Amirah|Fine.}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 1714815) to Amirah
+(param: TargetScene:Main|MoveMode:Walk|FlagName:TBK_amirah5)
+
+TRIGGER Procedure 1.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8015 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 994_0 starts:
+{{dialogue|Mysterious Man|Ms. Amirah! There you are! It's me, your old pal, the Mysterious Man! Did you miss me?}}
+{{dialogue|Amirah|No.}}
+{{dialogue|Mysterious Man|Ahah, well, I must say I was just here admiring your new products and... Fine stuff! Very fine indeed! You really showed me! I was just discussing with your brother here about getting a discount on some of these goods...}}
+{{dialogue|Mysterious Man|I'll start taking a few of these artworks down to Walnut Groove every month, and soon we'll all be just a little bit richer! Sounds good, doesn't it?}}
+{{dialogue|Amirah|No deal.}}
+{{dialogue|Arvio|Wha?}}
+{{dialogue|Amirah|My sales have been fine lately. Thanks.}}
+{{dialogue|Mysterious Man|Ahah, look: perhaps I was a bit harsh before. It was cruel to suggest your popularity here has been due to your appearance. Clearly I was wrong! But don't let your pride get in the way of us all making money, I beg of you!}}
+{{dialogue|Amirah|Okay then, just one question: if you really didn't have any confidence in my skills, why bother to sell us the diagram for such a reasonable price?}}
+{{dialogue|Arvio|Oh! Was it the Mysterious Man's plan all along to get my sister worked up enough to have an artistic breakthrough? Or... did he just genuinely believe her work was bad before?}}
+{{dialogue|Mysterious Man|The Mysterious Man works in mysterious ways...}}
+{{dialogue|Amirah|Full price. No discount. We can start with a dozen for now. Final offer, take it or leave it.}}
+{{dialogue|Mysterious Man|The offer is acceptable, and most generous. Thank you, Miss Amirah! You shan't regret this!}}
+{{dialogue|Mysterious Man|Miss Amirah, Mister Arvio, I'm a man of my word. I'm off to Walnut Groove, as promised. I'm glad we were able to come to an agreement! And... congratulations on your newly realized skills, Miss Amirah!}}
+{{dialogue|Amirah|Good luck out there...}}
+{{dialogue|Arvio|See you next month!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 4) There is a conversation segment (id 3671) that ends:
+{{dialogue|Amirah|Isn't it a little early to be celebrating?}}
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: TBKLENT | info: 1 | exist: 1
+ACTIONS
+(cId 5) A conversation 996_0 starts:
+{{dialogue|Arvio|Ah, but of course! ''Player'', you are indeed our wonderful benefactor! Builder, investor, potter... is there anything you can't do?}}
+{{dialogue|Amirah|Hm. Yes.}}
+{{dialogue|Amirah|I actually wasn't bluffing back there. Sales have been quite good since you built the new kiln. Here's the 2000 Gols you lent us. Thank you for being patient.}}
+
+*''There's no need!''
+*''That would be great.''
+
+{{dialogue|Arvio|indent=true|answer=There's no need!
+|reward={{NPC2|Arvio|rp=5}}|reward={{NPC2|Amirah|rp=5}}|Woohoo! I always knew you were cool, ''Player''!}}
+{{dialogue|Amirah|indent=true|No, we must pay you back. ''Player'' has helped us out of friendship, but we too must remain honest. Friends repay one another.}}
+{{dialogue|Arvio|indent=true|Ah... if you say so...}}
+{{dialogue|Arvio|indent=true|answer=That would be great.
+|Hope we can count on you again if we ever run out of cash again, ''Player''!}}
+{{dialogue|Amirah|indent=true|I haven't cared for the feeling of owing money. Frankly, this is a weight off my shoulders. Let's not go into debt again.}}
+{{dialogue|Arvio|indent=true|Eh, alright, we can try it your way...}}
+{{dialogue|Amirah|''Player'', once again I'd like to relay...}}
+{{dialogue|Arvio|Okay, okay! Thanks again! You have our eternal gratitude, ten thousand blessings, yadda yadda yadda... I think we've expressed our appreciation enough, Am!}}
+{{dialogue|Amirah|Hm. Alright. See you later, ''Player''.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 4) There is a conversation segment (id 3671) that ends:
+{{dialogue|Amirah|Isn't it a little early to be celebrating?}}
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: TBKLENT | info: 1 | exist: 0
+ACTIONS
+(cId 5) A conversation 1000_0 starts:
+{{dialogue|Arvio|Right, right... no more spending money we don't have. First we need to pay back Owen. Then celebrate!}}
+{{dialogue|Amirah|I can live with that.}}
+{{dialogue|Amirah|''Player'', once again I'd like to relay...}}
+{{dialogue|Arvio|Okay, okay! Thanks again! You have our eternal gratitude, ten thousand blessings, yadda yadda yadda... I think we've expressed our appreciation enough, Am!}}
+{{dialogue|Amirah|Hm. Alright. See you later, ''Player''.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 3669) that ends:
+{{dialogue|Arvio|See you next month!}}
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 17148 | sec: 1
+Mysterious Man stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 1714861) to Mysterious Man
+(param: TargetScene:Main|MoveMode:Walk|FlagName:TBK_mm3)
+
+TRIGGER Procedure 1.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 17148
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 995_0 starts:
+{{dialogue|Arvio|Woohoo! What a sale! You were bad to the bone, Ami! A hardened pro like that and you had him eating out of your hand! This calls for a celebration! To the Blue Moon!}}
+{{dialogue|Amirah|Isn't it a little early to be celebrating?}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 3676:
+{{dialogue|Amirah|I actually wasn't bluffing back there. Sales have been quite good since you built the new kiln. Here's the 2000 Gols you lent us. Thank you for being patient.}}
+
+*''There's no need!'' (No unique dialogue)
+*''That would be great.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Amirah gains 5 favor
+Arvio gains 5 favor
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 3676:
+{{dialogue|Amirah|I actually wasn't bluffing back there. Sales have been quite good since you built the new kiln. Here's the 2000 Gols you lent us. Thank you for being patient.}}
+
+*''There's no need!'' (No unique dialogue)
+*''That would be great.'' (No unique dialogue)
+
+(cId: -1) There is a conversation segment (id 3679) that ends:
+{{dialogue|Arvio|Ah... if you say so...}}
+CONDITIONS
+Always:
+ACTIONS
+MONEY PLAYER ADD || money: 2000

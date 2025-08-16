@@ -1,0 +1,601 @@
+Reading Mission 1700118: Product Recall
+
+<onlyinclude>{{Infobox mission
+|name = Product Recall
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Product Recall:
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 2608) that ends:
+{{dialogue|Arvio|Do whatever it takes to get those photos back! Er, without breaking the law, I suppose...}}
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1700117
+START MISSION 1700117
+Arvio stops standing still
+Amirah stops standing still
+Set TALK to 0
+Add behavior CommanderNPCAction (idName: 11780141) to Arvio
+(param: CMDAction:Give)
+STOPWATCH REAL TIME SET || id: 171171 | sec: 1.4
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlag (idName: 1178015) from Amirah
+Remove behavior CommanderMoveToFlag (idName: 1178000) from Player
+
+TRIGGER Procedure 1.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700117
+CONDITIONS
+Always:
+ACTIONS
+Run mission Product Recall
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700118
+CONDITIONS
+Always:
+ACTIONS
+===Retrieve photos===
+
+{{mission_details
+|desc = Talk to tourists you suspect might have a photo and convince them to give back the five Desert Rose pictures.
+|details = Retrieve photos
+}}
+Set TargetA to 0
+Set TargetB to 0
+Set TargetC to 0
+Set TargetD to 0
+Set TargetE to 0
+NPC ICON ADD || missionIcon: 2 | missionId: 1700117 | npc: 8064
+NPC ICON ADD || missionIcon: 2 | missionId: 1700117 | npc: 8065
+NPC ICON ADD || missionIcon: 2 | missionId: 1700117 | npc: 8066
+NPC ICON ADD || missionIcon: 2 | missionId: 1700117 | npc: 8067
+NPC ICON ADD || missionIcon: 2 | npc: 8068 | missionId: 1700117
+NPC ADD TAG || tag: HoldPhoto8064
+NPC ADD TAG || tag: HoldPhoto8065
+NPC ADD TAG || tag: HoldPhoto8066
+NPC ADD TAG || tag: HoldPhoto8067
+NPC ADD TAG || tag: HoldPhoto8068
+Add behavior Story1700117_8014_1 (idName: 17001171) to Arvio
+(param: -1)
+Add behavior Story1700117_8064_1 (idName: 17001172) to Tourist
+(param: -1)
+Add behavior Story1700117_8065_1 (idName: 17001173) to Tourist
+(param: -1)
+Add behavior Story1700117_8066_1 (idName: 17001174) to Tourist
+(param: -1)
+Add behavior Story1700117_8067_1 (idName: 17001175) to Tourist
+(param: -1)
+Add behavior Story1700117_8068_1 (idName: 17001176) to Tourist
+(param: -1)
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Tourist
+CONDITIONS
+CHECK NPC TAG || tag: HoldPhoto8064 | flag: 1
+ACTIONS
+(cId 3) A conversation 2623 starts:
+{{dialogue|Tourist|Huh? Desert Rose? Photo? Nah, never heard of it. Shove off.}}
+
+*''I'll pay you double for it.{{textcolor|green| (100 Gols)}}'' (No unique dialogue)
+*''Give it to me!'' (No unique dialogue)
+
+
+TRIGGER Procedure 0.0 Step 2.0 Order 6 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Tourist
+CONDITIONS
+Check if TargetA is == 2
+CHECK NPC TAG || flag: 1 | tag: HoldPhoto8064
+ACTIONS
+(cId 6) A conversation 2626 starts:
+{{dialogue|Tourist|No tradebacks! You made your decision.}}
+
+*''I'll pay you double for it.{{textcolor|green| (100 Gols)}}'' (No unique dialogue)
+*''Give it to me!'' (No unique dialogue)
+
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Tourist
+CONDITIONS
+CHECK NPC TAG || flag: 1 | tag: HoldPhoto8065
+ACTIONS
+(cId 7) A conversation 2627 starts:
+{{dialogue|Tourist|Yar har, nay, I can't be givin' ye me Desert Rose photo. 'Tis mine. And I plan for it to comfort me on those lonely nights out at sea. However, were I to hear one good reason why I shouldn't keep it, I might reconsider, I might.}}
+
+*''Amirah didn't consent to this.'' (No unique dialogue)
+*''I'll give you a picture of me.'' (No unique dialogue)
+
+
+TRIGGER Procedure 0.0 Step 4.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Tourist
+CONDITIONS
+Check if TargetB is == 2
+CHECK NPC TAG || flag: 1 | tag: HoldPhoto8065
+ACTIONS
+(cId 10) A conversation 2632 starts:
+{{dialogue|Tourist|Yar, of all the low-down, dirty things...}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1700118
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|205}}
+NPC ICON REMOVE || missionId: 1700117 | npc: 8064 | missionIcon: 2
+NPC ICON REMOVE || missionId: 1700117 | npc: 8065 | missionIcon: 2
+NPC ICON REMOVE || missionId: 1700117 | npc: 8066 | missionIcon: 2
+NPC ICON REMOVE || missionId: 1700117 | npc: 8067 | missionIcon: 2
+NPC ICON REMOVE || missionId: 1700117 | npc: 8068 | missionIcon: 2
+NPC LEAVE BY TRAIN || npc: 8064 | isOut: 1 | params: 0
+NPC LEAVE BY TRAIN || npc: 8065 | isOut: 1 | params: 0
+NPC LEAVE BY TRAIN || npc: 8066 | isOut: 1 | params: 0
+NPC LEAVE BY TRAIN || npc: 8067 | isOut: 1 | params: 0
+NPC LEAVE BY TRAIN || npc: 8068 | isOut: 1 | params: 0
+NPC LEAVE BY TRAIN || npc: 8070 | isOut: 1 | params: 0
+Remove behavior Story1700117_8014_1 (idName: 17001171) from Arvio
+Remove behavior Story1700117_8064_1 (idName: 17001172) from Tourist
+Remove behavior Story1700117_8065_1 (idName: 17001173) from Tourist
+Remove behavior Story1700117_8066_1 (idName: 17001174) from Tourist
+Remove behavior Story1700117_8067_1 (idName: 17001175) from Tourist
+Remove behavior Story1700117_8068_1 (idName: 17001176) from Tourist
+END MISSION 1700118
+
+TRIGGER Procedure 0.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Tourist
+CONDITIONS
+CHECK NPC TAG || flag: 1 | tag: HoldPhoto8066
+ACTIONS
+(cId 11) A conversation 2633, 2634 starts:
+{{dialogue|Tourist|You want my Desert Rose photo? Hey, you're in luck! I was looking for a way to do a good deed today! Here you go!}}
+{{dialogue|Tourist|Now, I'm off to Atara to commit more tax fraud!}}
+
+TRIGGER Procedure 1.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 11) There is a conversation segment (id 2633) that ends:
+{{dialogue|Tourist|You want my Desert Rose photo? Hey, you're in luck! I was looking for a way to do a good deed today! Here you go!}}
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Photo of the Desert Rose of Default quality (Notify player)
+Set TargetC to 2
+NPC ICON REMOVE || missionId: 1700117 | npc: 8066 | missionIcon: 2
+NPC REMOVE TAG || tag: HoldPhoto8066
+MISSION TARGET COUNTER CHANGE || missionId: 1700117 | targetId: 1 | transId: 80006325 | isAdd: 1
+
+TRIGGER Procedure 0.0 Step 6.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Tourist
+CONDITIONS
+Check if TargetC is == 2
+CHECK NPC TAG || flag: 1 | tag: HoldPhoto8066
+ACTIONS
+(cId 10) A conversation 2635 starts:
+{{dialogue|Tourist|If anyone asks, just say you never met me.}}
+
+TRIGGER Procedure 0.0 Step 7.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Tourist
+CONDITIONS
+CHECK NPC TAG || flag: 1 | tag: HoldPhoto8067
+ACTIONS
+(cId 13) A conversation 2636 starts:
+{{dialogue|Tourist|Hey. I overheard your conversation with the shopkeeper guy and the Desert Rose. I was hoping you wouldn't notice me but... now that you're directly confronting me, I can't say no. Here you go.}}
+
+TRIGGER Procedure 1.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 13) There is a conversation segment (id 2636) that ends:
+{{dialogue|Tourist|Hey. I overheard your conversation with the shopkeeper guy and the Desert Rose. I was hoping you wouldn't notice me but... now that you're directly confronting me, I can't say no. Here you go.}}
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Photo of the Desert Rose of Default quality (Notify player)
+NPC ICON REMOVE || missionId: 1700117 | npc: 8067 | missionIcon: 2
+NPC REMOVE TAG || tag: HoldPhoto8067
+Set TargetD to 2
+MISSION TARGET COUNTER CHANGE || transId: 80006325 | isAdd: 1 | targetId: 1 | missionId: 1700117
+
+TRIGGER Procedure 0.0 Step 8.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Tourist
+CONDITIONS
+Check if TargetD is == 2
+CHECK NPC TAG || flag: 1 | tag: HoldPhoto8067
+ACTIONS
+(cId 15) A conversation 2637 starts:
+{{dialogue|Tourist|Please don't hate me because I admire pretty people.}}
+
+TRIGGER Procedure 0.0 Step 9.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Tourist
+CONDITIONS
+CHECK NPC TAG || flag: 1 | tag: HoldPhoto8068
+ACTIONS
+(cId 14) A conversation 2638, 2639 starts:
+{{dialogue|Tourist|You want my Desert Rose photo? You're gonna have to fight me for it!}}
+{{dialogue|Tourist|I'm just kiddin', here you go. Have a nice day!}}
+
+TRIGGER Procedure 1.0 Step 8.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 14) There is a conversation segment (id 2639) that ends:
+{{dialogue|Tourist|I'm just kiddin', here you go. Have a nice day!}}
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Photo of the Desert Rose of Default quality (Notify player)
+NPC ICON REMOVE || missionId: 1700117 | npc: 8068 | missionIcon: 2
+NPC REMOVE TAG || tag: HoldPhoto8068
+Set TargetE to 2
+MISSION TARGET COUNTER CHANGE || transId: 80006325 | isAdd: 1 | targetId: 1 | missionId: 1700117
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Arvio
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1700117 | targetId: 1 | canSubmit: 0
+ACTIONS
+(cId 1) A conversation 2609 starts:
+{{dialogue|Arvio|How many have you got so far? Huh? No, there've got to still be more out there. Let's keep looking!}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 2623:
+{{dialogue|Tourist|Huh? Desert Rose? Photo? Nah, never heard of it. Shove off.}}
+
+*''I'll pay you double for it.{{textcolor|green| (100 Gols)}}'' (No unique dialogue)
+*''Give it to me!'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 2626:
+{{dialogue|Tourist|No tradebacks! You made your decision.}}
+
+*''I'll pay you double for it.{{textcolor|green| (100 Gols)}}'' (No unique dialogue)
+*''Give it to me!'' (No unique dialogue)
+
+CONDITIONS
+CHECK PLAYER MONEY || set: 2 | count: 100
+ACTIONS
+MONEY PLAYER ADD || money: -100
+(cId 4) A conversation 2624 starts:
+{{dialogue|Tourist|Double? Dang, you're a grade A simp for this girl, huh? Well, I won't say no to cold hard cash, but you better be careful; don't spend all your hard-earned cash on a girl who doesn't even know who you are, partner.}}
+NPC ICON REMOVE || missionId: 1700117 | missionIcon: 2 | npc: 8064
+Set TargetA to 1
+NPC REMOVE TAG || tag: HoldPhoto8064
+Set TargetA to 3
+MISSION TARGET COUNTER CHANGE || transId: 80006325 | isAdd: 1 | targetId: 1 | missionId: 1700117
+
+TRIGGER Procedure 1.0 Step 1.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 4) There is a conversation segment (id 2624) that ends:
+{{dialogue|Tourist|Double? Dang, you're a grade A simp for this girl, huh? Well, I won't say no to cold hard cash, but you better be careful; don't spend all your hard-earned cash on a girl who doesn't even know who you are, partner.}}
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Photo of the Desert Rose of Default quality (Notify player)
+
+TRIGGER Procedure 1.0 Step 2.0 Order 8 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 2623:
+{{dialogue|Tourist|Huh? Desert Rose? Photo? Nah, never heard of it. Shove off.}}
+
+*''I'll pay you double for it.{{textcolor|green| (100 Gols)}}'' (No unique dialogue)
+*''Give it to me!'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 2626:
+{{dialogue|Tourist|No tradebacks! You made your decision.}}
+
+*''I'll pay you double for it.{{textcolor|green| (100 Gols)}}'' (No unique dialogue)
+*''Give it to me!'' (No unique dialogue)
+
+CONDITIONS
+CHECK PLAYER MONEY || set: 6 | count: 100
+ACTIONS
+(cId 80642) A conversation 2717 starts:
+{{dialogue|Tourist|Wow... trying to be a white knight and you don't even have enough for this photo... kinda sad. Come back when you get the cash.}}
+Set TargetA to 2
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 2623:
+{{dialogue|Tourist|Huh? Desert Rose? Photo? Nah, never heard of it. Shove off.}}
+
+*''I'll pay you double for it.{{textcolor|green| (100 Gols)}}'' (No unique dialogue)
+*''Give it to me!'' (No unique dialogue)
+
+(cId -1) The player picks the second option in conversation segment 2626:
+{{dialogue|Tourist|No tradebacks! You made your decision.}}
+
+*''I'll pay you double for it.{{textcolor|green| (100 Gols)}}'' (No unique dialogue)
+*''Give it to me!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 2625 starts:
+{{dialogue|Tourist|Yeah, right! I paid good money for this pic... that I don't have... Hey, I thought I told you to shove off!}}
+Set TargetA to 2
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 2627:
+{{dialogue|Tourist|Yar har, nay, I can't be givin' ye me Desert Rose photo. 'Tis mine. And I plan for it to comfort me on those lonely nights out at sea. However, were I to hear one good reason why I shouldn't keep it, I might reconsider, I might.}}
+
+*''Amirah didn't consent to this.'' (No unique dialogue)
+*''I'll give you a picture of me.'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 2629:
+{{dialogue|Tourist|Nar, nar... me heart has place for but one unrequited parasocial relationship. 'Tis the sea captain's lament.}}
+
+*''Amirah didn't consent to this.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 8) A conversation 2628, 2630, 2631 starts:
+{{dialogue|Tourist|Walrus's beard! That lass, these photos are bein' distributed without her knowin'? Why I-}}
+{{dialogue|Tourist|Take this photo from my hands, young desert-dweller. I shan't be needin' it no more. Mark these old sea dog's words; any such copy of that thar photograph out thar, I'll be makin' sure they finds their way to the bottom of the briny deep.}}
+{{dialogue|Tourist|And you can tell that silver-tongued salesman, I'll be waitin' for him in Davy Jones' locker!}}
+Add 1 Photo of the Desert Rose of Default quality (Notify player)
+Set TargetB to 2
+NPC ICON REMOVE || missionId: 1700117 | npc: 8065 | missionIcon: 2
+NPC REMOVE TAG || tag: HoldPhoto8065
+MISSION TARGET COUNTER CHANGE || missionId: 1700117 | targetId: 1 | transId: 80006325 | isAdd: 1
+
+TRIGGER Procedure 1.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 2627:
+{{dialogue|Tourist|Yar har, nay, I can't be givin' ye me Desert Rose photo. 'Tis mine. And I plan for it to comfort me on those lonely nights out at sea. However, were I to hear one good reason why I shouldn't keep it, I might reconsider, I might.}}
+
+*''Amirah didn't consent to this.'' (No unique dialogue)
+*''I'll give you a picture of me.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 9) A conversation 2629 starts:
+{{dialogue|Tourist|Nar, nar... me heart has place for but one unrequited parasocial relationship. 'Tis the sea captain's lament.}}
+
+*''Amirah didn't consent to this.'' (No unique dialogue)
+
+
+TRIGGER Procedure 1.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Tourist
+CONDITIONS
+Always:
+ACTIONS
+(cId 15) A conversation 2640 starts:
+{{dialogue|Tourist|What? Desert Rose? You think I'm one of those creeps? Well, I never!}}
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Arvio
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1700117 | targetId: 1 | canSubmit: 1
+ACTIONS
+(cId 2) A conversation 653_0 starts:
+{{dialogue|Arvio|You got all the photos? Wow, that was quick! How'd you do it?}}
+
+*''I convinced 'em all to hand over the photos.''
+*''I bought them all off the tourists.''
+
+{{dialogue|Arvio|indent=true|answer=I convinced 'em all to hand over the photos.
+|reward={{NPC2|Arvio|rp=5}}|Goodness, well done, ''Player''! You must really have a way with words! I'd found it quite difficult to get anyone to part with their photos...}}
+{{dialogue|Arvio|indent=true|answer=I bought them all off the tourists.
+|Ah, darn! Of course, of course, here let me pay you back. What scoundrels! Not only were they creeping on my sister, but they were happy to jump at the chance to take advantage of us as well!}}
+{{dialogue|Arvio|Whew... It's finally over...}}
+{{dialogue|Arvio|But now, what am I to do with all these photos?}}
+
+*''Wanna give me one?''
+*''Put them in storage.''
+*''Destroy them.''
+
+{{dialogue|Arvio|indent=true|answer=Wanna give me one?
+|reward={{i2|Photo of the Desert Rose|1}}|Hahah, of course! Think of it as a memento for all we went through with this... I'll get rid of the rest. I believe I can count on you to enjoy this photo the way it was meant to be enjoyed: as landscape photography!}}
+{{dialogue|Arvio|indent=true|answer=Put them in storage.
+|Yes, you're right. The world is not ready for the Desert Rose. Maybe one day.}}
+{{dialogue|Arvio|indent=true|reward={{i2|Photo of the Desert Rose|1}}|Why don't you take a photo for yourself, as a memento for this whole ordeal. I believe I can count on you to enjoy this photo the way it was meant to be enjoyed: as landscape photography!}}
+{{dialogue|Arvio|indent=true|answer=Destroy them.
+|Hm, you may be right. The only way to be completely sure that no one will ever use these to creep on my sister again is to destroy them...}}
+{{dialogue|Arvio|indent=true|Agh! But I paid fifty Gols to make all these copies!}}
+{{dialogue|Arvio|indent=true|Tell you what, ''Player'', I'll think on it. In the meantime, why don't you take one as a memento for this whole ordeal.}}
+{{dialogue|Arvio|indent=true|reward={{i2|Photo of the Desert Rose|1}}|I believe I can count on you to enjoy this photo the way it was meant to be enjoyed: as landscape photography!}}
+{{dialogue|Arvio|Thank you again, ''Player'', for all your support through this difficult time. Hopefully my next "business opportunity" will have less disastrous results... Catch you around!}}
+The conversation ends.
+Remove 5 Photo of the Desert Rose of Default quality (Notify player)
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 2) There is a conversation segment (id 2612) that ends:
+{{dialogue|Arvio|Ah, darn! Of course, of course, here let me pay you back. What scoundrels! Not only were they creeping on my sister, but they were happy to jump at the chance to take advantage of us as well!}}
+CONDITIONS
+Always:
+ACTIONS
+MONEY PLAYER ADD || money: 100
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 2) There is a conversation segment (id 2615) that ends:
+{{dialogue|Arvio|Hahah, of course! Think of it as a memento for all we went through with this... I'll get rid of the rest. I believe I can count on you to enjoy this photo the way it was meant to be enjoyed: as landscape photography!}}
+(cId: 2) There is a conversation segment (id 2617) that ends:
+{{dialogue|Arvio|Why don't you take a photo for yourself, as a memento for this whole ordeal. I believe I can count on you to enjoy this photo the way it was meant to be enjoyed: as landscape photography!}}
+(cId: 2) There is a conversation segment (id 2621) that ends:
+{{dialogue|Arvio|I believe I can count on you to enjoy this photo the way it was meant to be enjoyed: as landscape photography!}}
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Photo of the Desert Rose of Default quality (Notify player)
+
+TRIGGER Procedure 2.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1700117
+NPC LEAVE BY TRAIN || npc: 8064 | isOut: 1 | params: 0
+NPC LEAVE BY TRAIN || npc: 8065 | isOut: 1 | params: 0
+NPC LEAVE BY TRAIN || npc: 8066 | isOut: 1 | params: 0
+NPC LEAVE BY TRAIN || npc: 8070 | isOut: 1 | params: 0
+NPC LEAVE BY TRAIN || npc: 8068 | isOut: 1 | params: 0
+NPC LEAVE BY TRAIN || npc: 8067 | isOut: 1 | params: 0
+Run mission Stand Up For Yourself!
+Remove behavior Story1700117_8014_1 (idName: 17001171) from Arvio
+Remove behavior Story1700117_8064_1 (idName: 17001172) from Tourist
+Remove behavior Story1700117_8065_1 (idName: 17001173) from Tourist
+Remove behavior Story1700117_8066_1 (idName: 17001174) from Tourist
+Remove behavior Story1700117_8067_1 (idName: 17001175) from Tourist
+Remove behavior Story1700117_8068_1 (idName: 17001176) from Tourist
+END MISSION 1700118
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the first option in conversation segment 2610:
+{{dialogue|Arvio|You got all the photos? Wow, that was quick! How'd you do it?}}
+
+*''I convinced 'em all to hand over the photos.'' (No unique dialogue)
+*''I bought them all off the tourists.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Arvio gains 5 favor
+
+TRIGGER Procedure 2.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1700117 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Arvio===
+
+{{mission_details
+|desc = All photos retrieved, tell Arvio!
+|details = Talk to Arvio
+}}
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Tourist
+CONDITIONS
+CHECK NPC TAG || tag: HoldPhoto8064 | flag: 0
+Check if TargetA is <= (maybe?) 3
+ACTIONS
+(cId 1464) A conversation 947_0 starts:
+{{dialogue|Tourist|Desert Rose? Ah, nah, that's old news. Sold it to that shopowner guy not that long ago.}}
+{{dialogue|Tourist|Heh heh, made a pretty penny, too! Word of advice, don't accuse that guy of white knighting for his own sister, you'll get such a thump in the head! Ow...}}
+The conversation ends.
+MISSION TARGET COUNTER CHANGE || missionId: 1700117 | targetId: 1 | transId: 80006325 | isAdd: 1
+NPC ICON REMOVE || missionId: 1700117 | npc: 8064 | missionIcon: 2
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Tourist
+CONDITIONS
+CHECK NPC TAG || tag: HoldPhoto8065 | flag: 0
+Check if TargetB is <= (maybe?) 2
+ACTIONS
+(cId 1465) A conversation 948_0 starts:
+{{dialogue|Tourist|Photo? Yar, I've parted ways with that cursed parchment. Brought me nothin' but trouble it did... What's more, the lady in the photo never wanted to be photographed in the first place!}}
+{{dialogue|Tourist|Those still holdin' on to their copies... Aye, 'tis a sign of the times...}}
+The conversation ends.
+MISSION TARGET COUNTER CHANGE || missionId: 1700117 | targetId: 1 | transId: 80006325 | isAdd: 1
+NPC ICON REMOVE || missionId: 1700117 | npc: 8065 | missionIcon: 2
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Tourist
+CONDITIONS
+CHECK NPC TAG || tag: HoldPhoto8066 | flag: 0
+Check if TargetC is <= (maybe?) 2
+ACTIONS
+(cId 1466) A conversation 949_0 starts:
+{{dialogue|Tourist|Desert Rose, you say? Goodness, I'm afraid to tell you that photo is long gone! Gave it to that concerned sibling; he explained the situation and I handed it over right away! Yes, I never miss an opportunity to do a good deed.}}
+{{dialogue|Tourist|Ahem, well, if you'll excuse me, I'm off to Atara to commit more tax fraud!}}
+The conversation ends.
+MISSION TARGET COUNTER CHANGE || missionId: 1700117 | targetId: 1 | transId: 80006325 | isAdd: 1
+NPC ICON REMOVE || npc: 8066 | missionId: 1700117 | missionIcon: 2
+
+TRIGGER Procedure 3.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Tourist
+CONDITIONS
+CHECK NPC TAG || tag: HoldPhoto8067 | flag: 0
+Check if TargetD is <= (maybe?) 2
+ACTIONS
+(cId 1467) A conversation 950_0 starts:
+{{dialogue|Tourist|I heard everything you and the shopowner guy said... he got to me first. Gosh, I hope you two weren't competing to try to get more photos back...}}
+{{dialogue|Tourist|Please don't hate me because I admire pretty people.}}
+The conversation ends.
+MISSION TARGET COUNTER CHANGE || transId: 80006325 | isAdd: 1 | targetId: 1 | missionId: 1700117
+NPC ICON REMOVE || npc: 8067 | missionId: 1700117 | missionIcon: 2
+
+TRIGGER Procedure 3.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Tourist
+CONDITIONS
+CHECK NPC TAG || tag: HoldPhoto8068 | flag: 0
+Check if TargetE is <= (maybe?) 2
+ACTIONS
+(cId 1468) A conversation 3530 starts:
+{{dialogue|Tourist|You want that photo? You're gonna have to fight me for it! I'm just kiddin'! I gave it to your friend already. Have a nice day!}}
+MISSION TARGET COUNTER CHANGE || transId: 80006325 | isAdd: 1 | targetId: 1 | missionId: 1700117
+NPC ICON REMOVE || npc: 8068 | missionIcon: 2 | missionId: 1700117

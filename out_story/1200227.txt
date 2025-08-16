@@ -1,0 +1,125 @@
+Reading Mission 1200227: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200135
+
+TRIGGER Procedure 5.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1200217 is result 1 flag 1
+Relapse is in state 2 with flag 0
+ACTIONS
+Run mission Something in the Air
+Newspaper adds Article content 1079.
+Title: I Believe in Sandrock!
+It was the best of times, it was the worst of times... wait, got that mixed up; it was the worst of times, and then... the best of times!
+
+That seems as good a way as any to describe the events that unfolded recently at the Blue Moon as Musa made his way into what turned out to be a very unwelcoming welcome party. Now, this reporter doesn't really feel the need to dwell on facts such as "who exploded what" or "what ignited whom," but rather, let us focus on the result!
+
+After a rather dismal first act, it looked like we'd ruined our chances to impress Musa, that is until... the tables turned! And were set on fire! And promptly extinguished. It was an extinguishing... of hope!
+
+Mort shared with us all the most moving of tales... one of loss, one of regret, but ultimately, a tale of inspiration. He spoke solemnly, gaze aligned squarely at our wealthy guest, tears forming in his eyes... 
+
+"I believe in these people. I believe in Sandrock." 
+
+Powerful words. So much so that even the calculating businessman, infamous for his heart of stone in the negotiation room, had no choice but to reconsider his refusal to invest in our town. 
+
+Regardless of Musa's ultimate decision, this reporter is thoughtlessly jumping on the bandwagon. I believe in Sandrock, too!
+
+TRIGGER Procedure 5.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Something in the Air is in state 2 with flag 1
+Relapse is in state 2 with flag 0
+
+GROUP 10:
+Something in the Air is successfully completed
+Relapse is in state 2 with flag 0
+
+ACTIONS
+Run mission #1200227
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200227
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1200227 | flagName: Mission_1600096_Trigger_2 | id: 22271 | sceneName: Main | showOnMap: 1 | mapIcon: MissionArea | transId: 80006704
+ACTION AREA TRIGGER SET RADIUS || id: 22271 | radius: 15
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_saloon
+Relapse is in state 2 with flag 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_saloon
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 22271
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+Fang stands still in Saloon and looks at Grace
+Grace stands still in Saloon and looks at Fang
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+SHOW CONVERSATION LISTENER || dialog: 1875_0 | npc: 8016 | cId: 0 | missionId: 1200227 | listeners: 8000
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Fang stops standing still
+Grace stops standing still
+END MISSION 1200227
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_TOGETHER | state: 9
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 22271
+END MISSION 1200227

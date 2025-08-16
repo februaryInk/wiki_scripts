@@ -1,0 +1,210 @@
+Reading Mission 1300013: Over the Moon
+
+<onlyinclude>{{Infobox mission
+|name = Over the Moon
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Over the Moon:
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the first option in conversation segment 522:
+{{dialogue|Owen|The sandstorm was mostly blowing {{textcolor|green|in the direction of the yakmel ranch}}; do you think you can help me find it?}}
+
+*''Yeah, I can do it.'' (No unique dialogue)
+*''Too much going on right now, sorry.'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 525:
+{{dialogue|Owen|Hey, ''Player'', got time to find my moon?}}
+
+*''Yeah, I can do it.'' (No unique dialogue)
+*''Too much going on right now, sorry.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set ACCEPT to 1
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1300012
+CONDITIONS
+Always:
+ACTIONS
+Run mission Over the Moon
+END MISSION 1300012
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1300013
+CONDITIONS
+Always:
+ACTIONS
+===Find Moon Sign===
+
+{{mission_details
+|desc = According to Owen, the sign has been spotted on the slope near the workshop. Go there to retrieve it.
+|details = Find Moon Sign
+}}
+AREA TRIGGER CREATE || id: 1300013 | sceneName: Main | flagName: moonmissdown | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80000771 | missionId: 1300012
+Set Number to 0
+MONSTER ADD TAG || tag: SaloonDisappear3 | isAdd: 1
+Set Number to 0
+Set FIX to 0
+Set Talk to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 1300013
+CONDITIONS
+Always:
+ACTIONS
+===Defeat the Rocket Roosters===
+
+{{mission_details
+|desc = The sign is surrounded by Rocket Roosters. They need to be chased away before you can get the sign.
+|details = Defeat the Rocket Roosters
+}}
+In a speech bubble:
+{{dialogue|Player|I need to defeat the Rocket Roosters before I can get the Blue Moon Sign.}}
+AREA TRIGGER DELETE || id: 1300013
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 0 | tag: SaloonDisappear3
+CONDITIONS
+Always:
+ACTIONS
+Increment Number by 1
+MISSION TARGET COUNTER CHANGE || missionId: 1300012 | targetId: 1 | transId: 80000715 | isAdd: 1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 10 | tag: SaloonDisappear3
+CONDITIONS
+Check if Number is >= 3
+ACTIONS
+SCENEITEM INTERACT SET LOCKER || isAdd: 0 | itemType: 0 | id: 1300013
+===Retrieve the Sign===
+
+{{mission_details
+|desc = You've chased away the Rocket Roosters. You can now retrieve the sign.
+|details = Retrieve the Sign
+}}
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 1300013 | missionId: 1300012 | iconType: 2
+MONSTER ADD TAG || isAdd: 0 | tag: SaloonDisappear3
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 1300013
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 1300013 | sec: 2.5
+Add behavior CommanderPlayerAction (idName: 1300013) to Player
+(param: CMDAction:GetGift)
+CUTSCENE UI STATE ENTER || 
+SCENEITEM ADD ICON STACK || add: 0 | itemType: 0 | id: 1300013 | missionId: 1300012 | iconType: 2
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 1300013
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+SCENEITEM DELETE || itemType: 0 | id: 1300013
+Remove behavior CommanderPlayerAction (idName: 1300013) from Player
+Add 1 Blue Moon Sign of Default quality (Notify player)
+===Install Moon Sign===
+
+{{mission_details
+|desc = You've got the moon! Go put it back on the saloon!
+|details = Install Moon Sign
+}}
+Set Number to 1
+SCENEITEM CREATE FLAG || itemType: 11 | id: 13000130 | path: Lable_moonmiss | sceneName: Main | flagName: moonlocation | extraParams: -1|CreatorItem|18000034_1|1547|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 13000130 | missionId: 1300012 | iconType: 2
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 13000130
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Set FIX to 1
+DELAY MASK SET || maskId: 1300013 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 13013
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 1300013 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 1300013 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Owen stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_owen
+SCENEITEM DELETE || itemType: 12 | id: 13000130
+SCENEITEM CREATE FLAG || path: Mission_moonlocation1 | itemType: 12 | id: 13000130 | sceneName: Main | flagName: moonlocation | extraParams: -1
+
+TRIGGER Procedure 1.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 1300013 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 526 starts:
+{{dialogue|Owen|This is great! It's a "Whole-tel" again, hahaha! Thanks a million!}}
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Owen stops standing still
+SUBMIT MISSION 1300012
+END MISSION 1300013
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1300013
+CONDITIONS
+Always:
+ACTIONS
+MONSTER ADD TAG || tag: SaloonDisappear3 | isAdd: 0
+SCENEITEM DELETE || itemType: 11 | id: 13000130
+AREA TRIGGER DELETE || id: 1300013
+AREA TRIGGER DELETE || id: 13013
+SCENEITEM DELETE || itemType: 0 | id: 13013
+SCENEITEM CREATE FLAG || itemType: 0 | id: 13013 | path: Mission_moonlocation2 | sceneName: Main | flagName: moonlocation | extraParams: 0

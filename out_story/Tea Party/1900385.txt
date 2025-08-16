@@ -1,0 +1,637 @@
+Reading Mission 1900385: Tea Party
+
+<onlyinclude>{{Infobox mission
+|name = Tea Party
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Tea Party:
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 0) There is a conversation segment (id 18112) that ends:
+{{dialogue|Amirah|Great, I'll see you then.}}
+(cId: -1) There is a conversation segment (id 18112) that ends:
+{{dialogue|Amirah|Great, I'll see you then.}}
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1900386
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1900386
+CONDITIONS
+Always:
+ACTIONS
+Run mission Tea Party
+END MISSION 1900386
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1900385
+CONDITIONS
+Always:
+ACTIONS
+===Wait for Tomorrow===
+
+{{mission_details
+|desc = The tea party is tomorrow at 15:00 PM. Wait until then to attend.
+|details = Wait for Tomorrow
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+===Attend Tea Party at 15:00PM===
+
+{{mission_details
+|desc = Today is the tea party with Heidi, Amirah, and Pablo. Go to the Blue Moon Saloon at 15:00PM to attend.
+|details = Attend Tea Party at 15:00PM
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 13:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1900385 | id: 9385 | sceneName: Main | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80027713 | flagName: T9386
+
+TRIGGER Procedure 1.0 Step 0.5 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_saloon
+CHECK TIME || compare: 2 | hour: 15 | minute: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_saloon
+AREA TRIGGER DELETE || id: 9385
+DELAY MASK SET || maskId: 93850 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+Heidi stands still in Saloon and looks at Amirah
+Pablo stands still in Saloon and looks at Amirah
+Amirah stands still in Saloon and looks at Heidi
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: P9385A_0
+Add behavior CommanderSit (idName: 2938500) to Pablo
+(param: TargetScene:Saloon|SeatDramaName:9385Seat02)
+SCENEITEM CREATE FLAG || itemType: 0 | path: xl_z9368_table0 | sceneName: Saloon | flagName: Table_00 | extraParams: 0 | id: 5938500
+
+TRIGGER Procedure 1.0 Step 2.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 93850 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 93850 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 9938500 | sec: 2
+
+TRIGGER Procedure 1.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 9938500
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 18115, 18116 starts:
+{{dialogue|Amirah|Sorry I'm late.}}
+{{dialogue|Heidi|You're fine! We just got here a little early.}}
+
+TRIGGER Procedure 1.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 93851 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 7.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 93851 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Heidi stands still in Saloon and looks at Amirah
+DELAY MASK SET || maskId: 93851 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Add behavior CommanderSit (idName: 2938504) to Heidi
+(param: TargetScene:Saloon|SeatDramaName:9385Seat04)
+Add behavior CommanderPlayerSit (idName: 2938502) to Player
+(param: TargetScene:Saloon|SeatDramaName:9385Seat03)
+Add behavior CommanderSit (idName: 2938503) to Amirah
+(param: TargetScene:Saloon|SeatDramaName:9385Seat01)
+STOPWATCH REAL TIME SET || sec: 1.5 | id: 9938501
+
+TRIGGER Procedure 1.0 Step 8.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 93851 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 5513_0 starts:
+{{dialogue|Pablo|Ooh! What have we here! You've brought our fine associate, ''Player'', to the tea party have you? "Meeting the friend group" already? Things must be getting pretty serious...}}
+
+*''We're just friends.''
+*{{flirt}}''Well, that depends on Amirah...''
+
+{{dialogue|Amirah|indent=true|answer=We're just friends.
+|Pablo's just teasing. You'll get used to it.}}
+{{dialogue|Amirah|indent=true|answer=Well, that depends on Amirah...
+|If only I had half of your wit, Pablo.}}
+{{dialogue|Pablo|indent=true|As do I! Were it so, you'd still have the second sharpest tongue in Sandrock...}}
+
+TRIGGER Procedure 1.0 Step 9.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 9938502 | sec: 1.5
+
+TRIGGER Procedure 1.0 Step 10.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 9938502
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 5516_0 starts:
+{{dialogue|Heidi|Why the third degree, Pablo? Sounds like someone's jealous...!}}
+{{dialogue|Pablo|Couldn't tell you. I've never had to be jealous.}}
+{{dialogue|Amirah|I'm sorry, I've been so preoccupied with work lately, it's been so long since I've been able to come.}}
+{{dialogue|Pablo|Hm, well while we're doing confessions... you've been away for so long I was forced to open up auditions for your replacement...}}
+{{dialogue|Pablo|But you know, when certain entrepreneurial gentlewomen hear they have to spend a little on the premium tea and dessert, they backed out. Sigh... it seems not many in this town are interested in refining their palette. So... you're safe. For now.}}
+{{dialogue|Amirah|I see. I suspected your response to my absence would be less than charitable. As such, I've brought a present for each of you, as an apology.}}
+{{dialogue|Pablo|Ah hah! Her tact is surpassed only by her beauty. Very well, Ms. Amirah! The club Curator recognizes your gifts. All is forgiven.}}
+{{dialogue|Heidi|Seconded! And... wow! This gift box is just stunning, Amirah! Wait, there's more inside!}}
+{{dialogue|Amirah|It's a small teacup, handmade, as you might expect. Look, I engraved your names on them too. ''Player'' helped me create the Fragrant Satchels, so you'll always be able to enjoy a pleasant aroma that should pair nicely with any tea leaf...}}
+{{dialogue|Pablo|Very personal, I approve.}}
+{{dialogue|Pablo|''Player''! You must join us for tea. If not only for your charm, because I've grown weary of these two beauties... give me something new to look at!}}
+{{dialogue|Heidi|Right back at ya, sunshine...}}
+{{dialogue|Amirah|Yes, do please join us more often, ''Player''. I feel like you'd be suitable member for our tea party. Pablo, as he mentioned, is the leader, Heidi and I are his knights, and together we call ourselves-}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 11.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 18134 starts:
+{{dialogue|0|"The Fleeting Youth Tea Society."}}
+STOPWATCH REAL TIME SET || id: 9938508 | sec: 2
+
+TRIGGER Procedure 1.0 Step 12.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 9938508
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 5517_0 starts:
+{{dialogue|Pablo|...Fleeting, as in "swift." We are all that remains of the vibrant artistic Sandrock scene that once was... so it goes without saying we're always on the lookout for new members.}}
+
+*''I'd love to join!''
+*''I'm not much of an artist...''
+*''My youth isn't "fleeting..."''
+
+{{dialogue|Pablo|indent=true|answer=I'd love to join!
+|reward={{NPC2|Heidi|rp=2}}|reward={{NPC2|Amirah|rp=2}}|reward={{NPC2|Pablo|rp=2}}|So charmingly positive! But we already have "the nice one;" that role is fulfilled by none other than our alliterative architect, Ms. Heidi... Nevermind that, we'll play it by ear. Good find, Ms. Amirah!}}
+{{dialogue|Amirah|indent=true|Why, Pablo, can it be? Are you starting to trust my judgement?}}
+{{dialogue|Heidi|indent=true|There's nothing in the rule book that says we can't have two "nice ones...!"}}
+{{dialogue|Pablo|indent=true|Typical "nice one" response...}}
+{{dialogue|Pablo|indent=true|answer=I'm not much of an artist...
+|Honey, there's a line where modesty tips into pride.}}
+{{dialogue|Amirah|indent=true|Nonsense! You are a creator, and creation is the art of life.}}
+{{dialogue|Heidi|indent=true|Amirah is absolutely right, you've got my vote too!}}
+{{dialogue|Pablo|indent=true|answer=My youth isn't "fleeting..."
+|Well, when you put it like that... perhaps indeed you are too "young." I believe I may have misjudged you. I withdraw my invitation...}}
+{{dialogue|Heidi|indent=true|Oh come on, Pablo. They're teasing you!}}
+{{dialogue|Amirah|indent=true|Perhaps ''Player'' thinks they won't fit in. Don't worry, it's all just a bit of fun. Anyone can join us, really.}}
+{{dialogue|Pablo|Very well, then! Let the induction ceremony... begin!}}
+{{dialogue|Heidi|Great! Well, today's on me then. I've always wanted to celebrate a new member!}}
+{{dialogue|Amirah|Heidi... you can't keep doing this...}}
+{{dialogue|Pablo|Come on, Ami. Who are we to turn down our big fancy architect's kind offer? Quickly now, a toast before she changes her mind!}}
+{{dialogue|Heidi|Toast what? This is tea, not Yakmel Milk! Alright, alright. Well, to our success!}}
+{{dialogue|Pablo|Success? Tch... come now, that's a given... Let's toast to something better!}}
+{{dialogue|Amirah|''Player'', as our newest member, why don't you make a toast?}}
+
+*''To friendship!''
+*''To love!''
+*''To gossiping about everyone else in town!''
+
+{{dialogue|Amirah|indent=true|answer=To friendship!
+|reward={{NPC2|Heidi|rp=2}}|reward={{NPC2|Amirah|rp=2}}|reward={{NPC2|Pablo|rp=2}}|Exactly what I was thinking.}}
+{{dialogue|Pablo|indent=true|Yes, yes, very good. And quick addendum? To Sandrock becoming the art capital of the Free Cities!}}
+{{dialogue|Pablo|indent=true|answer=To love!
+|reward={{NPC2|Amirah|rp=4}}|Oooh, to love! And who, dare say, is on your mind? I like this toast. Ten out of ten toast, would toast again.}}
+{{dialogue|Pablo|indent=true|answer=To gossiping about everyone else in town!
+|reward={{NPC2|Pablo|rp=3}}|...You're going to fit like a glove, ''Player''.}}
+
+TRIGGER Procedure 1.0 Step 13.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 93852 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 14.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 93852 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 93852 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+SCENEITEM DELETE || itemType: 0 | id: 5938500
+SCENEITEM CREATE FLAG || itemType: 0 | id: 5938502 | path: xl_z9368_table2 | sceneName: Saloon | flagName: Table_00 | extraParams: 0
+
+TRIGGER Procedure 1.0 Step 15.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 93852 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 5526_0 starts:
+{{dialogue|Heidi|...You're just going to leave it there?}}
+{{dialogue|Amirah|Surely your story isn't over...}}
+{{dialogue|Pablo|When it comes to my own tea, I prefer sipping to spilling...}}
+{{dialogue|Heidi|Oh come on, now! Just a hint!}}
+{{dialogue|Pablo|What happens in Walnut Groove, stays in Walnut Groove, my darlings...}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 13.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 93853 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 16.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 93854 | delayTime: 0 | durationTime: -1 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 17.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 93854 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 93854 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+SCENEITEM DELETE || itemType: 0 | id: 5938502
+SCENEITEM CREATE FLAG || itemType: 0 | id: 5938503 | path: xl_z9368_table3 | sceneName: Saloon | flagName: Table_00 | extraParams: 0
+
+TRIGGER Procedure 1.0 Step 18.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 93854 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 5528_0 starts:
+{{dialogue|Heidi|...They're actually doing really well! They have their own company and everything, it's called A&G-}}
+{{dialogue|Pablo|Bo-ring! Not juicy enough. Next!}}
+{{dialogue|Pablo|Amirah! What ever happened to that one guy who liked you, waited outside your shop for a while...?}}
+{{dialogue|Amirah|Which one...}}
+{{dialogue|Pablo|Ah... you know... the ugly one!}}
+{{dialogue|Amirah|...Which one?}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 16.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 93855 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 0.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 938500
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 2938501) to Heidi
+(param: CMDAction:Hi)
+
+TRIGGER Procedure 2.0 Step 14.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 93853 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 93853 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 15.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 93853 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 5527_0 starts:
+{{dialogue|Heidi|...What! She didn't!}}
+{{dialogue|Pablo|She did.}}
+{{dialogue|Amirah|She wouldn't!}}
+{{dialogue|Pablo|She would.}}
+{{dialogue|Amirah|Goodness...}}
+{{dialogue|Heidi|I thought she was a nun!}}
+{{dialogue|Pablo|She was...}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 93855 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderPlayerSit (idName: 2938502) from Player
+Remove behavior CommanderSit (idName: 2938504) from Heidi
+Remove behavior CommanderSit (idName: 2938503) from Amirah
+Remove behavior CommanderSit (idName: 2938500) from Pablo
+Remove behavior CommanderNPCAction (idName: 2938501) from Heidi
+Heidi stops standing still
+Amirah stops standing still
+Heidi stops standing still
+Pablo stops standing still
+SCENEITEM DELETE || itemType: 0 | id: 5938503
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: PlB9386_0
+SCENEITEM DELETE || itemType: 0 | id: 5938500
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Saloon to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_main
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_main
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 93855 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Saloon to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Heidi stands still in Main and looks at Player
+Pablo stands still in Main and looks at Amirah
+Amirah stands still in Main and looks at Pablo
+
+TRIGGER Procedure 3.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 93855 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 8) A conversation 5529_0 starts:
+{{dialogue|Pablo|It's lovely to have new members. Til next time!}}
+{{dialogue|Heidi|Bye everyone, I really have to get back to work, though.}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 2938505) to Heidi
+(param: TargetScene:Main|MoveMode:Walk|FlagName:HdB9386_1|LookAtActor:8022)
+Add behavior CommanderMoveToFlagAndAction (idName: 2938506) to Pablo
+(param: TargetScene:Main|MoveMode:Walk|FlagName:PblB9386_1|LookAtActor:8009)
+STOPWATCH REAL TIME SET || id: 9938505 | sec: 2.5
+
+TRIGGER Procedure 3.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 9938505
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 2938507) to Amirah
+(param: TargetScene:Main|MoveMode:Walk|FlagName:AmlB9386_1|LookAtActor:8000)
+Add behavior CommanderMoveToFlagAndAction (idName: 2938508) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:PlB9386_1|LookAtActor:8015)
+
+TRIGGER Procedure 3.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8015 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 9) A conversation 5530_0 starts:
+{{dialogue|Amirah|That was lovely, ''Player''. And I think our gifts were a hit!}}
+
+*''Glad I thought of it!''
+*''Well, it was your idea.''
+*''Hey, you write 'em up, I bang 'em out.''
+*{{flirt}}''Maybe next time, it can be just the two of us.''
+
+{{dialogue|Amirah|indent=true|answer=Glad I thought of it!
+|Erm... Yes.}}
+{{dialogue|Amirah|indent=true|answer=Well, it was your idea.
+|reward={{NPC2|Amirah|rp=2}}|Pablo is a lovely man, but he must be appeased from time to time. I know only from experience.}}
+{{dialogue|Amirah|indent=true|answer=Hey, you write 'em up, I bang 'em out.
+|reward={{NPC2|Amirah|rp=2}}|I think you can give yourself a bit more credit, ''Player''. I've become quite a fan of your creations. Especially the most intricate ones.}}
+{{dialogue|Amirah|indent=true|answer=Maybe next time, it can be just the two of us.
+|reward={{NPC2|Amirah|rp=3}}|Hm. I certainly wouldn't be opposed...}}
+{{dialogue|Amirah|In any case, I do hope you'll stop by again.}}
+{{dialogue|Amirah|Take this with you, and welcome once again to...}}
+{{dialogue|Amirah|The Fleeting Youth Tea Society!}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 2938508) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 2938507) from Amirah
+Remove behavior CommanderMoveToFlagAndAction (idName: 2938506) from Pablo
+Remove behavior CommanderMoveToFlagAndAction (idName: 2938505) from Heidi
+Amirah stops standing still
+Pablo stops standing still
+Heidi stops standing still
+Add 2 Yakmel Milk of Unknown quality (Notify player)
+SUBMIT MISSION 1900386
+END MISSION 1900386
+END MISSION 1900385
+
+TRIGGER Procedure 4.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) The player picks the first option in conversation segment 18135:
+{{dialogue|Pablo|...Fleeting, as in "swift." We are all that remains of the vibrant artistic Sandrock scene that once was... so it goes without saying we're always on the lookout for new members.}}
+
+*''I'd love to join!'' (No unique dialogue)
+*''I'm not much of an artist...'' (No unique dialogue)
+*''My youth isn't "fleeting..."'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Amirah gains 2 favor
+Heidi gains 2 favor
+Pablo gains 2 favor
+
+TRIGGER Procedure 4.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) The player picks the first option in conversation segment 18152:
+{{dialogue|Amirah|''Player'', as our newest member, why don't you make a toast?}}
+
+*''To friendship!'' (No unique dialogue)
+*''To love!'' (No unique dialogue)
+*''To gossiping about everyone else in town!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Amirah gains 2 favor
+Heidi gains 2 favor
+Pablo gains 2 favor
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) The player picks the second option in conversation segment 18152:
+{{dialogue|Amirah|''Player'', as our newest member, why don't you make a toast?}}
+
+*''To friendship!'' (No unique dialogue)
+*''To love!'' (No unique dialogue)
+*''To gossiping about everyone else in town!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Amirah gains 4 favor
+
+TRIGGER Procedure 4.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) The player picks the third option in conversation segment 18152:
+{{dialogue|Amirah|''Player'', as our newest member, why don't you make a toast?}}
+
+*''To friendship!'' (No unique dialogue)
+*''To love!'' (No unique dialogue)
+*''To gossiping about everyone else in town!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Pablo gains 3 favor
+
+TRIGGER Procedure 4.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) The player picks the second option in conversation segment 18178:
+{{dialogue|Amirah|That was lovely, ''Player''. And I think our gifts were a hit!}}
+
+*''Glad I thought of it!'' (No unique dialogue)
+*''Well, it was your idea.'' (No unique dialogue)
+*''Hey, you write 'em up, I bang 'em out.'' (No unique dialogue)
+*{{flirt}}''Maybe next time, it can be just the two of us.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Amirah gains 2 favor
+
+TRIGGER Procedure 4.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) The player picks the third option in conversation segment 18178:
+{{dialogue|Amirah|That was lovely, ''Player''. And I think our gifts were a hit!}}
+
+*''Glad I thought of it!'' (No unique dialogue)
+*''Well, it was your idea.'' (No unique dialogue)
+*''Hey, you write 'em up, I bang 'em out.'' (No unique dialogue)
+*{{flirt}}''Maybe next time, it can be just the two of us.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Amirah gains 2 favor
+
+TRIGGER Procedure 4.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) The player picks the fourth option in conversation segment 18178:
+{{dialogue|Amirah|That was lovely, ''Player''. And I think our gifts were a hit!}}
+
+*''Glad I thought of it!'' (No unique dialogue)
+*''Well, it was your idea.'' (No unique dialogue)
+*''Hey, you write 'em up, I bang 'em out.'' (No unique dialogue)
+*{{flirt}}''Maybe next time, it can be just the two of us.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Amirah gains 3 favor

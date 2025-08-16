@@ -1,0 +1,109 @@
+Reading Mission 1700111: Delivery Master
+
+<onlyinclude>{{Infobox mission
+|name = Delivery Master
+|image =
+|description = Arvio is overrun with deliveries. He is a little busy and would like your help delivering goods to customers.
+|type = Side
+|time =
+|location =
+|characters = [[Arvio]]
+|condition =
+|details =
+|exp = 120
+|reputation = None
+|gols = 50
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Delivery Expert:
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: deliveryforArvio | info: 3 | exist: 1
+ACTIONS
+SUBMIT MISSION 1700109
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission Delivery Master
+END MISSION 1700110
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700111
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1700111
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Arvio
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 612_0 starts:
+{{dialogue|Arvio|''Player'', could you help me deliver once again? I'm almost done with my backlog, so, I promise, pinky promise, absolutely give you an Arvio guarantee, that it is the last time!}}
+
+*''Fine, give it to me then!''
+*''I'm really very busy...''
+
+{{dialogue|Arvio|indent=true|answer=Fine, give it to me then!
+|Thank you! Thank you! Next time I'll trouble someone else, for this is the last time to use your precious time.}}
+{{dialogue|Arvio|indent=true|reward={{i2|Arvio's Goods|1}}|These dyes are to be sent to Vivi's clothes shop Tailor Made on Main Street. I guess that Vivi has thought up a brand new style!}}
+{{dialogue|Arvio|indent=true|answer=I'm really very busy...
+|It's not on your way? That's bizarre, you're not going through Main Street?}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 2538) that ends:
+{{dialogue|Arvio|These dyes are to be sent to Vivi's clothes shop Tailor Made on Main Street. I guess that Vivi has thought up a brand new style!}}
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Arvio's Goods of Default quality (Notify player)
+START MISSION 1700111
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700111
+CONDITIONS
+Always:
+ACTIONS
+Run mission Delivery Master
+END MISSION 1700111
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Arvio|''Player'', could you help me deliver once again? I'm almost done with my backlog, so, I promise, pinky promise, absolutely give you an Arvio guarantee, that it is the last time!}}
+
+*''Fine, give it to me then!''
+*''I'm really very busy...''
+
+{{dialogue|Arvio|indent=true|answer=Fine, give it to me then!
+|Thank you! Thank you! Next time I'll trouble someone else, for this is the last time to use your precious time.}}
+{{dialogue|Arvio|indent=true|These dyes are to be sent to Vivi's clothes shop Tailor Made on Main Street. I guess that Vivi has thought up a brand new style!}}
+{{dialogue|Arvio|indent=true|answer=I'm really very busy...
+|It's not on your way? That's bizarre, you're not going through Main Street?}}
+
+==Rewards==
+{{mission reward
+|exp = 120
+|reputation = None
+|gols = 50
+}}

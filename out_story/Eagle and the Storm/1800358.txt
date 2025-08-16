@@ -1,0 +1,147 @@
+Reading Mission 1800358: Eagle and the Storm
+
+<onlyinclude>{{Infobox mission
+|name = Eagle and the Storm
+|image =
+|description = Ginger's treatment process has begun, but it will be a difficult process, both for her and her family.
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 2200
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200364
+
+TRIGGER Procedure 10.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: fangginger | info: 1 | exist: 0
+ACTIONS
+Run mission The Girl with the Umbrella
+Set global blackboard key fangginger with info 1.
+
+TRIGGER Procedure 10.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+The Girl with the Umbrella is successfully completed
+
+GROUP 1:
+The Girl with the Umbrella has failed
+
+ACTIONS
+Run mission Eagle and the Storm
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800358
+CONDITIONS
+Always:
+ACTIONS
+Set 8358A to 0
+Add behavior Story1800359_8107 (idName: 83591071) to Ginger
+(param: -1)
+Gust stands still in Clinic and looks at Ginger
+Fang stands still in Clinic and looks at Ginger
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+Where's Mi-an is in state 1 with flag 0
+The Childhood Friend is in state 1 with flag 0
+Goodbye, Nia is in state 1 with flag 0
+The Kidnapping is in state 1 with flag 0
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: triallogan | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+X stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8358_0_1
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 20470, 20471, 20472 starts:
+{{dialogue|X|Help! Help! Come with me!}}
+{{dialogue|X|Bad birdie, don't fight! Please don't fight!}}
+{{dialogue|X|Civil Corps! Call the police!}}
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 8358422) to X
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8358_42_2)
+X stops standing still
+
+TRIGGER Procedure 0.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 835811
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 20473 starts:
+{{dialogue|Player|(X seems alarmed, there must be something going on at the clinic.)}}
+DELIVER MISSION 1800358
+
+TRIGGER Procedure 0.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 8358422) from X
+START MISSION 1800358
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 10.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800358
+CONDITIONS
+Always:
+ACTIONS
+Run mission Eagle and the Storm
+END MISSION 1800358
+
+==Rewards==
+{{mission reward
+|exp = 2200
+|reputation = None
+|gols = None
+}}

@@ -1,0 +1,240 @@
+Reading Mission 1200273: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100068
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+CHECK WEATHER STATE || weather: 2 | flag: 0
+Cover My Glass is successfully completed
+Takin' it Easy is in state 1 with flag 1
+
+GROUP 10:
+Cover My Glass has failed
+CHECK WEATHER STATE || weather: 2 | flag: 0
+
+GROUP 20:
+CHECK GLOBAL BLACKBOARD || key: 1200057missed | info: 1 | exist: 1
+
+ACTIONS
+AREA TRIGGER DELETE || id: 20681
+AREA TRIGGER DELETE || id: 10681
+Remove behavior CommanderMoveToFlag (idName: 1669051) from Elsie
+Remove behavior CommanderMoveToFlagAndAction (idName: 1669171) from Mi-an
+END MISSION 1600068
+
+TRIGGER Procedure 2.0 Step 3.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1200271 is result 1 flag 1
+ACTIONS
+Run mission #1200273
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Justice stands still in Main and looks at Mabel
+Mabel stands still in Main and looks at Justice
+AREA TRIGGER CREATE || missionId: 1200273 | id: 22731 | sceneName: Main | flagName: shesgone_trigger | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+NPC LEAVE || npc: 8005
+NPC REMOVE TAG || tag: MabelHurtHome
+LOCK NPC ORDER MISSION || npc: 8005
+NPC ADD TAG || tag: MabelHurt
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 12:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Justice stops standing still
+Mabel stops standing still
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22731
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Mabel stops standing still
+Justice stops standing still
+Mabel stands still in Main and looks at Justice
+Justice stands still in Main and looks at Mabel
+AREA TRIGGER DELETE || id: 22731
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 22731
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Justice|Don't worry Mabel, we'll find her.}}
+STOPWATCH REAL TIME SET || sec: 3 | id: 22731
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 22731
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Mabel|She's... she's... out there alone...}}
+STOPWATCH REAL TIME SET || sec: 3 | id: 22732
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 22732
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Justice|We'll let you know if there's any news. Now, go and rest up, ya hear?}}
+STOPWATCH REAL TIME SET || sec: 2 | id: 22733
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 22733
+CONDITIONS
+Always:
+ACTIONS
+Justice stops standing still
+Mabel stops standing still
+CUTSCENE UI STATE EXIT || 
+NPC ICON ADD || missionIcon: 0 | npc: 8008 | missionId: 1200273
+Run mission #1200274
+Set global blackboard key 1200273 with info 1.
+Justice gains 10 favor
+Cooper gains 10 favor
+Mabel gains 10 favor
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Justice
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON REMOVE || missionIcon: 0 | npc: 8008 | missionId: 1200273
+(cId 0) A conversation 2713_0 starts:
+{{dialogue|Justice|Oh hey ''Player''. So, you heard about Elsie, right? It's a tough thing, havin' your daughter goin' missin' like that. I ain't envyin' them ranch folk one bit.}}
+{{dialogue|Justice|I'm still gathering information on the case. You're her friend, right? Can I ask you somethin'? When did you last see her?}}
+
+*''(Stay silent)''
+*''A few days ago.''
+
+{{dialogue|Justice|indent=true|answer=(Stay silent)
+|Hey now, I ain't against you here, I'm tryin' to help find her. You ain't helpin' no one by being quiet, least of all Elsie.}}
+{{dialogue|Justice|indent=true|answer=A few days ago.
+|OK... got it.}}
+{{dialogue|Justice|Now, anythin' to think she might have run away?}}
+
+*''(Stay silent)''
+*''She had an argument with her parents.''
+*''It's all because of that duck...''
+
+{{dialogue|Justice|indent=true|answer=(Stay silent)
+|I don't know what you're tryin' to pull, but I ain't a fan. Throw me a bone here, okay?}}
+{{dialogue|Justice|indent=true|answer=She had an argument with her parents.
+|An argument? Interestin'... Adds up with what the parents were sayin'.}}
+{{dialogue|Justice|indent=true|answer=It's all because of that duck...
+|Yeah, I heard about that duck. Really should've reported it to the Civil Corps, let us handle it. And now all this...}}
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8008 | cId: 0 | missionId: 1200273
+CONDITIONS
+Flaming Saddles is successfully completed
+ACTIONS
+(cId 1) A conversation 2720_0 starts:
+{{dialogue|Justice|Alright, last up. Do you remember anythin' that could've given you a hint that she'd just ghost like this? Did she ever talk about it before?}}
+
+*''(Stay silent)''
+*''She had a Treasure Chest with assets...''
+*''You know what she's like.''
+
+{{dialogue|Justice|indent=true|answer=(Stay silent)
+|Sigh... Well, I guess I ain't gonna bother you no more then...}}
+{{dialogue|Justice|indent=true|answer=She had a Treasure Chest with assets...
+|Assets? She's not planning to just uproot outta here, is she...?}}
+{{dialogue|Justice|indent=true|answer=You know what she's like.
+|Yeah, I know she's a tough gal, but it's still dangerous around Sandrock. I'm kinda worried...}}
+{{dialogue|Justice|Anyway, thanks for the help, partner. I gotta go write all this up. If you hear anythin' else, just let me know, okay?}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: 1200273
+END MISSION 1200273
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8008 | cId: 0 | missionId: 1200273
+CONDITIONS
+Flaming Saddles is in state 3 with flag 0
+ACTIONS
+(cId 1) A conversation 2721_0 starts:
+{{dialogue|Justice|Alright, last up. Do you remember anythin' that could've given you a hint that she'd just ghost like this? Did she ever talk about it before?}}
+
+*''(Stay silent)''
+*''You know what she's like.''
+
+{{dialogue|Justice|indent=true|answer=(Stay silent)
+|Sigh... Well, I guess I ain't gonna bother you no more then...}}
+{{dialogue|Justice|indent=true|answer=You know what she's like.
+|Yeah, I know she's a tough gal, but it's still dangerous around Sandrock. I'm kinda worried...}}
+{{dialogue|Justice|Anyway, thanks for the help, partner. I gotta go write all this up. If you hear anythin' else, just let me know, okay?}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800273
+CONDITIONS
+Always:
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: 1200273
+AREA TRIGGER DELETE || id: 22731
+NPC ICON REMOVE || missionId: 1200273 | npc: 8008 | missionIcon: 0
+END MISSION 1200274

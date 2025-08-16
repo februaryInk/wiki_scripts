@@ -1,0 +1,380 @@
+Reading Mission 1800262: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200107
+
+TRIGGER Procedure 2.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE FLAG || flag: mail468 | compare: 2 | days: 3
+Duvos Attacks! is in state 2 with flag 0
+ACTIONS
+Run mission #1800259
+
+TRIGGER Procedure 2.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE FLAG || flag: mail468 | compare: 2 | days: 5
+Duvos Attacks! is in state 2 with flag 0
+ACTIONS
+Run mission #1800262
+ACTION DATE REMOVE FLAG || flag: mail468
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800262
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|475}}
+Set 8262A to 0
+Set 8262SitA to 0
+Set 8262SitB to 0
+CALENDAR SET REMINDER || addDays: 2 | hour: 18 | transId: 80002682
+
+TRIGGER Procedure 0.0 Step 0.1 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment 8262A by 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 19:00 (order: 0):
+CONDITIONS
+Check if 8262A is == 2
+ACTIONS
+AREA TRIGGER ONCE CREATE || missionId: 1800262 | id: 82621 | sceneName: Main | flagName: Trigger_Saloon | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 0.0 Step 2.1 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 82621
+GLOBAL BLACK BOARD REMOVE || key: mail4680
+Run mission #1800263
+END MISSION 1800262
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_saloon
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_saloon
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+Amirah stands still in Saloon and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: S8262_0_1
+SCENEITEM CREATE FLAG || itemType: 0 | id: 82621 | path: S8262_Item1 | flagName: S8262_Item1 | extraParams: 0 | sceneName: Saloon
+Arvio stands still in Saloon
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8262141) to Arvio
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:S8262_14_1|Action:Hi|LookAtActor:8000|Delay:0.5)
+Add behavior CommanderMoveToFlagAndAction (idName: 8262001) to Player
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:S8262_0_2|LookAtActor:8015|Delay:1.5)
+
+TRIGGER Procedure 0.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || delayTime: 0 | durationTime: -2 | maskId: 82622 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82622 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 82622 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Add behavior CommanderSit (idName: 8262142) to Arvio
+(param: SeatDramaName:SaloonSeat01|TargetScene:Saloon)
+Add behavior CommanderSit (idName: 8262152) to Amirah
+(param: SeatDramaName:SaloonSeat02-1|TargetScene:Saloon)
+Add behavior CommanderPlayerSit (idName: 8262002) to Player
+(param: SeatDramaName:SaloonSeat02-2)
+Remove behavior CommanderMoveToFlagAndAction (idName: 8262141) from Arvio
+Amirah stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8262001) from Player
+
+TRIGGER Procedure 0.0 Step 8.8 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8014 | behaviourName: CommanderSit | eventName: SitDownFinished
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8015 | eventName: SitDownFinished | behaviourName: CommanderSit
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: mail468 | info: 1 | exist: 0
+Check if 8262Sit is == 2
+ACTIONS
+(cId 1) A conversation 2527_0 starts:
+{{dialogue|Arvio|Ah, ''Player''! You came! I was going to tell you the news, but then everything kind of happened at once, and we kind of got caught up... but the first phase is now over!}}
+
+*''What's the big news?''
+*''Don't burn yourselves out.''
+
+{{dialogue|Arvio|indent=true|answer=What's the big news?
+|Oh, right! We got a huge job! If it goes well, we could have a steady source of income from here on out. Right on track to bring our parents to Sandrock! Of course, we're going to make sure it all goes smoothly.}}
+{{dialogue|Amirah|indent=true|answer=Don't burn yourselves out.
+|I appreciate the concern, but Arvio has worked this out, and now we both have to come together to make this work.}}
+{{dialogue|Arvio|You'll never guess! I really thought all this work was for nothing. We were struggling along, but Mr. Musa wrote to me out of the blue! He said that Luna had popularized my sister's pottery in Atara, and now he wants to help us spread even further!}}
+{{dialogue|Arvio|And most importantly, with the steps we've made to ease the production process, Am will have plenty of time to learn more and develop her art. She doesn't have to slave away night and day!}}
+
+*''You did it, Arvio!''
+*''Amirah, your hard work paid off!''
+*''You really pulled through, guys!''
+
+{{dialogue|Arvio|indent=true|answer=You did it, Arvio!
+|reward={{NPC2|Arvio|rp=3}}|I had to! The look on my sister's face... I'd been ignoring it for so long and letting her shoulder all the burden. It broke my heart, I realized I'd been failing her. I'm so sorry, Amirah... for everything.}}
+{{dialogue|Arvio|indent=true|If I couldn't pull through and be the brother I needed to be, then how am I to face her everyday?}}
+{{dialogue|Amirah|indent=true|answer=Amirah, your hard work paid off!
+|reward={{NPC2|Amirah|rp=3}}|You know, I always had thought of Arvio as my immature little brother. But he's surprised me. He really pulled through, and I needed to do my part.}}
+{{dialogue|Amirah|indent=true|We all know how difficult life is in Barnarock, and our parents really did everything they could to get us the opportunities here. It finally feels like our journey wasn't in vain.}}
+{{dialogue|Amirah|indent=true|answer=You really pulled through, guys!
+|reward={{NPC2|Amirah|rp=2}}|reward={{NPC2|Arvio|rp=2}}|We did, didn't we?}}
+{{dialogue|Arvio|indent=true|I feel like we finally worked as a team. I'm sorry, Am. You've been shouldering the burden for too long. I really needed to do this, to just get over myself and grow up.}}
+{{dialogue|Amirah|indent=true|And you have.}}
+{{dialogue|Amirah|You know everything we've been through, Arvio. How much we've struggled to get to where we are. I'm always happy to help, I've never needed anything in return. Just as long as we're both okay.}}
+{{dialogue|Amirah|You don't have to apologize for anything. I'm just happy you've managed to overcome everything and come out stronger on the other side. Everything you've done lately, you've done for us.}}
+{{dialogue|Amirah|But the thing that makes me happier than anything, is that you've really grown and become a wonderful, caring man. You're no longer the kid I had to clean up after. I'm proud of you, Arvio.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 11.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 2496_0 starts:
+{{dialogue|Arvio|Sister... you... it's because of you. You've done so much for me... I had to show you... pay you back...}}
+{{dialogue|Arvio|Ah... well, we invited ''Player'' over to celebrate our success with us! Let's not dwell on these things!}}
+
+*''It's touching to see you two talk like this.''
+*''Cheers! To your success!''
+
+{{dialogue|Amirah|indent=true|answer=It's touching to see you two talk like this.
+|See, don't cry your eyes out, Arvio! ''Player'' is watching, too!}}
+{{dialogue|Amirah|indent=true|''Player'', we've actually wanted to thank you for a while, but we just couldn't find the time to show you how much we appreciate all the help. We were only able to get this far because of your help!}}
+{{dialogue|Amirah|indent=true|So let's celebrate together! You deserve to be a part of this!}}
+{{dialogue|Arvio|indent=true|answer=Cheers! To your success!
+|Right! ''Player'', you've helped us so much along the way, if it weren't for you, who knows where we'd be right now! My sister and I owe you so much.}}
+{{dialogue|Arvio|indent=true|We really couldn't have done it without your help, so we wanted you to celebrate with us!}}
+{{dialogue|Arvio|indent=true|Today we celebrate our bright future!}}
+{{dialogue|Arvio|May your workshop become the most renown, may my sister's work become the most sought after! Cheers!}}
+{{dialogue|Amirah|Cheers!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 9.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8014 | behaviourName: CommanderSit | eventName: SitDownFinished
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8015 | eventName: SitDownFinished | behaviourName: CommanderSit
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: mail468 | info: 1 | exist: 1
+Check if 8262Sit is == 2
+ACTIONS
+(cId 1) A conversation 2490_0 starts:
+{{dialogue|Arvio|Ah, ''Player''! You came! I was going to tell you the news, but then everything kind of happened at once, and we kind of got caught up... but the first phase is now over!}}
+
+*''What's the big news?''
+*''Don't burn yourselves out.''
+
+{{dialogue|Arvio|indent=true|answer=What's the big news?
+|Oh, right! We got a huge job! If it goes well, we could have a steady source of income from here on out. Right on track to bring our parents to Sandrock! Of course, we're going to make sure it all goes smoothly.}}
+{{dialogue|Amirah|indent=true|answer=Don't burn yourselves out.
+|I appreciate the concern, but Arvio has worked this out, and now we both have to come together to make this work.}}
+{{dialogue|Arvio|Well, after our tireless efforts, Mr Musa finally agreed to my proposal and invested! He's going to help us sell our ceramics all across the Free Cities, and maybe even beyond! Oh, and he said you put in a good word for me! I really appreciate that!}}
+{{dialogue|Arvio|You'll never guess! I really thought all this work was for nothing. We were struggling along, but Mr. Musa wrote to me out of the blue! He said that Luna had popularized my sister's pottery in Atara, and now he wants to help us spread even further!}}
+{{dialogue|Arvio|And most importantly, with the steps we've made to ease the production process, Am will have plenty of time to learn more and develop her art. She doesn't have to slave away night and day!}}
+
+*''You did it, Arvio!''
+*''Amirah, your hard work paid off!''
+*''You really pulled through, guys!''
+
+{{dialogue|Arvio|indent=true|answer=You did it, Arvio!
+|reward={{NPC2|Arvio|rp=3}}|I had to! The look on my sister's face... I'd been ignoring it for so long and letting her shoulder all the burden. It broke my heart, I realized I'd been failing her. I'm so sorry, Amirah... for everything.}}
+{{dialogue|Arvio|indent=true|If I couldn't pull through and be the brother I needed to be, then how am I to face her everyday?}}
+{{dialogue|Amirah|indent=true|answer=Amirah, your hard work paid off!
+|reward={{NPC2|Amirah|rp=3}}|You know, I always had thought of Arvio as my immature little brother. But he's surprised me. He really pulled through, and I needed to do my part.}}
+{{dialogue|Amirah|indent=true|We all know how difficult life is in Barnarock, and our parents really did everything they could to get us the opportunities here. It finally feels like our journey wasn't in vain.}}
+{{dialogue|Amirah|indent=true|answer=You really pulled through, guys!
+|reward={{NPC2|Amirah|rp=2}}|reward={{NPC2|Arvio|rp=2}}|We did, didn't we?}}
+{{dialogue|Arvio|indent=true|I feel like we finally worked as a team. I'm sorry, Am. You've been shouldering the burden for too long. I really needed to do this, to just get over myself and grow up.}}
+{{dialogue|Amirah|indent=true|And you have.}}
+{{dialogue|Amirah|You know everything we've been through, Arvio. How much we've struggled to get to where we are. I'm always happy to help, I've never needed anything in return. Just as long as we're both okay.}}
+{{dialogue|Amirah|You don't have to apologize for anything. I'm just happy you've managed to overcome everything and come out stronger on the other side. Everything you've done lately, you've done for us.}}
+{{dialogue|Amirah|But the thing that makes me happier than anything, is that you've really grown and become a wonderful, caring man. You're no longer the kid I had to clean up after. I'm proud of you, Arvio.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 9.0 Order 18 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8014 | behaviourName: CommanderSit | eventName: SitDownFinished
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8015 | eventName: SitDownFinished | behaviourName: CommanderSit
+CONDITIONS
+Always:
+ACTIONS
+Increment 8262Sit by 1
+
+TRIGGER Procedure 0.0 Step 13.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 82621 | sec: 2
+In a speech bubble:
+{{dialogue|Arvio|Come on, cheers!}}
+
+TRIGGER Procedure 0.0 Step 13.1 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 82621
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Amirah|Cheers!}}
+In a speech bubble:
+{{dialogue|Player|Cheers!}}
+
+TRIGGER Procedure 0.0 Step 15.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 82624
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 82623 | delayTime: 1 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 17.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82623 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Arvio stops standing still
+DELAY MASK SET || maskId: 82623 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 8262143) from Arvio
+Remove behavior CommanderPlayerSit (idName: 8262002) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8262003) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8262004) from Player
+Remove behavior CommanderSit (idName: 8262142) from Arvio
+Remove behavior CommanderNPCAction (idName: 8262143) from Arvio
+Remove behavior CommanderNPCAction (idName: 8262144) from Arvio
+Remove behavior CommanderSit (idName: 8262152) from Amirah
+Remove behavior CommanderNPCAction (idName: 8262153) from Amirah
+Remove behavior CommanderPlayerAction (idName: 8262003) from Player
+SCENEITEM DELETE || id: 82621 | itemType: 0
+
+TRIGGER Procedure 0.0 Step 19.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82623 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: mail468
+Run mission #1800263
+CUTSCENE UI STATE EXIT || 
+Arvio gains 10 favor
+Amirah gains 10 favor
+END MISSION 1800262
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 8625:
+{{dialogue|Arvio|And most importantly, with the steps we've made to ease the production process, Am will have plenty of time to learn more and develop her art. She doesn't have to slave away night and day!}}
+
+*''You did it, Arvio!'' (No unique dialogue)
+*''Amirah, your hard work paid off!'' (No unique dialogue)
+*''You really pulled through, guys!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Arvio gains 3 favor
+
+TRIGGER Procedure 1.0 Step 1.1 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the second option in conversation segment 8625:
+{{dialogue|Arvio|And most importantly, with the steps we've made to ease the production process, Am will have plenty of time to learn more and develop her art. She doesn't have to slave away night and day!}}
+
+*''You did it, Arvio!'' (No unique dialogue)
+*''Amirah, your hard work paid off!'' (No unique dialogue)
+*''You really pulled through, guys!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Amirah gains 3 favor
+
+TRIGGER Procedure 1.0 Step 1.2 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the third option in conversation segment 8625:
+{{dialogue|Arvio|And most importantly, with the steps we've made to ease the production process, Am will have plenty of time to learn more and develop her art. She doesn't have to slave away night and day!}}
+
+*''You did it, Arvio!'' (No unique dialogue)
+*''Amirah, your hard work paid off!'' (No unique dialogue)
+*''You really pulled through, guys!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Arvio gains 2 favor
+Amirah gains 2 favor

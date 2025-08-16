@@ -1,0 +1,263 @@
+Reading Mission 1300018: Wanted!
+
+<onlyinclude>{{Infobox mission
+|name = Wanted!
+|image =
+|description = Among all the dangers in the Eufaula Desert, the criminal Logan is said to be one of the worst. Help keep people in Sandrock informed.
+|type = Side
+|time =
+|location =
+|characters = [[Pen]]
+|condition =
+|details =
+|exp = 300
+|reputation = None
+|gols = 50
+|npc1 = Pen
+|rp1 = 10
+|rewards = {{i2|Seaside Casual Shoes}|1}
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100068
+
+TRIGGER Procedure 1.0 Step 6.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE || compare: 2 | year: 1 | month: 2 | day: 10
+ACTIONS
+Run mission Made in the Shade
+
+TRIGGER Procedure 1.0 Step 7.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: pensandstorm | info: 1 | exist: 1
+ACTIONS
+Run mission Wanted!
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1300018
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 130181
+SCENEITEM DELETE || itemType: 0 | id: 130182
+SCENEITEM DELETE || itemType: 0 | id: 130183
+SCENEITEM DELETE || itemType: 0 | id: 130184
+Set part to 0
+Set DAY to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 13018
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: inprison | info: 1 | exist: 0
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 13018
+DELAY MASK SET || maskId: 13018 | delayTime: -1 | durationTime: 2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the first option in conversation segment 607:
+{{dialogue|Pen|Say... since you're here, Skinny, why don't you help me {{textcolor|green|paste some of these posters}} around town?}}
+
+*''Sure, Protector of Sandrock!'' (No unique dialogue)
+*''I have something else to do...'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 610:
+{{dialogue|Pen|You're back! To offer your old pal Pen a hand, no doubt!}}
+
+*''Sure, Protector of Sandrock!'' (No unique dialogue)
+*''I have something else to do...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Pen stops standing still
+Pen stops standing still
+CUTSCENE UI STATE EXIT || 
+START MISSION 1300018
+AREA TRIGGER DELETE || id: 13018
+
+TRIGGER Procedure 0.0 Step 2.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 13018 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1300018
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: Penhaibaoplayer
+Pen stands still in Main
+DELAY MASK SET || maskId: 13018 | delayTime: 2 | durationTime: 1 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 130181 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 13018 | path: Lable_luogenhaibao2 | sceneName: Main | flagName: PHhaibaolocation | extraParams: 0
+Remove behavior CommanderNPCAction (idName: 13018) from Pen
+Pen stands still in Main
+DELAY MASK SET || maskId: 130181 | delayTime: 2 | durationTime: 1 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1300018
+CONDITIONS
+Always:
+ACTIONS
+Run mission Wanted!
+END MISSION 1300018
+
+TRIGGER Procedure 0.0 Step 3.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 13018 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 13018) to Pen
+(param: CMDAction:PutOnPoster)
+STOPWATCH REAL TIME SET || id: 13018 | sec: 2.3
+
+TRIGGER Procedure 0.0 Step 4.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 13018
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 130181 | delayTime: 0 | durationTime: 1 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 130181 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 134_0 starts:
+{{dialogue|Pen|There it is, the face of evil. Gaze upon it and know fear...}}
+{{dialogue|Pen|You do know who that is, don't you?}}
+
+*''Yeah, I've figured it out.''
+*''No, who is it?''
+
+{{dialogue|Pen|indent=true|answer=Yeah, I've figured it out.
+|Good. You've been paying attention, Skinny Arms!}}
+{{dialogue|Pen|indent=true|answer=No, who is it?
+|Why, that's {{textcolor|red|Logan}}! The most low-down, rotten, no good criminal in all of the Eufaula! He would even sacrifice his own family to get what he wants.}}
+{{dialogue|Pen|indent=true|This bandit roams the desert looking for the weak to prey upon. The lowest of the low... Oh, how I loathe Logan and his gang...!}}
+{{dialogue|Pen|indent=true|Anyway, he's been very quiet lately... too quiet! You'd do best to be on your guard whenever you're out in the wild. You never know what kind of dastardly schemes he might be... scheming... schemily...}}
+{{dialogue|Pen|Well, back to it. Last time all the posters blew away so this time I've made sure to make them extra sticky!}}
+{{dialogue|Pen|Say... since you're here, Skinny, why don't you help me {{textcolor|green|paste some of these posters}} around town?}}
+
+*''Sure, Protector of Sandrock!''
+*''I have something else to do...''
+
+{{dialogue|Pen|indent=true|answer=Sure, Protector of Sandrock!
+|Oh ho, you remembered my official name! Here, take these, just come find me when you're done.}}
+{{dialogue|Pen|indent=true|answer=I have something else to do...
+|Ah, yes... I see how it is... I suppose poor Pen with his sore and swollen feet will have to trek all about town to finish this job. Poor Pen. Poor, poor Pen!}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the second option in conversation segment 607:
+{{dialogue|Pen|Say... since you're here, Skinny, why don't you help me {{textcolor|green|paste some of these posters}} around town?}}
+
+*''Sure, Protector of Sandrock!'' (No unique dialogue)
+*''I have something else to do...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Pen stops standing still
+Pen stops standing still
+CUTSCENE UI STATE EXIT || 
+Set part to 2
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment DAY by 1
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if DAY is >= 2
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1300018 | id: 13018 | sceneName: Main | flagName: PHhaibao | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80000835
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION END || order: 0 | missionId: 1700247 | missionEndResult: 1
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 13018
+CLOSE MISSION || missionId: 1300018
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Mission Unpossible is successfully completed
+ACTIONS
+AREA TRIGGER DELETE || id: 13018
+CLOSE MISSION || missionId: 1300018
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1300018
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 13018
+NPC ICON REMOVE || missionId: 1300018 | npc: 8020 | missionIcon: 0
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Pen|You're back! To offer your old pal Pen a hand, no doubt!}}
+
+*''Sure, Protector of Sandrock!''
+*''I have something else to do...''
+
+{{dialogue|Pen|indent=true|answer=Sure, Protector of Sandrock!
+|Oh ho, you remembered my official name! Here, take these, just come find me when you're done.}}
+{{dialogue|Pen|indent=true|answer=I have something else to do...
+|Ah, yes... I see how it is... I suppose poor Pen with his sore and swollen feet will have to trek all about town to finish this job. Poor Pen. Poor, poor Pen!}}
+
+==Rewards==
+{{mission reward
+|npc1 = Pen
+|rp1 = 10
+|exp = 300
+|reputation = None
+|gols = 50
+|rewards = {{i2|Seaside Casual Shoes}|1}
+}}

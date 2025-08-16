@@ -1,0 +1,146 @@
+Reading Mission 1900387: Birthday Blues
+
+<onlyinclude>{{Infobox mission
+|name = Birthday Blues
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Birthday Blues:
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if Done is == 1
+ACTIONS
+START MISSION 1900384
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1900384
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 2938102) from Catori
+Remove behavior CommanderNPCAction (idName: 2938100) from Catori
+Remove behavior CommanderMoveToFlagAndAction (idName: 2938100) from Player
+CUTSCENE UI STATE EXIT || 
+Run mission Birthday Blues
+END MISSION 1900384
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1900387
+CONDITIONS
+Always:
+ACTIONS
+===Wait for Recipe===
+
+{{mission_details
+|desc = Catori is asking Jensen about model trains. Wait for news.
+|details = Wait for Recipe
+}}
+Run mission Birthday Blues
+Set DaD to 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+END MISSION 1900381
+The player receives a letter:
+{{mail|755}}
+
+TRIGGER Procedure 0.0 Step 2.2 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 755
+CONDITIONS
+Always:
+ACTIONS
+===Make Model Train===
+
+{{mission_details
+|desc = Now you have the recipe for the PE777 model train, build it on the Worktable.
+|details = Make Model Train
+*{{i2|Train Model|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 2.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1900384 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Catori===
+
+{{mission_details
+|desc = The model train is finished. Take it to Catori so she can deliver it in time for Alo's birthday.
+|details = Talk to Catori
+*{{i2|Train Model|0/1}}
+*{{i2|Catori|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Catori
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1900384 | targetId: 1 | canSubmit: 1
+ACTIONS
+(cId 1) A conversation 5812_0 starts:
+{{dialogue|Catori|You did it, ''Player''! It's perfect. I know he'll love it.}}
+{{dialogue|Catori|I wish I could be there to give it to him myself, but at least he'll have a gift to open so he knows his Ma loves him. And it's got a little slice of your soul, too!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+BAG MODIFY BY TARGET || missionId: 1900384 | targetId: 1
+SUBMIT MISSION 1900384
+END MISSION 1900387
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if Alo is in town
+Birthday Blues is in state 2 with flag 1
+ACTIONS
+SUBMIT MISSION 1900384
+END MISSION 1900387
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Birthday Blues is successfully completed
+ACTIONS
+END MISSION 1900387

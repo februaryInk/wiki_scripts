@@ -1,0 +1,67 @@
+Reading Mission 1600153: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Parent not found; run conditions not available.
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1600153
+CONDITIONS
+Always:
+ACTIONS
+Set IsPerDayUrge to 0
+Set global blackboard key NormalMission1001 with info MissionReceiveFlag.
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Cooper
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: NormalMission1001 | exist: 1 | info: MissionReceiveFlag
+Check if IsPerDayUrge is == 0
+CHECK PLAYER ITEM || item: 19300022 | itemGrade: -1 | set: 6 | count: 5
+ACTIONS
+(cId 0) A conversation 110007 starts:
+{{dialogue|Cooper|Still ain't finished pickin' that up for me? What, you really that bothered by it?}}
+Set IsPerDayUrge to 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: NormalMission1001 | info: MissionReceiveFlag | exist: 1
+ACTIONS
+Set IsPerDayUrge to 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+When the player moves from -1 to the Main:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: NormalMission1001 | info: MissionEndFlag | exist: 1
+ACTIONS
+GROUP 1:
+GLOBAL BLACK BOARD REMOVE || key: NormalMission1001
+
+GROUP 0:
+END MISSION 1600153
+

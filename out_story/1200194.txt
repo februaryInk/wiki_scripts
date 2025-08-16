@@ -1,0 +1,308 @@
+Reading Mission 1200194: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200135
+
+TRIGGER Procedure 2.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Buckin' Bronco is successfully completed
+ACTIONS
+Run mission #1800194
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Buckin' Bronco is successfully completed
+CHECK FESTIVAL || flag: 0 | type: 9
+ACTIONS
+Run mission #1200194
+Newspaper adds Article content 1074.
+Title: Costumed Criminal Caught!
+"Eat marbles, marble eaters!" Famous last words.
+
+Last words before being caught, that is! Was that enough of a hook? See for a second there, maybe you thought... Oh, alright, maybe that wasn't a great thing to do. Sorry for misleading you, but we put out a survey and apparently more than half of our readers don't make it more than halfway down the page! So, yeah. Just trying to make things more exciting.
+
+Anyway, ''Player'' caught a bandit!
+
+Oh, maybe that was a better hook. But in any case, yes, it's true. Apparently upon receiving a highly dubious commission, ''Player'' hit the streets looking for clues leading to the revelation of the specialist's true identity and subsequent capture! Bravo, ''Player''! 
+
+Our hard-boiled Builder detective had this to say on the matter:
+
+"It all stank to high heaven. I could see trouble written all over his face, and had a feeling he couldn't even spell the word if he was lookin' at it in the mirror. He fancied himself a wolf in sheep's clothing, but when he opened his mouth all I could hear was 'baa baa baa...'"
+
+Or at least, that's what I'd expect to hear. Everyone thinks in metaphors when they're solving crimes! Unfortunately ''Player'' was not available for comment, and, well... Sorry, ''Player''! We have to get this news out while it's still hot!
+
+Andy, the bandit boy is safely in the hands of the Civil Corps, and it is planned that he will be sent to work for the Church until he can be rehabilitated.
+
+We eagerly await the arrival of the real specialist. Stay tuned to the Tumbleweed Standard for more updates on these situations. Are you still reading? Yay! Article's over now, thanks for reading!
+
+Reported by Heidi
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Bronco the Kid stands still in Main and looks at Jasmine
+Jasmine stands still in Main and looks at Bronco the Kid
+Set CHOICE to 0
+AREA TRIGGER CREATE || missionId: 1200194 | id: 21941 | sceneName: Main | flagName: meetbronco_trigger1 | showOnMap: 1 | mapIcon: MissionArea | transId: 80031473
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 21941
+CONDITIONS
+CHECK FESTIVAL || type: 9 | flag: 1
+ACTIONS
+AREA TRIGGER DELETE || id: 21941
+AREA TRIGGER CREATE || missionId: 1200194 | id: 21941 | sceneName: Main | flagName: meetbronco_trigger1 | showOnMap: 1 | mapIcon: MissionArea | transId: 80031473
+Set 2194A to 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 219499
+CONDITIONS
+CHECK FESTIVAL || type: 9 | flag: 1
+ACTIONS
+Set 2194A to 1
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 21941
+CONDITIONS
+CHECK FESTIVAL || type: 9 | flag: 0
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderMoveToFlag (idName: 21941) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:meetbronco_player1)
+AREA TRIGGER DELETE || id: 21941
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 1499_0 starts:
+{{dialogue|Bronco the Kid|...Do you have any idea how fast you were goin' there, little lady?}}
+{{dialogue|Jasmine|Yeah! I'm the fastest in the world! I was goin' a million leagues per hour!}}
+{{dialogue|Bronco the Kid|Ooh, you know, when I said "you have the right to remain silent," that wasn't just empty chatter...}}
+{{dialogue|Bronco the Kid|I've heard enough, you're comin' with me little lady!}}
+{{dialogue|Jasmine|There's laws against running too fast!? But how am I supposed to deliver everyone's letters before they wake up...? Wait, no! I'm sorry! I'll slow down!}}
+
+*''Hey! Leave her alone!''
+*''What's going on here?''
+*''None of my business, bye.'' (No unique dialogue)
+
+{{dialogue|Bronco the Kid|Woah there, partner... You tryin' to interfere with the law of the land?}}
+{{dialogue|Bronco the Kid|Is that a concealed Pickhammer? Hands where I can see 'em! Nice and slow...}}
+
+*''(Comply)''
+*''Who the heck are you, anyway?''
+*''I don't have a Pickhammer on me.''
+
+{{dialogue|Bronco the Kid|indent=true|answer=(Comply)
+|That's right, nice and slow there, buckaroo. Keep your hands where I can see them.}}
+{{dialogue|Bronco the Kid|indent=true|Hm... That's right... if I'm not mistaken, you are the Builder who captured that "An-dee..." All... a bit convenient, wouldn't you say?}}
+{{dialogue|Bronco the Kid|indent=true|Now then, what's your relationship with the infamous Logan gang member, "An-Dee," hm? My sources tell me that you were seen fraternizing with him shortly before and after he was apprehended. Care to share your alibi?}}
+{{dialogue|Bronco the Kid|indent=true|answer=I don't have a Pickhammer on me.
+|Even more suspicious! You're a Builder, aren't you? Why would a Builder be missing their most essential building tool...? Dubious indeed... that is, if you're even telling the truth about that...!}}
+{{dialogue|Bronco the Kid|All you need to understand, buckaroo, is that I am authorized by the Sandrock government and the Alliance Council to take you in if need be, so I suggest you drop the attitude and start answering my questions.}}
+
+*''Yes, sir.''
+*''Make me!''
+
+{{dialogue|Bronco the Kid|indent=true|answer=Yes, sir.
+|Hm... That's right... if I'm not mistaken, you are the Builder who captured that "An-dee..." All... a bit convenient, wouldn't you say?}}
+{{dialogue|Bronco the Kid|indent=true|Now then, what's your relationship with the infamous Logan gang member, "An-Dee," hm? My sources tell me that you were seen fraternizing with him shortly before and after he was apprehended. Care to share your alibi?}}
+{{dialogue|Bronco the Kid|Why you...! Are you resisting arrest?!}}
+
+*''No, no, sorry, I'll comply''
+*''Just try me, small fry!''
+
+{{dialogue|Bronco the Kid|indent=true|answer=No, no, sorry, I'll comply
+|Hm... That's right... if I'm not mistaken, you are the Builder who captured that "An-dee..." All... a bit convenient, wouldn't you say?}}
+{{dialogue|Bronco the Kid|indent=true|Now then, what's your relationship with the infamous Logan gang member, "An-Dee," hm? My sources tell me that you were seen fraternizing with him shortly before and after he was apprehended. Care to share your alibi?}}
+{{dialogue|Bronco the Kid|indent=true|answer=Just try me, small fry!
+|That's it! You're going down, punk!}}
+Remove behavior CommanderMoveToFlag (idName: 21941) from Player
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 10 | npc: 8000 | enter: 0 | id: 21941
+CONDITIONS
+CHECK FESTIVAL || type: 9 | flag: 1
+Check if 2194A is == 1
+ACTIONS
+ACTION SHOW CUSTOM IMAGE TIPS || preset: Mission | content: 80031474
+STOPWATCH REAL TIME SET || id: 219499 | sec: 10
+Set 2194A to 0
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the third option in conversation segment 5132:
+{{dialogue|Jasmine|There's laws against running too fast!? But how am I supposed to deliver everyone's letters before they wake up...? Wait, no! I'm sorry! I'll slow down!}}
+
+*''Hey! Leave her alone!'' (No unique dialogue)
+*''What's going on here?'' (No unique dialogue)
+*''None of my business, bye.'' (No unique dialogue)
+
+(cId 1) The player picks the second option in conversation segment 5140:
+{{dialogue|Bronco the Kid|Listen, citizen, you're pretty tough... but that was only ten percent of my power... ow, ow, ow, my back! Ahem, I need you to tell me right now what your relationship with An-Dee, former member of the Logan Gang is. Otherwise... I can't be held responsible for what happens to you next...}}
+
+*''(Tell him.)'' (No unique dialogue)
+*''(Walk away)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 2
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+(cId 1) After the conversation ends:
+(cId 2) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 2
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Bronco the Kid stops standing still
+Jasmine stops standing still
+Bronco the Kid stops standing still
+Jasmine stops standing still
+END MISSION 1200194
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 0) There is a conversation segment (id 5139) that ends:
+{{dialogue|Bronco the Kid|That's it! You're going down, punk!}}
+CONDITIONS
+Always:
+ACTIONS
+NPC START PK || sponsor: 8000 | recipient: 8034 | fieldName: -1 | isReplace: 0 | time: -1 | hasCountDown: 1 | startBubble: 1 | noResultAnim: 0
+
+TRIGGER Procedure 2.0 Step 0.2 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PK STATE CHANGE || order: 0 | sponsor: 8000 | recipient: 8034 | state: Running
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Bronco the Kid stops standing still
+Jasmine stops standing still
+Jasmine stands still in Main and looks at Player
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PK RESULT || order: 0 | sponsor: 8000 | recipient: 8034 | result: 2
+ON PK RESULT || order: 0 | result: 1 | sponsor: 8000 | recipient: 8034
+CONDITIONS
+Always:
+ACTIONS
+Set RESULT to 1
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PK RESULT || order: 0 | sponsor: 8000 | recipient: 8034 | result: 3
+CONDITIONS
+Always:
+ACTIONS
+Set RESULT to 2
+
+TRIGGER Procedure 2.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PK STATE CHANGE || order: 0 | sponsor: 8000 | recipient: 8034 | state: Complete
+CONDITIONS
+Check if RESULT is == 1
+ACTIONS
+Bronco the Kid stands still in Main and looks at Player
+CUTSCENE UI STATE ENTER || 
+(cId 1) A conversation 1507_0 starts:
+{{dialogue|Bronco the Kid|Listen, citizen, you're pretty tough... but that was only ten percent of my power... ow, ow, ow, my back! Ahem, I need you to tell me right now what your relationship with An-Dee, former member of the Logan Gang is. Otherwise... I can't be held responsible for what happens to you next...}}
+
+*''(Tell him.)''
+*''(Walk away)''
+
+{{dialogue|Bronco the Kid|indent=true|answer=(Tell him.)
+|Hm... That's right... if I'm not mistaken, you are the Builder who captured that "An-dee..." All... a bit convenient, wouldn't you say?}}
+{{dialogue|Bronco the Kid|indent=true|Now then, what's your relationship with the infamous Logan gang member, "An-Dee," hm? My sources tell me that you were seen fraternizing with him shortly before and after he was apprehended. Care to share your alibi?}}
+{{dialogue|Bronco the Kid|indent=true|answer=(Walk away)
+|Heh... you... eh... I'll... catch up with you... when it's convenient... for you...}}
+
+TRIGGER Procedure 2.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PK STATE CHANGE || order: 0 | sponsor: 8000 | recipient: 8034 | state: Complete
+CONDITIONS
+Check if RESULT is == 2
+ACTIONS
+Bronco the Kid stands still in Main and looks at Player
+CUTSCENE UI STATE ENTER || 
+(cId 2) A conversation 5142, 1504_0 starts:
+{{dialogue|Bronco the Kid|Bad move, buckaroo. I never lose in a fight.}}
+{{dialogue|Bronco the Kid|Hm... That's right... if I'm not mistaken, you are the Builder who captured that "An-dee..." All... a bit convenient, wouldn't you say?}}
+{{dialogue|Bronco the Kid|Now then, what's your relationship with the infamous Logan gang member, "An-Dee," hm? My sources tell me that you were seen fraternizing with him shortly before and after he was apprehended. Care to share your alibi?}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 5144) that ends:
+{{dialogue|Bronco the Kid|Now then, what's your relationship with the infamous Logan gang member, "An-Dee," hm? My sources tell me that you were seen fraternizing with him shortly before and after he was apprehended. Care to share your alibi?}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 21942) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:meetbronco_player1|Action:Talk)
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 5145, 5146, 5147, 5148 starts:
+{{dialogue|Bronco the Kid|Wow. Absolutely air-tight. You provided dates, times, and a list of witnesses who could vouch for you. In fact, it seems you've been decisively crucial to every successful law enforcement campaign to take place in this city since your arrival.}}
+{{dialogue|Bronco the Kid|That pretty well clears you of all suspicion, buckaroo. Yep. You'd have to be crazy to suspect someone like yourself at this point.}}
+{{dialogue|Bronco the Kid|But sometimes the least suspicious suspect is actually the most suspicious! And frankly, all of the citizens of Sandrock are suspects!}}
+{{dialogue|Bronco the Kid|I'll have my eye on you, buckaroo. On your way.}}
+Remove behavior CommanderMoveToFlagAndAction (idName: 21942) from Player
+Set CHOICE to 2

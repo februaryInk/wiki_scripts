@@ -1,0 +1,748 @@
+Reading Mission 1500358: Bandits on the Storm
+
+<onlyinclude>{{Infobox mission
+|name = Bandits on the Storm
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Bandits on the Storm:
+
+TRIGGER Procedure 0.0 Step 8.0 Order 11 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Ernest
+CONDITIONS
+Check if LoveChoice is == 1
+ACTIONS
+(cId 535703) A conversation 5181_0 starts:
+{{dialogue|Ernest|Are you free now? I've got everything prepared!}}
+
+*''No problem!''
+*''That whole plate business, it's still heaped.''
+
+{{dialogue|Ernest|indent=true|answer=No problem!
+|Okay! Then tomorrow, {{textcolor|green|at the cave's entrance}}. See you there!}}
+{{dialogue|Ernest|indent=true|answer=That whole plate business, it's still heaped.
+|Err... ah, you're still busy? Well... I guess I can wait a while. If you want to come with me, just find me. We can explore together!}}
+
+TRIGGER Procedure 0.0 Step 9.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 17120) that ends:
+{{dialogue|Ernest|Okay! Then tomorrow, {{textcolor|green|at the cave's entrance}}. See you there!}}
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON REMOVE || missionId: 1500357 | npc: 8069 | missionIcon: 2
+Remove 1 Bronze Sword and Shield of Default quality (Notify player)
+Set LoveChoice to 0
+===Wait for Tomorrow===
+
+{{mission_details
+|desc = Everything is ready and you've organized a time to go to the cave. Wait until tomorrow and get ready to leave.
+|details = Wait for Tomorrow
+}}
+Run mission Bandits on the Storm
+END MISSION 1500357
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1500358
+CONDITIONS
+Always:
+ACTIONS
+Set CaveDay to 0
+Set CaveIn to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700247
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 535801
+Ernest stops standing still
+Ernest stops standing still
+SCENEITEM DELETE || itemType: 0 | id: 535801
+SCENEITEM DELETE || itemType: 0 | id: 535803
+SCENEITEM DELETE || itemType: 0 | id: 535802
+SCENEITEM DELETE || itemType: 0 | id: 535804
+SCENEITEM DELETE || itemType: 0 | id: 535805
+Remove behavior CommanderMoveToFlagAndAction (idName: 5358002) from Ernest
+Remove behavior CommanderMoveToFlagAndAction (idName: 5358001) from Player
+CUTSCENE UI STATE EXIT || 
+ACTOR BLIND SET || set: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 5358004) from Ernest
+Remove behavior CommanderMoveToFlagAndAction (idName: 5358003) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 5358006) from Ernest
+Remove behavior CommanderMoveToFlagAndAction (idName: 5358005) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 5358007) from Ernest
+Remove behavior CommanderMoveToFlagAndAction (idName: 5358006) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 5358008) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 5358009) from Ernest
+Ernest stops standing still
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8069
+ACTOR SET FACTION || isAdd: 0 | npc: 8069 | id: 8
+Ernest stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 5358008) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 5358009) from Ernest
+Ernest stops standing still
+CLOSE MISSION || missionId: 1500357
+AREA TRIGGER DELETE || id: 535810
+END MISSION 1500358
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 2
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment CaveDay by 1
+
+TRIGGER Procedure 0.0 Step 1.5 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if CaveDay is == 2
+Check if CaveIn is == 0
+ACTIONS
+The player receives a letter:
+{{mail|661}}
+SUBMIT MISSION 1500357
+AREA TRIGGER DELETE || id: 535801
+END MISSION 1500358
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+===Go to Eufaula Outback===
+
+{{mission_details
+|desc = You have an appointment with Ernest to explore Logan's cave in the Eufaula Outback. Remember to go on time!
+|details = Go to Eufaula Outback
+}}
+AREA TRIGGER CREATE || missionId: 1500357 | id: 535801 | sceneName: Main | flagName: Story_535801_Area | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80027652
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 535801
+CONDITIONS
+Always:
+ACTIONS
+Set CaveIn to 1
+DELAY MASK SET || maskId: 535801 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 535801 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 535802 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Ernest stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: Story_5358_Player
+AREA TRIGGER DELETE || id: 535801
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 535801 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 535703) A conversation 17124 starts:
+{{dialogue|Ernest|Ah, you're here. Let's go, the anticipation is already filling me with an inspiring motivation.}}
+
+TRIGGER Procedure 0.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 535703) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 535802 | delayTime: 0 | durationTime: 0 | changeType: 0 | curveIndex: 0
+===Investigate Cave===
+
+{{mission_details
+|desc = Look around the cave and see if there's anything worth looking into.
+|details = Investigate Cave
+}}
+
+TRIGGER Procedure 0.0 Step 7.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 535802 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 535802 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+PLAYER SET POS ROT FLAG || sceneName: MysteriousCave_Dungeon | flagName: Story_5358_Player1
+
+TRIGGER Procedure 0.0 Step 8.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the MysteriousCave_Dungeon:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_MysteriousCave_Dungeon
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_MysteriousCave_Dungeon
+
+TRIGGER Procedure 0.0 Step 9.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the MysteriousCave_Dungeon:
+CONDITIONS
+Always:
+ACTIONS
+Ernest stands still in MysteriousCave_Dungeon
+
+TRIGGER Procedure 0.0 Step 10.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the MysteriousCave_Dungeon:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 535801 | path: Mission_CaveGouhuo | sceneName: MysteriousCave_Dungeon | flagName: Story_535801_Interact | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 535802 | path: Mission_CaveMuJia | sceneName: MysteriousCave_Dungeon | flagName: Story_535802_Interact | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 535803 | path: Mission_CaveStone | sceneName: MysteriousCave_Dungeon | flagName: Story_535803_Interact | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 535804 | path: Mission_CaveFood | sceneName: MysteriousCave_Dungeon | flagName: Story_535804_Interact | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 535805 | path: Mission_CaveExtrance | sceneName: MysteriousCave_Dungeon | flagName: Story_535805_Interact | extraParams: 0
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 535801 | missionId: 1500357 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 535802 | missionId: 1500357 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 535803 | missionId: 1500357 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 535804 | missionId: 1500357 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 535805 | missionId: 1500357 | iconType: 2
+AREA TRIGGER CREATE || missionId: 1500357 | id: 535810 | sceneName: MysteriousCave_Dungeon | flagName: Story_535810_Area | showOnMap: 0 | mapIcon: 0 | transId: 0
+
+TRIGGER Procedure 0.0 Step 10.5 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 535802
+CONDITIONS
+Always:
+ACTIONS
+(cId 535704) A conversation 17125, 17126 starts:
+{{dialogue|Ernest|So it's here? Right, an Old World ruin,of course. It looks like it's partly man-made, and partly natural. Interesting. There are abandoned pipes everywhere... I wonder what they were used for.}}
+{{dialogue|Ernest|Alright, let's go. If you remember anything, let me know!}}
+
+TRIGGER Procedure 0.0 Step 11.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 535704) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Ernest stops standing still
+Ernest stops standing still
+ACTOR SET FACTION || isAdd: 1 | npc: 8069 | id: 8
+ACTION ACTOR ADD FOLLOWER || state: Attack | mActor: 8000 | tActor: 8069
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 535801
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 535801
+Add behavior CommanderMoveToFlagAndAction (idName: 5358001) to Player
+(param: TargetScene:MysteriousCave_Dungeon|MoveMode:Run|FlagName:Story_5358_Player2)
+Add behavior CommanderMoveToFlagAndAction (idName: 5358002) to Ernest
+(param: TargetScene:MysteriousCave_Dungeon|MoveMode:Run|FlagName:Story_535803)
+CUTSCENE UI STATE ENTER || 
+ACTOR BLIND SET || set: 1
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8069 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 535705) A conversation 17136 starts:
+{{dialogue|Ernest|It's strange... the conditions here are simple, but I can imagine such warmth. Sitting around the campfire, drinking hot soup, and sharing their life stories. Perhaps playing a tune; an old folk song.}}
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 535705) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 5358001) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 5358002) from Ernest
+CUTSCENE UI STATE EXIT || 
+MISSION TARGET COUNTER CHANGE || missionId: 1500357 | targetId: 535705 | transId: 80027661 | isAdd: 1
+ACTOR BLIND SET || set: 0
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 535802
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 535802
+Add behavior CommanderMoveToFlagAndAction (idName: 5358003) to Player
+(param: TargetScene:MysteriousCave_Dungeon|MoveMode:Run|FlagName:Story_5358_Player3)
+Add behavior CommanderMoveToFlagAndAction (idName: 5358004) to Ernest
+(param: TargetScene:MysteriousCave_Dungeon|MoveMode:Run|FlagName:Story_535804)
+CUTSCENE UI STATE ENTER || 
+ACTOR BLIND SET || set: 1
+
+TRIGGER Procedure 1.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 535805
+CONDITIONS
+Always:
+ACTIONS
+(cId 535706) A conversation 17217 starts:
+{{dialogue|0|It's in good condition, but the light has been extinguished.}}
+
+TRIGGER Procedure 1.0 Step 8.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 535806
+CONDITIONS
+Always:
+ACTIONS
+(cId 535707) A conversation 17218 starts:
+{{dialogue|0|It looks like it could have been a blueprint for a house. The paper is really old, and the details are faded.}}
+
+TRIGGER Procedure 1.0 Step 10.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 535807
+CONDITIONS
+Always:
+ACTIONS
+(cId 535708) A conversation 17219 starts:
+{{dialogue|0|Third day out here in the desert an' a mean sandstorm whipped up suddenly. Managed to find a cave, though. Looks like we get to live to see another sunrise.}}
+
+TRIGGER Procedure 1.0 Step 11.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 535708) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 535709) A conversation 17137 starts:
+{{dialogue|Ernest|Hm... is this a refuge of some sort? Basic facilities, a haven for travelers who stray too far and find themselves locked in a battle against the hazardous environment... People leave food and water for the next traveler.}}
+
+TRIGGER Procedure 1.0 Step 12.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 535709) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 5358004) from Ernest
+Remove behavior CommanderMoveToFlagAndAction (idName: 5358003) from Player
+CUTSCENE UI STATE EXIT || 
+MISSION TARGET COUNTER CHANGE || missionId: 1500357 | targetId: 535705 | transId: 80027662 | isAdd: 1
+ACTOR BLIND SET || set: 0
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 535803
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 535803
+Add behavior CommanderMoveToFlagAndAction (idName: 5358005) to Player
+(param: TargetScene:MysteriousCave_Dungeon|MoveMode:Run|FlagName:Story_5358_Player4)
+Add behavior CommanderMoveToFlagAndAction (idName: 5358006) to Ernest
+(param: TargetScene:MysteriousCave_Dungeon|MoveMode:Run|FlagName:Story_535805)
+CUTSCENE UI STATE ENTER || 
+ACTOR BLIND SET || set: 1
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8069 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 535710) A conversation 17138, 5202_0 starts:
+{{dialogue|Ernest|These marks aren't naturally formed... they're evidence of the heroic battle that took place. I can hear it now: the clash of metal, the shrill echo of a gunshot. Amazing.}}
+{{dialogue|Ernest|Do you remember anything?}}
+
+*''He said something about... "the truth?"''
+*''Nothing, just a boring old fight.''
+
+{{dialogue|Ernest|indent=true|answer=He said something about... "the truth?"
+|The truth? I heard he kidnapped Matilda because he suspected someone in town was hiding water... but that doesn't seem like common banditry...}}
+{{dialogue|Ernest|indent=true|Although his actions were vicious, and reprehensible, his eyes were soft, and sensitive. They seemed to tell of a man burdened by sorrow, mystery, and justice. For those who claim to uphold the law, harbor secrets of their own...}}
+{{dialogue|Ernest|indent=true|Ah... obviously, I'm not alluding to anything. This is all purely... fiction, mind you. Any resemblance are purely coincidence, and all that...}}
+{{dialogue|Ernest|indent=true|answer=Nothing, just a boring old fight.
+|Violence may not be the solution to our problems, but it is certainly the most commonly used.}}
+{{dialogue|Ernest|indent=true|While I don't preach violence, it is one of the most primal forms of communication. When the villain of the story is finally defeated by our hero, everyone feels that elation.}}
+{{dialogue|Ernest|indent=true|Of course, ironically this shows that we, as humans, ultimately want peace. We want the dark forces to be defeated, and for hope to reign.}}
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 535710) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 5358005) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 5358006) from Ernest
+CUTSCENE UI STATE EXIT || 
+MISSION TARGET COUNTER CHANGE || missionId: 1500357 | targetId: 535705 | transId: 80027663 | isAdd: 1
+ACTOR BLIND SET || set: 0
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 535804
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 535804
+Add behavior CommanderMoveToFlagAndAction (idName: 5358006) to Player
+(param: TargetScene:MysteriousCave_Dungeon|MoveMode:Run|FlagName:Story_5358_Player5)
+Add behavior CommanderMoveToFlagAndAction (idName: 5358007) to Ernest
+(param: TargetScene:MysteriousCave_Dungeon|MoveMode:Run|FlagName:Story_535806)
+CUTSCENE UI STATE ENTER || 
+ACTOR BLIND SET || set: 1
+
+TRIGGER Procedure 2.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8069 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 535711) A conversation 5219_3_0 starts:
+{{dialogue|0|Leftovers}}
+
+*''Fresh food leftovers''
+*''Packaging''
+*''Whole''
+
+{{dialogue|0|indent=true|answer=Fresh food leftovers
+|Looks like half eaten leftovers. They've started to stain the stone underneath, but the color is still vibrant.}}
+{{dialogue|0|indent=true|answer=Packaging
+|Looks like discarded packaging for pre-packaged food. The label is covered in muck and sand, it's practically illegible.}}
+{{dialogue|0|indent=true|answer=Whole
+|Some of the food seems really old, some of it far newer. The older ones seem to be completely dried out. Looks like they've been here for months... even years?}}
+
+TRIGGER Procedure 2.0 Step 4.1 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 535711) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 535718) A conversation 5220_3_0, 5205_0 starts:
+{{dialogue|0|Animal skin blanket}}
+
+*''Color''
+*''Texture''
+*''Whole''
+
+{{dialogue|0|indent=true|answer=Color
+|Although it's now a plain gray, the design and pattern seems intricate, and was originally dyed a bright color.}}
+{{dialogue|0|indent=true|answer=Texture
+|It seems to be made from several pieces of animal skin and fur sewn together. It is roughly sewn, but very warm.}}
+{{dialogue|0|indent=true|answer=Whole
+|The temperature fluctuates heavily between day and night in Sandrock. These blankets are a necessity for overnight comfort.}}
+{{dialogue|Ernest|It looks like no one has been here recently. But... what does it tell us? How long was he here?}}
+
+*''They were prepared, but left in a hurry.''
+*''It wasn't the first time he came here.''
+
+{{dialogue|Ernest|indent=true|answer=They were prepared, but left in a hurry.
+|It appears that's true... but whatever the case is, this place is just... inspiring. I had a flash of something...}}
+{{dialogue|Ernest|indent=true|The child was born of a noble mother, and had she not eloped with his low-born father, he would have been born into affluence. Her parents, however, had protested their love, chasing them to the ends of the earth.}}
+{{dialogue|Ernest|indent=true|...And thus his upbringing, forced into exile, was shabby, and pitiful. Living in crevasses, caves, and down-trodden abodes.}}
+{{dialogue|Ernest|indent=true|answer=It wasn't the first time he came here.
+|That makes sense... it seems this could be a temporary haven of sorts, or perhaps they had been planning this for a while? I'm sure they wouldn't show their hideout this easily...}}
+{{dialogue|Ernest|indent=true|Sigh. But maybe I'm wrong. Do you think I really lack logic? That little girl said...}}
+{{dialogue|Ernest|indent=true|Haha, ahh, there's no time for that now, eh? Let's carry on.}}
+
+TRIGGER Procedure 2.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 535718) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 5358007) from Ernest
+Remove behavior CommanderMoveToFlagAndAction (idName: 5358006) from Player
+MISSION TARGET COUNTER CHANGE || missionId: 1500357 | targetId: 535705 | transId: 80027664 | isAdd: 1
+ACTOR BLIND SET || set: 0
+
+TRIGGER Procedure 2.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 535805
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 535805
+Add behavior CommanderMoveToFlagAndAction (idName: 5358008) to Player
+(param: TargetScene:MysteriousCave_Dungeon|MoveMode:Run|FlagName:Story_5358_Player6)
+Add behavior CommanderMoveToFlagAndAction (idName: 5358009) to Ernest
+(param: TargetScene:MysteriousCave_Dungeon|MoveMode:Run|FlagName:Story_535807)
+CUTSCENE UI STATE ENTER || 
+ACTOR BLIND SET || set: 1
+
+TRIGGER Procedure 2.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8069 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 535712) A conversation 17163, 17164 starts:
+{{dialogue|Ernest|Well... it's completely blocked. It was a risky move, causing an explosion in a cave such as this, but the level of control to cause such accurate damage... they must have planned this escape route in advance.}}
+{{dialogue|Ernest|The mind that thought this up... spectacular. Our protagonist is both wise and daring in equal turn...}}
+
+TRIGGER Procedure 2.0 Step 7.1 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 535712) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 535717) A conversation 5208_0 starts:
+{{dialogue|Ernest|Ah... haha... no, no of course I don't mean Logan, he is an antagonist, of course, of course... I simply mean the character in my novel. But, ah... what do you think?}}
+
+*''Characters don't need to be so stereotypical...''
+*{{flirt}}''You can write a novel about me!''
+
+{{dialogue|Ernest|indent=true|answer=Characters don't need to be so stereotypical...
+|Ahh... yes well, although you are right, while stereotype oft dictates our imagination, I base my characters on the real world that inspires me. All of my characters are purely drawn from reality.}}
+{{dialogue|Ernest|indent=true|Like just now, I'm using the Logan character to form the basis of my character, but it does not mean that the character is Logan, and they won't be named Logan.}}
+{{dialogue|Ernest|indent=true|Some say that their characters are not based on real people, that inspiration purely comes from their imagination, but I do not believe this can be true. Nothing comes from a vacuum.}}
+{{dialogue|Ernest|indent=true|The mind draws inspiration from everything it sees, and then the imagination creates depth.}}
+{{dialogue|Ernest|indent=true|Some characters may have different elements drawn from different people. And perhaps, yes, these characters may be "stereotypical," but these archetypes are based on generalizations of real, living people.}}
+{{dialogue|Ernest|indent=true|answer=You can write a novel about me!
+|"The sword came as naturally to them as the Pickhammer, as though challenging the 'Jack of All Trades, Master of None' title was their fate. To help the poor and wealthy alike, they fearlessly traversed whatever came their way..."}}
+{{dialogue|Ernest|indent=true|"Such depth of character... and one I'm starting to understand more as days go on. Perhaps, once I get to know you better, you could really be a good foundation for my next novel."}}
+
+TRIGGER Procedure 2.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 17172) that ends:
+{{dialogue|Ernest|Some characters may have different elements drawn from different people. And perhaps, yes, these characters may be "stereotypical," but these archetypes are based on generalizations of real, living people.}}
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 5358008) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 5358009) from Ernest
+CUTSCENE UI STATE EXIT || 
+MISSION TARGET COUNTER CHANGE || missionId: 1500357 | targetId: 535705 | transId: 80027665 | isAdd: 1
+ACTOR BLIND SET || set: 0
+
+TRIGGER Procedure 2.0 Step 8.1 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1500357 | targetId: 535705 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 535810 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 8.2 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 535810 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 535810 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+PLAYER SET POS ROT FLAG || sceneName: MysteriousCave_Dungeon | flagName: Story_5358_Player8
+Ernest stands still in MysteriousCave_Dungeon
+
+TRIGGER Procedure 2.0 Step 8.3 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 535810 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 535716) A conversation 17181, 17182 starts:
+{{dialogue|Ernest|Alright... I think that's enough.}}
+{{dialogue|Ernest|Thanks for coming with me, but alas, time is fleeting, and we really should be heading back.}}
+
+TRIGGER Procedure 2.0 Step 9.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 535716) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 535803 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+Ernest stops standing still
+
+TRIGGER Procedure 2.0 Step 10.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 535803 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 535803 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: Story_5358_Player7
+
+TRIGGER Procedure 2.0 Step 11.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from MysteriousCave_Dungeon to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_main
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_main
+
+TRIGGER Procedure 2.0 Step 12.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from MysteriousCave_Dungeon to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Ernest stands still in Main
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 2.0 Step 13.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from MysteriousCave_Dungeon to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId 535714) A conversation 17183, 17184, 17185 starts:
+{{dialogue|Ernest|This adventure... was inspiring.}}
+{{dialogue|Ernest|I've got a bunch of new ideas.}}
+{{dialogue|Ernest|Well, I better go write them down before I forget! See you later.}}
+
+TRIGGER Procedure 2.0 Step 14.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 535714) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 535801
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8069
+ACTOR SET FACTION || isAdd: 0 | npc: 8069 | id: 8
+Ernest stops standing still
+CUTSCENE UI STATE EXIT || 
+ACTOR BLIND SET || set: 0
+SUBMIT MISSION 1500357
+END MISSION 1500358
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 17174) that ends:
+{{dialogue|Ernest|"Such depth of character... and one I'm starting to understand more as days go on. Perhaps, once I get to know you better, you could really be a good foundation for my next novel."}}
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 8502}}
+A cutscene CG_ERNESTFALL (duration: 1.0) starts playing
+Look Out! - Something fell from above, almost injuring Ernest and myself. Luckily, Ernest saved me at the last second...
+
+TRIGGER Procedure 3.0 Step 0.1 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_ERNESTFALL | state: 7
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: MysteriousCave_Dungeon | flagName: Story_5358_Player9
+Ernest stands still in MysteriousCave_Dungeon
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_ERNESTFALL | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 535715) A conversation 5378_0 starts:
+{{dialogue|Ernest|Are you okay?}}
+
+*''Me?! Are you okay?''
+*''So was that art, or life?''
+
+{{dialogue|Ernest|indent=true|answer=Me?! Are you okay?
+|I'm... fine. Ah... a little bruised, maybe, but nothing serious. Ha, I'm not so weak I'm taken out by a little fall, am I?}}
+{{dialogue|Ernest|indent=true|answer=So was that art, or life?
+|Haha, maybe we can chalk this up to... art is life.}}
+
+TRIGGER Procedure 3.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 535715) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 5358008) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 5358009) from Ernest
+CUTSCENE UI STATE EXIT || 
+Ernest stops standing still
+MISSION TARGET COUNTER CHANGE || missionId: 1500357 | targetId: 535705 | transId: 80027665 | isAdd: 1
+ACTOR BLIND SET || set: 0
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 535810
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Ernest|The tunnel was damp and foreboding, and the smell of the brackish moisture stuck to their noses with a thick, nauseating ferocity.}}
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC BUBBLE STATE CHANGE || order: 0 | npc: 8069 | flag: 0
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Ernest|But the anticipation of the unknown gave a tentative stillness to the air, however... Sorry. I'm ah... a little more nervous than I expected.}}
+
+TRIGGER Procedure 4.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC BUBBLE STATE CHANGE || order: 0 | npc: 8069 | flag: 0
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 538510

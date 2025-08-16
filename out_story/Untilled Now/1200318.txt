@@ -1,0 +1,190 @@
+Reading Mission 1200318: Untilled Now
+
+<onlyinclude>{{Infobox mission
+|name = Untilled Now
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Untilled Now:
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Mi-an stops standing still
+CUTSCENE UI STATE EXIT || 
+START MISSION 1200317
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200317
+CONDITIONS
+Always:
+ACTIONS
+Run mission Untilled Now
+END MISSION 1200317
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200318
+CONDITIONS
+Always:
+ACTIONS
+===Go to Eufaula Outback===
+
+{{mission_details
+|desc = You should go check on the forest and see how bad the damage is.
+|details = Go to Eufaula Outback
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the DesertOutback:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Zeke stands still in DesertOutback
+Mi-an stands still in DesertOutback
+PLAYER SET POS ROT FLAG || flagName: plantfail_player0 | sceneName: DesertOutback
+Trudy stands still in DesertOutback and looks at Zeke
+SCENEITEM DELETE || id: 23161 | itemType: 0
+SCENEITEM DELETE || id: 23162 | itemType: 0
+SCENEITEM DELETE || id: 23163 | itemType: 0
+SCENEITEM DELETE || id: 23164 | itemType: 0
+SCENEITEM CREATE FLAG || path: Mission_Plant_DesertOutBack_1_Die | itemType: 0 | id: 23181 | sceneName: DesertOutback | flagName: showdown_desertoutback | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 23185
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 12788, 12789 starts:
+{{dialogue|Zeke|Sigh, I had feared this, Trudy... But I don't know what's going on. For some reason, the roots aren't holding on to the soil... the algae isn't working very well.}}
+{{dialogue|Trudy|The water usage per tree is also way higher than what we had predicted. We've already used as much as we can spare from the Portian water. If we keep going like this, it's... not sustainable...}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 23181) to Player
+(param: TargetScene:DesertOutback|MoveMode:Run|FlagName:plantfail_player1)
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 3853_0 starts:
+{{dialogue|Trudy|Ah, ''Player'', you're here too. This sandstorm... it hit us hard. We're kind of at our wits' end here. Luckily Irrigation Tower is still intact, but everything else...}}
+{{dialogue|Zeke|Trudy... Uhm, I think we're at the limit of what we can do alone. I heard that there is uh, agricultural expert in Highwind, Professor Luo. Maybe we can ask him to come to Sandrock and work with us?}}
+{{dialogue|Trudy|Good idea. We can't just give up... I'll send a telegram to Highwind.}}
+
+*''Professor Luo? I've heard that name before...''
+*''So we're short on water again?''
+
+{{dialogue|Zeke|indent=true|answer=Professor Luo? I've heard that name before...
+|He's pretty famous around Highwind, I hear. I wouldn't be surprised if you've heard of him.}}
+{{dialogue|Trudy|indent=true|Hey, I hear ''Player'''s quite the celebrity in Highwind these days! Maybe a name drop in the invitation will up our chances of getting him to come?}}
+{{dialogue|Trudy|indent=true|answer=So we're short on water again?
+|If we want to have this forest... then yes.}}
+{{dialogue|Trudy|indent=true|Even if we somehow lower our consumption, I just don't see how we can balance the forest's requirements with our residents' needs. We... might need to put the forest on hold.}}
+{{dialogue|Trudy|indent=true|Sigh. Let's reassess the situation. We'll need to come up with a new plan.}}
+{{dialogue|Trudy|Well, I think there's nothing more we can do today. Let's clean up and head back. ''Player'', thanks for coming, I'll let you know if anything new comes up.}}
+The conversation ends.
+Remove behavior CommanderMoveToFlag (idName: 23181) from Player
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCActionLoop (idName: 23182) from Mi-an
+CUTSCENE UI STATE EXIT || 
+Trudy stops standing still
+Zeke stops standing still
+Add behavior CommanderBubbleTag (idName: 23182) to Trudy
+(param: BubbleTag:Story1200317_8006|BubbleTime:6|minTime:12)
+Add behavior CommanderBubbleTag (idName: 23182) to Zeke
+(param: BubbleTag:Story1200317_8033|BubbleTime:6|minTime:12)
+Add behavior CommanderMoveToFlagAndActionLoop (idName: 23182) to Mi-an
+(param: TargetScene:DesertOutback|MoveMode:Run|FlagName:plantfail_mian|Action:MachineOperating)
+Mi-an stops standing still
+SUBMIT MISSION 1200317
+STOPWATCH REAL TIME SET || id: 1200318 | sec: 5
+
+TRIGGER Procedure 2.0 Step 0.1 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC BUBBLE STATE CHANGE || order: 0 | npc: 8017 | flag: 0
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Mi-an|What luck! No major damage...!}}
+
+TRIGGER Procedure 2.0 Step 0.1 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 1200318
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Mi-an|Everything looks okay here...}}
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from DesertOutback to the -1:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndActionLoop (idName: 23182) from Mi-an
+Remove behavior CommanderBubbleTag (idName: 23182) from Trudy
+Remove behavior CommanderBubbleTag (idName: 23182) from Zeke
+END MISSION 1200318
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200318
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior NPC_Plant (idName: 23162) from Trudy
+Remove behavior NPC_Plant (idName: 23162) from Mi-an
+Remove behavior NPC_Plant (idName: 23162) from Dan-bi
+Remove behavior NPC_Plant (idName: 23162) from Burgess
+Remove behavior NPC_Plant (idName: 23162) from Amirah
+Remove behavior NPC_Plant (idName: 23162) from Arvio
+Remove behavior NPC_Plant (idName: 23162) from Logan
+NPC REMOVE TAG || tag: NPCWatering

@@ -1,0 +1,500 @@
+Reading Mission 1900400: Spread Your Wings
+
+<onlyinclude>{{Infobox mission
+|name = Spread Your Wings
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Spread Your Wings:
+
+TRIGGER Procedure 0.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON REMOVE || missionId: 1900399 | npc: 8040 | missionIcon: 0
+AREA TRIGGER DELETE || id: 93990
+Jasmine stops standing still
+Jasmine stops standing still
+Remove behavior CommanderNPCAction (idName: 2939900) from Jasmine
+START MISSION 1900399
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1900399
+CONDITIONS
+Always:
+ACTIONS
+Run mission Spread Your Wings
+END MISSION 1900399
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1900400
+CONDITIONS
+Always:
+ACTIONS
+===Go to Apartments===
+
+{{mission_details
+|desc = Jasmine delivered you a letter with a scathing critique of Ernest's new book. Ernest must be upset, better go and check on him.
+|details = Go to Apartments
+}}
+Set A00 to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Apartment:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_apartment
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_apartment
+DELAY MASK SET || maskId: 190400 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Apartment:
+CONDITIONS
+Always:
+ACTIONS
+Ernest stands still in Apartment
+PLAYER SET POS ROT FLAG || sceneName: Apartment | flagName: P9400_0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Apartment:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 190400 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 190400 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 2940000) to Ernest
+(param: CMDAction:ShakeHead)
+Add behavior CommanderMoveToFlagAndAction (idName: 2940001) to Player
+(param: TargetScene:Apartment|MoveMode:Walk|FlagName:P9400_1|LookAtActor:8069)
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 1940002) to Ernest
+(param: TargetScene:Apartment|MoveMode:Walk|FlagName:On9400_1|LookAtActor:8000)
+(cId 0) A conversation 6025_0 starts:
+{{dialogue|Ernest|Oh, hey. What are you doing here?}}
+{{dialogue|Ernest|Ah... I'm sorry. I didn't mean to be obtuse. Of course, I'm happy you're here I just... sigh.}}
+{{dialogue|Ernest|Come on, let's do something. What would you like to do?}}
+
+*''(Take out the newspaper)''
+*''How is the new book coming along?''
+*''(Tell a joke)''
+
+{{dialogue|Ernest|indent=true|answer=(Take out the newspaper)
+|You saw the news... Are you worried about me?}}
+{{dialogue|Ernest|indent=true|Sigh... It's not even just the article... although my new book is vastly different from my previous ones...}}
+{{dialogue|Ernest|indent=true|answer=How is the new book coming along?
+|The book? Ah, I've actually already finished. I sent the first draft to Eduardo, and he's preparing it for publication.}}
+{{dialogue|Ernest|indent=true|But as you can probably tell, it's uh... not exactly going well...}}
+{{dialogue|Ernest|indent=true|answer=(Tell a joke)
+|reward={{NPC2|Ernest|rp=2}}|Hahaha, you know, darling, you have a unique way of soothing my soul.}}
+{{dialogue|Ernest|indent=true|So you read the paper, then. I know you're trying to cheer me up...}}
+{{dialogue|Ernest|In fact... that article really shook me. It's not like it's the first time he's written about me like that... Guillaume always writes these scathing articles about me. Daddy's boy, I think, is his favorite term...}}
+{{dialogue|Ernest|Before, I could always shrug it off. I had the success of my books to rely on, and a confidence in my work. But now that I'm trying a new style... I'm worried readers will be apprehensive.}}
+{{dialogue|Ernest|Eduardo asked whether I wanted to hold off on publication. He was afraid that I would bring down my father's reputation.}}
+{{dialogue|Ernest|Sigh... I guess it's not surprising. He's really my father's employee, after all. Thank you for visiting me. I just need to think on it some more...}}
+
+*''Let's get some fresh air.''
+*''I'll leave you be...''
+
+{{dialogue|Ernest|indent=true|answer=Let's get some fresh air.
+|...}}
+{{dialogue|Ernest|indent=true|Well... I suppose I should eat something. Very well, let's have something to eat.}}
+{{dialogue|Ernest|indent=true|answer=I'll leave you be...
+|Don't worry about me, honey. I'll be fine. You go and do whatever you need to. You've already made me feel much better.}}
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the second option in conversation segment 19216:
+{{dialogue|Ernest|Sigh... I guess it's not surprising. He's really my father's employee, after all. Thank you for visiting me. I just need to think on it some more...}}
+
+*''Let's get some fresh air.'' (No unique dialogue)
+*''I'll leave you be...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set A00 to 1
+NPC ICON ADD || missionId: 1900399 | npc: 8069 | missionIcon: 0
+
+TRIGGER Procedure 0.0 Step 7.0 Order 7 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Ernest
+CONDITIONS
+Check if A00 is == 1
+ACTIONS
+(cId 1) A conversation 6032_0 starts:
+{{dialogue|Ernest|Hey, honey...}}
+{{dialogue|Player|(Ernest seems really down...)}}
+
+*''Let's get some fresh air.''
+*''I'll leave you be...''
+
+{{dialogue|Ernest|indent=true|answer=Let's get some fresh air.
+|...}}
+{{dialogue|Ernest|indent=true|Well... I suppose I should eat something. Very well, let's have something to eat.}}
+{{dialogue|Ernest|indent=true|answer=I'll leave you be...
+|Don't worry about me, honey. I'll be fine. You go and do whatever you need to. You've already made me feel much better.}}
+NPC ICON REMOVE || missionId: 1900399 | npc: 8069 | missionIcon: 0
+
+TRIGGER Procedure 0.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the third option in conversation segment 19206:
+{{dialogue|Ernest|Come on, let's do something. What would you like to do?}}
+
+*''(Take out the newspaper)'' (No unique dialogue)
+*''How is the new book coming along?'' (No unique dialogue)
+*''(Tell a joke)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Ernest gains 2 favor
+
+TRIGGER Procedure 0.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the first option in conversation segment 19216:
+{{dialogue|Ernest|Sigh... I guess it's not surprising. He's really my father's employee, after all. Thank you for visiting me. I just need to think on it some more...}}
+
+*''Let's get some fresh air.'' (No unique dialogue)
+*''I'll leave you be...'' (No unique dialogue)
+
+(cId 1) The player picks the first option in conversation segment 19220:
+{{dialogue|Player|(Ernest seems really down...)}}
+
+*''Let's get some fresh air.'' (No unique dialogue)
+*''I'll leave you be...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+SOUND PLAY 2D || idStr: Play_stomach_growl
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Check if A00 is == 1
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 0) There is a conversation segment (id 19217) that ends:
+{{dialogue|Ernest|Well... I suppose I should eat something. Very well, let's have something to eat.}}
+(cId: 1) There is a conversation segment (id 19217) that ends:
+{{dialogue|Ernest|Well... I suppose I should eat something. Very well, let's have something to eat.}}
+CONDITIONS
+Always:
+ACTIONS
+===Go to the Blue Moon Saloon===
+
+{{mission_details
+|desc = To make Ernest feel better, take him out for a walk and some dinner at the Blue Moon Saloon.
+|details = Go to the Blue Moon Saloon
+}}
+DELAY MASK SET || maskId: 190401 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+Set A00 to 2
+
+TRIGGER Procedure 1.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 190401 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 190401 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Remove behavior CommanderNPCAction (idName: 2940000) from Ernest
+Remove behavior CommanderMoveToFlagAndAction (idName: 2940001) from Player
+PLAYER SWITCH SCENE || scene: Saloon
+Ernest stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 1940002) from Ernest
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Saloon:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_saloon
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_saloon
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 1.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 1904010 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 4.5 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 1904010 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: P9400_0
+Ernest stands still in Saloon and looks at Player
+Owen stands still in Saloon and looks at Ernest
+Add behavior CommanderSit (idName: 2940002) to Ernest
+(param: TargetScene:Saloon|SeatDramaName:9400Seat02)
+Add behavior CommanderPlayerSit (idName: 2940003) to Player
+(param: TargetScene:Saloon|SeatDramaName:SaloonSeat01-1)
+DELAY MASK SET || maskId: 1904010 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 1904010 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 10) A conversation 6033_0 starts:
+{{dialogue|Ernest|Sigh... I know I shouldn't let this get to me, shouldn't let it affect my motivation, but...}}
+{{dialogue|Ernest|I just need to think this through. Being an author is my dream, and I can't afford to take needless risks that may ruin my career.}}
+{{dialogue|Ernest|Thank you for bringing me out, honey. I feel considerably better. I think I'm going to go back now, I need to think about my next step. I'll see you later, okay?}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 4940001 | sec: 1.75
+STOPWATCH REAL TIME SET || id: 4940002 | sec: 3
+DELAY MASK SET || maskId: 190402 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8001 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 11) A conversation 6034_0 starts:
+{{dialogue|Owen|Hey, ''Player''... I don't mean to intrude, but is Ernest okay? He seems a little... less than his usual self.}}
+
+*''He's lost some self-confidence.''
+*''He's a bit de-motivated.''
+
+{{dialogue|Owen|indent=true|answer=He's lost some self-confidence.
+|Ah... got something to do with that article in the paper? If someone wrote a hit piece like that about my Saloon... I'd probably be feeling like that, too.}}
+{{dialogue|Owen|indent=true|answer=He's a bit de-motivated.
+|Ah... got something to do with that article in the paper? I'm not a writer, but I know being shot down like that must sting. No wonder he wants to put down the pen...}}
+{{dialogue|Owen|There must be something we can do to help. So it's all about his new book, huh... He just needs a little confidence boost is all. I'm sure the book is great.}}
+{{dialogue|Player|(What should I say?)}}
+
+*''It really is. We just need to help him see that.''
+*''He just needs to find the right audience...''
+*''Should I buy him a puppy?''
+
+{{dialogue|Owen|indent=true|answer=It really is. We just need to help him see that.
+|That's the right direction. But how?}}
+
+:*''Hmm... Story night?''
+:*''There's always a crowd in Blue Moon!''
+
+{{dialogue|Owen|indent=true|answer=He just needs to find the right audience...
+|That's the right direction. But how?}}
+
+:*''Hmm... Story night?''
+:*''There's always a crowd in Blue Moon!''
+
+{{dialogue|Owen|indent=true|answer=Should I buy him a puppy?
+|I don't think he could handle that kind of responsibility right now... let's put a pin in it. Uh... not in the puppy that is...}}
+{{dialogue|Owen|I see... Yes, I could read his story at story night. That's a great idea!}}
+{{dialogue|Owen|We'll see the crowd react in real time. If no one likes it, I'll take the fall and say it's an execution thing. But I'm sure everyone will love it, and that'll get Ernest's mojo back!}}
+{{dialogue|Owen|Alright, well I'll get everything ready, I'll keep it a secret, too.}}
+{{dialogue|Owen|Just make sure Ernest comes to the Story Night on Saturday.}}
+{{dialogue|Owen|See you then!}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Wait for a Letter===
+
+{{mission_details
+|desc = Owen has promised to help Ernest find his confidence, so wait for his news.
+|details = Wait for a Letter
+}}
+Remove behavior CommanderMoveToFlagAndAction (idName: 2940005) from Owen
+Remove behavior CommanderMoveToFlagAndAction (idName: 2940004) from Ernest
+Remove behavior CommanderPlayerSit (idName: 2940003) from Player
+Remove behavior CommanderSit (idName: 2940002) from Ernest
+Ernest stops standing still
+Owen stops standing still
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 7.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 190402 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 190402 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Add behavior CommanderMoveToFlagAndAction (idName: 2940004) to Ernest
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:On9400_1|LookAtActor:0)
+
+TRIGGER Procedure 1.0 Step 8.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 4940002
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 2940005) to Owen
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:Ow9400_1|LookAtActor:8069)
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || transId: 80015256 | missionId: 1900400 | sceneName: Main | showOnMap: 1 | mapIcon: MissionAreaBranch | id: 9401 | flagName: T9401
+Ernest stops standing still
+
+TRIGGER Procedure 2.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 22:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 9401
+Run mission Spread Your Wings
+FAIL MISSION || missionId: 1900399
+END MISSION 1900399
+END MISSION 1900400
+
+TRIGGER Procedure 2.5 Step 3.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 18:00 (order: 0):
+CONDITIONS
+CHECK CURRENT SCENE || name: Saloon | flag: 0
+ACTIONS
+Set A00 to 3
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON EVERY WEEK START || order: 0 | week: 5
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|764}}
+
+TRIGGER Procedure 3.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 764
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Ernest===
+
+{{mission_details
+|desc = Owen is prepared to narrate the content of Ernest's novel at the next story night, so persuade Ernest to attend.
+|details = Talk to Ernest
+}}
+Ernest stands still in Main
+
+TRIGGER Procedure 3.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Ernest
+CONDITIONS
+Always:
+ACTIONS
+(cId 20) A conversation 6041_0 starts:
+{{dialogue|Ernest|Story Night? I'm sorry, honey, I really don't feel up to it.}}
+{{dialogue|Ernest|I know you're trying to make me feel better, but I really just need to focus...}}
+
+*''Maybe it'll give you some inspiration.''
+*''I feel like you're drifting away from me...''
+
+{{dialogue|Ernest|indent=true|answer=Maybe it'll give you some inspiration.
+|Yes... I think you're right. Being stuck in this room just ruminating over each sentence won't do me any good. You win! I'll come with you.}}
+{{dialogue|Ernest|indent=true|answer=I feel like you're drifting away from me...
+|You... I'm sorry. I've been so absorbed in my writing, I've pushed you aside... that's never my intention. I'll put this aside for a night, and we can go together.}}
+{{dialogue|Ernest|Well, that settles it. I'll see you there. What? No, of course, I'll never break a promise to you, my dear.}}
+The conversation ends.
+===Attend Story Night===
+
+{{mission_details
+|desc = You and Owen made a plan to do a reading of Ernest's new book during Story Night to get some early feedback. Make sure you attend Story Night next Saturday.
+|details = Attend Story Night
+}}
+
+TRIGGER Procedure 4.0 Step 4.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 18:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Ernest stops standing still
+Run mission Spread Your Wings
+AREA TRIGGER DELETE || id: 9400
+END MISSION 1900399
+END MISSION 1900400

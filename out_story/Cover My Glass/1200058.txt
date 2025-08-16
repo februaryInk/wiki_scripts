@@ -1,0 +1,152 @@
+Reading Mission 1200058: Cover My Glass
+
+<onlyinclude>{{Infobox mission
+|name = Cover My Glass
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Cover My Glass:
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1200057
+Yan stops standing still
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200057
+CONDITIONS
+Always:
+ACTIONS
+Run mission Cover My Glass
+END MISSION 1200057
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200058
+CONDITIONS
+CHECK PLAYER ITEM || itemGrade: -1 | item: 19110005 | set: 6 | count: 10
+ACTIONS
+===Prepare Materials===
+
+{{mission_details
+|desc = It takes a lot of glass to repair the window, head back to your workshop and smelt some.
+|details = Prepare Materials
+*{{i2|Glass|0/10}}
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | canSubmit: 1 | missionId: 1200057 | targetId: 0
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 20581
+===Repair the Window===
+
+{{mission_details
+|desc = Take your materials and repair the window on the train that's stopped in the station.
+|details = Repair the Window
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 20581 | sceneName: Main | flagName: trainrob_window | extraParams: mission_TrainW|CreatorItem|19110005_10|80002405|FixGlass|1.4 | path: Lable_TrainWB
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 20581 | missionId: 1200057 | iconType: 3
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 20581
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Yan===
+
+{{mission_details
+|desc = You've fixed the window, now go tell Yan.
+|details = Talk to Yan
+}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Yan
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 1512 starts:
+{{dialogue|Yan|Fixed that window, eh? Splendid! Another fine contribution to Sandrock on behalf of the Commerce Guild! I'm sure they'll have a few kind words to throw my way at the next Fireside, eh,  ''Player''?}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1200057
+
+TRIGGER Procedure 1.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200058
+CONDITIONS
+CHECK PLAYER ITEM || item: 19110005 | itemGrade: -1 | set: 2 | count: 10
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 20581
+===Prepare Materials===
+
+{{mission_details
+|desc = It takes a lot of glass to repair the window, head back to your workshop and smelt some.
+|details = Prepare Materials
+*{{i2|Glass|0/10}}
+}}
+SET CAN SUBMIT TARGET || missionId: 1200057 | targetId: 0 | canSubmit: 1
+===Repair the Window===
+
+{{mission_details
+|desc = Take your materials and repair the window on the train that's stopped in the station.
+|details = Repair the Window
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 20581 | path: Lable_TrainWB | sceneName: Main | flagName: trainrob_window | extraParams: mission_TrainW|CreatorItem|19110005_10|80002405|FixGlass|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 20581 | missionId: 1200057 | iconType: 3
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1200058
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || id: 20581 | itemType: 11
+SCENEITEM DELETE || itemType: 0 | id: 20581
+SCENEITEM DELETE || itemType: 12 | id: 20581
+
+TRIGGER Procedure 1.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 20581
+CONDITIONS
+CHECK CAN SEE ACTOR || fovId: 1 | originId: 8023 | targetId: 8000
+ACTIONS
+In a speech bubble:
+{{dialogue|Jensen|Wow! You're a good window fixer!}}

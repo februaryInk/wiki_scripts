@@ -1,0 +1,163 @@
+Reading Mission 1300006: A Piece of the Past
+
+<onlyinclude>{{Infobox mission
+|name = A Piece of the Past
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from A Piece of the Past:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1300003
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Player|This looks like a fragment of a relic. Maybe the local museum would be interested?}}
+DELIVER MISSION 1300003
+START MISSION 1300003
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1300003
+CONDITIONS
+Always:
+ACTIONS
+Run mission A Piece of the Past
+END MISSION 1300003
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1300006
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Catori===
+
+{{mission_details
+|desc = Catori owns the museum in town, maybe she'll know what this thing is.
+|details = Talk to Catori
+}}
+Set talk to 0
+Set Number to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON BAG CHANGE || order: 0 | item: 19200049 | changeType: 0 | itemGrade: 0
+CONDITIONS
+Check if Number is == 1
+ACTIONS
+AREA TRIGGER DELETE || id: 13000061
+SCENEITEM DELETE || itemType: 0 | id: 13006
+AREA TRIGGER DELETE || id: 13006
+Set talk to 10
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Catori
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 586, 587, 591 starts:
+{{dialogue|Catori|Oh, hey there, you got something for me?}}
+{{dialogue|Catori|Well, I'll be darned! This relic fragment... it's exactly the one I was looking for! I can't believe it! Look, look, I have the other fragments right here.}}
+{{dialogue|Catori|Why don't you go over to the {{textcolor|green|Restoration Machine}} in my museum and reconstruct this item! Come back when you're done!}}
+Set talk to 1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Fish Fossil Piece 1 of Unknown quality (Notify player)
+===Reconstruct the Relic===
+
+{{mission_details
+|desc = Catori gave you the other piece of the relic. Use the Restoration Machine to reconstruct it.
+|details = Reconstruct the Relic
+*{{i2|Fish Fossil|0/1}}
+}}
+SCENEITEM CREATE FLAG || itemType: 0 | id: 13006 | path: Mission_NewArrow | sceneName: Museum | flagName: Mus_Machine_FixMachine | extraParams: 0
+AREA TRIGGER CREATE || id: 13006 | sceneName: Main | flagName: Museum_Door | showOnMap: 1 | mapIcon: MissionArea | transId: 91000211 | missionId: 1300003
+Set Number to 1
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON BAG CHANGE || order: 0 | item: 19200049 | changeType: 0 | itemGrade: -1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Catori===
+
+{{mission_details
+|desc = You've restored a relic, go tell Catori.
+|details = Talk to Catori
+*{{i2|Fish Fossil|0/1}}
+*{{i2|Catori|0/1}}
+}}
+
+TRIGGER Procedure 2.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Museum:
+CONDITIONS
+Check if Number is == 1
+ACTIONS
+AREA TRIGGER DELETE || id: 13006
+AREA TRIGGER CREATE || missionId: 1300003 | id: 13000061 | sceneName: Museum | showOnMap: 1 | mapIcon: BranchTalk | transId: 91000211 | flagName: Mus_Machine_FixMachine
+
+TRIGGER Procedure 2.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 100321
+CONDITIONS
+Check if Number is == 1
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 13006
+
+TRIGGER Procedure 2.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION SUBMIT CLICK || order: 0 | missionId: 1300003 | npc: 8024
+CONDITIONS
+CHECK PLAYER ITEM || item: 19200049 | itemGrade: -1 | set: 2 | count: 1
+ACTIONS
+(cId 7) A conversation 1044, 1045, 1046 starts:
+{{dialogue|Catori|Now that's a nice looking relic, I'm gonna display it in my museum! Here's something for your hard work.}}
+{{dialogue|Catori|Keep your eye out for more relic pieces in the future; anytime you collect a full set, you can use the {{textcolor|green|Restoration Machine}} to reconstruct a relic!}}
+{{dialogue|Catori|Then you can put 'em up on display in the {{textcolor|green|Museum}}, and, I might add, donors will be rewarded handsomely.}}
+Remove 1 Fish Fossil of Default quality (Notify player)
+
+TRIGGER Procedure 2.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 13006
+SCENEITEM DELETE || itemType: 0 | id: 13006
+SUBMIT MISSION 1300003
+END MISSION 1300006

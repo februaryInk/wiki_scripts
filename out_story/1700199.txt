@@ -1,0 +1,347 @@
+Reading Mission 1700199: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200128
+
+TRIGGER Procedure 7.0 Step 18.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200128
+AFTER DESERIALIZE || order: 0
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Check if mission Leaving the Nest is result 1 flag 1
+
+GROUP 1:
+Check if mission Leaving the Nest is result 2 flag 1
+
+ACTIONS
+ACTION SOCIAL REMOVE MASK || npc: 8016 | mask: NoParty
+
+TRIGGER Procedure 8.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 5281) that ends:
+{{dialogue|Catori|Heidi will take care of the new rooftop itself, but I'll need your help for the display. Can you ask Director Qi to make you a Diagram? When you're all done, please install them on location.}}
+(cId: -1) There is a conversation segment (id 5281) that ends:
+{{dialogue|Catori|Heidi will take care of the new rooftop itself, but I'll need your help for the display. Can you ask Director Qi to make you a Diagram? When you're all done, please install them on location.}}
+CONDITIONS
+Check if mission Heritage of Sandrock is result 1 flag 1
+ACTIONS
+START MISSION 1700198
+Add 1 Exhibition Stand of Default quality (Notify player)
+Run mission #1700199
+
+Run conditions from Heritage of Sandrock:
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 5281) that ends:
+{{dialogue|Catori|Heidi will take care of the new rooftop itself, but I'll need your help for the display. Can you ask Director Qi to make you a Diagram? When you're all done, please install them on location.}}
+(cId: -1) There is a conversation segment (id 5281) that ends:
+{{dialogue|Catori|Heidi will take care of the new rooftop itself, but I'll need your help for the display. Can you ask Director Qi to make you a Diagram? When you're all done, please install them on location.}}
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1700198
+Add 1 Exhibition Stand of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700198
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1700199
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700199
+CONDITIONS
+Always:
+ACTIONS
+===Ask Qi===
+
+{{mission_details
+|desc = Qi will need to develop the rooftop display. Go and talk to him for guidance.
+|details = Ask Qi
+*{{i2|Qi|0/1}}
+}}
+Set build to 4
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 5282 starts:
+{{dialogue|Qi|Catori needs a display for the Museum? Is that really her way of attracting more visitors? I don't understand. But whatever, bring me Data Discs and I'll have it for you.}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Collect Data Discs===
+
+{{mission_details
+|desc = Qi needs Data Discs to create the diagram for the rooftop display. Collect them and bring them back to him.
+|details = Collect Data Discs
+*{{i2|Data Disc|0/10}}
+*{{i2|Qi|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+CHECK PLAYER ITEM || item: 19200001 | itemGrade: -1 | set: 2 | count: 10
+ACTIONS
+(cId 2) A conversation 5283 starts:
+{{dialogue|Qi|Ok, good. This one's pretty simple, so I'll have it soon. Check your mail tomorrow.}}
+BAG MODIFY BY TARGET || missionId: 1700198 | targetId: 2
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Wait for Diagrams===
+
+{{mission_details
+|desc = Qi needs time to create the diagram for the rooftop display. Wait for him to finish making the diagram.
+|details = Wait for Diagrams
+}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|345}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 345
+CONDITIONS
+Always:
+ACTIONS
+===Make Exhibition Stand and Rooftop Display===
+
+{{mission_details
+|desc = Now you have the diagram, you can finally make the Exhibition Stand and Rooftop Display.
+|details = Make Exhibition Stand and Rooftop Display
+*{{i2|Exhibition Stand|0/4}}
+*{{i2|Rooftop Display|0/1}}
+}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1700198 | targetId: 4 | canSubmit: 1
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: MuseumLvUp | info: 0 | exist: 1
+ACTIONS
+===Wait for Construction===
+
+{{mission_details
+|desc = The construction crew is hard at work. You should wait until the construction is complete.
+|details = Wait for Construction
+}}
+
+TRIGGER Procedure 1.0 Step 2.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1700198 | targetId: 4 | canSubmit: 1
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: MuseumLvUp | info: 0 | exist: 0
+ACTIONS
+===Install the Exhibition Stand and Rooftop Display===
+
+{{mission_details
+|desc = The construction crew has finally finished the infrastructure upgrade for the Museum. Go and install the new stand and display.
+|details = Install the Exhibition Stand and Rooftop Display
+}}
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 1719801 | missionId: 1700198 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 1719802 | missionId: 1700198 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 1719803 | missionId: 1700198 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 1719804 | missionId: 1700198 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 1719805 | missionId: 1700198 | iconType: 2
+SCENEITEM INTERACT SET || itemType: 11 | canInteract: 1 | id: 1719801
+SCENEITEM INTERACT SET || canInteract: 1 | itemType: 11 | id: 1719802
+SCENEITEM INTERACT SET || canInteract: 1 | itemType: 11 | id: 1719803
+SCENEITEM INTERACT SET || itemType: 11 | id: 1719804 | canInteract: 1
+SCENEITEM INTERACT SET || itemType: 11 | id: 1719805 | canInteract: 1
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: MuseumLvUp | info: 1 | exist: 1
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 11 | id: 1719801 | sceneName: Main | path: MuseumLightBoard_Mark | flagName: MuseumLightBoard | extraParams: MuseumLightBoard|CreatorItem|14000025_1|1547|Fix|1.4
+SCENEITEM CREATE FLAG || itemType: 11 | sceneName: Museum | id: 1719802 | path: MuseumCabinet_Mark | flagName: Museum_Cabinet | extraParams: MuseumCabinet|CreatorItem|19800004|1547|Fix|1.4
+SCENEITEM CREATE FLAG || itemType: 11 | path: MuseumCabinet_Mark | sceneName: Museum | extraParams: MuseumCabinet|CreatorItem|19800004|1547|Fix|1.4 | flagName: Museum_Cabinet2 | id: 1719803
+SCENEITEM CREATE FLAG || id: 1719804 | itemType: 11 | flagName: Museum_Cabinet3 | sceneName: Museum | path: MuseumCabinet_Mark | extraParams: MuseumCabinet|CreatorItem|19800004|1547|Fix|1.4
+SCENEITEM CREATE FLAG || itemType: 11 | id: 1719805 | extraParams: MuseumCabinet|CreatorItem|19800004|1547|Fix|1.4 | path: MuseumCabinet_Mark | sceneName: Museum | flagName: Museum_Cabinet4
+Set global blackboard key MuseumLvUp with info 2.
+
+TRIGGER Procedure 1.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: MuseumLvUp | info: 2 | exist: 1
+ACTIONS
+===Install the Exhibition Stand and Rooftop Display===
+
+{{mission_details
+|desc = The construction crew has finally finished the infrastructure upgrade for the Museum. Go and install the new stand and display.
+|details = Install the Exhibition Stand and Rooftop Display
+}}
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 1719801 | missionId: 1700198 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 1719802 | missionId: 1700198 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 1719803 | missionId: 1700198 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 1719804 | missionId: 1700198 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 1719805 | missionId: 1700198 | iconType: 2
+SCENEITEM INTERACT SET || itemType: 11 | id: 1719801 | canInteract: 1
+SCENEITEM INTERACT SET || itemType: 11 | id: 1719802 | canInteract: 1
+SCENEITEM INTERACT SET || itemType: 11 | id: 1719803 | canInteract: 1
+SCENEITEM INTERACT SET || itemType: 11 | id: 1719804 | canInteract: 1
+SCENEITEM INTERACT SET || itemType: 11 | id: 1719805 | canInteract: 1
+GLOBAL BLACK BOARD REMOVE || key: MuseumLvUp
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 1 | actorId: 8000 | itemType: 12 | id: 1719801
+CONDITIONS
+Check if build is <= (maybe?) 0
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1700198 | targetId: 6 | isAdd: 1 | transId: 91003176
+Decrement build by 1
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 4
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 1 | actorId: 8000 | itemType: 12 | id: 1719802
+ON SCENEITEM CREATE || order: 1 | actorId: 8000 | itemType: 12 | id: 1719803
+ON SCENEITEM CREATE || order: 1 | actorId: 8000 | itemType: 12 | id: 1719804
+ON SCENEITEM CREATE || order: 1 | actorId: 8000 | itemType: 12 | id: 1719805
+CONDITIONS
+Check if build is <= (maybe?) 0
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1700198 | targetId: 6 | isAdd: 1 | transId: 91003178
+Decrement build by 1
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 1719801
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 1719802
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 1719803
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 1719804
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 1719805
+CONDITIONS
+GROUP 0:
+Check if build is == 0
+Opportunities Abound is in state 1 with flag 1
+
+GROUP 1:
+Opportunities Abound is in state 2 with flag 1
+Check if build is == 0
+
+ACTIONS
+SUBMIT MISSION 1700198
+MUSEUM SET ACTIVE || active: 1
+END MISSION 1700198
+END MISSION 1700199
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 1719801
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 1719802
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 1719803
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 1719804
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 1719805
+CONDITIONS
+Check if build is == 0
+Opportunities Abound is successfully completed
+ACTIONS
+===Talk to Catori===
+
+{{mission_details
+|desc = You've finished the upgrades to the Museum. Go and tell Catori.
+|details = Talk to Catori
+*{{i2|Catori|0/1}}
+}}
+MUSEUM SET ACTIVE || active: 1
+
+TRIGGER Procedure 2.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Catori
+CONDITIONS
+Always:
+ACTIONS
+(cId 17199) A conversation 1565_0 starts:
+{{dialogue|Catori|They're amazing, ''Player''! You're really efficient, you know that?}}
+{{dialogue|Catori|Thanks for all your hard work, partner. Now it's my turn to get the tourists to come, watch me!}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 17199) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1700198
+
+TRIGGER Procedure 2.0 Step 6.0 Order 6 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+END MISSION 1700198
+The player receives a letter:
+{{mail|346}}
+CATORI PROFIT ACTIVE || 
+Run mission Opportunities Abound
+END MISSION 1700199

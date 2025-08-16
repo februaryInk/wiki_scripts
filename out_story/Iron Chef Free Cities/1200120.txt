@@ -1,0 +1,161 @@
+Reading Mission 1200120: Iron Chef Free Cities
+
+<onlyinclude>{{Infobox mission
+|name = Iron Chef Free Cities
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Iron Chef Free Cities:
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+START MISSION 1200119
+NPC ICON REMOVE || missionId: 1200119 | npc: 8061 | missionIcon: 0
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200119
+CONDITIONS
+Always:
+ACTIONS
+Run mission Iron Chef Free Cities
+END MISSION 1200119
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200120
+CONDITIONS
+Always:
+ACTIONS
+Add 10 Seesai Pepper Blend of Default quality (Notify player)
+===Research the Recipe===
+
+{{mission_details
+|desc = Use the peppers provided by the mysterious merchant to research the perfect recipe. According to his description, using hand-made {{textcolor|green|noodles}}, plus fresh and tender {{textcolor|green|meats}}, boil {{textcolor|green| a pot of Bone Soup Base}} and add some {{textcolor|green|Green Vegetables}}, it should be delicious!
+|details = Research the Recipe
+*{{i2|Drool With Joy Noodles|0/1}}
+}}
+Set FINISH to 0
+Set DAY to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200119 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Report to the Mysterious Man===
+
+{{mission_details
+|desc = The recipe is ready! Go and tell the Mysterious Man the good news!
+|details = Report to the Mysterious Man
+*{{i2|Drool With Joy Noodles|0/1}}
+*{{i2|Mysterious Man|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Mysterious Man
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1200119 | targetId: 2 | canSubmit: 1
+ACTIONS
+(cId 1) A conversation 807_0 starts:
+{{dialogue|Mysterious Man|Mmm! The savory broth... I can feel it in my joints! Is that Yakmel I taste? Excellent choice! Oh, and the noodles are so fresh! And the veggies really balance out the spice... Even my wife would love this and she's- Oop. Noodles almost made me spill the beans...}}
+{{dialogue|Mysterious Man|Builder, you've done it! This dish is exquisite! I'm going to take this across the Free Cities. I surmise that the demand will be high.}}
+{{dialogue|Mysterious Man|Gosh, you don't know how many other people I went through trying to get this recipe right... But you, you're the one! The one who can bend noodles to your very will...}}
+{{dialogue|Mysterious Man|I think I'll call them... "Chaojimalatuoniudelipleasantaciousmian!" That's Seesaian for... makes you "Drool With Joy!" Because they make me drool. I'm gonna trademark that.}}
+{{dialogue|Mysterious Man|...Eh, anyway! I'm going to start talking to restaurant owners in other cities. Meanwhile, feel free to start selling the recipe around here in Sandrock.}}
+{{dialogue|Mysterious Man|Maybe you can work something out with that saloon guy, what's his name? Joe? Just don't sell the recipe for anything less than 200 Gols, got me? Okay, we're pals now, so I'm gonna share with you a couple of tricks of the trade...}}
+{{dialogue|Mysterious Man|First rule of making a deal: you gotta ease into it, {{textcolor|green|don't just strike straight to the heart of the matter}}, ask 'em about their family or something, remember how I did? Second rule: {{textcolor|green|always let 'em know that you've got other options}}! Make 'em desperate!}}
+{{dialogue|Mysterious Man|That's all, I'll be on my way. I'll send you any profit share later.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Set FINISH to 1
+Run mission A Hard Bargain
+SUBMIT MISSION 1200119
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE || compare: 4 | year: -1 | month: -1 | day: 20
+CHECK DATE || compare: 4 | year: -1 | month: -1 | day: 21
+ACTIONS
+NPC LEAVE || npc: 8061
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 3
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if FINISH is == 0
+ACTIONS
+Mysterious Man stands still in Main
+Mysterious Man stops standing still
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment DAY by 1
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if DAY is >= 7
+CHECK GLOBAL BLACKBOARD || key: noodlesmoney | info: 5 | exist: 1
+A Hard Bargain is successfully completed
+ACTIONS
+The player receives a letter:
+{{mail|215}}
+GLOBAL BLACK BOARD REMOVE || key: noodlesmoney
+END MISSION 1200120
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if DAY is >= 7
+CHECK GLOBAL BLACKBOARD || key: noodlesmoney | info: 3 | exist: 1
+A Hard Bargain is successfully completed
+ACTIONS
+The player receives a letter:
+{{mail|216}}
+GLOBAL BLACK BOARD REMOVE || key: noodlesmoney
+END MISSION 1200120

@@ -1,0 +1,122 @@
+Reading Mission 1200115: Track the Suspect
+
+<onlyinclude>{{Infobox mission
+|name = Track the Suspect
+|image =
+|description = The evidence has shown a few clues, who could the thief be?
+|type = Side
+|time =
+|location =
+|characters = [[Justice]]
+|condition =
+|details =
+|exp = 800
+|reputation = None
+|gols = None
+|npc1 = X
+|rp1 = 10
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Thief!:
+
+TRIGGER Procedure 1.0 Step 1.5 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 6) There is a conversation segment (id 2946) that ends:
+{{dialogue|Justice|Hahaha! Y'know, that's quite an imagination you got there! We only got one bird in this town, and that's Fang's: X the raven! Sure he may be a rude lil' feller, but he ain't no criminal!}}
+CONDITIONS
+Always:
+ACTIONS
+Set RECEIVE to 1
+Set global blackboard key thiefcorrect with info 1.
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Check if RECEIVE is == 1
+ACTIONS
+SUBMIT MISSION 1200113
+Run mission Track the Suspect
+END MISSION 1200114
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200115
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: thiefcorrect | info: 1 | exist: 0
+ACTIONS
+The player receives a letter:
+{{mail|213}}
+DELIVER MISSION 1200115
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Justice
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 779_0 starts:
+{{dialogue|Justice|Hey! Did ya manage to take a look at my letter? Last night our "bandit," X, came in an' tried to make me his next victim! Heh, heh... you got to wake up pretty early on a Tuesday if you wanna pilfer a fork off ol' Justice!}}
+{{dialogue|Justice|Anyway, I put him straight already, an' even though he got a bit of a lip, er, beak, he still seemed to understand good enough. He won't be makin' this kinda trouble again.}}
+
+*''Did he give everything back?''
+*''I'll go talk to him too!''
+
+{{dialogue|Justice|indent=true|answer=Did he give everything back?
+|Uh... ah... I mean, I tried to tell him, and well... No. Aw, shucks you got me, I guess it must've slipped my mind...}}
+{{dialogue|Justice|indent=true|answer=I'll go talk to him too!
+|Y'know I never expected you to be so eager to uphold the law! Ha! Thinkin' of a career change, Builder?}}
+{{dialogue|Justice|Well, we really gotta follow this up. I reckon he ain't soon to forget the scolding I gave him last night, but we gotta see this through to the end. After all! It's not "mission complete" until we return all the stolen goods!}}
+{{dialogue|Justice|Tell you what: let's split up! I'll go tell Unsuur to get the paperwork ready, and you track down X and make that overgrown canary sing! Roll out!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1200115
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200115
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: thiefcorrect | info: 1 | exist: 1
+ACTIONS
+DELIVER MISSION 1200115
+START MISSION 1200115
+GLOBAL BLACK BOARD REMOVE || key: thiefcorrect
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200115
+CONDITIONS
+Always:
+ACTIONS
+X stops standing still
+Run mission Track the Suspect
+END MISSION 1200115
+
+NPC in-mission talks:
+
+{{dialogue|Justice|Huh? Oh, yeah. Turns out we're out of forms to apply for an avian interrogation warrant, but, uh, don't worry, everything's in motion. How are things on your end? Oh. Yeah, just go talk to the bird, it'll be fine.}}
+
+==Rewards==
+{{mission reward
+|npc1 = X
+|rp1 = 10
+|exp = 800
+|reputation = None
+|gols = None
+}}

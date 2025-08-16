@@ -1,0 +1,369 @@
+Reading Mission 1900411: One Night in Sandrock
+
+<onlyinclude>{{Infobox mission
+|name = One Night in Sandrock
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from One Night in Sandrock:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1900410
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1900410
+START MISSION 1900410
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1900410
+CONDITIONS
+Always:
+ACTIONS
+Run mission One Night in Sandrock
+END MISSION 1900410
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1900411
+CONDITIONS
+Always:
+ACTIONS
+===Wait for Tomorrow===
+
+{{mission_details
+|desc = Ginger can't spend too much time in the sun, meet up with her tomorrow night to take her out on the town.
+|details = Wait for Tomorrow
+}}
+Set D02 to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK WEATHER STATE || weather: 1 | flag: 0
+CHECK WEATHER STATE || weather: 2 | flag: 0
+CHECK WEATHER STATE || weather: 5 | flag: 0
+ACTIONS
+===Go to Clinic at 21:00===
+
+{{mission_details
+|desc = You agreed to meet Ginger tonight at the clinic, 21:00PM.
+|details = Go to Clinic at 21:00
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 19:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1900410 | id: 9411 | sceneName: Main | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80031216 | flagName: T9411
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_clinic
+CHECK TIME || compare: 2 | hour: 21 | minute: 0
+Check if D02 is > (maybe?) 2
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_clinic
+AREA TRIGGER DELETE || id: 9411
+DELAY MASK SET || maskId: 94110 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+Fang stands still in Clinic and looks at X
+X stands still in Clinic and looks at Fang
+Ginger stands still in Clinic and looks at Player
+Gust stands still in Clinic
+PLAYER SET POS ROT FLAG || sceneName: Clinic | flagName: P9411_A0
+Add behavior CommanderSit (idName: 2941100) to Gust
+(param: TargetScene:Clinic|SeatDramaName:SickBed01Drama)
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 94110 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Ginger stops standing still
+Ginger stops standing still
+Remove behavior CommanderSit (idName: 2941100) from Gust
+Gust stops standing still
+AREA TRIGGER DELETE || id: 9411
+AREA TRIGGER DELETE || id: 941101
+AREA TRIGGER DELETE || id: 941105
+FAIL MISSION || missionId: 1900410
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 94110 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 20611, 20612, 20613 starts:
+{{dialogue|Ginger|Shhhhh...}}
+{{dialogue|Ginger|He's sleeping... we have to be quiet!}}
+{{dialogue|Ginger|If he wakes up, he won't let me go!}}
+
+TRIGGER Procedure 1.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 94111 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 94111 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Ginger stops standing still
+CUTSCENE UI STATE EXIT || 
+DELAY MASK SET || maskId: 94111 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: P9411_B0
+Fang stops standing still
+X stops standing still
+
+TRIGGER Procedure 1.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Clinic to the Main:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 94112 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 1.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Clinic to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Ginger stands still in Main and looks at Player
+
+TRIGGER Procedure 1.0 Step 7.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Clinic to the Main:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1900411 | id: 941101 | sceneName: Main | flagName: TX9411 | showOnMap: 0 | mapIcon: MissionAreaBranch | transId: 0
+DELAY MASK SET || maskId: 94112 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 94112 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 20614, 20615 starts:
+{{dialogue|Ginger|The owner of the Blue Moon, Owen, right? He told me there are shows at night. I wonder if there's one on tonight?}}
+{{dialogue|Ginger|How about we go there and take a look?}}
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8107 | state: Defense
+===Take Ginger to the Blue Moon===
+
+{{mission_details
+|desc = Ginger's heard that music is played at the Blue Moon and she wants to hear for herself. Take her to the Blue Moon saloon.
+|details = Take Ginger to the Blue Moon
+}}
+AREA TRIGGER CREATE || missionId: 1900411 | id: 941105 | sceneName: Main | flagName: T9386 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80031218
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 2.0 Step 6.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 2) There is a conversation segment (id 20618) that ends:
+{{dialogue|Ginger|Okay... I was looking forward to our adventure, but maybe you're right...}}
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderSit (idName: 2941100) from Gust
+Remove behavior CommanderBubbleTag (idName: 2941111) from Ginger
+Gust stops standing still
+AREA TRIGGER DELETE || id: 941101
+AREA TRIGGER DELETE || id: 941105
+SCENEITEM DELETE || id: 69411 | itemType: 0
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8107
+Ginger stops standing still
+SUBMIT MISSION 1900410
+END MISSION 1900410
+END MISSION 1900411
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 941101
+CONDITIONS
+Always:
+ACTIONS
+Run mission One Night in Sandrock
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 941105
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 94119 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 0.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 0:00 (order: 0):
+CONDITIONS
+CHECK CURRENT SCENE || name: PlayerHome | flag: 1
+ACTIONS
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8107
+Remove behavior CommanderSit (idName: 2941100) from Gust
+Remove behavior CommanderBubbleTag (idName: 2941111) from Ginger
+FAIL MISSION || missionId: 1900410
+AREA TRIGGER DELETE || id: 941101
+AREA TRIGGER DELETE || id: 941105
+SCENEITEM DELETE || itemType: 0 | id: 69411
+Ginger stops standing still
+Gust stops standing still
+Remove behavior CommanderSit (idName: 2941100) from Gust
+END MISSION 1900411
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 0:00 (order: 0):
+CONDITIONS
+CHECK CURRENT SCENE || name: PlayerHome | flag: 0
+ACTIONS
+(cId 11) A conversation 20620 starts:
+{{dialogue|Ginger|''Player''... it's getting a bit late. Thank you for coming on a walk with me, but I think I'd better go back now. Good night!}}
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8107
+Remove behavior CommanderSit (idName: 2941100) from Gust
+Remove behavior CommanderBubbleTag (idName: 2941111) from Ginger
+Add behavior CommanderMoveToFlagAndAction (idName: 890411) to Ginger
+(param: TargetScene:Clinic|MoveMode:Walk|FlagName:Hd9409_A3|LookAtActor:8108)
+FAIL MISSION || missionId: 1900410
+AREA TRIGGER DELETE || id: 941101
+AREA TRIGGER DELETE || id: 941105
+SCENEITEM DELETE || itemType: 0 | id: 69411
+
+TRIGGER Procedure 3.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 890411) from Ginger
+Ginger stops standing still
+Gust stops standing still
+Remove behavior CommanderSit (idName: 2941100) from Gust
+END MISSION 1900411
+
+TRIGGER Procedure 4.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 94119 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: P9411_C0
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8107
+Ginger stands still in Main and looks at Player
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 94119 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 69411 | path: xl_Kjr9411Sound | sceneName: Main | flagName: Sound9411_A0 | extraParams: 0
+
+TRIGGER Procedure 4.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 94119 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 20) A conversation 20621, 20622 starts:
+{{dialogue|Ginger|''Player'', listen... there's music coming from the Blue Moon!}}
+{{dialogue|Ginger|Come on... let's go and see!}}
+
+TRIGGER Procedure 4.0 Step 3.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 20) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Ginger stops standing still
+Ginger stops standing still
+Remove behavior CommanderSit (idName: 2941100) from Gust
+Remove behavior CommanderBubbleTag (idName: 2941111) from Ginger
+Gust stops standing still
+SCENEITEM DELETE || id: 69411 | itemType: 0
+Run mission One Night in Sandrock
+CUTSCENE UI STATE EXIT || 
+AREA TRIGGER DELETE || id: 941101
+AREA TRIGGER DELETE || id: 941105
+END MISSION 1900411

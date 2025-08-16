@@ -1,0 +1,195 @@
+Reading Mission 1700112: Delivery Master
+
+<onlyinclude>{{Infobox mission
+|name = Delivery Master
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Delivery Master:
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 2538) that ends:
+{{dialogue|Arvio|These dyes are to be sent to Vivi's clothes shop Tailor Made on Main Street. I guess that Vivi has thought up a brand new style!}}
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Arvio's Goods of Default quality (Notify player)
+START MISSION 1700111
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700111
+CONDITIONS
+Always:
+ACTIONS
+Run mission Delivery Master
+END MISSION 1700111
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700112
+CONDITIONS
+Always:
+ACTIONS
+===Deliver to Vivi===
+
+{{mission_details
+|desc = Deliver to Vivi within 24 hrs.
+|details = Deliver to Vivi
+*{{i2|Arvio's Goods|0/1}}
+*{{i2|Vivi|0/1}}
+}}
+Set CD to 1
+MISSION TRACE NAVI NPC || isAdd: 1 | missionId: 1700111 | npc: 8039
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Vivi
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 615_0 starts:
+{{dialogue|Vivi|Ain't these my dyes from By the Stairs? But why you here deliverin' them!? I told that boy I can just walk over and get it myself. He wouldn't have any of it, said he'd come give it to me anyway.}}
+{{dialogue|Vivi|But I see he's a tricksy one, that Arvio, gettin' you to do it for him. Well, do this ol' gal a favor, tell him not to get others to do his lackey work!}}
+The conversation ends.
+BAG MODIFY BY TARGET || missionId: 1700111 | targetId: 1
+MISSION TRACE NAVI NPC || isAdd: 0 | missionId: 1700111 | npc: 8039
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Arvio===
+
+{{mission_details
+|desc = The goods have been delivered. Talk with Arvio.
+|details = Talk to Arvio
+}}
+Set global blackboard key deliveryforArvio with info 4.
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the first option in conversation segment 2542:
+{{dialogue|Arvio|I already think of you a real life superhero, so I've prepared an equally exceptional reward! Please accept... an exclusive discount at By the Stairs, valid for 7 days starting right now! Amazing isn't it?!}}
+
+*''Amazing!'' (No unique dialogue)
+*''Is that it?'' (No unique dialogue)
+*''It's my pleasure.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Arvio gains 5 favor
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the third option in conversation segment 2542:
+{{dialogue|Arvio|I already think of you a real life superhero, so I've prepared an equally exceptional reward! Please accept... an exclusive discount at By the Stairs, valid for 7 days starting right now! Amazing isn't it?!}}
+
+*''Amazing!'' (No unique dialogue)
+*''Is that it?'' (No unique dialogue)
+*''It's my pleasure.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Arvio gains 10 favor
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Arvio
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: deliveryforArvio | info: 4 | exist: 1
+ACTIONS
+(cId 2) A conversation 616_0 starts:
+{{dialogue|Arvio|Making you deliver stuff all alone is certainly laborious work! Even if you're tired of hearing it, I want to express my deep, sincere thanks! Oh! Can you guess what I've got you as a reward?}}
+{{dialogue|Arvio|I already think of you a real life superhero, so I've prepared an equally exceptional reward! Please accept... an exclusive discount at By the Stairs, valid for 7 days starting right now! Amazing isn't it?!}}
+
+*''Amazing!''
+*''Is that it?''
+*''It's my pleasure.''
+
+{{dialogue|Arvio|indent=true|answer=Amazing!
+|reward={{NPC2|Arvio|rp=5}}|Wow, we really are like two peas in a pod! Just remember, only the next seven days! So come and buy, buy, buy!}}
+{{dialogue|Arvio|indent=true|answer=Is that it?
+|I'm sorry you feel that way, I really thought you'd be satisfied, I pondered this for many sleepness nights before coming up with that delightful gift.}}
+{{dialogue|Arvio|indent=true|It's actually something I could genuinely provide... Well, I'll apply it as if you've accepted regardless.}}
+{{dialogue|Arvio|indent=true|answer=It's my pleasure.
+|reward={{NPC2|Arvio|rp=10}}|Oh, ''Player'', you're really too kind. But no, if I don't repay you, I'd be considered stingy, so I'll give you a handsome discount!}}
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: deliveryforArvio | info: 4 | exist: 1
+ACTIONS
+MODIFIER ADD || typeParam: StoreDiscount_3_-0.5_C | id: 10441
+SUBMIT MISSION 1700111
+ACTION SHOW CUSTOM IMAGE TIPS || preset: PriceRecovery | content: 80004168
+
+TRIGGER Procedure 1.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Decrement CD by 1
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: deliveryforArvio | info: 4 | exist: 0
+ACTIONS
+Set global blackboard key deliveryforArvio with info 0.
+BAG MODIFY BY TARGET || missionId: 1700111 | targetId: 1
+FAIL MISSION || missionId: 1700111
+MISSION TRACE NAVI NPC || isAdd: 0 | missionId: 1700111 | npc: 8039
+END MISSION 1700112
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment STORE by 1
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if STORE is >= 6
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: deliveryforArvio
+MODIFIER REMOVE || id: 10441
+END MISSION 1700112

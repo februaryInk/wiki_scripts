@@ -1,0 +1,209 @@
+Reading Mission 1200301: Another One Rides the Bus
+
+<onlyinclude>{{Infobox mission
+|name = Another One Rides the Bus
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Another One Rides the Bus:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200300
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|580}}
+DELIVER MISSION 1200300
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200300
+CONDITIONS
+Always:
+ACTIONS
+Run mission Another One Rides the Bus
+END MISSION 1200300
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200301
+CONDITIONS
+Always:
+ACTIONS
+===Construct Transportation Assets===
+
+{{mission_details
+|desc = You have received the diagrams, now construct the Notice Board and the Water Tank Bus on your Assembly Station.
+|details = Construct Transportation Assets
+*{{i2|Station Sign|0/1}}
+*{{i2|Water Tank Bus|0/1}}
+}}
+SCENEITEM CREATE FLAG || itemType: 0 | id: 23013 | sceneName: Main | path: Mission_Scene_City_BusStation_0 (1) | flagName: busstop_busstop1 | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200300 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Wei===
+
+{{mission_details
+|desc = Your bus and board are ready. Take them to Commissioner Wei.
+|details = Talk to Wei
+*{{i2|Water Tank Bus|0/1}}
+*{{i2|Wei|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Wei
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1200300 | targetId: 2 | canSubmit: 1
+ACTIONS
+BAG MODIFY BY TARGET || targetId: 2 | missionId: 1200300
+(cId 0) A conversation 11876 starts:
+{{dialogue|Wei|Thank you ''Player''! This is great. Gonna be a future workhorse for us. Appreciate the work!}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || path: Mission_Scene_City_BusStation_0 | itemType: 0 | id: 23014 | sceneName: Main | flagName: busstop_busstop1 | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+CHECK SCENEITEM EXIST || sceneItemType: 0 | id: 23014 | exist: 0
+CHECK SCENEITEM EXIST || sceneItemType: 12 | id: 23011 | exist: 0
+ACTIONS
+SCENEITEM CREATE FLAG || path: Mission_Scene_City_BusStation_0 | itemType: 0 | id: 23014 | sceneName: Main | flagName: busstop_busstop1 | extraParams: 0
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+At the beginning of the day:
+CONDITIONS
+CHECK SCENEITEM EXIST || sceneItemType: 0 | id: 23014 | exist: 1
+ACTIONS
+===Install Notice Board===
+
+{{mission_details
+|desc = Your Notice Board is ready. Go and install it where the Bus Station will be.
+|details = Install Notice Board
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 23011 | sceneName: Main | extraParams: Mission_CityObj_QiCheZhanTai_0|CreatorItem|19810004_1|1547|Fix|1.4 | flagName: busstop_busstop2 | path: Mission_hydroponic_empey
+SCENEITEM ADD ICON STACK || id: 23011 | itemType: 11 | add: 1 | missionId: 1200300 | iconType: 3
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+CHECK SCENEITEM EXIST || exist: 0 | id: 23014 | sceneItemType: 0
+ACTIONS
+===Wait for Bus Station Completion===
+
+{{mission_details
+|desc = Your work on the project is done. Time to hand things over to Heidi and her construction crew.
+|details = Wait for Bus Station Completion
+}}
+
+TRIGGER Procedure 2.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 23011
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 23011 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23011 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || id: 23014 | itemType: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 23012 | sceneName: Main | extraParams: 0 | path: Mission_Scene_City_BusStation_0 | flagName: busstop_busstop1
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: busstop_player
+Heidi stands still in Main
+Mi-an stands still in Main
+DELAY MASK SET || maskId: 23011 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 23011
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 23011) to Mi-an
+(param: CMDAction:Fix)
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 23011) from Mi-an
+Remove behavior CommanderMoveToFlagAndAction (idName: 23012) from Mi-an
+Heidi stops standing still
+Mi-an stops standing still
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1200300
+END MISSION 1200301
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8017 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 23015 | path: Mission_Scene_City_BusStation_0 (2) | sceneName: Main | flagName: busstop_busstop1 | extraParams: 0
+Add behavior CommanderMoveToFlagAndAction (idName: 23012) to Mi-an
+(param: TargetScene:Main|MoveMode:Run|FlagName:busstop_mian)
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8017 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 11877, 11878, 11879 starts:
+{{dialogue|Heidi|Lookin' good, Builders! This is gonna end up being one of the most used structures in Sandrock, I guarantee it!}}
+{{dialogue|Mi-an|I'm looking forward to it! Sandrock is finally on the up-up!}}
+{{dialogue|Heidi|You know it!}}

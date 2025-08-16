@@ -1,0 +1,156 @@
+Reading Mission 1200026: Recipe for Fun
+
+<onlyinclude>{{Infobox mission
+|name = Recipe for Fun
+|image =
+|description = The Church and Catori's Game Center are working together on something to try to cheer up the citizens of Sandrock.
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 2300
+|reputation = 40
+|gols = 800
+|npc1 = Catori
+|rp1 = 30
+|rewards = {{i2|Froggy Explorer Pants}|1}
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100002
+
+TRIGGER Procedure 3.0 Step 6.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Practice What You Preach is in state 3 with flag 0
+Practice What You Preach is in state 1 with flag 0
+ACTIONS
+Run mission Practice What You Preach
+
+TRIGGER Procedure 3.0 Step 7.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Practice What You Preach is successfully completed
+ACTIONS
+Run mission Recipe for Fun
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200026
+CONDITIONS
+Always:
+ACTIONS
+Matilda stands still in Guildhall
+The player receives a letter:
+{{mail|32}}
+DELIVER MISSION 1200026
+Catori stands still in Guildhall
+AREA TRIGGER CREATE || missionId: 1200026 | id: 20261 | sceneName: Main | flagName: trigger_guildhall | showOnMap: 1 | mapIcon: MissionArea | transId: 80001318
+NPC ADD TAG || tag: nosermons
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_guildhall
+ACTIONS
+Matilda stops standing still
+UNIQUE ACTION RUN || idStr: enter_guildhall
+Catori stops standing still
+Catori stands still in Guildhall
+Matilda stands still in Guildhall
+Matilda stops standing still
+AREA TRIGGER DELETE || id: 20261
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderSit (idName: 20271) to Matilda
+(param: SeatDramaName:GuildHallSeat01|TargetScene:Guildhall)
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Guildhall | flagName: huasha_player
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderSit (idName: 20271) from Matilda
+Catori stops standing still
+Unlock blueprint for Sandrunning Kiosk
+START MISSION 1200026
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8018 | behaviourName: CommanderSit | eventName: SitDownFinished
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 178_0 starts:
+{{dialogue|Matilda|''Player''! How are you?}}
+{{dialogue|Matilda|I take it you got our letter? My, that Burgess... That child went around to everyone in town to check up on their wellness; he has such a big heart.}}
+{{dialogue|Matilda|The results he came back with, I must say, were rather shocking: eighty percent of those who took the survey reported that they were at least suffering some form of anxiety! Some from the Geeglers, some from the state of things.}}
+{{dialogue|Matilda|So I got together with our resident expert in fun, Catori here, and-}}
+{{dialogue|Matilda|Well, Catori, why don't you tell our fine Builder friend here what we came up with?}}
+{{dialogue|Catori|It's my pleasure, Minister. I must thank you again for getting the Church to support this project.}}
+{{dialogue|Catori|See now, ''Player'', way I see it, the only cure to these psychological drudgery type have-you-do, how-do-you-dos is one word: entertainment!}}
+{{dialogue|Catori|Seeing as Gecko Station has recently become unoccupied, we now have the opportunity to turn a negative into a positive: I present to you Sandsledding! But we won't call it that, no, too simple: we'll call it "{{textcolor|green|Sandrunning}}!"}}
+{{dialogue|Catori|Sounds sleek and sophisticated, something the youth can identify with. Our tourism profits will quintuple overnight! And the mental health crisis, I assume... will also be resolved.}}
+{{dialogue|Matilda|This is where you come in, Builder. We need you to help us build up some of the things involved in creatin' such an attraction!}}
+{{dialogue|Catori|I've already explained our needs to Mi-an, she'll be making the Sandsleds. I need you to help us make the {{textcolor|green|Sign-in Table}}. Here is the diagram, I drew it up myself.}}
+{{dialogue|Catori|When you're done, please install them {{textcolor|green|north of the 'ol Geegler building}}.}}
+{{dialogue|Matilda|How lovely! I love it when a plan comes together. Looking forward to seeing what the two of you come up with!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 32
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1200026
+Set global blackboard key sandskiingmail with info 1.
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200026
+CONDITIONS
+Always:
+ACTIONS
+Run mission Recipe for Fun
+END MISSION 1200026
+
+==Rewards==
+{{mission reward
+|npc1 = Catori
+|rp1 = 30
+|exp = 2300
+|reputation = 40
+|gols = 800
+|rewards = {{i2|Froggy Explorer Pants}|1}
+}}
+==Post-conduct==
+
+If the player successfully completes the mission, some of the townsfolk will comment on it:
+
+{{dialogue|Catori|Between you and me, I'm actually kinda surprised Matilda supported this endeavor. I guess that's what makes her such a great leader. Here's hopin' we get a lot more opportunities like this!}}

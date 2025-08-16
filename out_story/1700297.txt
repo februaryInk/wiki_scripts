@@ -1,0 +1,384 @@
+Reading Mission 1700297: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200310
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1200311 is result 1 flag 1
+ACTIONS
+Run mission #1700298
+Set global blackboard key triallogan with info 1.
+Logan stops standing still
+Andy stops standing still
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Sandrock Strikes Back is successfully completed
+ACTIONS
+Run mission #1700297
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700297
+CONDITIONS
+Always:
+ACTIONS
+Set accept to 1
+AREA TRIGGER ONCE CREATE || missionId: 1700297 | id: 172971 | sceneName: Main | showOnMap: 1 | mapIcon: MissionArea | transId: -1 | flagName: DW_Danbi
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172970 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Dan-bi stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: DW_Player0
+DELAY MASK SET || maskId: 172970 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 172971
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 172971) to Dan-bi
+(param: CMDAction:Doubt|Delay:0.5)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 172972
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 172971) to Player
+(param: TargetScene:Main|FlagName:DW_Player)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 172971) from Dan-bi
+(cId -1) A conversation 3583_0 starts:
+{{dialogue|Dan-bi|Oh... ''Player''. Hello. Are you here to meet someone...?}}
+
+*''Is everything okay?''
+*''Rian isn't back yet...''
+*''No, just leaving, actually...'' (No unique dialogue)
+
+{{dialogue|Dan-bi|Ri-ri... He's... he's...}}
+{{dialogue|Dan-bi|He's been gone for a really long time! He seemed so bold, so packed full of pluck...! Oh... Who could have seen this coming...?}}
+
+*''He'll be alright.''
+*''Hope he makes it...''
+*''I think everyone saw this coming...''
+
+{{dialogue|Dan-bi|indent=true|answer=He'll be alright.
+|Waaah...!}}
+{{dialogue|Dan-bi|indent=true|Thanks for trying to help, but please... leave me to stand here, looking out into the distance longingly, yearning for that day where my Ri-ri steps onto the platform once more...!}}
+
+:*''I'm sure he'll be okay.'' (No unique dialogue)
+:*''(Thumbs up)'' (No unique dialogue)
+:*''(Nod)'' (No unique dialogue)
+
+{{dialogue|Dan-bi|indent=true|answer=Hope he makes it...
+|Waaah...!}}
+{{dialogue|Dan-bi|indent=true|Thanks for trying to help, but please... leave me to stand here, looking out into the distance longingly, yearning for that day where my Ri-ri steps onto the platform once more...!}}
+
+:*''I'm sure he'll be okay.'' (No unique dialogue)
+:*''(Thumbs up)'' (No unique dialogue)
+:*''(Nod)'' (No unique dialogue)
+
+{{dialogue|Dan-bi|indent=true|answer=I think everyone saw this coming...
+|Oh, what, because he's a little slow? ''Player'', how could you...?}}
+Dan-bi stops standing still
+Remove behavior CommanderMoveToFlag (idName: 172971) from Player
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if accept is == 1
+ACTIONS
+DELAY MASK SET || maskId: 172972 | delayTime: 2 | durationTime: 2 | changeType: 0 | curveIndex: -2
+Dan-bi stands still in Main
+
+TRIGGER Procedure 0.0 Step 0.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 172972) to Dan-bi
+(param: Action:Kiss|FlagName:DW_Danbi4|TargetScene:Main)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 172973 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if accept is == 0
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: notrain
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172972 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Dan-bi stops standing still
+Rian stands still in Main
+SCENEITEM CREATE FLAG || itemType: 0 | id: 172971 | sceneName: Main | extraParams: -1 | flagName: DW_Train | path: Mission_Carriage
+SCENEITEM CREATE FLAG || itemType: 0 | id: 172972 | path: Story_music_Traincome | sceneName: Main | flagName: YanLeave_Yan | extraParams: -1
+Dan-bi stands still in Main
+ACTOR FREEZ COLLIDER || npc: 8074 | freezeCollider: 1
+ACTOR FREEZ COLLIDER || npc: 8073 | freezeCollider: 1
+DELAY MASK SET || maskId: 172972 | delayTime: 10 | durationTime: 2 | changeType: 1 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172972 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 172971) to Dan-bi
+(param: MoveMode:Run|FlagName:DW_Danbi2|TargetScene:Main)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8074 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 11743, 11744, 11745, 11746, 11747, 11748, 11749, 11750, 11751, 11752, 11753, 11754, 11755 starts:
+{{dialogue|Dan-bi|Ri-ri! Oh, Ri-ri! Over here!}}
+{{dialogue|Rian|Babe!}}
+{{dialogue|Dan-bi|Oh, you made it! I was so worried about you!}}
+{{dialogue|Rian|I thought about you every day...}}
+{{dialogue|Dan-bi|What happened to you? Are you okay?}}
+{{dialogue|Rian|Yeah, I guess... it took me longer than I thought it would...}}
+{{dialogue|Dan-bi|Did you run into danger? Duvos spies!?}}
+{{dialogue|Rian|Danger? Well, not so much that specifically... I got to Highwind pretty quickly as it were. I got word out as soon as possible, but uh... well, the guys in Highwind didn't really believe me for a while... something about my look wasn't trustworthy?}}
+{{dialogue|Rian|By the time they checked the story with Alliance HQ, well, the battle was over already...}}
+{{dialogue|Dan-bi|Oh, it must have been such a tiring journey! You're so brave!}}
+{{dialogue|Rian|Well, I dunno about that... But I am ready to reclaim my role as a semi-reliable carpenter, and be the father to our child you always believed I could be!}}
+{{dialogue|Dan-bi|Oh, Ri-ri!}}
+{{dialogue|Rian|Kiss me, my love...!}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8074 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 11756, 3587_0 starts:
+{{dialogue|Dan-bi|Oh, ''Player''! You're here! Look, Ri-ri's back!}}
+{{dialogue|Rian|Hey, ''Player''. Heard you saved the town. I was gonna do that, too, but... guess you beat me to it... by a lot. Oh, well. Next time.}}
+
+*''Glad you made it.''
+*''We shouldn't have sent you...''
+*''How was Highwind?''
+*''Yep. See ya.''
+
+{{dialogue|Rian|indent=true|answer=Glad you made it.
+|Heh, come on. Like, was there ever any doubt?}}
+{{dialogue|Rian|indent=true|answer=We shouldn't have sent you...
+|Yeah. Probably.}}
+{{dialogue|Rian|indent=true|answer=How was Highwind?
+|Well, you know. It was a business trip. Didn't have much time to poke around. I guess it was also kinda hard to enjoy waiting on those slow guys... imagine wasting peoples' time like that? Like... c'mon... tch... geez!}}
+{{dialogue|Dan-bi|Come on, Ri-ri, let's go home!}}
+{{dialogue|Rian|Catch you later, ''Player''.}}
+The conversation ends.
+Remove behavior CommanderMoveToFlagAndAction (idName: 172971) from Dan-bi
+Dan-bi stops standing still
+Remove behavior CommanderPlayerAction (idName: 172971) from Player
+
+TRIGGER Procedure 0.0 Step 0.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172973 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: notrain
+SCENEITEM DELETE || itemType: 0 | id: 172971
+Rian stops standing still
+Dan-bi stops standing still
+Remove behavior CommanderNPCAction (idName: 172972) from Rian
+Remove behavior CommanderMoveToFlagAndAction (idName: 172972) from Dan-bi
+Add behavior CommanderMoveToFlag (idName: 172972) to Dan-bi
+(param: TargetScene:DRHome|FlagName:Interact_danbisdesk)
+ACTION ACTOR ADD FOLLOWER || mActor: 8074 | tActor: 8073 | state: Defense
+END LOCK NPC ORDER MISSION || npc: 8073
+SCENEITEM CREATE FLAG || itemType: 0 | id: 172973 | path: Story_music_Yanleave | sceneName: Main | flagName: YanLeave_Yan | extraParams: -1
+DELAY MASK SET || maskId: 172973 | delayTime: 5 | durationTime: 1 | changeType: 1 | curveIndex: -2
+ACTOR FREEZ COLLIDER || npc: 8074 | freezeCollider: 0
+ACTOR FREEZ COLLIDER || npc: 8073 | freezeCollider: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the third option in conversation segment 11742:
+{{dialogue|Dan-bi|Thanks for trying to help, but please... leave me to stand here, looking out into the distance longingly, yearning for that day where my Ri-ri steps onto the platform once more...!}}
+
+*''I'm sure he'll be okay.'' (No unique dialogue)
+*''(Thumbs up)'' (No unique dialogue)
+*''(Nod)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 172971) to Player
+(param: CMDAction:Nod_Story)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 11742:
+{{dialogue|Dan-bi|Thanks for trying to help, but please... leave me to stand here, looking out into the distance longingly, yearning for that day where my Ri-ri steps onto the platform once more...!}}
+
+*''I'm sure he'll be okay.'' (No unique dialogue)
+*''(Thumbs up)'' (No unique dialogue)
+*''(Nod)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 172971) to Player
+(param: CMDAction:ThumbsUp)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8074 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 172972) from Dan-bi
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8074 | tActor: 8073
+END MISSION 1700297
+
+TRIGGER Procedure 0.0 Step 0.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if accept is == 0
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: notrain
+Dan-bi stops standing still
+Rian stands still in Main
+Rian stops standing still
+The player receives a letter:
+{{mail|748}}
+END MISSION 1700297
+
+TRIGGER Procedure 0.0 Step 0.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172973 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 172973
+SCENEITEM DELETE || itemType: 0 | id: 172972
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8074 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 172972) to Rian
+(param: CMDAction:Kiss)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the third option in conversation segment 11737:
+{{dialogue|Dan-bi|Oh... ''Player''. Hello. Are you here to meet someone...?}}
+
+*''Is everything okay?'' (No unique dialogue)
+*''Rian isn't back yet...'' (No unique dialogue)
+*''No, just leaving, actually...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set accept to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 172971
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 172970 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700298
+CONDITIONS
+Always:
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: notrain
+Dan-bi stops standing still
+Rian stands still in Main
+Rian stops standing still
+The player receives a letter:
+{{mail|748}}
+END MISSION 1700297

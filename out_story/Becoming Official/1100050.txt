@@ -1,0 +1,190 @@
+Reading Mission 1100050: Becoming Official
+
+<onlyinclude>{{Infobox mission
+|name = Becoming Official
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Becoming Official:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100049
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1100049
+START MISSION 1100049
+ACTION MISSION TRACE 1100049
+Run mission Combat Training
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1100049
+CONDITIONS
+Always:
+ACTIONS
+Run mission Becoming Official
+END MISSION 1100049
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100050
+CONDITIONS
+Always:
+ACTIONS
+===Register Workshop===
+
+{{mission_details
+|desc = Go to {{textcolor|green|City Hall to find Matilda}}, she can help you officially register your workshop in Sandrock.
+|details = Register Workshop
+}}
+Set SCENECHANGE to 0
+Matilda stands still in Guildhall
+Set NOPK to 0
+Set PK to 0
+Set OVER to 0
+Set dodge to 0
+Set CG to 0
+
+TRIGGER Procedure 0.0 Step 8.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Matilda stands still in Guildhall
+PLAYER SET POS ROT FLAG || sceneName: Guildhall | flagName: register_player0
+FINISH FIND NPC || npc: 8018 | missionId: 1100049 | targetId: 0
+
+TRIGGER Procedure 0.0 Step 8.1 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || sec: 1 | id: 20501
+Matilda stops standing still
+
+TRIGGER Procedure 0.0 Step 8.15 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 20501
+CONDITIONS
+Always:
+ACTIONS
+Matilda stops standing still
+Add behavior CommanderNPCAction (idName: 20504) to Matilda
+(param: CMDAction:TurnBack)
+
+TRIGGER Procedure 0.0 Step 8.2 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR END || order: 0 | npc: 8018 | idName: 20504 | behaviourName: CommanderNPCAction
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 20505) to Matilda
+(param: CMDAction:Hi)
+
+TRIGGER Procedure 0.0 Step 8.4 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver | npc: 8018
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 460, 463 starts:
+{{dialogue|Matilda|Why, hello there! You must be ''Player''! I'm Minister Matilda from the Church of the Light, filling in for Mayor Trudy. We're so excited to see you getting started as a Builder here in Sandrock!}}
+{{dialogue|Matilda|If you're here, well that means you must've passed Yan's little audition and you're ready to register your workshop! All you have to do is fill in the name of your Workshop and we're all set.}}
+
+TRIGGER Procedure 0.0 Step 8.4 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR END || order: 0 | npc: 8018 | idName: 20505 | behaviourName: CommanderNPCAction
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 20503) to Matilda
+(param: TargetScene:Guildhall|MoveMode:Walk|FlagName:register_matilda2)
+
+TRIGGER Procedure 0.0 Step 9.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+EDIT HOME NAME || 
+Set OVER to 2
+
+TRIGGER Procedure 0.1 Step 8.3 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | behaviourName: CommanderNPCAction | eventName: NPCActionOver | npc: 8018
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 20504) to Player
+(param: TargetScene:Guildhall|MoveMode:Walk|FlagName:register_player1)
+
+TRIGGER Procedure 1.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON HOME NAME EDIT END || order: 0
+CONDITIONS
+Check if OVER is == 2
+ACTIONS
+(cId 10) A conversation 464, 465, 788, 789, 869 starts:
+{{dialogue|Matilda|That'll do it! If you ever want to change your Workshop name again, you can buy a {{textcolor|green|Rename Card}} from the City Hall store.}}
+{{dialogue|Matilda|Congratulations, Builder! Your workshop is officially open for business in Sandrock! Whenever you're ready, you can start taking commissions from the Commission Board {{textcolor|green|inside the Commerce Guild}}.}}
+{{dialogue|Matilda|Now, I'm not exactly known around these parts for my arithmetic, but I do reckon we can expect a lot from two Builders as opposed to just ole Mason by his lonesome! Work hard, then you'll have plenty of pocket money for yourself, too, don't you know?}}
+{{dialogue|Matilda|Hm... I daresay this calls for a celebration! Normally we have {{textcolor|green|Fireside Meetings}} on Sunday nights but I reckon I'll just round everyone up tomorrow to proper welcome you new Builders; oh and you must come, it wouldn't be the same without you!}}
+{{dialogue|Matilda|See you then, and congratulations again, Builder! May you bring telesis to Sandrock.}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Builder License of Outstanding quality (Notify player)
+Remove behavior CommanderMoveToFlag (idName: 20504) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 20503) from Matilda
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1100049
+Run mission First Day on the Job
+ACTION MISSION TRACE 1100089
+Remove behavior CommanderNPCAction (idName: 20504) from Matilda
+Remove behavior CommanderNPCAction (idName: 20505) from Matilda
+END MISSION 1100050
+
+TRIGGER Procedure 1.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_temple
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_guildhall
+Set SCENECHANGE to 1

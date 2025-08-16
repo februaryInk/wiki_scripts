@@ -1,0 +1,155 @@
+Reading Mission 1200015: Qi's Gungam Opus
+
+<onlyinclude>{{Infobox mission
+|name = Qi's Gungam Opus
+|image =
+|description = Director Qi has come up with something to help speed up the construction of the bridge, what could it be?
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 600
+|reputation = 25
+|gols = 800
+|npc1 = Qi
+|rp1 = 30
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100002
+
+TRIGGER Procedure 2.0 Step 12.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: hengjiaover | info: 1 | exist: 1
+ACTIONS
+END MISSION 1200038
+Run mission #1100063
+Run mission Paradise Lost and Found
+GLOBAL BLACK BOARD REMOVE || key: hengjiaover
+Run mission Keep on Rockin'
+
+TRIGGER Procedure 2.0 Step 13.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: 1200012over | info: 1 | exist: 1
+ACTIONS
+Run mission Qi's Gungam Opus
+GLOBAL BLACK BOARD REMOVE || key: 1200012over
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200015
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1200015
+The player receives a letter:
+{{mail|29}}
+Qi stands still in Science
+Heidi stands still in Science
+Set global blackboard key acceptrobot with info 2.
+NPC REMOVE TAG || tag: research47
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Science:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_science
+ACTIONS
+Qi stops standing still
+Heidi stops standing still
+UNIQUE ACTION RUN || idStr: enter_science
+Qi stands still in Science
+Heidi stands still in Science
+AREA TRIGGER DELETE || id: 20151
+Set SCENECHANGE to 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Science:
+CONDITIONS
+Check if SCENECHANGE is == 1
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Science | flagName: robot_player
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Qi stops standing still
+Heidi stops standing still
+AUTOSAVE TRY || 
+Unlock blueprint for R-47 Mobile Suit
+START MISSION 1200015
+
+TRIGGER Procedure 0.0 Step 4.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200015
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1200011
+END MISSION 1200012
+ACTION MISSION TRACE 1200015
+Run mission Qi's Gungam Opus
+END MISSION 1200015
+
+TRIGGER Procedure 1.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Science:
+CONDITIONS
+Check if SCENECHANGE is == 1
+ACTIONS
+(cId 0) A conversation 148_0 starts:
+{{dialogue|Qi|Welcome. I have something very exciting to show you today.}}
+{{dialogue|Qi|Using the R47 Power Core Ultra, I was able to channel upwards of ten giga-joules per second of energy out of Condensed Power Stones without encountering any significant losses in efficiency.}}
+{{dialogue|Qi|The amplitude and frequencies of vibrations at higher joule inputs seem to be minimalized by an advanced internal stabilizer in the compression chamber, averting electro-thermal heat displacement. It's literally bending the law of thermodynamics!}}
+{{dialogue|Heidi|Why are we here?}}
+{{dialogue|Qi|I've designed a {{textcolor|green|power suit}} running on the R47 Power Core Ultra! It'll greatly enhance the speed at which we can rebuild the bridge.}}
+{{dialogue|Qi|It's a design I came up with at Vega 5, but I never believed we'd actually find the energy output to put it into practice. My inspiration for it comes from something very obscure. Something you two never would've heard of.}}
+{{dialogue|Heidi|Isn't this one of the robots from that Old World entertainment show, what was it? Gungams?}}
+{{dialogue|Qi|Erm, must be a bizarre coincidence, I've never seen anything like that! Why would I be watching some random, obscure Old World entertainment show?}}
+{{dialogue|Heidi|In any case, this will be very useful. I was planning on using cranes, but with this, we can save a lot on the budget! Good job, Director.}}
+{{dialogue|Qi|If I ever get my hands on any other R57 Cores, I'll be able to manifest even more superior designs! Ahem, here's the diagram for it.}}
+{{dialogue|Heidi|I mean, it looks exactly like one of the Gungam robots...}}
+{{dialogue|Qi|And look at the time! We all have a lot of work to do, so l'll bid you both good day.}}
+{{dialogue|Heidi|Fine. ''Player'', when you're done with this Gungam mobile suit, give it to me. We should have the budget for it.}}
+{{dialogue|Qi|I heard that!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 29
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1200015
+Set global blackboard key acceptrobot with info 1.
+
+==Rewards==
+{{mission reward
+|npc1 = Qi
+|rp1 = 30
+|exp = 600
+|reputation = 25
+|gols = 800
+}}

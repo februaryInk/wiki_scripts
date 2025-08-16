@@ -1,0 +1,286 @@
+Reading Mission 1200044: The Inspector
+
+<onlyinclude>{{Infobox mission
+|name = The Inspector
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from The Inspector:
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+GROUP 0:
+START MISSION 1200043
+CUTSCENE UI STATE EXIT || 
+
+GROUP 1:
+
+GROUP 2:
+
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200043
+CONDITIONS
+Always:
+ACTIONS
+Mint stops standing still
+Remove behavior CommanderIdle (idName: 124311) from Player
+Run mission The Inspector
+END MISSION 1200043
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200044
+CONDITIONS
+Always:
+ACTIONS
+===Go to City Hall===
+
+{{mission_details
+|desc = Bring the inspection engineer to City Hall
+|details = Go to City Hall
+}}
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8045 | state: Defense
+Set scenechange to 0
+Set CG to 0
+Set part to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+Check if scenechange is == 0
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8045
+Set scenechange to 1
+Set CG to 1
+Qi stands still in Guildhall and looks at Mint
+Matilda stands still in Guildhall and looks at Mint
+Mint stands still in Guildhall and looks at Qi
+Add behavior CommanderIdle (idName: 124411) to Player
+(param: LookAtActor:8007|TranslateFlagScene:Guildhall|TranslateFlagPos:1244_G1_Player_1)
+
+TRIGGER Procedure 0.0 Step 1.5 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+Check if scenechange is == 1
+ACTIONS
+{{cutscene|id = 1191}}
+A cutscene CG_MINTMEETQI (duration: 0.0) starts playing
+Small World - When taking Mint to City Hall, Qi happened to be there explaining one of his ideas to Matilda. Even stranger, it turned out that Qi and Mint were actually childhood friends, and were very excited to take the chance to catch up.
+PLAYER SET POS ROT FLAG || sceneName: Guildhall | flagName: mint_player
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_MINTMEETQI | state: 9
+CONDITIONS
+Check if scenechange is == 1
+Check if CG is == 1
+ACTIONS
+Qi stops standing still
+Mint stops standing still
+Matilda stops standing still
+Remove behavior CommanderIdle (idName: 124411) from Player
+Add behavior CommanderMoveToFlagAndAction (idName: 124412) to Qi
+(param: TargetScene:Guildhall|MoveMode:Run|FlagName:1244_G1_8007_2|LookAtActor:8045|Delay:1.5)
+Add behavior CommanderMoveToFlagAndAction (idName: 124412) to Matilda
+(param: TargetScene:Guildhall|MoveMode:Walk|FlagName:1244_G1_8018_2|LookAtActor:8045|Delay:0.5)
+Add behavior CommanderMoveToFlagAndAction (idName: 124412) to Mint
+(param: TargetScene:Guildhall|MoveMode:Walk|FlagName:1244_G1_8045_2|LookAtActor:8007)
+Add behavior CommanderMoveToFlagAndAction (idName: 124412) to Player
+(param: TargetScene:Guildhall|MoveMode:Walk|FlagName:1244_G1_Player_2|LookAtActor:8007|Delay:0.5)
+
+TRIGGER Procedure 0.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8007 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+The Inspector is in state 3 with flag 0
+ACTIONS
+STOPWATCH REAL TIME SET || id: 124412 | sec: 2
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8018 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 1316, 1317, 1318, 1319, 1320, 1321, 1322, 1323, 1324, 1325, 1326, 1327, 1328, 1191, 1192, 1193, 1329 starts:
+{{dialogue|Matilda|Well, hello. It seems the two of y'all are familiar...?}}
+{{dialogue|Qi|Indubitably. This is Sleepyhe- er, Mint. We grew up together.}}
+{{dialogue|Qi|Mint, you are here on behalf of the Ataran government, I presume?}}
+{{dialogue|Mint|Yeah, that's right! I've been working as an engineer around the Free Cities. They've sent me here to make sure your bridge is good to go.}}
+{{dialogue|Mint|Nice to meet you, Mayor Trudy. I'm Mint!}}
+{{dialogue|Matilda|Pleased to make your acquaintance as well, Mr. Mint. I'm afraid Mayor Trudy is out at the moment, I'm Minister Matilda, I'll be taking over for her until she gets back.}}
+{{dialogue|Matilda|I hadn't expected your arrival so soon, Mint. We may need to continue this discussion a bit later...}}
+{{dialogue|Matilda|I must say, though, what a coincidence! The Director's childhood companion waltzin' in to inspect the bridge he toiled so hard on- And we here at Sandrock do appreciate the good doctor's work, don't we, ''Player''?}}
+{{dialogue|Qi|Actually I wasn't finished talking about my robot, but nevermind that. Speaking of inspection... Sleepyhead, did you bring your inspection equipment?}}
+{{dialogue|Mint|Ah! I... didn't...}}
+{{dialogue|Qi|I knew it. Never change, Mint. Do you know what you need?}}
+{{dialogue|Mint|Yeah, I need a {{textcolor|green|Magneto Inductive Inspector}} to test the stress.}}
+{{dialogue|Qi|Alright, I've got it. ''Player'', can you help? I'll {{textcolor|green|draw up a diagram for Mint's missing equipment}} and send it to you. Please check your mailbox tomorrow and build it for us as soon as possible.}}
+{{dialogue|Mint|Thanks. Well, if you're not ready for me, Minister, I could maybe use a rest. It's been over ten minutes since my last nap! So, where is the local hotel here...?}}
+{{dialogue|Qi|Hotel? Nonsense. You will be staying with me. I am certain you will find my Research Center far more hospitable than that old milk shack...}}
+{{dialogue|Mint|Er- well, okay!}}
+{{dialogue|Matilda|Ah, hah... well, ''Player'', let's not get in the way of these two peas in a pod; looks like they have a lot of catching up to do! So long!}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+GROUP 0:
+STOPWATCH REAL TIME SET || id: 120044 | sec: 5
+Add behavior CommanderMoveToFlag (idName: 20442) to Qi
+(param: TargetScene:Science|MoveMode:Walk|FlagName:robot_qi)
+Remove behavior CommanderMoveToFlagAndAction (idName: 124412) from Mint
+Remove behavior CommanderMoveToFlagAndAction (idName: 124412) from Qi
+Remove behavior CommanderMoveToFlagAndAction (idName: 124412) from Matilda
+Remove behavior CommanderMoveToFlagAndAction (idName: 124412) from Player
+CUTSCENE UI STATE EXIT || 
+Run mission Mint Condition
+Add tag "IsTeamFollow" to Mint
+Add behavior Npc_Follow (idName: 120441) to Mint
+(param: EGFollowID:8007|EGFollowTeam:True)
+SUBMIT MISSION 1200043
+
+GROUP 1:
+
+GROUP 2:
+
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+The Inspector is successfully completed
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: notrain
+Remove behavior CommanderMoveToFlag (idName: 20442) from Qi
+ACTION NPC REMOVE TAG || npc: 8045 | tag: IsTeamFollow
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8007 | tActor: 8045
+Set part to 1
+Set global blackboard key con4mintcome with info 1.
+Townsfolk respond to the event:
+
+{{dialogue|Amirah|That engineer boy from Vega 5 seems quite educated. In fact, most people from Vega 5 I meet seem educated. Perhaps we ought to adopt some of their policies around here...}}
+
+{{dialogue|Arvio|That person sent from Atara didn't have his bridge inspection device on him; I knew I should've kept one of those in stock!}}
+
+{{dialogue|Burgess|I heard the bridge you worked on is getting inspected soon. How exciting! I can't think of anything more fun than an inspection! Other than... ooh... how about a survey...?}}
+
+{{dialogue|Catori|That inspector kid fell asleep while playing one of my games! Maybe I need to spruce the place up a bit or somethin'...}}
+
+{{dialogue|Cooper|Used to be you didn't need inspectors for everything. You'd just trust the job got done! 'Course... a lot of structures fell down those days but... that's the way we liked it!}}
+
+{{dialogue|Dan-bi|I thought the bridge was ready, but it seems that the Alliance need to approve it? Urgh, there's always something! It's like when a sandstorm comes right before harvesting your Sandrice. You can only watch from home, just anxious, hoping it'll work!}}
+
+{{dialogue|Ernest|I seem to have heard the name Mint somewhere... Some Vega 5 journal, perhaps? I can't seem to recall.}}
+
+{{dialogue|Grace|I overheard a conversation with Qi and the sleepy engineer; I guess they were both into Old World entertainment shows growing up- I couldn't follow what they were talking about at all...}}
+
+{{dialogue|Heidi|I got a good look at the bridge; you and Mi-an did great! It's exactly as I imagined it. Maybe even bridge-ier. I'm sure it'll pass inspection!}}
+
+{{dialogue|Hugo|I can tell how tough anything is just by lookin' at it! Why didn't they just get me to do the bridge inspection?}}
+
+{{dialogue|Jensen|I hope that sleepy kid hurries up with his bridge inspection! My trains are itching to get back on track!}}
+
+{{dialogue|Justice|Fightin' monsters, savin' heedless narcoleptics... Yep, there's always somethin' to do around here.}}
+
+{{dialogue|Krystal|I heard someone fell off the train!? Ah, so some bozo fell asleep at the station? I swear, this is exactly how these stupid rumors start. One person hears somethin', and bam, compeltely different story. Gotta be careful, eh Builda?}}
+
+{{dialogue|Matilda|I had heard the engineer hired by Atara would be arriving quickly, but I didn't think he would be here so soon! I must say I feel a bit embarassed not having anyone meet him at the train station, but... well, y'all took good care of him...}}
+
+{{dialogue|Mi-an|If Mint falls asleep while you're talking to him, don't take it personally. I think that's just kind of his 'thing.'}}
+
+{{dialogue|Miguel|I heard you found that inspector boy endangering himself at the train station... are we sure that's the person we want examining our bridge?}}
+
+{{dialogue|Mort|I've noticed an unfamiliar fellow following our Director Qi around; is he a new Builder? Ah? Here to inspect the bridge. I see. Well he seems a fine chap.}}
+
+{{dialogue|Owen|Turns out Mint, the engineer sent by Atara, and Director Qi were old childhood pals! How wild is that? 'Course, if you never move out of your hometown like me, you never lose touch with anybody!}}
+
+{{dialogue|Pablo|I talked to that engineer a bit; he's very well travelled. You'd think he would have lots of insight to offer on the world outside of Sandrock... yeah, you'd think that...}}
+
+{{dialogue|Pen|Here's a better way of testing a bridge's strength: just let me punch it! If it breaks, it wasn't sturdy enough! Then you can build a better one. Think about it.}}
+
+{{dialogue|Qi|Sleepyhead is still the same person I remember from childhood. Not like me, I used to be so aloof.}}
+
+{{dialogue|Rian|I talked to that Mint dude the other day. Well, like, I think I did. I was chillin' with him for a bit, but he didn't really say anything. Now I think of it, it sounded like he was snoring or something...}}
+
+{{dialogue|Rocky|That Mint kid reminds me of a young me. You know, I thought about bein' an engineer. Never could wrap my head around differential equations, though. Wait, did I say differential equations? I meant... the multiplication table.}}
+
+{{dialogue|Unsuur|The inspector who came to town has an incredible talent: he can fall asleep instantly whenever he wants. I wish I could do that.}}
+
+{{dialogue|Vivi|I'm a bit miffed they feel the need to inspect our bridge; don't they know who my granddaughter is? Hmph. I suppose rules are rules...}}
+
+{{dialogue|Yan|You and Mi-an could learn a thing or two from that Ataran engineer! Huh? He sleeps on the job? Er- like I said, you could learn not to follow his example... of sleepin' on the job! Back to it, then!}}
+
+{{dialogue|Zeke|Some people are amazed Qi ran into an old childhood friend; I'm amazed... he has a friend.}}
+
+Remove behavior Npc_Follow (idName: 120441) from Mint
+Remove behavior Story1200043_8045_1 (idName: 20443) from Mint
+Remove behavior Story1200043_8007_1 (idName: 20443) from Qi
+END MISSION 1200044
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1200044
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 20441
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8045
+Mint stands still in Science
+Mint stops standing still
+ACTION NPC REMOVE TAG || npc: 8045 | tag: IsTeamFollow
+Set global blackboard key mintcomefail with info 1.
+GLOBAL BLACK BOARD REMOVE || key: notrain
+Run mission Mint Condition
+Remove behavior Story1200043_8007_1 (idName: 20443) from Qi
+Remove behavior Story1200043_8045_1 (idName: 20443) from Mint
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8007 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+ACTION NPC REMOVE TAG || npc: 8045 | tag: IsTeamFollow
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8007 | tActor: 8045
+Remove behavior CommanderMoveToFlag (idName: 20442) from Qi
+Add behavior Story1200043_8007_1 (idName: 20443) to Qi
+(param: -1)
+Add behavior Story1200043_8045_1 (idName: 20443) to Mint
+(param: -1)

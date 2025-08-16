@@ -1,0 +1,484 @@
+Reading Mission 1200309: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1700314
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173140 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Clinic | flagName: GKA_Player
+DELAY MASK SET || maskId: 173140 | delayTime: 2 | durationTime: 2 | changeType: 1 | curveIndex: -2
+ACTION NPC RENAME || npc: 8097 | nameTransId: 80018460
+CUTSCENE UI STATE EXIT || 
+Justice stops standing still
+AREA TRIGGER ONCE CREATE || missionId: 1700314 | id: 73141 | sceneName: Main | flagName: kidintown9_trigger1 | showOnMap: 1 | mapIcon: MissionArea | transId: 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173141 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 173143) from Fang
+GLOBAL BLACK BOARD REMOVE || key: NoCutSceneObstacle
+Trudy stops standing still
+Qi stops standing still
+Justice stops standing still
+Logan stops standing still
+Larry stops standing still
+Fang stops standing still
+Fang stands still in Clinic
+Qi stands still in Clinic
+AREA TRIGGER ONCE CREATE || missionId: 1700314 | id: 173141 | sceneName: Clinic | flagName: GKA_Fang2 | showOnMap: 0 | mapIcon: MissionAreaBranch | transId: 0
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 173141) from Trudy
+Remove behavior CommanderMoveToFlagAndAction (idName: 173141) from Qi
+Remove behavior CommanderMoveToFlagAndAction (idName: 173141) from Logan
+Justice stops standing still
+Remove behavior Story1700314 (idName: 173141) from Larry
+Remove behavior CommanderMoveToFlagAndAction (idName: 173141) from Fang
+Remove behavior CommanderNPCAction (idName: 173142) from Fang
+Remove behavior CommanderMoveToFlagAndAction (idName: 173142) from Fang
+Logan stands still in Clinic
+Justice stands still in Clinic
+Trudy stands still in Clinic
+Run mission #1200309
+DELAY MASK SET || maskId: 173141 | delayTime: 1.5 | durationTime: 2 | changeType: 1 | curveIndex: -2
+GLOBAL BLACK BOARD REMOVE || key: 1700314
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200309
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER ONCE CREATE || missionId: 1200309 | id: 23091 | sceneName: Clinic | flagName: testlarry_clinic_trigger | showOnMap: 1 | mapIcon: MissionArea | transId: 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 23091
+CONDITIONS
+Always:
+ACTIONS
+Logan stops standing still
+Justice stops standing still
+Trudy stops standing still
+Logan stands still in Clinic
+Justice stands still in Clinic
+Trudy stands still in Clinic
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderMoveToFlag (idName: 23091) to Player
+(param: TargetScene:Clinic|MoveMode:Run|FlagName:testlarry_clinic_player1)
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 3731_0 starts:
+{{dialogue|Justice|Trudy, I don't wanna be rude, but... why are we helpin' him? What if he's up to no good and started makin' trouble in the neighborhood? We just had it up to here with Duvos...}}
+{{dialogue|Trudy|I know, Justice. And you're right. But we just can't throw out an injured like that, human or not. We'll keep a close eye on him. If something goes wrong, I'll take full responsibility.}}
+{{dialogue|Justice|All right, your call.}}
+{{dialogue|Logan|C'mon, Justice, jus' give it a chance. A trial run.}}
+{{dialogue|Justice|You too?! I thought you'd be first with the pitchfork!}}
+{{dialogue|Logan|Hey, ya'll gave me a second chance, didn't ya?}}
+The conversation ends.
+Remove behavior CommanderMoveToFlag (idName: 23091) from Player
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Justice|Well...}}
+STOPWATCH REAL TIME SET || id: 23091 | sec: 3
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 23091
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 12294, 3733_0 starts:
+{{dialogue|Trudy|I'm going to get Burgess to do a psychiatric test on Larry, just to be sure. Leave this to me and ''Player'', Justice. You and Logan have too much history with him.}}
+{{dialogue|Trudy|So, how about it ''Player'', want to help me give a little test to Larry?}}
+
+*''No problem!''
+*''Sorry, I have too much on my plate.''
+
+{{dialogue|Trudy|indent=true|answer=No problem!
+|Great! I'll go get Burgess.}}
+{{dialogue|Trudy|indent=true|answer=Sorry, I have too much on my plate.
+|Fine... I understand. Let me know if you have some time.}}
+Set CHOICE to 1
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+NPC ICON ADD || missionId: 1200309 | npc: 8006 | missionIcon: 1
+Logan stops standing still
+Justice stops standing still
+Trudy stops standing still
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 0
+ACTIONS
+DELAY MASK SET || maskId: 23091 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 12295:
+{{dialogue|Trudy|So, how about it ''Player'', want to help me give a little test to Larry?}}
+
+*''No problem!'' (No unique dialogue)
+*''Sorry, I have too much on my plate.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 0
+NPC ICON REMOVE || missionId: 1200309 | npc: 8006 | missionIcon: 1
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Trudy
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+(cId 1) A conversation 3733_0 starts:
+{{dialogue|Trudy|So, how about it ''Player'', want to help me give a little test to Larry?}}
+
+*''No problem!''
+*''Sorry, I have too much on my plate.''
+
+{{dialogue|Trudy|indent=true|answer=No problem!
+|Great! I'll go get Burgess.}}
+{{dialogue|Trudy|indent=true|answer=Sorry, I have too much on my plate.
+|Fine... I understand. Let me know if you have some time.}}
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23091 | eventType: 2
+CONDITIONS
+CHECK CURRENT SCENE || name: Clinic | flag: 0
+ACTIONS
+Justice stops standing still
+Logan stops standing still
+Trudy stops standing still
+CUTSCENE UI STATE EXIT || 
+PLAYER SET POS ROT FLAG || sceneName: Clinic | flagName: weirdnoise_clinic_player
+DELAY MASK SET || maskId: 23091 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+AREA TRIGGER CREATE || missionId: 1200309 | id: 23091 | sceneName: Main | flagName: kidintown9_trigger1 | showOnMap: 1 | mapIcon: MissionArea | transId: 0
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23091 | eventType: 2
+CONDITIONS
+CHECK CURRENT SCENE || name: Clinic | flag: 1
+ACTIONS
+Justice stops standing still
+Logan stops standing still
+Trudy stops standing still
+PLAYER SET POS ROT FLAG || sceneName: Clinic | flagName: testlarry_clinic_player2
+DELAY MASK SET || maskId: 23091 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Fang stands still in Clinic
+X stands still in Clinic
+Burgess stands still in Clinic
+Trudy stands still in Clinic
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Clinic:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_clinic
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_clinic
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 23091
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+Burgess stands still in Clinic
+Trudy stands still in Clinic
+Fang stands still in Clinic
+X stands still in Clinic
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 12298, 12299, 12300 starts:
+{{dialogue|Trudy|Burgess, this is Larry! He's the one that needs to take your test. He speaks our language.}}
+{{dialogue|Burgess|Uh, nice to meet you Mister Geegler Larry! I'll be administering the "Roaring Sand Shark Test!" I'll show you some pictures, you tell me what you feel!}}
+{{dialogue|Trudy|Okay, well, ''Player'', Larry, why don't you two take it together? ''Player'' can be the control group.}}
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 23091) to Player
+(param: CMDAction:Nod_Story)
+
+TRIGGER Procedure 3.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23091 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 12298, 12299, 12300 starts:
+{{dialogue|Trudy|Burgess, this is Larry! He's the one that needs to take your test. He speaks our language.}}
+{{dialogue|Burgess|Uh, nice to meet you Mister Geegler Larry! I'll be administering the "Roaring Sand Shark Test!" I'll show you some pictures, you tell me what you feel!}}
+{{dialogue|Trudy|Okay, well, ''Player'', Larry, why don't you two take it together? ''Player'' can be the control group.}}
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderPlayerAction (idName: 23091) from Player
+(cId 3) A conversation 3736_0 starts:
+{{dialogue|Player|(What should I say?)}}
+
+*''Serenity.'' (No unique dialogue)
+*''A human child.'' (No unique dialogue)
+*''Loneliness...'' (No unique dialogue)
+
+{{dialogue|Larry|I see... A human child... Yes...}}
+{{dialogue|Burgess|Nothing else? No... happy feelings? Well, Larry, that's number two.}}
+{{dialogue|Burgess|Next picture.}}
+{{dialogue|Player|(What should I say?)}}
+
+*''Heroism!'' (No unique dialogue)
+*''War.'' (No unique dialogue)
+*''Futility...'' (No unique dialogue)
+
+{{dialogue|Larry|The Holy Book says "acts of undue violence will be met with severe punishment, not limited to on the spot firing" from a cannon into the sun.}}
+{{dialogue|Burgess|Wow, I agree with the first part! Not so much about the cannon, though...}}
+
+*''Yeah! Let's just take that "no violence" bit.''
+*''The "Holy Book" said that?''
+
+{{dialogue|Larry|indent=true|answer=Yeah! Let's just take that "no violence" bit.
+|Yes...}}
+{{dialogue|Larry|indent=true|answer=The "Holy Book" said that?
+|That is what I had believed. I did not see any other way of firing.}}
+{{dialogue|Larry|indent=true|The glasses man told me that firing was simply to lose your job... it seems my misunderstandings were indeed vast...}}
+{{dialogue|Burgess|Let's move on...}}
+{{dialogue|Player|(What should I say?)}}
+
+*''A human and animal fighting.'' (No unique dialogue)
+*''Friendship with animals!'' (No unique dialogue)
+*''Metaphorically devouring of the soul...'' (No unique dialogue)
+
+{{dialogue|Larry|...}}
+{{dialogue|Burgess|What's wrong, Larry? What do you see?}}
+{{dialogue|Larry|It... it reminds me of someone...}}
+{{dialogue|Burgess|Who?}}
+{{dialogue|Larry|Howlett.}}
+{{dialogue|Larry|When we made the agreement, we shook, hand to claw. When I saw this picture... it reminded me of that day.}}
+{{dialogue|Burgess|Larry, that feeling... it's called friendship.}}
+{{dialogue|Larry|Friends... I understand.}}
+{{dialogue|Player|(What should I say?)}}
+
+*''A couple deep in love.'' (No unique dialogue)
+*''A past love, now only a memory'' (No unique dialogue)
+*''The depths of despair, we'll all wither away alone...'' (No unique dialogue)
+
+{{dialogue|Larry|Xena... XENA!}}
+{{dialogue|Burgess|An old love... Larry, are you okay?}}
+{{dialogue|Larry|I loved you, Xena! Where are you!? Where have you gone!? Why did you leeeeave meeeee!?}}
+{{dialogue|Burgess|A love lost... a story as old as time. I understand, Larry.}}
+{{dialogue|Burgess|Phew! OK we're finished. Now, let me see the results...}}
+The conversation ends.
+Set CHOICE2 to 0
+
+TRIGGER Procedure 4.0 Step 2.0 Order 2 Repeat 4
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the third option in conversation segment 12301:
+{{dialogue|Player|(What should I say?)}}
+
+*''Serenity.'' (No unique dialogue)
+*''A human child.'' (No unique dialogue)
+*''Loneliness...'' (No unique dialogue)
+
+(cId 3) The player picks the third option in conversation segment 12305:
+{{dialogue|Player|(What should I say?)}}
+
+*''Heroism!'' (No unique dialogue)
+*''War.'' (No unique dialogue)
+*''Futility...'' (No unique dialogue)
+
+(cId 3) The player picks the third option in conversation segment 12312:
+{{dialogue|Player|(What should I say?)}}
+
+*''A human and animal fighting.'' (No unique dialogue)
+*''Friendship with animals!'' (No unique dialogue)
+*''Metaphorically devouring of the soul...'' (No unique dialogue)
+
+(cId 3) The player picks the third option in conversation segment 12321:
+{{dialogue|Player|(What should I say?)}}
+
+*''A couple deep in love.'' (No unique dialogue)
+*''A past love, now only a memory'' (No unique dialogue)
+*''The depths of despair, we'll all wither away alone...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Increment CHOICE2 by 1
+
+TRIGGER Procedure 5.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8021 | cId: 3 | missionId: 1200309
+CONDITIONS
+Check if CHOICE2 is >= 3
+ACTIONS
+(cId 4) A conversation 3740_0 starts:
+{{dialogue|Burgess|''Player''... Have you been experiencing stress lately?}}
+{{dialogue|Burgess|reward={{i2|Fragrant Satchel|1}}|It seems like you're holding onto some... negative emotions. If you're tired, or burned out, you need to rest.}}
+{{dialogue|Burgess|Take this and put it near your bed, the sweet fragrances will help soothe your mind.}}
+{{dialogue|Trudy|So, Burgess. How did our President Larry fare?}}
+{{dialogue|Burgess|Let me see...}}
+{{dialogue|Burgess|Normal as can be! No violent tendencies, no hateful feelings, just a tinge of 100% genuine sadness.}}
+{{dialogue|Trudy|So he should be safe to live amongst us?}}
+{{dialogue|Burgess|I would give a most certain yes. He seems to understand us, and doesn't hold any harmful feelings.}}
+{{dialogue|Trudy|Great!}}
+{{dialogue|Larry|Thank you, Mayor, uniform boy, strong person, and quiet lady with bird.}}
+{{dialogue|Trudy|Larry, have you thought about what you'll do next?}}
+{{dialogue|Larry|Ssssss... no. If I go back, I might have to fight Gary for the leadership position, I don't want that... If I may, I would request that I be permitted to stay in Sandrock a while longer.}}
+{{dialogue|Trudy|Of course, Larry. Take all the time you need. I'll check to see if someone might have something for you to do in town to sustain yourself... Although truth be told, there might be some resistance to see a former enemy in town.}}
+{{dialogue|Trudy|I'll leave you for now, make yourself at home, and welcome to Sandrock.}}
+The conversation ends.
+
+TRIGGER Procedure 5.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 4) There is a conversation segment (id 12328) that ends:
+{{dialogue|Burgess|It seems like you're holding onto some... negative emotions. If you're tired, or burned out, you need to rest.}}
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Fragrant Satchel of Default quality (Notify player)
+
+TRIGGER Procedure 6.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Burgess stops standing still
+Trudy stops standing still
+Fang stops standing still
+X stops standing still
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 6.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Burgess stops standing still
+Trudy stops standing still
+Fang stops standing still
+X stops standing still
+
+TRIGGER Procedure 5.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8021 | cId: 3 | missionId: 1200309
+CONDITIONS
+Check if CHOICE2 is < 3
+ACTIONS
+(cId 4) A conversation 3741_0 starts:
+{{dialogue|Burgess|Wowee, ''Player'', you're as stable as a table!}}
+{{dialogue|Trudy|So, Burgess. How did our President Larry fare?}}
+{{dialogue|Burgess|Let me see...}}
+{{dialogue|Burgess|Normal as can be! No violent tendencies, no hateful feelings, just a tinge of 100% genuine sadness.}}
+{{dialogue|Trudy|So he should be safe to live amongst us?}}
+{{dialogue|Burgess|I would give a most certain yes. He seems to understand us, and doesn't hold any harmful feelings.}}
+{{dialogue|Trudy|Great!}}
+{{dialogue|Larry|Thank you, Mayor, uniform boy, strong person, and quiet lady with bird.}}
+{{dialogue|Trudy|Larry, have you thought about what you'll do next?}}
+{{dialogue|Larry|Ssssss... no. If I go back, I might have to fight Gary for the leadership position, I don't want that... If I may, I would request that I be permitted to stay in Sandrock a while longer.}}
+{{dialogue|Trudy|Of course, Larry. Take all the time you need. I'll check to see if someone might have something for you to do in town to sustain yourself... Although truth be told, there might be some resistance to see a former enemy in town.}}
+{{dialogue|Trudy|I'll leave you for now, make yourself at home, and welcome to Sandrock.}}
+The conversation ends.
+
+TRIGGER Procedure 6.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 23091
+NPC ICON REMOVE || missionId: 1200309 | npc: 8006 | missionIcon: 1
+The player receives a letter:
+{{mail|602}}
+SCENEITEM DELETE || itemType: 0 | id: 23081
+Remove behavior CommanderDrama (idName: 23084) from Larry
+NPC SET CAN INTERACT || npc: 8097 | canInteract: 1
+END MISSION 1200309

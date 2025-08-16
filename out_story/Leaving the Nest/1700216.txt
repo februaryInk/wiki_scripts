@@ -1,0 +1,467 @@
+Reading Mission 1700216: Leaving the Nest
+
+<onlyinclude>{{Infobox mission
+|name = Leaving the Nest
+|image =
+|description = Fang seems to be determined to learn how to socialize with people.
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 850
+|reputation = None
+|gols = None
+|npc1 = Fang
+|rp1 = 50
+|npc2 = X
+|rp2 = 10
+}}</onlyinclude>
+
+The start (or end?) of the mission causes new newspaper content to appear:
+Newspaper adds Unknown content 5015.
+Mission Add ID: 1700216
+Title: The Eagle in the Valley
+I wanted to like this book, I really did. It came highly recommended by a friend of mine, but I just couldn't get into it. Ultimately, I can't get around the fact that I just completely reject the premise. Like, are we really supposed to believe that all these animals don't know what an eagle is? And they have such arbitrary measures for what constitutes their own identity, like, obviously the eagle is not a spider, the spider should know that being a spider is defined by far more than just the number of legs one has, the spider should know that the eagle is an eagle the instant it lays its many eyes on that eagle! 
+
+And the ending! What happens to the eagle after he gets out of the valley? Were the 'creatures with wings' he saw eagles? Other birds? His parents? I just don't feel like we get a good sense of resolution by the end of the story and are kind of left with more questions than answers. Also, they made the squirrels the bad guys? What the heck?! Huge blunder. Squirrels are cute, dummy!!!
+
+Also how does the eagle know how to talk and say things like 'sir' when he was born literally five seconds ago. Ugh. I'm over this. Super over this.
+
+2/10
+
+Pictures were neat.
+
+Written by Jasmine
+Edited by Heidi
+
+==Overview==
+Run conditions from parent mission: 1200106
+
+TRIGGER Procedure 3.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1800224 is result 1 flag 1
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+Run mission Remember the Good Times
+
+TRIGGER Procedure 3.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Remember the Good Times is successfully completed
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+Run mission Leaving the Nest
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700216
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|395}}
+DELIVER MISSION 1700216
+Set Byletter to 0
+Set refused to 0
+AREA TRIGGER CREATE || missionId: 1700216 | id: 172161 | sceneName: Main | showOnMap: 1 | mapIcon: MissionAreaBranch | flagName: kidintown9_trigger1 | transId: 80009863
+Set global blackboard key fangsociallesson with info 1.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the third option in conversation segment 6012:
+{{dialogue|Fang|Code word. You choose.}}
+
+*''Peach how does that sound?'' (No unique dialogue)
+*''Long live the Light.'' (No unique dialogue)
+*''Look! A "raven!"'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Fang gains 2 favor
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700216
+CONDITIONS
+Always:
+ACTIONS
+Run mission Leaving the Nest
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_clinic
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_clinic
+
+TRIGGER Procedure 1.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+X stands still in Clinic
+PLAYER SET POS ROT FLAG || sceneName: Clinic | flagName: SocialLesson_Player
+Fang stands still in Clinic
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 172161
+Set Byletter to 1
+
+TRIGGER Procedure 1.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 5986, 5987, 5988, 5989, 5990, 5991 starts:
+{{dialogue|X|Well if it ain't my fine, feathered friend! Ol' Coop here stocks more bird seed than you can shake a stick at.}}
+{{dialogue|Fang|... seed?}}
+{{dialogue|X|Speak! Hello!}}
+{{dialogue|Fang|Hello... Milkman...}}
+{{dialogue|X|Upstandin' citizen. This is a business. I invented the cheeeese omelet!}}
+{{dialogue|Fang|... What do I say... to that?}}
+
+TRIGGER Procedure 1.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 172161) to Player
+(param: TargetScene:Clinic|FlagName:SocialLesson_Player2)
+
+TRIGGER Procedure 1.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 5992, 5993, 5994, 5995, 5996 starts:
+{{dialogue|Fang|''Player''... come in...}}
+{{dialogue|Fang|X was just... leaving.}}
+{{dialogue|X|CoCo! Buh-bye! Love you! Kiss kiss!}}
+{{dialogue|X|Take good care of my baby! ...Or else!}}
+{{dialogue|X|Brawk!}}
+
+TRIGGER Procedure 1.0 Step 7.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 172161) to X
+(param: TargetScene:Main|FlagName:1600093_Target2_Player2)
+
+TRIGGER Procedure 1.0 Step 8.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 1769_0 starts:
+{{dialogue|Fang|Thank you for coming... ''Player''...}}
+
+*''You sound better!''
+*''Sure, what do you need?''
+
+{{dialogue|Fang|indent=true|answer=You sound better!
+|Yes, I have been... practicing...}}
+{{dialogue|Fang|I have some chores... can't do them alone. Might have trouble... speaking.}}
+{{dialogue|Fang|First... need to pick up some... herbs. From Zeke.}}
+{{dialogue|Fang|Then... I want to return the book to Catori.}}
+{{dialogue|Fang|Last...}}
+{{dialogue|Fang|...}}
+{{dialogue|Fang|...The Milkman.}}
+
+*''Let's do it.'' (No unique dialogue)
+*''Milkman? Cooper? Let's not talk to him...''
+*''Too much on my plate...''
+
+{{dialogue|Fang|indent=true|answer=Milkman? Cooper? Let's not talk to him...
+|No. He is the Milkman. His milk is delicious.}}
+{{dialogue|Fang|indent=true|answer=Too much on my plate...
+|I see...}}
+{{dialogue|Fang|indent=true|Tell me when... you are free...}}
+{{dialogue|Fang|indent=true|I will... wait.}}
+
+TRIGGER Procedure 1.0 Step 9.5 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 6006) that ends:
+{{dialogue|Fang|I will... wait.}}
+(cId: 3) There is a conversation segment (id 6008) that ends:
+{{dialogue|Fang|No. He is the Milkman. His milk is delicious.}}
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 172161) from X
+Set global blackboard key fangsociallesson with info 2.
+Set refused to 1
+
+TRIGGER Procedure 1.0 Step 10.0 Order 7 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Fang
+CONDITIONS
+Check if refused is == 1
+ACTIONS
+(cId 0) A conversation 1834_0 starts:
+{{dialogue|Fang|Can you... help me?}}
+
+*''Let's do it.'' (No unique dialogue)
+*''Too much on my plate...''
+
+{{dialogue|Fang|indent=true|answer=Too much on my plate...
+|No. He is the Milkman. His milk is delicious.}}
+
+TRIGGER Procedure 1.0 Step 10.5 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 6007:
+{{dialogue|Fang|Can you... help me?}}
+
+*''Let's do it.'' (No unique dialogue)
+*''Too much on my plate...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 6009, 6010, 6011, 1774_3_1 starts:
+{{dialogue|Fang|I will try... to talk myself. But...}}
+{{dialogue|Fang|Need help.}}
+{{dialogue|Fang|Code word. I say code word, we leave.}}
+{{dialogue|Fang|Code word. You choose.}}
+
+*''Peach how does that sound?''
+*''Long live the Light.''
+*''Look! A "raven!"''
+
+{{dialogue|Fang|indent=true|answer=Peach how does that sound?
+|Peach? Too common... a word...}}
+{{dialogue|Fang|indent=true|answer=Long live the Light.
+|Too long. I don't go... to church.}}
+{{dialogue|Fang|indent=true|answer=Look! A "raven!"
+|reward={{NPC2|Fang|rp=2}}|Yes. Interesting.}}
+{{dialogue|Fang|indent=true|I say "raven," we leave.}}
+{{dialogue|Fang|indent=true|Let us go find Zeke. I... will follow you.}}
+{{dialogue|Fang|Code word. You choose.}}
+
+*''Peach how does that sound?''
+*''Long live the Light.''
+*''Look! A "raven!"''
+
+{{dialogue|Fang|indent=true|answer=Peach how does that sound?
+|Peach? Too common... a word...}}
+{{dialogue|Fang|indent=true|answer=Long live the Light.
+|Too long. I don't go... to church.}}
+{{dialogue|Fang|indent=true|answer=Look! A "raven!"
+|reward={{NPC2|Fang|rp=2}}|Yes. Interesting.}}
+{{dialogue|Fang|indent=true|I say "raven," we leave.}}
+{{dialogue|Fang|indent=true|Let us go find Zeke. I... will follow you.}}
+{{dialogue|Fang|Code word. You choose.}}
+
+*''Peach how does that sound?''
+*''Long live the Light.''
+*''Look! A "raven!"''
+
+{{dialogue|Fang|indent=true|answer=Peach how does that sound?
+|Peach? Too common... a word...}}
+{{dialogue|Fang|indent=true|Code word. You choose.}}
+
+:*''Long live the Light.''
+:*''Look! A "raven!"''
+
+{{dialogue|Fang|indent=double|answer=Long live the Light.
+|Too long. I don't go... to church.}}
+{{dialogue|Fang|indent=double|Code word. You choose.}}
+
+::*''Look! A "raven!"''
+
+{{dialogue|Fang|indent=3|answer=Look! A "raven!"
+|reward={{NPC2|Fang|rp=2}}|Yes. Interesting.}}
+{{dialogue|Fang|indent=3|I say "raven," we leave.}}
+{{dialogue|Fang|indent=3|Let us go find Zeke. I... will follow you.}}
+{{dialogue|Fang|indent=double|answer=Look! A "raven!"
+|reward={{NPC2|Fang|rp=2}}|Yes. Interesting.}}
+{{dialogue|Fang|indent=double|I say "raven," we leave.}}
+{{dialogue|Fang|indent=double|Let us go find Zeke. I... will follow you.}}
+{{dialogue|Fang|indent=true|answer=Long live the Light.
+|Too long. I don't go... to church.}}
+{{dialogue|Fang|indent=true|Code word. You choose.}}
+
+:*''Peach how does that sound?''
+:*''Look! A "raven!"''
+
+{{dialogue|Fang|indent=double|answer=Peach how does that sound?
+|Peach? Too common... a word...}}
+{{dialogue|Fang|indent=double|Code word. You choose.}}
+
+::*''Look! A "raven!"''
+
+{{dialogue|Fang|indent=3|answer=Look! A "raven!"
+|reward={{NPC2|Fang|rp=2}}|Yes. Interesting.}}
+{{dialogue|Fang|indent=3|I say "raven," we leave.}}
+{{dialogue|Fang|indent=3|Let us go find Zeke. I... will follow you.}}
+{{dialogue|Fang|indent=double|answer=Look! A "raven!"
+|reward={{NPC2|Fang|rp=2}}|Yes. Interesting.}}
+{{dialogue|Fang|indent=double|I say "raven," we leave.}}
+{{dialogue|Fang|indent=double|Let us go find Zeke. I... will follow you.}}
+{{dialogue|Fang|indent=true|answer=Look! A "raven!"
+|reward={{NPC2|Fang|rp=2}}|Yes. Interesting.}}
+{{dialogue|Fang|indent=true|I say "raven," we leave.}}
+{{dialogue|Fang|indent=true|Let us go find Zeke. I... will follow you.}}
+
+TRIGGER Procedure 1.0 Step 11.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 6017) that ends:
+{{dialogue|Fang|Let us go find Zeke. I... will follow you.}}
+CONDITIONS
+Always:
+ACTIONS
+Set refused to 0
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 6003:
+{{dialogue|Fang|...The Milkman.}}
+
+*''Let's do it.'' (No unique dialogue)
+*''Milkman? Cooper? Let's not talk to him...'' (No unique dialogue)
+*''Too much on my plate...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 6009, 6010, 6011, 1774_3_1 starts:
+{{dialogue|Fang|I will try... to talk myself. But...}}
+{{dialogue|Fang|Need help.}}
+{{dialogue|Fang|Code word. I say code word, we leave.}}
+{{dialogue|Fang|Code word. You choose.}}
+
+*''Peach how does that sound?''
+*''Long live the Light.''
+*''Look! A "raven!"''
+
+{{dialogue|Fang|indent=true|answer=Peach how does that sound?
+|Peach? Too common... a word...}}
+{{dialogue|Fang|indent=true|answer=Long live the Light.
+|Too long. I don't go... to church.}}
+{{dialogue|Fang|indent=true|answer=Look! A "raven!"
+|reward={{NPC2|Fang|rp=2}}|Yes. Interesting.}}
+{{dialogue|Fang|indent=true|I say "raven," we leave.}}
+{{dialogue|Fang|indent=true|Let us go find Zeke. I... will follow you.}}
+{{dialogue|Fang|Code word. You choose.}}
+
+*''Peach how does that sound?''
+*''Long live the Light.''
+*''Look! A "raven!"''
+
+{{dialogue|Fang|indent=true|answer=Peach how does that sound?
+|Peach? Too common... a word...}}
+{{dialogue|Fang|indent=true|answer=Long live the Light.
+|Too long. I don't go... to church.}}
+{{dialogue|Fang|indent=true|answer=Look! A "raven!"
+|reward={{NPC2|Fang|rp=2}}|Yes. Interesting.}}
+{{dialogue|Fang|indent=true|I say "raven," we leave.}}
+{{dialogue|Fang|indent=true|Let us go find Zeke. I... will follow you.}}
+{{dialogue|Fang|Code word. You choose.}}
+
+*''Peach how does that sound?''
+*''Long live the Light.''
+*''Look! A "raven!"''
+
+{{dialogue|Fang|indent=true|answer=Peach how does that sound?
+|Peach? Too common... a word...}}
+{{dialogue|Fang|indent=true|Code word. You choose.}}
+
+:*''Long live the Light.''
+:*''Look! A "raven!"''
+
+{{dialogue|Fang|indent=double|answer=Long live the Light.
+|Too long. I don't go... to church.}}
+{{dialogue|Fang|indent=double|Code word. You choose.}}
+
+::*''Look! A "raven!"''
+
+{{dialogue|Fang|indent=3|answer=Look! A "raven!"
+|reward={{NPC2|Fang|rp=2}}|Yes. Interesting.}}
+{{dialogue|Fang|indent=3|I say "raven," we leave.}}
+{{dialogue|Fang|indent=3|Let us go find Zeke. I... will follow you.}}
+{{dialogue|Fang|indent=double|answer=Look! A "raven!"
+|reward={{NPC2|Fang|rp=2}}|Yes. Interesting.}}
+{{dialogue|Fang|indent=double|I say "raven," we leave.}}
+{{dialogue|Fang|indent=double|Let us go find Zeke. I... will follow you.}}
+{{dialogue|Fang|indent=true|answer=Long live the Light.
+|Too long. I don't go... to church.}}
+{{dialogue|Fang|indent=true|Code word. You choose.}}
+
+:*''Peach how does that sound?''
+:*''Look! A "raven!"''
+
+{{dialogue|Fang|indent=double|answer=Peach how does that sound?
+|Peach? Too common... a word...}}
+{{dialogue|Fang|indent=double|Code word. You choose.}}
+
+::*''Look! A "raven!"''
+
+{{dialogue|Fang|indent=3|answer=Look! A "raven!"
+|reward={{NPC2|Fang|rp=2}}|Yes. Interesting.}}
+{{dialogue|Fang|indent=3|I say "raven," we leave.}}
+{{dialogue|Fang|indent=3|Let us go find Zeke. I... will follow you.}}
+{{dialogue|Fang|indent=double|answer=Look! A "raven!"
+|reward={{NPC2|Fang|rp=2}}|Yes. Interesting.}}
+{{dialogue|Fang|indent=double|I say "raven," we leave.}}
+{{dialogue|Fang|indent=double|Let us go find Zeke. I... will follow you.}}
+{{dialogue|Fang|indent=true|answer=Look! A "raven!"
+|reward={{NPC2|Fang|rp=2}}|Yes. Interesting.}}
+{{dialogue|Fang|indent=true|I say "raven," we leave.}}
+{{dialogue|Fang|indent=true|Let us go find Zeke. I... will follow you.}}
+
+TRIGGER Procedure 2.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 172161) from Player
+CUTSCENE UI STATE EXIT || 
+Fang stops standing still
+X stops standing still
+START MISSION 1700216
+
+==Rewards==
+{{mission reward
+|npc1 = Fang
+|rp1 = 50
+|npc2 = X
+|rp2 = 10
+|exp = 850
+|reputation = None
+|gols = None
+}}

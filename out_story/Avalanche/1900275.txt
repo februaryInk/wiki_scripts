@@ -1,0 +1,611 @@
+Reading Mission 1900275: Avalanche
+
+<onlyinclude>{{Infobox mission
+|name = Avalanche
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Avalanche:
+
+TRIGGER Procedure 0.0 Step 17.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if Do is == 1
+ACTIONS
+START MISSION 1900274
+
+TRIGGER Procedure 0.0 Step 18.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1900274
+CONDITIONS
+Always:
+ACTIONS
+Run mission Avalanche
+END MISSION 1900274
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1900275
+CONDITIONS
+Always:
+ACTIONS
+===Make a Simple Bookcase===
+
+{{mission_details
+|desc = Unsuur needs a new Simple Bookcase to display his rocks. Make it on your Worktable.
+|details = Make a Simple Bookcase
+*{{i2|Simple Bookcase|0/1}}
+}}
+Set C1 to 0
+Set C2 to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1900274 | targetId: 0 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Install the Simple Bookcase===
+
+{{mission_details
+|desc = Your Bookshelf is ready, take it to Unsuur's house and install it.
+|details = Install the Simple Bookcase
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 927500 | flagName: Jj9275 | path: M9275_Mark | sceneName: UnsuurHome | extraParams: M9275_J0|CreatorItem|18000030_1|1547|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 927500 | missionId: 1900274 | iconType: 2
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 927500 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Unsuur stands still in UnsuurHome and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: UnsuurHome | flagName: P9275
+DELAY MASK SET || maskId: 927500 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+SCENEITEM DELETE || itemType: 0 | id: 82713
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 0
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 927500 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 927502) to Unsuur
+(param: TargetScene:UnsuurHome|MoveMode:Walk|FlagName:M9275_2|LookAtActor:8000)
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8026 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 927503) to Player
+(param: TargetScene:UnsuurHome|MoveMode:Walk|FlagName:P9275_2|LookAtActor:8026)
+
+TRIGGER Procedure 0.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 3132_0 starts:
+{{dialogue|Unsuur|Hey, ''Player''. I was at work and I heard someone come in 'cause my house is next door and I am glad it's you and not someone else.}}
+{{dialogue|Unsuur|Woah.}}
+{{dialogue|Unsuur|You really pulled out all the stops on this one. Books, rocks... heck, you could put just about anything in there.}}
+{{dialogue|Unsuur|Let me just collect all my rocks here and we can take this bad boy for a test-display.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 9.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 92750 | eventType: 5
+CONDITIONS
+Check relationship with Unsuur is Lover
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 927505 | sceneName: UnsuurHome | flagName: Jj9275 | extraParams: 0 | path: Q9256_efc
+STOPWATCH REAL TIME SET || id: 392750 | sec: 1.5
+(cId 3) A conversation 3145_0 starts:
+{{dialogue|Unsuur|Nice. They look good up there. High and mighty. Wondering what the peasant rocks are up to. Sorry, that was out of line. All rocks are great.}}
+{{dialogue|Unsuur|Next is mid-tier. We have... sulfur, selenite, and... coal.}}
+{{dialogue|Unsuur|Sulfur is toxic. I just like the way it looks. It's slightly toxic to touch, but... definitely don't lick this one. It would make you pretty sick. Well, Captain licked it once and got sick. Guess it hasn't been tested on humans yet. I just... wouldn't.}}
+{{dialogue|Unsuur|Next is selenite. Some people call it selenite rose. Couldn't really recommend lickin' it either. I mean, maybe once or twice is fine. It's pretty much just salt. It'll dissolve if you lick it too much. Then you got nothin'. 'Cept maybe a tummy ache...}}
+
+*''Good safety tips. I won't lick anything.''
+*{{flirt}}''You make rocks sound so fascinating.''
+*''(Lick the rock.)''
+
+{{dialogue|Unsuur|indent=true|answer=Good safety tips. I won't lick anything.
+|Even if something isn't toxic, it's a good idea to wash it before you lick it. Probably ask first, too. Yeah, that's kind of just a good rule for life. If you're ever thinking about licking anything, always ask for permission.}}
+{{dialogue|Unsuur|indent=true|answer=You make rocks sound so fascinating.
+|reward={{NPC2|Unsuur|rp=3}}|Well... I just always thought... they are. I never thought I'd have to convince anyone of it... Glad to know you're on the trolley now, though.}}
+{{dialogue|Unsuur|Ah, now you've gone and done it.}}
+
+*''Sorry, I couldn't resist.''
+*''Selenite rose sounds romantic.''
+*{{flirt}}''Now my lips are all salty... wanna taste?''
+
+{{dialogue|Unsuur|indent=true|answer=Sorry, I couldn't resist.
+|We've all been there.}}
+{{dialogue|Unsuur|indent=true|answer=Selenite rose sounds romantic.
+|Yeah, I guess it'd be a real good present for a lover. Or even just someone who really likes rocks.}}
+{{dialogue|Unsuur|indent=true|answer=Now my lips are all salty... wanna taste?
+|Okay.}}
+
+TRIGGER Procedure 0.0 Step 10.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 3) There is a conversation segment (id 10178) that ends:
+{{dialogue|Unsuur|Okay.}}
+CONDITIONS
+Always:
+ACTIONS
+The player interacts (type 2, option 1) with Unsuur
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 3) There is a conversation segment (id 10173) that ends:
+{{dialogue|Unsuur|Even if something isn't toxic, it's a good idea to wash it before you lick it. Probably ask first, too. Yeah, that's kind of just a good rule for life. If you're ever thinking about licking anything, always ask for permission.}}
+(cId: 3) There is a conversation segment (id 10174) that ends:
+{{dialogue|Unsuur|Well... I just always thought... they are. I never thought I'd have to convince anyone of it... Glad to know you're on the trolley now, though.}}
+(cId: 3) There is a conversation segment (id 10176) that ends:
+{{dialogue|Unsuur|We've all been there.}}
+(cId: 3) There is a conversation segment (id 10177) that ends:
+{{dialogue|Unsuur|Yeah, I guess it'd be a real good present for a lover. Or even just someone who really likes rocks.}}
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 3155_0 starts:
+{{dialogue|Unsuur|Last but again, not least, is coal.}}
+{{dialogue|Unsuur|I place coal in mid-tier because I just kinda like it. I mean... it is kind of an ugly chunk of gunk, only good for being used up, and then when it is, it harms the environment. But on the plus side... it's coal.}}
+{{dialogue|Unsuur|I'm all picked out, I think. You're gonna have to fly solo from here on out, I think. Which one makes you think of me?}}
+
+*''Toxic sulfur!''
+*''Salty selenite!''
+*''Ugly coal!''
+*''None of these...''
+
+{{dialogue|Unsuur|indent=true|answer=Toxic sulfur!
+|True. That is so me. Toxic. But you know what else? I like to look on the bright side. Being toxic ensures that people would never want to lick you. And who has time for that, really?}}
+{{dialogue|Unsuur|indent=true|answer=Salty selenite!
+|Ah, yes. Salt. Nature's candy. I'm honored that you would even think to associate me with one of our worlds most diligent and memorable condiments. Maybe one day I can work my way up to ketchup. The deputy of condiments.}}
+{{dialogue|Unsuur|indent=true|answer=Ugly coal!
+|Nice one. You got me there. Boom. Roasted. Now I'm all burnt up... releasing greenhouse gases... oh no...}}
+{{dialogue|Unsuur|indent=true|answer=None of these...
+|Too hard to choose? Yeah, in a way they all kind of represent me equally. Don't worry, low tier will be a lot easier to deal with.}}
+
+TRIGGER Procedure 0.0 Step 9.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 927500
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 927500 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 9.1 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the second option in conversation segment 10172:
+{{dialogue|Unsuur|Next is selenite. Some people call it selenite rose. Couldn't really recommend lickin' it either. I mean, maybe once or twice is fine. It's pretty much just salt. It'll dissolve if you lick it too much. Then you got nothin'. 'Cept maybe a tummy ache...}}
+
+*''Good safety tips. I won't lick anything.'' (No unique dialogue)
+*{{flirt}}''You make rocks sound so fascinating.'' (No unique dialogue)
+*''(Lick the rock.)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Unsuur gains 3 favor
+
+TRIGGER Procedure 0.0 Step 11.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON INTERACTIVE EXIT || order: 0 | instID: 8026
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 10179 starts:
+{{dialogue|Unsuur|Yeah, you weren't kiddin'. Anyway, back to the rocks.}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 9275 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 9275 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 2927401
+SCENEITEM DELETE || itemType: 0 | id: 2927402
+SCENEITEM DELETE || itemType: 0 | id: 2927403
+SCENEITEM DELETE || itemType: 0 | id: 2927404
+DELAY MASK SET || maskId: 9275 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Unsuur stands still in UnsuurHome and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: UnsuurHome | flagName: P9275_3
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 9275 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 3133_0 starts:
+{{dialogue|Unsuur|Cool. Say, ''Player'', do you want to stick around for a bit? I mean... Maybe you could help me decide which rocks to put where?}}
+
+*''Let's do it.''
+*''Eh. I'll pass.''
+
+{{dialogue|Unsuur|indent=true|answer=Let's do it.
+|Alright, cool. Let me just put on some tunes to set the mood...}}
+{{dialogue|Unsuur|Yeah? Well, no pressure, but... Once these rocks are in their spots, I don't really see myself taking them off and putting them back on... It's rude; to the rocks.}}
+
+*''Alright, let's do it.''
+*''I really better go...''
+
+{{dialogue|Unsuur|indent=true|answer=Alright, let's do it.
+|Alright, cool. Let me just put on some tunes to set the mood...}}
+{{dialogue|Unsuur|indent=true|answer=I really better go...
+|More for me.}}
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 1927503
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 3137_0 starts:
+{{dialogue|Unsuur|So... the short of it is, I like to organize the rocks into three categories: high, mid, and low tier.}}
+{{dialogue|Unsuur|The highest tier represents the rocks I like the best. The mid tier represents the ones I think are alright and definitely deserve a seat at the table, er, Rockshelf, and low tier... well, those rocks I'm not a super fan of, but I'm sure other people like.}}
+{{dialogue|Unsuur|Let's start with the top.}}
+{{dialogue|Unsuur|First we've got... onyx... painite... zinc... and then this one, I don't know what it is.}}
+{{dialogue|Unsuur|Onyx is dark and mysterious. It's pretty shiny. Reflects light. Makes you kinda wonder about the universe.}}
+{{dialogue|Unsuur|Next is painite. Despite the name, it's really got nothing to do with 'pain.' It's just a nice red rock. I've only ever found one before. Qi said it's super rare, maybe the only one in the world. So... I guess you could say this rock is unique.}}
+{{dialogue|Unsuur|Then there's zinc. Zinc is really useful. It's found in the wirings of our telegraphs, street lamp posts... Why, even the firing pin in our Civil Corps pistols are made of zinc. I'd hate to live in a world without zinc.}}
+{{dialogue|Unsuur|Last but not least is... this one. I... uh... well, I had some stuff to say about the others but not this one. Oh well.}}
+{{dialogue|Unsuur|Ready to choose your favorite? And hey, in case you didn't think the stakes were high enough... despite it already being high tier...}}
+{{dialogue|Unsuur|Why don't we also choose the rock that makes us think of each other? I'll go first. I choose...}}
+{{dialogue|Unsuur|Painite. Because it's the best rock. And you're the best rock.}}
+
+*''Very moving, thank you.''
+*{{flirt}}''You're the best rock!''
+*''There's two more tiers after this? I better go...''
+
+{{dialogue|Unsuur|indent=true|answer=Very moving, thank you.
+|You seem pretty situated, but... yeah, you're welcome.}}
+{{dialogue|Unsuur|indent=true|answer=You're the best rock!
+|...There can only be one 'best rock' by definition, ''Player''... And I already said it was you...}}
+{{dialogue|Unsuur|indent=true|answer=There's two more tiers after this? I better go...
+|Oh. Sure. I get it. Way to turn a tier list into a tear list.}}
+{{dialogue|Unsuur|indent=true|See ya.}}
+{{dialogue|Unsuur|Okay, now you go.}}
+
+*''Mysterious onyx!''
+*''Useful zinc!''
+*''The other one!''
+
+{{dialogue|Unsuur|indent=true|answer=Mysterious onyx!
+|You think I'm as mysterious as onyx? I dunno, ''Player''. I'm an open book. Ask me anything. Heck, I'll give you better responses than any book ever could. Books can't talk.}}
+{{dialogue|Unsuur|indent=true|answer=Useful zinc!
+|Wow... you think I'm as useful as zinc? That's a tall order, ''Player''. I don't know if I can fill those shoes. No one's ever been able to make shoes large enough for zinc. That's why zinc wears no shoes. And tragically... I still and always do.}}
+{{dialogue|Unsuur|indent=true|answer=The other one!
+|Ah. Interesting choice. The other one.}}
+{{dialogue|Unsuur|indent=true|I guess this one is like... No one ever saw it making it to high tier. It's the rock that subverts your expectations and then flips them upside down again. The underdog rock. I love a good underdog tale. An under-tale, if you will.}}
+{{dialogue|Unsuur|indent=true|So that's what you think of me? The underdog? I'm honored.}}
+
+TRIGGER Procedure 1.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+(cId 1) After the conversation ends:
+CONDITIONS
+Check if C1 is == 1
+ACTIONS
+Remove behavior CommanderPlayerAction (idName: 927501) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 927503) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 927502) from Unsuur
+Unsuur stops standing still
+Unsuur stops standing still
+SUBMIT MISSION 1900274
+CUTSCENE UI STATE EXIT || 
+END MISSION 1900275
+
+TRIGGER Procedure 1.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Check if C1 is == 0
+ACTIONS
+DELAY MASK SET || maskId: 92750 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the third option in conversation segment 10158:
+{{dialogue|Unsuur|Painite. Because it's the best rock. And you're the best rock.}}
+
+*''Very moving, thank you.'' (No unique dialogue)
+*{{flirt}}''You're the best rock!'' (No unique dialogue)
+*''There's two more tiers after this? I better go...'' (No unique dialogue)
+
+(cId 1) The player picks the second option in conversation segment 10145:
+{{dialogue|Unsuur|Yeah? Well, no pressure, but... Once these rocks are in their spots, I don't really see myself taking them off and putting them back on... It's rude; to the rocks.}}
+
+*''Alright, let's do it.'' (No unique dialogue)
+*''I really better go...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set C1 to 1
+
+TRIGGER Procedure 1.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 92750 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 12 | id: 927500
+SCENEITEM CREATE FLAG || itemType: 0 | id: 927504 | path: M9275_J1 | sceneName: UnsuurHome | flagName: Jj9275 | extraParams: 0
+DELAY MASK SET || maskId: 92750 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 9.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 92750 | eventType: 5
+CONDITIONS
+Check relationship with Unsuur is 6 Lover
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 927505 | sceneName: UnsuurHome | flagName: Jj9275 | extraParams: 0 | path: Q9256_efc
+STOPWATCH REAL TIME SET || id: 392750 | sec: 2
+(cId 3) A conversation 3153_0 starts:
+{{dialogue|Unsuur|Nice. They look good up there. High and mighty. Wondering what the peasant rocks are up to. Sorry, that was out of line. All rocks are great.}}
+{{dialogue|Unsuur|Next is mid-tier. We have... sulfur, selenite, and... coal.}}
+{{dialogue|Unsuur|Sulfur is toxic. I just like the way it looks. It's slightly toxic to touch, but... definitely don't lick this one. It would make you pretty sick. Well, Captain licked it once and got sick. Guess it hasn't been tested on humans yet. I just... wouldn't.}}
+{{dialogue|Unsuur|Next is selenite. Some people call it selenite rose. Couldn't really recommend lickin' it either. I mean, maybe once or twice is fine. It's pretty much just salt. It'll dissolve if you lick it too much. Then you got nothin'. 'Cept maybe a tummy ache...}}
+
+*''Good safety tips. I won't lick anything.''
+*{{flirt}}''You make rocks sound so fascinating.''
+*''(Lick the rock.)''
+
+{{dialogue|Unsuur|indent=true|answer=Good safety tips. I won't lick anything.
+|Even if something isn't toxic, it's a good idea to wash it before you lick it. Probably ask first, too. Yeah, that's kind of just a good rule for life. If you're ever thinking about licking anything, always ask for permission.}}
+{{dialogue|Unsuur|indent=true|answer=You make rocks sound so fascinating.
+|reward={{NPC2|Unsuur|rp=3}}|Well... I just always thought... they are. I never thought I'd have to convince anyone of it... Glad to know you're on the trolley now, though.}}
+{{dialogue|Unsuur|Ah, now you've gone and done it.}}
+
+*''Sorry, I couldn't resist.''
+*''Selenite rose sounds romantic.''
+
+{{dialogue|Unsuur|indent=true|answer=Sorry, I couldn't resist.
+|We've all been there.}}
+{{dialogue|Unsuur|indent=true|answer=Selenite rose sounds romantic.
+|Yeah, I guess it'd be a real good present for a lover. Or even just someone who really likes rocks.}}
+
+TRIGGER Procedure 1.0 Step 10.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 392750
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 927505
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 92751 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 92751 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 927504
+SCENEITEM CREATE FLAG || itemType: 0 | id: 927507 | path: M9275_J2 | sceneName: UnsuurHome | flagName: Jj9275 | extraParams: 0
+DELAY MASK SET || maskId: 92751 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 92751 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 927508 | sceneName: UnsuurHome | flagName: Jj9275 | extraParams: 0 | path: Q9256_efc
+STOPWATCH REAL TIME SET || id: 392751 | sec: 1.5
+(cId 7) A conversation 3160_0 starts:
+{{dialogue|Unsuur|Alright... whew... finally, we're about ready to wrap things up with low tier... Last and least. Need a minute? Or are you ready?}}
+
+*''You really know a lot about stones.''
+*{{flirt}}''When you talk about your collection, you sound so charming.''
+*''Thanks for sharing. Wow! Look at the time...''
+
+{{dialogue|Unsuur|indent=true|answer=You really know a lot about stones.
+|Yeah, well. It's pretty much all I do. You'd know a lot about rocks, too, if you were me.}}
+{{dialogue|Unsuur|indent=true|answer=When you talk about your collection, you sound so charming.
+|Uh, thanks. It's nice that you're listening. It's one of the things I like best about you. Not everybody likes to listen. I don't mind if they don't, but it's better when somebody does. Especially when it's you doing the listening.}}
+{{dialogue|Unsuur|indent=true|Gotta write that one down... later... on paper...}}
+{{dialogue|Unsuur|indent=true|answer=Thanks for sharing. Wow! Look at the time...
+|Oh. Sure. I get it. Way to turn a tier list into a tear list.}}
+{{dialogue|Unsuur|indent=true|See ya.}}
+
+TRIGGER Procedure 2.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Check if C2 is == 1
+ACTIONS
+Remove behavior CommanderPlayerAction (idName: 927501) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 927503) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 927502) from Unsuur
+Unsuur stops standing still
+Unsuur stops standing still
+SUBMIT MISSION 1900274
+CUTSCENE UI STATE EXIT || 
+END MISSION 1900275
+
+TRIGGER Procedure 2.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Check if C2 is == 0
+ACTIONS
+(cId 8) A conversation 3164_0, 3165_0 starts:
+{{dialogue|Unsuur|Alright, final tier. These are what a lot of what people would call regular rocks. Granite. Sandstone. Marble. Some of them have bits of quartz in them that sparkle in the sunlight. Some of them are... quartz.}}
+{{dialogue|Unsuur|When it comes to squeaking into bottom tier, the main thing I look for here is hustle. What shape is the rock? Does it look like it's a hard worker? Does it look like it started from the bottom and now it's... trying to get into bottom tier?}}
+{{dialogue|Unsuur|This piece of granite, to me, looks like a fluffy cloud. The fact that such a hard, sturdy piece of rock could be so fluffy and cute... Makes me think... I can be whatever I wanna be.}}
+{{dialogue|Unsuur|This sandstone... the fact that it's called a sandstone and not a Sandrock, despite its location... I can't help but admire its rebellious spirit.}}
+{{dialogue|Unsuur|This quartz... there are many others like it, but this one's mine. It's the most common crystal in the world- Tch. If you don't count feldspar.}}
+{{dialogue|Unsuur|In some places, it's see-through. In other places it's milky and not so see-through. Is it hiding secrets? Is it transparent about other things? When light passes through, it creates... a rainbow.}}
+{{dialogue|Unsuur|Even though it's common, its shape is unique; the same way every snowflake is unique. And when it wants to, it can create an amazing display of color. Like a... like a...}}
+{{dialogue|Unsuur|Well, like just about any crystal really. That's why quartz is bottom tier.}}
+{{dialogue|Unsuur|So now I ask...}}
+{{dialogue|Unsuur|Which of these do you think represents... us?}}
+The conversation ends.
+{{dialogue|Unsuur|Sorry I keep changing the rules of this game and stuff. I kinda just made it up on the spot, need to work out the bugs... So yeah, which one is us?}}
+
+*''Hopeful granite.''
+*''Rebellious sandstone.''
+*{{flirt}}''Is quartz the romance option somehow?''
+*''Feldspaaar!''
+
+{{dialogue|Unsuur|indent=true|answer=Hopeful granite.
+|Yeah. Whatever happens in Sandrock, we've got our whole lives ahead of us. We could do anything. We could even change our careers. To deputy.}}
+{{dialogue|Unsuur|indent=true|answer=Rebellious sandstone.
+|Woah. You think we're rebels? Maybe you are, but I need to step up my game. I'll start being more rebellious first thing tomorrow morning. If I can get Justice to give me the day off.}}
+{{dialogue|Unsuur|indent=true|answer=Is quartz the romance option somehow?
+|Yeah. In a weird way... I think it is.}}
+{{dialogue|Unsuur|indent=true|answer=Feldspaaar!
+|I refuse to even acknowledge feldspar as a mineral. Some things are not cool to joke about, ''Player''. But... don't worry. It's fine. You didn't know.}}
+
+TRIGGER Procedure 2.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 392751
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 927508
+
+TRIGGER Procedure 2.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) The player picks the third option in conversation segment 10187:
+{{dialogue|Unsuur|Alright... whew... finally, we're about ready to wrap things up with low tier... Last and least. Need a minute? Or are you ready?}}
+
+*''You really know a lot about stones.'' (No unique dialogue)
+*{{flirt}}''When you talk about your collection, you sound so charming.'' (No unique dialogue)
+*''Thanks for sharing. Wow! Look at the time...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set C2 to 1
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 92752 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 92752 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 927507
+SCENEITEM CREATE FLAG || itemType: 0 | id: 927509 | path: M9275_J3 | sceneName: UnsuurHome | flagName: Jj9275 | extraParams: 0
+DELAY MASK SET || maskId: 92752 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 92752 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 927510 | sceneName: UnsuurHome | flagName: Jj9275 | extraParams: 0 | path: Q9256_efc
+STOPWATCH REAL TIME SET || id: 392752 | sec: 1.5
+
+TRIGGER Procedure 3.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 392752
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 927510
+(cId 10) A conversation 3170_0 starts:
+{{dialogue|Unsuur|Wow. There you have it.}}
+{{dialogue|Unsuur|That took a lot longer than I expected... but the results speak for themselves. This is probably the best display I've ever seen. Thanks for helping me, ''Player''. Feel free to come check out the rocks any time. Door's always open.}}
+{{dialogue|Unsuur|See ya.}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderPlayerAction (idName: 927501) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 927503) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 927502) from Unsuur
+Unsuur stops standing still
+Unsuur stops standing still
+SUBMIT MISSION 1900274
+CUTSCENE UI STATE EXIT || 
+ACTION PLAYER ADD ATTR VALUE || value: 1 | attrType: 21
+ACTION SHOW CUSTOM IMAGE TIPS || preset: LevelUp | content: 80015519
+END MISSION 1900275

@@ -1,0 +1,251 @@
+Reading Mission 1200002: A Fake Friend
+
+<onlyinclude>{{Infobox mission
+|name = A Fake Friend
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from A Fake Friend:
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+START MISSION 1200001
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200001
+CONDITIONS
+Always:
+ACTIONS
+Run mission A Fake Friend
+END MISSION 1200001
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200002
+CONDITIONS
+Always:
+ACTIONS
+===Ask Qi===
+
+{{mission_details
+|desc = Assemble the Fake Yakmel and install it on Cooper's farm.
+|details = Ask Qi
+}}
+Set FIND to 1
+Set MAIL to 0
+Set EAT to 0
+AUTOSAVE TRY || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200269
+CONDITIONS
+Always:
+ACTIONS
+FAIL MISSION || missionId: 1200001
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+Check if FIND is == 1
+ACTIONS
+(cId 0) A conversation 260 starts:
+{{dialogue|Qi|Cooper wants fake yakmels? For wha... no, I don't really want to know. Give me {{textcolor|green|5 Data Discs}} and I'll get started on this buffoonery.}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Collection Data Disc===
+
+{{mission_details
+|desc = Use the research Data Disc to exchange the assembly drawings of the Fake Yakmel with Qi.
+|details = Collection Data Disc
+*{{i2|Data Disc|0/5}}
+*{{i2|Qi|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1200001 | targetId: 2 | canSubmit: 1
+ACTIONS
+(cId 1) A conversation 261 starts:
+{{dialogue|Qi|I'll base the fake yakmels on some of the Old World entertainment devices that I've run across before. You'll get the diagrams in the mail when I'm done.}}
+Remove 5 Data Disc of Rare quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Wait for Diagram===
+
+{{mission_details
+|desc = After Qi draws the drawing, it will be sent to you directly.
+|details = Wait for Diagram
+}}
+Set MAIL to 1
+AUTOSAVE TRY || 
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if MAIL is == 1
+ACTIONS
+The player receives a letter:
+{{mail|10}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 10
+CONDITIONS
+Always:
+ACTIONS
+===Assemble and install===
+
+{{mission_details
+|desc = Assemble the Fake Yakmel and install it on Cooper's farm.
+|details = Assemble and install
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 20021 | path: Lable_tuoniukong | sceneName: Main | flagName: label_tuoniugong | extraParams: Mission_YakmelModel|CreatorItem|14000028_1|1547|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 20021 | missionId: 1200001 | iconType: 2
+AUTOSAVE TRY || 
+
+TRIGGER Procedure 1.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 20021
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Increment FIX by 1
+Add behavior CommanderMoveToFlag (idName: 12002) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:fademax)
+
+TRIGGER Procedure 1.0 Step 5.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 20021
+CONDITIONS
+Always:
+ACTIONS
+Cooper stands still in Main
+Cooper stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 12021) to Cooper
+(param: TargetScene:Main|MoveMode:Run|FlagName:fadecooper)
+
+TRIGGER Procedure 1.0 Step 6.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8003 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 262, 263 starts:
+{{dialogue|Cooper|By gum, you've done it. There's no practical difference between what you've made and a real Yakmel! Why, only one with a keen eye, such as myself, could tell the difference.}}
+{{dialogue|Cooper|Would ya like to stay for dinner? Mabel's makin' rutabaga stew.}}
+
+TRIGGER Procedure 1.0 Step 10.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 20021 | delayTime: 0 | durationTime: -2 | changeType: 2 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 10.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 20021
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 12002) from Player
+PLAYER SET POS ROT FLAG || sceneName: CooperHome | flagName: fademax2
+Set EAT to 1
+Remove behavior CommanderMoveToFlagAndAction (idName: 12021) from Cooper
+
+TRIGGER Procedure 1.0 Step 11.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the CooperHome:
+CONDITIONS
+Check if EAT is == 1
+ACTIONS
+ACTION CUTSCENE START AUDIO TYPE || id: CG_YAKMEL_DINNER | duration: 0 | audioType: NoTransitionOff
+
+TRIGGER Procedure 1.0 Step 12.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_YAKMEL_DINNER | state: 3
+CONDITIONS
+Always:
+ACTIONS
+Cooper stands still in CooperHome
+Mabel stands still in CooperHome
+
+TRIGGER Procedure 1.0 Step 13.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_YAKMEL_DINNER | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 266 starts:
+{{dialogue|Cooper|Thanks again for helpin' out, pardner. Why don't you take the leftovers home for yerself.}}
+
+TRIGGER Procedure 1.0 Step 14.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Cooper stops standing still
+Mabel stops standing still
+Elsie stops standing still
+CUTSCENE UI STATE EXIT || 
+Add 2 Jerky of Ordinary quality (Notify player)
+Cooper gains 5 favor
+Add 2 Omelet of Default quality (Notify player)
+Add 2 Sand Jujube Cake of Default quality (Notify player)
+SUBMIT MISSION 1200001
+END MISSION 1200002

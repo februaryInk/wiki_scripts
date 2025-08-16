@@ -1,0 +1,126 @@
+Reading Mission 1800482: Science Project
+
+<onlyinclude>{{Infobox mission
+|name = Science Project
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Science Project:
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Check if 8481A is == 2
+ACTIONS
+Set global blackboard key 1800496 with info 1.
+CLOSE MISSION || missionId: 1800481
+END MISSION 1800481
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800481
+CONDITIONS
+Always:
+ACTIONS
+Run mission Science Project
+END MISSION 1800481
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800482
+CONDITIONS
+GROUP 0:
+CHECK PLAYER ITEM || item: 19800018 | itemGrade: -1 | set: 6 | count: 3
+
+GROUP 1:
+CHECK PLAYER ITEM || item: 19110003 | count: 5 | set: 6 | itemGrade: -1
+
+GROUP 2:
+CHECK PLAYER ITEM || item: 19111004 | itemGrade: -1 | set: 6 | count: 2
+
+ACTIONS
+===Gather Materials===
+
+{{mission_details
+|desc = To repair the machine, several materials are needed. Collect them and report back to Andy.
+|details = Gather Materials
+*{{i2|Copper Stick|0/3}}
+*{{i2|Magnesium-Chromium Brick|0/5}}
+*{{i2|Granite Slab|0/2}}
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800482
+CONDITIONS
+CHECK PLAYER ITEM || item: 19800018 | itemGrade: -1 | set: 2 | count: 3
+CHECK PLAYER ITEM || item: 19110003 | count: 5 | set: 2 | itemGrade: -1
+CHECK PLAYER ITEM || item: 19111004 | itemGrade: -1 | set: 2 | count: 2
+ACTIONS
+===Talk to Andy===
+
+{{mission_details
+|desc = The materials have been collected. Go and share the good news with Andy.
+|details = Talk to Andy
+*{{i2|Copper Stick|0/3}}
+*{{i2|Magnesium-Chromium Brick|0/5}}
+*{{i2|Granite Slab|0/2}}
+*{{i2|Andy|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | canSubmit: 1 | missionId: 1800481 | targetId: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Andy===
+
+{{mission_details
+|desc = The materials have been collected. Go and share the good news with Andy.
+|details = Talk to Andy
+*{{i2|Copper Stick|0/3}}
+*{{i2|Magnesium-Chromium Brick|0/5}}
+*{{i2|Granite Slab|0/2}}
+*{{i2|Andy|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Andy
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1800481 | targetId: 3 | canSubmit: 1
+ACTIONS
+(cId 1) A conversation 22153 starts:
+{{dialogue|Andy|Alright! This should be exactly what I need to fix my machine! Thanks a bunch!}}
+BAG MODIFY BY TARGET || missionId: 1800481 | targetId: 3
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1800481
+END MISSION 1800482

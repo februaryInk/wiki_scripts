@@ -1,0 +1,485 @@
+Reading Mission 1800333: New Teacher
+
+<onlyinclude>{{Infobox mission
+|name = New Teacher
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from New Teacher:
+
+TRIGGER Procedure 0.0 Step 13.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if 8332Task is == 1
+ACTIONS
+START MISSION 1800332
+
+TRIGGER Procedure 0.0 Step 15.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800332
+CONDITIONS
+Always:
+ACTIONS
+Run mission New Teacher
+END MISSION 1800332
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800333
+CONDITIONS
+Always:
+ACTIONS
+===Make School Decorations===
+
+{{mission_details
+|desc = In order to make the classroom cozier, Jane asked for a Rocking Chair, a Lamp, and a Tent.
+|details = Make School Decorations
+*{{i2|Yakboy Rocking Chair|0/1}}
+*{{i2|Children's Tent|0/1}}
+*{{i2|Gentle Standing Lamp|0/1}}
+}}
+Add 1 Children's Tent of Default quality (Notify player)
+Add 1 Gentle Standing Lamp of Default quality (Notify player)
+Add 1 Yakboy Rocking Chair of Default quality (Notify player)
+Set 8333Finished to 0
+Set 8333Day to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1800332 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Install School Decorations===
+
+{{mission_details
+|desc = You've made everything Jane asked for. Take them to the school and place them in the classroom.
+|details = Install School Decorations
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 83331 | path: S8333_Item1_Mark | sceneName: School | flagName: S8333_Item1 | extraParams: S8333_Item1|CreatorItem|18000101_1|1547|Fix|1.4
+SCENEITEM CREATE FLAG || itemType: 11 | id: 83332 | path: S8333_Item2_Mark | sceneName: School | flagName: S8333_Item2 | extraParams: S8333_Item2|CreatorItem|18000187_1|1547|Fix|1.4
+SCENEITEM CREATE FLAG || itemType: 11 | id: 83333 | path: S8333_Item3_Mark | sceneName: School | flagName: S8333_Item3 | extraParams: S8333_Item3|CreatorItem|18000188_1|1547|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 83331 | missionId: 1800332 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 83332 | missionId: 1800332 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 83333 | iconType: 2 | missionId: 1800332
+
+TRIGGER Procedure 0.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 83331
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE EX || num: 1 | transId: 91002698 | missionId: 1800332 | targetId: 2
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 83332
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE EX || num: 1 | transId: 91004108 | missionId: 1800332 | targetId: 2
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 83333
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE EX || num: 1 | transId: 91004110 | missionId: 1800332 | targetId: 2
+
+TRIGGER Procedure 0.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1800332 | targetId: 2 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 83331 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 6.3 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83331 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Jane stands still in School and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: School | flagName: S8333_0_1
+DELAY MASK SET || maskId: 83331 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+SCENEITEM CREATE FLAG || path: S8333_Item2_collider | flagName: S8333_Item2 | sceneName: School | id: 83334 | itemType: 0 | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 6.4 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83331 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 83336201) to Jane
+(param: CMDAction:LookAround)
+Add behavior CommanderPlayerAction (idName: 8333001) to Player
+(param: CMDAction:LookSky)
+
+TRIGGER Procedure 0.0 Step 6.5 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8062 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+Set 8333Finished to 1
+Set 8333Guildhall to 0
+Add behavior CommanderMoveToFlagAndAction (idName: 83336211) to Jane
+(param: TargetScene:School|MoveMode:Walk|FlagName:S8333_62_2|Delay:0.0)
+Add behavior CommanderMoveToFlag (idName: 8333001) to Player
+(param: TargetScene:School|MoveMode:Walk|FlagName:S8333_0_2|Delay:0.0)
+Remove behavior CommanderPlayerAction (idName: 8333001) from Player
+
+TRIGGER Procedure 0.0 Step 6.6 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8062 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 4017_0 starts:
+{{dialogue|Jane|It's fabulous! Thank you, ''Player''. It's just how I imagined. I can see why Trudy said you're the best of the best! Right, well. I need to get cracking planning my lessons...}}
+{{dialogue|Jane|Oh! That reminds me, is there somewhere we can rent books in Sandrock? City Hall, maybe? Could you show me the way there?}}
+{{dialogue|Jane|It's for my lessons. I just did a little practice, but I feel like I'm missing something. I think if I dig through a couple of books I'll find what I need!}}
+
+*''Oh, were you preparing your class back there?''
+*''Yeah just head to the City Hall. You'll find it no problem.''
+
+{{dialogue|Jane|indent=true|answer=Yeah just head to the City Hall. You'll find it no problem.
+|Oh, yeah I'm sure I won't get lost... and I suppose you all did solve the sand bandit problem, so it should be safe enough... Well, thank you anyway! I'll see you soon.}}
+{{dialogue|Jane|Haha, you caught me! I was trying to think about how I can bring a little dramatics to my lessons.}}
+{{dialogue|Jane|Like just before... I was trying to teach the digestive system of Yakmel- yawn... See! Haha, I'm boring myself already! I thought a little acting magic could grab the students' attention.}}
+{{dialogue|Jane|I figured if I could really show them the pain a Yakmel feels while eating noodles, they'd really empathize. You know, back at college I wrote a paper called "Theatre in Education: Methods for Engaging Edu-tainment." It even won an award...}}
+{{dialogue|Player|(What should I say?)}}
+
+*''Let me take you there!''
+*''Yeah just head to the City Hall. You'll find it no problem.''
+
+{{dialogue|Jane|indent=true|answer=Let me take you there!
+|Really? You're the best! Let's go!}}
+{{dialogue|Jane|indent=true|answer=Yeah just head to the City Hall. You'll find it no problem.
+|Oh, yeah I'm sure I won't get lost... and I suppose you all did solve the sand bandit problem, so it should be safe enough... Well, thank you anyway! I'll see you soon.}}
+
+TRIGGER Procedure 0.0 Step 14.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Check if 8333Guildhall is == 1
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 83336211) from Jane
+AREA TRIGGER CREATE || missionId: 1800332 | id: 83332 | sceneName: Guildhall | flagName: Trigger_83332 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+===Go to City Hall 2F===
+
+{{mission_details
+|desc = Accompany Jane to the City Hall Library on the second floor of the building to look for the books she's thinking of.
+|details = Go to City Hall 2F
+}}
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8062 | state: Defense
+Remove behavior CommanderMoveToFlagAndAction (idName: 8333001) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8333002) from Player
+CUTSCENE UI STATE EXIT || 
+Jane stops standing still
+Remove behavior CommanderPlayerAction (idName: 8333001) from Player
+Remove behavior CommanderNPCAction (idName: 83336201) from Jane
+Remove behavior CommanderMoveToFlag (idName: 8333001) from Player
+
+TRIGGER Procedure 0.0 Step 14.4 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Check if 8333Guildhall is == 2
+ACTIONS
+Remove behavior CommanderPlayerAction (idName: 8333001) from Player
+Remove behavior CommanderNPCAction (idName: 83336201) from Jane
+Remove behavior CommanderMoveToFlagAndAction (idName: 83336211) from Jane
+Jane stops standing still
+CUTSCENE UI STATE EXIT || 
+ACTION DATE REMOVE FLAG || flag: 8333Task
+Remove behavior CommanderMoveToFlagAndAction (idName: 8333001) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8333002) from Player
+Remove behavior CommanderMoveToFlag (idName: 8333001) from Player
+SUBMIT MISSION 1800332
+NPC REMOVE TAG || tag: NoSchool
+END MISSION 1800333
+
+TRIGGER Procedure 0.0 Step 11.3 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 13628:
+{{dialogue|Jane|It's for my lessons. I just did a little practice, but I feel like I'm missing something. I think if I dig through a couple of books I'll find what I need!}}
+
+*''Oh, were you preparing your class back there?'' (No unique dialogue)
+*''Yeah just head to the City Hall. You'll find it no problem.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Jane gains 3 favor
+
+TRIGGER Procedure 0.0 Step 12.3 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 13633:
+{{dialogue|Player|(What should I say?)}}
+
+*''Let me take you there!'' (No unique dialogue)
+*''Yeah just head to the City Hall. You'll find it no problem.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8333Guildhall to 1
+
+TRIGGER Procedure 0.0 Step 13.3 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the second option in conversation segment 13633:
+{{dialogue|Player|(What should I say?)}}
+
+*''Let me take you there!'' (No unique dialogue)
+*''Yeah just head to the City Hall. You'll find it no problem.'' (No unique dialogue)
+
+(cId 1) The player picks the second option in conversation segment 13628:
+{{dialogue|Jane|It's for my lessons. I just did a little practice, but I feel like I'm missing something. I think if I dig through a couple of books I'll find what I need!}}
+
+*''Oh, were you preparing your class back there?'' (No unique dialogue)
+*''Yeah just head to the City Hall. You'll find it no problem.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8333Guildhall to 2
+
+TRIGGER Procedure 0.0 Step 14.6 Order 26 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8062
+
+TRIGGER Procedure 0.0 Step 16.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_guildhall
+CHECK GLOBAL BLACKBOARD || key: yanreveal | info: 1 | exist: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_guildhall
+
+TRIGGER Procedure 0.0 Step 17.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+Always:
+ACTIONS
+Jane stands still in Guildhall
+PLAYER SET POS ROT FLAG || sceneName: Guildhall | flagName: S8333_0_1
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8062
+AREA TRIGGER DELETE || id: 83332
+Add behavior CommanderMoveToFlagAndAction (idName: 83336221) to Jane
+(param: TargetScene:Guildhall|MoveMode:Walk|FlagName:S8333_62_1|Delay:1.0|Action:Book_Story)
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 18.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: MoveToFlagAndActionOver | behaviourName: CommanderMoveToFlagAndAction | npc: 8062
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 83336222) to Jane
+(param: TargetScene:Guildhall|MoveMode:Walk|FlagName:S8333_62_2)
+
+TRIGGER Procedure 0.0 Step 19.0 Order 28 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: MoveToFlagOver | behaviourName: CommanderMoveToFlag | npc: 8062
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 4021_0 starts:
+{{dialogue|Jane|This is it! "Fundamentals of Drama Education"! Ohh, look! "Miss Jane"! This is my favorite play!}}
+{{dialogue|Jane|"There is no joy like that of being loved by another, and feeling that your presence is an addition to their happiness."}}
+{{dialogue|Jane|The love between Miss Jane and Mr. Rock is so touching... I wish I could-}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 20.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Trudy stands still in Guildhall and looks at Jane
+Add behavior CommanderMoveToFlagAndAction (idName: 8333001) to Player
+(param: TargetScene:Guildhall|MoveMode:Run|FlagName:S8333_0_2|Delay:3.0)
+Add behavior CommanderMoveToFlagAndAction (idName: 8333062) to Trudy
+(param: TargetScene:Guildhall|MoveMode:Walk|FlagName:S8333_6_2|Delay:0.0|LookAtActor:8062)
+Add behavior CommanderMoveToFlagAndAction (idName: 8333623) to Jane
+(param: TargetScene:Guildhall|MoveMode:Walk|FlagName:S8333_62_3|Delay:3.0)
+STOPWATCH REAL TIME SET || id: 833301 | sec: 1
+
+TRIGGER Procedure 0.0 Step 21.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8006 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 4022_0 starts:
+{{dialogue|Trudy|Oh, hello! Are you here to borrow some books?}}
+{{dialogue|Jane|Oh! Hey... I mean... Hello, Mayor Trudy! Yes we are!}}
+{{dialogue|Trudy|Wonderful! Well, just let me know which one you want to take out, and I'll make a note of it.}}
+{{dialogue|Jane|This one, please.}}
+{{dialogue|Trudy|"Fundamentals of Drama Education". Oh! I didn't realize you were so interested in acting, Jane! Maybe you'll want to have a little chat with Owen and our famous Coogo band! Sandrock's quite the Walnut Groove these days!}}
+{{dialogue|Jane|I didn't know Sandrock was full of such creativity! Thank you so much Mayor!}}
+{{dialogue|Trudy|Anyways, I've made a note of it now, so I'll let you get back to it.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 23.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8333001) from Player
+Add behavior CommanderMoveToFlag (idName: 8333003) to Player
+(param: TargetScene:Guildhall|MoveMode:Walk|FlagName:S8333_0_1|Delay:3.0)
+Trudy stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8333062) from Trudy
+Add behavior CommanderTeleport (idName: 8333063) to Trudy
+(param: TargetFlag:S8333_6_2|TargetScene:Guildhall|Delay:1.0)
+Add behavior CommanderMoveToFlag (idName: 8333624) to Jane
+(param: TargetScene:Guildhall|MoveMode:Walk|FlagName:S8333_62_2|Delay:2.0)
+
+TRIGGER Procedure 0.0 Step 24.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 4023_0 starts:
+{{dialogue|Jane|Phew... Ah... ''Player'', is it just me, or do you also start to get really nervous when you see someone with authority? It's like I'm asking my professor to review my work...}}
+
+*''Don't worry, Trudy's great!''
+*''Why didn't you tell her about your "edu-tainment" stuff?''
+*''Well, we've got the book. Let's go.''
+
+{{dialogue|Jane|indent=true|answer=Don't worry, Trudy's great!
+|I know, I know, she's lovely. I really shouldn't be so nervous!}}
+{{dialogue|Jane|indent=true|I don't know... I'm not entirely confident. I was doing an internship at a school and the parents kept saying to "just teach the stuff." They didn't really get my teaching style...}}
+{{dialogue|Jane|indent=true|answer=Why didn't you tell her about your "edu-tainment" stuff?
+|I don't know... I'm not entirely confident with it. I was doing an internship at a school and the parents kept saying to "just teach the stuff." They didn't really get my teaching style...}}
+{{dialogue|Jane|indent=true|I know that sometimes parents might not understand what I'm doing... and I know that Mayor Trudy is going to be one of my parents! So... ahhh... that kind of makes me a little nervous...}}
+{{dialogue|Jane|Anyway, thanks for coming with me today. It's nice. You're the first real friend I've made in Sandrock so far. It's exciting to come to a new place, but it's also a little scary. I'm glad I met you, though. But I'll let you go now, back to the book for me! Bye!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 25.4 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 83336221) from Jane
+Remove behavior CommanderMoveToFlag (idName: 83336222) from Jane
+Jane stops standing still
+Jane stops standing still
+Remove behavior CommanderMoveToFlag (idName: 8333003) from Player
+Remove behavior CommanderTeleport (idName: 8333063) from Trudy
+CUTSCENE UI STATE EXIT || 
+ACTION DATE REMOVE FLAG || flag: 8333Task
+Remove behavior CommanderMoveToFlagAndAction (idName: 8333623) from Jane
+Remove behavior CommanderMoveToFlag (idName: 8333624) from Jane
+SUBMIT MISSION 1800332
+NPC REMOVE TAG || tag: NoSchool
+END MISSION 1800333
+
+TRIGGER Procedure 1.0 Step 0.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment 8333Day by 1
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 8333Finished is == 0
+Check if 8333Day is != (maybe?) 7
+ACTIONS
+The player receives a letter:
+{{mail|610}}
+FAIL MISSION || missionId: 1800333
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 8333Finished is == 1
+ACTIONS
+Jane stops standing still
+ACTION DATE REMOVE FLAG || flag: 8333Task
+AREA TRIGGER DELETE || id: 83332
+SUBMIT MISSION 1800332
+END MISSION 1800332
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1800333
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 11 | id: 83331
+SCENEITEM DELETE || itemType: 11 | id: 83332
+SCENEITEM DELETE || itemType: 11 | id: 83333
+SCENEITEM DELETE || itemType: 12 | id: 83331
+SCENEITEM DELETE || itemType: 12 | id: 83332
+SCENEITEM DELETE || itemType: 12 | id: 83333
+SCENEITEM CREATE FLAG || itemType: 12 | id: 83331 | path: S8333_Item1 | sceneName: School | flagName: S8333_Item1 | extraParams: -1
+SCENEITEM CREATE FLAG || itemType: 12 | id: 83332 | path: S8333_Item2 | flagName: S8333_Item2 | extraParams: -1 | sceneName: School
+SCENEITEM CREATE FLAG || itemType: 12 | id: 83333 | path: S8333_Item3 | sceneName: School | flagName: S8333_Item3 | extraParams: -1
+SCENEITEM CREATE FLAG || path: S8333_Item2_collider | flagName: S8333_Item2 | itemType: 0 | id: 83334 | sceneName: School | extraParams: 0
+NPC REMOVE TAG || tag: NoSchool

@@ -1,0 +1,516 @@
+Reading Mission 1500392: True Love's Treasure
+
+<onlyinclude>{{Infobox mission
+|name = True Love's Treasure
+|image =
+|description = Logan's found a treasure map, where could it lead?
+|type = Side
+|time =
+|location =
+|characters = [[Logan]]
+|condition =
+|details =
+|exp = 2200
+|reputation = None
+|gols = None
+|npc1 = Logan
+|rp1 = 20
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200332
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Andy's Last Wish is successfully completed
+ACTIONS
+Run mission #1800387
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check relationship with Logan is Lover
+Check if Logan has favor >= 800
+CHECK WEATHER STATE || weather: 0 | flag: 1
+Bumpy Date is successfully completed
+Check relationship with Logan is 6 Mate Unhappy
+ACTIONS
+Run mission True Love's Treasure
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+Where's Mi-an is in state 1 with flag 0
+The Childhood Friend is in state 1 with flag 0
+Goodbye, Nia is in state 1 with flag 0
+The Kidnapping is in state 1 with flag 0
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: triallogan | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+IS MARRIAGE || isMarriage: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+
+TRIGGER Procedure 0.0 Step 0.5 Order 27 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key 1500392 with info 1.
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1500392 | id: 539201 | sceneName: Main | flagName: Story_5392_Area | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80031283
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 539201
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 539201 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 539201
+Set accepttask to 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 539201 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 539201 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Logan stands still in Main
+Andy stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: Story_5392_Player
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 539201 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 539201) A conversation 19585 starts:
+{{dialogue|Andy|Logan, you gotta take the initiative when huntin', you taught me that!}}
+
+TRIGGER Procedure 0.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8013 | cId: 539201 | missionId: 1500392
+CONDITIONS
+Always:
+ACTIONS
+(cId 539202) A conversation 19586 starts:
+{{dialogue|Logan|It ain't the same, Andy...}}
+
+TRIGGER Procedure 0.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8011 | cId: 539202 | missionId: 1500392
+CONDITIONS
+Always:
+ACTIONS
+(cId 539203) A conversation 19587 starts:
+{{dialogue|Andy|There's nothin'... uh, ahem.. cough, cough, ''Player'''s comin'!}}
+
+TRIGGER Procedure 0.0 Step 8.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 539203) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 5392001) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:Story_5392_Player1)
+Add behavior CommanderMoveToFlagAndAction (idName: 5392002) to Logan
+(param: TargetScene:Main|MoveMode:Run|FlagName:Story_539203)
+Add behavior CommanderMoveToFlagAndAction (idName: 5392003) to Andy
+(param: TargetScene:Main|MoveMode:Run|FlagName:Story_539204)
+
+TRIGGER Procedure 0.0 Step 9.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 539204) A conversation 6108_0 starts:
+{{dialogue|0|(What should I say?)}}
+
+*''What are you talking about?''
+*''Are you looking for me?''
+*''Huh? Take the initiative?''
+
+{{dialogue|Andy|indent=true|answer=What are you talking about?
+|Uh... Logan's teachin' me huntin'!}}
+{{dialogue|Logan|indent=true|Yeah... Andy dragged me out here to teach 'im...}}
+{{dialogue|Logan|indent=true|answer=Are you looking for me?
+|Andy dragged me out here to teach 'im...}}
+{{dialogue|Andy|indent=true|answer=Huh? Take the initiative?
+|Uh... Logan's teachin' me huntin'!}}
+{{dialogue|Logan|indent=true|Yeah... Andy dragged me out here to teach 'im...}}
+
+TRIGGER Procedure 0.0 Step 13.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8011 | cId: 539204 | missionId: 1500392
+CONDITIONS
+Always:
+ACTIONS
+(cId 539205) A conversation 19593, 19594, 19595 starts:
+{{dialogue|Logan|Ahem...}}
+{{dialogue|Logan|Yeah, that's right...}}
+{{dialogue|Logan|Andy didn't wanna go to school today... an' I said he could take the day off an'... yeah, I'd teach 'im somethin'... that is, if you agree as well...}}
+
+TRIGGER Procedure 0.0 Step 14.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8011 | cId: 539205 | missionId: 1500392
+CONDITIONS
+Always:
+ACTIONS
+(cId 539206) A conversation 19596, 19597 starts:
+{{dialogue|Andy|Uh... yeah!}}
+{{dialogue|Andy|Oh, yeah, that's right! An' I said you'd definitely agree, right? Right?}}
+
+TRIGGER Procedure 0.0 Step 16.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8013 | cId: 539206 | missionId: 1500392
+CONDITIONS
+Always:
+ACTIONS
+(cId 539207) A conversation 6112_0 starts:
+{{dialogue|0|(What should I say?)}}
+
+*''You need to go to school.''
+*''Yeah a day off wouldn't hurt.''
+*''Did you call me just for this?''
+
+{{dialogue|Andy|indent=true|answer=You need to go to school.
+|Alright... fine, I guess I better head to class. See ya later, ''Player''!}}
+{{dialogue|Andy|indent=true|An' good luck... with the hunt, Logan...}}
+{{dialogue|Andy|indent=true|answer=Yeah a day off wouldn't hurt.
+|I told ya! I'm gonna go to the Game Center!}}
+{{dialogue|Andy|indent=true|Good luck... with the hunt, Logan!}}
+{{dialogue|Andy|indent=true|answer=Did you call me just for this?
+|Yeah, we did.}}
+{{dialogue|Andy|indent=true|Oh, look at the time... I got plans with Jasmine! Gotta run...}}
+{{dialogue|Andy|indent=true|Good luck...with the hunt, Logan!}}
+
+TRIGGER Procedure 0.0 Step 18.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8013 | cId: 539207 | missionId: 1500392
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 5392003) from Andy
+Add behavior CommanderMoveToFlagAndAction (idName: 5392004) to Andy
+(param: TargetScene:Main|MoveMode:Run|FlagName:Story_539205)
+STOPWATCH REAL TIME SET || id: 539201 | sec: 3
+Add behavior CommanderMoveToFlagAndAction (idName: 5392005) to Logan
+(param: TargetScene:Main|MoveMode:Run|FlagName:Story_539206)
+
+TRIGGER Procedure 0.0 Step 19.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 539201
+CONDITIONS
+Always:
+ACTIONS
+(cId 539208) A conversation 19608, 6116_0 starts:
+{{dialogue|Logan|Ahem...Andy really don't like school... but he's a good kid. He's been spendin' a lot of time with the Director in the Research Center.}}
+{{dialogue|Logan|Long as he's interested in learnin', I'm happy. I don't think school teaches ya everythin' you need. Oh, don't tell him I said that...}}
+
+*''Andy's smart. He'll be fine.'' (No unique dialogue)
+*''He's a bit naughty...'' (No unique dialogue)
+
+Andy stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 5392004) from Andy
+
+TRIGGER Procedure 0.0 Step 20.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8011 | cId: 539208 | missionId: 1500392
+CONDITIONS
+Always:
+ACTIONS
+(cId 539209) A conversation 20007, 19612, 19613, 19614, 6117_0, 19624, 19625 starts:
+{{dialogue|Logan|...}}
+{{dialogue|Logan|Speaking of Andy... I dunno what he's been readin' lately, but he keeps tryin' to get me to go on dates with ya. Haha, he seems to be real happy that we're together.}}
+{{dialogue|Logan|Y'know, since Andy started livin' with me an' Haru he's been like a little brother to us. Through everythin', he's been there. Haha, he really kept things lively while we were out in the desert.}}
+{{dialogue|Logan|Andy really cares about me. And he's family to me.}}
+{{dialogue|0|(What should I say?)}}
+
+*{{flirt}}''We're together... so Andy is family to me, too.''
+*{{flirt}}''We'll take care of him together in the future.''
+*''Andy... I don't know if I can take care of him properly...''
+
+{{dialogue|Logan|indent=true|answer=We're together... so Andy is family to me, too.
+|That's right... we're family.}}
+{{dialogue|Logan|indent=true|But whatever happens in the future, I won't let anything happen to you or Andy.}}
+{{dialogue|Logan|indent=true|answer=We'll take care of him together in the future.
+|Really?}}
+{{dialogue|Logan|indent=true|Well that makes me feel a million times better!}}
+{{dialogue|Logan|indent=true|answer=Andy... I don't know if I can take care of him properly...
+|Right... yeah, Andy's a little much to handle...}}
+{{dialogue|Logan|indent=true|I get it. Well, leave Andy to me.}}
+{{dialogue|Logan|Well, I better get back to work.}}
+{{dialogue|Logan|I'll see you later, hon'.}}
+
+TRIGGER Procedure 0.0 Step 23.0 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 539209) After the conversation ends:
+CONDITIONS
+Check if accepttask is == 0
+ACTIONS
+Logan stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 5392001) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 5392002) from Logan
+Remove behavior CommanderMoveToFlagAndAction (idName: 5392005) from Logan
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 25.0 Order 26 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 539209) After the conversation ends:
+CONDITIONS
+Check if accepttask is == 1
+ACTIONS
+Logan stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 5392001) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 5392002) from Logan
+Remove behavior CommanderMoveToFlagAndAction (idName: 5392005) from Logan
+CUTSCENE UI STATE EXIT || 
+UNLOCK NPC MARRIAGE || npc: 8011
+END MISSION 1500392
+
+TRIGGER Procedure 0.0 Step 22.1 Order 25 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 539209) The player picks the third option in conversation segment 19688:
+{{dialogue|0|(What should I say?)}}
+
+*{{flirt}}''We're together... so Andy is family to me, too.'' (No unique dialogue)
+*{{flirt}}''We'll take care of him together in the future.'' (No unique dialogue)
+*''Andy... I don't know if I can take care of him properly...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set accepttask to 1
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DAY START FOR WEATHER || order: 0 | weather: 2
+CONDITIONS
+Always:
+ACTIONS
+Set sun to 0
+WEATHER SET STATE || WeatherState: 0
+UNIQUE ACTION RUN || idStr: set_weather
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+Where's Mi-an is in state 1 with flag 0
+The Childhood Friend is in state 1 with flag 0
+Goodbye, Nia is in state 1 with flag 0
+The Kidnapping is in state 1 with flag 0
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: triallogan | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+IS MARRIAGE || isMarriage: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Logan stands still in Main
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+(cId 539210) A conversation 19626, 19627, 19628, 19629, 19630, 6121_0 starts:
+{{dialogue|Logan|Hey, uh... honey, I...}}
+{{dialogue|Logan|So I found somethin' in the desert. A treasure map.}}
+{{dialogue|Logan|I thought it mighta been left behind by some... salvager or somethin'. Y'know, back in the day? Maybe it's got some treasure or somethin' there.}}
+{{dialogue|Logan|There might be monsters, but I can handle 'em.}}
+{{dialogue|Logan|So what I'm sayin' is... y'know...}}
+{{dialogue|Logan|Ahem... Anyway. There's a treasure map, wanna come check it out? W-with... me?}}
+
+*''Of course!''
+*''I'm kind of busy...''
+*''Why are you stuttering?''
+
+{{dialogue|Logan|indent=true|answer=Of course!
+|Alright, I got the map with me. We can set off right away.}}
+{{dialogue|Logan|indent=true|answer=I'm kind of busy...
+|No worries, I'll wait 'til you got a bit of time then we can look for the treasure together.}}
+{{dialogue|Logan|indent=true|answer=Why are you stuttering?
+|Huh? I am? I thought I was bein'... y'know, smooth...}}
+DELIVER MISSION 1500392
+Set notaccept to 0
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 539210) There is a conversation segment (id 19635) that ends:
+{{dialogue|Logan|Huh? I am? I thought I was bein'... y'know, smooth...}}
+CONDITIONS
+Always:
+ACTIONS
+(cId 539211) A conversation 6171_0 starts:
+{{dialogue|Logan|Ahem... Anyway. There's a treasure map, wanna come check it out? W-with... me?}}
+
+*''Of course!''
+*''I'm kind of busy...''
+
+{{dialogue|Logan|indent=true|answer=Of course!
+|Alright, I got the map with me. We can set off right away.}}
+{{dialogue|Logan|indent=true|answer=I'm kind of busy...
+|No worries, I'll wait 'til you got a bit of time then we can look for the treasure together.}}
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 539210) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Logan stops standing still
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 19640) that ends:
+{{dialogue|Logan|Alright, I got the map with me. We can set off right away.}}
+CONDITIONS
+Always:
+ACTIONS
+Logan stops standing still
+CUTSCENE UI STATE EXIT || 
+START MISSION 1500392
+===Seek the Treasure===
+
+{{mission_details
+|desc = Follow the map and find the treasure with Logan.
+|details = Seek the Treasure
+}}
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8011 | state: Defense
+Run mission True Love's Treasure
+END MISSION 1500392
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PLAYER MARRIAGE || order: 0 | id: -1
+CONDITIONS
+Always:
+ACTIONS
+Logan stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 5392001) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 5392002) from Logan
+Remove behavior CommanderMoveToFlagAndAction (idName: 5392005) from Logan
+CUTSCENE UI STATE EXIT || 
+Logan stops standing still
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8011
+AREA TRIGGER DELETE || id: 539201
+UNLOCK NPC MARRIAGE || npc: 8011
+CLOSE MISSION || missionId: 1500392
+
+TRIGGER Procedure 2.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PLAYER BREAKUP || order: 0 | id: 8011
+CONDITIONS
+Always:
+ACTIONS
+Logan stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 5392001) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 5392002) from Logan
+Remove behavior CommanderMoveToFlagAndAction (idName: 5392005) from Logan
+CUTSCENE UI STATE EXIT || 
+Logan stops standing still
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8011
+AREA TRIGGER DELETE || id: 539201
+UNLOCK NPC MARRIAGE || npc: 8011
+CLOSE MISSION || missionId: 1500392
+
+TRIGGER Procedure 2.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+At the beginning of the day:
+CONDITIONS
+IS MARRIAGE || isMarriage: 1
+ACTIONS
+Logan stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 5392001) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 5392002) from Logan
+Remove behavior CommanderMoveToFlagAndAction (idName: 5392005) from Logan
+CUTSCENE UI STATE EXIT || 
+Logan stops standing still
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8011
+AREA TRIGGER DELETE || id: 539201
+UNLOCK NPC MARRIAGE || npc: 8011
+CLOSE MISSION || missionId: 1500392
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Logan|Hon', you wanna try lookin' for that treasure?}}
+
+*''Yeah, let's go!''
+*''Sorry, give me a bit more time.''
+
+{{dialogue|Logan|indent=true|answer=Yeah, let's go!
+|Alright, I got the map with me. We can set off right away.}}
+{{dialogue|Logan|indent=true|answer=Sorry, give me a bit more time.
+|No worries, I'll wait 'til you got a bit of time then we can look for the treasure together.}}
+
+==Rewards==
+{{mission reward
+|npc1 = Logan
+|rp1 = 20
+|exp = 2200
+|reputation = None
+|gols = None
+}}

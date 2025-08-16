@@ -1,0 +1,238 @@
+Reading Mission 1200293: When the Dust Settles
+
+<onlyinclude>{{Infobox mission
+|name = When the Dust Settles
+|image =
+|description = Logan is finally ready to move back into his house. Help him make the place livable for himself, Haru, and Andy.
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 2200
+|reputation = None
+|gols = None
+|npc1 = Logan
+|rp1 = 20
+|npc2 = Andy
+|rp2 = 20
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200310
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+CHECK DATE FLAG || days: 5 | flag: DATE:loganinprision | compare: 2
+
+GROUP 10:
+Check if mission 1200312 is result 1 flag 1
+
+ACTIONS
+Run mission #1200290
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+CHECK DATE FLAG || days: 5 | flag: DATE:loganinprision | compare: 2
+
+GROUP 10:
+Check if mission 1200312 is result 1 flag 1
+
+ACTIONS
+Run mission When the Dust Settles
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200293
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1200293 | id: 22931 | sceneName: Main | flagName: cleanloganhouse_trigger | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+SCENEITEM DELETE || itemType: 21 | id: 20651
+SCENEITEM CREATE FLAG || path: Mission_Item_Machine_Broom_0 | flagName: loganclue_broom | itemType: 0 | id: 22931 | sceneName: LoganOldHome | extraParams: 0
+SCENEITEM INTERACT SET || itemType: 9 | id: 28 | canInteract: 1
+SCENEITEM CREATE FLAG || itemType: 0 | id: 22936 | path: Mission_LoganHomeMusic | sceneName: LoganOldHome | flagName: loganclue_FindInfo | extraParams: 0
+SCENEITEM INTERACT SET || itemType: 9 | id: 15 | canInteract: 0
+ACTION NPC ADD HOME DATA || npc: 8011 | maskName: 22931 | level: 0 | scene: LoganOldHome | pos: 1.885,5.091957,-16.341
+ACTION NPC ADD HOME DATA || npc: 8012 | maskName: 22931 | level: 0 | scene: LoganOldHome | pos: 3.907,5.092012,-15.596
+ACTION NPC ADD HOME DATA || npc: 8013 | level: 0 | scene: LoganOldHome | pos: -8.791,5.092012,-13.89 | maskName: 22931
+The player receives a letter:
+{{mail|746}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the LoganOldHome:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: LoganOldHome | flagName: cleanloganhouse_player0
+Logan stands still in LoganOldHome
+Haru stands still in LoganOldHome
+Andy stands still in LoganOldHome
+AREA TRIGGER DELETE || id: 22931
+SCENEITEM CREATE FLAG || itemType: 0 | id: 22932 | path: Mission_Trash01 | sceneName: LoganOldHome | flagName: cleanloganhouse | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 22933 | path: Mission_Trash02 | sceneName: LoganOldHome | flagName: cleanloganhouse | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 22934 | path: Mission_Trash03 | sceneName: LoganOldHome | flagName: cleanloganhouse | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 22935 | path: Mission_Trash05 | sceneName: LoganOldHome | flagName: cleanloganhouse | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the LoganOldHome:
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 11470, 11471, 11472, 11473, 11474 starts:
+{{dialogue|Logan|Might get nostalgic for the spaciousness of our old place but... nothin' beats home sweet home.}}
+{{dialogue|Andy|Woohoo! Dibs on the big bed! Which one's the big bed? Mmm, take a big whiff, y'all! Smell that? It's the smell of home! Sniiiifff... Cough, hack-!}}
+{{dialogue|Haru|You may be mistaking the smell of home with the smell of dust.}}
+{{dialogue|Logan|Guess we have been gone for a minute...}}
+{{dialogue|Haru|Fortunately for us, dust is not the most formidable of foes. With the proper tools, we'll have this place clean as a whistle in no time at all.}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 22932) to Player
+(param: TargetScene:LoganOldHome|MoveMode:Run|FlagName:cleanloganhouse_player1)
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 3510_0 starts:
+{{dialogue|Logan|Hey there, partner. You're a little early for the housewarming party.}}
+{{dialogue|Haru|''Player''! Apologies. Having you here in this dustbowl is even less hospitable than our first encounter...}}
+
+*''I can help you guys!''
+*''I'm a lean, mean, cleaning machine!''
+*''Yeah, I'd better go.''
+*''How dare you. Goodbye!''
+
+{{dialogue|Logan|indent=true|answer=I can help you guys!
+|Can always use an extra pair of hands. Grab a duster and start dustin'.}}
+{{dialogue|Logan|indent=true|answer=I'm a lean, mean, cleaning machine!
+|Can always use an extra pair of hands. Grab a duster and start dustin'.}}
+{{dialogue|Haru|indent=true|answer=Yeah, I'd better go.
+|Mm. Please feel free to visit another time.}}
+{{dialogue|Logan|indent=true|Right place at the wrong time. Be seein' ya.}}
+{{dialogue|Haru|indent=true|answer=How dare you. Goodbye!
+|Mm. Please feel free to visit another time.}}
+{{dialogue|Logan|indent=true|Right place at the wrong time. Be seein' ya.}}
+Remove behavior CommanderMoveToFlag (idName: 22932) from Player
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 11478) that ends:
+{{dialogue|Logan|Right place at the wrong time. Be seein' ya.}}
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM INTERACT SET || itemType: 9 | id: 14 | canInteract: 1
+SCENEITEM DELETE || itemType: 0 | id: 22931
+CUTSCENE UI STATE EXIT || 
+Logan stops standing still
+Haru stops standing still
+Andy stops standing still
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 11479) that ends:
+{{dialogue|Logan|Can always use an extra pair of hands. Grab a duster and start dustin'.}}
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1200293
+START MISSION 1200293
+CUTSCENE UI STATE EXIT || 
+Logan stops standing still
+Haru stops standing still
+Andy stops standing still
+Add behavior Npc_SweepLoganOldHome (idName: 22932) to Logan
+(param: -1)
+Add behavior Npc_SweepLoganOldHome (idName: 22932) to Haru
+(param: -1)
+Add behavior Npc_SweepLoganOldHome (idName: 22932) to Andy
+(param: -1)
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || id: 22932 | itemType: 0
+SCENEITEM DELETE || id: 22933 | itemType: 0
+SCENEITEM DELETE || id: 22934 | itemType: 0
+SCENEITEM DELETE || id: 22935 | itemType: 0
+END MISSION 1200293
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200293
+CONDITIONS
+Always:
+ACTIONS
+Run mission When the Dust Settles
+END MISSION 1200293
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Just Give a Whistle is successfully completed
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 22931
+AREA TRIGGER DELETE || id: 22931
+SCENEITEM DELETE || itemType: 0 | id: 22932
+SCENEITEM DELETE || id: 22933 | itemType: 0
+SCENEITEM DELETE || id: 22934 | itemType: 0
+SCENEITEM DELETE || id: 22935 | itemType: 0
+SCENEITEM DELETE || itemType: 0 | id: 22943
+SCENEITEM DELETE || itemType: 0 | id: 22941
+SCENEITEM DELETE || itemType: 0 | id: 22942
+SCENEITEM INTERACT SET || itemType: 9 | id: 14 | canInteract: 1
+SCENEITEM DELETE || itemType: 0 | id: 22931
+Remove behavior Npc_SweepLoganOldHome (idName: 22932) from Logan
+Remove behavior Npc_SweepLoganOldHome (idName: 22932) from Haru
+Remove behavior Npc_SweepLoganOldHome (idName: 22932) from Andy
+Logan stops standing still
+Haru stops standing still
+Andy stops standing still
+END MISSION 1200293
+
+==Rewards==
+{{mission reward
+|npc1 = Logan
+|rp1 = 20
+|npc2 = Andy
+|rp2 = 20
+|exp = 2200
+|reputation = None
+|gols = None
+}}

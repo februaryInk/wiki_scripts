@@ -1,0 +1,423 @@
+Reading Mission 1800295: What's Mine is Yours
+
+<onlyinclude>{{Infobox mission
+|name = What's Mine is Yours
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from What's Mine is Yours:
+
+TRIGGER Procedure 1.0 Step 3.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Set global blackboard key 8294Talk with info 1.
+Trudy stops standing still
+Ged stops standing still
+Add behavior CommanderTeleport (idName: 8295842) to Ged
+(param: TargetScene:Mole_Dungeon|TargetFlag:Kid_Hole|Delay:10.0)
+DELIVER MISSION 1800294
+START MISSION 1800294
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800294
+CONDITIONS
+Always:
+ACTIONS
+Run mission What's Mine is Yours
+END MISSION 1800294
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800295
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: 8294Talk | info: 1 | exist: 0
+ACTIONS
+===Take Ged to City Hall===
+
+{{mission_details
+|desc = Take Ged to speak with Trudy to see if there's any way they can help each other.
+|details = Take Ged to City Hall
+}}
+Set 8295Lead to 0
+Set 8295Walk to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 563
+CONDITIONS
+CHECK DATE FLAG || flag: 8295Day | compare: 5 | days: 5
+ACTIONS
+AREA TRIGGER ONCE CREATE || missionId: 1800295 | id: 82953 | sceneName: Main | flagName: S8295_Item2 | showOnMap: 1 | mapIcon: Store | transId: 80017146
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_guildhall
+CHECK GLOBAL BLACKBOARD || key: yanreveal | info: 1 | exist: 0
+Check if 8295Lead is == 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_guildhall
+Set 8295Lead to 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+Always:
+ACTIONS
+Trudy stands still in Guildhall and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Guildhall | flagName: S8295_0_1
+Ged stands still in Guildhall and looks at Trudy
+ACTION ACTOR REMOVE FOLLOWER || tActor: 8084 | mActor: 8000
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 3473_0 starts:
+{{dialogue|Trudy|''Player''! It's so good to see you. And who is this delightful gentlemole with you?}}
+{{dialogue|Ged|Alors! Who is this visage in front of my eyes? Like the dawn sun rising before me, a splendor!}}
+{{dialogue|Trudy|Well, isn't he adorable?}}
+{{dialogue|Ged|My mind gets ahead of me. I am Ged, mon amour, I am here on behest of my people, les moles.}}
+{{dialogue|Trudy|Oh? Well, we are obviously in your debt. What seems to be the problem?}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 3474_0 starts:
+{{dialogue|Ged|We are a poor people. Although we are no longer at the mercy of that dastardly Rat Queen, our economic situation is dire.}}
+{{dialogue|Ged|My beautiful Mayor, perhaps you can find it in your heart to help your subterranean comrades. And not for nothing, no! Our paws are your paws!}}
+{{dialogue|Trudy|Of course we can help, but what can we do for you?}}
+{{dialogue|Ged|I hear you are having problems with plants? We can dig them all up, very cheap.}}
+{{dialogue|Trudy|Uh... let's put a pin in that.}}
+{{dialogue|Ged|No? Right. I hate that idea, too. Are you accepting applications at the Whac-a-mole machine? My friends and I have exceptionally hard heads, and might I also add, you don't have real moles working there...}}
+{{dialogue|Trudy|Interesting observation... Say, you're in the mountains, do you ever find anything useful there?}}
+{{dialogue|Ged|Alas I do not know. Despite our endless digging, I can say the mountains are bare, save for an abundance of relics, ores, rare metals, sometimes gems...}}
+{{dialogue|Ged|Indeed, it is obvious we have nothing we could provide for you.}}
+{{dialogue|Trudy|Y'know Ged, I'm sure we could somehow find a use for some of those things...}}
+{{dialogue|Ged|Mon Dieu! Mayor, you are as sharp as you are beautiful, magnificent! I can see why the people of Sandrock worship you.}}
+{{dialogue|Trudy|Is he... being sarcastic?}}
+
+*''No, he's just like this.''
+*''I don't really know...''
+
+{{dialogue|Ged|I would never be sarcastic. Look at my face. Zis is my serious face.}}
+{{dialogue|Trudy|Well if that's the case, we can certainly come to some sort of arrangement.}}
+{{dialogue|Ged|Arrangement? Mayor, I must tell you, Princess Lumi already has my heart. Although you are a magnifique woman, this is an important decision, one I cannot take so lightly...}}
+{{dialogue|Trudy|Ahem. About the mine.}}
+{{dialogue|Ged|O-oh, but of course.}}
+{{dialogue|Trudy|Perhaps we could arrange a trade? Sandrock relies on ores and relics for its development, so if we work together we can get a flow going through, with of course, us paying you for your efforts.}}
+{{dialogue|Ged|That seems like an acceptable situation. As they say, moles love Gols! What would you have us do? How would we begin this, as you say, trade?}}
+{{dialogue|Trudy|Well, what do you need to get your ores and relics to town?}}
+{{dialogue|Ged|Now that I think about it, it is hard for us to bring the ore to the surface from the depth of the mines... if we only had a Mine Cart that could work on the leftover rail systems already in the caves...}}
+{{dialogue|Trudy|I'm sure ''Player'' could build one! I guess once we have a Mine Cart, and we'd be able to send some of Heidi's construction crew down to rebuild some of that rail system.}}
+
+*''No problem!''
+*''I've got a lot on my plate...''
+
+{{dialogue|Trudy|indent=true|answer=No problem!
+|Great! Well, I'll discuss this with Heidi, and send you a diagram.}}
+{{dialogue|Ged|indent=true|Fantastique! I will dig on over and tell the moles the good news. We will be seeing brighter days soon.}}
+{{dialogue|Trudy|indent=true|answer=I've got a lot on my plate...
+|Ah... I guess I can send it to the Commerce Guild... Sorry, it'll probably take a bit longer.}}
+{{dialogue|Ged|indent=true|I guess we can wait. I will tell the moles that they will have to fast for a few more days... Ah, but alas, our cake has been all but consumed...}}
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Trudy stops standing still
+Ged stops standing still
+CUTSCENE UI STATE EXIT || 
+===Wait for Diagram===
+
+{{mission_details
+|desc = Heidi is working on a diagram for a Mine Cart. Wait for her to mail it to you.
+|details = Wait for Diagram
+}}
+Add behavior CommanderTeleport (idName: 8295842) to Ged
+(param: TargetScene:Mole_Dungeon|TargetFlag:Kid_Hole|Delay:10.0)
+
+TRIGGER Procedure 0.0 Step 6.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|562}}
+Remove behavior CommanderTeleport (idName: 8295842) from Ged
+
+TRIGGER Procedure 0.0 Step 6.2 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 562
+CONDITIONS
+Always:
+ACTIONS
+===Construct the Mine Cart===
+
+{{mission_details
+|desc = On your Assembly Station, build a Mine Cart that is mole-sized and sturdy.
+|details = Construct the Mine Cart
+*{{i2|Mine Cart|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1800294 | targetId: 4 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Install the Mine Cart===
+
+{{mission_details
+|desc = The Mine Cart is ready! Take it to the mines and install it.
+|details = Install the Mine Cart
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 82951 | path: S8295_Label | sceneName: Main | flagName: S8295_Item1 | extraParams: S8295_Item1|CreatorItem|19810044_1|1547|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 82951 | missionId: 1800294 | iconType: 2
+
+TRIGGER Procedure 0.0 Step 9.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 82951
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 82951 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 11.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82951 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Trudy stands still in Main and looks at Ged
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8295_0_2
+Ged stands still in Main and looks at Trudy
+DELAY MASK SET || maskId: 82951 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 13.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82951 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 3478_0 starts:
+{{dialogue|Trudy|Amazing! It looks so sturdy. I don't know if we've made something so... industrious before!}}
+{{dialogue|Ged|Mon amour! My beautiful Mayor, it is only with your expertisé and generosité that this was made possible at all... this mole's heart has filled with such feelings.}}
+{{dialogue|Trudy|Well, it was really all our Builder here, ''Player''!}}
+{{dialogue|Ged|Of course! My good Constructeur! You have not only saved our kingdom once, but now have provided us with a path towards le future...}}
+{{dialogue|Ged|Ze Mayor, her kindness rivals even that of mon Princess Lumi... Is it possible I have feelings for another!? Why do I always go for the good girls...?}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 15.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Princess Lumi stands still in Main
+Add behavior CommanderMoveToFlagAndAction (idName: 8295812) to Princess Lumi
+(param: TargetScene:Main|FlagName:S8295_81_2|MoveMode:Walk)
+Add behavior CommanderMoveToFlagAndAction (idName: 8295064) to Trudy
+(param: TargetScene:Main|FlagName:S8295_6_3|MoveMode:Walk|Delay:2.0)
+Add behavior CommanderMoveToFlagAndAction (idName: 8295844) to Ged
+(param: TargetScene:Main|FlagName:S8295_84_3|MoveMode:Walk|Delay:2.0)
+
+TRIGGER Procedure 0.0 Step 17.0 Order 12 Repeat 3
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8081 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8006 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: MoveToFlagOver | npc: 8084 | behaviourName: CommanderMoveToFlagAndAction
+CONDITIONS
+Always:
+ACTIONS
+Increment 8295Walk by 1
+
+TRIGGER Procedure 0.0 Step 19.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8081 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8006 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 10 | eventName: MoveToFlagOver | npc: 8084 | behaviourName: CommanderMoveToFlagAndAction
+CONDITIONS
+Check if 8295Walk is >= 3
+ACTIONS
+(cId 4) A conversation 3479_0 starts:
+{{dialogue|Princess Lumi|What's going on here...}}
+{{dialogue|Ged|Ah... Princess... this is awkward, with the Mayor here...}}
+{{dialogue|Trudy|Oh, you must be Princess Lumi! We've just finished installing the mine system!}}
+{{dialogue|Princess Lumi|How wonderful! So we can finally start working towards a brighter future!}}
+{{dialogue|Ged|Yes, my Princess! You can now watch over us, we'll be working in your honor to bring our little home to prosperité!}}
+{{dialogue|Princess Lumi|Watch over? What can I do to help?}}
+{{dialogue|Ged|Nothing, Princess. You can watch while we bring you wealth, and lift ourselves from poverté.}}
+{{dialogue|Princess Lumi|Nonsense! I'm not willing to sit by and watch my friends toil for my benefit. No, I'm going to join and work side by side with the moles.}}
+{{dialogue|Ged|But Princess...}}
+{{dialogue|Princess Lumi|I'm not going to be like my step-mother, Ged! I need to be a real leader. Like the Mayor here!}}
+{{dialogue|Trudy|Oh, stop...}}
+{{dialogue|Ged|My Princess... you are even more inspiring than ever before... And though I am dubious your poofy dresses shall serve you well in the mines, I can promise that I shall serve you well in the mines...!}}
+{{dialogue|Princess Lumi|Thank you, ''Player''. Our people owe you our lives. If you ever need our services, please don't be afraid to pop by!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 22.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 82953 | delayTime: 1 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 25.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82953 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Trudy stops standing still
+Ged stops standing still
+Princess Lumi stops standing still
+DELAY MASK SET || delayTime: 1 | maskId: 82953 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 8295001) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8295064) from Trudy
+Remove behavior CommanderMoveToFlagAndAction (idName: 8295844) from Ged
+Remove behavior CommanderMoveToFlagAndAction (idName: 8295812) from Princess Lumi
+NPC LEAVE || npc: 8084
+SUBMIT MISSION 1800294
+ACTION DATE SET FLAG || flag: 8295Day
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 30.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE FLAG || flag: 8295Day | compare: 2 | days: 2
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: 8294Talk
+The player receives a letter:
+{{mail|563}}
+ACTION SHOW CUSTOM IMAGE TIPS || content: 80017144 | preset: Mission
+SCENEITEM CREATE FLAG || itemType: 0 | id: 82952 | path: mission_preorderbook_2 | flagName: S8295_Item2 | sceneName: Main | extraParams: -1
+
+TRIGGER Procedure 0.0 Step 30.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE FLAG || flag: 8295Day | compare: 2 | days: 6
+ACTIONS
+AREA TRIGGER DELETE || id: 82953
+GLOBAL BLACK BOARD REMOVE || key: 8295Day
+END MISSION 1800295
+
+TRIGGER Procedure 1.0 Step 0.2 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8084
+NPC LEAVE || npc: 8084
+
+TRIGGER Procedure 1.0 Step 0.5 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 8295Lead is == 0
+ACTIONS
+Set 8295Lead to 1
+===￥not use￥===
+
+{{mission_details
+|desc = Ged is going to meet with Trudy. Go see what they're up to.
+|details = ￥not use￥
+}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_guildhall
+CHECK GLOBAL BLACKBOARD || key: yanreveal | info: 1 | exist: 0
+Check if 8295Lead is == 1
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_guildhall
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+Always:
+ACTIONS
+Trudy stands still in Guildhall and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Guildhall | flagName: S8295_0_1
+Ged stands still in Guildhall and looks at Trudy
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800295
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: 8294Talk | info: 1 | exist: 1
+ACTIONS
+Set 8295Lead to 1
+===Wait for Diagrams===
+
+{{mission_details
+|desc = Heidi is working on a diagram for a Mine Cart. Wait for her to mail it to you.
+|details = Wait for Diagrams
+}}

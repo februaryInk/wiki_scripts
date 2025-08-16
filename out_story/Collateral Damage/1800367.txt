@@ -1,0 +1,291 @@
+Reading Mission 1800367: Collateral Damage
+
+<onlyinclude>{{Infobox mission
+|name = Collateral Damage
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Collateral Damage:
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 632
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Sunshade of Default quality (Do not notify player)
+DELIVER MISSION 1800366
+START MISSION 1800366
+
+TRIGGER Procedure 0.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800366
+CONDITIONS
+Always:
+ACTIONS
+Run mission Collateral Damage
+END MISSION 1800366
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 1.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800367
+CONDITIONS
+Always:
+ACTIONS
+===Prepare Items and Materials===
+
+{{mission_details
+|desc = Many things have been destroyed in the city. Prepare a Sunshade, a Single-Arm Street Lamp, 3 Iron Bars, 1 Manganese Steel Bar, and 4 Iron Nails.
+|details = Prepare Items and Materials
+*{{i2|Single-Arm Street Lamp|0/1}}
+*{{i2|Sunshade|0/1}}
+*{{i2|Steel Bar|0/3}}
+*{{i2|Manganese Steel Bar|0/1}}
+*{{i2|Cast Iron Nails|0/4}}
+}}
+
+TRIGGER Procedure 0.0 Step 10.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1800366 | targetId: 10 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Check on buildings in town===
+
+{{mission_details
+|desc = You have all the materials you need, take them to the spots in town that need fixing.
+|details = Check on buildings in town
+}}
+SCENEITEM INTERACT SET || itemType: 11 | canInteract: 1 | id: 83661
+SCENEITEM INTERACT SET || canInteract: 1 | itemType: 11 | id: 83662
+SCENEITEM INTERACT SET || canInteract: 1 | itemType: 11 | id: 83663
+AREA TRIGGER CREATE || missionId: 1800366 | id: 83661 | sceneName: Main | flagName: Trigger_83661 | showOnMap: 0 | mapIcon: MissionAreaBranch | transId: 0
+AREA TRIGGER CREATE || transId: 0 | flagName: Trigger_83662 | showOnMap: 0 | mapIcon: MissionAreaBranch | sceneName: Main | missionId: 1800366 | id: 83662
+AREA TRIGGER CREATE || missionId: 1800366 | id: 83663 | sceneName: Main | flagName: Trigger_83663 | showOnMap: 0 | mapIcon: MissionAreaBranch | transId: 0
+Set 8367Fresh1 to 0
+Set 8367Fresh2 to 0
+Set 8367Fresh3 to 0
+Set 8367Fresh4 to 0
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 83661 | missionId: 1800366 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | iconType: 2 | missionId: 1800366 | id: 83662
+SCENEITEM ADD ICON STACK || iconType: 2 | missionId: 1800366 | id: 83663 | add: 1 | itemType: 11
+SCENEITEM DELETE || itemType: 12 | id: 836610
+SCENEITEM DELETE || itemType: 12 | id: 836620
+SCENEITEM DELETE || itemType: 12 | id: 836630
+
+TRIGGER Procedure 0.0 Step 11.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | id: 83661 | itemType: 12
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || isAdd: 1 | transId: 80022335 | targetId: 1 | missionId: 1800366
+AREA TRIGGER DELETE || id: 83661
+
+TRIGGER Procedure 0.0 Step 12.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | id: 83662 | itemType: 12
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || isAdd: 1 | transId: 80022336 | targetId: 1 | missionId: 1800366
+AREA TRIGGER DELETE || id: 83662
+
+TRIGGER Procedure 0.0 Step 13.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | id: 83663 | itemType: 12
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || isAdd: 1 | transId: 80022337 | targetId: 1 | missionId: 1800366
+AREA TRIGGER DELETE || id: 83663
+
+TRIGGER Procedure 0.0 Step 13.1 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | canSubmit: 1 | missionId: 1800366 | targetId: 1
+CONDITIONS
+Always:
+ACTIONS
+===Recycle Ammunition===
+
+{{mission_details
+|desc = Some of the weapons and ammunition left by Duvos are still in town. Go recycle them.
+|details = Recycle Ammunition
+}}
+RESOURCE LOCK INTERACT || id: 18003661 | set: 0
+RESOURCE LOCK INTERACT || set: 0 | id: 18003662
+RESOURCE LOCK INTERACT || set: 0 | id: 18003663
+RESOURCE LOCK INTERACT || set: 0 | id: 18003664
+AREA TRIGGER CREATE || missionId: 1800366 | id: 836641 | sceneName: Main | flagName: Trigger_836641 | showOnMap: 1 | mapIcon: BranchTalk | transId: 80022338
+AREA TRIGGER CREATE || missionId: 1800366 | id: 836642 | transId: 80022338 | mapIcon: BranchTalk | showOnMap: 1 | sceneName: Main | flagName: Trigger_836642
+AREA TRIGGER CREATE || missionId: 1800366 | id: 836643 | transId: 80022338 | sceneName: Main | mapIcon: BranchTalk | showOnMap: 1 | flagName: Trigger_836643
+AREA TRIGGER CREATE || missionId: 1800366 | id: 836644 | transId: 80022338 | mapIcon: BranchTalk | showOnMap: 1 | sceneName: Main | flagName: Trigger_836644
+
+TRIGGER Procedure 0.0 Step 14.0 Order 5 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 8367Fresh1 is <= (maybe?) 1
+ACTIONS
+PICK UP RESOURCE REFRESH || id: 18003661
+
+TRIGGER Procedure 0.0 Step 14.1 Order 12 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 8367Fresh2 is <= (maybe?) 1
+ACTIONS
+PICK UP RESOURCE REFRESH || id: 18003662
+
+TRIGGER Procedure 0.0 Step 14.2 Order 13 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 8367Fresh3 is <= (maybe?) 1
+ACTIONS
+PICK UP RESOURCE REFRESH || id: 18003663
+
+TRIGGER Procedure 0.0 Step 14.3 Order 14 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 8367Fresh4 is <= (maybe?) 1
+ACTIONS
+PICK UP RESOURCE REFRESH || id: 18003664
+
+TRIGGER Procedure 0.0 Step 15.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON RESOURCE PICK UP || order: 0 | npc: 8000 | id: 18003661
+CONDITIONS
+Always:
+ACTIONS
+Set 8367Fresh1 to 1
+MISSION TARGET COUNTER CHANGE EX || missionId: 1800366 | targetId: 2 | transId: 80022886 | num: 1
+AREA TRIGGER DELETE || id: 836641
+
+TRIGGER Procedure 0.0 Step 15.1 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON RESOURCE PICK UP || order: 0 | npc: 8000 | id: 18003662
+CONDITIONS
+Always:
+ACTIONS
+Set 8367Fresh2 to 1
+MISSION TARGET COUNTER CHANGE EX || missionId: 1800366 | targetId: 2 | transId: 80022886 | num: 1
+AREA TRIGGER DELETE || id: 836642
+
+TRIGGER Procedure 0.0 Step 15.2 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON RESOURCE PICK UP || order: 0 | npc: 8000 | id: 18003663
+CONDITIONS
+Always:
+ACTIONS
+Set 8367Fresh3 to 1
+MISSION TARGET COUNTER CHANGE EX || missionId: 1800366 | targetId: 2 | transId: 80022886 | num: 1
+AREA TRIGGER DELETE || id: 836643
+
+TRIGGER Procedure 0.0 Step 15.3 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON RESOURCE PICK UP || order: 0 | npc: 8000 | id: 18003664
+CONDITIONS
+Always:
+ACTIONS
+Set 8367Fresh4 to 1
+MISSION TARGET COUNTER CHANGE EX || missionId: 1800366 | targetId: 2 | transId: 80022886 | num: 1
+AREA TRIGGER DELETE || id: 836644
+
+TRIGGER Procedure 0.0 Step 17.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | canSubmit: 1 | missionId: 1800366 | targetId: 2
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Trudy===
+
+{{mission_details
+|desc = You have completed all repairs and cleaned up the city. Go tell Trudy.
+|details = Talk to Trudy
+}}
+
+TRIGGER Procedure 0.0 Step 18.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Trudy
+CONDITIONS
+Sandrock Strikes Back is successfully completed
+ACTIONS
+(cId 1) A conversation 15246, 15247 starts:
+{{dialogue|Trudy|Ah, you helped fix things up around town? Thank you so much, ''Player''!}}
+{{dialogue|Trudy|Having things back to normal here... well, I think it'll make everyone feel a lot better moving forward. Thanks again!}}
+
+TRIGGER Procedure 0.0 Step 22.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1800366
+END MISSION 1800367
+
+TRIGGER Procedure 0.0 Step 19.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Trudy
+CONDITIONS
+Sandrock Strikes Back is in state 3 with flag 0
+ACTIONS
+(cId 1) A conversation 15246, 15248 starts:
+{{dialogue|Trudy|Ah, you helped fix things up around town? Thank you so much, ''Player''!}}
+{{dialogue|Trudy|So... does that mean you're ready to go to the Northern Ruins, then...? I wish you luck, ''Player''. Be careful! Come back safely... for all our sakes.}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1800367
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 12 | id: 83661
+SCENEITEM DELETE || itemType: 12 | id: 83662
+SCENEITEM DELETE || itemType: 12 | id: 83663
+SCENEITEM DELETE || itemType: 11 | id: 83661
+SCENEITEM DELETE || itemType: 11 | id: 83662
+SCENEITEM DELETE || itemType: 11 | id: 83663
+Set 8367Fresh to 1
+SCENEITEM CREATE FLAG || sceneName: Main | itemType: 12 | id: 83661 | path: S83661_Light | flagName: S83661_Light | extraParams: -1
+SCENEITEM CREATE FLAG || flagName: S83662_SunUmbrella | id: 83662 | path: S83662_SunUmbrella | itemType: 12 | sceneName: Main | extraParams: -1
+SCENEITEM CREATE FLAG || itemType: 12 | id: 83663 | path: S83663_MailBox | sceneName: Main | flagName: S83663_MailBox | extraParams: -1
+PICK UP RESOURCE DELETE || id: 18003661
+PICK UP RESOURCE DELETE || id: 18003662
+PICK UP RESOURCE DELETE || id: 18003663
+PICK UP RESOURCE DELETE || id: 18003664

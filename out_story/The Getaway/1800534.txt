@@ -1,0 +1,385 @@
+Reading Mission 1800534: The Getaway
+
+<onlyinclude>{{Infobox mission
+|name = The Getaway
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from The Getaway:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800533
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Getaway
+END MISSION 1800533
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800534
+CONDITIONS
+Always:
+ACTIONS
+===Go to Mort's House===
+
+{{mission_details
+|desc = Would Fang be willing to talk about these things? Maybe you should look for him now.
+|details = Go to Mort's House
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Cemetery:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_cemetery
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_cemetery
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Cemetery:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85341 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+PLAYER SET POS ROT FLAG || sceneName: Cemetery | flagName: S8534_0_1
+Add behavior CommanderDramaWithIndex (idName: 8534161) to Fang
+(param: SeatDramaName:CemeterySit01|TargetScene:Cemetery|DramaIndex:13|TriggerTag:8534SitEat)
+X stands still in Main
+Add behavior CommanderDramaWithIndex (idName: 8534411) to Mort
+(param: SeatDramaName:CemeterySit02|TargetScene:Cemetery|DramaIndex:13|TriggerTag:8534SitEat)
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8041 | behaviourName: CommanderDramaWithIndex | eventName: SitDownFinished
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85341 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85341 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 24041, 24042 starts:
+{{dialogue|Mort|Same as usual, Fang?}}
+{{dialogue|Fang|Yes. Please.}}
+
+TRIGGER Procedure 0.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add tag "8534SitEat" to Fang
+Add tag "8534SitEat" to Mort
+STOPWATCH REAL TIME SET || sec: 4 | id: 85341
+
+TRIGGER Procedure 0.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 85341
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 24043, 24044, 24045 starts:
+{{dialogue|Fang|Today's tea... is delicious.}}
+{{dialogue|Mort|Hehe, I'm glad you noticed. I bought honey from the Mysterious Man, he said it has all sorts of extracts from flowers.}}
+{{dialogue|Mort|Drink up, young man.}}
+
+TRIGGER Procedure 0.0 Step 8.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8534001) to Player
+(param: TargetScene:Cemetery|MoveMode:Run|FlagName:S8534_0_2|LookAtActor:8016)
+
+TRIGGER Procedure 0.0 Step 9.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 24046, 24047, 24048 starts:
+{{dialogue|Fang|''Player'', you are here too.}}
+{{dialogue|Mort|Ah, ''Player''! What a pleasure. Come and drink tea with us.}}
+{{dialogue|Fang|Mort and I... are having tea. You should try.}}
+
+TRIGGER Procedure 0.0 Step 10.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerMoveSit (idName: 8534002) to Player
+(param: SeatDramaName:CemeterySit00|Delay:0.0)
+
+TRIGGER Procedure 0.0 Step 11.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerMoveSit | eventName: SitDownFinished
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85342 | delayTime: 2 | durationTime: -2 | changeType: 0 | curveIndex: 0
+Add tag "8534SitEat" to Fang
+Add tag "8534SitEat" to Mort
+
+TRIGGER Procedure 0.0 Step 12.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85342 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderDramaWithIndex (idName: 8534161) from Fang
+Remove behavior CommanderDramaWithIndex (idName: 8534411) from Mort
+Remove behavior CommanderPlayerMoveSit (idName: 8534002) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8534001) from Player
+STOPWATCH REAL TIME SET || id: 85342 | sec: 8
+
+TRIGGER Procedure 0.0 Step 12.0 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 85342
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8534_0_1
+
+TRIGGER Procedure 0.0 Step 13.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Cemetery to the Main:
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8534_0_1
+Fang stands still in Main and looks at Player
+DELAY MASK SET || maskId: 85342 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 14.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85342 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8534003) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8534_0_1|LookAtActor:8016|Action:Give)
+
+TRIGGER Procedure 0.0 Step 15.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 24049, 24050, 24051, 24052, 8370_3_1 starts:
+{{dialogue|Fang|This...}}
+{{dialogue|Fang|I remember this... I... only have this one there.}}
+{{dialogue|Fang|This is... someone I care about.}}
+{{dialogue|Fang|The gardener... George...}}
+{{dialogue|Player|(What should I say?)}}
+
+*''I'm sorry... I didn't mean to bring up a  painful memory.''
+*''Do you still have contact with George?''
+*''Do you have any other photos?''
+*''(Don't ask anything)''
+
+{{dialogue|Fang|indent=true|answer=I'm sorry... I didn't mean to bring up a  painful memory.
+|It's okay.}}
+{{dialogue|Fang|indent=true|Before... seeing a photograph like this would make me feel... uncomfortable. But today...}}
+{{dialogue|Fang|indent=true|I feel nothing. It is... a fond memory now.}}
+{{dialogue|Fang|indent=true|You have helped me... I have become more comfortable.}}
+{{dialogue|Fang|indent=true|answer=Do you still have contact with George?
+|No...}}
+{{dialogue|Fang|indent=true|He... had to leave. Probably because of me...}}
+{{dialogue|Fang|indent=true|I don't know where he went...}}
+{{dialogue|Fang|indent=true|In those days... X and I were frightened...}}
+{{dialogue|Fang|indent=true|When we left, we were worried we would be taken back... we didn't have time... to find him.}}
+{{dialogue|Fang|indent=true|answer=Do you have any other photos?
+|Perhaps... I lived there for many years.}}
+{{dialogue|Fang|indent=true|...But in those photos, I felt like... a marionette. "Smile..." while standing next to... "him."}}
+{{dialogue|Fang|indent=true|...When we escaped... I took this one.}}
+{{dialogue|Fang|indent=true|I wished to rid myself of the memories...}}
+{{dialogue|Fang|indent=true|But this... I wanted to keep.}}
+{{dialogue|Fang|indent=true|answer=(Don't ask anything)
+|Photographs... are moments in time.}}
+{{dialogue|Fang|indent=true|Memories can be created... that is what we are doing now. I know now what life means to me...}}
+{{dialogue|Fang|indent=true|But this feeling... cannot truly be captured in... a photograph.}}
+Remove behavior CommanderMoveToFlagAndAction (idName: 8534003) from Player
+
+TRIGGER Procedure 0.0 Step 16.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+The player interacts (type 2, option 0) with Fang
+
+TRIGGER Procedure 0.0 Step 17.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON INTERACTIVE EXIT || order: 0 | instID: 8016
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 8375_0 starts:
+{{dialogue|Fang|reward={{NPC2|Fang|rp=3}}|Every time I hold you... I never want to let go...}}
+
+*''Hug me again...''
+*''I never want to leave you...''
+*''Are you flirting with me...?''
+
+{{dialogue|Fang|indent=true|answer=Hug me again...
+|Of course...}}
+{{dialogue|Fang|indent=true|answer=I never want to leave you...
+|We will... always be together.}}
+{{dialogue|Fang|indent=true|Nothing... nothing will separate us.}}
+{{dialogue|Fang|indent=true|Darling... next time we go out... let's take more photos.}}
+{{dialogue|Fang|indent=true|I like... looking at our life.}}
+{{dialogue|Fang|indent=true|Now, you can do what you need to... I am sure you're busy. I'll see you later.}}
+{{dialogue|Fang|indent=true|answer=Are you flirting with me...?
+|I... I suppose so...}}
+{{dialogue|Fang|indent=true|I want to stay by your side forever.}}
+{{dialogue|Fang|indent=true|Darling... next time we go out... let's take more photos.}}
+{{dialogue|Fang|indent=true|I like... looking at our life.}}
+{{dialogue|Fang|indent=true|Now, you can do what you need to... I am sure you're busy. I'll see you later.}}
+Set 8534B to 0
+
+TRIGGER Procedure 0.0 Step 19.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Check if 8534B is == 1
+ACTIONS
+The player interacts (type 2, option 0) with Fang
+
+TRIGGER Procedure 0.0 Step 21.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 5) There is a conversation segment (id 24070) that ends:
+{{dialogue|Fang|Every time I hold you... I never want to let go...}}
+
+*''Hug me again...'' (No unique dialogue)
+*''I never want to leave you...'' (No unique dialogue)
+*''Are you flirting with me...?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Fang gains 3 favor
+
+TRIGGER Procedure 0.0 Step 22.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Check if 8534B is == 0
+ACTIONS
+X stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8534003) from Player
+Fang stops standing still
+CUTSCENE UI STATE EXIT || 
+CAMERA PATH STOP ALL || 
+SUBMIT MISSION 1800533
+END MISSION 1800534
+
+TRIGGER Procedure 0.0 Step 18.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) The player picks the first option in conversation segment 24070:
+{{dialogue|Fang|Every time I hold you... I never want to let go...}}
+
+*''Hug me again...'' (No unique dialogue)
+*''I never want to leave you...'' (No unique dialogue)
+*''Are you flirting with me...?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8534B to 1
+
+TRIGGER Procedure 0.0 Step 20.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON INTERACTIVE EXIT || order: 0 | instID: 8016
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 24076, 24077, 24078 starts:
+{{dialogue|Fang|Darling... next time we go out... let's take more photos.}}
+{{dialogue|Fang|I like... looking at our life.}}
+{{dialogue|Fang|Now, you can do what you need to... I am sure you're busy. I'll see you later.}}
+
+TRIGGER Procedure 0.0 Step 23.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+X stops standing still
+Fang stops standing still
+SUBMIT MISSION 1800533
+CUTSCENE UI STATE EXIT || 
+CAMERA PATH STOP ALL || 
+END MISSION 1800534
+
+TRIGGER Procedure 1.0 Step 17.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the third option in conversation segment 24070:
+{{dialogue|Fang|Every time I hold you... I never want to let go...}}
+
+*''Hug me again...'' (No unique dialogue)
+*''I never want to leave you...'' (No unique dialogue)
+*''Are you flirting with me...?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || flagName: S8534_0_9 | itemType: 0 | id: 85349 | path: S8510_efx | sceneName: Main | extraParams: 0
+
+TRIGGER Procedure 1.0 Step 18.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 24074) that ends:
+{{dialogue|Fang|I... I suppose so...}}
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 85349

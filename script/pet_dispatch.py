@@ -4,9 +4,9 @@ Pet Dispatch results table generator.
 
 from __future__ import annotations
 
-from sandrock                     import *
-from sandrock.lib.text            import load_text
-from script.structures.generators import *
+from sandrock                       import *
+from sandrock.lib.text              import load_text
+from sandrock.structures.generators import *
 
 # ------------------------------------------------------------------------------
 

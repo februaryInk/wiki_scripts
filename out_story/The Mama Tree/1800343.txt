@@ -1,0 +1,202 @@
+Reading Mission 1800343: The Mama Tree
+
+<onlyinclude>{{Infobox mission
+|name = The Mama Tree
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from The Mama Tree:
+
+TRIGGER Procedure 0.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Set 8342Day to 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800342
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Mama Tree
+END MISSION 1800342
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800343
+CONDITIONS
+Always:
+ACTIONS
+===Construct Fluid Tank===
+
+{{mission_details
+|desc = Construct Fluid Tank according to the diagram on the Assembly Station.
+|details = Construct Fluid Tank
+*{{i2|Fertilizer Tank|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1800343
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 11 | id: 83431
+SCENEITEM CREATE FLAG || itemType: 12 | id: 83431 | path: S8343_Item1 | sceneName: Main | flagName: S8343_Item1 | extraParams: -1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1800342 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Install Fluid Tank===
+
+{{mission_details
+|desc = Go attach this Fluid Tank to the Mama Tree and hope that it's enough to help her...
+|details = Install Fluid Tank
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 83431 | path: S8343_Item1_Mark | sceneName: Main | flagName: S8343_Item1 | extraParams: S8343_Item1|CreatorItem|19810069_1|1547|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 83431 | missionId: 1800342 | iconType: 3
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 83431
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 83431 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83431 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Zeke stands still in Main and looks at Player
+Nia stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8343_0_1
+DELAY MASK SET || maskId: 83431 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Add behavior CommanderNPCAction (idName: 8343332) to Zeke
+(param: CMDAction:Applause)
+
+TRIGGER Procedure 0.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8033 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 4328_0 starts:
+{{dialogue|Zeke|Looks good, ''Player''.}}
+{{dialogue|Nia|Looks great, you mean! I think I saw Mama Tree just froop up a little bit...!}}
+{{dialogue|Zeke|Like I said, don't get your hopes up. This is an experimental cocktail of algae and nutrients... we don't know if it's going to take. "Mama Tree" is on her... last limb. We just need to wait and observe.}}
+{{dialogue|Zeke|Thank you for your willingness to help, ''Player'' and Nia. This tree witnessed Ma and Pa's love, and I'm glad to see you are willing to make efforts to save its life.}}
+{{dialogue|Zeke|Thanks for trying though, you two. I think my Pa... and Ma... both appreciate it.}}
+{{dialogue|Nia|Hey! Of course we had to try! This tree was important to your Pa. That means it's important to Sandrock!}}
+{{dialogue|Zeke|Yeah... Well... Whatever happens... Thank you.}}
+{{dialogue|Nia|It's up to you now, Mama Tree! Hang in there!}}
+{{dialogue|Zeke|''Player'', there's nothing more we can do. We're gonna head back. Coming with?}}
+
+*''Return to town.''
+*''Stay here.''
+
+{{dialogue|Zeke|indent=true|answer=Return to town.
+|Back we go, then.}}
+{{dialogue|Nia|indent=true|Thanks again for helping us!}}
+{{dialogue|Zeke|indent=true|Oh, yeah. Right. Thanks, ''Player''.}}
+{{dialogue|Zeke|indent=true|answer=Stay here.
+|Oh. Yeah? Got somethin' to do out here? Alright. Be seein' you then.}}
+{{dialogue|Nia|indent=true|Later, ''Player''! Thanks again for helping us!}}
+{{dialogue|Zeke|indent=true|Oh, yeah. Right. Thanks, ''Player''.}}
+
+TRIGGER Procedure 0.0 Step 13.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Check if 8343Choice is == 1
+ACTIONS
+DELAY MASK SET || maskId: 83432 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 15.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Check if 8343Choice is == 2
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 8343332) from Zeke
+CUTSCENE UI STATE EXIT || 
+Zeke stops standing still
+Nia stops standing still
+SUBMIT MISSION 1800342
+END MISSION 1800343
+
+TRIGGER Procedure 0.0 Step 11.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 14755:
+{{dialogue|Zeke|''Player'', there's nothing more we can do. We're gonna head back. Coming with?}}
+
+*''Return to town.'' (No unique dialogue)
+*''Stay here.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8343Choice to 1
+
+TRIGGER Procedure 0.0 Step 12.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the second option in conversation segment 14755:
+{{dialogue|Zeke|''Player'', there's nothing more we can do. We're gonna head back. Coming with?}}
+
+*''Return to town.'' (No unique dialogue)
+*''Stay here.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8343Choice to 2
+
+TRIGGER Procedure 0.0 Step 14.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83432 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 8343332) from Zeke
+CUTSCENE UI STATE EXIT || 
+Zeke stops standing still
+Nia stops standing still
+DELAY MASK SET || maskId: 83432 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8343_0_3
+SUBMIT MISSION 1800342
+END MISSION 1800343

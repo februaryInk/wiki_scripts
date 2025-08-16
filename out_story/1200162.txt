@@ -1,0 +1,168 @@
+Reading Mission 1200162: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200135
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200135
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1200264
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1200160 is result 1 flag 1
+ACTIONS
+Run mission #1200162
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200162
+CONDITIONS
+Always:
+ACTIONS
+Trudy stands still in Guildhall
+Ernest stands still in Guildhall
+AREA TRIGGER CREATE || missionId: 1200162 | id: 21621 | sceneName: Main | flagName: trigger_guildhall | showOnMap: 1 | mapIcon: MissionArea | transId: 80000767
+Set DAY to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_guildhall
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 21621
+UNIQUE ACTION RUN || idStr: enter_guildhall
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+Always:
+ACTIONS
+Trudy stops standing still
+Ernest stops standing still
+Ernest stands still in Guildhall and looks at Trudy
+Trudy stands still in Guildhall
+
+TRIGGER Procedure 0.0 Step 2.5 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+Always:
+ACTIONS
+Trudy stops standing still
+Add behavior CommanderSit (idName: 21621) to Trudy
+(param: SeatDramaName:GuildHallSeat01|TargetScene:Guildhall)
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8006 | behaviourName: CommanderSit | eventName: SitDownFinished
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 1129_0 starts:
+{{dialogue|Ernest|I guess just start off with an introduction, talk a little about yourself. Whatever comes to mind.}}
+{{dialogue|Trudy|Um... I'm Trudy. I've lived in Sandrock my whole life. I was elected mayor here after my husband Theodore, the former mayor passed away during a sandstorm.}}
+{{dialogue|Trudy|As a citizen, I've watched Sandrock dwindle and nearly shrivel up. So now it's my job, no, my duty to keep this place alive!}}
+{{dialogue|Trudy|...Which I couldn't do without the help of all my lovely friends and colleagues, of course!}}
+{{dialogue|Ernest|Good! Yeah, that's good stuff, we can use that. Alright, let's start with the questions.}}
+{{dialogue|Ernest|A lot of outsiders find the Sandrock mindset hard to understand. As you said, Sandrock is dwindling, but it seems like all of you still have the capacity to pick up and move somewhere more prosperous. Why not do that? Why stay in this town?}}
+{{dialogue|Trudy|Wow. Gosh, that's... that's a complicated question to answer...}}
+{{dialogue|Ernest|Well, try to keep it compact. You know how readers can be, no attention span these days...}}
+{{dialogue|Trudy|A... Alright...}}
+{{dialogue|Trudy|Well, simply put: this place means something to us. For people like me, it's been a part of our lives since childhood. Everything we've ever experienced happened all around this oasis.}}
+{{dialogue|Trudy|We do this for Martle, for Rhonda, Theodore... all the people we lost here. The people who loved this place no matter what. If we let Sandrock disappear, we let their memories fade with it... and allow their sacrifice to be... meaningless.}}
+{{dialogue|Trudy|I won't let that happen.}}
+{{dialogue|Trudy|Oh, s-sorry, was that too long? Maybe I can rephrase that...}}
+{{dialogue|Ernest|N-no! Ah, I just...}}
+{{dialogue|Ernest|That was... good! We can use that! Next question.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 21621 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 21621 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Add behavior Story1200162_8006_1 (idName: 21621) to Trudy
+(param: -1)
+Add behavior Story1200162_8069_1 (idName: 21621) to Ernest
+(param: -1)
+Remove behavior CommanderSit (idName: 21621) from Trudy
+Ernest stops standing still
+DELAY MASK SET || maskId: 21621 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior Story1200162_8006_1 (idName: 21621) from Trudy
+Remove behavior Story1200162_8069_1 (idName: 21621) from Ernest
+END MISSION 1200162
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment DAY by 1
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if DAY is >= 4
+ACTIONS
+Trudy stops standing still
+Ernest stops standing still
+AREA TRIGGER DELETE || id: 21621
+END MISSION 1200162

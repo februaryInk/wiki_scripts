@@ -1,0 +1,164 @@
+Reading Mission 1200203: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200135
+
+TRIGGER Procedure 3.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Mystical Investigations is successfully completed
+ACTIONS
+The player receives a letter:
+{{mail|355}}
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END || order: 0 | result: 1 | missionId: 1200194
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1200203
+Run mission #1200204
+Run mission #1200205
+Run mission #1200206
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200203
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || transId: 80008804 | missionId: 1200203 | id: 22031 | sceneName: Main | flagName: 1600069_MissionArea_2 | showOnMap: 1 | mapIcon: MissionArea
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_saloon
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_saloon
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 22031
+Remove behavior CommanderBubbleTag (idName: 22061) from Bronco the Kid
+Remove behavior CommanderBubbleTag (idName: 22061) from Rian
+Remove behavior CommanderBubbleTag (idName: 22061) from Dan-bi
+Remove behavior CommanderBubbleTag (idName: 22091) from Bronco the Kid
+Remove behavior CommanderBubbleTag (idName: 22091) from Ernest
+Remove behavior CommanderBubbleTag (idName: 22081) from Bronco the Kid
+Remove behavior CommanderBubbleTag (idName: 22081) from Burgess
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+Bronco the Kid stands still in Saloon
+Grace stands still in Saloon and looks at Bronco the Kid
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+Bronco the Kid stops standing still
+Add behavior CommanderSit (idName: 22031) to Bronco the Kid
+(param: TargetScene:Saloon|SeatDramaName:SaloonSeat08)
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8034 | behaviourName: CommanderSit | eventName: SitDownFinished
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 1621_0 starts:
+{{dialogue|Bronco the Kid|Hand over the omelets nice and slow... don't make any sudden movements!}}
+{{dialogue|Grace|You're saying my omelets ought to be classified as weaponry? Dang, that's a hot take.}}
+{{dialogue|Bronco the Kid|I've heard the tales...}}
+{{dialogue|Grace|Um. Well, here... you... go...!}}
+{{dialogue|Bronco the Kid|Good, good. You know how to play ball with the law. I'm starting to like you, fry cook!}}
+{{dialogue|Grace|Hm... Hot sauce? Made fresh just this morning.}}
+{{dialogue|Bronco the Kid|Er, I don't handle spicy foods very well, I'm more of a mayonnaise guy. Although occasionally I do dabble in the mustard...}}
+{{dialogue|Grace|Oh... I really thought a heroic bandit-nabber such as yourself would be able to handle a little bit of chili paste on their omelet... That's kind of disappointing...}}
+{{dialogue|Bronco the Kid|Heh... Well, it's true, I'm new in town. Perhaps a spectacle of strength would inspire some confidence in you ordinary citizens!}}
+{{dialogue|Grace|Lovely. Here you are.}}
+{{dialogue|Bronco the Kid|Ah...}}
+{{dialogue|Bronco the Kid|Guh...}}
+{{dialogue|Bronco the Kid|Urp...}}
+{{dialogue|Bronco the Kid|By the Light, this is terrible!}}
+{{dialogue|Bronco the Kid|It's just so incredibly bad!}}
+{{dialogue|Bronco the Kid|And my mouth is on fire!}}
+{{dialogue|Grace|Oops, guess I'm just a silly ordinary citizen who can't cook. Tee hee. Enjoy your omelet.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 0) There is a conversation segment (id 5386) that ends:
+{{dialogue|Grace|Um. Well, here... you... go...!}}
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 22031 | sceneName: Saloon | extraParams: 0 | flagName: kidintown_saloon_omelett | path: Mission_Drop_Food_DanJuanBing_0
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Grace stops standing still
+(cId 1) A conversation 5400, 5401, 5402 starts:
+{{dialogue|Bronco the Kid|It's the worst thing I've ever eaten in my life!}}
+{{dialogue|Bronco the Kid|The spices are quite bad!}}
+{{dialogue|Bronco the Kid|But the omelet itself is even worse!}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderSit (idName: 22031) from Bronco the Kid
+ACTOR SHOW BUBBLE RANDOM || npc: 8034 | duration: 20 | transIds: 80007888,80007889,80007890,80007891
+SCENEITEM DELETE || itemType: 0 | id: 22031
+END MISSION 1200203
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1200203
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 22031

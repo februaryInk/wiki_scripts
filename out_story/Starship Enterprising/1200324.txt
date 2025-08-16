@@ -1,0 +1,191 @@
+Reading Mission 1200324: Starship Enterprising
+
+<onlyinclude>{{Infobox mission
+|name = Starship Enterprising
+|image =
+|description = Qi believes that there's a sizable water tank with a working Atmospheric Water Generator inside the Starship Ruins. See if you can go confirm such hopes.
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 5200
+|reputation = None
+|gols = None
+|npc1 = Qi
+|rp1 = 20
+|npc2 = Justice
+|rp2 = 20
+|rewards = {{i2|Rainbow Dinosaur Senior Jacket}|1}
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200310
+
+TRIGGER Procedure 8.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1200323 is result 1 flag 1
+ACTIONS
+Run mission The Luo Down
+The player receives a letter:
+{{mail|621}}
+
+TRIGGER Procedure 8.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Run mission Starship Enterprising
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200324
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 23241) to Qi
+(param: TargetScene:Guildhall|MoveMode:Walk|FlagName:greenbaby_guildhall_musa2)
+Add behavior CommanderMoveToFlagAndAction (idName: 23241) to Trudy
+(param: TargetScene:Guildhall|MoveMode:Walk|FlagName:greenbaby_guildhall_trudy2)
+AREA TRIGGER CREATE || missionId: 1200324 | id: 23241 | sceneName: Guildhall | flagName: greenbaby_guildhall_trigger | showOnMap: 1 | mapIcon: MissionArea | transId: 80000767
+DELIVER MISSION 1200324
+START MISSION 1200324
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 23241
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 23241) from Trudy
+Remove behavior CommanderMoveToFlagAndAction (idName: 23241) from Qi
+CUTSCENE UI STATE ENTER || 
+Trudy stands still in Guildhall and looks at Qi
+Qi stands still in Guildhall and looks at Trudy
+AREA TRIGGER DELETE || id: 23241
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200324
+CONDITIONS
+Always:
+ACTIONS
+Run mission Starship Enterprising
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 23241
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 3882_0 starts:
+{{dialogue|Trudy|If I may ask, Director Qi, what are you doing here?}}
+{{dialogue|Qi|I'm here to use the Telegraph. As you know, I'm suppose to report in to the Alliance once every week about my progress in the Starship Ruins. Although it is a pain, they are funding me and giving me on site protection, so contractually, I can't complain.}}
+{{dialogue|Trudy|How are you progressing...? I haven't seen much of you lately...}}
+{{dialogue|Qi|It is a very big ruin, I'm only cataloging the most standout of technologies, I'll leave the rest to the other researchers and archaeologists... Even so, it'll take me a while. It is a very big ruin.}}
+{{dialogue|Trudy|Well, I'm glad you showed up. If we didn't know about this new water source, I don't know what else we could have done.}}
+{{dialogue|Trudy|Maybe the Light is finally looking out for us...}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Trudy stops standing still
+Qi stops standing still
+NPC ICON ADD || missionId: 1200324 | npc: 8007 | missionIcon: 6
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON REMOVE || missionId: 1200324 | npc: 8007 | missionIcon: 6
+Remove behavior CommanderMoveToFlagAndAction (idName: 23241) from Trudy
+Remove behavior CommanderMoveToFlagAndAction (idName: 23241) from Qi
+AREA TRIGGER DELETE || id: 23241
+END MISSION 1200324
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON REMOVE || missionId: 1200324 | npc: 8007 | missionIcon: 6
+(cId 1) A conversation 3883_3_1 starts:
+{{dialogue|Qi|I just got back from the Starship Ruins. It was filled with such fascinating relics and science... I couldn't sleep, I just kept on absorbing...}}
+{{dialogue|Player|(What should I ask?)}}
+
+*''You absolutely sure there's a reservoir up there?''
+*''You sure the water will be safe?''
+*''Did you find anything else interesting there?''
+*''I didn't see any water on my way through the ruin...''
+*''I don't have any more questions.''
+
+{{dialogue|Qi|indent=true|answer=You absolutely sure there's a reservoir up there?
+|It's a space facility, pretty much everything they need to send anything into space needs water at some point...}}
+{{dialogue|Qi|indent=true|Think about it. For the starship, they need water to make hydrogen for the fusion reactor and oxygen for the crew. Then they also need water to make antihydrogen for the antimatter engine, which by the way is very superlative but I have no idea how it works.}}
+{{dialogue|Qi|indent=true|On top of that, they still need extra water for the crew, for cooling down the launch structure during lift off, and even for muffling the shockwaves from the thrusters!}}
+{{dialogue|Qi|indent=true|Plus, I read it in a book.}}
+{{dialogue|Qi|indent=true|answer=You sure the water will be safe?
+|reward={{NPC2|Qi|rp=5}}|Could it be contaminated? Sure... but most likely it's fine...}}
+{{dialogue|Qi|indent=true|I read before that the filter systems used in the Old World pretty much insured all water were clean to use. In fact, they even had procedures to reintroduce minerals back into the filtered water because it was so pure.}}
+{{dialogue|Qi|indent=true|As long as the filters are still working and the reservoir doesn't have any cracks... hmm, maybe I should go revisit my math...}}
+{{dialogue|Qi|indent=true|answer=Did you find anything else interesting there?
+|Yes.}}
+{{dialogue|Qi|indent=true|I found a quantum communicator, but I don't know how to operate it. There's a user manual, but it doesn't even say how to turn it on! It's like whoever designed this wanted me to be confounded! Unlucky for them... I enjoy a good challenge.}}
+{{dialogue|Qi|indent=true|I also tested a cryocell, but it wasn't working. Which was good for me, and in turn, Sandrock, in the end. Because I didn't really have a plan for if it did work...}}
+{{dialogue|Qi|indent=true|answer=I didn't see any water on my way through the ruin...
+|According to some of the base documents I found, there are several wings to this facility. You were in the starship launch section, there are others.}}
+{{dialogue|Qi|indent=true|I'd assume the reservior and the Atmospheric Water Generator would be somewhere close by.}}
+{{dialogue|Qi|indent=true|answer=I don't have any more questions.
+|Sure, I'll meet you there tomorrow.}}
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the second option in conversation segment 12985:
+{{dialogue|Player|(What should I ask?)}}
+
+*''You absolutely sure there's a reservoir up there?'' (No unique dialogue)
+*''You sure the water will be safe?'' (No unique dialogue)
+*''Did you find anything else interesting there?'' (No unique dialogue)
+*''I didn't see any water on my way through the ruin...'' (No unique dialogue)
+*''I don't have any more questions.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Qi gains 5 favor
+
+==Rewards==
+{{mission reward
+|npc1 = Qi
+|rp1 = 20
+|npc2 = Justice
+|rp2 = 20
+|exp = 5200
+|reputation = None
+|gols = None
+|rewards = {{i2|Rainbow Dinosaur Senior Jacket}|1}
+}}

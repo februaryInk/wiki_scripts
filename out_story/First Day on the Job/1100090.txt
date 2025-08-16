@@ -1,0 +1,334 @@
+Reading Mission 1100090: First Day on the Job
+
+<onlyinclude>{{Infobox mission
+|name = First Day on the Job
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from First Day on the Job:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100089
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1100089
+START MISSION 1100089
+ACTION MISSION TRACE 1100089
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1100089
+CONDITIONS
+Always:
+ACTIONS
+Run mission First Day on the Job
+END MISSION 1100089
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100090
+CONDITIONS
+Always:
+ACTIONS
+===Head for the Commerce Guild===
+
+{{mission_details
+|desc = You've registered your Workshop, go to the {{textcolor|green|Commerce Guild}} and tell Yan.
+|details = Head for the Commerce Guild
+}}
+Set SCENE to 0
+AREA TRIGGER CREATE || id: 10901 | sceneName: Main | flagName: trigger_chamber | showOnMap: 0 | mapIcon: MissionArea | transId: -1 | missionId: 1100089
+NPC REMOVE TAG || tag: yaninshang
+Set MOVEPLAYER to 0
+Set STEP to 0
+Set IN to 0
+Yan stands still in Chamber and looks at Rocky
+Rocky stands still in Chamber and looks at Yan
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 10901
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 10901
+Add behavior CommanderMoveToFlag (idName: 20901) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:zhuce_mian0|LookAtActor:8043)
+Mi-an stands still in Main
+Mi-an stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 20901) to Mi-an
+(param: TargetScene:Main|MoveMode:Run|FlagName:zhuce_player0|LookAtActor:8043)
+Set STEP to 1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 10 | eventName: MoveToFlagOver | behaviourName: CommanderMoveToFlagAndAction | npc: 8017
+CONDITIONS
+Check if IN is == 2
+Check if STEP is == 1
+ACTIONS
+(cId 1) A conversation 853, 854 starts:
+{{dialogue|Mi-an|Oh hey, ''Player''. Did you get a message from Yan saying, "Emergency, come now!" as well?}}
+{{dialogue|Mi-an|Wonder what's the emergency...?}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 20901) from Mi-an
+Remove behavior CommanderMoveToFlag (idName: 20901) from Player
+Add behavior CommanderSwitchScene (idName: 10904) to Mi-an
+(param: TargetScene:Chamber)
+STOPWATCH REAL TIME SET || id: 20901 | sec: 3
+Set MOVEPLAYER to 1
+
+TRIGGER Procedure 0.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 20901
+CONDITIONS
+Check if MOVEPLAYER is == 1
+ACTIONS
+Add behavior CommanderSwitchScene (idName: 10904) to Player
+(param: TargetScene:Chamber)
+DELAY MASK SET || maskId: 20902 | delayTime: 0 | durationTime: 2 | changeType: 2 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 20902 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Chamber | flagName: zhuce_player
+Mi-an stands still in Chamber
+DELAY MASK SET || maskId: 20902 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 7.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Chamber:
+CONDITIONS
+Check if MOVEPLAYER is == 1
+ACTIONS
+ACTION CUTSCENE START AUDIO TYPE || id: CG_INCHAMBER | duration: 0 | audioType: NoTransitionOff
+Remove behavior CommanderSwitchScene (idName: 10904) from Player
+Remove behavior CommanderSwitchScene (idName: 10904) from Mi-an
+TIME SET ENABLE || bool: 0
+
+TRIGGER Procedure 1.0 Step 0.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_INCHAMBER | state: 8
+CONDITIONS
+Always:
+ACTIONS
+Yan stops standing still
+Rocky stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 11901) to Yan
+(param: TargetScene:Chamber|MoveMode:Run|FlagName:zhuce_yan|LookAtActor:8017)
+Add behavior CommanderMoveToFlagAndAction (idName: 11901) to Rocky
+(param: TargetScene:Chamber|MoveMode:Walk|FlagName:zhuce_rocky|LookAtActor:8043)
+
+TRIGGER Procedure 1.0 Step 0.1 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8043 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 469, 870, 1243_0, 471, 872, 472, 473, 873, 981, 1330, 474, 874 starts:
+{{dialogue|Yan|No! No, you came at the perfect time! {{textcolor|green|Mr. Rocky}} here is the big boss of Eufaula Salvage, and he's got a very special commission that we should take care of right away!}}
+{{dialogue|Yan|With Mason's departure, the commission sort of got lost in the shuffle for a few... months or so... But now that you two are both registered workshops, you can take this commission off my hands- er, help out, right?}}
+{{dialogue|Mi-an|Oh! Yeah, sure! That's what we're here for! Did ya hear that, ''Player''? Our first big job!}}
+
+*''Yeah, let's do this!''
+*''It's a lot of pressure...''
+
+{{dialogue|Mi-an|indent=true|answer=Yeah, let's do this!
+|Great!}}
+{{dialogue|Mi-an|indent=true|answer=It's a lot of pressure...
+|Don't worry, we got this! And we have the Commerce Guild to support us, too! C'mon, let's do it!}}
+{{dialogue|Yan|See, they're up for it. What do you say buddy-pal?}}
+{{dialogue|Rocky|...Alright, Yan. Against my better judgement, I'm gonna give you one more chance.}}
+{{dialogue|Yan|Great! Listen here Builders, Rocky and his miners are working out of {{textcolor|green|Paradise Lost}}, you know, that big lookin' ruins right next to ''Player'''s workshop.}}
+{{dialogue|Yan|My pal here commissioned two {{textcolor|green|Crane Lifts}} to move things up and down this real long tunnel they're working out of. And since there are two of you, each one of ya can make a lift, easy peasy for all!}}
+{{dialogue|Rocky|Sorry for putting you two on the spot, if only Yan's doing his job like he's supposed to and... Hey, I'm not your "pal!"}}
+{{dialogue|Rocky|If you're lookin' for parts, we have {{textcolor|green|a bunch of salvage in our company backyard}} that you can ruffle through. It's located by the Paradise Lost ruins. Lots of miners there, can't miss it.}}
+{{dialogue|Rocky|Normally we charge a weekly fee for access, but here, take a free {{textcolor|green|one-week pass}}.}}
+{{dialogue|Rocky|When you're done, install it for me as well. Qi already drew me up a diagram for the lift, so here, you can have it. Hope you put it to better use than this sorry excuse-for-a-Builder here.}}
+{{dialogue|Yan|My back was hurting...}}
+TIME SET ENABLE || bool: 1
+Set STEP to 2
+Set IN to 0
+Add behavior CommanderIdle (idName: 11901) to Player
+(param: LookAtActor:8043)
+Remove behavior CommanderMoveToFlagAndAction (idName: 11901) from Yan
+Yan stands still in Chamber and looks at Mi-an
+
+TRIGGER Procedure 1.0 Step 0.2 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8044 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 11901) from Rocky
+Add behavior CommanderIdle (idName: 11902) to Rocky
+(param: LookAtActor:8017)
+
+TRIGGER Procedure 1.0 Step 1.1 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 0) There is a conversation segment (id 471) that ends:
+{{dialogue|Yan|See, they're up for it. What do you say buddy-pal?}}
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderIdle (idName: 11901) from Player
+Add behavior CommanderIdle (idName: 11902) to Player
+(param: LookAtActor:8044)
+
+TRIGGER Procedure 1.0 Step 1.2 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 0) There is a conversation segment (id 872) that ends:
+{{dialogue|Rocky|...Alright, Yan. Against my better judgement, I'm gonna give you one more chance.}}
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderIdle (idName: 11902) from Player
+Add behavior CommanderIdle (idName: 11903) to Player
+(param: LookAtActor:8043)
+
+TRIGGER Procedure 1.0 Step 1.3 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 0) There is a conversation segment (id 473) that ends:
+{{dialogue|Yan|My pal here commissioned two {{textcolor|green|Crane Lifts}} to move things up and down this real long tunnel they're working out of. And since there are two of you, each one of ya can make a lift, easy peasy for all!}}
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderIdle (idName: 11903) from Player
+Add behavior CommanderIdle (idName: 11904) to Player
+(param: LookAtActor:8044)
+
+TRIGGER Procedure 1.0 Step 1.4 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 0) There is a conversation segment (id 474) that ends:
+{{dialogue|Rocky|When you're done, install it for me as well. Qi already drew me up a diagram for the lift, so here, you can have it. Hope you put it to better use than this sorry excuse-for-a-Builder here.}}
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderIdle (idName: 11904) from Player
+Add behavior CommanderIdle (idName: 11905) to Player
+(param: LookAtActor:8043)
+Yan stops standing still
+Add behavior CommanderIdle (idName: 20903) to Yan
+(param: -1)
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Mi-an stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 20902) to Mi-an
+(param: TargetScene:Chamber|MoveMode:Walk|FlagName:zhuce_mian2)
+Remove behavior CommanderIdle (idName: 11905) from Player
+Add behavior CommanderMoveToFlag (idName: 20902) to Player
+(param: TargetScene:Chamber|MoveMode:Walk|FlagName:zhuce_player2|LookAtActor:8017)
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 119013
+CONDITIONS
+Always:
+ACTIONS
+(cId 10) A conversation 476, 477 starts:
+{{dialogue|Mi-an|Based on this diagram... We won't be able to find these parts from any random scrap... I guess we'll need to go take a look at {{textcolor|green|Rocky's salvage yard}}. Looks like we'll need to use a {{textcolor|green|Furnace}} as well.}}
+{{dialogue|Mi-an|Well, we can't finish if we don't get started! Let's do our best, ''Player''!}}
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 11901) from Yan
+Remove behavior CommanderIdle (idName: 20903) from Yan
+Remove behavior CommanderMoveToFlag (idName: 20902) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 20902) from Mi-an
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1100089
+Run mission Picking Up the Slack
+ACTION MISSION TRACE 1100091
+Set global blackboard key finishcrane with info 1.
+Townsfolk respond to the event:
+
+{{dialogue|Mi-an|Hey, ''Player''! How's it going on your end? My Crane Lift is almost done; things have been much easier since I built a {{textcolor|green|Furnace}}. Say, has Yan been buggin' you like he's been buggin' me? He came to check on my progress like ten times already!}}
+
+Remove behavior CommanderIdle (idName: 11902) from Rocky
+Yan stops standing still
+END MISSION 1100090
+
+TRIGGER Procedure 1.0 Step 7.0 Order 4 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8017 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Check if STEP is == 1
+ACTIONS
+Increment IN by 1
+
+TRIGGER Procedure 1.0 Step 8.0 Order 5 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8017 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Check if STEP is == 2
+ACTIONS
+Increment IN by 1
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 0) There is a conversation segment (id 981) that ends:
+{{dialogue|Rocky|If you're lookin' for parts, we have {{textcolor|green|a bunch of salvage in our company backyard}} that you can ruffle through. It's located by the Paradise Lost ruins. Lots of miners there, can't miss it.}}
+CONDITIONS
+Always:
+ACTIONS
+ACTION SHOW CUSTOM IMAGE TIPS || content: 80002454 | preset: Mission
+DUNGEON PAY ENTER || sceneName: VoxelDungeon

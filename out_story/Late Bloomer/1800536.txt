@@ -1,0 +1,597 @@
+Reading Mission 1800536: Late Bloomer
+
+<onlyinclude>{{Infobox mission
+|name = Late Bloomer
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Late Bloomer:
+
+TRIGGER Procedure 0.0 Step 11.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Zeke stops standing still
+Mi-an stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8535001) from Player
+CUTSCENE UI STATE EXIT || 
+CAMERA PATH STOP ALL || 
+
+TRIGGER Procedure 0.0 Step 12.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800535
+CONDITIONS
+Always:
+ACTIONS
+Zeke stops standing still
+Mi-an stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8535001) from Player
+CUTSCENE UI STATE EXIT || 
+CAMERA PATH STOP ALL || 
+Run mission Late Bloomer
+END MISSION 1800535
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800536
+CONDITIONS
+Always:
+ACTIONS
+===Wait Until Tomorrow===
+
+{{mission_details
+|desc = Zeke mentioned that if Mi-an is willing to help the flowers grow, she can make a flower support frame for assistance. The recipe will be ready the next day.
+|details = Wait Until Tomorrow
+}}
+Set 8536D1 to 0
+
+TRIGGER Procedure 0.0 Step 0.1 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Mi-an
+CONDITIONS
+Check if 8536D1 is == 0
+ACTIONS
+(cId 1) A conversation 23595 starts:
+{{dialogue|Mi-an|Great! I'll do a little research on what needs to be done for planting Yimi Flowers in Sandrock, then get back to you right away!}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|836}}
+Set 8536D1 to 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 836
+CONDITIONS
+Always:
+ACTIONS
+===Make the Flower Support Frame===
+
+{{mission_details
+|desc = With the recipe in hand, create the flower support frame at {{textcolor|green|the Worktable}}.
+|details = Make the Flower Support Frame
+*{{i2|Yimi Planter|0/5}}
+}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1800535 | targetId: 2 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Install the Flower Support Frame===
+
+{{mission_details
+|desc = The flower support frame is ready. Go to the location Mi-an described for the Yimi flowers and install it.
+|details = Install the Flower Support Frame
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 85361 | flagName: S8536_Item1 | path: S8536_Item1_Mark | sceneName: Main | extraParams: S8536_Item1|CreatorItem|19810125_5|1547|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 85361 | missionId: 1800535 | iconType: 2
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 85361
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85361 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85361 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Mi-an stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8536_0_1
+DELAY MASK SET || maskId: 85361 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+ACTOR BLIND SET || set: 1
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 0
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85361 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 8390_0 starts:
+{{dialogue|Mi-an|Nice! That should do it! With our healthier Sandrock soil and a little bit of a lot of high quality H2O, should be just a matter of days!}}
+{{dialogue|Mi-an|The Yimi Flower may not be a new discovery, or endangered, or... any of that. But... it's cute, dang it!}}
+{{dialogue|Mi-an|With everything else that goes on in this town, I'm glad we were able to step back and... just do something for ourselves, for once!}}
+{{dialogue|Mi-an|Thanks, dear, for helping me with this!}}
+
+*''I hope it grows up big and strong!''
+*''You really like these, huh?''
+*''No problem-o.''
+*''I hope they end up being useful.''
+
+{{dialogue|Mi-an|indent=true|answer=I hope it grows up big and strong!
+|reward={{NPC2|Mi-an|rp=3}}|I'm confident it will!}}
+{{dialogue|Mi-an|indent=true|answer=You really like these, huh?
+|reward={{NPC2|Mi-an|rp=3}}|Yeah! They're a down and out kind of flower; who doesn't like a good underdog story?}}
+{{dialogue|Mi-an|indent=true|answer=I hope they end up being useful.
+|Even if they don't, I'll always cherish this experience!}}
+{{dialogue|Mi-an|I can take it from here, babe. I'll let you know when there's progress!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 7.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Mi-an stops standing still
+CUTSCENE UI STATE EXIT || 
+CAMERA PATH STOP ALL || 
+Set 8536A to 0
+===Wait for the Yimi Flowers to Bloom===
+
+{{mission_details
+|desc = The support frame is installed. Now, wait patiently to see if the Yimi flowers will bloom successfully.
+|details = Wait for the Yimi Flowers to Bloom
+}}
+ACTOR BLIND SET || set: 0
+Set global blackboard key con41800535 with info 1.
+Townsfolk respond to the event:
+
+{{dialogue|Mi-an|The Yimi buds moved a little bit today! I could feel my heart tremble with excitement!}}
+
+{{dialogue|Mi-an|Yimi, yimi... kind of a strange name. I wonder where it comes from...?}}
+
+{{dialogue|Mi-an|I'm really looking forward to watching the Yimi Flower bloom by your side!}}
+
+
+TRIGGER Procedure 0.0 Step 9.0 Order 9 Repeat 3
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment 8536A by 1
+
+TRIGGER Procedure 0.0 Step 10.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 8536A is >= 3
+ACTIONS
+===Talk to Mi-an===
+
+{{mission_details
+|desc = As the Yimi flowers are about to bloom, find time to report to Mi-an and arrange a time to witness this moment.
+|details = Talk to Mi-an
+}}
+
+TRIGGER Procedure 0.0 Step 11.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Mi-an
+CONDITIONS
+Check if 8536A is >= 3
+ACTIONS
+(cId 4) A conversation 23608, 23609 starts:
+{{dialogue|Mi-an|Hey! ''Player''! I've been watching the flower closely and I think it's about to bloom. Wanna go on a little date at the spot tomorrow and see if we can't witness history in the making?}}
+{{dialogue|Mi-an|Let's get there at 16:00! See you there!}}
+
+TRIGGER Procedure 0.0 Step 12.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Wait Until Tomorrow===
+
+{{mission_details
+|desc = You've made an appointment with Mi-an to wait for the Yimi flowers to bloom together the next day, so rest for today.
+|details = Wait Until Tomorrow
+}}
+
+TRIGGER Procedure 0.0 Step 13.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+===Go to the Yimi Flower Field After 16:00PM===
+
+{{mission_details
+|desc = Today is the day to witness the Yimi flowers blooming. Remember to meet Mi-an at the Yimi flower field after 16:00.
+|details = Go to the Yimi Flower Field After 16:00PM
+}}
+
+TRIGGER Procedure 0.0 Step 14.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 16:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || sceneName: Main | flagName: Trigger_85361 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80034774 | id: 85361 | missionId: 1800535
+
+TRIGGER Procedure 0.0 Step 15.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 85361
+CONDITIONS
+CHECK TIME || compare: 2 | hour: 16 | minute: 0
+ACTIONS
+AREA TRIGGER DELETE || id: 85361
+DELAY MASK SET || maskId: 85362 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 16.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85362 | eventType: 2
+CONDITIONS
+CHECK TIME || compare: 2 | hour: 19 | minute: 0
+ACTIONS
+Mi-an stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8536_0_2
+DELAY MASK SET || maskId: 85362 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+ACTOR BLIND SET || set: 1
+
+TRIGGER Procedure 0.0 Step 16.0 Order 38 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85362 | eventType: 2
+CONDITIONS
+CHECK TIME || compare: 6 | hour: 19 | minute: 0
+ACTIONS
+TIME SET CURRENT HOUR MINUTE || hour: 19 | minute: 0
+Mi-an stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8536_0_2
+DELAY MASK SET || maskId: 85362 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+ACTOR BLIND SET || set: 1
+
+TRIGGER Procedure 0.0 Step 17.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85362 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 23610, 23611 starts:
+{{dialogue|Mi-an|Darling! You made it!}}
+{{dialogue|Mi-an|I swear I saw them fidget a bit; let's give them a bit of time. And if you get tired, you can rest on my shoulder...}}
+
+TRIGGER Procedure 0.0 Step 18.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 3031}}
+A cutscene CG_BLOOM (duration: -2.0) starts playing
+Yimi Bloom - Mi-an and I quietly awaited the blooming of the Yimi flower. After some time, Mi'an woke me up, and together we witnessed a magnificent scene.
+
+TRIGGER Procedure 0.0 Step 19.0 Order 35 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_BLOOM | state: 3
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 85362 | path: S8536_Item2 | sceneName: Main | flagName: S8536_Item2 | extraParams: 0
+ACTOR FREEZ COLLIDER || npc: 8017 | freezeCollider: 1
+ACTOR FREEZ COLLIDER || npc: 8000 | freezeCollider: 1
+Mi-an stops standing still
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8536_0_3
+Add behavior CommanderDramaWithIndexEvent (idName: 8536172) to Mi-an
+(param: DramaName:MianSeat2|DelayTime:0|TargetScene:Main|DramaIndex:0|DramaType:SitGround)
+Add behavior CommanderPlayerDramaWithIndexEvent (idName: 8536002) to Player
+(param: DramaName:MianSeat1|DelayTime:0|TargetScene:Main|DramaIndex:0|DramaType:SitGround)
+
+TRIGGER Procedure 0.0 Step 20.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 9 | name: CG_BLOOM
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 8395_0 starts:
+{{dialogue|Mi-an|Wow, it's really something...}}
+{{dialogue|Mi-an|And to share this moment together... I couldn't ask for anything better.}}
+{{dialogue|Mi-an|This whole ordeal, I couldn't really confirm it until just now...}}
+
+*''Confirm what?''
+*''You can tell me anything, dear.''
+*''We should have let it go the way of the dinosaurs?''
+
+{{dialogue|Mi-an|indent=true|answer=We should have let it go the way of the dinosaurs?
+|Haha, what? No! I was talking about... what doing this has meant to me...}}
+{{dialogue|Mi-an|Well, I don't need to remind you that being a Builder is all I've really ever known. And it's not something I dislike- I mean, not at all!}}
+{{dialogue|Mi-an|Building with you, that's always meant the world to me. But...}}
+{{dialogue|Mi-an|It really tires me out, ya know?!}}
+{{dialogue|Mi-an|I never disliked Building, but I never "liked" it either. It was just something I... did.}}
+{{dialogue|Mi-an|I did it because that's what everyone did. Everyone in my family, I mean. And there was never really time for anything else.}}
+{{dialogue|Mi-an|It wasn't until I moved here that I really started thinking about other things. I found adventure, I found independence, I found... you!}}
+{{dialogue|Mi-an|You helped me realize that there's more to life than just work; we have to search for the things that really speak to us and give our lives meaning!}}
+{{dialogue|Mi-an|The first time I walked into the Greenhouse, I was just blown away; there were plants and flowers from every season climbing up and down the walls... I just had to know how it all worked!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 21.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+GROUP 0:
+Luo and the Tree is successfully completed
+
+GROUP 10:
+Luo and the Tree is in state 2 with flag 1
+
+ACTIONS
+(cId 7) A conversation 23624 starts:
+{{dialogue|Mi-an|I loved long talks with Zeke, digging around in the dirt with Nia... When I heard the story about Mama Tree, I... I went home crying that day, haha...}}
+
+TRIGGER Procedure 0.0 Step 22.0 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Luo and the Tree is in state 2 with flag 0
+Luo and the Tree is in state 3 with flag 0
+ACTIONS
+(cId 7) A conversation 23625 starts:
+{{dialogue|Mi-an|That's kinda how I became friends with the planting community of Sandrock... I think if all of us hadn't become close, things would be a lot different around here.}}
+
+TRIGGER Procedure 0.0 Step 20.1 Order 36 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTOR FREEZ COLLIDER || npc: 8017 | freezeCollider: 0
+ACTOR FREEZ COLLIDER || npc: 8000 | freezeCollider: 0
+Remove behavior CommanderPlayerDramaWithIndexEvent (idName: 8536002) from Player
+Remove behavior CommanderDramaWithIndexEvent (idName: 8536172) from Mi-an
+
+TRIGGER Procedure 0.0 Step 23.0 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Tuckered Out! is successfully completed
+ACTIONS
+(cId 8) A conversation 23626, 8398_0 starts:
+{{dialogue|Mi-an|But of course, I never would've met anyone if not for you telling me to get a hobby, haha! I can't believe I almost passed out in the street... And I'm so glad you were there to catch me.}}
+{{dialogue|Mi-an|So... maybe compared to all that... this Yimi Flower doesn't matter so much. But seeing it bloom... doing it with you... made me... ...Happy.}}
+{{dialogue|Mi-an|...}}
+{{dialogue|Mi-an|reward={{NPC2|Mi-an|rp=5}}|Am I a fool, ''Player''? For taking so long to figure all of this out about myself?}}
+
+*''No, it was cute watching you grow.''
+*''It takes all kinds in this world.''
+*''You are kind of a silly goose.''
+*''Peach didn't save the world til he was 35...''
+
+{{dialogue|Mi-an|indent=true|answer=No, it was cute watching you grow.
+|Ah...}}
+{{dialogue|Mi-an|indent=true|Haha... cute, huh...?}}
+{{dialogue|Mi-an|indent=true|answer=It takes all kinds in this world.
+|Haha... maybe so.}}
+{{dialogue|Mi-an|indent=true|I guess... some of us are late bloomers! Right, Yimi Flower?}}
+{{dialogue|Mi-an|indent=true|answer=You are kind of a silly goose.
+|Well, that'll always be the case. I can only aspire to be a learned goose who happens also to be silly.}}
+{{dialogue|Mi-an|indent=true|answer=Peach didn't save the world til he was 35...
+|Haha... maybe so.}}
+{{dialogue|Mi-an|indent=true|I guess... some of us are late bloomers! Right, Yimi Flower?}}
+{{dialogue|Mi-an|People have said the Yimi flower represents a short life or... fleetingness. But I think we proved here that everything good can blossom, if it gets the kind of love and attention it needs.}}
+{{dialogue|Mi-an|I think... that's kinda what you do for me, ''Player''.}}
+{{dialogue|Mi-an|I feel like I've really blossomed here in Sandrock; I finally feel like... myself.}}
+{{dialogue|Mi-an|''Player''... I hope we can be "us..." here... for a long time.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 25.0 Order 26 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 8) There is a conversation segment (id 23628) that ends:
+{{dialogue|Mi-an|Am I a fool, ''Player''? For taking so long to figure all of this out about myself?}}
+
+*''No, it was cute watching you grow.'' (No unique dialogue)
+*''It takes all kinds in this world.'' (No unique dialogue)
+*''You are kind of a silly goose.'' (No unique dialogue)
+*''Peach didn't save the world til he was 35...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Mi-an gains 5 favor
+
+TRIGGER Procedure 0.0 Step 26.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+The player interacts (type 2, option 1) with Mi-an
+
+TRIGGER Procedure 0.0 Step 24.0 Order 25 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Tuckered Out! is in state 3 with flag 0
+ACTIONS
+(cId 8) A conversation 8398_0 starts:
+{{dialogue|Mi-an|So... maybe compared to all that... this Yimi Flower doesn't matter so much. But seeing it bloom... doing it with you... made me... ...Happy.}}
+{{dialogue|Mi-an|...}}
+{{dialogue|Mi-an|reward={{NPC2|Mi-an|rp=5}}|Am I a fool, ''Player''? For taking so long to figure all of this out about myself?}}
+
+*''No, it was cute watching you grow.''
+*''It takes all kinds in this world.''
+*''You are kind of a silly goose.''
+*''Peach didn't save the world til he was 35...''
+
+{{dialogue|Mi-an|indent=true|answer=No, it was cute watching you grow.
+|Ah...}}
+{{dialogue|Mi-an|indent=true|Haha... cute, huh...?}}
+{{dialogue|Mi-an|indent=true|answer=It takes all kinds in this world.
+|Haha... maybe so.}}
+{{dialogue|Mi-an|indent=true|I guess... some of us are late bloomers! Right, Yimi Flower?}}
+{{dialogue|Mi-an|indent=true|answer=You are kind of a silly goose.
+|Well, that'll always be the case. I can only aspire to be a learned goose who happens also to be silly.}}
+{{dialogue|Mi-an|indent=true|answer=Peach didn't save the world til he was 35...
+|Haha... maybe so.}}
+{{dialogue|Mi-an|indent=true|I guess... some of us are late bloomers! Right, Yimi Flower?}}
+{{dialogue|Mi-an|People have said the Yimi flower represents a short life or... fleetingness. But I think we proved here that everything good can blossom, if it gets the kind of love and attention it needs.}}
+{{dialogue|Mi-an|I think... that's kinda what you do for me, ''Player''.}}
+{{dialogue|Mi-an|I feel like I've really blossomed here in Sandrock; I finally feel like... myself.}}
+{{dialogue|Mi-an|''Player''... I hope we can be "us..." here... for a long time.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 27.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON INTERACTIVE EXIT || order: 0 | instID: 8017
+CONDITIONS
+Always:
+ACTIONS
+(cId 9) A conversation 8402_0 starts:
+{{dialogue|Mi-an|Oh, so I was thinking...}}
+{{dialogue|Mi-an|Now that we know how to do it... Wouldn't it be nice to turn this place into a little garden? I'll talk things over with Trudy... It could even be an attraction! Like a miniature field of four leaf clovers...}}
+
+*''Let's do it!''
+*''What if it's a strain on the environment?''
+*''Do you really think anyone would come?''
+
+{{dialogue|Mi-an|indent=true|answer=Let's do it!
+|reward={{NPC2|Mi-an|rp=2}}|Great! So glad we're on the same page.}}
+{{dialogue|Mi-an|indent=true|answer=What if it's a strain on the environment?
+|We can have Zeke run the numbers, but he seemed fine with it before!}}
+{{dialogue|Mi-an|indent=true|Besides, an accomplishment like this could catch the attention of more researchers! That'll be good in the long run.}}
+{{dialogue|Mi-an|indent=true|answer=Do you really think anyone would come?
+|Um... yes! Come on, who doesn't want to see rare rainbow-colored flowers?}}
+{{dialogue|Mi-an|Alright! It's settled then. Tomorrow, I'll go meet with Mayor Trudy to make sure we can spare the resources. That being said, I think we're done here today...}}
+{{dialogue|Mi-an|Bye, darling! See you soon!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 29.0 Order 28 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || id: 85362 | itemType: 0
+ACTOR BLIND SET || set: 0
+Mi-an stops standing still
+CUTSCENE UI STATE EXIT || 
+CAMERA PATH STOP ALL || 
+SUBMIT MISSION 1800535
+END MISSION 1800536
+
+TRIGGER Procedure 0.0 Step 27.1 Order 37 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON INTERACTIVE EXIT || order: 0 | instID: 8017
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: S8536_0_3 | sceneName: Main
+
+TRIGGER Procedure 0.0 Step 28.0 Order 27 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) The player picks the first option in conversation segment 23639:
+{{dialogue|Mi-an|Now that we know how to do it... Wouldn't it be nice to turn this place into a little garden? I'll talk things over with Trudy... It could even be an attraction! Like a miniature field of four leaf clovers...}}
+
+*''Let's do it!'' (No unique dialogue)
+*''What if it's a strain on the environment?'' (No unique dialogue)
+*''Do you really think anyone would come?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Mi-an gains 2 favor
+
+TRIGGER Procedure 1.0 Step 11.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 23600:
+{{dialogue|Mi-an|Thanks, dear, for helping me with this!}}
+
+*''I hope it grows up big and strong!'' (No unique dialogue)
+*''You really like these, huh?'' (No unique dialogue)
+*''No problem-o.'' (No unique dialogue)
+*''I hope they end up being useful.'' (No unique dialogue)
+
+(cId -1) The player picks the second option in conversation segment 23600:
+{{dialogue|Mi-an|Thanks, dear, for helping me with this!}}
+
+*''I hope it grows up big and strong!'' (No unique dialogue)
+*''You really like these, huh?'' (No unique dialogue)
+*''No problem-o.'' (No unique dialogue)
+*''I hope they end up being useful.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Mi-an gains 3 favor
+
+TRIGGER Procedure 1.0 Step 13.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DAY START FOR WEATHER || order: 0 | weather: 2
+CONDITIONS
+Always:
+ACTIONS
+WEATHER SET STATE || WeatherState: 0

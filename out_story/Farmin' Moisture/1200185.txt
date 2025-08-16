@@ -1,0 +1,227 @@
+Reading Mission 1200185: Farmin' Moisture
+
+<onlyinclude>{{Infobox mission
+|name = Farmin' Moisture
+|image =
+|description = Nia, a student of botany, is especially interested in Sandrock's Moisture Farm. Her plan for her second day in Sandrock is to go and have a look. She wants you to take her there.
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 750
+|reputation = None
+|gols = None
+|npc1 = Nia
+|rp1 = 20
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200192
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Childhood Friend
+ACTION SOCIAL REMOVE MASK || mask: LockFavor | npc: 8059
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+The Childhood Friend is successfully completed
+
+GROUP 10:
+The Childhood Friend has failed
+
+ACTIONS
+Run mission Farmin' Moisture
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200185
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|294}}
+GLOBAL BLACK BOARD REMOVE || key: niaday1
+Set global blackboard key niaday2 with info 1.
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Nia stands still in Main
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+The Childhood Friend has failed
+ACTIONS
+(cId 0) A conversation 4543, 4544 starts:
+{{dialogue|Nia|I was so hungry yesterday, so I headed to the Blue Moon Saloon by myself. That Owen's kinda handsome, huh?}}
+{{dialogue|Nia|Oh, by the way, take these. They're what your parents prepared for you, and some presents from me as well!}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 0) There is a conversation segment (id 4544) that ends:
+{{dialogue|Nia|Oh, by the way, take these. They're what your parents prepared for you, and some presents from me as well!}}
+CONDITIONS
+Always:
+ACTIONS
+Add 10 Water of Default quality (Notify player)
+Add 5 Pomato Seeds of Default quality (Notify player)
+Add 3 Highwind Fried Rice of Default quality (Notify player)
+MONEY PLAYER ADD || money: 200
+Add 1 Nia's Satchel of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+The Childhood Friend is successfully completed
+ACTIONS
+(cId 0) A conversation 4545 starts:
+{{dialogue|Nia|Morning ''Player''! Yawn, I slept so well at the Blue Moon! I had a really great dream, too. Decided to come pick you up myself this morning! Teehee, feels like when we were kids, and I'd come get you for school.}}
+
+TRIGGER Procedure 0.0 Step 6.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8059 | cId: 0 | missionId: 1200185
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 4546 starts:
+{{dialogue|Nia|Hey, let me see your workshop! What's it like?}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 21855
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 1322_0 starts:
+{{dialogue|Nia|Not bad, not bad! Did you build these machines yourself? And wow, that Assembly Station is way bigger than the one you had back home!}}
+{{dialogue|Nia|Hey, I've an idea! You've been away so long, everyone's forgotten what you look like already! Let's take a photo together to show the folks in Highwind!}}
+
+*''Okay!''
+*''I'm not very photogenic...''
+
+{{dialogue|Nia|indent=true|answer=Okay!
+|Yeah! Alright don't pull any stupid faces though, okay? I want to keep it with me.}}
+{{dialogue|Nia|indent=true|answer=I'm not very photogenic...
+|You're too shy to take a photo with me? Don't worry, you know I've seen all those photos of you when you were young, pulling those dumb faces! Besides, I want to keep it with me, as a reminder...}}
+{{dialogue|Nia|Let's do a cool pose! Say cheese!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 21851 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 1.5 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 21851 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+ACTION CAPTURE ENTER STORY MODE || npc: 8059 | photoId: 24 | poseIds: 3005,3006
+DELAY MASK SET || maskId: 21851 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAPTURE MODE EXIT || order: 0 | isStory: 1
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 1326_0 starts:
+{{dialogue|Nia|Not bad, not bad! It's actually a pretty good shot. When I get back I'll show it to your parents. I'm sure they'll be proud to see your workshop.}}
+{{dialogue|Nia|Alright I'm gonna tell you our plan for today, okay? That way you won't get worried when you can't find me.}}
+{{dialogue|Nia|I'm visiting the Moisture Farm later. You know, it's actually really famous. Professor Luo has even mentioned it in class before. I think I might be able to learn a thing or two! If... you're not busy, maybe you can come with me?}}
+
+*''Okay! Let's go!''
+*''Sorry, I'm kind of busy...''
+
+{{dialogue|Nia|indent=true|answer=Okay! Let's go!
+|Alright! I'm gonna head over there now, when you're done with your busywork, come find me, 'kay? I want to show you all the cool botany stuff that I've learned at school.}}
+{{dialogue|Nia|indent=true|answer=Sorry, I'm kind of busy...
+|Ah... kinda typical, huh. I came all the way here, and you don't have the time.}}
+{{dialogue|Nia|indent=true|...I know you guys have a lot to do, commissons, collecting materials, relics and whatever.}}
+{{dialogue|Nia|indent=true|Well, when you're done, just come meet me at the Moisture Farm, okay? I'll be there for a while. If you come, I can show you some of the things I learned at school!}}
+{{dialogue|Nia|indent=true|I'm gonna head there now. See you later!}}
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Nia stops standing still
+DELIVER MISSION 1200185
+START MISSION 1200185
+
+TRIGGER Procedure 1.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200185
+CONDITIONS
+Always:
+ACTIONS
+Run mission Farmin' Moisture
+END MISSION 1200186
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+END MISSION 1200185
+
+==Rewards==
+{{mission reward
+|npc1 = Nia
+|rp1 = 20
+|exp = 750
+|reputation = None
+|gols = None
+}}

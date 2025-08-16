@@ -1,0 +1,141 @@
+Reading Mission 1700105: Runner-Up
+
+<onlyinclude>{{Infobox mission
+|name = Runner-Up
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Runner-Up:
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 2509) that ends:
+{{dialogue|Arvio|My store guarantees delivery within 24 hours upon supply arrival in town, so please don't forget! When you've delivered it, I kindly ask that you return to me and let me know. Thank you!}}
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Arvio's Goods of Default quality (Notify player)
+START MISSION 1700104
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700104
+CONDITIONS
+Always:
+ACTIONS
+Run mission Runner-Up
+END MISSION 1700104
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700105
+CONDITIONS
+Always:
+ACTIONS
+===Deliver to Owen===
+
+{{mission_details
+|desc = Deliver to Owen within 24 hrs.
+|details = Deliver to Owen
+*{{i2|Arvio's Goods|0/1}}
+*{{i2|Owen|0/1}}
+}}
+Set CD to 1
+MISSION TRACE NAVI NPC || isAdd: 1 | missionId: 1700104 | npc: 8001
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Owen
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 595_0 starts:
+{{dialogue|Owen|Ain't this the package I ordered from By the Stairs? Why are you the one out here delivering it to me?}}
+{{dialogue|Owen|Ah! So you're helping Arvio? Well, take a Yakmel Milk on the house, consider it a little tip from me.}}
+The conversation ends.
+BAG MODIFY BY TARGET || missionId: 1700104 | targetId: 1
+MISSION TRACE NAVI NPC || isAdd: 0 | missionId: 1700104 | npc: 8001
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Arvio===
+
+{{mission_details
+|desc = The goods have been delivered. Talk with Arvio.
+|details = Talk to Arvio
+}}
+Set global blackboard key deliveryforArvio with info 1.
+Add 1 Yakmel Milk of Default quality (Notify player)
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Arvio
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: deliveryforArvio | info: 1 | exist: 1
+ACTIONS
+(cId 2) A conversation 2512 starts:
+{{dialogue|Arvio|You've already delivered it? That was quick! I really don't know what I would have done without you.}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: deliveryforArvio | info: 1 | exist: 1
+ACTIONS
+SUBMIT MISSION 1700104
+
+TRIGGER Procedure 1.0 Step 1.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Decrement CD by 1
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: deliveryforArvio | info: 1 | exist: 0
+ACTIONS
+Set global blackboard key deliveryforArvio with info 0.
+BAG MODIFY BY TARGET || missionId: 1700104 | targetId: 1
+FAIL MISSION || missionId: 1700104
+MISSION TRACE NAVI NPC || isAdd: 0 | missionId: 1700104 | npc: 8001
+END MISSION 1700105
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission Delivery Trainee
+END MISSION 1700105

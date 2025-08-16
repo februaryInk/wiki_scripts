@@ -1,0 +1,164 @@
+Reading Mission 1800354: Grandma Vivi's Guidance
+
+<onlyinclude>{{Infobox mission
+|name = Grandma Vivi's Guidance
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Getting Off the Runway:
+
+TRIGGER Procedure 0.0 Step 12.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if 8350B is == 1
+Check if 8350A is == 1
+ACTIONS
+START MISSION 1800350
+
+TRIGGER Procedure 0.0 Step 14.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800350
+CONDITIONS
+Always:
+ACTIONS
+Run mission Getting Off the Runway
+Run mission Grandma Vivi's Guidance
+END MISSION 1800350
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800354
+CONDITIONS
+Always:
+ACTIONS
+Set 8354Day to 0
+Set 8354Day1 to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment 8354Day1 by 1
+Increment 8354Day by 1
+Modulus 8354Day by 3
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Check if 8354Day1 is >= 28
+ACTIONS
+AREA TRIGGER DELETE || id: 83541
+AREA TRIGGER DELETE || id: 83542
+AREA TRIGGER DELETE || id: 83543
+ACTION NPC REMOVE CLUSTER || cluster: S1800350_1
+ACTION NPC REMOVE CLUSTER || cluster: S1800350_2
+ACTION NPC REMOVE CLUSTER || cluster: S1800350_3
+END MISSION 1800354
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 8354Day is == 1
+Check if 8354Day1 is > (maybe?) 26
+ACTIONS
+AREA TRIGGER ONCE CREATE || missionId: 1800354 | id: 83541 | sceneName: Main | flagName: Trigger_83541 | showOnMap: 0 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 1.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 83541
+CONDITIONS
+Always:
+ACTIONS
+ACTION NPC GEN CLUSTER || cluster: S1800350_1 | npcs: 8022,8039 | randomNpcs: -1 | leader: 8039 | min: 2 | max: 3 | behavior: Story1800354_Chat1
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+ACTION NPC REMOVE CLUSTER || cluster: S1800350_1
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 8354Day is == 2
+Check if 8354Day1 is > (maybe?) 27
+ACTIONS
+AREA TRIGGER ONCE CREATE || missionId: 1800354 | id: 83542 | sceneName: Main | flagName: Trigger_83541 | showOnMap: 0 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 83542
+CONDITIONS
+Always:
+ACTIONS
+ACTION NPC GEN CLUSTER || cluster: S1800350_2 | npcs: 8022,8039 | randomNpcs: -1 | leader: 8039 | min: 2 | max: 3 | behavior: Story1800354_Chat2
+
+TRIGGER Procedure 2.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+ACTION NPC REMOVE CLUSTER || cluster: S1800350_2
+
+TRIGGER Procedure 3.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 8354Day is == 0
+Check if 8354Day1 is > (maybe?) 27
+ACTIONS
+AREA TRIGGER ONCE CREATE || missionId: 1800354 | id: 83543 | sceneName: Main | flagName: Trigger_83541 | showOnMap: 0 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 3.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 83543
+CONDITIONS
+Always:
+ACTIONS
+ACTION NPC GEN CLUSTER || cluster: S1800350_3 | npcs: 8022,8039 | randomNpcs: -1 | leader: 8039 | min: 2 | max: 3 | behavior: Story1800354_Chat3
+
+TRIGGER Procedure 3.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+ACTION NPC REMOVE CLUSTER || cluster: S1800350_3
+END MISSION 1800354

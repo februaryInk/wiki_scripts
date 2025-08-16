@@ -1,0 +1,287 @@
+Reading Mission 1300394: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200106
+
+TRIGGER Procedure 6.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+"Him" is successfully completed
+ACTIONS
+Run mission #1500400
+
+TRIGGER Procedure 6.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1500400 is result 1 flag 1
+ACTIONS
+Run mission #1300394
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1300394
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER ONCE CREATE || missionId: 1300394 | sceneName: Main | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0 | id: 3393 | flagName: S0393_1
+Set 3941 to 0
+NPC LEAVE || npc: 8102
+NPC RANDOM REMOVE || id: 173891
+GLOBAL BLACK BOARD REMOVE || key: fangginger
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment 3941 by 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 3941 is >= 3
+ACTIONS
+AREA TRIGGER DELETE || id: 3393
+
+TRIGGER Procedure 1.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | id: 3393 | enter: 0
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 33932 | delayTime: 0 | durationTime: 1 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 33932 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Trudy stands still in Main and looks at Catori
+Cooper stands still in Main and looks at Trudy
+Arvio stands still in Main and looks at Cooper
+Catori stands still in Main and looks at Arvio
+Fang stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S0393_7
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 33932 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 33932 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 33932) A conversation 6650_0 starts:
+{{dialogue|Cooper|That was the train to Highwind; dang, I'm gonna miss all of 'em... ''Player'' the great Builder, ol' No-talk doc... and toucan Sally... that bird was crazy. I loved that little guy... He was always like "Cawwww!"}}
+{{dialogue|Arvio|Ah? I thought it was only Fang's father who left?}}
+{{dialogue|Trudy|Yes, that is the case. I was worried we were losing some of our best and brightest...}}
+{{dialogue|Catori|So Talon came here, got sick, then got healed? I thought he was trying to take back his son. I'm getting lost with all these rumors you're spreading, Arvio...}}
+{{dialogue|Arvio|No, it all happened! I confirmed everything with the weird bodyguard guys that were creeping around town the last few days...}}
+{{dialogue|Trudy|It seems Talon came here looking to take Fang back, but changed his mind...}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 33932) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 3393) to Fang
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S0393_8)
+Add behavior CommanderMoveToFlagAndAction (idName: 3393) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S0393_9)
+Fang stops standing still
+
+TRIGGER Procedure 2.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 33934) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Set 393 to 0
+Fang stops standing still
+
+TRIGGER Procedure 2.0 Step 1.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8016 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Fang stands still in Main and looks at Catori
+Remove behavior CommanderMoveToFlagAndAction (idName: 3393) from Fang
+Remove behavior CommanderMoveToFlagAndAction (idName: 3393) from Player
+STOPWATCH REAL TIME SET || id: 3393 | sec: 1
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 3393
+CONDITIONS
+Always:
+ACTIONS
+(cId 33933) A conversation 6661_0 starts:
+{{dialogue|Cooper|Shucks! Let's quit with all the speculatin'! Let's just get it here from the horse's mouth! Y'all two better pony up and start whinnyin'!}}
+{{dialogue|Catori|Er, hello, doc. ''Player''. We were just wondering what all's happened with you two lately. What happened to "Iron Talon?"}}
+{{dialogue|Fang|It is... nice of you all to show concern...}}
+
+*''Everything's handled. Talon left.''
+*''Whatever happens, I will always respect Fang's wishes...''
+*''Talon might come back for Fang...''
+
+{{dialogue|Fang|indent=true|answer=Everything's handled. Talon left.
+|Yes. You could say... we have reconciled. He has returned home. I shall stay here.}}
+{{dialogue|Arvio|indent=true|That's wonderful! Wait, what? "Reconcile...?"}}
+{{dialogue|Cooper|indent=true|Swell! You don't need to leave the tri-county area anyway; I never do. Other place's dun have Yakmel Milk! Plus; air's too dry. Can't hardly keep your eyes open, it's so dry!}}
+{{dialogue|Fang|indent=true|Sandrock is drier than the surrounding areas... Please visit my clinic soon. You may be suffering from rheumatoid arthritis. Or lupus...}}
+{{dialogue|Cooper|indent=true|Aw, shucks, doc! It's never lupus! But yeah, reckon you might have yourself a point there... it's a date!}}
+{{dialogue|Fang|indent=true|answer=Whatever happens, I will always respect Fang's wishes...
+|Thank you, ''Pet Name''...}}
+{{dialogue|Arvio|indent=true|Ah, I get it... If Fang wants to stay here, no one can force him to leave!}}
+{{dialogue|Trudy|indent=true|Well, I'm glad you decided to stay, Fang. You really have become an important part of our community; we'd all be truly sad to see you go.}}
+{{dialogue|Catori|indent=true|Yeah, if you left now, how would we have time to work on our future hospital themed part of Catori World, huh?}}
+{{dialogue|Cooper|indent=true|And you still owe me a Super Yakmel!}}
+{{dialogue|Fang|indent=true|What... I do not recall such a conversation...}}
+{{dialogue|Trudy|indent=true|That's... probably because it never happened...}}
+{{dialogue|Arvio|indent=true|answer=Talon might come back for Fang...
+|What? Come back and take Fang? Say it ain't so!}}
+{{dialogue|Trudy|indent=true|Could anyone really be so selfish? It's clear Fang's home is here with us...}}
+{{dialogue|Cooper|indent=true|I say let 'em come! Bring an army! Y'all know what we do to armies, ain'tcha? Mayhaps ol' Tally-boy don't read the papers...}}
+{{dialogue|Catori|indent=true|You don't really think it would come to that, do you? I know they're rich, but... Does the Talon family have that kind of power?}}
+{{dialogue|Fang|indent=true|No. He doesn't...}}
+{{dialogue|Fang|I am here for Sandrock. As you all were here for me. I won't be leaving, so... don't worry.}}
+{{dialogue|Trudy|That's wonderful to hear, doctor... Sorry about all the gossip; we really were just... well, worried about you. Please know that you will always be welcome here in Sandrock.}}
+{{dialogue|Trudy|Everyone! I think we've put our dear doctor through enough for one day, let's leave them to their happy family!}}
+{{dialogue|Cooper|Yeeeeep, gotta feed 'em Yakmel.}}
+{{dialogue|Catori|Glad everything turned out alright, doc. Swing by any time!}}
+{{dialogue|Arvio|Yes, hope to see you soon! I should be getting some new herbs in, stop in sometime!}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 33933) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Trudy stops standing still
+Cooper stops standing still
+Catori stops standing still
+Arvio stops standing still
+(cId 33934) A conversation 6654_0 starts:
+{{dialogue|Fang|''Pet Name''... We have put our friends concerns at ease. I must go to the clinic; I wish you a safe and pleasant day. See you... tonight.}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment 393 by 1
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 393 is >= 7
+ACTIONS
+NPC ICON ADD || missionId: 1300394 | npc: 8016 | missionIcon: 6
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Fang
+CONDITIONS
+Always:
+ACTIONS
+(cId 33935) A conversation 6655_0 starts:
+{{dialogue|Fang|I received a letter. It's from Talon. There seems to be a sum of money... I don't want to read his letter.}}
+
+*''I'll read it for you.''
+*''Let's just throw it away.''
+
+{{dialogue|Fang|indent=true|answer=Let's just throw it away.
+|Mhmm.}}
+{{dialogue|Fang|If what he says makes you unhappy... then just throw it away.}}
+{{dialogue|Fang|Talon... what did he say?}}
+
+*''He has changed.''
+*''It's not important anymore.''
+
+{{dialogue|Fang|indent=true|answer=He has changed.
+|You... you forgive him?}}
+{{dialogue|Fang|indent=true|''Pet Name'', I may not be able to do as you do...}}
+{{dialogue|Fang|indent=true|But now... he is no longer a weight on my heart.}}
+{{dialogue|Fang|indent=true|answer=It's not important anymore.
+|You are right. It is not important.}}
+NPC ICON REMOVE || missionId: 1300394 | npc: 8016 | missionIcon: 6
+
+TRIGGER Procedure 3.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 33935) The player picks the first option in conversation segment 20776:
+{{dialogue|Fang|I received a letter. It's from Talon. There seems to be a sum of money... I don't want to read his letter.}}
+
+*''I'll read it for you.'' (No unique dialogue)
+*''Let's just throw it away.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+MONEY PLAYER ADD || money: 100000
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 393 is == 10
+ACTIONS
+Newspaper adds Unknown content 6039.
+Title: Cure for Rare Heart Disease Found
+A rare, but life-threatening heart condition is quickly being eradicated, after the sudden ailment and miraculous recovery of Seesai's "Iron" Talon on a business trip. The cure was discovered in Sandrock of all places, a city not known for its research or medical technology at all. Despite inquiries, the doctor who made the breakthrough has requested to remain anonymous.
+
+The disease, now known as Talon Syndrome, stems from a rare heart defect that becomes fatal when a person who has the defect undergoes a period of extreme stress. The likelihood of the defect becoming active increases with age; slowly lowering the threshold for what dictates a 'period of extreme stress' over time.
+
+Treatment consists of putting the patient on a course of a new plant-based medicine, called "Sarnaiol." Furthermore, the medical team in Sandrock responsible for this treatment method has also developed a breathing machine that aids greatly in its administration, a machine known simply as "The ''Player''." 
+
+Having a near-death experience with this illness, Talon of Talon Corp, has come out as a public figure to raise awareness for this illness, as well as donate much of his influence towards the cure, in addition to others. First in Seesai, though he has said that he wishes to expand his program over time.
+
+The effects of his campaign can already be felt as new hospitals and medical research centers have sprung up around Seesai, and it's sure that countless lives will be saved as a result of this man's "change of heart."
+END MISSION 1300394

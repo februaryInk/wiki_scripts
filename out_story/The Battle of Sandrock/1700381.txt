@@ -1,0 +1,277 @@
+Reading Mission 1700381: The Battle of Sandrock
+
+<onlyinclude>{{Infobox mission
+|name = The Battle of Sandrock
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from The Battle of Sandrock:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 10 | tag: LiberateSandRock_3
+CONDITIONS
+Check if Counter2 is == 3
+ACTIONS
+{{cutscene|id = 1368}}
+A cutscene CG_LIBERATE (duration: 2.0) starts playing
+Oldtown Showdown - The Oldtown Lodge was swarming with soldiers! We had a standoff, and Grace swooped in and saved the day!
+
+TRIGGER Procedure 0.0 Step 0.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 9 | name: CG_LIBERATE
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER ONCE CREATE || missionId: 1700287 | id: 1728866 | sceneName: Main | flagName: UprisingSavePoint | showOnMap: 0 | mapIcon: -1 | transId: -1
+===Head towards the Temple===
+
+{{mission_details
+|desc = Go to the Church of the Light to rescue the last few hostages.
+|details = Head towards the Temple
+}}
+AREA TRIGGER CREATE || missionId: 1700287 | id: 172880 | sceneName: Main | showOnMap: 1 | mapIcon: MissionArea | transId: 80016720 | flagName: UprisingPhase4_Trigger
+AREA TRIGGER DELETE || id: 1728807
+AREA TRIGGER CREATE || missionId: 1700288 | id: 1728808 | sceneName: Main | flagName: UprisingBlock8 | showOnMap: 0 | mapIcon: MissionArea | transId: -1
+SCENEITEM DELETE || itemType: 0 | id: 1728803
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8084
+ACTION ACTOR REMOVE FOLLOWER || tActor: 8011 | mActor: 8000
+Run mission The Battle of Sandrock
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700381
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 18186 starts:
+{{dialogue|Grace|Wait a sec...! I hear something upstairs...! ''Player'', back me up before you head out...!}}
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || curveIndex: 0 | changeType: 0 | durationTime: -2 | delayTime: 0 | maskId: 173811
+
+TRIGGER Procedure 0.0 Step 0.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 18200) that ends:
+{{dialogue|173812|H-hey...! Is someone out there?}}
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Apartment | flagName: fightvsarmy_apartment_quilt_player2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 18207:
+{{dialogue|Player|(What should I say?)}}
+
+*''Those are my quilts!'' (No unique dialogue)
+*''(attack them)'' (No unique dialogue)
+*''They're mine but you can have them.'' (No unique dialogue)
+*''Did you guys not hear the...battle?'' (No unique dialogue)
+
+(cId: -1) There is a conversation segment (id 18201) that ends:
+{{dialogue|173811|Oh yeah? I don't see your name on 'em! Wait. Eh... Get 'em, boys!}}
+(cId: -1) There is a conversation segment (id 18203) that ends:
+{{dialogue|173811|My girlfriend says I'm always the kinda guy who only hears what he wants to hear! Get 'em, boys!}}
+(cId: -1) There is a conversation segment (id 18202) that ends:
+{{dialogue|173811|Oh, crap! These are yours? Get 'em, boys! No witnesses!}}
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 173812 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTOR SET FACTION || isAdd: 0 | npc: 8002 | id: 8
+SCENEITEM INTERACT SET || itemType: 9 | id: 27 | canInteract: 1
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8011 | state: Attack
+Grace stops standing still
+CUTSCENE UI STATE EXIT || 
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8002
+END MISSION 1700381
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173811 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Grace stands still in Apartment
+PLAYER SET POS ROT FLAG || sceneName: Apartment | flagName: fightvsarmy_apartment_quilt_player
+NPC RANDOM ADD || id: 10 | instId: 173811 | scene: Apartment | flagName: fightvsarmy_apartment_quilt1 | dailyBehavior: CommanderIdle
+NPC RANDOM ADD || id: 10 | instId: 173812 | scene: Apartment | flagName: fightvsarmy_apartment_quilt2 | dailyBehavior: CommanderIdle
+DELAY MASK SET || maskId: 173811 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173811 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 18187, 18188, 18189, 18190, 18191, 18192, 18193, 18194, 18195, 18196, 18197, 18198, 18199, 18200, 18207 starts:
+{{dialogue|173811|Yo, check out these sick quilts I scored when we robbed that pony express lookin' bozo.}}
+{{dialogue|173812|My gosh, they're so fluffy... It's like touching a cloud!}}
+{{dialogue|173811|Yeah, but back off, I stole 'em fair and square.}}
+{{dialogue|173812|Aw, maaan, you always have all the luck. Hey, c'mon, there's more than one quilt, share the love, buddy!}}
+{{dialogue|173811|I need both, I like to put one on the bottom and one on top and roll myself up like a caterpillar.}}
+{{dialogue|173811|Only thing that bugs me, heh, see what I did there? Caterpillar? Bug? Ahem... Only thing that bugs me is somebody stitched in this name here on the inside of em, ''Player''.}}
+{{dialogue|173811|Kinda like... reminds me that they're ill-gotten gains and what not.}}
+{{dialogue|173811|Hard to sleep when you're reminded of your own misdeeds and stuff... Which then puts me on track to thinking about that time I called my teacher 'Ma' in the third grade... It's rough man...}}
+{{dialogue|173812|Then give me the quilts, I have no conscience.}}
+{{dialogue|173811|Hey, wait a sec... Where is everyone...?}}
+{{dialogue|173812|Don't change the subject, duder. Quiltage. Quiltaaaage...}}
+{{dialogue|173812|No, seriously, it's too quiet, and nobody's come up to get us...}}
+{{dialogue|173811|It's been a while. Could something have happened to them...?}}
+{{dialogue|173812|H-hey...! Is someone out there?}}
+{{dialogue|Player|(What should I say?)}}
+
+*''Those are my quilts!'' (No unique dialogue)
+*''(attack them)'' (No unique dialogue)
+*''They're mine but you can have them.'' (No unique dialogue)
+*''Did you guys not hear the...battle?'' (No unique dialogue)
+
+
+TRIGGER Procedure 0.0 Step 0.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 18207:
+{{dialogue|Player|(What should I say?)}}
+
+*''Those are my quilts!'' (No unique dialogue)
+*''(attack them)'' (No unique dialogue)
+*''They're mine but you can have them.'' (No unique dialogue)
+*''Did you guys not hear the...battle?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 18201 starts:
+{{dialogue|173811|Oh yeah? I don't see your name on 'em! Wait. Eh... Get 'em, boys!}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the third option in conversation segment 18207:
+{{dialogue|Player|(What should I say?)}}
+
+*''Those are my quilts!'' (No unique dialogue)
+*''(attack them)'' (No unique dialogue)
+*''They're mine but you can have them.'' (No unique dialogue)
+*''Did you guys not hear the...battle?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 18202 starts:
+{{dialogue|173811|Oh, crap! These are yours? Get 'em, boys! No witnesses!}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the fourth option in conversation segment 18207:
+{{dialogue|Player|(What should I say?)}}
+
+*''Those are my quilts!'' (No unique dialogue)
+*''(attack them)'' (No unique dialogue)
+*''They're mine but you can have them.'' (No unique dialogue)
+*''Did you guys not hear the...battle?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 18203 starts:
+{{dialogue|173811|My girlfriend says I'm always the kinda guy who only hears what he wants to hear! Get 'em, boys!}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173812 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Grace stops standing still
+NPC RANDOM REMOVE || id: 173811
+NPC RANDOM REMOVE || id: 173812
+MONSTER ADD TAG || isAdd: 1 | tag: Task_Quilt
+CUTSCENE UI STATE EXIT || 
+DELAY MASK SET || maskId: 173812 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8002 | state: Attack
+ACTOR SET FACTION || isAdd: 1 | npc: 8002 | id: 8
+
+TRIGGER Procedure 0.0 Step 0.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 0 | tag: Task_Quilt
+CONDITIONS
+Always:
+ACTIONS
+Set a to 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 0 | tag: Task_Quilt
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 173813 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173813 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Grace stands still in Apartment
+PLAYER SET POS ROT FLAG || sceneName: Apartment | flagName: fightvsarmy_apartment_quilt_player3
+DELAY MASK SET || maskId: 173813 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173813 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Mom's Quilts of Rare quality (Notify player)
+ACTOR BUFF ADD || npc: 8000 | buffId: 26 | instanceId: 172881
+ACTION PLAYER ADD ATTR VALUE || attrType: 5 | value: 5
+ACTION PLAYER ADD ATTR VALUE || attrType: 6 | value: 5
+ACTION PLAYER ADD ATTR VALUE || attrType: 3 | value: 10
+(cId -1) A conversation 18204, 18205 starts:
+{{dialogue|Grace|Huh. How did your name end up on-}}
+{{dialogue|Grace|You know what? Tell me later. Get to the Temple with Logan!}}

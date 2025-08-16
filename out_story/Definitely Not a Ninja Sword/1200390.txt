@@ -1,0 +1,130 @@
+Reading Mission 1200390: Definitely Not a Ninja Sword
+
+<onlyinclude>{{Infobox mission
+|name = Definitely Not a Ninja Sword
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Definitely Not a Ninja Sword:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200389
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|791}}
+DELIVER MISSION 1200389
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200389
+CONDITIONS
+Always:
+ACTIONS
+Run mission Definitely Not a Ninja Sword
+END MISSION 1200389
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200390
+CONDITIONS
+Always:
+ACTIONS
+===Go to the Research Center===
+
+{{mission_details
+|desc = It's time, head to the Research Center to see what Qi has come up with.
+|details = Go to the Research Center
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Science:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_science
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_science
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Science:
+CONDITIONS
+Always:
+ACTIONS
+Qi stands still in Science
+PLAYER SET POS ROT FLAG || sceneName: Science | flagName: qiandheidi1_heidi
+SCENEITEM CREATE FLAG || path: Mission_Science_Inside_BrokenObj | id: 23901 | itemType: 0 | sceneName: Science | flagName: newrobot_science | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Science:
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 11921, 11922 starts:
+{{dialogue|Qi|Ah... ''Player''. I was uh, studying how Gungam pilots used this saber.}}
+{{dialogue|Qi|I think I've recorded enough data to last me a while, excuse me.}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 23901 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23901 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 23901
+DELAY MASK SET || maskId: 23901 | delayTime: 0 | durationTime: -2 | curveIndex: 0 | changeType: 1
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 23901
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 11923, 11924 starts:
+{{dialogue|Qi|Thank you. I've managed to successfully repair the sword. Although I doubt it'll reach the potential of an Old World version, it is still extremely powerful.}}
+{{dialogue|Qi|Ahem. Anyway, since you found it, I think it fitting that you have it. Do be very careful though. Now if you'll excuse me, I have a spaceship to study.}}
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Qi stops standing still
+SUBMIT MISSION 1200389
+END MISSION 1200390

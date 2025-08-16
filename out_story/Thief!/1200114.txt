@@ -1,0 +1,396 @@
+Reading Mission 1200114: Thief!
+
+<onlyinclude>{{Infobox mission
+|name = Thief!
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Thief!:
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+Sandy stops standing still
+CUTSCENE UI STATE EXIT || 
+Vivi stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 21131) from Pablo
+START MISSION 1200113
+Arvio stops standing still
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200113
+CONDITIONS
+Always:
+ACTIONS
+Run mission Thief!
+END MISSION 1200113
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200114
+CONDITIONS
+Always:
+ACTIONS
+===Talk to the victims===
+
+{{mission_details
+|desc = Talk to the victims of the theft and learn about the circumstances of the robbery.
+|details = Talk to the victims
+}}
+Set RECEIVE to 0
+Set INTVIVI to 0
+Set INTPABLO to 0
+Set INTARVIO to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Vivi
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 750_3_0, 2920 starts:
+{{dialogue|Vivi|I know you've got it where it counts, child, I can see it in your eyes! I know you'll help us track down this good-for-nothin' thief!}}
+
+*''Ask about when it disappeared''
+*''Ask about where it was lost''
+*''Check the crime scene''
+
+{{dialogue|Vivi|indent=true|answer=Ask about when it disappeared
+|Let's see, I use the magnifying glass to help me read before going to bed, so the first thing I do when I get up is to put it in my pocket. Uhm, no wait, I put on my reading glasses first, then get the magnifying glass from the nightstand.}}
+{{dialogue|Vivi|indent=true|Then I'd get up to make breakfast. Hugo and Heidi would be up around that time, and you know what Hugo is like if he ain't got his breakfast. Big boy like that still hasn't learned to cook a grown man's meal. I swear one of these days...}}
+{{dialogue|Vivi|indent=true|Oh, I'm sorry child, I'm talkin' your ear off. Anyway, the thief must have snuck in at the crack of dawn, and done so quietly. I sleep light as a feather, and I didn't stir the slightest!}}
+{{dialogue|Vivi|indent=true|answer=Ask about where it was lost
+|I carry it in my pocket during the day, I only set it aside on the nightstand when I go to bed. So the only place it could have possibly gotten stolen from is {{textcolor|green|from my room when I was asleep}}!}}
+{{dialogue|Vivi|indent=true|Now that I think about it, I always open the window to get some air when I sleep. That must'a have given the thief a way in! I'll get Hugo to make me an iron window, that's what I'll do!}}
+{{dialogue|Vivi|indent=true|answer=Check the crime scene
+|Crime scene? Child, make sure those Civil Corps boys pay you: you've got the lingo down and everything! Well I suppose the "crime scene," that'd be {{textcolor|green|my bedroom}}. You go right on ahead and check!}}
+{{dialogue|Vivi|Is that all? My, you young folk sure do work quickly! You sure you don't want to hear about the rest of my day? Well, alright. I put all my trust in you to catch this darn thief! Good luck!}}
+FINISH FIND NPC || npc: 8039 | missionId: 1200113 | targetId: 1
+SCENEITEM INTERACT SET || itemType: 0 | id: 21134 | canInteract: 1
+SCENEITEM CREATE FLAG || path: Mission_fxpickup | itemType: 0 | id: 21141 | sceneName: HugoHome | extraParams: 0 | flagName: thief_magnifier
+Set global blackboard key FindTheThief with info 1.
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 21134
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 2919 starts:
+{{dialogue||The place where the magnifying glass originally was on the nightstand is now empty. A black feather is laying where it once was.}}
+Set INTVIVI to 1
+MISSION TARGET COUNTER CHANGE || missionId: 1200113 | targetId: 2 | transId: 80007007 | isAdd: 1
+SCENEITEM DELETE || itemType: 0 | id: 21141
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Pablo
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 755_3_0, 759_0 starts:
+{{dialogue|Pablo|Well! Justice always declares himself the heroic vanguard, but here you are, Builder, doing his work. Fine, I guess I'll discuss this with you instead...}}
+
+*''Ask about when it disappeared''
+*''Ask about where it was lost''
+*''Check the crime scene''
+
+{{dialogue|Pablo|indent=true|answer=Ask about when it disappeared
+|It was before noon. I always take my ring off when I start work. Heavy hands lack a certain finesse... I usually put my ring on the front desk.}}
+{{dialogue|Pablo|indent=true|You know, barbers are essentially therapists here in small towns, and in order for me to get into that zen mindset for headshrinking, I need to do yoga! I was upside down doing a crow pose, and when I looked up, it was gone!}}
+{{dialogue|Pablo|indent=true|answer=Ask about where it was lost
+|It was in {{textcolor|green|my shop}}! I welcome customers from all over, but I never would've expected a murderer! Indeed, they killed my mood, darling!}}
+{{dialogue|Pablo|indent=true|answer=Check the crime scene
+|Hm? Yes, just look around my shop for clues. What's it they say? The criminal always returns to the scene of the crime? Well if that happens, do be sure to catch them this time, darling!}}
+{{dialogue|Pablo|Oh, I do hope you can help me get it back, darling. This ring is incredibly precious to me. Ruby is my birthstone; it's brought me incalculable luck and cosmic charm!}}
+
+*''I'll try my best.''
+*''It's just some colored glass?''
+
+{{dialogue|Pablo|indent=true|answer=I'll try my best.
+|I'm sure my ring will guide its way to you, it's been a beacon in these dark times...}}
+{{dialogue|Pablo|indent=true|answer=It's just some colored glass?
+|reward={{NPC2|Pablo|rp=-5}}|... Honey, pedantry is entirely unbecoming of you. Unless... your star sign, is it Swordfish...? I could certainly see it. Total Swordfish behavior...}}
+FINISH FIND NPC || npc: 8022 | missionId: 1200113 | targetId: 1
+SCENEITEM INTERACT SET || itemType: 0 | id: 21133 | canInteract: 1
+SCENEITEM CREATE FLAG || itemType: 0 | id: 21142 | path: Mission_fxpickup | sceneName: PabloHome | flagName: thief_featherpablo | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 21133
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 2926 starts:
+{{dialogue||There are many different tools, and decorative feathers of various colors. Very fitting for Pablo's style.}}
+Set INTPABLO to 1
+SCENEITEM DELETE || itemType: 0 | id: 21142
+MISSION TARGET COUNTER SET || missionId: 1200113 | targetId: 2 | transId: 80007009 | count: 1
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the second option in conversation segment 2927:
+{{dialogue|Pablo|Oh, I do hope you can help me get it back, darling. This ring is incredibly precious to me. Ruby is my birthstone; it's brought me incalculable luck and cosmic charm!}}
+
+*''I'll try my best.'' (No unique dialogue)
+*''It's just some colored glass?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Pablo gains -5 favor
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Arvio
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 762_3_0, 2936 starts:
+{{dialogue|Arvio|The only thing of value I've really lost in this whole ordeal is my dignity! But it's so nice of you to help me find my missing lock! Thank you for taking such time out of your busy schedule!}}
+
+*''Ask about when it disappeared''
+*''Ask about where it was lost''
+*''Check the crime scene''
+
+{{dialogue|Arvio|indent=true|answer=Ask about when it disappeared
+|I usually carry my bag with me when I'm popping in and out of {{textcolor|green|the store}}, so I couldn't tell you exactly when it happened.}}
+{{dialogue|Arvio|indent=true|Thinking about it now, the thread was a little loose on the buckle a few days ago. My sister mentioned it, and suggested she fix it, but now it's been lost before she got the chance...}}
+{{dialogue|Arvio|indent=true|answer=Ask about where it was lost
+|Well, I don't really know. Do you think the thief followed me all day today? I would most certainly have noticed if he did. Maybe he has some sort of invisibility device! Oh, that dastardly crook!}}
+{{dialogue|Arvio|indent=true|answer=Check the crime scene
+|Feel free to have a look at my shop! While you're there maybe you can have a look at our new goods. As my Grandma used to say, "Investigating crime? It's shopping time!" Okay, she didn't actually say that, but...}}
+{{dialogue|Arvio|No more questions? Alright! Remember to take a look at my shop! Oh. And catch the thief, too, if you can!}}
+FINISH FIND NPC || npc: 8014 | missionId: 1200113 | targetId: 1
+SCENEITEM INTERACT SET || itemType: 0 | id: 21132 | canInteract: 1
+SCENEITEM CREATE FLAG || itemType: 0 | id: 21143 | path: Mission_fxpickup | sceneName: Main | flagName: thief_featherarvio | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 7.0 Order 7 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 21132
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 2935 starts:
+{{dialogue||Arvio's shop. Feathers are scattered across the shelves.}}
+Set INTARVIO to 1
+SCENEITEM DELETE || itemType: 0 | id: 21143
+MISSION TARGET COUNTER CHANGE || missionId: 1200113 | targetId: 2 | transId: 80007008 | isAdd: 1
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200113 | targetId: 2 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Report to Justice===
+
+{{mission_details
+|desc = The investigation is now complete. You need to take all of the collected information and report to Justice.
+|details = Report to Justice
+}}
+GLOBAL BLACK BOARD REMOVE || key: FindTheThief
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Justice
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 767_0 starts:
+{{dialogue|Justice|Oh, hey, ''Player''! So? Did you manage to find anythin' useful on the case of the missing stuff?}}
+{{dialogue|Justice|Hm! That is all rather interestin'! I guess there really is a thief after all!}}
+{{dialogue|Justice|Let's try to catch 'em quick! If we can find 'em while they're still in town, maybe we can catch ourselves a criminal and still return all the stolen goods! Kill two birds with one stone and all that.}}
+{{dialogue|Justice|Here, let me jot down all the evidence so far. If anyone fits this here description, well, they've gotta be the perpetrator! Us law-type folks, we call this, uh, "criminal profilin'." ...Uh huh, aaaand... Here, take a look!}}
+{{dialogue|Justice|So how goes it pardner? Ringin' any bells? Got any ideas about the identity of our mystery bandit based on our profile?}}
+
+*''I think it's a random bandit.''
+*''I think it's the Civil Corps itself!''
+*''Is it a bird?''
+*''It's a monster!''
+
+{{dialogue|Justice|indent=true|answer=I think it's a random bandit.
+|Uh. Okay. I think I see your logic. Bandits... steal things. Therefore, one could be to blame. That's a good, uh... deduction! But some random bandit? Most bandits are just wayless vagrants, they ain't got that kinda skill.}}
+{{dialogue|Justice|indent=true|Why don't you ponder a lil' more, who's lookin' most suspicious in your mind?}}
+
+:*''I think it's the Civil Corps itself!''
+:*''Is it a bird?''
+:*''It's a monster!''
+
+{{dialogue|Justice|indent=double|answer=I think it's the Civil Corps itself!
+|You're jokin', right? Hahah! You're not wrong, I guess us at the Civil Corps could easily fit the conditions, but we're the ones solvin' crime, not causin' it! Why would we make a mess we just have to clean up ourselves?}}
+{{dialogue|Justice|indent=double|Yeah, looks like the trail's run cold. But hey, fifty percent of crimes go unsolved, I wouldn't beat yourself up over it. I certainly don't when it happens to me.}}
+{{dialogue|Justice|indent=double|I'll jus' try to calm everyone down a peg in the meantime. Thanks for the assist, Builder! 'Preciate it regardless. Later, pardner!}}
+{{dialogue|Justice|indent=double|answer=Is it a bird?
+|Hahaha! Y'know, that's quite an imagination you got there! We only got one bird in this town, and that's Fang's: X the raven! Sure he may be a rude lil' feller, but he ain't no criminal!}}
+{{dialogue|Justice|indent=double|But then again, he sure could fit the description... Maybe he at least knows something?}}
+{{dialogue|Justice|indent=double|Tell you what: let's split up! I'll go tell Unsuur to get the paperwork ready, and you track down X and make that overgrown canary sing! Roll out!}}
+{{dialogue|Justice|indent=double|answer=It's a monster!
+|Where!? Where's my shootin' iron!? Wait a tick, ain't no monster- ''Player'', what's the big idea? Huh? You know you can't be scarin' folks like that 'round here!}}
+{{dialogue|Justice|indent=double|Yeah, looks like the trail's run cold. But hey, fifty percent of crimes go unsolved, I wouldn't beat yourself up over it. I certainly don't when it happens to me.}}
+{{dialogue|Justice|indent=double|I'll jus' try to calm everyone down a peg in the meantime. Thanks for the assist, Builder! 'Preciate it regardless. Later, pardner!}}
+{{dialogue|Justice|indent=true|answer=I think it's the Civil Corps itself!
+|You're jokin', right? Hahah! You're not wrong, I guess us at the Civil Corps could easily fit the conditions, but we're the ones solvin' crime, not causin' it! Why would we make a mess we just have to clean up ourselves?}}
+{{dialogue|Justice|indent=true|Think on it a bit more, other than us at the Civil Corps, who's lookin' most suspicious?}}
+
+:*''I think it's a random bandit.''
+:*''Is it a bird?''
+:*''It's a monster!''
+
+{{dialogue|Justice|indent=double|answer=I think it's a random bandit.
+|Uh. Okay. I think I see your logic. Bandits... steal things. Therefore, one could be to blame. That's a good, uh... deduction! But some random bandit? Most bandits are just wayless vagrants, they ain't got that kinda skill.}}
+{{dialogue|Justice|indent=double|Yeah, looks like the trail's run cold. But hey, fifty percent of crimes go unsolved, I wouldn't beat yourself up over it. I certainly don't when it happens to me.}}
+{{dialogue|Justice|indent=double|I'll jus' try to calm everyone down a peg in the meantime. Thanks for the assist, Builder! 'Preciate it regardless. Later, pardner!}}
+{{dialogue|Justice|indent=double|answer=Is it a bird?
+|Hahaha! Y'know, that's quite an imagination you got there! We only got one bird in this town, and that's Fang's: X the raven! Sure he may be a rude lil' feller, but he ain't no criminal!}}
+{{dialogue|Justice|indent=double|But then again, he sure could fit the description... Maybe he at least knows something?}}
+{{dialogue|Justice|indent=double|Tell you what: let's split up! I'll go tell Unsuur to get the paperwork ready, and you track down X and make that overgrown canary sing! Roll out!}}
+{{dialogue|Justice|indent=double|answer=It's a monster!
+|Where!? Where's my shootin' iron!? Wait a tick, ain't no monster- ''Player'', what's the big idea? Huh? You know you can't be scarin' folks like that 'round here!}}
+{{dialogue|Justice|indent=double|Yeah, looks like the trail's run cold. But hey, fifty percent of crimes go unsolved, I wouldn't beat yourself up over it. I certainly don't when it happens to me.}}
+{{dialogue|Justice|indent=double|I'll jus' try to calm everyone down a peg in the meantime. Thanks for the assist, Builder! 'Preciate it regardless. Later, pardner!}}
+{{dialogue|Justice|indent=true|answer=Is it a bird?
+|Hahaha! Y'know, that's quite an imagination you got there! We only got one bird in this town, and that's Fang's: X the raven! Sure he may be a rude lil' feller, but he ain't no criminal!}}
+{{dialogue|Justice|indent=true|But then again, he sure could fit the description... Maybe he at least knows something?}}
+{{dialogue|Justice|indent=true|Tell you what: let's split up! I'll go tell Unsuur to get the paperwork ready, and you track down X and make that overgrown canary sing! Roll out!}}
+{{dialogue|Justice|indent=true|answer=It's a monster!
+|Where!? Where's my shootin' iron!? Wait a tick, ain't no monster- ''Player'', what's the big idea? Huh? You know you can't be scarin' folks like that 'round here!}}
+{{dialogue|Justice|indent=true|Think on it a lil' more.}}
+
+:*''I think it's a random bandit.''
+:*''I think it's the Civil Corps itself!''
+:*''Is it a bird?''
+
+{{dialogue|Justice|indent=double|answer=I think it's a random bandit.
+|Uh. Okay. I think I see your logic. Bandits... steal things. Therefore, one could be to blame. That's a good, uh... deduction! But some random bandit? Most bandits are just wayless vagrants, they ain't got that kinda skill.}}
+{{dialogue|Justice|indent=double|Yeah, looks like the trail's run cold. But hey, fifty percent of crimes go unsolved, I wouldn't beat yourself up over it. I certainly don't when it happens to me.}}
+{{dialogue|Justice|indent=double|I'll jus' try to calm everyone down a peg in the meantime. Thanks for the assist, Builder! 'Preciate it regardless. Later, pardner!}}
+{{dialogue|Justice|indent=double|answer=I think it's the Civil Corps itself!
+|You're jokin', right? Hahah! You're not wrong, I guess us at the Civil Corps could easily fit the conditions, but we're the ones solvin' crime, not causin' it! Why would we make a mess we just have to clean up ourselves?}}
+{{dialogue|Justice|indent=double|Yeah, looks like the trail's run cold. But hey, fifty percent of crimes go unsolved, I wouldn't beat yourself up over it. I certainly don't when it happens to me.}}
+{{dialogue|Justice|indent=double|I'll jus' try to calm everyone down a peg in the meantime. Thanks for the assist, Builder! 'Preciate it regardless. Later, pardner!}}
+{{dialogue|Justice|indent=double|answer=Is it a bird?
+|Hahaha! Y'know, that's quite an imagination you got there! We only got one bird in this town, and that's Fang's: X the raven! Sure he may be a rude lil' feller, but he ain't no criminal!}}
+{{dialogue|Justice|indent=double|But then again, he sure could fit the description... Maybe he at least knows something?}}
+{{dialogue|Justice|indent=double|Tell you what: let's split up! I'll go tell Unsuur to get the paperwork ready, and you track down X and make that overgrown canary sing! Roll out!}}
+
+TRIGGER Procedure 1.0 Step 1.5 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 6) There is a conversation segment (id 2946) that ends:
+{{dialogue|Justice|Hahaha! Y'know, that's quite an imagination you got there! We only got one bird in this town, and that's Fang's: X the raven! Sure he may be a rude lil' feller, but he ain't no criminal!}}
+CONDITIONS
+Always:
+ACTIONS
+Set RECEIVE to 1
+Set global blackboard key thiefcorrect with info 1.
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Check if RECEIVE is == 1
+ACTIONS
+SUBMIT MISSION 1200113
+Run mission Track the Suspect
+END MISSION 1200114
+
+TRIGGER Procedure 1.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Check if RECEIVE is == 0
+ACTIONS
+SUBMIT MISSION 1200113
+
+TRIGGER Procedure 1.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission Track the Suspect
+END MISSION 1200114
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200113 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Investigate the Crime Scene===
+
+{{mission_details
+|desc = Find and investigate the crime scene.
+|details = Investigate the Crime Scene
+}}
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 10 | missionId: 1200113 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Check if INTVIVI is == 1
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1200113 | targetId: 2 | transId: 80007007 | isAdd: 1
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 10 | missionId: 1200113 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Check if INTPABLO is == 1
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1200113 | targetId: 2 | transId: 80007009 | isAdd: 1
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 10 | missionId: 1200113 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Check if INTARVIO is == 1
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1200113 | targetId: 2 | transId: 80007008 | isAdd: 1
+
+TRIGGER Procedure 2.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1200114
+CONDITIONS
+Always:
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: FindTheThief
+Run mission Track the Suspect

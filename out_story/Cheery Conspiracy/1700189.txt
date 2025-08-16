@@ -1,0 +1,88 @@
+Reading Mission 1700189: Cheery Conspiracy
+
+<onlyinclude>{{Infobox mission
+|name = Cheery Conspiracy
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Cheery Conspiracy:
+
+TRIGGER Procedure 1.0 Step 4.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1700171
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+Arvio stops standing still
+X stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 171718042) from X
+Fang stops standing still
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the third option in conversation segment 4222:
+{{dialogue|Arvio|I really thought I had a devilishly detailed plan here... but you're still not convinced? Unbelievably, even X is on board! Since X is happy to help, wouldn't you reconsider?}}
+
+*''I feel like your heart is in the right place, but...'' (No unique dialogue)
+*''We can't do this, Arvio.'' (No unique dialogue)
+*''I'm telling Fang. This is wrong.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+ACTION DATE SET FLAG || flag: CCrefused
+Run mission Cheery Conspiracy
+
+==Conduct==
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Fang
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 1432_0 starts:
+{{dialogue|Fang|Hm...?}}
+
+*''(Tell him about Arvio's plan)''
+*''Nothing...''
+
+{{dialogue|Fang|indent=true|answer=(Tell him about Arvio's plan)
+|He... I don't understand...}}
+{{dialogue|Fang|indent=true|Thank you. For telling me.}}
+{{dialogue|Fang|indent=true|answer=Nothing...
+|...}}
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE FLAG || flag: CCrefused | compare: 2 | days: 7
+ACTIONS
+The player receives a letter:
+{{mail|300}}
+
+TRIGGER Procedure 2.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 300
+CONDITIONS
+Always:
+ACTIONS
+END MISSION 1700189

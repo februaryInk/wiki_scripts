@@ -1,0 +1,161 @@
+Reading Mission 1200321: Brain Food
+
+<onlyinclude>{{Infobox mission
+|name = Brain Food
+|image =
+|description = Qi left a notice saying he was running out of food at the Starship Ruins.
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 2000
+|reputation = 15
+|gols = 1000
+|npc1 = Qi
+|rp1 = 20
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200364
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Sandrock Strikes Back is successfully completed
+ACTIONS
+Run mission #1200320
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Definitely Not a Ninja Sword is successfully completed
+ACTIONS
+Run mission Brain Food
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|601}}
+DELIVER MISSION 1200321
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200321
+CONDITIONS
+Always:
+ACTIONS
+Run mission Brain Food
+END MISSION 1200321
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200321
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER ONCE CREATE || missionId: 1200321 | id: 23211 | sceneName: Main | flagName: reservoir_trigger1 | showOnMap: 1 | transId: 0 | mapIcon: MissionAreaBranch
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | enter: 0 | npc: 8000 | id: 23211
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 23211 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 23211
+CONDITIONS
+Always:
+ACTIONS
+Qi stands still in Main
+PLAYER SET POS ROT FLAG || flagName: reservoir_player1 | sceneName: Main
+DELAY MASK SET || maskId: 23211 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 23211
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 3873_0 starts:
+{{dialogue|Qi|Oh, ''Player'', are you here to bathe in the magnificence of the Olympia as well? The people from the Alliance have already left, they have given me the directive to research this facility. Another blank check... unbelievable...}}
+{{dialogue|Qi|Do you know what this place is?}}
+
+*''It's a star ship shipyard!''
+*{{flirt}}''It's your dream!''
+*''It's where I kicked butts and took names!''
+
+{{dialogue|Qi|indent=true|answer=It's a star ship shipyard!
+|This is why you're my favorite Builder. Yes, it's a shipyard and launch facility for starships back during the Old World.}}
+{{dialogue|Qi|indent=true|answer=It's your dream!
+|I... won't deny it. It has been my dream since childhood to find the Olympia. This... is a shipyard and launch facility for the Olympia class starships during the Old World.}}
+{{dialogue|Qi|indent=true|answer=It's where I kicked butts and took names!
+|While that is very true... that wasn't the point I was trying to arrive at. This... is a shipyard and launch facility for the Olympia class starships back during the Old World.}}
+{{dialogue|Qi|Olympia is actually the name of an interstellar exploration program. I first read about it from the records onboard the Vega 5, which was to be the first stellar colony ship before it crashed during the Day of Calamity.}}
+{{dialogue|Qi|I'm not sure how salvageable everything is around here, I'm still cataloging, but don't get your hopes up. Our Duvos friends already went through everything.}}
+{{dialogue|Qi|Still, just by discovering this ruin is enough for me. It proves without a shadow of doubt now that the Olympia program existed... and has already sent ships out from our planet...}}
+{{dialogue|Qi|There are still human survivors out there! Amongst the stars!}}
+{{dialogue|Qi|Knowing this will keep me up many a nights...}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8007 | cId: 0 | missionId: 1200321
+CONDITIONS
+Check relationship with Qi is Lover
+Check relationship with Qi is 5 Lover Deepest
+ACTIONS
+(cId 1) A conversation 15657 starts:
+{{dialogue|Qi|''Player'', I'm afraid my workload has become rather overwhelming. I'm afraid we will need to decrease dating activity by at least fifty percent until the situation improves. I hope you understand.}}
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8007 | cId: 0 | missionId: 1200321
+CONDITIONS
+Check relationship with Qi is Married
+ACTIONS
+(cId 1) A conversation 15658, 15659 starts:
+{{dialogue|Qi|''Pet Name'' I'm afraid my workload has become rather overwhelming. I'm afraid we will need to mitigate my husbandly duties by at least fifty percent until the situation improves. I hope you understand.}}
+{{dialogue|Qi|It shall be done.}}
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Qi stops standing still
+
+==Rewards==
+{{mission reward
+|npc1 = Qi
+|rp1 = 20
+|exp = 2000
+|reputation = 15
+|gols = 1000
+}}

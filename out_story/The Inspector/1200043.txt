@@ -1,0 +1,216 @@
+Reading Mission 1200043: The Inspector
+
+<onlyinclude>{{Infobox mission
+|name = The Inspector
+|image =
+|description = An engineer has come to inspect the bridge, you ran into him by chance.
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 500
+|reputation = None
+|gols = None
+|npc1 = Qi
+|rp1 = 10
+|npc2 = Matilda
+|rp2 = 10
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100002
+
+TRIGGER Procedure 2.0 Step 13.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: 1200012over | info: 1 | exist: 1
+ACTIONS
+Run mission Qi's Gungam Opus
+GLOBAL BLACK BOARD REMOVE || key: 1200012over
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Qi's Gungam Opus is successfully completed
+ACTIONS
+Run mission The Inspector
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200043
+CONDITIONS
+Always:
+ACTIONS
+Set MINT to 0
+Set IsQTESuccess to 0
+Set global blackboard key notrain with info 1.
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+CHECK WEATHER STATE || weather: 2 | flag: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+Set MINT to 1
+Justice stands still in Main and looks at Mint
+Unsuur stands still in Main and looks at Mint
+Mint stands still in Main and looks at Unsuur
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: 1243_G1_Player_QTEFailed
+Add behavior CommanderIdle (idName: 124311) to Player
+(param: LookAtActor:8045)
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Check if MINT is == 1
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELIVER MISSION 1200043
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: 1243_G1_Player_QTEFailed
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Check if MINT is == 1
+ACTIONS
+{{cutscene|id = 1181}}
+A cutscene CG_MINTCOME (duration: 0.0) starts playing
+Meeting Mint - I first met Mint when his life was in danger; he had fallen asleep near the train tracks and then rolled into harm's way. Luckily we were able to help him in time. It was only later that we learned that this wasn't the first time the sleeping habit of his had gotten him into trouble.
+PLAYER SET POS ROT FLAG || flagName: 1243_G1_Player_QTEFailed | sceneName: Main
+
+TRIGGER Procedure 0.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE QTE TRIGGER || order: 0 | qte: CG_MINTCOME
+CONDITIONS
+Always:
+ACTIONS
+Unsuur stops standing still
+Unsuur stands still in Main
+Set IsQTESuccess to 1
+STOPWATCH REAL TIME SET || id: 124399 | sec: 0.1
+
+TRIGGER Procedure 0.0 Step 4.1 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 124399
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 124398 | sec: 0.1
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: 1243_G1_Player_QTESuccess
+
+TRIGGER Procedure 0.0 Step 4.2 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 124398
+CONDITIONS
+Always:
+ACTIONS
+Unsuur stops standing still
+Unsuur stands still in Main and looks at Mint
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_MINTCOME | state: 9
+CONDITIONS
+Check if MINT is == 1
+ACTIONS
+(cId 0) A conversation 245_0 starts:
+{{dialogue|Mint|All I remember is... I was feeling sleepy when I got off the train last night, and...}}
+
+*''Who are you again?''
+*''Why were you sleeping on the tracks?''
+
+{{dialogue|Mint|indent=true|answer=Who are you again?
+|Oh, I'm Mint. I was sent here by the Ataran Government to inspect a railway bridge.}}
+{{dialogue|Mint|indent=true|Where can I find City Hall? I'm supposed to talk with Mayor Trudy.}}
+{{dialogue|Mint|indent=true|answer=Why were you sleeping on the tracks?
+|Well, I don't know how to answer that one. Is it better or worse if I mention... this stuff happens from time to time? In any case, thanks for saving me!}}
+{{dialogue|Mint|indent=true|I'm Mint. I was sent here by the Ataran Government to inspect a railway bridge.}}
+{{dialogue|Mint|indent=true|Where can I find City Hall? I'm supposed to talk with Mayor Trudy.}}
+{{dialogue|Justice|Hold your horses, pal, you're not gettin' off that easy... I don't care if you're the Deacon of Meidi, here in Sandrock, everybody subscribes to a little tenet called "responsibility."}}
+{{dialogue|Justice|What if we hadn't showed up? You'd be in the hospital right now... at best!}}
+{{dialogue|Justice|Next time you feel like takin' a nap, check your surroundings! Ask yourself questions like: "Am I near any heavy machinery? Am I in a den of monsters? Do I smell gas?" This line of thinkin' may save your life one day, 'cause we're not always gonna be there, you got it?}}
+{{dialogue|Mint|Er, I'm sorry, sir. I'll try to be more careful from now on.}}
+{{dialogue|Justice|Yeah. You do that.}}
+{{dialogue|Justice|All's well that ends well, I guess. Eh, hey, Builder: me and Unsuur've gotta patrol, can you do me a solid and take the Inspector here to City Hall? I'd feel a lot better if you went along, considering the circumstances...}}
+{{dialogue|Justice|Thanks, ''Player''. Unsuur, let's ride.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Unsuur stops standing still
+STOPWATCH REAL TIME SET || id: 12431 | sec: 1
+
+TRIGGER Procedure 1.0 Step 0.1 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 12431
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 1203 starts:
+{{dialogue|Mint|Sorry for the trouble. Please, lead the way.}}
+Justice stops standing still
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+GROUP 0:
+START MISSION 1200043
+CUTSCENE UI STATE EXIT || 
+
+GROUP 1:
+
+GROUP 2:
+
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200043
+CONDITIONS
+Always:
+ACTIONS
+Mint stops standing still
+Remove behavior CommanderIdle (idName: 124311) from Player
+Run mission The Inspector
+END MISSION 1200043
+
+==Rewards==
+{{mission reward
+|npc1 = Qi
+|rp1 = 10
+|npc2 = Matilda
+|rp2 = 10
+|exp = 500
+|reputation = None
+|gols = None
+}}

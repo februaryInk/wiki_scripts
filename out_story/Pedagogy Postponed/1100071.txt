@@ -1,0 +1,201 @@
+Reading Mission 1100071: Pedagogy Postponed
+
+<onlyinclude>{{Infobox mission
+|name = Pedagogy Postponed
+|image =
+|description = You ran into Pen and Burgess training, but it seems Burgess has lost his sword.
+|type = Side
+|time =
+|location =
+|characters = [[Pen]]
+|condition =
+|details =
+|exp = 300
+|reputation = 10
+|gols = None
+|npc1 = Pen
+|rp1 = 20
+|npc2 = Burgess
+|rp2 = 10
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100068
+
+TRIGGER Procedure 0.0 Step 5.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: pensandstorm | info: 1 | exist: 1
+ACTIONS
+Run mission Instant Karma
+
+TRIGGER Procedure 0.0 Step 8.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Becoming Official is successfully completed
+ACTIONS
+Run mission Pedagogy Postponed
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100071
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 0
+AREA TRIGGER CREATE || missionId: 1100071 | id: 20711 | sceneName: Main | flagName: practicesword_trigger | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80000475
+SCENEITEM CREATE FLAG || itemType: 0 | id: 20711 | path: Mission_Practicesword | sceneName: BurgessHome | flagName: practicesword_sword | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 0.1 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 20711
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: inprison | info: 1 | exist: 0
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 20711 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 20711
+DELIVER MISSION 1100071
+
+TRIGGER Procedure 0.0 Step 0.2 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 20711 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Pen stands still in Main
+Burgess stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: practicesword_player
+DELAY MASK SET || maskId: 20711 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 20711 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 1418, 1419, 1420, 1421, 1422 starts:
+{{dialogue|Burgess|So you see... I have misplaced my sword and shield... But after some thinking, I realized that maybe it was all for the best! I don't really like hurting people anyway...}}
+{{dialogue|Pen|Nonsense! There's no higher pursuit than perfecting combat! Besides, we need all the help we can get in our crusade for justice. You need training, Burgess. I insist!}}
+{{dialogue|Burgess|Erm... well... I mean, if you really think it'll help everyone...}}
+{{dialogue|Pen|Good man! Ah, and look who it is, our resident Builder! Who no doubt can forge you a new set of weapons. Isn't that grand, Burgess?}}
+{{dialogue|Burgess|Oh... goodie...}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 366:
+{{dialogue|Pen|Anyway, he's lost his training sword and shield, I was wondering if you could build him a new set. That's easy for you, right?}}
+
+*''Sure.'' (No unique dialogue)
+*''Can't right now, too much on my plate.'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 371:
+{{dialogue|Pen|Ah hah! So you've cleared out your very busy schedule, I assume. Ready to make that sword and shield?}}
+
+*''Sure.'' (No unique dialogue)
+*''Can't right now, too much on my plate.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+START MISSION 1100071
+CUTSCENE UI STATE EXIT || 
+Pen stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 20712) from Burgess
+
+TRIGGER Procedure 0.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1100071
+CONDITIONS
+Always:
+ACTIONS
+Run mission Pedagogy Postponed
+END MISSION 1100071
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: farmattack | info: 1 | exist: 1
+ACTIONS
+AREA TRIGGER DELETE || id: 20711
+SCENEITEM DELETE || itemType: 0 | id: 20711
+CLOSE MISSION || missionId: 1100071
+
+TRIGGER Procedure 1.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Burgess stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 20712) to Burgess
+(param: TargetScene:Main|MoveMode:Walk|FlagName:practicesword_burgess2)
+(cId 1) A conversation 92_0 starts:
+{{dialogue|Pen|Salutations, Builder! I've been teaching Burgess the art of the blade! Pretty cool of me, huh?}}
+{{dialogue|Pen|Anyway, he's lost his training sword and shield, I was wondering if you could build him a new set. That's easy for you, right?}}
+
+*''Sure.''
+*''Can't right now, too much on my plate.''
+
+{{dialogue|Pen|indent=true|answer=Sure.
+|Wonderful! Don't keep us waiting too long now, hm? You should be able to craft them on your Worktable.}}
+{{dialogue|Pen|indent=true|answer=Can't right now, too much on my plate.
+|Isn't... your only job in this town to build things? For citizens like me? Alright, Builder. Let me know if you do end up having time.}}
+
+TRIGGER Procedure 1.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Pen stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 20712) from Burgess
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Pen|Ah hah! So you've cleared out your very busy schedule, I assume. Ready to make that sword and shield?}}
+
+*''Sure.''
+*''Can't right now, too much on my plate.''
+
+{{dialogue|Pen|indent=true|answer=Sure.
+|Wonderful! Don't keep us waiting too long now, hm? You should be able to craft them on your Worktable.}}
+{{dialogue|Pen|indent=true|answer=Can't right now, too much on my plate.
+|Isn't... your only job in this town to build things? For citizens like me? Alright, Builder. Let me know if you do end up having time.}}
+
+==Rewards==
+{{mission reward
+|npc1 = Pen
+|rp1 = 20
+|npc2 = Burgess
+|rp2 = 10
+|exp = 300
+|reputation = 10
+|gols = None
+}}

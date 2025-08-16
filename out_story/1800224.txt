@@ -1,0 +1,486 @@
+Reading Mission 1800224: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200106
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 7
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment SPEECHLESS by 1
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if Fang has favor >= 350
+Check if SPEECHLESS is >= 6
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+Run mission #1800224
+END MISSION 1800222
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800224
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1800224 | id: 82240 | sceneName: Main | flagName: Trigger_82241 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+Set 8224DAY to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_clinic
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_clinic
+NPC RANDOM ADD || id: 1 | instId: 82241 | scene: Clinic | dailyBehavior: RandomNPC | flagName: S8224_RNPC_Stand
+AREA TRIGGER DELETE || id: 82240
+X stands still in Main
+ACTION NPC RENAME || npc: 82241 | nameTransId: 30200023
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || flagName: S8224_Player_Stand0 | sceneName: Clinic
+Fang stands still in Clinic and looks at 82241
+82241 stands still in Clinic and looks at Fang
+
+TRIGGER Procedure 0.0 Step 2.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderTeleport (idName: 8224804) to 82241
+(param: TargetScene:Main|Delay:6.0|TargetFlag:S8224_RNPC_End)
+Remove behavior CommanderMoveToFlagAndAction (idName: 8224002) from Player
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 1852_0 starts:
+{{dialogue|82241|Customer: Urgh... you're supposed to be a doctor, ain't consultation part of the job? Where's that bird from before? I hate talkin' to that magpie, but this is even worse!}}
+{{dialogue|Fang|...}}
+{{dialogue|Fang|The sign...}}
+{{dialogue|82241|Sign? What sign? This again?}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8224802) to 82241
+(param: TargetScene:Clinic|MoveMode:Walk|FlagName:S8224_RNPC_1)
+Add behavior CommanderMoveToFlagAndAction (idName: 8224002) to Player
+(param: TargetScene:Clinic|MoveMode:Walk|FlagName:S8224_Player_Stand)
+
+TRIGGER Procedure 0.0 Step 4.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8224803) to 82241
+(param: TargetScene:Clinic|MoveMode:Walk|FlagName:S8224_RNPC_3)
+
+TRIGGER Procedure 0.0 Step 5.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 82241 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 1853_0 starts:
+{{dialogue|82241|My daughter's still sick! The cough's gone, but now she's got a fever. Can she keep taking the medicine you gave us last time? Or should we get a new one? What about if the fever goes away?}}
+{{dialogue|Fang|Slower... speak... slower.}}
+{{dialogue|82241|I can't, doc! I'm on pins and needles, and not the acupuncture kind; this is my daughter we're talkin' about here!}}
+
+*''What's going on?''
+*''Where's X?''
+
+{{dialogue|82241|indent=true|answer=What's going on?
+|Doc, is this your friend?}}
+{{dialogue|Fang|indent=true|Mm.}}
+{{dialogue|82241|indent=true|Great! Finally, someone who can speak... words! Maybe you can help!}}
+{{dialogue|Fang|indent=true|answer=Where's X?
+|Not here.}}
+{{dialogue|82241|indent=true|Even if the bird was here, all it'd do is parrot out, "Don't make me tap the sign, don't make me tap the sign, squark!" I wanna talk to a freakin' human!}}
+{{dialogue|82241|indent=true|Hey, wait a sec! You there, you're using... words! You know this guy, right? Maybe you can help!}}
+{{dialogue|82241|I came here to buy some meds for my daughter. I'd heard about this hermit doctor in Sandrock and his dubious, yet potent practices that might cure her chronic disease. She's already a lot better, in fact!}}
+{{dialogue|82241|But recently her condition has changed drastically; I'm at wit's end. Fang's good, but you just can't get a word out of him!}}
+{{dialogue|82241|Just help me read this prescription, the writing is all scribbly! It's like the handwriting equivalent of mumble rap!}}
+
+*''Let me help you "translate" it.''
+*''I doubt I can read it either...''
+
+{{dialogue|82241|indent=true|answer=Let me help you "translate" it.
+|reward={{NPC2|Fang|rp=1}}|Great, you're friends. Friends understand each others' handwriting, right? Right. So, quick, tell me what it says!}}
+{{dialogue|82241|indent=true|answer=I doubt I can read it either...
+|You can't read his writing? What kinda friend are you, then?}}
+{{dialogue|Fang|indent=true|Just... look.}}
+
+TRIGGER Procedure 0.0 Step 5.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 1858_0 starts:
+{{dialogue|Fang|Three...}}
+{{dialogue|82241|Three? Three what, three times a day? Three at a time? Three's a crowd? You want me to leave? Can you just speak clearly for once, doc!?}}
+{{dialogue|Fang|...Symptoms... again... ''Player'', look...}}
+{{dialogue|82241|Alright! She was coughing, now she's not. When I brought her here, I think the weather did a number on her! Now she has a fever. And she says she's dizzy, too. I don't wanna be just poppin' pills, what do I do, doc!?}}
+
+*''One tablet, three times a day.''
+*''One tablet, once a day.''
+*''Two tablets, three times a day.''
+
+{{dialogue|82241|indent=true|answer=Two tablets, three times a day.
+|reward={{NPC2|Fang|rp=3}}|Are you sure? Her life depends on this!}}
+{{dialogue|Fang|indent=true|Yes.}}
+{{dialogue|82241|indent=true|That's great, thank you doctor! And your friend too, they've been super helpful. Way better than that bird, at least! Now, I gotta run. Thanks again!}}
+{{dialogue|Fang|No. Not right.}}
+{{dialogue|82241|What? What's not right? Urgh, just have a look again, tell me what to do!}}
+{{dialogue|82241|Alright! She was coughing, now she's not. When I brought her here, I think the weather did a number on her! Now she has a fever. And she says she's dizzy, too. I don't wanna be just poppin' pills, what do I do, doc!?}}
+
+*''One tablet, three times a day.''
+*''One tablet, once a day.''
+*''Two tablets, three times a day.''
+
+{{dialogue|Fang|indent=true|answer=One tablet, three times a day.
+|reward={{NPC2|Fang|rp=-3}}|No... it's three.}}
+{{dialogue|82241|indent=true|What's wrong? Three? Three times a day?}}
+{{dialogue|Fang|indent=true|... yes.}}
+{{dialogue|82241|indent=true|Okay, so how many each time? Three? One? Twenty?!}}
+{{dialogue|Fang|indent=true|... Two.}}
+{{dialogue|82241|indent=true|You're sure? Okay well, doctor... it's really okay? Urgh, I'm never coming here again. It's just so... frustrating.}}
+{{dialogue|Fang|indent=true|answer=One tablet, once a day.
+|reward={{NPC2|Fang|rp=-3}}|No... it's three.}}
+{{dialogue|82241|indent=true|What's wrong? Three? Three times a day?}}
+{{dialogue|Fang|indent=true|... yes.}}
+{{dialogue|82241|indent=true|Okay, so how many each time? Three? One? Twenty?!}}
+{{dialogue|Fang|indent=true|... Two.}}
+{{dialogue|82241|indent=true|You're sure? Okay well, doctor... it's really okay? Urgh, I'm never coming here again. It's just so... frustrating.}}
+{{dialogue|82241|indent=true|answer=Two tablets, three times a day.
+|reward={{NPC2|Fang|rp=3}}|Are you sure? Her life depends on this!}}
+{{dialogue|Fang|indent=true|Yes.}}
+{{dialogue|82241|indent=true|That's great, thank you doctor! And your friend too, they've been super helpful. Way better than that bird, at least! Now, I gotta run. Thanks again!}}
+Set ErrorChoice to 0
+
+TRIGGER Procedure 0.0 Step 5.0 Order 25 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the first option in conversation segment 6219:
+{{dialogue|82241|Just help me read this prescription, the writing is all scribbly! It's like the handwriting equivalent of mumble rap!}}
+
+*''Let me help you "translate" it.'' (No unique dialogue)
+*''I doubt I can read it either...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Fang gains 1 favor
+
+TRIGGER Procedure 0.0 Step 6.0 Order 9 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 4) The player picks the first option in conversation segment 6226:
+{{dialogue|82241|Alright! She was coughing, now she's not. When I brought her here, I think the weather did a number on her! Now she has a fever. And she says she's dizzy, too. I don't wanna be just poppin' pills, what do I do, doc!?}}
+
+*''One tablet, three times a day.'' (No unique dialogue)
+*''One tablet, once a day.'' (No unique dialogue)
+*''Two tablets, three times a day.'' (No unique dialogue)
+
+(cId 4) The player picks the second option in conversation segment 6226:
+{{dialogue|82241|Alright! She was coughing, now she's not. When I brought her here, I think the weather did a number on her! Now she has a fever. And she says she's dizzy, too. I don't wanna be just poppin' pills, what do I do, doc!?}}
+
+*''One tablet, three times a day.'' (No unique dialogue)
+*''One tablet, once a day.'' (No unique dialogue)
+*''Two tablets, three times a day.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Increment ErrorChoice by 1
+
+TRIGGER Procedure 0.0 Step 7.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) The player picks the first option in conversation segment 6226:
+{{dialogue|82241|Alright! She was coughing, now she's not. When I brought her here, I think the weather did a number on her! Now she has a fever. And she says she's dizzy, too. I don't wanna be just poppin' pills, what do I do, doc!?}}
+
+*''One tablet, three times a day.'' (No unique dialogue)
+*''One tablet, once a day.'' (No unique dialogue)
+*''Two tablets, three times a day.'' (No unique dialogue)
+
+(cId 4) The player picks the second option in conversation segment 6226:
+{{dialogue|82241|Alright! She was coughing, now she's not. When I brought her here, I think the weather did a number on her! Now she has a fever. And she says she's dizzy, too. I don't wanna be just poppin' pills, what do I do, doc!?}}
+
+*''One tablet, three times a day.'' (No unique dialogue)
+*''One tablet, once a day.'' (No unique dialogue)
+*''Two tablets, three times a day.'' (No unique dialogue)
+
+CONDITIONS
+Check if ErrorChoice is >= 2
+ACTIONS
+Fang gains -3 favor
+
+TRIGGER Procedure 0.0 Step 7.0 Order 26 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) The player picks the third option in conversation segment 6226:
+{{dialogue|82241|Alright! She was coughing, now she's not. When I brought her here, I think the weather did a number on her! Now she has a fever. And she says she's dizzy, too. I don't wanna be just poppin' pills, what do I do, doc!?}}
+
+*''One tablet, three times a day.'' (No unique dialogue)
+*''One tablet, once a day.'' (No unique dialogue)
+*''Two tablets, three times a day.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Fang gains 3 favor
+
+TRIGGER Procedure 0.0 Step 8.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 82241 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 6207 starts:
+{{dialogue|82241|What are the symptoms? "How long has it lasted?" Argh, it's not that simple!}}
+
+TRIGGER Procedure 0.0 Step 8.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 82241 | behaviourName: CommanderTeleport | eventName: Teleported
+CONDITIONS
+Check if ErrorChoice is >= 2
+ACTIONS
+(cId 5) A conversation 1861_0 starts:
+{{dialogue|Fang|Thank you. You... tried.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 10.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+X stands still in Clinic
+X stops standing still
+Fang stands still in Clinic and looks at X
+Add behavior CommanderMoveToFlagAndAction (idName: 8224422) to X
+(param: TargetScene:Clinic|MoveMode:Walk|FlagName:S8224_X_2)
+Add behavior CommanderMoveToFlagAndAction (idName: 82241699) to Fang
+(param: TargetScene:Clinic|MoveMode:Walk|FlagName:S8224_Fang_01|Delay:1.0)
+82241 stops standing still
+
+TRIGGER Procedure 0.0 Step 8.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: Teleported | npc: 82241 | behaviourName: CommanderTeleport
+CONDITIONS
+Check if ErrorChoice is < 2
+ACTIONS
+(cId 5) A conversation 1863_0 starts:
+{{dialogue|Fang|Thank you.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 9.0 Order 28 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8224424) from X
+Remove behavior CommanderMoveToFlagAndAction (idName: 8224165) from Fang
+Remove behavior CommanderMoveToFlagAndAction (idName: 82240099) from Player
+
+TRIGGER Procedure 0.0 Step 11.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8042 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 1864_0 starts:
+{{dialogue|X|I'm sorry I was gone so long, honey. Squark! Not home!}}
+{{dialogue|X|What's wrong, cat got your tongue?}}
+{{dialogue|Fang|Don't use... that voice... "His" voice...}}
+{{dialogue|X|Sorry! Uh oh! Uh oh!}}
+{{dialogue|Fang|... Never use that voice.}}
+{{dialogue|X|I won't always be here, sweetie. Can you speak up a bit, Fang?}}
+{{dialogue|Fang|M... Mother's voice...}}
+{{dialogue|X|I won't always be here. Say somethin' already!}}
+{{dialogue|Fang|I... can't...}}
+
+*''Why don't you want to speak?''
+*''You can't work without speaking.''
+*''It's okay. We understand it's hard for you.''
+
+{{dialogue|Fang|indent=true|answer=It's okay. We understand it's hard for you.
+|...}}
+{{dialogue|Fang|I don't... like talking. X speaks...}}
+{{dialogue|Fang|Today... was hard. X not here.}}
+{{dialogue|X|CoCo! Friend! I won't always be here, sweetie.}}
+{{dialogue|Fang|I... Patients angry... This... won't... do.}}
+{{dialogue|Fang|Need... to think...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 12.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Fang stops standing still
+Fang stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 8224165) to Fang
+(param: TargetScene:Clinic|MoveMode:Walk|FlagName:S8224_Fang_Away)
+Remove behavior CommanderMoveToFlagAndAction (idName: 82241699) from Fang
+
+TRIGGER Procedure 0.0 Step 12.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+X stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8224802) from 82241
+Remove behavior CommanderMoveToFlagAndAction (idName: 8224803) from 82241
+Remove behavior CommanderMoveToFlagAndAction (idName: 8224002) from Player
+Remove behavior CommanderTeleport (idName: 8224804) from 82241
+X stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8224422) from X
+CUTSCENE UI STATE EXIT || 
+NPC RANDOM REMOVE || id: 82241
+Fang gains 5 favor
+X gains 5 favor
+
+TRIGGER Procedure 0.0 Step 12.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8224424) to X
+(param: TargetScene:Clinic|MoveMode:Walk|FlagName:S8224_X_3)
+
+TRIGGER Procedure 0.0 Step 13.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8016 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 1866_0, 6255 starts:
+{{dialogue|X|Brawwwwwrk!}}
+The conversation ends.
+{{dialogue||(Maybe I should give them some space... I'll come visit again soon.)}}
+
+TRIGGER Procedure 0.0 Step 13.0 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8224424) from X
+Remove behavior CommanderMoveToFlagAndAction (idName: 8224165) from Fang
+Remove behavior CommanderMoveToFlagAndAction (idName: 82240099) from Player
+
+TRIGGER Procedure 0.0 Step 13.0 Order 19 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment 8224DAY by 1
+
+TRIGGER Procedure 0.0 Step 13.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Fang
+CONDITIONS
+Always:
+ACTIONS
+(cId 11) A conversation 1867_0 starts:
+{{dialogue|Fang|...}}
+
+*''Can I do something to help?''
+*''Whose voice bothered you?''
+
+{{dialogue|Fang|indent=true|answer=Can I do something to help?
+|Don't... bother... yourself...}}
+{{dialogue|Fang|indent=true|answer=Whose voice bothered you?
+|No one...}}
+
+TRIGGER Procedure 0.0 Step 14.0 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 11) There is a conversation segment (id 6258) that ends:
+{{dialogue|Fang|No one...}}
+CONDITIONS
+Always:
+ACTIONS
+(cId 12) A conversation 6259 starts:
+{{dialogue||Your relationship is not deep enough for Fang to open up about this.}}
+
+TRIGGER Procedure 0.0 Step 22.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 8224DAY is >= 2
+ACTIONS
+AREA TRIGGER DELETE || id: 82242
+END MISSION 1800224

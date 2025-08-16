@@ -1,0 +1,351 @@
+Reading Mission 1700336: Let's Play Mahjong
+
+<onlyinclude>{{Infobox mission
+|name = Let's Play Mahjong
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Let's Play Mahjong:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|622}}
+DELIVER MISSION 1700335
+
+TRIGGER Procedure 0.0 Step 0.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 622
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1700335
+Run mission Let's Play Mahjong
+END MISSION 1700335
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700336
+CONDITIONS
+Always:
+ACTIONS
+===Collect Materials===
+
+{{mission_details
+|desc = As it turns out, the table was once used to play a game called "mahjong." Get the materials required for Qi to repair it.
+|details = Collect Materials
+*{{i2|Microchip|0/1}}
+*{{i2|Hardwood Planks|0/2}}
+*{{i2|Bronze Plate|0/2}}
+}}
+Set submit to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1700335 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Go to the Game Center===
+
+{{mission_details
+|desc = You have the materials required to fix the mahjong table. Take them to the Game Center for repairs.
+|details = Go to the Game Center
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the GameCenter:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_gamecenter
+Check if X is in town
+Check if Fang is in town
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_gamecenter
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the GameCenter:
+CONDITIONS
+Always:
+ACTIONS
+Catori stands still in GameCenter
+Qi stands still in GameCenter
+Fang stands still in GameCenter
+X stands still in GameCenter
+PLAYER SET POS ROT FLAG || sceneName: GameCenter | flagName: MahjongPlayer0
+CUTSCENE UI STATE ENTER || 
+SCENEITEM CREATE FLAG || itemType: 0 | id: 173361 | path: MahjongTable | sceneName: GameCenter | flagName: MahjongDesk | extraParams: -1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the GameCenter:
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 4268_0 starts:
+{{dialogue|Catori|So wait, if I have these three and these three, I win? This one's... two, three four... and this one's three-of-a-kind.}}
+{{dialogue|X|Brawwwk! Three and three and three and three and two!}}
+{{dialogue|X|Sometimes four...}}
+{{dialogue|X|Draw one! Draw one! I win! I win!}}
+{{dialogue|Catori|Guess that's what I get for trying to learn the game from a bird. I dunno, I guess I thought it'd be more like tic-tac-toe or somethin'; this game has rules on top of rules...!}}
+{{dialogue|Qi|Really? I found the bird's explanation to be rather disjointed, but altogether accurate. Or rather... devoid of misinformation.}}
+{{dialogue|Qi|The game is played with a total of 108 tiles, divided mostly into three suits: "dot," "line," and "wan." Each player begins the game by drawing thirteen tiles.}}
+{{dialogue|Qi|Each player begins each turn by drawing a tile, and then immediately ends their turn by discarding a tile. The objective is to acquire fourteen tiles that fulfill the following requirement: four sets of three and a pair.}}
+{{dialogue|Qi|A set can be comprised of three tiles in a sequence, e.g., tile with one dot, tile with two dots, tile with three dots. Or a set can be simply three-of-a-kind, e.g., holding three of the same tile. No more troublesome than binary linear equations, really.}}
+{{dialogue|Catori|Uh.... huh.}}
+{{dialogue|Qi|To summarize, any hand that can be represented by the formula: m*AAA+n*ABC+DD, keeping in mind that "m" and "n" can be zero, is a winning hand.}}
+{{dialogue|Catori|Think I was having better luck with the bird.}}
+{{dialogue|Catori|Ah, hello, ''Player''! Come to set up the machine? Well, come on in. Gang's all here...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 173361) to Player
+(param: CMDAction:Nod_Story)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 14512) that ends:
+{{dialogue|Catori|Alright, then. No time like the present!}}
+CONDITIONS
+Always:
+ACTIONS
+ACTION MAHJONG START || idx: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+X stops standing still
+Add tag "XSOLO" to X
+STOPWATCH REAL TIME SET || id: 173361 | sec: 1.5
+
+TRIGGER Procedure 0.0 Step 0.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Qi stops standing still
+Fang stops standing still
+Catori stops standing still
+ACTION NPC REMOVE TAG || npc: 8042 | tag: XSOLO
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1700335
+END MISSION 1700336
+
+TRIGGER Procedure 0.0 Step 0.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 14506) that ends:
+{{dialogue|Catori|Make another one yourself, if you'd like! Gotta admit they really bring the room together...}}
+CONDITIONS
+Always:
+ACTIONS
+Qi stops standing still
+Fang stops standing still
+Catori stops standing still
+ACTION NPC REMOVE TAG || npc: 8042 | tag: XSOLO
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1700335
+END MISSION 1700336
+
+TRIGGER Procedure 0.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderPlayerAction (idName: 173361) from Player
+Add behavior CommanderMoveToFlagAndAction (idName: 173361) to Player
+(param: TargetScene:GameCenter|FlagName:MahjongPlayer|Action:Fix)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 173361) from Player
+BAG MODIFY BY TARGET || missionId: 1700335 | targetId: 1
+(cId -1) A conversation 4305_0 starts:
+{{dialogue|Catori|I guess, eh... run those rules back to me one more time, X, and maybe we can play a round.}}
+{{dialogue|X|Time's up! Buh-bye! Bye!}}
+{{dialogue|X|CoCo...! CoCo! Buh-bye!}}
+{{dialogue|X|Bye, dear. Kiss kiss! Have fun and play with your friends.}}
+{{dialogue|Catori|Ah... yeah, Dr. Fang. It'd be lovely if you'd stay a bit longer and play a round with us. Maybe it'll feel a bit like home!}}
+{{dialogue|Fang|...Very well.}}
+{{dialogue|Qi|Indeed. Often the best way to understand games such as this is simply to play. I recommend we act on the serendipitous nature of having exactly the correct number of players for a game: four, by playing a round here and now.}}
+{{dialogue|X|Buh-bye! Buh-bye! I'm late for a very important date!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAHJONG END || order: 0
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 4274_0 starts:
+{{dialogue|Catori|Hah! Well, I admit... I could maybe get into this! I get kinda excited, fishin' for that last tile to make the win. Does all seem like dumb luck, though...}}
+{{dialogue|Qi|Indeed, once you have arrived at the mathematically correct decision as to which piece to discard, the deciding factor is probability. Or "luck," as you've said it. Which is really just... Probability taken personally...}}
+{{dialogue|Fang|Hmm... no. Not... exactly.}}
+{{dialogue|Qi|Doctor...?}}
+{{dialogue|Fang|Look at your hand... Look at the board... Look at the faces around the board...}}
+{{dialogue|Qi|Ah, I suppose, yes, there is a human element to the game as well. By being aware of what pieces your opponents are discarding, you can make better decisions yourself. Furthermore, there are the rarer win conditions to consider, like the "seven pairs" which offer greater rewards...}}
+{{dialogue|Qi|Yes, the level of complexity, combined with the wild variance of outcomes, solidified by the opportunity to "read" your opponents... I am beginning to understand the nature of this game's popularity.}}
+{{dialogue|Catori|Alright! Well if this game's made a fan out of you, I'm sure the rest of town is sure to follow! You all can come back for a game anytime, I'll be practicing!}}
+{{dialogue|Catori|Thanks for putting this together, ''Player''! Hope you'll come play again soon, too!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 173361
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 4269_0 starts:
+{{dialogue|Catori|Well. Four counting you, ''Player''. What do you say? Care for a game of... "Mah... jong?"}}
+
+*''Deal me in!''
+*''I don't get the rules still...''
+*''Fang, do you know how to play?''
+*''Sorry, just not interested.''
+
+{{dialogue|Catori|indent=true|answer=Deal me in!
+|Alright, then. No time like the present!}}
+{{dialogue|Catori|indent=true|answer=I don't get the rules still...
+|Think we're all in the same boat, ''Player''.}}
+{{dialogue|Catori|indent=true|The machine won't let us make any huge mistakes. And these two guys seem to know what they're doing. Let's just dive in and see what happens!}}
+{{dialogue|Qi|indent=true|Based on its popularity in the Old World, the barrier for entry should be relatively low.}}
+{{dialogue|Catori|indent=true|answer=Fang, do you know how to play?
+|Eh, well, don't knock yourself out, doc. Maybe just shake your head if we're doing something wrong... Don't worry about trying to teach us strategy.}}
+{{dialogue|Catori|indent=true|Hm, if the bird knows the rules, Fang must be a killer... And now with only Qi left to explain the rules in the most technical way possible... whew... this could be rough...}}
+{{dialogue|Catori|indent=true|answer=Sorry, just not interested.
+|Yeah, sure, no problem. I'm not sure how interested I am either... Well. The machine's here. Maybe we can get a game together somewhere down the line if there's nothing else going on.}}
+{{dialogue|Catori|indent=true|Make another one yourself, if you'd like! Gotta admit they really bring the room together...}}
+{{dialogue|Catori|Well. Four counting you, ''Player''. What do you say? Care for a game of... "Mah... jong?"}}
+
+*''Deal me in!''
+*''I don't get the rules still...''
+*''Fang, do you know how to play?''
+*''Sorry, just not interested.''
+
+{{dialogue|Catori|indent=true|answer=Deal me in!
+|Alright, then. No time like the present!}}
+{{dialogue|Catori|indent=true|answer=I don't get the rules still...
+|Think we're all in the same boat, ''Player''.}}
+{{dialogue|Catori|indent=true|The machine won't let us make any huge mistakes. And these two guys seem to know what they're doing. Let's just dive in and see what happens!}}
+{{dialogue|Qi|indent=true|Based on its popularity in the Old World, the barrier for entry should be relatively low.}}
+{{dialogue|Catori|indent=true|answer=Fang, do you know how to play?
+|Eh, well, don't knock yourself out, doc. Maybe just shake your head if we're doing something wrong... Don't worry about trying to teach us strategy.}}
+{{dialogue|Catori|indent=true|Hm, if the bird knows the rules, Fang must be a killer... And now with only Qi left to explain the rules in the most technical way possible... whew... this could be rough...}}
+{{dialogue|Catori|indent=true|answer=Sorry, just not interested.
+|Yeah, sure, no problem. I'm not sure how interested I am either... Well. The machine's here. Maybe we can get a game together somewhere down the line if there's nothing else going on.}}
+{{dialogue|Catori|indent=true|Make another one yourself, if you'd like! Gotta admit they really bring the room together...}}
+{{dialogue|Catori|Well. Four counting you, ''Player''. What do you say? Care for a game of... "Mah... jong?"}}
+
+*''Deal me in!''
+*''I don't get the rules still...''
+*''Fang, do you know how to play?''
+*''Sorry, just not interested.''
+
+{{dialogue|Catori|indent=true|answer=Deal me in!
+|Alright, then. No time like the present!}}
+{{dialogue|Catori|indent=true|answer=I don't get the rules still...
+|Think we're all in the same boat, ''Player''.}}
+{{dialogue|Catori|indent=true|The machine won't let us make any huge mistakes. And these two guys seem to know what they're doing. Let's just dive in and see what happens!}}
+{{dialogue|Qi|indent=true|Based on its popularity in the Old World, the barrier for entry should be relatively low.}}
+{{dialogue|Catori|indent=true|Well. Four counting you, ''Player''. What do you say? Care for a game of... "Mah... jong?"}}
+
+:*''Deal me in!''
+:*''Fang, do you know how to play?''
+:*''Sorry, just not interested.''
+
+{{dialogue|Catori|indent=double|answer=Deal me in!
+|Alright, then. No time like the present!}}
+{{dialogue|Catori|indent=double|answer=Fang, do you know how to play?
+|Eh, well, don't knock yourself out, doc. Maybe just shake your head if we're doing something wrong... Don't worry about trying to teach us strategy.}}
+{{dialogue|Catori|indent=double|Hm, if the bird knows the rules, Fang must be a killer... And now with only Qi left to explain the rules in the most technical way possible... whew... this could be rough...}}
+{{dialogue|Catori|indent=double|Well. Four counting you, ''Player''. What do you say? Care for a game of... "Mah... jong?"}}
+
+::*''Deal me in!''
+::*''Sorry, just not interested.''
+
+{{dialogue|Catori|indent=3|answer=Deal me in!
+|Alright, then. No time like the present!}}
+{{dialogue|Catori|indent=3|answer=Sorry, just not interested.
+|Yeah, sure, no problem. I'm not sure how interested I am either... Well. The machine's here. Maybe we can get a game together somewhere down the line if there's nothing else going on.}}
+{{dialogue|Catori|indent=3|Make another one yourself, if you'd like! Gotta admit they really bring the room together...}}
+{{dialogue|Catori|indent=double|answer=Sorry, just not interested.
+|Yeah, sure, no problem. I'm not sure how interested I am either... Well. The machine's here. Maybe we can get a game together somewhere down the line if there's nothing else going on.}}
+{{dialogue|Catori|indent=double|Make another one yourself, if you'd like! Gotta admit they really bring the room together...}}
+{{dialogue|Catori|indent=true|answer=Fang, do you know how to play?
+|Eh, well, don't knock yourself out, doc. Maybe just shake your head if we're doing something wrong... Don't worry about trying to teach us strategy.}}
+{{dialogue|Catori|indent=true|Hm, if the bird knows the rules, Fang must be a killer... And now with only Qi left to explain the rules in the most technical way possible... whew... this could be rough...}}
+{{dialogue|Catori|indent=true|Well. Four counting you, ''Player''. What do you say? Care for a game of... "Mah... jong?"}}
+
+:*''Deal me in!''
+:*''I don't get the rules still...''
+:*''Sorry, just not interested.''
+
+{{dialogue|Catori|indent=double|answer=Deal me in!
+|Alright, then. No time like the present!}}
+{{dialogue|Catori|indent=double|answer=I don't get the rules still...
+|Think we're all in the same boat, ''Player''.}}
+{{dialogue|Catori|indent=double|The machine won't let us make any huge mistakes. And these two guys seem to know what they're doing. Let's just dive in and see what happens!}}
+{{dialogue|Qi|indent=double|Based on its popularity in the Old World, the barrier for entry should be relatively low.}}
+{{dialogue|Catori|indent=double|Well. Four counting you, ''Player''. What do you say? Care for a game of... "Mah... jong?"}}
+
+::*''Deal me in!''
+::*''Sorry, just not interested.''
+
+{{dialogue|Catori|indent=3|answer=Deal me in!
+|Alright, then. No time like the present!}}
+{{dialogue|Catori|indent=3|answer=Sorry, just not interested.
+|Yeah, sure, no problem. I'm not sure how interested I am either... Well. The machine's here. Maybe we can get a game together somewhere down the line if there's nothing else going on.}}
+{{dialogue|Catori|indent=3|Make another one yourself, if you'd like! Gotta admit they really bring the room together...}}
+{{dialogue|Catori|indent=double|answer=Sorry, just not interested.
+|Yeah, sure, no problem. I'm not sure how interested I am either... Well. The machine's here. Maybe we can get a game together somewhere down the line if there's nothing else going on.}}
+{{dialogue|Catori|indent=double|Make another one yourself, if you'd like! Gotta admit they really bring the room together...}}
+{{dialogue|Catori|indent=true|answer=Sorry, just not interested.
+|Yeah, sure, no problem. I'm not sure how interested I am either... Well. The machine's here. Maybe we can get a game together somewhere down the line if there's nothing else going on.}}
+{{dialogue|Catori|indent=true|Make another one yourself, if you'd like! Gotta admit they really bring the room together...}}

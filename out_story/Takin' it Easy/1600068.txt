@@ -1,0 +1,278 @@
+Reading Mission 1600068: Takin' it Easy
+
+<onlyinclude>{{Infobox mission
+|name = Takin' it Easy
+|image =
+|description = Elsie sees that you and Mi-an are tired after working on the Crane Lift and wants to take you out for a relaxing visit into town.
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 600
+|reputation = None
+|gols = None
+|npc1 = Elsie
+|rp1 = 20
+|npc2 = Mi-an
+|rp2 = 20
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100002
+
+TRIGGER Procedure 0.0 Step 10.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON BAG CHANGE TAG || order: 0 | tagId: 52 | changeType: 0 | itemGrade: 0
+CONDITIONS
+Always:
+ACTIONS
+Run mission A Piece of the Past
+Add 1 Fish Fossil Piece 2 of Unknown quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 11.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+CHECK DATE || compare: 5 | year: 1 | month: 2 | day: 25
+Picking Up the Slack is successfully completed
+
+GROUP 10:
+CHECK DATE || compare: 2 | year: 1 | month: 2 | day: 28
+Picking Up the Slack is successfully completed
+
+ACTIONS
+Run mission #1100095
+Run mission Takin' it Easy
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1600068
+CONDITIONS
+Always:
+ACTIONS
+Set DaysCounter to 0
+DELIVER MISSION 1600068
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Chamber:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_chamber
+CHECK GLOBAL BLACKBOARD || key: yanreveal | info: 1 | exist: 0
+CHECK WEATHER STATE || weather: 0 | flag: 1
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_chamber
+CUTSCENE UI STATE ENTER || 
+Elsie stands still in Chamber and looks at Mi-an
+Mi-an stands still in Chamber and looks at Elsie
+AREA TRIGGER DELETE || id: 20681
+
+TRIGGER Procedure 1.0 Step 0.1 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Chamber:
+CONDITIONS
+Always:
+ACTIONS
+(cId 10) A conversation 1740, 1741, 1742, 1743, 1744, 1745, 1746 starts:
+{{dialogue|Mi-an|...So if you'll just move a few decimeters to your left, I think you'll find the pathway to the Commission Board to have become quite clear, allowing way for me to snag a commission!}}
+{{dialogue|Elsie|Hah! No deal! You can't fool me with your mind-games, Mi-an!}}
+{{dialogue|Mi-an|Okay, I give up.}}
+{{dialogue|Elsie|Look at yourself! How long has it been since you finished that big elevator thing? And you're already back in here, at it again!}}
+{{dialogue|Elsie|You need to admit that you have a problem, Mi-an. You're a workaholic!}}
+{{dialogue|Mi-an|I wouldn't go that far, I mean... I didn't have anything going on today! What else would I do if I didn't pick up a commission?}}
+{{dialogue|Elsie|A whole heck of a lot else! I'ma tell ya--}}
+PLAYER SET POS ROT FLAG || sceneName: Chamber | flagName: 1600068_G1_Player_0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Elsie stops standing still
+Elsie stands still in Chamber and looks at Player
+Add behavior CommanderMoveToFlagAndAction (idName: 1668001) to Player
+(param: TargetScene:Chamber|MoveMode:Walk|FlagName:1600068_G1_Player_1|LookAtActor:8005)
+STOPWATCH REAL TIME SET || id: 166801 | sec: 2
+Mi-an stops standing still
+Mi-an stands still in Chamber and looks at Player
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 166801
+CONDITIONS
+Always:
+ACTIONS
+(cId 13) A conversation 1747, 1748 starts:
+{{dialogue|Elsie|Oh, shucks, another one of you!? Alright, that's it! This is an intervention! I'm takin' the two of you out to do somethin' fun! No commissions allowed!}}
+{{dialogue|Mi-an|Uhm, I guess it wouldn't kill me to take one day off... and I am pretty tired.}}
+
+TRIGGER Procedure 1.0 Step 2.1 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 13) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 14) A conversation 1749 starts:
+{{dialogue|Mi-an|Hey there, ''Player''! I guess we're going... somewhere? Want to join us?}}
+STOPWATCH REAL TIME SET || id: 166803 | sec: 0.5
+
+TRIGGER Procedure 1.0 Step 2.2 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 166803
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 1668001) from Player
+Add behavior CommanderMoveToFlagAndAction (idName: 1668002) to Player
+(param: TargetScene:Chamber|MoveMode:Walk|FlagName:1600068_G1_Player_1|LookAtActor:8017)
+
+TRIGGER Procedure 1.0 Step 2.3 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 14) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 15) A conversation 1750, 1751 starts:
+{{dialogue|Elsie|Course you're joinin' us! As I was sayin': what you two need is to relax! And what better way to relax than a rigorous and dehabilitatin' day of mountain climbin' and Yakmel wranglin'!?}}
+{{dialogue|Mi-an|Erm, hey, Elle, that does sound really relaxing, but I... stubbed my toe this morning, better stay off the mountains for today, haha! So... why don't we just stop into the Golden Goose Gaming Center for a little bit instead?}}
+STOPWATCH REAL TIME SET || id: 166804 | sec: 0.5
+Mi-an stops standing still
+Mi-an stands still in Chamber and looks at Elsie
+
+TRIGGER Procedure 1.0 Step 2.5 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 15) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 16) A conversation 1752 starts:
+{{dialogue|Elsie|Wh- Huh...? G-games...? But that's kid stuff! Cool, mature adult-type-folk like us spend our leisure time runnin' free on the wild... frontier... and...}}
+
+TRIGGER Procedure 1.0 Step 2.4 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 166804
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 1668002) from Player
+Add behavior CommanderMoveToFlagAndAction (idName: 1668001) to Player
+(param: TargetScene:Chamber|MoveMode:Walk|FlagName:1600068_G1_Player_1|LookAtActor:8005)
+
+TRIGGER Procedure 1.0 Step 2.6 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 16) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 166802 | sec: 0.2
+
+TRIGGER Procedure 1.0 Step 2.7 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 166802
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 1668172) to Mi-an
+(param: CMDAction:ActingCute|LookAtActor:8005)
+STOPWATCH REAL TIME SET || id: 166805 | sec: 4
+
+TRIGGER Procedure 1.0 Step 2.8 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8017 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 1668172) from Mi-an
+
+TRIGGER Procedure 1.0 Step 3.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 166805
+CONDITIONS
+Always:
+ACTIONS
+(cId 17) A conversation 1753, 1754, 1755 starts:
+{{dialogue|Elsie|Oh, fine... I guess if y'all really want to, we can go to the Game Center. But I'm not playin' any of y'all's kid games, alright? I'm just there to keep you company. And make sure you don't relapse!}}
+{{dialogue|Mi-an|Woohoo!}}
+{{dialogue|Elsie|Now let's hurry on over. ''Player'', we'll see you there!}}
+
+*''Sounds good.'' (No unique dialogue)
+*''Actually, I can't go right now...'' (No unique dialogue)
+
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION CHOICE MADE END || order: 0 | npc: 8005 | id: 1755 | selectIndex: 0 | cId: 17 | missionId: 1600068
+CONDITIONS
+Always:
+ACTIONS
+(cId 18) A conversation 1756 starts:
+{{dialogue|Elsie|Yeehaw!}}
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 18) After the conversation ends:
+(cId 19) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Elsie stops standing still
+Mi-an stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 1668001) from Player
+CUTSCENE UI STATE EXIT || 
+START MISSION 1600068
+AUTOSAVE TRY || 
+
+TRIGGER Procedure 1.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION CHOICE MADE END || order: 0 | npc: 8005 | id: 1755 | selectIndex: 1 | cId: 17 | missionId: 1600068
+CONDITIONS
+Always:
+ACTIONS
+(cId 19) A conversation 1757 starts:
+{{dialogue|Elsie|Haha, yeah, that's a good one. We'll be waitin' for you at the Game Center! Don't take too long now!}}
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1600068
+CONDITIONS
+Always:
+ACTIONS
+Run mission Takin' it Easy
+END MISSION 1600068
+
+==Rewards==
+{{mission reward
+|npc1 = Elsie
+|rp1 = 20
+|npc2 = Mi-an
+|rp2 = 20
+|exp = 600
+|reputation = None
+|gols = None
+}}

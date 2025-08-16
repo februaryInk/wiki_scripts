@@ -1,0 +1,356 @@
+Reading Mission 1500313: The Outpost
+
+<onlyinclude>{{Infobox mission
+|name = The Outpost
+|image =
+|description = Logan and Elsie want to rebuild the Monster Hunter Outpost to help bolster Sandrock's defenses against the roaming creatures of the Eufaula Desert.
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 1750
+|reputation = 15
+|gols = 400
+|npc1 = Logan
+|rp1 = 20
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200332
+
+TRIGGER Procedure 0.0 Step 0.5 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Just Give a Whistle is successfully completed
+ACTIONS
+Run mission One Flew Over the Bandit Nest
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Check if mission 1800318 is result 1 flag 1
+
+GROUP 10:
+Check if mission 1800318 is result 2 flag 1
+
+ACTIONS
+Run mission The Outpost
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1500313
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1500313 | id: 531300 | sceneName: Main | flagName: Story_5313_Main | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80019123
+
+TRIGGER Procedure 0.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if Logan_Mission is == 1
+ACTIONS
+The player receives a letter:
+{{mail|599}}
+DELIVER MISSION 1500313
+
+TRIGGER Procedure 0.0 Step 5.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1500313
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Outpost
+END MISSION 1500313
+
+TRIGGER Procedure 1.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_guildhall
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_guildhall
+
+TRIGGER Procedure 1.0 Step 0.5 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Trudy stands still in Guildhall
+Elsie stands still in Guildhall
+Logan stands still in Guildhall
+PLAYER SET POS ROT FLAG || sceneName: Guildhall | flagName: Story_5313_Start
+AREA TRIGGER DELETE || id: 531300
+(cId 1) A conversation 12822, 12823 starts:
+{{dialogue|Trudy|Logan, Elsie, let's talk about the plan-}}
+{{dialogue|Trudy|Oh, ''Player'', great timing!}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 531340) to Player
+(param: TargetScene:Guildhall|MoveMode:Run|FlagName:Story_5313_02)
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1500313
+Logan stops standing still
+CUTSCENE UI STATE EXIT || 
+START MISSION 1500313
+Remove behavior CommanderMoveToFlag (idName: 531360) from Logan
+Remove behavior CommanderMoveToFlag (idName: 531350) from Player
+Remove behavior CommanderMoveToFlag (idName: 531340) from Player
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 5313001) A conversation 12824 starts:
+{{dialogue|Trudy|We were just discussing Logan's proposal to defend Sandrock against any monsters... we might need your help for that.}}
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8006 | cId: 5313001 | missionId: 1500313
+CONDITIONS
+Always:
+ACTIONS
+(cId 5313001) A conversation 12825 starts:
+{{dialogue|Logan|So Trudes, I reckon yer gonna support us on this?}}
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8011 | cId: 5313001 | missionId: 1500313
+CONDITIONS
+Always:
+ACTIONS
+(cId 5313002) A conversation 12826, 12827, 12828, 12829 starts:
+{{dialogue|Trudy|Yes, I thought it over. Now that you're back, and we're getting more and more people into town, I think we'll need a monster hunter's watchful eye protecting our town again. Can I see your plan?}}
+{{dialogue|Elsie|Course Trudy! Me an' Logan have been talkin' it over, an' we reckon we got a real good plan. He was thinkin' real hard about what everyone said at the development meetin'...}}
+{{dialogue|Logan|Elsie, wanna show 'er the plan?}}
+{{dialogue|Elsie|Right on! Here you go, Trudy! We got this written up, outlines everythin'.}}
+
+TRIGGER Procedure 2.0 Step 1.5 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8005 | cId: 5313002 | missionId: 1500313
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 5313001) to Elsie
+(param: CMDAction:Give)
+STOPWATCH REAL TIME SET || id: 5313009 | sec: 1.5
+
+TRIGGER Procedure 2.0 Step 1.6 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 5313009
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 5313009 | path: Mission_ShaoGang_WenJian | sceneName: Guildhall | flagName: Story_5313_Paper | extraParams: 0
+STOPWATCH REAL TIME SET || id: 5313010 | sec: 0.5
+
+TRIGGER Procedure 2.0 Step 1.7 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 5313010
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 5313009
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8005 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 5313003) A conversation 12830 starts:
+{{dialogue|Trudy|Thank you, can you walk me through it?}}
+SCENEITEM DELETE || itemType: 0 | id: 5313009
+
+TRIGGER Procedure 2.0 Step 2.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8006 | cId: 5313003 | missionId: 1500313
+CONDITIONS
+Always:
+ACTIONS
+(cId 5313100) A conversation 12831 starts:
+{{dialogue|Logan|Uh, well, basically rebuild the monster hunter outpost.}}
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8011 | cId: 5313100 | missionId: 1500313
+CONDITIONS
+Always:
+ACTIONS
+(cId 5313004) A conversation 12832, 12833 starts:
+{{dialogue|Trudy|Howlett's old outpost? Out in the desert?}}
+{{dialogue|Logan|That's right. I went an' checked it out the other day, an' it's lookin' real run down. I reckon with a bit of spit an' polish, we can get that place workin' for us again. I know it's gonna cost a bit of money, but-}}
+
+TRIGGER Procedure 2.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8011 | cId: 5313004 | missionId: 1500313
+CONDITIONS
+Always:
+ACTIONS
+(cId 5313005) A conversation 12834 starts:
+{{dialogue|Trudy|Let me worry about the money, Logan. We have enough budget, just let me know what you have planned.}}
+
+TRIGGER Procedure 2.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8006 | cId: 5313005 | missionId: 1500313
+CONDITIONS
+Always:
+ACTIONS
+(cId 5313006) A conversation 12835, 14653, 12836, 12837, 12838, 12839 starts:
+{{dialogue|Logan|Well, I can operate from that outpost like my Pa did. It's facin' the Northern Eufaula, so I'll see any monsters comin' at us from that direction leagues away. If we had the outpost manned, we never would've had the Geegler attacks.}}
+{{dialogue|Logan|If I get somethin' I can't handle, I can call the Civil Corps for backup.}}
+{{dialogue|Elsie|I'll be helpin' out as well, if I can get the monsters to leave us alone without havin' to fight, so much the better!}}
+{{dialogue|Trudy|Sounds like a feasible plan...}}
+{{dialogue|Logan|We'll be needin' some materials to rebuild the structure, I'm hopin' the Builder can help with that. I can secure the other supplies from around town.}}
+{{dialogue|Trudy|It seems like you have thought this through. I think it's a sensible idea. Go for it.}}
+
+TRIGGER Procedure 2.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8006 | cId: 5313006 | missionId: 1500313
+CONDITIONS
+Always:
+ACTIONS
+(cId 5313007) A conversation 12840 starts:
+{{dialogue|Elsie|Really?! Yeehaw! You're the best mayor, Trudy!}}
+
+TRIGGER Procedure 2.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8005 | cId: 5313007 | missionId: 1500313
+CONDITIONS
+Always:
+ACTIONS
+(cId 5313008) A conversation 3857_0 starts:
+{{dialogue|Trudy|''Player'', would you be able to lend a hand and fix the outpost?}}
+
+*''Of course, no problem!''
+*''You'd better talk to the Commissioner about it first.''
+
+{{dialogue|Trudy|indent=true|answer=Of course, no problem!
+|Wonderful. Well, I'll discuss it with Commissioner Wei anyway, let him know you're taking the commission.}}
+{{dialogue|Elsie|indent=true|Thank you, ''Player''! All we need are some materials. Here's a list. Once you have 'em, just stick 'em on site!}}
+{{dialogue|Trudy|indent=true|answer=You'd better talk to the Commissioner about it first.
+|Of course, can't forget protocol! Thank you, ''Player''.}}
+{{dialogue|Logan|indent=true|Well, I hope you pick it up. I've seen yer work, so I trust you to make the outpost as good as new!}}
+
+TRIGGER Procedure 3.0 Step 0.5 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5313008) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 0
+ACTIONS
+Trudy stops standing still
+Elsie stops standing still
+Add behavior CommanderMoveToFlag (idName: 531350) to Player
+(param: TargetScene:Guildhall|MoveMode:Run|FlagName:Story_5313_50)
+Add behavior CommanderMoveToFlag (idName: 531360) to Logan
+(param: TargetScene:Guildhall|MoveMode:Run|FlagName:Story_5313_60)
+Remove behavior CommanderNPCAction (idName: 5313001) from Elsie
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5313008) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Trudy stops standing still
+Logan stops standing still
+Elsie stops standing still
+Set Logan_Mission to 1
+Remove behavior CommanderMoveToFlag (idName: 531340) from Player
+Remove behavior CommanderNPCAction (idName: 5313001) from Elsie
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5313008) The player picks the first option in conversation segment 12842:
+{{dialogue|Trudy|''Player'', would you be able to lend a hand and fix the outpost?}}
+
+*''Of course, no problem!'' (No unique dialogue)
+*''You'd better talk to the Commissioner about it first.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 0
+
+TRIGGER Procedure 3.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8011 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 12847, 12848, 12849 starts:
+{{dialogue|Logan|''Player'', wait up a sec.}}
+{{dialogue|Logan|Hey, uh, how do I put this... Uh, thank you for takin' yer time to help with this outpost. It is for Sandrock's safety, but that outpost is also real important to me. I used to work there with my Pa...}}
+{{dialogue|Logan|Anyway... I'm in yer debt. I appreciate it.}}
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5313008) The player picks the second option in conversation segment 12842:
+{{dialogue|Trudy|''Player'', would you be able to lend a hand and fix the outpost?}}
+
+*''Of course, no problem!'' (No unique dialogue)
+*''You'd better talk to the Commissioner about it first.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 1
+
+==Rewards==
+{{mission reward
+|npc1 = Logan
+|rp1 = 20
+|exp = 1750
+|reputation = 15
+|gols = 400
+}}

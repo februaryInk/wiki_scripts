@@ -1,0 +1,245 @@
+Reading Mission 1200184: The Childhood Friend
+
+<onlyinclude>{{Infobox mission
+|name = The Childhood Friend
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from The Childhood Friend:
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Nia stops standing still
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8059 | state: Defense
+START MISSION 1200183
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200183
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Childhood Friend
+END MISSION 1200183
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200184
+CONDITIONS
+Always:
+ACTIONS
+===Take Nia to the Blue Moon Saloon===
+
+{{mission_details
+|desc = Take Nia to the Blue Moon Saloon
+|details = Take Nia to the Blue Moon Saloon
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_saloon
+ACTIONS
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8059
+UNIQUE ACTION RUN || idStr: leave_saloon
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: player_1300011B
+Nia stands still in Saloon
+SCENEITEM CREATE FLAG || itemType: 0 | id: 21841 | path: Mission_OwFood | sceneName: Saloon | flagName: food_1300011 | extraParams: 0
+DELAY MASK SET || maskId: 218401 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerSit (idName: 21841) to Player
+(param: SeatDramaName:SaloonSeat01)
+Nia stops standing still
+Add behavior CommanderSit (idName: 21841) to Nia
+(param: SeatDramaName:SaloonSeat02|TargetScene:Saloon)
+Set 2184Move1 to 0
+
+TRIGGER Procedure 0.0 Step 2.5 Order 7 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8059 | behaviourName: CommanderSit | eventName: SitDownFinished
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerSit | eventName: SitDownFinished
+CONDITIONS
+Always:
+ACTIONS
+Increment 2184Move1 by 1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8059 | behaviourName: CommanderSit | eventName: SitDownFinished
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8000 | behaviourName: CommanderPlayerSit | eventName: SitDownFinished
+CONDITIONS
+Check if 2184Move1 is >= 2
+ACTIONS
+DELAY MASK SET || maskId: 218401 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 218401 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 1308_0 starts:
+{{dialogue|Nia|Ooh! So this is Yakmel Milk. I thought it would be gross... but it's actually deliciously good! Hmm!}}
+{{dialogue|Nia|It's kinda crazy... the first time I travel outside of Highwind, and it's to Sandrock of all places! After you left, I often find myself wondering about you. How your work is going, how you're dealing with the sandstorms, if you're happy... and so on.}}
+{{dialogue|Nia|In my mind, I kinda built you up as this hero, coming to save Sandrock. Silly, isn't it? Hey, don't laugh!}}
+{{dialogue|Nia|I'm serious! I subscribed to the "Tumbleweed Standard," and I keep seeing your name pop up! You fixed the Moisture Farm, beat the Googlies or whatever they're called, and even rebuilt a bridge, it's amazing!}}
+{{dialogue|Nia|Your Ma couldn't believe it! She kept saying "''Player''? Our ''Player''?" Your Pa even joked that there must be someone with the same name as you here! But they're really proud of you.}}
+{{dialogue|Nia|They're just not used to us doing grown up stuff, I guess. You've always been kind of foolhardy, though! Always running into things before thinking! So I guess it kinda makes sense for them to feel that way? Right? Hehe.}}
+
+*''Must stay humble!'' (No unique dialogue)
+*''I'm working hard towards my dream.'' (No unique dialogue)
+
+{{dialogue|Nia|...When you talk like that, it makes you sound so mature! You've really changed, you know. I mean, you're still you, but there's this air of reliability now... I guess I can't call you the "idle master" anymore!}}
+{{dialogue|Nia|Maybe when I finish school, I should also go somewhere else and expand my horizon? But I dunno, I tend to get lonely by myself. I'll probably be homesick by the second week.}}
+
+*''Come join us in Sandrock!''
+*''It's not that easy...''
+
+{{dialogue|Nia|indent=true|answer=Come join us in Sandrock!
+|"Us?" Haha, you're already becoming a Sandrocker! Now you're all pistols and howdys, right?}}
+{{dialogue|Nia|indent=true|answer=It's not that easy...
+|You don't like Sandrock? Or is there someone you're not getting along with? Where are they!? Let me at 'em!}}
+
+:*''It's fine, it'll get better.''
+:*''I was just kidding.''
+:*''My boss, Yan...''
+
+{{dialogue|Nia|indent=double|answer=It's fine, it'll get better.
+|Yeah, I get it. Conditions here are really tough. When the train went through the Eastern Eufaula, it was so hot and dry, nothing like the lush hills and abundant valleys of Highwind.}}
+{{dialogue|Nia|indent=double|But you're an optimistic and resourceful person. You'll be able to get over whatever's troubling you. I'm sure of it!}}
+{{dialogue|Nia|indent=double|answer=I was just kidding.
+|Eeehh heh, still teasing me. And here I was thinking you've become more mature. Fine, two can play this game: I don't care how you're doing here, there! Heheh!}}
+{{dialogue|Nia|indent=double|answer=My boss, Yan...
+|This boss of yours sounds really awful. How do the other townfolk put up with him?}}
+{{dialogue|Nia|indent=double|Don't worry, though. If I see him, I'll let him have a piece of my mind! Nobody messes with my best friend!}}
+{{dialogue|Nia|Look, I'm only staying in Sandrock for three days. Then I have to go back and take an exam. I have a little request, though. Can you show me around town? I'd really appreciate the company...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8059 | cId: 0 | missionId: 1200184
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 1438_3_0 starts:
+{{dialogue|Nia|Oh, by the way. Now that I'm finally here, anything you want to ask me?}}
+{{dialogue||(What should I ask?)}}
+
+*''How are my parents?''
+*''How are your studies?''
+
+{{dialogue|Nia|indent=true|answer=How are my parents?
+|They're doing really well, you don't have to worry. When I'm around, they talk about you and Sandrock all the time. They kept wondering if you're making any new friends, or getting enough sleep, or eating enough. I think they really miss you.}}
+{{dialogue|Nia|indent=true|Speaking of, your Ma wrote a letter. You haven't gotten it yet? Wow, I really got here that fast!}}
+{{dialogue|Nia|indent=true|answer=How are your studies?
+|My studies are going really well, actually. I'm working like crazy to keep my grades up, though.}}
+{{dialogue|Nia|indent=true|Hey, are you growing any crops? I almost forgot that you're doing desert planting, right? It's so interesting, it uses completely unorthodox techniques. That's kind of what I'm studying at the moment: unconventional farming methods.}}
+{{dialogue|Nia|indent=true|Professor Luo, my master, is a lead researcher on these methods. Like, how can you increase yield and growth under the same conditions? Or even bringing crops back to life! But uh... his methods are still under development, so I'm bound to secrecy!}}
+{{dialogue|Nia|indent=true|Which reminds me, where is the Moisture Farm in Sandrock? I've heard a great many things about it, so I'm curious. If you're free tomorrow, could you go with me to take a look? Please? Pretty please, with an Applecherry on top?}}
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8059 | cId: 1 | missionId: 1200184
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 1317_0 starts:
+{{dialogue|Nia|Oh uh... sooo I have one more question to ask. I finally get to gossip with you...}}
+{{dialogue|Nia|Are you in looove? Anyone you met in Sandrock that you like? Or... maybe someone likes you?}}
+
+*''I'm incredibly popular, actually.''
+*{{flirt}}''No, I only have you in my heart.''
+*''I don't know, I've just been working hard.''
+
+{{dialogue|Nia|indent=true|answer=I'm incredibly popular, actually.
+|Really? You're serious? Hahaha! Wow, you have really changed! I've never seen you this... confident, I guess?}}
+{{dialogue|Nia|indent=true|Well, I'm gonna graduate soon, so who knows? Maybe I'll be able to find love, too!}}
+{{dialogue|Nia|indent=true|answer=No, I only have you in my heart.
+|Huh!?}}
+{{dialogue|Nia|indent=true|Hey! Don't tease me like that! Hahaha... is it hot in here?}}
+{{dialogue|Nia|indent=true|answer=I don't know, I've just been working hard.
+|Same old, same old, huh? Still just focused on your work. Phew. I mean... not that I'm happy about that or anything...}}
+{{dialogue|Nia|Oh, we've got so caught up in talking, I completely forgot to give you your presents! Besides what your parents brought you, I brought a couple as well!}}
+{{dialogue|Nia|Alright, I think we've talked enough already. Let's eat up, I think I'm gonna hit the hay a little early tonight.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 21841 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 21841
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 21841
+Remove behavior CommanderPlayerSit (idName: 21841) from Player
+Remove behavior CommanderSit (idName: 21841) from Nia
+DELAY MASK SET || maskId: 21841 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 21841
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Childhood Friend
+In a speech bubble:
+{{dialogue|Nia|Alright, you go do your Builder stuff, I'm gonna get some rest!}}
+ACTOR BUFF ADD || buffId: 21 | npc: 8000 | instanceId: 21841
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1200183
+END MISSION 1200184
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1200184
+CONDITIONS
+Always:
+ACTIONS
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8059

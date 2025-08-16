@@ -1,0 +1,145 @@
+Reading Mission 1700116: "Desert Rose"
+
+<onlyinclude>{{Infobox mission
+|name = "Desert Rose"
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from "Desert Rose":
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 2575) that ends:
+{{dialogue|Arvio|Thanks, ''Player''! See you soon!}}
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1700115
+Add 1 Picture Frame of Default quality (Notify player)
+NPC ICON REMOVE || missionId: 1700115 | npc: 8014 | missionIcon: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700115
+CONDITIONS
+Always:
+ACTIONS
+Run mission "Desert Rose"
+END MISSION 1700115
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700116
+CONDITIONS
+Always:
+ACTIONS
+===Make Picture Frames===
+
+{{mission_details
+|desc = Make 10 Picture Frames for Arvio within 3 days.
+|details = Make Picture Frames
+*{{i2|Picture Frame|0/10}}
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Arvio
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1700115 | targetId: 1 | canSubmit: 1
+ACTIONS
+(cId 1) A conversation 637_0 starts:
+{{dialogue|Arvio|You've finished! Amazing! Haha, why do I need all these frames, you ask? Well lately one of my photos, the "Desert Rose" has been flying off the shelves, and...!}}
+
+*''A photo of a flower?''
+*''You're making money selling photos?''
+
+{{dialogue|Arvio|indent=true|answer=A photo of a flower?
+|No, no! Well, yes! In a sense...}}
+{{dialogue|Arvio|indent=true|answer=You're making money selling photos?
+|Indeed! Once I'd heard Jasmine got her hands on an Old World camera, I began to smell with this keen nose of mine, the smell... of opportunity!}}
+{{dialogue|Arvio|You see, I've come up with the term "Desert Rose..." And I made it the title for one of the photos I'm selling! "Desert Rose" of course refers to...}}
+
+*''The Yakmel ranch''
+*''Your sister.''
+*''The city of Sandrock.''
+
+{{dialogue|Arvio|indent=true|answer=The Yakmel ranch
+|Hm... Ah, the Yakmel ranch huh? I... don't really see it. Oh, maybe Mabel is the rose, and Cooper is the thorns? No, I don't follow...}}
+{{dialogue|Arvio|indent=true|answer=Your sister.
+|Y- Aha? Ahaha... what exactly do you mean by that? Ehm, no, don't be silly, ''Player''! Obviously...}}
+{{dialogue|Arvio|indent=true|answer=The city of Sandrock.
+|reward={{NPC2|Arvio|rp=5}}|Yes, precisely!}}
+{{dialogue|Arvio|I've started calling the city of Sandrock, "The Desert Rose!" I'm trying to get the term to catch on; you know, good branding like that could get more tourists out here.}}
+{{dialogue|Arvio|Anyway, ten frames are almost certainly not enough. I have a feeling I'll have to reorder a batch from you once these are sold out! After that I'll give you a share of the profits! Keep in touch!}}
+The conversation ends.
+BAG MODIFY BY TARGET || missionId: 1700115 | targetId: 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1700115
+Run mission Product Recall
+END MISSION 1700116
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1700116
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|204}}
+Run mission Product Recall
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1700115 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Arvio===
+
+{{mission_details
+|desc = Give Arvio the Photo Frames.
+|details = Talk to Arvio
+*{{i2|Picture Frame|0/10}}
+*{{i2|Arvio|0/1}}
+}}
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the third option in conversation segment 2581:
+{{dialogue|Arvio|You see, I've come up with the term "Desert Rose..." And I made it the title for one of the photos I'm selling! "Desert Rose" of course refers to...}}
+
+*''The Yakmel ranch'' (No unique dialogue)
+*''Your sister.'' (No unique dialogue)
+*''The city of Sandrock.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Arvio gains 5 favor

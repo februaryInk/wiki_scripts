@@ -1,0 +1,235 @@
+Reading Mission 1300004: Instant Karma
+
+<onlyinclude>{{Infobox mission
+|name = Instant Karma
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Instant Karma:
+
+TRIGGER Procedure 1.0 Step 6.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8021 | cId: 4 | missionId: 1300005
+CONDITIONS
+GROUP 3:
+Check if Number is == 2
+
+GROUP 0:
+Check if Number is == 3
+
+GROUP 1:
+Check if Number is == 4
+
+GROUP 2:
+Check if Number is == 5
+
+ACTIONS
+(cId 6) A conversation 354 starts:
+{{dialogue|Burgess|Hm... well the bad news is, you're not quite ideal Sandrock citizen material, but the good news is, you have lots of room for improvement! And you can start improving right this very minute!}}
+Burgess gains 3 favor
+
+TRIGGER Procedure 1.0 Step 8.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1300005
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 1300005
+SCENEITEM DELETE || itemType: 0 | id: 13000051
+SCENEITEM DELETE || itemType: 0 | id: 13000052
+SCENEITEM CREATE FLAG || path: sandtest | flagName: trigger_1300005 | extraParams: 0 | itemType: 0 | id: 1300005 | sceneName: Main
+SCENEITEM CREATE FLAG || itemType: 0 | id: 13000051 | path: sandtest1 | sceneName: Main | flagName: templesand_1 | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 13000052 | path: sandtest2 | sceneName: Main | flagName: templesand_2 | extraParams: 0
+SAND VOLUME SET || id: 13000051 | percent: 1
+SAND VOLUME SET || id: 13000052 | percent: 1
+SAND SET CLEAN ENABLE || id: 13000051 | enable: 1
+SAND SET CLEAN ENABLE || id: 13000052 | enable: 1
+Run mission Instant Karma
+END MISSION 1300005
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1300004
+CONDITIONS
+Always:
+ACTIONS
+Set YUMAO to 0
+(cId 10) A conversation 408 starts:
+{{dialogue|Burgess|Oh, by the way, you'll need a Feather Duster to clean up the plants. You do have a Featherduster don't you? They're all the rage these days!}}
+Set day to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+CHECK PLAYER ITEM || item: 17100002 | itemGrade: -1 | set: 6 | count: 1
+ACTIONS
+===Make a Feather Duster===
+
+{{mission_details
+|desc = You need a {{textcolor|green|Feather Duster}} to clean the sand off the Church Temple's garden shrubbery.
+|details = Make a Feather Duster
+*{{i2|Feather Duster|0/1}}
+}}
+Set YUMAO to 1
+
+TRIGGER Procedure 1.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+CHECK PLAYER ITEM || item: 17100002 | itemGrade: -1 | set: 2 | count: 1
+ACTIONS
+===Clean up Sand===
+
+{{mission_details
+|desc = Use your Feather Duster to clean up the sand gathered in the Church Temple's garden.
+|details = Clean up Sand
+}}
+SAND VOLUME SET || id: 1300005 | percent: 1
+Set YUMAO to 10
+AREA TRIGGER CREATE || id: 1300004 | sceneName: Main | flagName: templesand_1 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80000457 | missionId: 1300005
+SAND VOLUME SET || id: 13000051 | percent: 1
+SAND VOLUME SET || id: 13000052 | percent: 1
+ACTION AREA TRIGGER SET RADIUS || id: 1300004 | radius: 15
+SAND SET CLEAN ENABLE || id: 1300005 | enable: 0
+SAND SET CLEAN ENABLE || id: 13000051 | enable: 0
+SAND SET CLEAN ENABLE || id: 13000052 | enable: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON BAG CHANGE || order: 0 | item: 17100002 | changeType: 0 | itemGrade: -1
+CONDITIONS
+Check if YUMAO is == 1
+ACTIONS
+===Clean up Sand===
+
+{{mission_details
+|desc = Use your Feather Duster to clean up the sand gathered in the Church Temple's garden.
+|details = Clean up Sand
+}}
+SAND VOLUME SET || percent: 1 | id: 1300005
+Set YUMAO to 10
+AREA TRIGGER CREATE || id: 1300004 | sceneName: Main | flagName: templesand_1 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80000457 | missionId: 1300005
+SAND VOLUME SET || id: 13000051 | percent: 1
+SAND VOLUME SET || id: 13000052 | percent: 1
+ACTION AREA TRIGGER SET RADIUS || radius: 15 | id: 1300004
+SAND SET CLEAN ENABLE || id: 1300005 | enable: 0
+SAND SET CLEAN ENABLE || id: 13000051 | enable: 0
+SAND SET CLEAN ENABLE || id: 13000052 | enable: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SAND CLEAR || order: 10 | compare: 6 | value: 20 | id: 1300005
+ON SAND CLEAR || order: 10 | id: 13000051 | compare: 6 | value: 20
+ON SAND CLEAR || order: 10 | id: 13000052 | compare: 6 | value: 20
+CONDITIONS
+Check if YUMAO is == 13
+ACTIONS
+===Talk to Burgess===
+
+{{mission_details
+|desc = The garden looks spick and span. Burgess will be delighted to hear about this.
+|details = Talk to Burgess
+}}
+Set day to 1
+AREA TRIGGER DELETE || id: 1300004
+SCENEITEM DELETE || itemType: 0 | id: 1300004
+Set YUMAO to 11
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SAND CLEAR || order: 0 | id: 1300005 | compare: 6 | value: 20
+CONDITIONS
+Always:
+ACTIONS
+Increment YUMAO by 1
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SAND CLEAR || order: 0 | id: 13000051 | compare: 6 | value: 20
+CONDITIONS
+Always:
+ACTIONS
+Increment YUMAO by 1
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SAND CLEAR || order: 0 | id: 13000052 | compare: 6 | value: 20
+CONDITIONS
+Always:
+ACTIONS
+Increment YUMAO by 1
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Burgess
+CONDITIONS
+Check if day is == 0
+ACTIONS
+(cId 0) A conversation 357 starts:
+{{dialogue|Burgess|I just know you're going to do a great job cleaning up the garden!}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1300004
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|14}}
+AREA TRIGGER DELETE || id: 1300004
+SCENEITEM DELETE || itemType: 0 | id: 1300005
+SCENEITEM DELETE || itemType: 0 | id: 1300004
+SCENEITEM DELETE || itemType: 0 | id: 13000051
+SCENEITEM DELETE || itemType: 0 | id: 13000052
+SCENEITEM DELETE || itemType: 0 | id: 13000053
+
+TRIGGER Procedure 1.0 Step 3.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Burgess
+CONDITIONS
+Check if day is == 1
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 1300005
+SCENEITEM DELETE || itemType: 0 | id: 13000051
+SCENEITEM DELETE || itemType: 0 | id: 13000052
+SCENEITEM DELETE || itemType: 0 | id: 13000053
+(cId 11) A conversation 358, 359 starts:
+{{dialogue|Burgess|Well done, ''Player''! If plants could talk, I'm sure they'd say, "Thank you!"}}
+{{dialogue|Burgess|As no good deed should go without a reward, here, take this. See you later.}}
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1300005
+END MISSION 1300004

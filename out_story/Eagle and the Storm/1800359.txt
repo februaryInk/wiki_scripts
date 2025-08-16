@@ -1,0 +1,706 @@
+Reading Mission 1800359: Eagle and the Storm
+
+<onlyinclude>{{Infobox mission
+|name = Eagle and the Storm
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Eagle and the Storm:
+
+TRIGGER Procedure 0.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 8358422) from X
+START MISSION 1800358
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 10.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800358
+CONDITIONS
+Always:
+ACTIONS
+Run mission Eagle and the Storm
+END MISSION 1800358
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800359
+CONDITIONS
+Always:
+ACTIONS
+===Go to Clinic===
+
+{{mission_details
+|desc = X has told you that there's something going on at the clinic. Go check it out.
+|details = Go to Clinic
+}}
+Set 8359A to 0
+AREA TRIGGER CREATE || missionId: 1800359 | id: 83595 | sceneName: Main | flagName: Trigger_Clinic | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_clinic
+Check if 8359A is == 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_clinic
+AREA TRIGGER DELETE || id: 83595
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || flagName: S8359_0_1 | sceneName: Clinic
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 6458_0 starts:
+{{dialogue|Gust|Ginger! Ginger!}}
+{{dialogue|Ginger|Urgh...}}
+{{dialogue|Gust|Ginger! You're burning up...}}
+{{dialogue|Fang|Please... be quiet... I am treating-}}
+{{dialogue|Gust|Your medicine! It's all because of your phony poison! She's burning up because of you!}}
+{{dialogue|Fang|Please. Leave.}}
+{{dialogue|Gust|What did you say to me!?}}
+{{dialogue|Fang|Leave.}}
+{{dialogue|Player|(What should I say?)}}
+
+*''Calm down, both of you!'' (No unique dialogue)
+*''(Stay silent)'' (No unique dialogue)
+
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 83598 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83598 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+X stands still in Clinic and looks at Gust
+Gust stands still in Clinic and looks at Fang
+Justice stands still in Clinic and looks at Gust
+PLAYER SET POS ROT FLAG || flagName: S8359_0_2 | sceneName: Clinic
+Fang stands still in Clinic and looks at Gust
+DELAY MASK SET || maskId: 83598 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 11.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83598 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 6459_0 starts:
+{{dialogue|Justice|Everyone, please calm down! Let's talk it through, no need for rash decisions!}}
+{{dialogue|Justice|Mr. Gust, I know you're concerned about your sister, but Dr. Fang is well respected around these parts. He fixed us up real good after the whole pollution fiasco!}}
+{{dialogue|Gust|Then how do you explain what's happening to my sister!?}}
+{{dialogue|Fang|She...}}
+{{dialogue|Gust|We tried your wacky medicine, and she got a fever straight away. Tried it again today, and she got even worse!}}
+{{dialogue|Fang|That's... that's because...}}
+{{dialogue|X|Squark! Breathe! Breathe!}}
+{{dialogue|Fang|Small doses of poison... to counteract...}}
+{{dialogue|Gust|Fighting fire with fire, huh? Ridiculous.}}
+{{dialogue|X|Squark! Bad crow!}}
+{{dialogue|Fang|I expected this... as long as the Cliffside Flowers are used...}}
+{{dialogue|Gust|You're just covering for yourself.}}
+{{dialogue|Fang|...}}
+{{dialogue|Fang|If you can't calm down... please leave.}}
+{{dialogue|Fang|Please be calm... In front of the patient.}}
+{{dialogue|Gust|You're kicking me out? My sister's life is at stake here, how can you be so callous-}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 14.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 20498, 20499 starts:
+{{dialogue|Ginger|Brother...}}
+{{dialogue|Ginger|Water... brother...}}
+NPC ADD TAG || tag: GingerOpenEyes
+
+TRIGGER Procedure 0.0 Step 15.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 8359163) to Fang
+(param: TargetScene:Clinic|MoveMode:Run|FlagName:S8359_16_3|LookAtActor:8107)
+Add behavior CommanderMoveToFlag (idName: 83591083) to Gust
+(param: TargetScene:Clinic|MoveMode:Run|FlagName:S8359_108_3|LookAtActor:8107)
+Add behavior CommanderMoveToFlag (idName: 8359082) to Justice
+(param: TargetScene:Clinic|MoveMode:Run|FlagName:S8359_8_2|LookAtActor:8107)
+Add behavior CommanderMoveToFlag (idName: 8359422) to X
+(param: TargetScene:Clinic|MoveMode:Run|FlagName:S8359_42_2|LookAtActor:8107)
+DELAY MASK SET || maskId: 83592 | delayTime: 1 | durationTime: -2 | changeType: 0 | curveIndex: 0
+Add behavior CommanderMoveToFlag (idName: 8359002) to Player
+(param: TargetScene:Clinic|MoveMode:Run|FlagName:S8359_0_3|LookAtActor:8107)
+
+TRIGGER Procedure 0.0 Step 15.2 Order 28 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83592 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 83592 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Justice stands still in Clinic and looks at Ginger
+X stands still in Clinic and looks at Ginger
+Fang stands still in Clinic and looks at Ginger
+Gust stands still in Clinic and looks at Ginger
+Remove behavior CommanderMoveToFlag (idName: 8359163) from Fang
+Remove behavior CommanderMoveToFlag (idName: 8359082) from Justice
+Remove behavior CommanderMoveToFlag (idName: 8359422) from X
+Remove behavior CommanderMoveToFlag (idName: 83591083) from Gust
+Remove behavior CommanderMoveToFlag (idName: 8359002) from Player
+PLAYER SET POS ROT FLAG || sceneName: Clinic | flagName: S8359_0_3
+
+TRIGGER Procedure 0.0 Step 16.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83592 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 20500, 6460_0 starts:
+{{dialogue|Gust|Ginger... here, drink up...}}
+{{dialogue|Gust|How do you feel?}}
+{{dialogue|Ginger|I... I had a dream...}}
+{{dialogue|Ginger|I was in the sun... it was so hot...}}
+{{dialogue|Ginger|But I feel better now... my body... feels light...}}
+{{dialogue|Fang|Detoxification... you are past the worst...}}
+{{dialogue|Ginger|Thank you... doctor...}}
+{{dialogue|Gust|...}}
+{{dialogue|Fang|The patient needs rest. If you wish to shout, please do so outside.}}
+{{dialogue|Gust|I-}}
+{{dialogue|Justice|Look, we're done for today, alright? Everyone head back now, nothin' to see here anymore. Mr. Gust, why don't you head back to the Blue Moon and have a nice Yakmel Milk, clear your head. I don't want any more of this.}}
+{{dialogue|Justice|Your sister's awake now, so you don't need to worry about her anymore. Just trust the doctor.}}
+{{dialogue|Gust|...}}
+{{dialogue|Gust|Rest up, Ginger.}}
+{{dialogue|Ginger|Gust, go back to the Blue Moon. I'll be fine.}}
+{{dialogue|Gust|Yeah, you're right. I'm a little hungry anyway...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 18.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Gust stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 83591083) from Gust
+Gust stops standing still
+Gust stops standing still
+STOPWATCH REAL TIME SET || sec: 3 | id: 83591
+Remove behavior Story1800358_8016 (idName: 83580161) from Fang
+
+TRIGGER Procedure 0.0 Step 20.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 83591
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 20516 starts:
+{{dialogue|Justice|That Gust... got a real temper on him. Ain't like his Pa at all... well, seems like everything's under control now, though. Anyway, I gotta head back on patrol...}}
+
+TRIGGER Procedure 0.0 Step 21.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Justice stops standing still
+Justice stops standing still
+STOPWATCH REAL TIME SET || id: 83592 | sec: 3
+Add behavior CommanderMoveToFlagAndAction (idName: 8359165) to Fang
+(param: TargetScene:Clinic|MoveMode:Walk|FlagName:S8359_16_4|Delay:1.0)
+
+TRIGGER Procedure 0.0 Step 22.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 83592
+CONDITIONS
+Check relationship with Fang is Lover
+ACTIONS
+(cId 6) A conversation 6461_0 starts:
+{{dialogue|Fang|...Sigh.}}
+{{dialogue|Player|(What should I say?)}}
+
+*''Are you okay, Fang?''
+*''That was scary...''
+*''Gust's just crazy.''
+
+{{dialogue|Fang|indent=true|answer=Are you okay, Fang?
+|I'm fine.}}
+{{dialogue|Fang|indent=true|Were you scared?}}
+{{dialogue|Fang|indent=true|There are many patients like this. Care is... chaotic.}}
+{{dialogue|Fang|indent=true|reward={{i2|Painkillers|3}}|I'm fine. If you are scared, take this, and sleep early tonight.}}
+{{dialogue|Fang|indent=true|answer=That was scary...
+|I'm worried about you. Go and rest, don't dwell.}}
+{{dialogue|Fang|indent=true|I have some medicine... it will calm you down. Take it before you sleep.}}
+{{dialogue|Fang|indent=true|reward={{i2|Painkillers|3}}|Don't worry about me.}}
+{{dialogue|Fang|indent=true|answer=Gust's just crazy.
+|There are many patients like this. Care is... chaotic.}}
+{{dialogue|Fang|indent=true|I often have such patients. There is nothing that can be done.}}
+{{dialogue|Fang|indent=true|Don't worry. I am fine.}}
+{{dialogue|Fang|The Cliffside Flowers... I have enough for the treatment, but I need more. To be safe.}}
+{{dialogue|Fang|Can you... collect some more?}}
+
+*''No problem. I'll go and get some.''
+*''I've got a lot on my plate...''
+
+{{dialogue|Fang|indent=true|answer=No problem. I'll go and get some.
+|Thank you, ''Player''.}}
+{{dialogue|Fang|indent=true|Cliffside Flowers, they grow nearby.}}
+{{dialogue|Fang|indent=true|It may be dangerous... please be careful.}}
+{{dialogue|Fang|indent=true|answer=I've got a lot on my plate...
+|I should have enough...}}
+{{dialogue|Fang|indent=true|But Cliffside Flowers. They grow nearby...}}
+{{dialogue|Fang|indent=true|If you pass by... please get some more for me.}}
+{{dialogue|Fang|indent=true|I don't need many.}}
+
+TRIGGER Procedure 0.0 Step 25.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Collect Cliffside Flowers===
+
+{{mission_details
+|desc = Ginger's treatment requires a particular type of flower; they are somewhat rare, but can be found by the cliffs near the Portia Tunnel.
+|details = Collect Cliffside Flowers
+*{{i2|Cliffside Flower|0/3}}
+}}
+AREA TRIGGER ONCE CREATE || missionId: 1800358 | id: 83591 | sceneName: Main | flagName: Trigger_83591 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 91005141
+CUTSCENE UI STATE EXIT || 
+Fang stops standing still
+Fang stops standing still
+Fang stops standing still
+X stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8359163) from Fang
+Remove behavior CommanderMoveToFlagAndAction (idName: 8359165) from Fang
+Set 8359B to 0
+Set 8359A to 2
+X stops standing still
+SCENEITEM CREATE FLAG || itemType: 0 | id: 83592 | path: S8359_Interact2 | sceneName: Clinic | flagName: S8359_Interact2 | extraParams: -1
+
+TRIGGER Procedure 1.0 Step 24.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 6) There is a conversation segment (id 20522) that ends:
+{{dialogue|Fang|I'm fine. If you are scared, take this, and sleep early tonight.}}
+(cId: 6) There is a conversation segment (id 20528) that ends:
+{{dialogue|Fang|Don't worry about me.}}
+CONDITIONS
+Always:
+ACTIONS
+Add 3 Painkillers of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 23.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 83592
+CONDITIONS
+Check relationship with Fang is 6 Lover
+ACTIONS
+(cId 6) A conversation 6466_0 starts:
+{{dialogue|Fang|...Sigh.}}
+{{dialogue|Player|(What should I say?)}}
+
+*''Are you okay, Fang?''
+*''That was scary...''
+*''Gust's just crazy.''
+
+{{dialogue|Fang|indent=true|answer=Are you okay, Fang?
+|I'm fine.}}
+{{dialogue|Fang|There are many patients like this. Care is... chaotic.}}
+{{dialogue|Fang|I often have such patients. There is nothing that can be done.}}
+{{dialogue|Fang|Don't worry. I am fine.}}
+{{dialogue|Fang|The Cliffside Flowers... I have enough for the treatment, but I need more. To be safe.}}
+{{dialogue|Fang|Can you... collect some more?}}
+
+*''No problem. I'll go and get some.''
+*''I've got a lot on my plate...''
+
+{{dialogue|Fang|indent=true|answer=No problem. I'll go and get some.
+|Thank you, ''Player''.}}
+{{dialogue|Fang|indent=true|Cliffside Flowers, they grow nearby.}}
+{{dialogue|Fang|indent=true|It may be dangerous... please be careful.}}
+{{dialogue|Fang|indent=true|answer=I've got a lot on my plate...
+|I should have enough...}}
+{{dialogue|Fang|indent=true|But Cliffside Flowers. They grow nearby...}}
+{{dialogue|Fang|indent=true|If you pass by... please get some more for me.}}
+{{dialogue|Fang|indent=true|I don't need many.}}
+
+TRIGGER Procedure 0.0 Step 26.0 Order 19 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment 8359B by 1
+
+TRIGGER Procedure 0.0 Step 27.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 83591
+CONDITIONS
+Always:
+ACTIONS
+ACTION CUTSCENE START AUDIO TYPE || id: CG_GUSTONCLIFF | audioType: NormalOff | duration: 1
+
+TRIGGER Procedure 0.0 Step 28.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_GUSTONCLIFF | state: 7
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Gust stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || flagName: S8359_0_1 | sceneName: Main
+
+TRIGGER Procedure 0.0 Step 29.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_GUSTONCLIFF | state: 9
+CONDITIONS
+GROUP 0:
+Check if 8359B is == 0
+
+GROUP 1:
+Check if 8359A is == 0
+
+ACTIONS
+(cId 7) A conversation 6469_0 starts:
+{{dialogue|Gust|I...}}
+{{dialogue|Gust|Sorry...}}
+{{dialogue|Gust|And... thanks.}}
+{{dialogue|Player|(What should I say?)}}
+
+*''You're here... to collect herbs?''
+*''I thought you said you were hungry.''
+*''It's kind of dangerous here...''
+*''You should apologize to Fang.''
+
+{{dialogue|Gust|indent=true|answer=You're here... to collect herbs?
+|Ahem...}}
+{{dialogue|Gust|indent=true|The doctor mentioned... some flowers on the cliff.}}
+{{dialogue|Gust|indent=true|They're only here...}}
+{{dialogue|Gust|indent=true|answer=I thought you said you were hungry.
+|Ahem...}}
+{{dialogue|Gust|indent=true|The doctor mentioned... some flowers on the cliff.}}
+{{dialogue|Gust|indent=true|They're only here...}}
+{{dialogue|Gust|indent=true|answer=It's kind of dangerous here...
+|I know what I'm doing.}}
+{{dialogue|Gust|indent=true|His medicine... I guess I shouldn't doubt it so much.}}
+{{dialogue|Gust|indent=true|If he says he needs the flowers to continue the treatment, then the least I could do...}}
+{{dialogue|Gust|indent=true|Ahem.}}
+{{dialogue|Gust|indent=true|answer=You should apologize to Fang.
+|...}}
+{{dialogue|Gust|indent=true|We'll see.}}
+{{dialogue|Player|(What should I say?)}}
+
+*''You really care about your sister.''
+*''Have you always been this hot-headed?''
+*''Fang's a good doctor, you need to trust him.''
+
+{{dialogue|Gust|indent=true|answer=You really care about your sister.
+|I only have one sister. When I was younger... I was stupid. I owe her.}}
+{{dialogue|Gust|indent=true|And I never want that to happen again...}}
+{{dialogue|Gust|indent=true|answer=Have you always been this hot-headed?
+|...}}
+{{dialogue|Gust|indent=true|I'm trying to save my sister's life. So excuse me if I'm a little "hot-headed."}}
+{{dialogue|Gust|indent=true|answer=Fang's a good doctor, you need to trust him.
+|We'll see.}}
+{{dialogue|Gust|Just then in the clinic...}}
+{{dialogue|Gust|I've never been that scared in my life.}}
+{{dialogue|Gust|My mind went blank... my hands couldn't stop shaking. Just like...}}
+{{dialogue|Gust|It's hard for me to see Ginger like that.}}
+{{dialogue|Gust|...}}
+{{dialogue|Gust|I'm gonna go. Thanks.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 30.1 Order 44 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 7) There is a conversation segment (id 20565) that ends:
+{{dialogue|Gust|It's hard for me to see Ginger like that.}}
+CONDITIONS
+Always:
+ACTIONS
+SOUND PLAY 2D || idStr: Play_stomach_growl
+
+TRIGGER Procedure 0.0 Step 31.0 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Check if 8359A is == 1
+ACTIONS
+===Collect Cliffside Flowers===
+
+{{mission_details
+|desc = Ginger's treatment requires a particular type of flower; they are somewhat rare, but can be found by the cliffs near the Portia Tunnel.
+|details = Collect Cliffside Flowers
+*{{i2|Cliffside Flower|0/3}}
+}}
+
+TRIGGER Procedure 0.0 Step 32.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Gust stops standing still
+Add behavior CommanderMoveToFlag (idName: 83591086) to Gust
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:S8359_108_1|Delay:0.0)
+Set 8359Fresh1 to 0
+PICK UP RESOURCE REFRESH || id: 18003591
+Remove behavior Story1800358_8108 (idName: 83581081) from Gust
+Add behavior Story1800358_8108 (idName: 83581081) to Gust
+(param: -1)
+
+TRIGGER Procedure 0.0 Step 30.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_GUSTONCLIFF | state: 9
+CONDITIONS
+GROUP 0:
+Check if 8359B is <= (maybe?) 0
+
+GROUP 1:
+Check if 8359A is == 1
+
+ACTIONS
+(cId 7) A conversation 6470_0 starts:
+{{dialogue|Gust|I...}}
+{{dialogue|Gust|Sorry...}}
+{{dialogue|Gust|And... thanks.}}
+{{dialogue|Player|(What should I say?)}}
+
+*''You're here... to collect herbs?''
+*''It's kind of dangerous here...''
+*''You should apologize to Fang.''
+
+{{dialogue|Gust|indent=true|answer=You're here... to collect herbs?
+|Ahem...}}
+{{dialogue|Gust|indent=true|The doctor mentioned... some flowers on the cliff.}}
+{{dialogue|Gust|indent=true|They're only here...}}
+{{dialogue|Gust|indent=true|answer=It's kind of dangerous here...
+|I know what I'm doing.}}
+{{dialogue|Gust|indent=true|His medicine... I guess I shouldn't doubt it so much.}}
+{{dialogue|Gust|indent=true|If he says he needs the flowers to continue the treatment, then the least I could do...}}
+{{dialogue|Gust|indent=true|Ahem.}}
+{{dialogue|Gust|indent=true|answer=You should apologize to Fang.
+|...}}
+{{dialogue|Gust|indent=true|We'll see.}}
+{{dialogue|Player|(What should I say?)}}
+
+*''You really care about your sister.''
+*''Have you always been this hot-headed?''
+*''Fang's a good doctor, you need to trust him.''
+
+{{dialogue|Gust|indent=true|answer=You really care about your sister.
+|I only have one sister. When I was younger... I was stupid. I owe her.}}
+{{dialogue|Gust|indent=true|And I never want that to happen again...}}
+{{dialogue|Gust|indent=true|answer=Have you always been this hot-headed?
+|...}}
+{{dialogue|Gust|indent=true|I'm trying to save my sister's life. So excuse me if I'm a little "hot-headed."}}
+{{dialogue|Gust|indent=true|answer=Fang's a good doctor, you need to trust him.
+|We'll see.}}
+{{dialogue|Gust|Just then in the clinic...}}
+{{dialogue|Gust|I've never been that scared in my life.}}
+{{dialogue|Gust|My mind went blank... my hands couldn't stop shaking. Just like...}}
+{{dialogue|Gust|It's hard for me to see Ginger like that.}}
+{{dialogue|Gust|...}}
+{{dialogue|Gust|I'm gonna go. Thanks.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 33.0 Order 22 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 8359Fresh1 is <= (maybe?) 1
+ACTIONS
+PICK UP RESOURCE REFRESH || id: 18003591
+
+TRIGGER Procedure 0.0 Step 35.0 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | canSubmit: 1 | missionId: 1800358 | targetId: 2
+CONDITIONS
+Always:
+ACTIONS
+Set 8359Fresh1 to 1
+RESOURCE LOCK INTERACT || id: 18003591 | set: 1
+===Talk to Fang===
+
+{{mission_details
+|desc = You've gotten the flowers from the cliff; return to Fang.
+|details = Talk to Fang
+*{{i2|Cliffside Flower|0/3}}
+*{{i2|Fang|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 36.0 Order 25 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Fang
+CONDITIONS
+CHECK PLAYER ITEM || item: 19810107 | itemGrade: -1 | set: 2 | count: 3
+ACTIONS
+(cId 8) A conversation 20538 starts:
+{{dialogue|Fang|Thank you. This should be... enough.}}
+Remove 3 Cliffside Flower of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 38.0 Order 26 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1800358
+Set 8359C to 0
+
+TRIGGER Procedure 0.0 Step 40.0 Order 27 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 83592
+PICK UP RESOURCE DELETE || id: 18003591
+Remove behavior Story1800359_8107 (idName: 83591071) from Ginger
+Remove behavior CommanderMoveToFlag (idName: 83591086) from Gust
+Run mission Eagle and the Storm
+END MISSION 1800359
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 20482:
+{{dialogue|Player|(What should I say?)}}
+
+*''Calm down, both of you!'' (No unique dialogue)
+*''(Stay silent)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Fang gains 2 favor
+
+TRIGGER Procedure 1.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DAY START FOR WEATHER || order: 0 | weather: 2
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: set_weather
+ACTIONS
+UNIQUE ACTION RUN || idStr: set_weather
+WEATHER SET STATE || WeatherState: 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 8359A is == 0
+ACTIONS
+Increment 8359A by 1
+The player receives a letter:
+{{mail|788}}
+===Find Gust===
+
+{{mission_details
+|desc = Justice sent you a letter saying that Gust and Fang had an argument; you could talk to Gust to learn more about what happened.
+|details = Find Gust
+}}
+AREA TRIGGER ONCE CREATE || missionId: 1800358 | id: 83591 | sceneName: Main | flagName: Trigger_83591 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+AREA TRIGGER DELETE || id: 83595
+
+TRIGGER Procedure 2.0 Step 27.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Gust
+CONDITIONS
+GROUP 0:
+Check if 8359A is == 0
+
+GROUP 1:
+Check if 8359B is == 0
+
+ACTIONS
+(cId 9) A conversation 20539 starts:
+{{dialogue|Gust|If anything happens to her...}}
+
+TRIGGER Procedure 2.0 Step 30.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 83592
+CONDITIONS
+GROUP 1:
+Check if 8359B is == 0
+
+GROUP 0:
+Always:
+
+ACTIONS
+(cId 10) A conversation 20540 starts:
+{{dialogue|Ginger|Thanks... for coming to see me.}}
+SCENEITEM DELETE || itemType: 0 | id: 83592

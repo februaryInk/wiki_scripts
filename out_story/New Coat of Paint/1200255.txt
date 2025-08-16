@@ -1,0 +1,169 @@
+Reading Mission 1200255: New Coat of Paint
+
+<onlyinclude>{{Infobox mission
+|name = New Coat of Paint
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from New Coat of Paint:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200254
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|464}}
+DELIVER MISSION 1200254
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200254
+CONDITIONS
+Always:
+ACTIONS
+Run mission New Coat of Paint
+END MISSION 1200254
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200255
+CONDITIONS
+Always:
+ACTIONS
+===Construct the machines===
+
+{{mission_details
+|desc = On your Assembly Station, build the machines from the diagrams Arvio found in the library.
+|details = Construct the machines
+*{{i2|Plasticizer|0/1}}
+*{{i2|Glazing Machine|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON ADD || missionId: 1200254 | npc: 8015 | missionIcon: 6
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Amirah
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 2415_0 starts:
+{{dialogue|Amirah|Ah, ''Player'', I'd been meaning to talk to you. Since you came and saw me, Arvio's been like a completely different person. I don't really think I've ever seen him this proactive before.}}
+{{dialogue|Amirah|I suppose I shouldn't look a gift horse in the mouth, but... I can't help but feel like he's been avoiding me. Did you talk to him? Is he alright?}}
+
+*''(Tell the truth)''
+*''(Keep it secret)''
+
+{{dialogue|Amirah|indent=true|answer=(Tell the truth)
+|reward={{NPC2|Amirah|rp=3}}|Ah... I understand. Thank you for telling me. He's really trying his best, isn't he? I can't say I'm not a little proud of him. Don't worry, I'll keep your secret.}}
+{{dialogue|Amirah|indent=true|answer=(Keep it secret)
+|reward={{NPC2|Arvio|rp=3}}|You don't know either? Well, thank you anyway. At least he's doing better now than he was before, I guess I can count my blessings. I'll try and talk to him soon.}}
+{{dialogue|Amirah|Anyway, thank you, ''Player''. I really appreciate all you've done for us.}}
+The conversation ends.
+NPC ICON REMOVE || missionId: 1200254 | npc: 8015 | missionIcon: 6
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the first option in conversation segment 8243:
+{{dialogue|Amirah|I suppose I shouldn't look a gift horse in the mouth, but... I can't help but feel like he's been avoiding me. Did you talk to him? Is he alright?}}
+
+*''(Tell the truth)'' (No unique dialogue)
+*''(Keep it secret)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Amirah gains 3 favor
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the second option in conversation segment 8243:
+{{dialogue|Amirah|I suppose I shouldn't look a gift horse in the mouth, but... I can't help but feel like he's been avoiding me. Did you talk to him? Is he alright?}}
+
+*''(Tell the truth)'' (No unique dialogue)
+*''(Keep it secret)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Arvio gains 3 favor
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | targetId: 1 | canSubmit: 1 | missionId: 1200254
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Arvio===
+
+{{mission_details
+|desc = The machines are ready, take them to Arvio.
+|details = Talk to Arvio
+*{{i2|Plasticizer|0/1}}
+*{{i2|Glazing Machine|0/1}}
+*{{i2|Arvio|0/1}}
+}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Arvio
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1200254 | canSubmit: 1 | targetId: 2
+ACTIONS
+(cId 1) A conversation 8247, 8248 starts:
+{{dialogue|Arvio|Amazing! I can't believe you came through for me! Or rather, I knew you would! Here's your payment, ''Player''!}}
+{{dialogue|Arvio|And you kept it a secret for me too, right? You know, when this all comes together, she's going to be so happy!}}
+BAG MODIFY BY TARGET || targetId: 2 | missionId: 1200254
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTION DATE SET FLAG || flag: 1200254
+SUBMIT MISSION 1200254
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE FLAG || compare: 2 | days: 3 | flag: 1200254
+ACTIONS
+NPC ICON REMOVE || npc: 8015 | missionIcon: 6 | missionId: 1200254
+ACTION DATE REMOVE FLAG || flag: 1200254
+The player receives a letter:
+{{mail|466}}
+END MISSION 1200255

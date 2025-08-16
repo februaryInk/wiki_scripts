@@ -1,0 +1,319 @@
+Reading Mission 1800265: Rager at Unsuur's
+
+<onlyinclude>{{Infobox mission
+|name = Rager at Unsuur's
+|image =
+|description = Justice is going to Unsuur's house for dinner, but he thought it was a little awkward to go alone. Perhaps with your company, they'll have a bit more to talk about.
+|type = Side
+|time =
+|location =
+|characters = [[Unsuur]]
+|condition =
+|details =
+|exp = 2000
+|reputation = None
+|gols = None
+|npc1 = Justice
+|rp1 = 10
+|npc2 = Unsuur
+|rp2 = 10
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200249
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Belly of the Beast is successfully completed
+Check relationship with Justice is Friend
+CHECK WEATHER STATE || weather: 0 | flag: 1
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+Run mission Training Day
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check relationship with Justice is Friend Good
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+Run mission Rager at Unsuur's
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800265
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER ONCE CREATE || missionId: 1800265 | id: 82651 | sceneName: Main | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0 | flagName: S8265_Trigger1
+Set 8265A to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 82651
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 82651 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82651 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Justice stands still in Main
+Unsuur stands still in Main and looks at Justice
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8265_0_1
+DELAY MASK SET || maskId: 82651 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82651 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 2550_0 starts:
+{{dialogue|Justice|I mean... I ain't sayin' no exactly, but...}}
+{{dialogue|Unsuur|That's good sheriff. Then you'll be over at 19:00?}}
+{{dialogue|Justice|Now hold on there, not exactly no ain't exactly yes.}}
+{{dialogue|Unsuur|That sounds awfully paradoxical, sir.}}
+{{dialogue|Justice|Eh, not so much of a paradox as it is a vague statement... ah, forget it.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8265082) to Justice
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8265_8_2|LookAtActor:8000)
+Add behavior CommanderMoveToFlagAndAction (idName: 8265262) to Unsuur
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8265_26_2|LookAtActor:8000|Delay:2)
+Add behavior CommanderMoveToFlagAndAction (idName: 8265002) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8265_0_2|Delay:1.0)
+
+TRIGGER Procedure 0.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 2551_0 starts:
+{{dialogue|Justice|Well, can I bring ''Player''?}}
+{{dialogue|Unsuur|Of course, sheriff.}}
+
+*''Bring me to what?''
+*''I don't care what's going on, I'm in.''
+*''You guys are weird.''
+
+{{dialogue|Justice|indent=true|answer=I don't care what's going on, I'm in.
+|Just like that, huh? I mean, you don't even wanna think about it?}}
+{{dialogue|Unsuur|indent=true|''Player'' lives life on the edge. Looks like you're both in, sheriff.}}
+{{dialogue|Justice|indent=true|Now hold on a minute...}}
+{{dialogue|Unsuur|indent=true|answer=You guys are weird.
+|Sure we are, that's why we wanted to invite you.}}
+{{dialogue|Justice|indent=true|Unsuur that ain't nice...}}
+{{dialogue|Unsuur|indent=true|Well, ''Player'''s the only one in town who doesn't follow the same path based on whether it's a weekday, weekend or Sunday... You can't tell me that isn't odd.}}
+{{dialogue|Justice|indent=true|What the heck are you talkin' about?}}
+{{dialogue|Justice|indent=true|Don't mind him, ''Player''. You're a fine, upstandin' citizen.}}
+{{dialogue|Justice|indent=true|You still ain't told them what you're invitin' them to!}}
+{{dialogue|Unsuur|I'm planning a dinner party tomorrow night. Captain can't make it, but I still want Justice to come. The theme is: soup.}}
+{{dialogue|Justice|Yeah, yeah I hear ya. An' I ain't sayin' I don't wanna come...}}
+{{dialogue|Unsuur|So you do want to come?}}
+{{dialogue|Justice|Well... I jus' don't want ''Player'' to miss out, you know? What if they're busy?}}
+{{dialogue|Unsuur|Are you busy tomorrow night, ''Player''?}}
+
+*''No, I'm free tomorrow.''
+*''Tomorrow? Free as a bird, baby.''
+*''I've got a lot on my plate at the moment...''
+
+{{dialogue|Justice|indent=true|answer=No, I'm free tomorrow.
+|Ah! That's great...}}
+{{dialogue|Unsuur|indent=true|Alright. 19:00 at my house. You don't have to bring anything. But you can if you want. Just make sure it's smaller than a house.}}
+{{dialogue|Justice|indent=true|answer=Tomorrow? Free as a bird, baby.
+|Ah! That's great...}}
+{{dialogue|Unsuur|indent=true|Alright. 19:00 at my house. You don't have to bring anything. But you can if you want. Just make sure it's smaller than a house.}}
+{{dialogue|Justice|indent=true|answer=I've got a lot on my plate at the moment...
+|Aww, really? That stinks, I really wanted to go! But dang, you heard 'em, looks like we're gonna have to cancel...}}
+{{dialogue|Unsuur|indent=true|No problem. I've got all the soup stuff in pre-soup condition. Ready to become soup at any time. Just give me a heads up and we can do it another time.}}
+{{dialogue|Justice|indent=true|I'm sure they're real busy, Unsuur.}}
+DELIVER MISSION 1800265
+
+TRIGGER Procedure 0.0 Step 6.1 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Check if 8265A is == 1
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8265263) to Unsuur
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8265_26_3)
+Unsuur stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8265262) from Unsuur
+STOPWATCH REAL TIME SET || id: 82651 | sec: 3
+Justice stands still in Main and looks at Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8265082) from Justice
+
+TRIGGER Procedure 0.0 Step 6.3 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Check if 8265A is == 0
+ACTIONS
+Unsuur stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8265262) from Unsuur
+Remove behavior CommanderMoveToFlagAndAction (idName: 8265082) from Justice
+
+TRIGGER Procedure 0.0 Step 7.1 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Check if 8265A is == 0
+ACTIONS
+Justice stops standing still
+Remove behavior CommanderTeleport (idName: 8265264) from Unsuur
+Remove behavior CommanderMoveToFlagAndAction (idName: 8265082) from Justice
+Justice stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8265262) from Unsuur
+Remove behavior CommanderMoveToFlagAndAction (idName: 8265001) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8265002) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8265263) from Unsuur
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 6.2 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 82651
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 2560_0 starts:
+{{dialogue|Justice|Ah... I'd been putting this off. He's a good partner, but kinda... weirds me out a little. I always wanted to keep our relationship, y'know... professional.}}
+
+*''I think Unsuur is cool.''
+*''Yeah, he's a little weird.''
+*''Exactly! Like, what's up with the rocks?''
+
+{{dialogue|Justice|indent=true|answer=I think Unsuur is cool.
+|Yeah, maybe I jus' ain't taken the time to get to know him. Like, uh... really know him, y'know? Though... he's been on the force for some time now. Reckon I probably owe this one to him, huh?}}
+{{dialogue|Justice|indent=true|answer=Yeah, he's a little weird.
+|There ain't nothin' wrong with that, mind. I just...}}
+{{dialogue|Justice|indent=true|answer=Exactly! Like, what's up with the rocks?
+|Haha, he sure does love those rocks... There ain't nothin' wrong with that, mind. I jus', dunno what we'd talk about.}}
+{{dialogue|Justice|If it was just me and him hanging out, dunno what we'd talk about...}}
+{{dialogue|Justice|An' it ain't like I'm tryin' to avoid it. I just... needed some backup. Well, with you there I reckon it's gonna be fun, actually! It'll be good to get to know the fella who's always got my six a little better.}}
+{{dialogue|Justice|Anyway, thanks for comin' with me. I'll see you there, pardner!}}
+The conversation ends.
+Remove behavior CommanderMoveToFlagAndAction (idName: 8265263) from Unsuur
+
+TRIGGER Procedure 0.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Justice stops standing still
+Remove behavior CommanderTeleport (idName: 8265264) from Unsuur
+Remove behavior CommanderMoveToFlagAndAction (idName: 8265082) from Justice
+Justice stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8265262) from Unsuur
+Remove behavior CommanderMoveToFlagAndAction (idName: 8265001) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8265002) from Player
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 12.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+(cId -1) The player picks the first option in conversation segment 8848:
+{{dialogue|Unsuur|Hey, soup there it is, am I right?}}
+
+*''Yeah, I'm free now.'' (No unique dialogue)
+*''I'm still really busy.'' (No unique dialogue)
+
+CONDITIONS
+Check if 8265A is == 1
+ACTIONS
+START MISSION 1800265
+
+TRIGGER Procedure 0.0 Step 8.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 8848:
+{{dialogue|Unsuur|Hey, soup there it is, am I right?}}
+
+*''Yeah, I'm free now.'' (No unique dialogue)
+*''I'm still really busy.'' (No unique dialogue)
+
+(cId 2) The player picks the first option in conversation segment 8836:
+{{dialogue|Unsuur|Are you busy tomorrow night, ''Player''?}}
+
+*''No, I'm free tomorrow.'' (No unique dialogue)
+*''Tomorrow? Free as a bird, baby.'' (No unique dialogue)
+*''I've got a lot on my plate at the moment...'' (No unique dialogue)
+
+(cId 2) The player picks the second option in conversation segment 8836:
+{{dialogue|Unsuur|Are you busy tomorrow night, ''Player''?}}
+
+*''No, I'm free tomorrow.'' (No unique dialogue)
+*''Tomorrow? Free as a bird, baby.'' (No unique dialogue)
+*''I've got a lot on my plate at the moment...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8265A to 1
+
+TRIGGER Procedure 0.0 Step 13.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800265
+CONDITIONS
+Always:
+ACTIONS
+Run mission Rager at Unsuur's
+END MISSION 1800265
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Unsuur|Hey, soup there it is, am I right?}}
+
+*''Yeah, I'm free now.''
+*''I'm still really busy.''
+
+{{dialogue|Unsuur|indent=true|answer=Yeah, I'm free now.
+|Great. I'll tell Justice, just come to my house at 19:00 tomorrow night.}}
+{{dialogue|Unsuur|indent=true|answer=I'm still really busy.
+|That's fine.}}
+
+==Rewards==
+{{mission reward
+|npc1 = Justice
+|rp1 = 10
+|npc2 = Unsuur
+|rp2 = 10
+|exp = 2000
+|reputation = None
+|gols = None
+}}

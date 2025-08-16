@@ -1,0 +1,221 @@
+Reading Mission 1200083: Out of the Past
+
+<onlyinclude>{{Infobox mission
+|name = Out of the Past
+|image =
+|description = You've got Mi-an's photos from the investigation. Go around town and see what the residents of Sandrock have to say about what you found.
+|type = Main
+|time =
+|location =
+|characters = [[Elsie]]
+|condition =
+|details =
+|exp = 1500
+|reputation = None
+|gols = None
+|npc1 = Elsie
+|rp1 = 20
+|npc2 = Mi-an
+|rp2 = 10
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100002
+
+TRIGGER Procedure 3.0 Step 7.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Practice What You Preach is successfully completed
+ACTIONS
+Run mission Recipe for Fun
+
+TRIGGER Procedure 3.0 Step 8.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Where's Mi-an is successfully completed
+ACTIONS
+Run mission Out of the Past
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200083
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|80}}
+Set LEAVE to 0
+Set CHOICE to 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+The Childhood Friend is in state 1 with flag 0
+Farmin' Moisture is in state 1 with flag 0
+Goodbye, Nia is in state 1 with flag 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Elsie stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+DELIVER MISSION 1200083
+
+TRIGGER Procedure 0.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 439_0 starts:
+{{dialogue|Elsie|Howdy, ''Player''! Didja get Mi-an's letter? Nevermind, it's a bit of a chore; here, check out these puppies! All the photos from yesterday!}}
+{{dialogue|Elsie|Yep, I'd probably steer clear of that mail box of yours for today, but even if you didn't, and someone did write you a letter telling you to hold up on the investigation, you'd ignore it, wouldn't ya, 'cause we made a promise to get to the bottom of all this, didn't we!?}}
+{{dialogue|Elsie|Your mission, if you choose to accept it, is to take these here photographs to the folk we talked about yesterday and find out what all they know!}}
+{{dialogue|Elsie|I'd take care of it m'self, but, to be honest, I can't rightly stand listenin' to half the folk around here for more than about a minute and a half, so the responsibility therefore lands squarely on you and your lonesome!}}
+{{dialogue|Elsie|With all this here evidence and what not, everybody'll have no choice but to spill the beans about what they know! 'Least, I assume that's how it works. So, you ready?}}
+
+*''Yeah, I'm on it.''
+*''Nah, won't we get caught?''
+
+{{dialogue|Elsie|indent=true|answer=Yeah, I'm on it.
+|Yeehaw! Knew I could count on you! Once we clear Logan's name, we'll be heroes! Maybe they'll hold a parade for us- But let's not get too far ahead of ourselves!}}
+{{dialogue|Elsie|indent=true|I gotta get back to the ranch before my Pa notices there ain't nobody keepin' the Yakmel company. Let's meet up at the {{textcolor|green|Blue Moon}} once you've got the scoop!}}
+{{dialogue|Elsie|indent=true|answer=Nah, won't we get caught?
+|Ah hah, so Mi-an has gotten to you hasn't she? Look, I'll tell you what I told her; first and foremost: don't be a weenie! Second, if you get caught, just tell 'em it was me who took them photographs, I'll take the fall; I don't give a whoop!}}
+{{dialogue|Elsie|indent=true|Tch, nah, you know what, forget it. I'll just do it myself... ya weenie...}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 0) There is a conversation segment (id 2009) that ends:
+{{dialogue|Elsie|Howdy, ''Player''! Didja get Mi-an's letter? Nevermind, it's a bit of a chore; here, check out these puppies! All the photos from yesterday!}}
+CONDITIONS
+Always:
+ACTIONS
+PHOTO UNLOCK PRESTORE || id: 1
+PHOTO UNLOCK PRESTORE || id: 2
+PHOTO UNLOCK PRESTORE || id: 3
+PHOTO UNLOCK PRESTORE || id: 4
+PHOTO UNLOCK PRESTORE || id: 5
+PHOTO UNLOCK PRESTORE || id: 6
+PHOTO UNLOCK PRESTORE || id: 7
+ACTION SHOW CUSTOM IMAGE TIPS || preset: Mission | content: 80003293
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the second option in conversation segment 2013:
+{{dialogue|Elsie|With all this here evidence and what not, everybody'll have no choice but to spill the beans about what they know! 'Least, I assume that's how it works. So, you ready?}}
+
+*''Yeah, I'm on it.'' (No unique dialogue)
+*''Nah, won't we get caught?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 2
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 2
+ACTIONS
+Elsie stops standing still
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 2013:
+{{dialogue|Elsie|With all this here evidence and what not, everybody'll have no choice but to spill the beans about what they know! 'Least, I assume that's how it works. So, you ready?}}
+
+*''Yeah, I'm on it.'' (No unique dialogue)
+*''Nah, won't we get caught?'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 2018:
+{{dialogue|Elsie|Well look who it is, didja grow a spleen there, partner? Ready to continue with the investigation?}}
+
+*''Yeah, I'll do it.'' (No unique dialogue)
+*''Still no.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 1
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+Elsie stops standing still
+CUTSCENE UI STATE EXIT || 
+START MISSION 1200083
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200083
+CONDITIONS
+Always:
+ACTIONS
+Run mission Out of the Past
+END MISSION 1200083
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Appetite for Construction is successfully completed
+ACTIONS
+The player receives a letter:
+{{mail|81}}
+Set global blackboard key elsiecow with info 1.
+CLOSE MISSION || missionId: 1200083
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Elsie|Well look who it is, didja grow a spleen there, partner? Ready to continue with the investigation?}}
+
+*''Yeah, I'll do it.''
+*''Still no.''
+
+{{dialogue|Elsie|indent=true|answer=Yeah, I'll do it.
+|Yeehaw! Knew I could count on you! Once we clear Logan's name, we'll be heroes! Maybe they'll hold a parade for us- But let's not get too far ahead of ourselves!}}
+{{dialogue|Elsie|indent=true|I gotta get back to the ranch before my Pa notices there ain't nobody keepin' the Yakmel company. Let's meet up at the {{textcolor|green|Blue Moon}} once you've got the scoop!}}
+{{dialogue|Elsie|indent=true|answer=Still no.
+|"Still no." Meh meh meh... that's what you sound like...}}
+
+==Rewards==
+{{mission reward
+|npc1 = Elsie
+|rp1 = 20
+|npc2 = Mi-an
+|rp2 = 10
+|exp = 1500
+|reputation = None
+|gols = None
+}}

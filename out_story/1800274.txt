@@ -1,0 +1,261 @@
+Reading Mission 1800274: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1800273
+
+TRIGGER Procedure 0.0 Step 8.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 82733
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8273032) from Cooper
+Remove behavior CommanderMoveToFlagAndAction (idName: 8273043) from Mabel
+Add behavior CommanderMoveToFlag (idName: 8273033) to Cooper
+(param: TargetScene:CooperHome|MoveMode:Walk|FlagName:fadecooper2|Reset:True)
+Add behavior CommanderMoveToFlag (idName: 8273044) to Mabel
+(param: TargetScene:CooperHome|MoveMode:Walk|FlagName:fademabel|Reset:True)
+STOPWATCH REAL TIME SET || id: 82732 | sec: 2.5
+STOPWATCH REAL TIME SET || id: 82731 | sec: 2
+
+TRIGGER Procedure 0.0 Step 9.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 82731
+CONDITIONS
+Always:
+ACTIONS
+Cooper stops standing still
+Mabel stops standing still
+Elsie stops standing still
+Daisy stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8273042) from Mabel
+Remove behavior CommanderMoveToFlagAndAction (idName: 8273032) from Cooper
+Remove behavior CommanderMoveToFlagAndAction (idName: 8273043) from Mabel
+Run mission #1800274
+Cooper gains 10 favor
+Mabel gains 10 favor
+Elsie gains 10 favor
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800274
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1800274 | id: 82741 | sceneName: Main | flagName: Trigger_82301 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+Set 8274A to 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_saloon
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+Check if Owen is in town
+ACTIONS
+AREA TRIGGER DELETE || id: 82741
+UNIQUE ACTION RUN || idStr: enter_saloon
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+Elsie stands still in Saloon and looks at Arvio
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: S8274_0_1
+Owen stands still in Saloon and looks at Elsie
+Arvio stands still in Saloon and looks at Elsie
+Vivi stands still in Saloon and looks at Elsie
+Mi-an stands still in Saloon and looks at Elsie
+Jasmine stands still in Saloon and looks at Elsie
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 6.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 2697_0 starts:
+{{dialogue|Elsie|...then three Rockyenaroll's leapt at me! I jus' let out a yelp, real sharp "Awoof!", and they froze. That gave me a lot of confidence.}}
+{{dialogue|Elsie|Awoof woof! That them barks there? They're the darn angriest sounds in the wolf language. Those Rockyenaroll's turned an' ran on their heels!}}
+{{dialogue|Vivi|Oh my! Elsie, weren't you scared?}}
+{{dialogue|Arvio|Wow, your stories are even better than Owen's! Ah... that's not to say we uh... don't enjoy your stories, Owen! But, well, you heard her! It's so exciting!}}
+{{dialogue|Owen|Hahah! He's right, Elsie. I gotta start writing these down... "{{textcolor|green|The Legend of Elsie the Wolf Whisperer}}!" Sounds catchy, right?}}
+{{dialogue|Elsie|Haha, I ain't jus' speakin' wolf, y'know! I got a whole host of animals I can talk to now. Got the whole {{textcolor|green|Monster Whisperer}} thing goin' on. Yawn... phew! Sorry y'all, I been up for a few days now, I gotta get some rest!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 7.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 8274001) to Player
+(param: TargetScene:Saloon|MoveMode:Run|FlagName:S8274_0_2|LookAtActor:8005|Delay:2.0)
+Add behavior CommanderMoveToFlagAndAction (idName: 8274052) to Elsie
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:S8274_5_1|LookAtActor:8000|Action:Hi)
+STOPWATCH REAL TIME SET || id: 82742 | sec: 1.5
+Mi-an stops standing still
+Vivi stops standing still
+Jasmine stops standing still
+
+TRIGGER Procedure 0.0 Step 6.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the second option in conversation segment 9585:
+{{dialogue|Elsie|Whatcha think of my new look?}}
+
+*''Looks great! Tell me all about it.'' (No unique dialogue)
+*''I'm glad to have you back.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8274A to 1
+
+TRIGGER Procedure 0.0 Step 7.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 82742
+CONDITIONS
+Always:
+ACTIONS
+Owen stops standing still
+Arvio stops standing still
+
+TRIGGER Procedure 0.0 Step 7.5 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 2698_0 starts:
+{{dialogue|Elsie|Hey! ''Player''! I ain't seen you there.}}
+{{dialogue|Elsie|Whatcha think of my new look?}}
+
+*''Looks great! Tell me all about it.'' (No unique dialogue)
+*''I'm glad to have you back.''
+
+{{dialogue|Elsie|indent=true|answer=I'm glad to have you back.
+|Well, y'know, I ain't slept in about three days... Yawn... I'm shattered, I tell ya. I'm fixin' to head home an' hit the hay.}}
+
+TRIGGER Procedure 0.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Check if 8274A is == 1
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Elsie stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8274052) from Elsie
+Remove behavior CommanderMoveToFlag (idName: 8274001) from Player
+Elsie gains 10 favor
+END MISSION 1800274
+
+TRIGGER Procedure 0.0 Step 8.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the first option in conversation segment 9585:
+{{dialogue|Elsie|Whatcha think of my new look?}}
+
+*''Looks great! Tell me all about it.'' (No unique dialogue)
+*''I'm glad to have you back.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 2699_3_0 starts:
+{{dialogue|Elsie|Alright, ask away, bud! I know it must be all sorts of crazy seein' me like this.}}
+{{dialogue|Player|What else should I ask?}}
+
+*''What's with the change of clothes?''
+*''I was worried about you, what happened?''
+*''How did you tame the duck?''
+
+{{dialogue|Elsie|indent=true|answer=What's with the change of clothes?
+|Aw, those old ones got ripped up real bad. I managed to throw these ones together myself. Real durable like. Plus, I reckon they make me look real mature, don'tcha think? Like a real {{textcolor|green|Monster Whisperer}}!}}
+{{dialogue|Elsie|indent=true|answer=I was worried about you, what happened?
+|Aw, nothin' major. I had a few bumps an' the like, but got saved by some new friends of mine! I met these "{{textcolor|green|Monster Hunters}}" from Atara. They study monsters. Really knowledgeable.}}
+{{dialogue|Elsie|indent=true|They had this monster hunter with 'em, called Panah! She was real tough, like Howlett. Showed me all sortsa neat stuff, said I got a knack for it, that I'd make a great tracker.}}
+{{dialogue|Elsie|indent=true|answer=How did you tame the duck?
+|Tame? Naw, it ain't like that. Daisy's more like a bud, y'know? Gotta get outta this "tamin'" mindset, treat 'em like equals.}}
+{{dialogue|Elsie|indent=true|We went through quite some adventuring, would take me a year to tell you, I reckon! After I spent some time with her, I feel like the Martle Duck species ain't that different from us folks.}}
+
+TRIGGER Procedure 0.0 Step 9.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 2705_3_1 starts:
+{{dialogue|Player|What else should I ask?}}
+
+*''What's with the change of clothes?''
+*''I was worried about you, what happened?''
+*''How did you tame the duck?''
+*''No more questions.''
+
+{{dialogue|Elsie|indent=true|answer=What's with the change of clothes?
+|Aw, those old ones got ripped up real bad. I managed to throw these ones together myself. Real durable like. Plus, I reckon they make me look real mature, don'tcha think? Like a real {{textcolor|green|Monster Whisperer}}!}}
+{{dialogue|Elsie|indent=true|answer=I was worried about you, what happened?
+|Aw, nothin' major. I had a few bumps an' the like, but got saved by some new friends of mine! I met these "{{textcolor|green|Monster Hunters}}" from Atara. They study monsters. Really knowledgeable.}}
+{{dialogue|Elsie|indent=true|They had this monster hunter with 'em, called Panah! She was real tough, like Howlett. Showed me all sortsa neat stuff, said I got a knack for it, that I'd make a great tracker.}}
+{{dialogue|Elsie|indent=true|answer=How did you tame the duck?
+|Tame? Naw, it ain't like that. Daisy's more like a bud, y'know? Gotta get outta this "tamin'" mindset, treat 'em like equals.}}
+{{dialogue|Elsie|indent=true|We went through quite some adventuring, would take me a year to tell you, I reckon! After I spent some time with her, I feel like the Martle Duck species ain't that different from us folks.}}
+{{dialogue|Elsie|indent=true|answer=No more questions.
+|Yawn... alright, I'm gettin' real sleepy now. I ain't slept for a few days. I reckon I'mma sleep all week... yawn!}}
+{{dialogue|Elsie|indent=true|I'll catch ya later, ''Player''.}}
+
+TRIGGER Procedure 0.0 Step 10.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Elsie stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8274052) from Elsie
+Remove behavior CommanderMoveToFlag (idName: 8274001) from Player
+Elsie gains 10 favor
+END MISSION 1800274
+
+TRIGGER Procedure 1.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 82741
+END MISSION 1800274

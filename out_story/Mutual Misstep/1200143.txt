@@ -1,0 +1,136 @@
+Reading Mission 1200143: Mutual Misstep
+
+<onlyinclude>{{Infobox mission
+|name = Mutual Misstep
+|image =
+|description = You accidentally fell into a strange room while salvaging. Unexpectedly, there was another uninvited guest.
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 500
+|reputation = 10
+|gols = None
+|npc1 = Qi
+|rp1 = 10
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200112
+
+TRIGGER Procedure 0.0 Step 0.1 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission Shonash Canyon Bridge Opening Ceremony is result 1 flag 1
+ACTIONS
+ACTION DATE SET FLAG || flag: DATE:qi1
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if Qi has favor >= 20
+Picking Up the Slack is successfully completed
+Duvos Attacks! is in state 2 with flag 0
+ACTIONS
+Run mission Mutual Misstep
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200143
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM INTERACT SET || itemType: 9 | id: 4 | canInteract: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 21431 | sceneName: Main | path: Interact_missiondungeon1 | flagName: misstep_dungeon | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 0.5 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 21431
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 21431 | delayTime: 0 | durationTime: -2 | changeType: 2 | curveIndex: 0
+PLAYER SET POS ROT FLAG || sceneName: VoxelDungeon_Qiheng | flagName: misstep_player1
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the VoxelDungeon_Qiheng:
+CONDITIONS
+Always:
+ACTIONS
+Qi stands still in VoxelDungeon_Qiheng
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the VoxelDungeon_Qiheng:
+CONDITIONS
+Always:
+ACTIONS
+ACTION CUTSCENE START AUDIO TYPE || id: CG_MYSTERIOU | duration: 0 | audioType: NoTransitionOff
+SCENEITEM DELETE || itemType: 0 | id: 21431
+SCENEITEM INTERACT SET || itemType: 9 | id: 4 | canInteract: 1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_MYSTERIOU | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 3470, 3471, 3472, 3473 starts:
+{{dialogue|Qi|Well, this is a surprise; I predicted the Civil Corps would show up any minute now to rescue me, but I didn't expect them to send some random individual! Nevertheless, you are here now, so, proceed with your extraction plan. I won't complain.}}
+{{dialogue|Qi|... You do have a plan, right...? Wait, wait... by the look on your face, perhaps you're not a rescuer but a fellow prisoner instead. Oh. Okay... well, you can join the club and sit over there while we wait for the proper authority to appear.}}
+{{dialogue|Qi|Hold on, I recognize you, you're the new Builder. Hmm... perhaps we don't have to wait. With my intellect and your logistical aptitude, there may yet be new possibilities to extricate ourselves from this predicament.}}
+{{dialogue|Qi|Let's look around this area to see if there's anything we can use to escape. Relics or otherwise.}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1200143
+START MISSION 1200143
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200143
+CONDITIONS
+Always:
+ACTIONS
+Run mission Mutual Misstep
+END MISSION 1200143
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 21431 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: VoxelDungeon_Qiheng | flagName: misstep_player1
+
+==Rewards==
+{{mission reward
+|npc1 = Qi
+|rp1 = 10
+|exp = 500
+|reputation = 10
+|gols = None
+}}

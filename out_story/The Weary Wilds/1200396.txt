@@ -1,0 +1,795 @@
+Reading Mission 1200396: The Weary Wilds
+
+<onlyinclude>{{Infobox mission
+|name = The Weary Wilds
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from The Weary Wilds:
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1200395
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200395
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Weary Wilds
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200396
+CONDITIONS
+Always:
+ACTIONS
+===Wait Until Tomorrow===
+
+{{mission_details
+|desc = Logan will likely be very tired upon his return, so plan to visit the outpost the next day to welcome him back.
+|details = Wait Until Tomorrow
+}}
+Set STOVE1 to 0
+
+TRIGGER Procedure 0.0 Step 0.5 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Logan stands still in Main
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+===Go to Outpost===
+
+{{mission_details
+|desc = Logan should return to the outpost after completing his task. Go there first to see if there's anything you can assist with.
+|details = Go to Outpost
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the HunterBase:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_hunterbase
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_hunterbase
+CUTSCENE UI STATE ENTER || 
+STOP ENGAGEMENT || stopType: 2
+SCENEITEM DELETE || id: 23321 | itemType: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the HunterBase:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 23967 | path: sandtest11 | sceneName: HunterBase | flagName: backup_dust | extraParams: 0
+SAND VOLUME SET || id: 23967 | percent: 1
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1200396
+CONDITIONS
+Always:
+ACTIONS
+Logan stops standing still
+TIME SET ENABLE || bool: 1
+SCENEITEM INTERACT SET || itemType: 9 | id: 35 | canInteract: 1
+SCENEITEM DELETE || itemType: 0 | id: 23961
+SCENEITEM DELETE || itemType: 0 | id: 23962
+SCENEITEM DELETE || itemType: 0 | id: 23963
+SCENEITEM DELETE || itemType: 0 | id: 23964
+SCENEITEM DELETE || itemType: 0 | id: 23965
+SCENEITEM DELETE || itemType: 0 | id: 23966
+SCENEITEM DELETE || itemType: 0 | id: 23967
+SCENEITEM INTERACT SET || itemType: 0 | canInteract: 1 | id: 2059152
+SCENEITEM INTERACT SET || itemType: 0 | id: 2059153 | canInteract: 1
+SCENEITEM CREATE FLAG || itemType: 0 | id: 23321 | path: Mission_hunterbaselight | sceneName: HunterBase | flagName: backup | extraParams: 0
+SCENEITEM DELETE || itemType: 0 | id: 239631
+SCENEITEM DELETE || itemType: 0 | id: 239651
+SCENEITEM DELETE || itemType: 0 | id: 239641
+SCENEITEM DELETE || itemType: 0 | id: 239671
+SCENEITEM DELETE || itemType: 0 | id: 239661
+Remove behavior CommanderMoveToFlagAndActionLoop (idName: 23961) from Logan
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the HunterBase:
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 22429, 22105 starts:
+{{dialogue|Player|(Seems like only yesterday I finished working on this outpost...)}}
+{{dialogue|Player|(The place is a mess...)}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 23961 | path: Mission_Thunderstorm | sceneName: HunterBase | flagName: backup | extraParams: 0
+STOPWATCH REAL TIME SET || id: 23961 | sec: 3
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 23961
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 22106, 22107 starts:
+{{dialogue|Player|(A thunderstorm? In Sandrock...?)}}
+{{dialogue|Player|(It's really coming down out there... Maybe I can clean up a bit while the storm passes.)}}
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+TIME SET ENABLE || bool: 0
+CUTSCENE UI STATE EXIT || 
+===Clean the Outpost===
+
+{{mission_details
+|desc = With a storm raging outside, check the outpost for any cleaning that needs to be done before Logan returns.
+|details = Clean the Outpost
+}}
+SCENEITEM INTERACT SET || itemType: 9 | canInteract: 0 | id: 35
+SCENEITEM CREATE FLAG || path: Interact_doorbelowvivi | id: 23962 | itemType: 0 | sceneName: HunterBase | extraParams: 0 | flagName: backup_out
+SCENEITEM CREATE FLAG || itemType: 0 | id: 23963 | path: Interact_doorbelowvivi | sceneName: HunterBase | extraParams: 0 | flagName: backup_stove
+SCENEITEM CREATE FLAG || itemType: 0 | id: 23964 | path: Mission_Item_Drop_Plastic_1 | sceneName: HunterBase | flagName: backup_pile | extraParams: 0
+SCENEITEM CREATE FLAG || flagName: backup_broom | id: 23965 | itemType: 0 | sceneName: HunterBase | extraParams: 0 | path: Qi9256_c
+SCENEITEM CREATE FLAG || flagName: backup_cup | id: 23966 | itemType: 0 | path: Interact_doorbelowvivi | sceneName: HunterBase | extraParams: 0
+SAND SET CLEAN ENABLE || id: 23967 | enable: 0
+SCENEITEM INTERACT SET || id: 2059152 | itemType: 0 | canInteract: 0
+SCENEITEM INTERACT SET || id: 2059153 | itemType: 0 | canInteract: 0
+SCENEITEM CREATE FLAG || id: 239631 | itemType: 0 | path: Mission_fxpickup | sceneName: HunterBase | flagName: backup_stovefx | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 239651 | path: Mission_fxpickup | sceneName: HunterBase | flagName: backup_broom | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 239641 | path: Mission_fxpickup | sceneName: HunterBase | flagName: backup_pilefx | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 239671 | path: Mission_fxpickup | sceneName: HunterBase | flagName: backup_dustfx | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 239661 | path: Mission_fxpickup | sceneName: HunterBase | flagName: backup_cupfx | extraParams: 0
+AUTOSAVE TRY || 
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from HunterBase to the -1:
+CONDITIONS
+Always:
+ACTIONS
+TIME SET ENABLE || bool: 1
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 23962
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 22108 starts:
+{{dialogue|Player|(I'd better wait a bit while the storm passes.)}}
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 23963
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1200395 | targetId: 3 | transId: 80034856 | isAdd: 1
+(cId 3) A conversation 22109 starts:
+{{dialogue|Player|(I could cook here. First, I'd better clean up a bit, though.)}}
+SCENEITEM DELETE || itemType: 0 | id: 239631
+
+TRIGGER Procedure 5.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+ON SAND CLEAR || order: 0 | id: 23967 | compare: 6 | value: 20
+(cId 5) After the conversation ends:
+(cId 7) After the conversation ends:
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1200395 | targetId: 3 | canSubmit: 1
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 23961 | delayTime: 0 | durationTime: -2 | changeType: 2 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 23963
+CONDITIONS
+Check if STOVE1 is == 0
+ACTIONS
+(cId 14) A conversation 22109 starts:
+{{dialogue|Player|(I could cook here. First, I'd better clean up a bit, though.)}}
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 23964
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1200395 | targetId: 3 | transId: 80034858 | isAdd: 1
+(cId 4) A conversation 22110 starts:
+{{dialogue|Player|(Some junk... It wouldn't be so hard to pick it up and recycle it later.)}}
+SCENEITEM DELETE || itemType: 0 | id: 239641
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 23961) to Player
+(param: CMDAction:PickUp_Story)
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderPlayerAction (idName: 23961) from Player
+SCENEITEM DELETE || itemType: 0 | id: 23964
+Add 1 Plastic Scrap of Default quality (Notify player)
+
+TRIGGER Procedure 3.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SAND CLEAR || order: 0 | id: 23967 | compare: 6 | value: 20
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1200395 | targetId: 3 | transId: 80017418 | isAdd: 1
+SCENEITEM DELETE || itemType: 0 | id: 23967
+SCENEITEM DELETE || itemType: 0 | id: 239671
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 23965
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1200395 | targetId: 3 | transId: 80034857 | isAdd: 1
+(cId 5) A conversation 22111 starts:
+{{dialogue|Player|(There's a Feather Duster under the bed. That explains some of this...)}}
+Add 1 Feather Duster of Default quality (Notify player)
+SCENEITEM DELETE || id: 23965 | itemType: 0
+SCENEITEM DELETE || itemType: 0 | id: 239651
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 23966
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 22112 starts:
+{{dialogue|Player|(A half-drunk cup of Yakmel Milk. It smells a bit... off.)}}
+
+*''Clean the cup.'' (No unique dialogue)
+*''Take a sip.'' (No unique dialogue)
+
+SCENEITEM DELETE || id: 23966 | itemType: 0
+SCENEITEM DELETE || itemType: 0 | id: 239661
+
+TRIGGER Procedure 4.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) The player picks the second option in conversation segment 22112:
+{{dialogue|Player|(A half-drunk cup of Yakmel Milk. It smells a bit... off.)}}
+
+*''Clean the cup.'' (No unique dialogue)
+*''Take a sip.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 23962) to Player
+(param: CMDAction:StandDrink)
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 4.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 22114 starts:
+{{dialogue|Player|(It tastes worse than it smells... Better put this in the sink.)}}
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderPlayerAction (idName: 23961) from Player
+ACTOR BUFF ADD || buffId: 5021 | npc: 8000 | instanceId: 23961
+MISSION TARGET COUNTER CHANGE || transId: 80034859 | isAdd: 1 | missionId: 1200395 | targetId: 3
+
+TRIGGER Procedure 4.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) The player picks the first option in conversation segment 22112:
+{{dialogue|Player|(A half-drunk cup of Yakmel Milk. It smells a bit... off.)}}
+
+*''Clean the cup.'' (No unique dialogue)
+*''Take a sip.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 22113 starts:
+{{dialogue|Player|(Best to put it in the sink. This trap could be more deadly than anything Logan might encounter in the ruins.)}}
+MISSION TARGET COUNTER CHANGE || missionId: 1200395 | targetId: 3 | transId: 80034859 | isAdd: 1
+
+TRIGGER Procedure 5.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23961 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 9) A conversation 22115, 22116 starts:
+{{dialogue|Player|(Ah? What's this...?)}}
+{{dialogue|Player|(A bag of ingredients... and a torn-out page from a cook book: Tomato and Egg Soup. Should be pretty simple to make on the stove...)}}
+Add 1 Tomato of Default quality (Notify player)
+Add 1 Egg of Default quality (Notify player)
+Add 1 Sand Leek of Default quality (Notify player)
+Remove behavior CommanderMoveToFlag (idName: 23963) from Player
+
+TRIGGER Procedure 6.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+===Cook Food===
+
+{{mission_details
+|desc = There are some usable ingredients at the outpost. Prepare some food using {{textcolor|green|the stove}} to welcome Logan.
+|details = Cook Food
+}}
+Set STOVE1 to 1
+SCENEITEM DELETE || itemType: 0 | id: 23963
+SCENEITEM CREATE FLAG || itemType: 0 | path: Interact_backup | flagName: backup_stove | extraParams: 0 | sceneName: HunterBase | id: 23963
+SCENEITEM CREATE FLAG || id: 239632 | itemType: 0 | path: Mission_fxpickup | flagName: backup_stovefx | sceneName: HunterBase | extraParams: 0
+
+TRIGGER Procedure 6.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 23963
+CONDITIONS
+Always:
+ACTIONS
+(cId 10) A conversation 22117 starts:
+{{dialogue|Player|(First thing is to boil the water...)}}
+Remove 1 Tomato of Default quality (Notify player)
+Remove 1 Egg of Default quality (Notify player)
+Remove 1 Sand Leek of Default quality (Notify player)
+SCENEITEM DELETE || itemType: 0 | id: 23963
+CUTSCENE UI STATE ENTER || 
+SCENEITEM DELETE || id: 239632 | itemType: 0
+
+TRIGGER Procedure 6.0 Step 1.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || path: Mission_Drop_Food_FanQieDanHuaTang_0 | itemType: 0 | id: 23968 | sceneName: HunterBase | extraParams: 0 | flagName: backup_soup
+SCENEITEM CREATE FLAG || path: Mission_cooksmoke | itemType: 0 | id: 23969 | sceneName: HunterBase | extraParams: 0 | flagName: backup_stove
+STOPWATCH REAL TIME SET || sec: 4 | id: 23962
+SOUND PLAY 2D || idStr: Play_story_WaterBoil
+
+TRIGGER Procedure 7.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 239610
+The player interacts (type 2, option 0) with Logan
+
+TRIGGER Procedure 6.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 23962
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Tomato and Egg Soup of Default quality (Notify player)
+DELAY MASK SET || maskId: 23963 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 6.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 23963
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 23968
+SCENEITEM DELETE || itemType: 0 | id: 23969
+Logan stops standing still
+Logan stands still in HunterBase and looks at Player
+DELAY MASK SET || maskId: 23963 | delayTime: 5 | durationTime: -2 | changeType: 1 | curveIndex: 0
+PLAYER SET POS ROT FLAG || flagName: backup_player2 | sceneName: HunterBase
+SCENEITEM CREATE FLAG || itemType: 0 | path: Mission_FX_Logan_Water_01 | id: 239610 | sceneName: HunterBase | extraParams: 0 | flagName: backup_loganfx
+SOUND PLAY 2D || idStr: Play_story_DoorOpen_Logan
+
+TRIGGER Procedure 7.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 23963
+CONDITIONS
+Always:
+ACTIONS
+(cId 10) A conversation 22118 starts:
+{{dialogue|Logan|''Pet Name''... I... I saw the light on and-}}
+
+*''Look at you, you're soaked!'' (No unique dialogue)
+*''Did you finish the bounty?'' (No unique dialogue)
+
+
+TRIGGER Procedure 7.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON INTERACTIVE EXIT || order: 0 | instID: 8011
+CONDITIONS
+Always:
+ACTIONS
+(cId 11) A conversation 7821_0 starts:
+{{dialogue|Logan|Achoo! Huh... I'm drippin' water all over a clean outpost...}}
+
+*''Let's get you out of those wet clothes.''
+*''You need to drink something warm.''
+
+{{dialogue|Logan|indent=true|answer=Let's get you out of those wet clothes.
+|Alright, alright...}}
+{{dialogue|Logan|indent=true|Put these next to the stove; that'll dry 'em right quick.}}
+{{dialogue|Logan|indent=true|answer=You need to drink something warm.
+|Sounds pretty good right about now.}}
+{{dialogue|Logan|indent=true|Let me put these clothes by the stove; that'll dry 'em right quick.}}
+
+TRIGGER Procedure 7.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 23964 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 8.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 23964
+CONDITIONS
+Always:
+ACTIONS
+ACTION NPC PUT EQUIP || npc: 8011 | itemId: 12002001
+ACTION NPC PUT UNEQUIP || npc: 8011 | itemId: 12002001
+ACTION NPC UNEQUIP ALL ACCESSORY || npc: 8011
+Add behavior CommanderSit (idName: 23961) to Logan
+(param: SeatDramaName:1200395_Logan|TargetScene:HunterBase|LookAtActor:8000)
+Add behavior CommanderPlayerSit (idName: 23961) to Player
+(param: SeatDramaName:1200395_Player|TargetScene:HunterBase|LookAtActor:8011)
+EFFECT REMOVE ACTOR || id: 23961
+NPC REPLACE SUIT || npcSuitID: 50
+Logan stops standing still
+DELAY MASK SET || maskId: 23964 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+{{cutscene|id = 8023}}
+A cutscene CG_RESTING (duration: 0.0) starts playing
+Shelter from the Storm - Logan, tired from his expedition, returned to the outpost. I prepared a hot soup for him, and he relaxed, resting his head on my lap for a short nap.
+Remove 1 Tomato and Egg Soup of Default quality (Notify player)
+
+TRIGGER Procedure 8.0 Step 0.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_RESTING | state: 8
+CONDITIONS
+Always:
+ACTIONS
+NPC REPLACE SUIT || npcSuitID: 8
+EFFECT REMOVE ACTOR || id: 23961
+SCENEITEM DELETE || itemType: 0 | id: 239610
+
+TRIGGER Procedure 8.0 Step 0.5 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_RESTING | state: 9
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderSit (idName: 23961) from Logan
+Remove behavior CommanderPlayerSit (idName: 23961) from Player
+Add behavior CommanderMoveToFlagAndAction (idName: 23963) to Logan
+(param: TargetScene:HunterBase|FlagName:backup_logan3)
+
+TRIGGER Procedure 8.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8011 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+CHECK CHILD COUNT || compare: 2 | count: 1
+ACTIONS
+(cId 12) A conversation 7824_0 starts:
+{{dialogue|Logan|Huh...? How long was I out for?}}
+
+*''Only a little while. Are you alright?'' (No unique dialogue)
+*''Shh, go back to sleep...'' (No unique dialogue)
+
+{{dialogue|Logan|Hm. I'm fine. Think that soup did the trick.}}
+{{dialogue|Logan|Tracked that sonovagun into a cave a league or so from town; real winding like. Had to leave a trail of breadcrumbs to find my way back, like one of them fairy tales.}}
+{{dialogue|Logan|Wish I'd had the presence of mind to camp'm out; as you know, a beast with his back against the wall can be... rather precarious.}}
+{{dialogue|Logan|Unfortunately for our foul-tempered friend, I'm worse. Here's the bounty; counted it up already. It's square.}}
+
+*''We could spend this on our child.''
+*''Let's spend it on a better weapon for you!''
+*''I could use this for materials.''
+*''Why don't you just spend it on yourself?''
+
+{{dialogue|Logan|indent=true|answer=We could spend this on our child.
+|Yep. Kid's gotta eat. Ain't like we've been starvin' 'em though, have we? You pick out somethin' nice for the little one; you're better at that kinda stuff than me.}}
+{{dialogue|Logan|indent=true|answer=Let's spend it on a better weapon for you!
+|My daggers are plenty sharp, thank you very much. Put the money towards something for yourself, ''Pet Name''. I insist.}}
+{{dialogue|Logan|indent=true|answer=I could use this for materials.
+|Haha, you come all the way out here, but left your mind in that workshop of yours, huh? Well, I hope you know, ''Pet Name'', if you ever need anything of that sort, I'm happy to fetch it for you. Even if I have to borrow it off some critter still usin' it...}}
+{{dialogue|Logan|indent=true|answer=Why don't you just spend it on yourself?
+|Reckon I owe you one for cleanin' up this mess, if nothin' else.}}
+{{dialogue|Logan|Well, ''Pet Name'', would you look at that. Rain's let up. And just when I was startin' to think... we were in our own little world, just the two of us.}}
+{{dialogue|Logan|What about you? What are you thinkin' now?}}
+{{dialogue|Player|I think...}}
+
+*''We should stay in our world a little longer. (Kiss Logan)'' (No unique dialogue)
+*''I'd like to give you a hug! (Hug Logan)'' (No unique dialogue)
+*''You need to be more careful out there, alright?''
+*''We should get out of here.''
+
+{{dialogue|Logan|indent=true|answer=You need to be more careful out there, alright?
+|Hey, you got it. I swear on my Pa... and everything he ever taught me: you've got nothing to worry about.}}
+{{dialogue|Logan|indent=true|Hm... Reckon for better or worse, it's high time to leave our little world and head back to the other one. You go on ahead. I'll do the dishes. Only fair.}}
+{{dialogue|Logan|indent=true|Oh, and don't worry. I'll hang my hat at home tonight.}}
+{{dialogue|Logan|indent=true|answer=We should get out of here.
+|Yeah, I hear you.}}
+{{dialogue|Logan|indent=true|Hm... Reckon for better or worse, it's high time to leave our little world and head back to the other one. You go on ahead. I'll do the dishes. Only fair.}}
+{{dialogue|Logan|indent=true|Oh, and don't worry. I'll hang my hat at home tonight.}}
+PLAYER SET POS ROT FLAG || flagName: backup_player3 | sceneName: HunterBase
+
+TRIGGER Procedure 8.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 12) There is a conversation segment (id 22127) that ends:
+{{dialogue|Logan|Wish I'd had the presence of mind to camp'm out; as you know, a beast with his back against the wall can be... rather precarious.}}
+CONDITIONS
+Always:
+ACTIONS
+MONEY PLAYER ADD || money: 1500
+
+TRIGGER Procedure 8.0 Step 1.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8011 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+CHECK CHILD COUNT || compare: 3 | count: 0
+ACTIONS
+(cId 12) A conversation 7948_0 starts:
+{{dialogue|Logan|Huh...? How long was I out for?}}
+
+*''Only a little while. Are you alright?'' (No unique dialogue)
+*''Shh, go back to sleep...'' (No unique dialogue)
+
+{{dialogue|Logan|Hm. I'm fine. Think that soup did the trick.}}
+{{dialogue|Logan|Tracked that sonovagun into a cave a league or so from town; real winding like. Had to leave a trail of breadcrumbs to find my way back, like one of them fairy tales.}}
+{{dialogue|Logan|Wish I'd had the presence of mind to camp'm out; as you know, a beast with his back against the wall can be... rather precarious.}}
+{{dialogue|Logan|Unfortunately for our foul-tempered friend, I'm worse. Here's the bounty; counted it up already. It's square.}}
+
+*''Let's spend it on a better weapon for you!''
+*''I could use this for materials.''
+*''Why don't you just spend it on yourself?''
+
+{{dialogue|Logan|indent=true|answer=Let's spend it on a better weapon for you!
+|My daggers are plenty sharp, thank you very much. Put the money towards something for yourself, ''Pet Name''. I insist.}}
+{{dialogue|Logan|indent=true|answer=I could use this for materials.
+|Haha, you come all the way out here, but left your mind in that workshop of yours, huh? Well, I hope you know, ''Pet Name'', if you ever need anything of that sort, I'm happy to fetch it for you. Even if I have to borrow it off some critter still usin' it...}}
+{{dialogue|Logan|indent=true|answer=Why don't you just spend it on yourself?
+|Reckon I owe you one for cleanin' up this mess, if nothin' else.}}
+{{dialogue|Logan|Well, ''Pet Name'', would you look at that. Rain's let up. And just when I was startin' to think... we were in our own little world, just the two of us.}}
+{{dialogue|Logan|What about you? What are you thinkin' now?}}
+{{dialogue|Player|I think...}}
+
+*''We should stay in our world a little longer. (Kiss Logan)'' (No unique dialogue)
+*''I'd like to give you a hug! (Hug Logan)'' (No unique dialogue)
+*''You need to be more careful out there, alright?''
+*''We should get out of here.''
+
+{{dialogue|Logan|indent=true|answer=You need to be more careful out there, alright?
+|Hey, you got it. I swear on my Pa... and everything he ever taught me: you've got nothing to worry about.}}
+{{dialogue|Logan|indent=true|Hm... Reckon for better or worse, it's high time to leave our little world and head back to the other one. You go on ahead. I'll do the dishes. Only fair.}}
+{{dialogue|Logan|indent=true|Oh, and don't worry. I'll hang my hat at home tonight.}}
+{{dialogue|Logan|indent=true|answer=We should get out of here.
+|Yeah, I hear you.}}
+{{dialogue|Logan|indent=true|Hm... Reckon for better or worse, it's high time to leave our little world and head back to the other one. You go on ahead. I'll do the dishes. Only fair.}}
+{{dialogue|Logan|indent=true|Oh, and don't worry. I'll hang my hat at home tonight.}}
+PLAYER SET POS ROT FLAG || flagName: backup_player3 | sceneName: HunterBase
+
+TRIGGER Procedure 8.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 12) The player picks the -1 option in conversation segment 22128:
+{{dialogue|Logan|Unfortunately for our foul-tempered friend, I'm worse. Here's the bounty; counted it up already. It's square.}}
+
+*''We could spend this on our child.'' (No unique dialogue)
+*''Let's spend it on a better weapon for you!'' (No unique dialogue)
+*''I could use this for materials.'' (No unique dialogue)
+*''Why don't you just spend it on yourself?'' (No unique dialogue)
+
+(cId 12) The player picks the -1 option in conversation segment 22430:
+{{dialogue|Logan|Unfortunately for our foul-tempered friend, I'm worse. Here's the bounty; counted it up already. It's square.}}
+
+*''Let's spend it on a better weapon for you!'' (No unique dialogue)
+*''I could use this for materials.'' (No unique dialogue)
+*''Why don't you just spend it on yourself?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Logan gains 3 favor
+
+TRIGGER Procedure 8.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 22129) that ends:
+{{dialogue|Logan|Yep. Kid's gotta eat. Ain't like we've been starvin' 'em though, have we? You pick out somethin' nice for the little one; you're better at that kinda stuff than me.}}
+(cId: -1) There is a conversation segment (id 22130) that ends:
+{{dialogue|Logan|My daggers are plenty sharp, thank you very much. Put the money towards something for yourself, ''Pet Name''. I insist.}}
+(cId: -1) There is a conversation segment (id 22131) that ends:
+{{dialogue|Logan|Haha, you come all the way out here, but left your mind in that workshop of yours, huh? Well, I hope you know, ''Pet Name'', if you ever need anything of that sort, I'm happy to fetch it for you. Even if I have to borrow it off some critter still usin' it...}}
+(cId: -1) There is a conversation segment (id 22132) that ends:
+{{dialogue|Logan|Reckon I owe you one for cleanin' up this mess, if nothin' else.}}
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 23961
+SCENEITEM CREATE FLAG || path: Mission_ThunderstormStop | id: 239611 | itemType: 0 | sceneName: HunterBase | flagName: backup | extraParams: 0
+
+TRIGGER Procedure 9.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 12) The player picks the first option in conversation segment 22135:
+{{dialogue|Player|I think...}}
+
+*''We should stay in our world a little longer. (Kiss Logan)'' (No unique dialogue)
+*''I'd like to give you a hug! (Hug Logan)'' (No unique dialogue)
+*''You need to be more careful out there, alright?'' (No unique dialogue)
+*''We should get out of here.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+The player interacts (type 2, option 1) with Logan
+
+TRIGGER Procedure 9.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON INTERACTIVE EXIT || order: 0 | instID: 8011
+CONDITIONS
+Always:
+ACTIONS
+(cId 13) A conversation 22136, 7832_0 starts:
+{{dialogue|Logan|Uh huh. Did I ever tell you... I like the way you think?}}
+{{dialogue|Logan|Hm... Reckon for better or worse, it's high time to leave our little world and head back to the other one. You go on ahead. I'll do the dishes. Only fair.}}
+{{dialogue|Logan|Oh, and don't worry. I'll hang my hat at home tonight.}}
+The conversation ends.
+
+TRIGGER Procedure 9.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 12) The player picks the second option in conversation segment 22135:
+{{dialogue|Player|I think...}}
+
+*''We should stay in our world a little longer. (Kiss Logan)'' (No unique dialogue)
+*''I'd like to give you a hug! (Hug Logan)'' (No unique dialogue)
+*''You need to be more careful out there, alright?'' (No unique dialogue)
+*''We should get out of here.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+The player interacts (type 2, option 0) with Logan
+
+TRIGGER Procedure 9.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON INTERACTIVE EXIT || order: 0 | instID: 8011
+CONDITIONS
+Always:
+ACTIONS
+(cId 13) A conversation 22137, 7832_0 starts:
+{{dialogue|Logan|Heh... glad you were here for me...}}
+{{dialogue|Logan|Hm... Reckon for better or worse, it's high time to leave our little world and head back to the other one. You go on ahead. I'll do the dishes. Only fair.}}
+{{dialogue|Logan|Oh, and don't worry. I'll hang my hat at home tonight.}}
+The conversation ends.
+
+TRIGGER Procedure 9.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 22141) that ends:
+{{dialogue|Logan|Oh, and don't worry. I'll hang my hat at home tonight.}}
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 23963) from Logan
+SCENEITEM CREATE FLAG || path: Mission_hunterbaselight | itemType: 0 | id: 23321 | sceneName: HunterBase | flagName: backup | extraParams: 0
+ACTOR BUFF REMOVE || instanceId: 23961 | npc: 8000
+Logan stops standing still
+SCENEITEM DELETE || itemType: 0 | id: 23962
+SCENEITEM DELETE || itemType: 0 | id: 23963
+SCENEITEM INTERACT SET || itemType: 9 | id: 35 | canInteract: 1
+SCENEITEM INTERACT SET || itemType: 0 | id: 2059252 | canInteract: 1
+SCENEITEM INTERACT SET || itemType: 0 | id: 2059153 | canInteract: 1
+CAMERA PATH STOP ALL || 
+CUTSCENE UI STATE EXIT || 
+Logan stops standing still
+Add behavior CommanderMoveToFlagAndActionLoop (idName: 23962) to Logan
+(param: TargetScene:HunterBase|FlagName:backup_loganend|Action:FeatherDusting)
+SCENEITEM DELETE || itemType: 0 | id: 239611
+SCENEITEM DELETE || itemType: 0 | id: 23961
+SUBMIT MISSION 1200395
+
+TRIGGER Procedure 9.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from HunterBase to the -1:
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndActionLoop (idName: 23962) from Logan
+END MISSION 1200396

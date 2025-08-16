@@ -1,0 +1,433 @@
+Reading Mission 1800244: (Go and check it out)
+
+<onlyinclude>{{Infobox mission
+|name = (Go and check it out)
+|image =
+|description = (Go and check it out)
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200107
+
+TRIGGER Procedure 1.0 Step 2.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+The New Mascot is successfully completed
+Check if Musa is in town
+Check if mission 1700240 is result 1 flag 0
+
+GROUP 10:
+The New Mascot has failed
+Check if Musa is in town
+Check if mission 1700240 is result 1 flag 0
+
+ACTIONS
+Run mission #1800242
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: talkmusa | info: 1 | exist: 1
+ACTIONS
+Run mission (Go and check it out)
+GLOBAL BLACK BOARD REMOVE || key: talkmusa
+END MISSION 1800242
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800244
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER ONCE CREATE || flagName: Trigger_S8244 | sceneName: Main | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0 | id: 82441 | missionId: 1800244
+Set 8244A to 0
+Set 8244B to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 8244A is == 1
+ACTIONS
+Arvio stops standing still
+AREA TRIGGER DELETE || id: 82442
+NPC ADD TAG || tag: ArvioRead
+NPC REMOVE TAG || tag: AmirahStore
+END MISSION 1800244
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 82441
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 82441 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82441 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8244_Player_1
+DELAY MASK SET || maskId: 82441 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Amirah stands still in Main
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82441 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8244152) to Amirah
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8244_Amira_1|Action:Dizzy_Story)
+STOPWATCH REAL TIME SET || id: 82440 | sec: 3.5
+
+TRIGGER Procedure 0.0 Step 3.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 82440
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8244152) from Amirah
+Add behavior CommanderMoveToFlagAndAction (idName: 8244153) to Amirah
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8244_Amira_2|LookAtActor:8000|Delay:3.5)
+Add behavior CommanderMoveToFlag (idName: 8244002) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8244_Player_2)
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 82442
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 2127_0 starts:
+{{dialogue|Amirah|Ah... yawn... ''Player''... it's you.}}
+
+*''You look shattered... are you okay?''
+*''Woah, your eyes are super black!''
+
+{{dialogue|Amirah|indent=true|answer=You look shattered... are you okay?
+|reward={{NPC2|Amirah|rp=1}}|It's nothing... Yawn. I'll be fine.}}
+{{dialogue|Amirah|indent=true|answer=Woah, your eyes are super black!
+|Ah... just a little busy. That's all.}}
+{{dialogue|Amirah|I've just had to look after the general store as well. If you need anything, I'll be with you as soon as possible.}}
+
+*''Arvio's not pulling his weight?''
+*''You're burning out, have a rest.''
+
+{{dialogue|Amirah|indent=true|answer=Arvio's not pulling his weight?
+|Arvio... he was devastated when Musa criticised his idea. You know, he puts on this confident persona, but he's incredibly sensitive. He hasn't been taking care of his shop, or himself.}}
+{{dialogue|Amirah|indent=true|answer=You're burning out, have a rest.
+|reward={{NPC2|Amirah|rp=1}}|Thank you for your concern, but I'm used to this. It happens occasionally, I just need to pick up the slack until Arvio feels better. He puts on this confident persona, but he's incredibly sensitive.}}
+{{dialogue|Amirah|Arvio's really shaken up right now, but... he needs to figure this out on his own. He'll learn from his mistakes, not through lectures from me. All I can do is just keep us afloat in the meantime.}}
+{{dialogue|Amirah|Of course it's tiring, but I need to do what I can to help my family. It's my responsibilty.}}
+
+*''Let me talk to him!''
+*''Let me help you!''
+
+{{dialogue|Amirah|indent=true|answer=Let me talk to him!
+|No. I've done everything I can. I've talked to him about it... it's up to him now. You know what he's like, one wrong word and he could spiral.}}
+{{dialogue|Amirah|indent=true|I think it's better to just focus on what needs to be done, even if that means working a little harder.}}
+{{dialogue|Amirah|indent=true|answer=Let me help you!
+|reward={{NPC2|Amirah|rp=1}}|Thank you for your offer, I genuinely appreciate it, but I need to do these things myself. I can't rely on others.}}
+{{dialogue|Amirah|indent=true|You're always busy helping the town, and besides you've helped us so much already. I don't want to push all my burdens onto you.}}
+
+TRIGGER Procedure 0.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 7040}}
+A cutscene CG_AMIRATIRED (duration: 1.0) starts playing
+Burnout - Arvio's completely unaware of how his behavior is affecting others. Amirah is burning out because she has to work twice as hard to support them now.
+
+TRIGGER Procedure 0.0 Step 4.5 Order 5 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 7239:
+{{dialogue|Amirah|Ah... yawn... ''Player''... it's you.}}
+
+*''You look shattered... are you okay?'' (No unique dialogue)
+*''Woah, your eyes are super black!'' (No unique dialogue)
+
+(cId 1) The player picks the second option in conversation segment 7242:
+{{dialogue|Amirah|I've just had to look after the general store as well. If you need anything, I'll be with you as soon as possible.}}
+
+*''Arvio's not pulling his weight?'' (No unique dialogue)
+*''You're burning out, have a rest.'' (No unique dialogue)
+
+(cId 1) The player picks the second option in conversation segment 7246:
+{{dialogue|Amirah|Of course it's tiring, but I need to do what I can to help my family. It's my responsibilty.}}
+
+*''Let me talk to him!'' (No unique dialogue)
+*''Let me help you!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Amirah gains 1 favor
+
+TRIGGER Procedure 0.0 Step 8.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 8 | name: CG_AMIRATIRED
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 2135_0 starts:
+{{dialogue|Player|(What was that just now?)}}
+
+*''(Go and check it out)''
+*''(Forget it)''
+
+{{dialogue|Amirah|indent=true|answer=(Go and check it out)
+|Is there something you need to do? Well, I won't keep you. Thank you for coming to see me today.}}
+{{dialogue|Amirah|indent=true|answer=(Forget it)
+|Well, thank you for coming to see me today. Take care.}}
+
+TRIGGER Procedure 0.0 Step 9.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER ONCE CREATE || missionId: 1800244 | id: 82442 | sceneName: Main | flagName: Trigger_S82442 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 8244142) from Arvio
+Arvio stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8244152) from Amirah
+Amirah stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8244153) from Amirah
+Remove behavior CommanderMoveToFlag (idName: 8244002) from Player
+
+TRIGGER Procedure 0.0 Step 10.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 82442
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 82442 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 12.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82442 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+ACTION ACTOR HIDE BUBBLE || npc: 8014
+Arvio stops standing still
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8244_Player_4
+DELAY MASK SET || maskId: 82442 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Arvio stands still in Main
+
+TRIGGER Procedure 0.0 Step 13.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82442 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8244145) to Arvio
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8244_Arvio_2|Action:Idle_Story)
+
+TRIGGER Procedure 0.0 Step 13.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8014 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8244145) from Arvio
+Add behavior CommanderMoveToFlagAndAction (idName: 8244146) to Arvio
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8244_Arvio_3|Action:Hi|Delay:1.0)
+
+TRIGGER Procedure 0.0 Step 14.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8014 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 2138_0 starts:
+{{dialogue|Arvio|Ah... huff huff... ''Player''... what are you... doing here?}}
+
+*''Was that you back there?''
+*''What are you doing here?''
+
+{{dialogue|Arvio|indent=true|answer=Was that you back there?
+|No, I... well, yes... but...}}
+{{dialogue|Arvio|indent=true|I was uh... just passing by! Yeah! I better head back now...}}
+
+:*''I saw you watching.''
+:*''Going back to mope?''
+
+{{dialogue|Arvio|indent=double|answer=I saw you watching.
+|...}}
+{{dialogue|Arvio|indent=double|So... she told you all about it, right? I...}}
+{{dialogue|Arvio|indent=double|answer=Going back to mope?
+|Of course not!}}
+{{dialogue|Arvio|indent=double|How could I? Seeing how much she's sacrificing for us... for me...}}
+{{dialogue|Arvio|indent=true|answer=What are you doing here?
+|I... I came to see my sister... I mean, I was just passing through!}}
+{{dialogue|Arvio|indent=true|And... and you?}}
+
+:*''You already know, don't you?''
+:*''I came to see your sister, too.''
+
+{{dialogue|Arvio|indent=double|answer=You already know, don't you?
+|I... yes. Sigh... ''Player'', thanks for going to see my sister.}}
+{{dialogue|Arvio|indent=double|I'm sorry. I shouldn't have pretended I wasn't watching. I just...}}
+{{dialogue|Arvio|indent=double|answer=I came to see your sister, too.
+|You...}}
+{{dialogue|Arvio|indent=double|Thank you, ''Player''. For being there for her...}}
+{{dialogue|Arvio|indent=double|I didn't mean to run away... I just...}}
+
+TRIGGER Procedure 0.0 Step 14.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 2145_0 starts:
+{{dialogue|Arvio|I just... I didn't know. I didn't realize she'd have to do so much just to keep us going...}}
+{{dialogue|Arvio|I just wanted to apologize... but... I can't face her right now.}}
+
+*''You need to grow up. Face your responsiblities.''
+*''We believe in you. You just need to believe in yourself.''
+
+{{dialogue|Arvio|indent=true|answer=You need to grow up. Face your responsiblities.
+|reward={{NPC2|Arvio|rp=2}}|Ah... you're right. I can't let my sister shoulder all the burden. It's not fair. We should be helping each other... but I'm just dragging her down with me.}}
+{{dialogue|Arvio|indent=true|answer=We believe in you. You just need to believe in yourself.
+|reward={{NPC2|Arvio|rp=2}}|You... thank you. I understand. I need to... live up to your expectatio- no. I need to live up to myself, I need to believe that I can be better. I can't solve everything right away... but I can start.}}
+{{dialogue|Arvio|My sister has always stepped up to fix my mistakes. She's always there for me... but I can't be that little idiot brother anymore. It's just... not fair.}}
+{{dialogue|Arvio|I don't know the answer yet, but I'll get there.}}
+{{dialogue|Arvio|When I was growing up, every time I'd make a mistake, my sister was there to pick up the pieces. I always thought she'd scold me but... it was always a helping hand to bring me back up.}}
+{{dialogue|Arvio|I...}}
+{{dialogue|Arvio|I'm not going to let anyone else pay for my mistakes!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 15.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Set 8244B to 1
+Remove behavior CommanderMoveToFlagAndAction (idName: 8244145) from Arvio
+Arvio stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8244146) from Arvio
+CUTSCENE UI STATE EXIT || 
+NPC ADD TAG || tag: ArvioRead
+NPC REMOVE TAG || tag: AmirahStore
+Arvio gains 5 favor
+Amirah gains 5 favor
+
+TRIGGER Procedure 0.0 Step 15.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+END MISSION 1800244
+
+TRIGGER Procedure 0.0 Step 20.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Amirah
+CONDITIONS
+Check if 8244B is == 1
+ACTIONS
+(cId 7) A conversation 2148_0 starts:
+{{dialogue|Amirah|Hm? You talked to Arvio?}}
+{{dialogue|Amirah|He wanted to apologize? Ah... I'm used to this by now. He never really understands what he's done wrong. He'd just go into something blind and...}}
+{{dialogue|Amirah|Regardless. I'm glad you spoke to him. I'll give him some space, hopefully he'll reflect on things.}}
+{{dialogue|Amirah|I just... Sigh. I know this is a lot to ask, but... can you be there for him? Just... keep an eye on him? I know he respects you, and he doesn't need any more of my lectures.}}
+
+*''Of course I will.''
+*''If I get the time...''
+
+{{dialogue|Amirah|Thank you. I appreciate it. He needs to grow, and he will. I just need to give him room to breathe.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 8.1 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the first option in conversation segment 7254:
+{{dialogue|Player|(What was that just now?)}}
+
+*''(Go and check it out)'' (No unique dialogue)
+*''(Forget it)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Set 8244A to 2
+
+TRIGGER Procedure 1.0 Step 8.1 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the second option in conversation segment 7254:
+{{dialogue|Player|(What was that just now?)}}
+
+*''(Go and check it out)'' (No unique dialogue)
+*''(Forget it)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8244A to 1
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 2.0 Step 4.5 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 6) The player picks the first option in conversation segment 7272:
+{{dialogue|Arvio|I just wanted to apologize... but... I can't face her right now.}}
+
+*''You need to grow up. Face your responsiblities.'' (No unique dialogue)
+*''We believe in you. You just need to believe in yourself.'' (No unique dialogue)
+
+(cId 6) The player picks the second option in conversation segment 7272:
+{{dialogue|Arvio|I just wanted to apologize... but... I can't face her right now.}}
+
+*''You need to grow up. Face your responsiblities.'' (No unique dialogue)
+*''We believe in you. You just need to believe in yourself.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Arvio gains 2 favor

@@ -1,0 +1,212 @@
+Reading Mission 1300031: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100002
+
+TRIGGER Procedure 2.0 Step 9.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission Moisture Farm Blues is result 1 flag 1
+ACTIONS
+Run mission Operation De-Geeglate
+
+TRIGGER Procedure 2.0 Step 11.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1300022 is result 1 flag 1
+ACTIONS
+Run mission In Trusses We Trust
+Run mission #1300031
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1300031
+CONDITIONS
+Always:
+ACTIONS
+Set build to 0
+Set over to 0
+SCENEITEM DELETE || itemType: 0 | id: 1300031
+Set DAY to 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 130312 | path: Mission_bridge0 | sceneName: Main | flagName: BigBridge | extraParams: -1
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+In Trusses We Trust is in state 2 with flag 1
+ACTIONS
+Increment build by 1
+
+TRIGGER Procedure 0.0 Step 1.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if build is == 1
+Check if over is == 0
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 130310 | path: Mission_bridge1 | sceneName: Main | flagName: BigBridge | extraParams: 0
+SCENEITEM DELETE || itemType: 0 | id: 130312
+NPC RANDOM ADD || id: 6 | instId: 20311 | scene: Main | dailyBehavior: Story1300031_RandomNPC_1 | flagName: hengjia_work1
+NPC RANDOM ADD || id: 6 | instId: 20312 | dailyBehavior: Story1300031_RandomNPC_1 | scene: Main | flagName: hengjia_work2
+NPC RANDOM ADD || id: 6 | instId: 20313 | dailyBehavior: Story1300031_RandomNPC_1 | scene: Main | flagName: hengjia_work3
+NPC RANDOM ADD || id: 6 | instId: 20314 | dailyBehavior: Story1300031_RandomNPC_1 | scene: Main | flagName: hengjia_work4
+NPC RANDOM ADD || id: 6 | instId: 20315 | dailyBehavior: Story1300031_RandomNPC_1 | scene: Main | flagName: hengjia_work5
+Add behavior Story1300031_8017_1 (idName: 20311) to Mi-an
+(param: -1)
+Add behavior Story1300031_8009_1 (idName: 20311) to Heidi
+(param: -1)
+NPC ADD TAG || tag: BridgeNoRobot
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if build is == 3
+Check if over is == 0
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 130310
+SCENEITEM CREATE FLAG || itemType: 0 | id: 130311 | path: Mission_bridge2 | sceneName: Main | flagName: BigBridge | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if build is == 8
+Check if over is == 0
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 130311
+SCENEITEM CREATE FLAG || itemType: 0 | id: 130313 | path: Mission_bridge3 | sceneName: Main | flagName: BigBridge | extraParams: 0
+
+TRIGGER Procedure 1.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || exist: 1 | key: finishrobot | info: 1
+ACTIONS
+Set over to 1
+Set build to 0
+
+TRIGGER Procedure 1.0 Step 3.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if build is == 1
+Check if over is == 1
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 130310
+SCENEITEM DELETE || itemType: 0 | id: 130311
+SCENEITEM DELETE || itemType: 0 | id: 130312
+SCENEITEM DELETE || itemType: 0 | id: 130313
+SCENEITEM CREATE FLAG || itemType: 0 | id: 130314 | path: Mission_bridge5 | sceneName: Main | flagName: BigBridge | extraParams: 0
+NPC REMOVE TAG || tag: BridgeNoRobot
+
+TRIGGER Procedure 1.0 Step 4.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if build is == 2
+Check if over is == 1
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 130314
+SCENEITEM CREATE FLAG || itemType: 0 | id: 130315 | path: Mission_bridge6 | sceneName: Main | flagName: BigBridge | extraParams: 0
+
+TRIGGER Procedure 1.0 Step 5.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Check if build is >= 2
+Check if over is == 1
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 130315
+SCENEITEM CREATE FLAG || itemType: 0 | id: 130316 | path: Mission_bridge7 | sceneName: Main | flagName: BigBridge | extraParams: 0
+Set global blackboard key bridgedone with info 1.
+NPC RANDOM REMOVE || id: 20311
+NPC RANDOM REMOVE || id: 20312
+NPC RANDOM REMOVE || id: 20313
+NPC RANDOM REMOVE || id: 20314
+NPC RANDOM REMOVE || id: 20315
+Remove behavior Story1300031_8017_1 (idName: 20311) from Mi-an
+Remove behavior Story1300031_8009_1 (idName: 20311) from Heidi
+END MISSION 1300031
+
+TRIGGER Procedure 1.0 Step 6.0 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior Story1300031_RandomNPC_1 (idName: 20311) from 20311
+Remove behavior Story1300031_RandomNPC_1 (idName: 20311) from 20312
+Remove behavior Story1300031_RandomNPC_1 (idName: 20311) from 20313
+Remove behavior Story1300031_RandomNPC_1 (idName: 20311) from 20314
+Remove behavior Story1300031_RandomNPC_1 (idName: 20311) from 20315
+Add behavior Story1300031_RandomNPC_1 (idName: 20311) to 20311
+(param: -1)
+Add behavior Story1300031_RandomNPC_1 (idName: 20311) to 20312
+(param: -1)
+Add behavior Story1300031_RandomNPC_1 (idName: 20311) to 20313
+(param: -1)
+Add behavior Story1300031_RandomNPC_1 (idName: 20311) to 20314
+(param: -1)
+Add behavior Story1300031_RandomNPC_1 (idName: 20311) to 20315
+(param: -1)
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment DAY by 1
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if DAY is == 1
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 130317 | path: Mission_sandstorm01 | sceneName: Main | flagName: bridge_kaimu | extraParams: 0
+
+TRIGGER Procedure 2.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if DAY is == 3
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 130317
+SCENEITEM DELETE || itemType: 0 | id: 20314

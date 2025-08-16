@@ -1,0 +1,177 @@
+Reading Mission 1200381: The Sandrocker Dream
+
+<onlyinclude>{{Infobox mission
+|name = The Sandrocker Dream
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from The Sandrocker Dream:
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 759
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1200380
+START MISSION 1200380
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200380
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Sandrocker Dream
+END MISSION 1200380
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200381
+CONDITIONS
+GROUP 0:
+CHECK PLAYER ITEM || item: 19110006 | itemGrade: -1 | set: 6 | count: 20
+
+GROUP 10:
+CHECK PLAYER ITEM || item: 19112019 | itemGrade: -1 | set: 6 | count: 30
+
+GROUP 20:
+CHECK PLAYER ITEM || item: 19112020 | itemGrade: -1 | set: 6 | count: 10
+
+ACTIONS
+===Collect Materials===
+
+{{mission_details
+|desc = In order to repair the house Amirah and Arvio bought for their parents, you'll need to gather some materials.
+|details = Collect Materials
+*{{i2|Tempered Glass|0/20}}
+*{{i2|Granite Tiles|0/30}}
+*{{i2|Magnesium Aluminum Alloy|0/10}}
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200381
+CONDITIONS
+CHECK PLAYER ITEM || item: 19110006 | itemGrade: -1 | set: 2 | count: 20
+CHECK PLAYER ITEM || item: 19112019 | itemGrade: -1 | set: 2 | count: 30
+CHECK PLAYER ITEM || item: 19112020 | itemGrade: -1 | set: 2 | count: 10
+ACTIONS
+===Talk to Heidi===
+
+{{mission_details
+|desc = You've gathered everything you need, so give them to Heidi to get started.
+|details = Talk to Heidi
+*{{i2|Tempered Glass|0/20}}
+*{{i2|Granite Tiles|0/30}}
+*{{i2|Magnesium Aluminum Alloy|0/10}}
+*{{i2|Heidi|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200381
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Sandrocker Dream
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Sandrock Strikes Back is in state 3 with flag 0
+CHECK PLAYER ITEM || item: 19800016 | itemGrade: -1 | set: 6 | count: 10
+ACTIONS
+Add 10 Acacia Wood Planks of Default quality (Notify player)
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | targetId: 1 | canSubmit: 1 | missionId: 1200380
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Heidi===
+
+{{mission_details
+|desc = You've gathered everything you need, so give them to Heidi to get started.
+|details = Talk to Heidi
+*{{i2|Tempered Glass|0/20}}
+*{{i2|Granite Tiles|0/30}}
+*{{i2|Magnesium Aluminum Alloy|0/10}}
+*{{i2|Heidi|0/1}}
+}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Heidi
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 19067 starts:
+{{dialogue|Heidi|Great! I think your folks-in-law'll rest easier knowing you helped out on this, ''Player''! I can take care of the rest.}}
+BAG MODIFY BY TARGET || missionId: 1200380 | targetId: 2
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1200380
+END MISSION 1200381
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1200381
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|760}}
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PLAYER DIVORCE || order: 0 | id: 8014
+ON PLAYER DIVORCE || order: 0 | id: 8015
+CONDITIONS
+Always:
+ACTIONS
+FAIL MISSION || missionId: 1200380
+
+TRIGGER Procedure 2.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1200381
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || id: 2059134 | itemType: 0
+GLOBAL BLACK BOARD REMOVE || key: notrain
+SCENEITEM INTERACT SET || itemType: 9 | id: 34 | canInteract: 1
+SCENEITEM DELETE || itemType: 0 | id: 218734
+SCENEITEM CREATE FLAG || itemType: 0 | id: 23824 | path: Mission_Scene_City_OrdinaryHouse_4 | sceneName: Main | flagName: amirahhouse | extraParams: 0

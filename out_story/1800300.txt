@@ -1,0 +1,114 @@
+Reading Mission 1800300: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200135
+
+TRIGGER Procedure 9.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+We'll Be Ready For 'Em is successfully completed
+The Battle of Sandrock is in state 3 with flag 0
+ACTIONS
+NPC ADD TAG || tag: NoRandomNPCInTown
+
+TRIGGER Procedure 9.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 12) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1800290
+Run mission #1800291
+Run mission #1800292
+Run mission #1800302
+Run mission #1800303
+Run mission #1800304
+Run mission #1800299
+Run mission #1800301
+Run mission #1800300
+Run mission #1800293
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800300
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || flagName: Trigger_Chamber | id: 82885 | transId: 0 | missionId: 1800300 | mapIcon: MissionArea | showOnMap: 1 | sceneName: Main
+
+TRIGGER Procedure 0.0 Step 0.1 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Chamber:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_chamber
+CHECK GLOBAL BLACKBOARD || key: yanreveal | info: 1 | exist: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_chamber
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Chamber:
+CONDITIONS
+Always:
+ACTIONS
+Yan stands still in Chamber
+AREA TRIGGER DELETE || id: 82885
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Chamber:
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 3356_0 starts:
+{{dialogue|Yan|Weeeelcome, welcome, welcome!}}
+{{dialogue|Yan|Oh, yes. I was just kicking my feet up for a moment, but there's plenty to do for our new Duvos overlords! Just check the Commission Board over there, a big fresh batch is up!}}
+{{dialogue|Yan|That's right! Duvos commissions! Which shall be rewarded with a fresh helping of Duvos Bucks! Which you should just give to me. I'll be going to Duvos after this is over and you're not invited. Sorry, not sorry.}}
+{{dialogue|Yan|Anyway, yeah, if you want to grab a few extra commissions in addition to that Jacuzzi they got you workin' on, that'd be swell. But, eh... I dunno, I don't really care anymore. Do whatever you want!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Yan stops standing still
+END MISSION 1800300
+
+TRIGGER Procedure 0.0 Step 40.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 22841
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 82885
+END MISSION 1800300

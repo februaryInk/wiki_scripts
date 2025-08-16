@@ -1,0 +1,270 @@
+Reading Mission 1800332: New Teacher
+
+<onlyinclude>{{Infobox mission
+|name = New Teacher
+|image =
+|description = The new teacher, Jane, has written a letter to you asking for your help.
+|type = Side
+|time =
+|location =
+|characters = [[Jane]]
+|condition =
+|details =
+|exp = 3000
+|reputation = 15
+|gols = 1000
+|npc1 = Jane
+|rp1 = 50
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200333
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK SCENEITEM EXIST || id: 23101 | sceneItemType: 0 | exist: 1
+ACTIONS
+Run mission New Teacher
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|609}}
+AREA TRIGGER CREATE || missionId: 1800332 | id: 83321 | sceneName: Main | flagName: Trigger_School | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+Set 8332Day to 0
+SCENEITEM INTERACT SET || itemType: 9 | id: 33 | canInteract: 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1800332
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 11 | id: 83331
+SCENEITEM DELETE || itemType: 11 | id: 83332
+SCENEITEM DELETE || itemType: 11 | id: 83333
+SCENEITEM DELETE || itemType: 12 | id: 83331
+SCENEITEM DELETE || itemType: 12 | id: 83332
+SCENEITEM DELETE || itemType: 12 | id: 83333
+SCENEITEM CREATE FLAG || itemType: 12 | id: 83331 | path: S8333_Item1 | sceneName: School | flagName: S8333_Item1 | extraParams: -1
+SCENEITEM CREATE FLAG || itemType: 12 | id: 83332 | path: S8333_Item2 | flagName: S8333_Item2 | extraParams: -1 | sceneName: School
+SCENEITEM CREATE FLAG || itemType: 12 | id: 83333 | path: S8333_Item3 | sceneName: School | flagName: S8333_Item3 | extraParams: -1
+SCENEITEM CREATE FLAG || path: S8333_Item2_collider | flagName: S8333_Item2 | itemType: 0 | id: 83334 | sceneName: School | extraParams: 0
+NPC REMOVE TAG || tag: NoSchool
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the School:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_school
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_school
+AREA TRIGGER DELETE || id: 83321
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the School:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Jane stands still in School
+Add behavior CommanderMoveToFlagAndAction (idName: 8332622) to Jane
+(param: TargetScene:School|MoveMode:Walk|FlagName:S8332_62_1|Delay:1.5|Action:ShowEat_Story)
+PLAYER SET POS ROT FLAG || sceneName: School | flagName: S8332_0_1
+
+TRIGGER Procedure 0.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8062 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 13615 starts:
+{{dialogue|Jane|And that, children, is why you should never feed noodles to a yakmel, no matter how much he begs you for them.}}
+
+TRIGGER Procedure 0.0 Step 7.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8332622) from Jane
+Add behavior CommanderMoveToFlagAndAction (idName: 8332623) to Jane
+(param: TargetScene:School|MoveMode:Walk|FlagName:S8332_62_2|Delay:2.3|Action:Hi)
+Add behavior CommanderMoveToFlagAndAction (idName: 8332001) to Player
+(param: TargetScene:School|MoveMode:Run|FlagName:S8332_0_2|Delay:0.5)
+Set 8332Move1 to 0
+
+TRIGGER Procedure 0.0 Step 8.0 Order 5 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: MoveToFlagAndActionOver | behaviourName: CommanderMoveToFlagAndAction | npc: 8062
+CONDITIONS
+Always:
+ACTIONS
+Increment 8332Move1 by 1
+
+TRIGGER Procedure 0.0 Step 8.1 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 10 | eventName: MoveToFlagAndActionOver | behaviourName: CommanderMoveToFlagAndAction | npc: 8062
+CONDITIONS
+Check if 8332Move1 is >= 2
+ACTIONS
+(cId 2) A conversation 4012_0 starts:
+{{dialogue|Jane|Oh! You must be ''Player''. Thank you so much for coming. My name is Jane. It's lovely to finally meet you!}}
+{{dialogue|Jane|I'm afraid you caught me rehearsing...I mean practicing. The first day of school is just around the corner, and there's so much to do to prepare. I was hoping you might help me get the classroom ready. First impressions matter, you know?}}
+{{dialogue|Jane|This new building is wonderful, but the decoration is a bit on the traditional side. If you could bring me some things to spruce it up and make it my own, it might make everyone feel more at home and... less nervous.}}
+{{dialogue|Jane|The kids, I mean. Not me. Of course, I'm not nervous. Not in the least. It's all about the children, right? Haha.}}
+
+*''I'm happy to help.''
+*''Sorry, I have a lot on my plate.''
+*''You look kind of nervous.''
+
+{{dialogue|Jane|indent=true|answer=I'm happy to help.
+|Oh, you're such a livesaver! So here's a list of things I need to spruce up the school. After you make them just bring them along and place them in the classroom!}}
+{{dialogue|Jane|indent=true|answer=Sorry, I have a lot on my plate.
+|Oh. Well, alright. I suppose I can figure something out. Thank you for coming all the way here to meet me when you already have so much to do.}}
+{{dialogue|Jane|I guess I'm a bit of an open book, aren't I?}}
+{{dialogue|Jane|All right, I am a little nervous. It's such an important job, and I want to be the best I can be. It feels like the matinee of an one woman show... I expected a few friends to come, but curtains have opened to a full house...}}
+{{dialogue|Jane|But I can do this. Thanks for listening to me ramble on!}}
+{{dialogue|Player|(What should I say?)}}
+
+*''I'm happy to help.''
+*''Sorry, I have a lot on my plate.''
+
+{{dialogue|Jane|indent=true|answer=I'm happy to help.
+|Oh, you're such a livesaver! So here's a list of things I need to spruce up the school. After you make them just bring them along and place them in the classroom!}}
+{{dialogue|Jane|indent=true|answer=Sorry, I have a lot on my plate.
+|Oh. Well, alright. I suppose I can figure something out. Thank you for coming all the way here to meet me when you already have so much to do.}}
+Set 8332Task to 0
+DELIVER MISSION 1800332
+
+TRIGGER Procedure 0.0 Step 10.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Jane stops standing still
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 8332622) from Jane
+Remove behavior CommanderMoveToFlagAndAction (idName: 8332623) from Jane
+Remove behavior CommanderMoveToFlagAndAction (idName: 8332001) from Player
+
+TRIGGER Procedure 0.0 Step 13.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if 8332Task is == 1
+ACTIONS
+START MISSION 1800332
+
+TRIGGER Procedure 0.0 Step 9.1 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the first option in conversation segment 13619:
+{{dialogue|Jane|The kids, I mean. Not me. Of course, I'm not nervous. Not in the least. It's all about the children, right? Haha.}}
+
+*''I'm happy to help.'' (No unique dialogue)
+*''Sorry, I have a lot on my plate.'' (No unique dialogue)
+*''You look kind of nervous.'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 13624:
+{{dialogue|Jane|Do you have a bit of time to help me get everything ready?}}
+
+*''I'm happy to help.'' (No unique dialogue)
+*''Sorry, I have a lot on my plate.'' (No unique dialogue)
+
+(cId 2) The player picks the first option in conversation segment 16070:
+{{dialogue|Player|(What should I say?)}}
+
+*''I'm happy to help.'' (No unique dialogue)
+*''Sorry, I have a lot on my plate.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8332Task to 1
+
+TRIGGER Procedure 0.0 Step 9.3 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the third option in conversation segment 13619:
+{{dialogue|Jane|The kids, I mean. Not me. Of course, I'm not nervous. Not in the least. It's all about the children, right? Haha.}}
+
+*''I'm happy to help.'' (No unique dialogue)
+*''Sorry, I have a lot on my plate.'' (No unique dialogue)
+*''You look kind of nervous.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Jane gains 2 favor
+
+TRIGGER Procedure 0.0 Step 15.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800332
+CONDITIONS
+Always:
+ACTIONS
+Run mission New Teacher
+END MISSION 1800332
+
+TRIGGER Procedure 1.0 Step 4.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment 8332Day by 1
+
+TRIGGER Procedure 1.0 Step 5.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 8332Day is >= 7
+ACTIONS
+AREA TRIGGER DELETE || id: 83321
+NPC REMOVE TAG || tag: NoSchool
+END MISSION 1800332
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Jane|Do you have a bit of time to help me get everything ready?}}
+
+*''I'm happy to help.'' (No unique dialogue)
+*''Sorry, I have a lot on my plate.'' (No unique dialogue)
+
+
+==Rewards==
+{{mission reward
+|npc1 = Jane
+|rp1 = 50
+|exp = 3000
+|reputation = 15
+|gols = 1000
+}}

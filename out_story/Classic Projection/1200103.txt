@@ -1,0 +1,537 @@
+Reading Mission 1200103: Classic Projection
+
+<onlyinclude>{{Infobox mission
+|name = Classic Projection
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Classic Projection:
+
+TRIGGER Procedure 0.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Mi-an stops standing still
+START MISSION 1200102
+
+TRIGGER Procedure 0.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200102
+CONDITIONS
+Always:
+ACTIONS
+Run mission Classic Projection
+END MISSION 1200102
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200103
+CONDITIONS
+Always:
+ACTIONS
+===Make a Projector Screen===
+
+{{mission_details
+|desc = You need a screen to play the Old World entertainment on. Make a Projector Screen according to the diagram.
+|details = Make a Projector Screen
+*{{i2|Projector Screen|0/1}}
+}}
+Add 1 Projector Screen of Default quality (Notify player)
+Set DAY to 0
+Set CHOICE to 0
+Set FILM to 0
+Set SHOW to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200102 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Mi-an===
+
+{{mission_details
+|desc = The Projector Screen is ready, take it to Mi-an.
+|details = Talk to Mi-an
+*{{i2|Projector Screen|0/1}}
+*{{i2|Mi-an|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Mi-an
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1200102 | targetId: 2 | canSubmit: 1
+ACTIONS
+(cId 0) A conversation 572_0 starts:
+{{dialogue|Mi-an|Got the screen? Great! I fixed the projector with Qi's help! He also noticed in the box was a Data Disc with a "mo-vie" on it. You've heard of those, right? They're like movin' pictures!}}
+{{dialogue|Mi-an|Remember what the manual said? The projector works best at night, so... Tell you what, I'll find us a 'cinematic spot,' if you will! And... oh!}}
+{{dialogue|Mi-an|Can you give me the screen you made? Let's meet up {{textcolor|green|tomorrow at 20:00 PM at the saloon}} and I'll take you to the set-up!}}
+
+*''It's a date, then.''
+*''Sure.''
+
+{{dialogue|Mi-an|indent=true|answer=It's a date, then.
+|reward={{NPC2|Mi-an|rp=5}}|Oh, a... a date?}}
+{{dialogue|Mi-an|indent=true|Ahaha! That's right, Old World couples used to go to watch mo-vies together, didn't they? Gosh, I've always been interested in Old World tech, but I never thought I'd end up going full LARPer...}}
+{{dialogue|Mi-an|Fortunately the disc is in good shape; I asked Qi not to tell me what movie was on it, so it's going to be a surprise for both of us!}}
+{{dialogue|Mi-an|He did say, though, that it 'wouldn't be a complete waste of time.' That's high praise from him, I can't wait!}}
+{{dialogue|Mi-an|Ok! See you tomorrow night, ''Player''! 8pm!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 3
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the first option in conversation segment 2459:
+{{dialogue|Mi-an|Can you give me the screen you made? Let's meet up {{textcolor|green|tomorrow at 20:00 PM at the saloon}} and I'll take you to the set-up!}}
+
+*''It's a date, then.'' (No unique dialogue)
+*''Sure.'' (No unique dialogue)
+
+(cId 3) The player picks the first option in conversation segment 2472:
+{{dialogue|Mi-an|I hope it's got some romance in it! I want to know what dating was like in the Old World; how did people fall in love with virtually all of their wants and needs catered to by technology? What about you, what do you hope's on the disc?}}
+
+*''Hm, what was old romance like?'' (No unique dialogue)
+*''I'm curious about old tech.'' (No unique dialogue)
+*''I wanna see some dudes get blasted.'' (No unique dialogue)
+
+(cId 4) The player picks the second option in conversation segment 2481:
+{{dialogue|Mi-an|And there was a lot to be learned about life in the Old World, too! I guess you could say this exercise has resulted in a Builder cruise level up!}}
+
+*''This wasn't a work thing, it was a couple thing.'' (No unique dialogue)
+*''Movie? I couldn't keep my eyes off you...'' (No unique dialogue)
+*''Yeah, I learned a lot.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Mi-an gains 5 favor
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) The player picks the first option in conversation segment 2481:
+{{dialogue|Mi-an|And there was a lot to be learned about life in the Old World, too! I guess you could say this exercise has resulted in a Builder cruise level up!}}
+
+*''This wasn't a work thing, it was a couple thing.'' (No unique dialogue)
+*''Movie? I couldn't keep my eyes off you...'' (No unique dialogue)
+*''Yeah, I learned a lot.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Mi-an gains 10 favor
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DAY START FOR WEATHER || order: 0 | weather: 0
+CONDITIONS
+Always:
+ACTIONS
+WEATHER SET STATE || WeatherState: 0
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Wait for the Date===
+
+{{mission_details
+|desc = Meet Mi-an tomorrow at 20:00 in the evening at the gate of the Saloon to go and watch the movie.
+|details = Wait for the Date
+}}
+CALENDAR SET REMINDER || addDays: 1 | hour: 19 | transId: 80003996
+BAG MODIFY BY TARGET || missionId: 1200102 | targetId: 2
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Set DAY to 1
+===Wait for the Date===
+
+{{mission_details
+|desc = Meet Mi-an tonight at 20:00 in the evening at the gate of the Saloon to go and watch the movie.
+|details = Wait for the Date
+}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 19:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 21031) to Mi-an
+(param: TargetScene:Main|MoveMode:Run|FlagName:longestfirm_mian1)
+AREA TRIGGER CREATE || missionId: 1200103 | id: 21031 | sceneName: Main | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80003981 | flagName: longestfirm_trigger1
+ACTION AREA TRIGGER SET RADIUS || id: 21031 | radius: 15
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 21031
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 21031 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 21031
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 21031 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: longestfirm_player1
+Remove behavior CommanderMoveToFlagAndAction (idName: 21031) from Mi-an
+Mi-an stands still in Main
+DELAY MASK SET || maskId: 21031 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 21036 | sceneName: Main | extraParams: 0 | path: Mission_Projector_0 | flagName: longestfirm_project0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 21037 | path: Mission_Projector_1 | sceneName: Main | flagName: longestfirm_project1 | extraParams: 0
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 21031 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 575_0 starts:
+{{dialogue|Mi-an|Hey! There you are! Oh, before you got here, I talked to Owen for a bit; he gave us a blanket and snacks for our "mo-vie night."}}
+{{dialogue|Mi-an|He sure has taken kind of an odd interest in our relationship... Oh, well. Ready to go?}}
+
+*''Yep! Let's go!''
+*''Hold on a sec.''
+
+{{dialogue|Mi-an|indent=true|answer=Yep! Let's go!
+|Great! Follow me to the secret spot!}}
+{{dialogue|Mi-an|indent=true|answer=Hold on a sec.
+|Oh, sure... I mean, you know where I'll be!}}
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+(cId 2) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 21032) to Mi-an
+(param: TargetScene:Main|MoveMode:Run|FlagName:longestfirm_mian2)
+Mi-an stops standing still
+CUTSCENE UI STATE EXIT || 
+===Follow Mi-an===
+
+{{mission_details
+|desc = Mi-an has found what she calls "the best place to watch movies". Go there with her to watch the movie.
+|details = Follow Mi-an
+}}
+AREA TRIGGER CREATE || missionId: 1200103 | id: 21032 | sceneName: Main | flagName: longestfirm_trigger2 | showOnMap: 0 | mapIcon: MissionAreaBranch | transId: 0
+Set FILM to 1
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 0
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 2466:
+{{dialogue|Mi-an|He sure has taken kind of an odd interest in our relationship... Oh, well. Ready to go?}}
+
+*''Yep! Let's go!'' (No unique dialogue)
+*''Hold on a sec.'' (No unique dialogue)
+
+(cId 2) The player picks the first option in conversation segment 2469:
+{{dialogue|Mi-an|Hey! Ready for mo-vie night?}}
+
+*''Yep! Let's go!'' (No unique dialogue)
+*''Still need a minute.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 1
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 21032
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 21032 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 21032
+Set SHOW to 1
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 21032 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: longestfirm_player2
+Remove behavior CommanderMoveToFlagAndAction (idName: 21032) from Mi-an
+Mi-an stands still in Main
+DELAY MASK SET || maskId: 21032 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 21035 | path: Mission_Carpet_12 | sceneName: Main | flagName: longestfirm_carpet | extraParams: 0
+
+TRIGGER Procedure 2.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 21032 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 580_0 starts:
+{{dialogue|Mi-an|Ta-daa! Here we are! Builder Cruise Cinemas presents! ...Whatever mo-vie it is we're about to watch!}}
+{{dialogue|Mi-an|I hope it's got some romance in it! I want to know what dating was like in the Old World; how did people fall in love with virtually all of their wants and needs catered to by technology? What about you, what do you hope's on the disc?}}
+
+*''Hm, what was old romance like?''
+*''I'm curious about old tech.''
+*''I wanna see some dudes get blasted.''
+
+{{dialogue|Mi-an|indent=true|answer=Hm, what was old romance like?
+|reward={{NPC2|Mi-an|rp=5}}|Yeah, I think every era has something uniquely romantic about it. Maybe we'll find seeing something like that to be inspiring!}}
+{{dialogue|Mi-an|indent=true|answer=I'm curious about old tech.
+|Oh, yeah, of course. This movie'll be like a window into the past! Being able to really see what things were like. It'll be even easier to fantasize what it was like living in that age! ...If that's something that I actually did...}}
+{{dialogue|Mi-an|indent=true|answer=I wanna see some dudes get blasted.
+|A war movie? I dunno, might kinda kill the mood...}}
+{{dialogue|Mi-an|Well, nothing left to do but press play! Here we go...}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 21033 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC FAVOR LEVEL CHANGE || order: 0 | npc: 8017 | compare: 6 | level: Lover
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 21031) from Mi-an
+AREA TRIGGER DELETE || id: 21031
+Mi-an stops standing still
+SCENEITEM DELETE || itemType: 0 | id: 21036
+SCENEITEM DELETE || itemType: 0 | id: 21037
+Remove behavior CommanderMoveToFlagAndAction (idName: 21032) from Mi-an
+AREA TRIGGER DELETE || id: 21032
+Mi-an stops standing still
+AREA TRIGGER DELETE || id: 21033
+SCENEITEM DELETE || itemType: 0 | id: 21033
+SCENEITEM DELETE || itemType: 0 | id: 21034
+SCENEITEM DELETE || itemType: 0 | id: 21035
+FAIL MISSION || missionId: 1200102
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Mi-an
+CONDITIONS
+Check if CHOICE is == 0
+ACTIONS
+(cId 2) A conversation 578_0 starts:
+{{dialogue|Mi-an|Hey! Ready for mo-vie night?}}
+
+*''Yep! Let's go!'' (No unique dialogue)
+*''Still need a minute.''
+
+{{dialogue|Mi-an|indent=true|answer=Still need a minute.
+|Er, okay... Like I said, won't be going anywhere, kinda... cleared out my schedule for the whole evening... so, yeah...}}
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_MIANFILM | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 585_0 starts:
+{{dialogue|Mi-an|Wow! That was great! All the twists and turns. I can't believe the villain turned out to be his twin brother from the future all along!}}
+{{dialogue|Mi-an|The couple in that movie, I guess... I guess no matter how much things change in the world, love is always kinda the same, huh?}}
+{{dialogue|Mi-an|And there was a lot to be learned about life in the Old World, too! I guess you could say this exercise has resulted in a Builder cruise level up!}}
+
+*''This wasn't a work thing, it was a couple thing.''
+*''Movie? I couldn't keep my eyes off you...''
+*''Yeah, I learned a lot.''
+
+{{dialogue|Mi-an|indent=true|answer=This wasn't a work thing, it was a couple thing.
+|reward={{NPC2|Mi-an|rp=10}}|Ah! Yeah, I keep making things about work, I'm sorry. You're right! This wasn't a "Builder cruise!" It was a couple cruise! Or, to phrase it in a less lame way: a very nice date!}}
+{{dialogue|Mi-an|indent=true|answer=Movie? I couldn't keep my eyes off you...
+|reward={{NPC2|Mi-an|rp=5}}|Ahaha... wha? You didn't watch the movie? What's that look? Hey, eyes on the screen, please!}}
+{{dialogue|Mi-an|Oh, shoot, it's so late already! I guess I was enjoying myself so much that I lost track of time...!}}
+{{dialogue|Mi-an|I'd better get home, but... we should do this again sometime! I'd love to do more research on these 'mo-vies,' and it's nice to do something like this together, isn't it?}}
+{{dialogue|Mi-an|That was fun, see ya!}}
+The conversation ends.
+
+TRIGGER Procedure 4.0 Step 3.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 21034 | delayTime: 5 | durationTime: 3 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 21034 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior Story1200102_8000 (idName: 21034) from Player
+Remove behavior Story1200102_8017 (idName: 21034) from Mi-an
+AREA TRIGGER DELETE || id: 21033
+CUTSCENE UI STATE EXIT || 
+Mi-an stops standing still
+SCENEITEM CREATE FLAG || itemType: 0 | id: 21033 | flagName: longestfirm_project0 | extraParams: 0 | sceneName: Main | path: Mission_projector
+SCENEITEM CREATE FLAG || path: Mission_projector | itemType: 0 | id: 21034 | sceneName: Main | flagName: longestfirm_project1 | extraParams: 0
+SUBMIT MISSION 1200102
+
+TRIGGER Procedure 3.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if FILM is == 0
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 21031) from Mi-an
+AREA TRIGGER DELETE || id: 21031
+The player receives a letter:
+{{mail|97}}
+SCENEITEM DELETE || itemType: 0 | id: 21036
+SCENEITEM DELETE || itemType: 0 | id: 21037
+FAIL MISSION || missionId: 1200102
+
+TRIGGER Procedure 3.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if FILM is == 1
+Classic Projection is in state 3 with flag 0
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 21036
+SCENEITEM DELETE || itemType: 0 | id: 21037
+AREA TRIGGER DELETE || id: 21033
+Remove behavior CommanderMoveToFlagAndAction (idName: 21032) from Mi-an
+AREA TRIGGER DELETE || id: 21032
+FAIL MISSION || missionId: 1200102
+
+TRIGGER Procedure 3.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8017 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+When the time is 22:00 (order: 0):
+CONDITIONS
+Check if SHOW is == 0
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1200103 | id: 21033 | sceneName: Main | flagName: longestfirm_trigger2 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80003977
+
+TRIGGER Procedure 3.0 Step 7.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 21033 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Mi-an stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: longestfirm_player3
+Mi-an stops standing still
+Add behavior Story1200102_8017 (idName: 21034) to Mi-an
+(param: -1)
+Add behavior Story1200102_8000 (idName: 21034) to Player
+(param: -1)
+DELAY MASK SET || maskId: 21033 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+{{cutscene|id = 3021}}
+A cutscene CG_MIANFILM (duration: 0.0) starts playing
+Movie Night - Mi-an and I rebuilt a projector that we found in the ruins, then had a lovely evening together watching our very first "movie." It was a nice romantic moment from early in our relationship.
+
+TRIGGER Procedure 3.0 Step 8.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 21033
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 21036
+SCENEITEM DELETE || itemType: 0 | id: 21033
+Add 1 Projector Screen of Default quality (Notify player)
+
+TRIGGER Procedure 3.0 Step 9.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 21034
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 21037
+SCENEITEM DELETE || itemType: 0 | id: 21034
+Add 1 Projector of Default quality (Notify player)
+
+TRIGGER Procedure 3.0 Step 10.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || id: 21035 | itemType: 0
+END MISSION 1200103
+
+TRIGGER Procedure 4.0 Step 4.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 21034
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior Story1200102_8000 (idName: 21034) from Player
+Remove behavior Story1200102_8017 (idName: 21034) from Mi-an
+DELAY MASK SET || maskId: 21034 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0

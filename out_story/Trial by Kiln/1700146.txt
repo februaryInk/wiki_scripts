@@ -1,0 +1,697 @@
+Reading Mission 1700146: Trial by Kiln
+
+<onlyinclude>{{Infobox mission
+|name = Trial by Kiln
+|image =
+|description = The Mysterious Man's attitude made Amirah determined to get the technology of the Electric Kiln.
+|type = Side
+|time =
+|location =
+|characters = [[Amirah]]
+|condition =
+|details =
+|exp = 1250
+|reputation = 35
+|gols = 1000
+|npc1 = Amirah
+|rp1 = 20
+|npc2 = Arvio
+|rp2 = 10
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200108
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Check if Amirah has favor >= 100
+The Moonlighter is successfully completed
+Duvos Attacks! is in state 2 with flag 0
+
+GROUP 10:
+Check if Amirah has favor >= 100
+The Moonlighter has failed
+Duvos Attacks! is in state 2 with flag 0
+
+GROUP 20:
+Check if Amirah has favor >= 100
+CHECK GLOBAL BLACKBOARD || key: 1700113missed | info: 1 | exist: 1
+Duvos Attacks! is in state 2 with flag 0
+
+ACTIONS
+Run mission "Desert Rose"
+GLOBAL BLACK BOARD REMOVE || key: 1700113missed
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+Duvos Attacks! is in state 2 with flag 0
+Check relationship with Amirah is Friend
+ACTIONS
+Run mission Trial by Kiln
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700146
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1700146 | id: 171460 | sceneName: Main | flagName: TBK_trigger | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: -1
+ACTION DATE SET FLAG || flag: DATE:TBK
+Set global blackboard key TBKLENT with info 0.
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 171460
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 171461 | delayTime: 0 | durationTime: 1.5 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 171461 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM ADD || instId: 171461 | id: 1 | scene: Main | flagName: TBK_R1 | dailyBehavior: CommanderIdle
+NPC RANDOM ADD || instId: 171462 | id: 1 | scene: Main | flagName: TBK_R2 | dailyBehavior: CommanderIdle
+NPC RANDOM ADD || instId: 171463 | id: 1 | scene: Main | flagName: TBK_R3 | dailyBehavior: CommanderIdle
+DELAY MASK SET || maskId: 171461 | delayTime: 0 | durationTime: 2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 171461 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 17146) A conversation 3686, 3687, 3688, 3689 starts:
+{{dialogue|171463|If the Ceramic Gate was anywhere other than Sandrock, I'd probably never go. If not for that girl who runs the place, heh heh! She can talk clay with me all day, if you get my drift!}}
+{{dialogue|171462|I don't understand the hype, the Desert Rose's stuff is kinda overrated if you ask me.}}
+{{dialogue|171462|I much prefer Ed's Hacker Farm in Vega 5. The ceramics there are good, not great, but it's the only place you can get model spaceships and old jazz records at one stop... plus they got 10 Gols hotdogs!}}
+{{dialogue|171461|Shh! Keep your voice down! That lady and her brother just went inside, they might hear us. I don't want us to get the side-eye for having controversial views again.}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 17146) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 171462 | delayTime: 0.3 | durationTime: 1.5 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 171462 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+NPC LEAVE || npc: 171461
+NPC LEAVE || npc: 171462
+NPC LEAVE || npc: 171463
+AREA TRIGGER DELETE || id: 171460
+DELAY MASK SET || maskId: 171462 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: 0
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 3578) that ends:
+{{dialogue|Arvio|Ah, yes... the savings... Easy come, easy go!}}
+(cId: -1) There is a conversation segment (id 3600) that ends:
+{{dialogue|Amirah|Come on Arvio, stay focused. Let's think of a way to raise the money. ''Player'', feel free to look around...}}
+(cId: -1) There is a conversation segment (id 3596) that ends:
+{{dialogue|Amirah|Talk to you soon, ''Player''.}}
+(cId: -1) There is a conversation segment (id 3598) that ends:
+{{dialogue|Amirah|I really don't want to borrow money from someone I don't know very well. Let's think about it some more. ''Player'', feel free to look around...}}
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+ACTION DATE SET FLAG || flag: DATE:TBK
+Arvio stops standing still
+Amirah stops standing still
+Amirah stops standing still
+Mysterious Man stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 17146611) from Mysterious Man
+Remove behavior CommanderMoveToFlag (idName: 17146001) from Player
+START MISSION 1700146
+
+TRIGGER Procedure 0.0 Step 7.0 Order 7 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Amirah
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: TBKLENT | info: 0 | exist: 1
+CHECK DATE FLAG || flag: DATE:TBK | compare: 5 | days: 3
+ACTIONS
+(cId -1) A conversation 965_0 starts:
+{{dialogue|Amirah|Ah, hello, ''Player''. ...Sorry, my mind is elsewhere. All I can think about is how to get that design for the new kiln...}}
+
+*''I can pay all 5000 Gols!''
+*''I'll lend you 2000. 【Lose 2000 Gols】''
+*''Borrow it from Owen?''
+*''Good luck with that.''
+
+{{dialogue|Amirah|indent=true|answer=I can pay all 5000 Gols!
+|That's too much. I cannot accept such a gift...}}
+{{dialogue|Amirah|indent=true|Hm? If you really insist on helping... It appears as though I'll need to borrow the 2000 we lack from someone regardless. I'd feel better going through someone I know...}}
+
+:*''Sure! Here you go.{{textcolor|green|【Lose 2000】}}'' (No unique dialogue)
+:*''Actually, nevermind...''
+
+{{dialogue|Amirah|indent=true|answer=I'll lend you 2000. 【Lose 2000 Gols】
+|Would you? I admit, I'd feel better borrowing from someone I know...}}
+
+:*''Sure! Here you go.{{textcolor|green|【Lose 2000】}}'' (No unique dialogue)
+:*''Actually, nevermind...''
+
+{{dialogue|Amirah|indent=true|answer=Borrow it from Owen?
+|Owen? I don't know if I want to ask someone I'm not close with for help...}}
+{{dialogue|Amirah|indent=true|answer=Good luck with that.
+|Hm. Thank you.}}
+{{dialogue|Amirah|That's alright. It's none of your concern, anyway. I'll contact you when I've the diagram.}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 3588) that ends:
+{{dialogue|Amirah|Alright, ''Player''. We accept your generous offer.}}
+CONDITIONS
+Always:
+ACTIONS
+MONEY PLAYER ADD || money: -2000
+Set global blackboard key TBKLENT with info 1.
+
+TRIGGER Procedure 5.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 3568) that ends:
+{{dialogue|Mysterious Man|Uh-huh... Well, offer's on the table. If you decide you want my help, I'll be staying at the Blue Moon for about three days. Come find me if you get the money. Or don't. Makes no difference to me.}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 17146611) to Mysterious Man
+(param: TargetScene:Main|MoveMode:Walk|FlagName:mason_start2)
+
+TRIGGER Procedure 5.0 Step 10.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 3573) that ends:
+{{dialogue|Arvio|All our savings add up to around 3000 Gols, maybe we could sell a few things but... Are you really thinking of bankrupting us for a new kiln? Is it really going to be worth it?}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 17146001) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:TBK_mm1)
+
+TRIGGER Procedure 1.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE FLAG || flag: DATE:TBK | compare: 3 | days: 3
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1700146 | id: 171461 | sceneName: Main | flagName: TBK_trigger2 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80005698
+NPC LEAVE || npc: 171461
+NPC LEAVE || npc: 171462
+NPC LEAVE || npc: 171463
+AREA TRIGGER DELETE || id: 171460
+ACTION DATE REMOVE FLAG || flag: DATE:TBK
+
+TRIGGER Procedure 1.0 Step 1.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 171461
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 171463 | delayTime: 0 | durationTime: 1.5 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 171463 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 171461
+Arvio stands still in Main and looks at Mysterious Man
+Amirah stands still in Main and looks at Mysterious Man
+Mysterious Man stands still in Main and looks at Arvio
+DELAY MASK SET || maskId: 171462 | delayTime: 1 | durationTime: 1.5 | changeType: 1 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: TBK_player1
+DELIVER MISSION 1700146
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 171463 | eventType: 5
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: AmirahShout | exist: 0 | info: 1
+ACTIONS
+(cId -1) A conversation 951_0 starts:
+{{dialogue|Mysterious Man|That's enough, Mister... Arvio, was it? Remind me, whose shop is this again?}}
+{{dialogue|Arvio|Ahaha... Sorry, am I overstepping here? I just feel like there really must be a way for the two of you to work together. Mr. Mysterious: perhaps you just hadn't noticed this particular pot yet!}}
+{{dialogue|Arvio|It's got a lot of pot-ential! Surely this one is "mysterious" enough to add to your stock!}}
+{{dialogue|Mysterious Man|Please, call me the "Mysterious Man." Mr. Mysterious was my father's moniker. But, on the subject of mysteriousness, I'm afraid this pot could hardly be called mysterious enough for one such as myself. It's, at best, quizzical.}}
+{{dialogue|Amirah|It has never been my intention to have my work be confined to a singular aesthetic, much less a single word.}}
+{{dialogue|Amirah|If my wares are of no interest to you, then I believe we are done here. I have other orders to attend to.}}
+{{dialogue|Mysterious Man|You think I don't know what I'm talkin' about?}}
+{{dialogue|Mysterious Man|...You know, people don't come to this shop for the quality of the goods, right? You do know why they come, don't you...?}}
+{{dialogue|Amirah|...How dare you. Get out.}}
+{{dialogue|Mysterious Man|Hey! Don't take it personally! Look. I've been around. I've seen the best! If I brought my guys from Walnut Groove in here to see this dull junk you're peddlin', they'd laugh their butts off at the mere notion that you're anything but an amateur!}}
+{{dialogue|Mysterious Man|And what is that kiln you've got back there? Looks like it's from the stone age!}}
+{{dialogue|Arvio|Hey! That's my sister's livelihood you're talking about there, pal!}}
+{{dialogue|Amirah|Quiet, Arvio.}}
+{{dialogue|Amirah|...Indeed, I use a traditional kiln. Glazing requires a kiln with more advanced temperature controls.}}
+{{dialogue|Mysterious Man|So you know all about it! What's your excuse then? Old ways are best?}}
+{{dialogue|Amirah|No. Money. And besides, though a traveler as yourself may have encountered such things, the more advanced kilns are rare, and their construction is still a well-guarded secret by masters within the ceramics community...}}
+{{dialogue|Mysterious Man|Well, if you're a true artist, go and seek one of these "masters" out! Get off your high horse and beg, if you must. 'Til then, I have no business being here, and you have no business acting as though I do!}}
+{{dialogue|Amirah|Then you get one for me.}}
+{{dialogue|Mysterious Man|Why would I do that?}}
+{{dialogue|Amirah|You said "seek a master?" You're the so-called master of trade, who claims he can get any rare item from any rare place...}}
+{{dialogue|Amirah|Get me a new kiln and I'll prove to you that my ceramics are as good as anyone's in whatever "sky" it is you speak of.}}
+{{dialogue|Mysterious Man|You think I'm really gonna lug a kiln halfway across the Free Cities just so you can maybe feel better about yourself? Nah...}}
+{{dialogue|Amirah|Get me a diagram, then. I'll have one built.}}
+{{dialogue|Mysterious Man|Tch. What's in it for me?}}
+
+*''The best ceramics hookup in the Free Cities!''
+*''If you really can, name your price!''
+*''Uh. Hey, guys... havin' a chat?''
+
+{{dialogue|Amirah|indent=true|answer=The best ceramics hookup in the Free Cities!
+|reward={{NPC2|Amirah|rp=3}}|reward={{NPC2|Arvio|rp=2}}|''Player''...!}}
+{{dialogue|Mysterious Man|indent=true|Ah! You scared me! What, were you just standing back there quietly, waiting for a dramatic moment to enter the conversation? Sheesh...}}
+{{dialogue|Amirah|indent=true|''Player''! We were just thinking about you. I'm going to need your help!}}
+{{dialogue|Mysterious Man|indent=true|Hey, I didn't agree to do anything yet! Hold your horses...}}
+{{dialogue|Mysterious Man|indent=true|Yes, it would be good to gain a high quality pottery connection in Sandrock... but if I'm going to spend my time on something that isn't a sure thing, it ain't gonna be for free...}}
+{{dialogue|Mysterious Man|indent=true|answer=If you really can, name your price!
+|Hm? Oh, the local Builder is here.}}
+{{dialogue|Amirah|indent=true|''Player''! We were just thinking about you. I'm going to need your help!}}
+{{dialogue|Mysterious Man|indent=true|Hey, I didn't agree to do anything yet! Hold your horses...}}
+{{dialogue|Mysterious Man|indent=true|Your friend here is very astute. In business, all things are conditional, and everything has a price...}}
+{{dialogue|Amirah|indent=true|answer=Uh. Hey, guys... havin' a chat?
+|''Player''! We were just thinking about you. I'm going to need your help!}}
+{{dialogue|Mysterious Man|indent=true|Hey, I didn't agree to do anything yet! Hold your horses...}}
+{{dialogue|Mysterious Man|It is as you say, Ms. Amirah! I am a master of trade! There is no item too rare for me to find. But such a service comes at a cost... Five thousand Gols.}}
+{{dialogue|Arvio|What!? You're really not afraid of taking advantage are you!}}
+{{dialogue|Mysterious Man|You think so? Nah, really, I'm takin' it easy on you guys...}}
+{{dialogue|Arvio|You know what, I actually happen to think grey, non-glazed pots are pretty neat all of a sudden. Perhaps we ought to forget all about this price gouging and-}}
+{{dialogue|Amirah|No, Arvio. His price... it is fair. I shouldn't have gotten my hopes up...}}
+{{dialogue|Mysterious Man|Uh-huh... Well, offer's on the table. If you decide you want my help, I'll be staying at the Blue Moon for about three days. Come find me if you get the money. Or don't. Makes no difference to me.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 171463 | eventType: 5
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: AmirahShout | exist: 1 | info: 1
+ACTIONS
+(cId -1) A conversation 952_0 starts:
+{{dialogue|Mysterious Man|That's enough, Mister... Arvio, was it? Remind me, whose shop is this again?}}
+{{dialogue|Arvio|Ahaha... Sorry, am I overstepping here? I just feel like there really must be a way for the two of you to work together. Mr. Mysterious: perhaps you just hadn't noticed this particular pot yet!}}
+{{dialogue|Arvio|It's got a lot of pot-ential! Surely this one is "mysterious" enough to add to your stock!}}
+{{dialogue|Mysterious Man|Please, call me the "Mysterious Man." Mr. Mysterious was my father's moniker. But, on the subject of mysteriousness, I'm afraid this pot could hardly be called mysterious enough for one such as myself. It's, at best, quizzical.}}
+{{dialogue|Amirah|It has never been my intention to have my work be confined to a singular aesthetic, much less a single word.}}
+{{dialogue|Amirah|If my wares are of no interest to you, then I believe we are done here. I have other orders to attend to.}}
+{{dialogue|Mysterious Man|You think I don't know what I'm talkin' about?}}
+{{dialogue|Mysterious Man|...You know, people don't come to this shop for the quality of the goods, right? You do know why they come, don't you...?}}
+{{dialogue|Amirah|...How dare you. Have you no sense of dignity!?}}
+{{dialogue|Mysterious Man|Hey! Don't take it personally! Look. I've been around. I've seen the best! If I brought my guys from Walnut Groove in here to see this dull junk you're peddlin', they'd laugh their butts off at the mere notion that you're anything but an amateur!}}
+{{dialogue|Mysterious Man|And what is that kiln you've got back there? Looks like it's from the stone age!}}
+{{dialogue|Arvio|Hey! That's my sister's livelihood you're talking about there, pal!}}
+{{dialogue|Amirah|Quiet, Arvio.}}
+{{dialogue|Amirah|...Indeed, I use a traditional kiln. Glazing requires a kiln with more advanced temperature controls.}}
+{{dialogue|Mysterious Man|So you know all about it! What's your excuse then? Old ways are best?}}
+{{dialogue|Amirah|No. Money. And besides, though a traveler as yourself may have encountered such things, the more advanced kilns are rare, and their construction is still a well-guarded secret by masters within the ceramics community...}}
+{{dialogue|Mysterious Man|Well, if you're a true artist, go and seek one of these "masters" out! Get off your high horse and beg, if you must. 'Til then, I have no business being here, and you have no business acting as though I do!}}
+{{dialogue|Amirah|Then you get one for me.}}
+{{dialogue|Mysterious Man|Why would I do that?}}
+{{dialogue|Amirah|You said "seek a master?" You're the so-called master of trade, who claims he can get any rare item from any rare place...}}
+{{dialogue|Amirah|Get me a new kiln and I'll prove to you that my ceramics are as good as anyone's in whatever "sky" it is you speak of.}}
+{{dialogue|Mysterious Man|You think I'm really gonna lug a kiln halfway across the Free Cities just so you can maybe feel better about yourself? Nah...}}
+{{dialogue|Amirah|Get me a diagram, then. I'll have one built.}}
+{{dialogue|Mysterious Man|Tch. What's in it for me?}}
+
+*''The best ceramics hookup in the Free Cities!''
+*''If you really can, name your price!''
+*''Uh. Hey, guys... havin' a chat?''
+
+{{dialogue|Amirah|indent=true|answer=The best ceramics hookup in the Free Cities!
+|reward={{NPC2|Amirah|rp=3}}|reward={{NPC2|Arvio|rp=2}}|''Player''...!}}
+{{dialogue|Mysterious Man|indent=true|Ah! You scared me! What, were you just standing back there quietly, waiting for a dramatic moment to enter the conversation? Sheesh...}}
+{{dialogue|Amirah|indent=true|''Player''! We were just thinking about you. I'm going to need your help!}}
+{{dialogue|Mysterious Man|indent=true|Hey, I didn't agree to do anything yet! Hold your horses...}}
+{{dialogue|Mysterious Man|indent=true|Yes, it would be good to gain a high quality pottery connection in Sandrock... but if I'm going to spend my time on something that isn't a sure thing, it ain't gonna be for free...}}
+{{dialogue|Mysterious Man|indent=true|answer=If you really can, name your price!
+|Hm? Oh, the local Builder is here.}}
+{{dialogue|Amirah|indent=true|''Player''! We were just thinking about you. I'm going to need your help!}}
+{{dialogue|Mysterious Man|indent=true|Hey, I didn't agree to do anything yet! Hold your horses...}}
+{{dialogue|Mysterious Man|indent=true|Your friend here is very astute. In business, all things are conditional, and everything has a price...}}
+{{dialogue|Amirah|indent=true|answer=Uh. Hey, guys... havin' a chat?
+|''Player''! We were just thinking about you. I'm going to need your help!}}
+{{dialogue|Mysterious Man|indent=true|Hey, I didn't agree to do anything yet! Hold your horses...}}
+{{dialogue|Mysterious Man|It is as you say, Ms. Amirah! I am a master of trade! There is no item too rare for me to find. But such a service comes at a cost... Five thousand Gols.}}
+{{dialogue|Arvio|What!? You're really not afraid of taking advantage are you!}}
+{{dialogue|Mysterious Man|You think so? Nah, really, I'm takin' it easy on you guys...}}
+{{dialogue|Arvio|You know what, I actually happen to think grey, non-glazed pots are pretty neat all of a sudden. Perhaps we ought to forget all about this price gouging and-}}
+{{dialogue|Amirah|No, Arvio. His price... it is fair. I shouldn't have gotten my hopes up...}}
+{{dialogue|Mysterious Man|Uh-huh... Well, offer's on the table. If you decide you want my help, I'll be staying at the Blue Moon for about three days. Come find me if you get the money. Or don't. Makes no difference to me.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 171463
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 958_0 starts:
+{{dialogue|Arvio|Am...}}
+{{dialogue|Arvio|Ami...}}
+{{dialogue|Arvio|Amirah! What should we do!?}}
+{{dialogue|Amirah|Be quiet. Can't hear myself think.}}
+{{dialogue|Arvio|All our savings add up to around 3000 Gols, maybe we could sell a few things but... Are you really thinking of bankrupting us for a new kiln? Is it really going to be worth it?}}
+{{dialogue|Arvio|How do we know that "Mysterious Man," if that even is his real name, isn't just blowing smoke up both our backsides?}}
+
+*''I'll pay all 5000 Gols!''
+*''I can lend you 2000. 【Lose 2000 Gols】'' (No unique dialogue)
+*''Maybe Owen can help.''
+*''Uh... good luck. Bye.''
+
+{{dialogue|Arvio|indent=true|answer=Maybe Owen can help.
+|A fine idea! Owen's a good man. But more importantly: a rich man! I'm sure he'd loan us a few thousand for such a worthy cause. Besides, he owes me one for... me selling him stuff!}}
+{{dialogue|Amirah|indent=true|I really don't want to borrow money from someone I don't know very well. Let's think about it some more. ''Player'', feel free to look around...}}
+{{dialogue|Arvio|indent=true|answer=Uh... good luck. Bye.
+|Thanks for your kind words, I guess. Say, what did you come in here for, anyway?}}
+{{dialogue|Amirah|indent=true|Come on Arvio, stay focused. Let's think of a way to raise the money. ''Player'', feel free to look around...}}
+{{dialogue|Arvio|What?! You have that much money to spend on kilns? How long have you been hiding your wealth? Can Builders make that much money?!}}
+{{dialogue|Amirah|''Player''... I can't accept that. If you want to help, perhaps it would be alright for you to lend us what we lack: 2000 Gols. Five thousand, it's just too much...}}
+
+*''Of course! {{textcolor|green|【Lose 2000】}}'' (No unique dialogue)
+*''Er, I don't have enough...''
+
+{{dialogue|Arvio|indent=true|answer=Er, I don't have enough...
+|Huh? Were you just messing with us, ''Player''? About such a serious matter?}}
+{{dialogue|Amirah|indent=true|It doesn't matter. Taking the commission for the kiln when the time comes will be enough.}}
+{{dialogue|Amirah|indent=true|I shouldn't trouble you with this, ''Player''. I'll contact you when I have the diagram, and of course, you will be paid in full for your services.}}
+{{dialogue|Arvio|indent=true|There must be someone in town who could lend us the money... Ooh, how about...!}}
+{{dialogue|Amirah|indent=true|I'd only want to borrow money from someone we can trust. Let's think this over for a while...}}
+{{dialogue|Amirah|indent=true|Talk to you soon, ''Player''.}}
+
+TRIGGER Procedure 2.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700146
+CONDITIONS
+Always:
+ACTIONS
+Run mission Trial by Kiln
+
+TRIGGER Procedure 2.0 Step 3.0 Order 1 Repeat 2
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Mysterious Man stands still in Main
+Mysterious Man stops standing still
+
+TRIGGER Procedure 3.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 3574:
+{{dialogue|Arvio|How do we know that "Mysterious Man," if that even is his real name, isn't just blowing smoke up both our backsides?}}
+
+*''I'll pay all 5000 Gols!'' (No unique dialogue)
+*''I can lend you 2000. 【Lose 2000 Gols】'' (No unique dialogue)
+*''Maybe Owen can help.'' (No unique dialogue)
+*''Uh... good luck. Bye.'' (No unique dialogue)
+
+CONDITIONS
+CHECK PLAYER MONEY || set: 2 | count: 2000
+ACTIONS
+(cId -1) A conversation 960_0 starts:
+{{dialogue|Arvio|Wow, you'd do that for us? You're the real deal, ''Player''!}}
+{{dialogue|Amirah|Arvio... Please refrain from so flippantly putting us into debt...}}
+{{dialogue|Arvio|C'mon, Am, it's our friend, ''Player''! What else are we going to do, anyway? Sell everything we've got in three days? Ask Owen for help? That guy has a crush on you, you know? Could get weird...}}
+{{dialogue|Amirah|Hm, when you put it that way...}}
+{{dialogue|Amirah|Alright, ''Player''. We accept your generous offer.}}
+{{dialogue|Arvio|Five thousand Gols... so you really want to do this, huh, Am?}}
+{{dialogue|Amirah|Yes. Trust me, Arvio. One of these temperature controlling kilns will open doors for my shop, and... probably be a lot of fun, too.}}
+{{dialogue|Amirah|Thank you, ''Player''. You will be repaid in full, very soon. Now, come, brother. Let us depart to the Blue Moon. Fetch the savings, if you would.}}
+{{dialogue|Arvio|Ah, yes... the savings... Easy come, easy go!}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 1.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 3574:
+{{dialogue|Arvio|How do we know that "Mysterious Man," if that even is his real name, isn't just blowing smoke up both our backsides?}}
+
+*''I'll pay all 5000 Gols!'' (No unique dialogue)
+*''I can lend you 2000. 【Lose 2000 Gols】'' (No unique dialogue)
+*''Maybe Owen can help.'' (No unique dialogue)
+*''Uh... good luck. Bye.'' (No unique dialogue)
+
+CONDITIONS
+CHECK PLAYER MONEY || set: 6 | count: 2000
+ACTIONS
+(cId -1) A conversation 973_0 starts:
+{{dialogue|Arvio|Well this is a little embarrassing. My friend, I understand you want to help, but you don't seem to have enough money...}}
+{{dialogue|Amirah|It doesn't matter. Taking the commission for the kiln when the time comes will be enough.}}
+{{dialogue|Amirah|I shouldn't trouble you with this, ''Player''. I'll contact you when I have the diagram, and of course, you will be paid in full for your services.}}
+{{dialogue|Arvio|There must be someone in town who could lend us the money... Ooh, how about...!}}
+{{dialogue|Amirah|I'd only want to borrow money from someone we can trust. Let's think this over for a while...}}
+{{dialogue|Amirah|Talk to you soon, ''Player''.}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 2.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 3603:
+{{dialogue|Amirah|Hm? If you really insist on helping... It appears as though I'll need to borrow the 2000 we lack from someone regardless. I'd feel better going through someone I know...}}
+
+*''Sure! Here you go.{{textcolor|green|【Lose 2000】}}'' (No unique dialogue)
+*''Actually, nevermind...'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 3605:
+{{dialogue|Amirah|Would you? I admit, I'd feel better borrowing from someone I know...}}
+
+*''Sure! Here you go.{{textcolor|green|【Lose 2000】}}'' (No unique dialogue)
+*''Actually, nevermind...'' (No unique dialogue)
+
+CONDITIONS
+CHECK PLAYER MONEY || set: 6 | count: 2000
+ACTIONS
+(cId -1) A conversation 974_0 starts:
+{{dialogue|Amirah|Really, you don't need to trouble yourself with this. You should take care of your own accounts first, at the very least...}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 3.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 3603:
+{{dialogue|Amirah|Hm? If you really insist on helping... It appears as though I'll need to borrow the 2000 we lack from someone regardless. I'd feel better going through someone I know...}}
+
+*''Sure! Here you go.{{textcolor|green|【Lose 2000】}}'' (No unique dialogue)
+*''Actually, nevermind...'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 3605:
+{{dialogue|Amirah|Would you? I admit, I'd feel better borrowing from someone I know...}}
+
+*''Sure! Here you go.{{textcolor|green|【Lose 2000】}}'' (No unique dialogue)
+*''Actually, nevermind...'' (No unique dialogue)
+
+CONDITIONS
+CHECK PLAYER MONEY || set: 2 | count: 2000
+ACTIONS
+(cId -1) A conversation 970_0 starts:
+{{dialogue|Amirah|Thank you, ''Player''. I will meet with Arvio soon, and we will hire the services of that Mysterious Man, brazen as he may be...}}
+{{dialogue|Amirah|Rest assured that once I have my kiln, I'll be able to pay you back promptly. Thank you again for taking this chance on me. Let's meet again soon.}}
+The conversation ends.
+Set global blackboard key TBKLENT with info 1.
+MONEY PLAYER ADD || money: -2000
+
+TRIGGER Procedure 3.0 Step 4.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 3576:
+{{dialogue|Amirah|''Player''... I can't accept that. If you want to help, perhaps it would be alright for you to lend us what we lack: 2000 Gols. Five thousand, it's just too much...}}
+
+*''Of course! {{textcolor|green|【Lose 2000】}}'' (No unique dialogue)
+*''Er, I don't have enough...'' (No unique dialogue)
+
+CONDITIONS
+CHECK PLAYER MONEY || set: 2 | count: 2000
+ACTIONS
+(cId -1) A conversation 963_0 starts:
+{{dialogue|Arvio|Wow... so you really want to do this, huh, Am?}}
+{{dialogue|Amirah|Yes. Trust me, Arvio. One of these temperature controlling kilns will open doors for my shop, and... probably be a lot of fun, too.}}
+{{dialogue|Amirah|Thank you, ''Player''. You will be repaid in full, very soon. Now, come, brother. Let us depart to the Blue Moon. Fetch the savings, if you would.}}
+{{dialogue|Arvio|Ah, yes... the savings... Easy come, easy go!}}
+The conversation ends.
+Set global blackboard key TBKLENT with info 1.
+
+TRIGGER Procedure 3.0 Step 5.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 3576:
+{{dialogue|Amirah|''Player''... I can't accept that. If you want to help, perhaps it would be alright for you to lend us what we lack: 2000 Gols. Five thousand, it's just too much...}}
+
+*''Of course! {{textcolor|green|【Lose 2000】}}'' (No unique dialogue)
+*''Er, I don't have enough...'' (No unique dialogue)
+
+CONDITIONS
+CHECK PLAYER MONEY || set: 6 | count: 2000
+ACTIONS
+(cId -1) A conversation 972_0 starts:
+{{dialogue|Amirah|I... see. I hate to be critical, as I believe your heart is in the right place but if you don't have two thousand to lend, why offer up five?}}
+{{dialogue|Arvio|Hahah, I feel like the carpet has been pulled out from under my feet...}}
+{{dialogue|Amirah|I shouldn't trouble you with this, ''Player''. I'll contact you when I have the diagram, and of course, you will be paid in full for your services.}}
+{{dialogue|Amirah|I'd only want to borrow money from someone we can trust. Let's think this over for a while...}}
+{{dialogue|Amirah|Talk to you soon, ''Player''.}}
+The conversation ends.
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 3574:
+{{dialogue|Arvio|How do we know that "Mysterious Man," if that even is his real name, isn't just blowing smoke up both our backsides?}}
+
+*''I'll pay all 5000 Gols!'' (No unique dialogue)
+*''I can lend you 2000. 【Lose 2000 Gols】'' (No unique dialogue)
+*''Maybe Owen can help.'' (No unique dialogue)
+*''Uh... good luck. Bye.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Amirah gains 2 favor
+Arvio gains 2 favor
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 3574:
+{{dialogue|Arvio|How do we know that "Mysterious Man," if that even is his real name, isn't just blowing smoke up both our backsides?}}
+
+*''I'll pay all 5000 Gols!'' (No unique dialogue)
+*''I can lend you 2000. 【Lose 2000 Gols】'' (No unique dialogue)
+*''Maybe Owen can help.'' (No unique dialogue)
+*''Uh... good luck. Bye.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Amirah gains 5 favor
+Arvio gains 5 favor
+
+TRIGGER Procedure 4.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 3576:
+{{dialogue|Amirah|''Player''... I can't accept that. If you want to help, perhaps it would be alright for you to lend us what we lack: 2000 Gols. Five thousand, it's just too much...}}
+
+*''Of course! {{textcolor|green|【Lose 2000】}}'' (No unique dialogue)
+*''Er, I don't have enough...'' (No unique dialogue)
+
+CONDITIONS
+CHECK PLAYER MONEY || set: 2 | count: 2000
+ACTIONS
+MONEY PLAYER ADD || money: -2000
+Amirah gains 5 favor
+Arvio gains 5 favor
+
+TRIGGER Procedure 4.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 3555:
+{{dialogue|Mysterious Man|Tch. What's in it for me?}}
+
+*''The best ceramics hookup in the Free Cities!'' (No unique dialogue)
+*''If you really can, name your price!'' (No unique dialogue)
+*''Uh. Hey, guys... havin' a chat?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Amirah gains 3 favor
+Arvio gains 2 favor
+
+TRIGGER Procedure 5.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the -1 option in conversation segment 3555:
+{{dialogue|Mysterious Man|Tch. What's in it for me?}}
+
+*''The best ceramics hookup in the Free Cities!'' (No unique dialogue)
+*''If you really can, name your price!'' (No unique dialogue)
+*''Uh. Hey, guys... havin' a chat?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Amirah stands still in Main
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Amirah|Ah, hello, ''Player''. ...Sorry, my mind is elsewhere. All I can think about is how to get that design for the new kiln...}}
+
+*''I can pay all 5000 Gols!''
+*''I'll lend you 2000. 【Lose 2000 Gols】''
+*''Borrow it from Owen?''
+*''Good luck with that.''
+
+{{dialogue|Amirah|indent=true|answer=I can pay all 5000 Gols!
+|That's too much. I cannot accept such a gift...}}
+{{dialogue|Amirah|indent=true|Hm? If you really insist on helping... It appears as though I'll need to borrow the 2000 we lack from someone regardless. I'd feel better going through someone I know...}}
+
+:*''Sure! Here you go.{{textcolor|green|【Lose 2000】}}'' (No unique dialogue)
+:*''Actually, nevermind...''
+
+{{dialogue|Amirah|indent=double|answer=Actually, nevermind...
+|That's alright. It's none of your concern, anyway. I'll contact you when I've the diagram.}}
+{{dialogue|Amirah|indent=true|answer=I'll lend you 2000. 【Lose 2000 Gols】
+|Would you? I admit, I'd feel better borrowing from someone I know...}}
+
+:*''Sure! Here you go.{{textcolor|green|【Lose 2000】}}'' (No unique dialogue)
+:*''Actually, nevermind...''
+
+{{dialogue|Amirah|indent=double|answer=Actually, nevermind...
+|That's alright. It's none of your concern, anyway. I'll contact you when I've the diagram.}}
+{{dialogue|Amirah|indent=true|answer=Borrow it from Owen?
+|Owen? I don't know if I want to ask someone I'm not close with for help...}}
+{{dialogue|Amirah|indent=true|answer=Good luck with that.
+|Hm. Thank you.}}
+
+==Rewards==
+{{mission reward
+|npc1 = Amirah
+|rp1 = 20
+|npc2 = Arvio
+|rp2 = 10
+|exp = 1250
+|reputation = 35
+|gols = 1000
+}}

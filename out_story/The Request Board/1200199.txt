@@ -1,0 +1,127 @@
+Reading Mission 1200199: The Request Board
+
+<onlyinclude>{{Infobox mission
+|name = The Request Board
+|image =
+|description = When you came into the Commerce Guild, you saw Vivi putting up a request on the new page of the Commission Board. Seeing you coming, she eagerly approached with her own request.
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 600
+|reputation = 10
+|gols = 200
+|npc1 = Vivi
+|rp1 = 20
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100068
+
+TRIGGER Procedure 3.0 Step 0.1 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Elsie
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 11413 starts:
+{{dialogue|Elsie|I'm finally home! Check out my new threads, pretty cool, right? I hope everyone didn't worry about me, though... I was jus' out learnin' to speak to animals!}}
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+The Grass is Greener is successfully completed
+CHECK PLAYER WORKSHOP LEVEL || value: 2 | set: 2
+ACTIONS
+Run mission The Request Board
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200199
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || flagName: trigger_chamber | missionId: 1200199 | id: 21991 | sceneName: Main | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80007192
+ACTION AREA TRIGGER SET RADIUS || id: 21991 | radius: 15
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Chamber:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_chamber
+CHECK GLOBAL BLACKBOARD || key: yanreveal | info: 1 | exist: 0
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+UNIQUE ACTION RUN || idStr: enter_chamber
+AREA TRIGGER DELETE || id: 21991
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Chamber:
+CONDITIONS
+Always:
+ACTIONS
+Vivi stands still in Chamber
+PLAYER SET POS ROT FLAG || sceneName: Chamber | flagName: requestboard_chamber_player1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Chamber:
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 1609_0 starts:
+{{dialogue|Vivi|Oh, hello there, ''Player''! You come to pick up a commission?}}
+
+*''That's right!''
+*''Just looking around...''
+
+{{dialogue|Vivi|indent=true|answer=That's right!
+|It's good to see you working so hard! We're lucky to have a Builder as dedicated as you.}}
+{{dialogue|Vivi|indent=true|answer=Just looking around...
+|What's there to see in here? If you want to gander about, I'd suggest the canyon, beautiful place!}}
+{{dialogue|Vivi|Anyway, have you seen the {{textcolor|green|new section of the Commission Board}}? They're calling it the {{textcolor|green|Request Board}}. Check the Commission Board as you normally would, and... oh, you'll find it! It's a nice way for folks to ask for things outside a Builder's regular skillset.}}
+{{dialogue|Vivi|I've just put one up, so if you're willing to help me out, have a look.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1200199
+START MISSION 1200199
+CUTSCENE UI STATE EXIT || 
+Vivi stops standing still
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200199
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Request Board
+END MISSION 1200199
+
+==Rewards==
+{{mission reward
+|npc1 = Vivi
+|rp1 = 20
+|exp = 600
+|reputation = 10
+|gols = 200
+}}

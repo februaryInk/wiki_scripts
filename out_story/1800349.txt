@@ -1,0 +1,201 @@
+Reading Mission 1800349: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200364
+
+TRIGGER Procedure 9.0 Step 1.0 Order 1 Repeat 26
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Mi-ni Botanica is successfully completed
+ACTIONS
+Increment 1800349 by 1
+
+TRIGGER Procedure 9.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1800349
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800349
+CONDITIONS
+Always:
+ACTIONS
+Set 8349A to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || id: 83491 | sceneName: Main | flagName: Trigger_83491 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0 | missionId: 1800349
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 83491
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 83491 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 83491
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83491 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Nia stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8349_0_1
+DELAY MASK SET || maskId: 83491 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 83491
+CONDITIONS
+Check relationship with Nia is Married
+ACTIONS
+(cId 1) A conversation 6076_0 starts:
+{{dialogue|Nia|''Pet Name'', I've got some wonderful news. Want to take a guess?}}
+
+*''Our bond is growing ever so strong after a good night's sleep?''
+*''You struck a fortune?''
+*''You know I never guess!''
+
+{{dialogue|Nia|indent=true|answer=Our bond is growing ever so strong after a good night's sleep?
+|Haha, that's true, but that's not the news I'm talking about.}}
+{{dialogue|Nia|indent=true|answer=You struck a fortune?
+|Well, you're not far off! I mean, calling it a fortune may be an overstatement...}}
+{{dialogue|Nia|indent=true|answer=You know I never guess!
+|Why not! It's just a guess!}}
+{{dialogue|Nia|indent=true|Okay, fine, I'll tell you, but you're missing out on the fun of guessing!}}
+{{dialogue|Nia|You see, the Mi-ni Botanica has been doing pretty well. I've got some regular customers, and there's a decent amount of profit to split between me and Mi-an... So, I've made enough to pay you back!}}
+{{dialogue|Nia|The whole 5000 Gols!}}
+
+*''There's no need. We're family!''
+*''Hmm... just the Gols? I was hoping you'd throw in something extra.''
+
+{{dialogue|Nia|indent=true|answer=There's no need. We're family!
+|I can't accept that. It's a loan for me to start up the shop, which Mi-an and I run.}}
+{{dialogue|Nia|indent=true|If you don't take the money back, it'll cause us a huge headache when we're balancing the books...or doing taxes!}}
+{{dialogue|Nia|indent=true|answer=Hmm... just the Gols? I was hoping you'd throw in something extra.
+|Something...extra?}}
+{{dialogue|Nia|Ah, I see. Could you... close your eyes?}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTOR FREEZ COLLIDER || npc: 8000 | freezeCollider: 1
+ACTOR FREEZ COLLIDER || npc: 8059 | freezeCollider: 1
+Add behavior CommanderMoveToFlagAndAction (idName: 8349001) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8349_0_2)
+Add behavior CommanderMoveToFlagAndAction (idName: 8349592) to Nia
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8349_59_2|Action:KissSingle)
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8059 | eventName: MoveToFlagAndActionOver | behaviourName: CommanderMoveToFlagAndAction
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 19426 starts:
+{{dialogue|Nia|Okay, I'm off to work! Bye! See you after work my Builder!}}
+ACTOR FREEZ COLLIDER || freezeCollider: 0 | npc: 8059
+ACTOR FREEZ COLLIDER || freezeCollider: 0 | npc: 8000
+
+TRIGGER Procedure 0.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+MONEY PLAYER ADD || money: 5000
+Nia stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8349592) from Nia
+Remove behavior CommanderMoveToFlagAndAction (idName: 8349001) from Player
+CUTSCENE UI STATE EXIT || 
+Add behavior CommanderMoveToFlag (idName: 8349593) to Nia
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8347_59_1|Delay:0.0)
+
+TRIGGER Procedure 0.0 Step 6.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8059 | eventName: MoveToFlagOver | behaviourName: CommanderMoveToFlag
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 8349593) from Nia
+END MISSION 1800349
+
+TRIGGER Procedure 1.0 Step 4.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83491 | eventType: 5
+CONDITIONS
+Check relationship with Nia is 6 Mate Unhappy
+ACTIONS
+(cId 3) A conversation 6073_0 starts:
+{{dialogue|Nia|Hey ''Player''! Here's a reminder for you...}}
+
+*''A reminder? For what?''
+*''Ah, I know what this is about...''
+
+{{dialogue|Nia|indent=true|answer=A reminder? For what?
+|Haha, I knew you wouldn't remember...}}
+{{dialogue|Nia|indent=true|answer=Ah, I know what this is about...
+|Oh, so you remembered I haven't paid you back? Were you too embarrassed to ask me about it? Good thing I didn't forget, that would've been awkward...}}
+{{dialogue|Nia|So, you gave me that 5000 Gols for me to open the florist shop.}}
+{{dialogue|Nia|And the business is doing well! I've made enough and even a little extra, so now I can pay you back.}}
+{{dialogue|Nia|Here, please take it. Thanks again for supporting me!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 5.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Nia stops standing still
+Add 1 Potted Cactus of Default quality (Notify player)
+MONEY PLAYER ADD || money: 6000
+CUTSCENE UI STATE EXIT || 
+END MISSION 1800349

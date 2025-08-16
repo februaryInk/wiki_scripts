@@ -1,0 +1,336 @@
+Reading Mission 1200258: Bounce Back
+
+<onlyinclude>{{Infobox mission
+|name = Bounce Back
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Bounce Back:
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 22572) from Heidi
+Justice stops standing still
+DELIVER MISSION 1200257
+START MISSION 1200257
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200257
+CONDITIONS
+Always:
+ACTIONS
+Run mission Bounce Back
+END MISSION 1200257
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200258
+CONDITIONS
+Always:
+ACTIONS
+===Make a Power Cell===
+
+{{mission_details
+|desc = According to Heidi's design, create the Power Cell on your Worktable.
+|details = Make a Power Cell
+*{{i2|Power Cell|0/1}}
+}}
+Add 1 Power Cell of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200257 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Go to the Civil Corps===
+
+{{mission_details
+|desc = The Power Cell is ready, take it to the Civil Corps to install it.
+|details = Go to the Civil Corps
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the CivilCorp:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_civilcorp
+CHECK PLAYER ITEM || item: 19810035 | itemGrade: -1 | set: 2 | count: 1
+Duvos Attacks! is in state 1 with flag 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_civilcorp
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the CivilCorp:
+CONDITIONS
+Always:
+ACTIONS
+Justice stands still in CivilCorp
+Heidi stands still in CivilCorp
+PLAYER SET POS ROT FLAG || flagName: mirrorcle_player1 | sceneName: CivilCorp
+SCENEITEM DELETE || itemType: 0 | id: 172501
+SCENEITEM CREATE FLAG || flagName: MMirrorInCivilCorpnew | itemType: 0 | id: 172501 | path: Mission_MagicMirror | sceneName: CivilCorp | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the CivilCorp:
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 8368, 8369 starts:
+{{dialogue|Justice|You sure this is even gonna work?}}
+{{dialogue|Heidi|Ah, it's only a product of the collective knowledge of all human history. How hard could it be? ''Player'', if you please!}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 22581) to Player
+(param: TargetScene:CivilCorp|MoveMode:Run|FlagName:mirrorcle_player2|Action:Fix)
+Add behavior CommanderMoveToFlagAndAction (idName: 22583) to Justice
+(param: TargetScene:CivilCorp|MoveMode:Walk|FlagName:mirrorcle_justice3)
+Add behavior CommanderMoveToFlagAndAction (idName: 22583) to Heidi
+(param: TargetScene:CivilCorp|MoveMode:Walk|FlagName:mirrorcle_heidi3)
+GEAR TRIGGER TRIGGER || id: 2 | scene: CivilCorp
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 172501
+SCENEITEM CREATE FLAG || itemType: 0 | id: 22581 | path: Mission_FX_Machine_1 | sceneName: CivilCorp | flagName: MMirrorInCivilCorp | extraParams: 0
+Magic Mirror stands still in CivilCorp
+Remove 1 Power Cell of Default quality (Notify player)
+Remove behavior CommanderMoveToFlagAndAction (idName: 22581) from Player
+Add behavior CommanderMoveToFlagAndAction (idName: 22582) to Player
+(param: TargetScene:CivilCorp|MoveMode:Run|FlagName:mirrorcle_player3)
+
+TRIGGER Procedure 1.0 Step 1.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 2455_0 starts:
+{{dialogue|Magic Mirror|Systems... rebooting... run fairestofthemall.exe... loading... loading...}}
+{{dialogue|Magic Mirror|Complete!}}
+{{dialogue|Magic Mirror|AH. IT IS YOU. THE MOST beautiful CREATURE IN THE WORLD. AND ASSOCIATES.}}
+{{dialogue|Heidi|Haha, hey! The robot likes you, ''Player''. That's cute! What about me mirror, how do I rank on the beauty scale?}}
+{{dialogue|Magic Mirror|TOP TEN. FOR SURE.}}
+{{dialogue|Heidi|Aw, she's adorable! Can we keep her Justice? Can we?}}
+
+*''Can we?''
+*''I'm having second thoughts...''
+
+{{dialogue|Justice|indent=true|answer=Can we?
+|reward={{NPC2|Heidi|rp=1}}|I dunno, this is all starting to seem kind of... extremely dangerous...}}
+{{dialogue|Justice|indent=true|answer=I'm having second thoughts...
+|I agree. This is all starting to seem kind of... extremely dangerous...}}
+{{dialogue|Magic Mirror|TWO OUT OF TEN.}}
+{{dialogue|Heidi|Whaaat? Thing's busted. Everybody knows Justice is a solid ten!}}
+{{dialogue|Justice|I've heard nine before, but, thank you, Heidi. Your support is appreciated. I reckon this thing is still bent outta shape cuz I put its rusty butt behind bars... Keep it up, buster, and we might have ourselves a repeat of our little dance back in the cave...!}}
+{{dialogue|Magic Mirror|...THREE. OUT OF TEN.}}
+{{dialogue|Justice|Well, well. Movin' up in the world...}}
+{{dialogue|Justice|Alright, mirror-bot, or whatever you're called, what's your deal anyway? Way I see it, we can study you just fine from this side of these here bars. But let's say we did let you out of here, then what?}}
+{{dialogue|Magic Mirror|I AM ROSY. MY PURPOSE IS TO SERVE. THE MOST beautiful CREATURE in the WORLD.}}
+{{dialogue|Justice|''Player''? Hold up, I'm not buyin' it. This thing definitely tried to murder us. Let's get Qi in here to like... flip the switch that makes it evil or somethin'...}}
+{{dialogue|Heidi|Director said he's not interested...}}
+{{dialogue|Justice|Not interested? What's more scientifical than a gosh dang... robot!?}}
+{{dialogue|Magic Mirror|DIRECTOR GETS ONE OUT OF TEN FOR NOT BEING INTERESTED IN ME.}}
+{{dialogue|Justice|Can it, tin can! Quit rating people!}}
+{{dialogue|Magic Mirror|AFFIRMATIVE.}}
+{{dialogue|Heidi|So it does respond to commands...}}
+{{dialogue|Magic Mirror|NEGATIVE. CORRECTION: AFFIRMATIVE, REQUEST TO SUSPEND "FAIREST OF THEM ALL" APPLICATION AND PROCESSES HAS BEEN ACKNOWLEDGED. ACKNOWLEDGED AND IGNORED.}}
+{{dialogue|Magic Mirror|TWO OUT OF TEN.}}
+{{dialogue|Justice|Guys, I'm pretty close to shooting this thing.}}
+{{dialogue|Magic Mirror|ONLY MY master. CAN ISSUE COMMANDS. YOU. THE MOST beautiful CREATURE in the WORLD.}}
+
+*''Stop being annoying!''
+*''Stop rating people!''
+*''Keep rating people...''
+
+{{dialogue|Magic Mirror|indent=true|answer=Stop being annoying!
+|reward={{NPC2|Justice|rp=1}}|As you wish, my master.}}
+{{dialogue|Heidi|indent=true|Hey! Mirror-bot, rate me!}}
+{{dialogue|Magic Mirror|indent=true|REQUEST DENIED. "FAIREST OF THEM ALL" APPLICATION AND PROCESSES HAVE BEEN SUSPENDED TEMPORARILY. BY my master.}}
+{{dialogue|Heidi|indent=true|Hey! Look at that, it really listens to you, ''Player''!}}
+{{dialogue|Justice|indent=true|Whew. Well, we can't be so sure. This could all be some kinda elaborate ruse. A robot ruse... worst kind of ruse...}}
+{{dialogue|Justice|indent=true|Plus! Like I said: thing tried to kill us. That's jail time any way you slice it!}}
+{{dialogue|Magic Mirror|indent=true|answer=Stop rating people!
+|reward={{NPC2|Justice|rp=1}}|As you wish, my master.}}
+{{dialogue|Heidi|indent=true|Hey! Mirror-bot, rate me!}}
+{{dialogue|Magic Mirror|indent=true|REQUEST DENIED. "FAIREST OF THEM ALL" APPLICATION AND PROCESSES HAVE BEEN SUSPENDED TEMPORARILY. BY my master.}}
+{{dialogue|Heidi|indent=true|Hey! Look at that, it really listens to you, ''Player''!}}
+{{dialogue|Justice|indent=true|Whew. Well, we can't be so sure. This could all be some kinda elaborate ruse. A robot ruse... worst kind of ruse...}}
+{{dialogue|Justice|indent=true|Plus! Like I said: thing tried to kill us. That's jail time any way you slice it!}}
+{{dialogue|Magic Mirror|As you wish, my master.}}
+{{dialogue|Magic Mirror|TWO OUT OF TEN. TWO OUT OF TEN. TWO OUT OF TEN. TWO OUT OF TEN.TWO OUT OF TEN. TWO OUT OF TEN-}}
+{{dialogue|Justice|Alright, that's it-!}}
+{{dialogue|Heidi|Er... ''Player'', maybe this thing really will do what you say... Let's give it a shot... before it gets shot!}}
+{{dialogue|Magic Mirror|ONLY MY master. CAN ISSUE COMMANDS. YOU. THE MOST beautiful CREATURE in the WORLD.}}
+
+*''Stop being annoying!''
+*''Stop rating people!''
+*''Keep rating people...''
+
+{{dialogue|Magic Mirror|indent=true|answer=Stop being annoying!
+|reward={{NPC2|Justice|rp=1}}|As you wish, my master.}}
+{{dialogue|Heidi|indent=true|Hey! Mirror-bot, rate me!}}
+{{dialogue|Magic Mirror|indent=true|REQUEST DENIED. "FAIREST OF THEM ALL" APPLICATION AND PROCESSES HAVE BEEN SUSPENDED TEMPORARILY. BY my master.}}
+{{dialogue|Heidi|indent=true|Hey! Look at that, it really listens to you, ''Player''!}}
+{{dialogue|Justice|indent=true|Whew. Well, we can't be so sure. This could all be some kinda elaborate ruse. A robot ruse... worst kind of ruse...}}
+{{dialogue|Justice|indent=true|Plus! Like I said: thing tried to kill us. That's jail time any way you slice it!}}
+{{dialogue|Magic Mirror|indent=true|answer=Stop rating people!
+|reward={{NPC2|Justice|rp=1}}|As you wish, my master.}}
+{{dialogue|Heidi|indent=true|Hey! Mirror-bot, rate me!}}
+{{dialogue|Magic Mirror|indent=true|REQUEST DENIED. "FAIREST OF THEM ALL" APPLICATION AND PROCESSES HAVE BEEN SUSPENDED TEMPORARILY. BY my master.}}
+{{dialogue|Heidi|indent=true|Hey! Look at that, it really listens to you, ''Player''!}}
+{{dialogue|Justice|indent=true|Whew. Well, we can't be so sure. This could all be some kinda elaborate ruse. A robot ruse... worst kind of ruse...}}
+{{dialogue|Justice|indent=true|Plus! Like I said: thing tried to kill us. That's jail time any way you slice it!}}
+{{dialogue|Magic Mirror|indent=true|answer=Keep rating people...
+|As you wish, my master.}}
+{{dialogue|Magic Mirror|indent=true|TWO OUT OF TEN. TWO OUT OF TEN. TWO OUT OF TEN. TWO OUT OF TEN.TWO OUT OF TEN. TWO OUT OF TEN-}}
+{{dialogue|Justice|indent=true|Alright, that's it-!}}
+{{dialogue|Heidi|indent=true|Er... ''Player'', maybe this thing really will do what you say... Let's give it a shot... before it gets shot!}}
+{{dialogue|Magic Mirror|indent=true|ONLY MY master. CAN ISSUE COMMANDS. YOU. THE MOST beautiful CREATURE in the WORLD.}}
+
+:*''Stop being annoying!''
+:*''Stop rating people!''
+
+{{dialogue|Magic Mirror|indent=double|answer=Stop being annoying!
+|reward={{NPC2|Justice|rp=1}}|As you wish, my master.}}
+{{dialogue|Heidi|indent=double|Hey! Mirror-bot, rate me!}}
+{{dialogue|Magic Mirror|indent=double|REQUEST DENIED. "FAIREST OF THEM ALL" APPLICATION AND PROCESSES HAVE BEEN SUSPENDED TEMPORARILY. BY my master.}}
+{{dialogue|Heidi|indent=double|Hey! Look at that, it really listens to you, ''Player''!}}
+{{dialogue|Justice|indent=double|Whew. Well, we can't be so sure. This could all be some kinda elaborate ruse. A robot ruse... worst kind of ruse...}}
+{{dialogue|Justice|indent=double|Plus! Like I said: thing tried to kill us. That's jail time any way you slice it!}}
+{{dialogue|Magic Mirror|indent=double|answer=Stop rating people!
+|reward={{NPC2|Justice|rp=1}}|As you wish, my master.}}
+{{dialogue|Heidi|indent=double|Hey! Mirror-bot, rate me!}}
+{{dialogue|Magic Mirror|indent=double|REQUEST DENIED. "FAIREST OF THEM ALL" APPLICATION AND PROCESSES HAVE BEEN SUSPENDED TEMPORARILY. BY my master.}}
+{{dialogue|Heidi|indent=double|Hey! Look at that, it really listens to you, ''Player''!}}
+{{dialogue|Justice|indent=double|Whew. Well, we can't be so sure. This could all be some kinda elaborate ruse. A robot ruse... worst kind of ruse...}}
+{{dialogue|Justice|indent=double|Plus! Like I said: thing tried to kill us. That's jail time any way you slice it!}}
+
+TRIGGER Procedure 2.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Magic Mirror|MY. B.}}
+STOPWATCH REAL TIME SET || id: 22581 | sec: 3
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 8375:
+{{dialogue|Heidi|Aw, she's adorable! Can we keep her Justice? Can we?}}
+
+*''Can we?'' (No unique dialogue)
+*''I'm having second thoughts...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Heidi gains 1 favor
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 8394:
+{{dialogue|Magic Mirror|ONLY MY master. CAN ISSUE COMMANDS. YOU. THE MOST beautiful CREATURE in the WORLD.}}
+
+*''Stop being annoying!'' (No unique dialogue)
+*''Stop rating people!'' (No unique dialogue)
+*''Keep rating people...'' (No unique dialogue)
+
+(cId 1) The player picks the second option in conversation segment 8394:
+{{dialogue|Magic Mirror|ONLY MY master. CAN ISSUE COMMANDS. YOU. THE MOST beautiful CREATURE in the WORLD.}}
+
+*''Stop being annoying!'' (No unique dialogue)
+*''Stop rating people!'' (No unique dialogue)
+*''Keep rating people...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Justice gains 1 favor
+
+TRIGGER Procedure 2.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 22581
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 2460_0 starts:
+{{dialogue|Heidi|Fair enough. My working theory is that this AI only attacked you because its old master commanded it to. Which... does raise certain questions as to why the mirror thought the evil queen was the most beautiful creature in the world at one point...}}
+{{dialogue|Magic Mirror|SHE. Changed...}}
+{{dialogue|Heidi|Aw.}}
+{{dialogue|Heidi|Ahem. Well, anyway, Justice: if we can prove she's not crazy, can we let her out and study her?}}
+{{dialogue|Justice|Eh... yeah, sure.}}
+{{dialogue|Magic Mirror|YAY.}}
+{{dialogue|Heidi|Yay!}}
+{{dialogue|Justice|But I mean definitive proof! Like... get some experts on the telegraph, really figure this thing out, alright?}}
+{{dialogue|Heidi|Will do! I'll keep you in the loop, too, ''Player''.}}
+{{dialogue|Justice|Alright, well you two oughta head off and enjoy the rest of your day. I got a whole mess of paperwork to fill out...}}
+{{dialogue|Heidi|So long!}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+GEAR TRIGGER TRIGGER || id: 2 | scene: CivilCorp
+NPC SET CAN INTERACT || npc: 8083 | canInteract: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 22583) from Justice
+Remove behavior CommanderMoveToFlagAndAction (idName: 22583) from Heidi
+Remove behavior CommanderMoveToFlagAndAction (idName: 22582) from Player
+CUTSCENE UI STATE EXIT || 
+Justice stops standing still
+Heidi stops standing still
+SCENEITEM DELETE || id: 22581 | itemType: 0
+ACTION DATE SET FLAG || flag: 1200258
+SUBMIT MISSION 1200257
+END MISSION 1200258

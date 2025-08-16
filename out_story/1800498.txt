@@ -1,0 +1,185 @@
+Reading Mission 1800498: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200245
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+UNLOCK NPC MARRIAGE || npc: 8019
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if Miguel is in town
+Check if mission Crime and Punishment is result 1 flag 1
+ACTIONS
+Run mission #1800498
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800498
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1800498 | id: 84981 | sceneName: Main | flagName: Trigger_84981 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 84981
+CONDITIONS
+CHECK WEATHER STATE || weather: 2 | flag: 0
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 84981
+DELAY MASK SET || maskId: 84981 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 84981 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8498_0_1
+DELAY MASK SET || maskId: 84981 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Add behavior CommanderMoveToFlagAndAction (idName: 8498191) to Miguel
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8498_19_2|Action:Sweep_Once|Delay:1.0)
+Add behavior CommanderMoveToFlagAndAction (idName: 8498211) to Burgess
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8498_21_4|Delay:1.0|Action:PickUp_Once)
+Set 8498Move1 to 0
+
+TRIGGER Procedure 0.0 Step 2.1 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8021 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8498211) from Burgess
+Add behavior CommanderMoveToFlagAndAction (idName: 8498213) to Burgess
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8498_21_3|Delay:0.2|Action:PickUp_Once)
+
+TRIGGER Procedure 0.0 Step 2.2 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8019 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8498191) from Miguel
+Add behavior CommanderMoveToFlagAndAction (idName: 8498193) to Miguel
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8498_19_3|Action:Sweep_Once|Delay:0.5)
+
+TRIGGER Procedure 0.0 Step 2.3 Order 3 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8019 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8021 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Increment 8498Move1 by 1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8019 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8021 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Check if 8498Move1 is >= 2
+ACTIONS
+(cId 1) A conversation 7949_0 starts:
+{{dialogue|Burgess|I've been cleaning the oasis for years... it's even kind of relaxing!}}
+{{dialogue|Miguel|You're minister now, Burgess. There is no need for you to take on such menial tasks.}}
+{{dialogue|Burgess|Uh, uh, uh! I'm there on Sundays telling people to do what they say, and what kind of minister would I be telling people to clean up the town if I'm not out here myself, bag in hand?}}
+{{dialogue|Miguel|To find one who acts as they preach is a rarity. In my madness I think I had overlooked your virtues.}}
+{{dialogue|Burgess|That sounds like a long winded way of saying sorry! Miguel, you don't have to apologize to me.}}
+{{dialogue|Miguel|I-}}
+{{dialogue|Burgess|Logan did bad things, but he was doing what was right, and we forgave him! As we should! Your mind was all fuzzy, you thought you were doing right, but hoo-boy were you wrong!}}
+{{dialogue|Miguel|...}}
+{{dialogue|Burgess|But I knew you could snap out of it. You never stopped believing in the Light.}}
+{{dialogue|Miguel|It is touching that you held such hope for me. It is true that my belief never faltered, although misplaced...}}
+{{dialogue|Burgess|Welp. Now you get to see what you were missing out on all these years, out here pickin' up trash with the cool kids!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8498213) from Burgess
+Remove behavior CommanderMoveToFlagAndAction (idName: 8498193) from Miguel
+Add behavior CommanderMoveToFlagAndAction (idName: 8498212) to Burgess
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8498_21_4|LookAtActor:8000|Delay:0.0)
+Add behavior CommanderMoveToFlagAndAction (idName: 8498192) to Miguel
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8498_19_4|LookAtActor:8000|Delay:0.0)
+Add behavior CommanderMoveToFlag (idName: 8498001) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8498_0_2|LookAtActor:8021|Delay:0.0)
+
+TRIGGER Procedure 0.0 Step 3.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 7950_0 starts:
+{{dialogue|Miguel|Greetings, ''Player''.}}
+{{dialogue|Burgess|We're cleaning the oasis!}}
+
+*''Do you need any help?''
+*''Wow, I've never seen Miguel so hands on before!''
+
+{{dialogue|Burgess|indent=true|answer=Do you need any help?
+|I don't want to bother you! Miguel and I have this covered! Just one of the many duties of the Church of the Light!}}
+{{dialogue|Miguel|indent=true|Quite.}}
+{{dialogue|Miguel|indent=true|answer=Wow, I've never seen Miguel so hands on before!
+|I admit, I was prone to the delegation of tasks.}}
+{{dialogue|Miguel|Burgess has been introducing me to what I used to think of as "grunt work." Sigh... I feel awful for my elitist judgements.}}
+{{dialogue|Burgess|Feeling awful is the first step to not... feeling-awful!}}
+{{dialogue|Miguel|After so many years of dark pessimism, I find your positivity to be... inspiring.}}
+{{dialogue|Burgess|I've always been here, Miguel!}}
+{{dialogue|Miguel|Haha, of course you have, Burgess. I was just too blind to see. I still have a lot to learn from you. It feels strange... to re-learn my entire being...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 10.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8498212) from Burgess
+Remove behavior CommanderMoveToFlagAndAction (idName: 8498192) from Miguel
+Remove behavior CommanderMoveToFlag (idName: 8498001) from Player
+CUTSCENE UI STATE EXIT || 
+NPC ADD TAG || tag: PickUpRubbish
+END MISSION 1800498

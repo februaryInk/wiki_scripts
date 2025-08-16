@@ -1,0 +1,139 @@
+Reading Mission 1200305: Look to the Skies
+
+<onlyinclude>{{Infobox mission
+|name = Look to the Skies
+|image =
+|description = Qi has upgraded his telescope and can now see the "Scavenger" satellite; he's  invited you to join him.
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 1400
+|reputation = None
+|gols = None
+|npc1 = Qi
+|rp1 = 10
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200112
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check relationship with Qi is Friend
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+Run mission Quali-tea over Quanti-tea
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check relationship with Qi is Friend
+A Window to the Cosmos is successfully completed
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+Run mission Look to the Skies
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200305
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1200305 | id: 23051 | sceneName: Main | flagName: mian_science | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Science:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_science
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_science
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 23051
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Science:
+CONDITIONS
+Always:
+ACTIONS
+Qi stands still in Science
+PLAYER SET POS ROT FLAG || sceneName: Science | flagName: qiandheidi1_heidi
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Science:
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 3596_0 starts:
+{{dialogue|Qi|Ah. There you are. I have recently upgraded the telescope. I have increased the aperture, allowing for an observational field 27% higher than previously achievable. In fact, the locals have been using it too.}}
+{{dialogue|Qi|The satellite that I've been tracking, "Scavenger" will be passing above Sandrock around {{textcolor|green|21:00PM tomorrow}}. I thought, perhaps, you would come and observe it with me.}}
+{{dialogue|Player|(What should I say?)}}
+
+*''See you then!''
+*{{flirt}}''Is this a date?''
+*''I've got a lot on my plate...''
+
+{{dialogue|Qi|indent=true|answer=See you then!
+|Remember the time. Please, do not be late. Scavenger is not a synchronous satellite, it will not remain stationary. Current science has not confirmed the existence of remaining synchronous satellites.}}
+{{dialogue|Qi|indent=true|answer=I've got a lot on my plate...
+|Of course. I simply believe with two people, observation will be more efficient. Perhaps if you reconsider, you can meet me regardless.}}
+{{dialogue|Qi|This is important observational analysis, not a date.}}
+{{dialogue|Qi|We will be able to gather much more information together.}}
+{{dialogue|Qi|The satellite that I've been tracking, "Scavenger" will be passing above Sandrock around {{textcolor|green|21:00PM tomorrow}}. I thought, perhaps, you would come and observe it with me.}}
+
+*''See you then!''
+*''I've got a lot on my plate...''
+
+{{dialogue|Qi|indent=true|answer=See you then!
+|Remember the time. Please, do not be late. Scavenger is not a synchronous satellite, it will not remain stationary. Current science has not confirmed the existence of remaining synchronous satellites.}}
+{{dialogue|Qi|indent=true|answer=I've got a lot on my plate...
+|Of course. I simply believe with two people, observation will be more efficient. Perhaps if you reconsider, you can meet me regardless.}}
+DELIVER MISSION 1200305
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Qi stops standing still
+CUTSCENE UI STATE EXIT || 
+START MISSION 1200305
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200305
+CONDITIONS
+Always:
+ACTIONS
+Run mission Look to the Skies
+END MISSION 1200305
+
+==Rewards==
+{{mission reward
+|npc1 = Qi
+|rp1 = 10
+|exp = 1400
+|reputation = None
+|gols = None
+}}

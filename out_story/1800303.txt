@@ -1,0 +1,150 @@
+Reading Mission 1800303: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200135
+
+TRIGGER Procedure 9.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+We'll Be Ready For 'Em is successfully completed
+The Battle of Sandrock is in state 3 with flag 0
+ACTIONS
+NPC ADD TAG || tag: NoRandomNPCInTown
+
+TRIGGER Procedure 9.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 12) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1800290
+Run mission #1800291
+Run mission #1800292
+Run mission #1800302
+Run mission #1800303
+Run mission #1800304
+Run mission #1800299
+Run mission #1800301
+Run mission #1800300
+Run mission #1800293
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800303
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || flagName: Trigger_Temple | id: 83031 | transId: 0 | missionId: 1800303 | sceneName: Main | showOnMap: 1 | mapIcon: MissionArea
+AREA TRIGGER ONCE CREATE || missionId: 1800303 | id: 828822 | sceneName: Temple | flagName: Trigger_8288_Temple2 | showOnMap: 1 | mapIcon: MissionArea | transId: 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 828822
+CONDITIONS
+Always:
+ACTIONS
+Mort stands still in Temple
+Zeke stands still in Temple
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 83031
+
+TRIGGER Procedure 0.0 Step 1.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800303
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM ADD || id: 10 | instId: 83031 | scene: Temple | flagName: S8288_T_s3 | dailyBehavior: RandomNPC
+NPC RANDOM ADD || flagName: S8288_T_s5 | dailyBehavior: RandomNPC | id: 10 | instId: 83032 | scene: Temple
+NPC RANDOM ADD || flagName: S8288_T_s4 | dailyBehavior: RandomNPC | instId: 83033 | scene: Temple | id: 10
+83031 stands still in Temple
+83032 stands still in Temple
+83033 stands still in Temple
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 828822
+CONDITIONS
+Always:
+ACTIONS
+(cId 22) A conversation 3352_0 starts:
+{{dialogue|83031|So you spent your whole life trying to turn the desert green, huh?}}
+{{dialogue|83032|Doesn't sound too useful...}}
+{{dialogue|Mort|We did the best we could... with the best we had...}}
+{{dialogue|83031|Say, how much do you know about Duvos' crops and plants?}}
+{{dialogue|Zeke|I've read about it, it's very different from what we have here, since you guys don't get much sunshine. But due to the climate, I'd assume all the crops have very low yields.}}
+{{dialogue|83031|Yeah, the weather's pretty harsh back home. My little sister's studying to be a Botanist. She says she wants to solve our nation's food issues one day.}}
+{{dialogue|83032|Ooh! That's a good goal. If she succeeds, we won't have to fight wars anymore...}}
+{{dialogue|83033|Yeah, good point!}}
+{{dialogue|Mort|Why... doesn't the Empire just trade with the Free Cities for food?}}
+{{dialogue|83031|I dunno, I don't make the decisions...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 11.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 22) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Zeke stops standing still
+Mort stops standing still
+83031 stops standing still
+83032 stops standing still
+83033 stops standing still
+
+TRIGGER Procedure 0.0 Step 40.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM REMOVE || id: 83031
+NPC RANDOM REMOVE || id: 83032
+NPC RANDOM REMOVE || id: 83033
+END MISSION 1800303
+
+TRIGGER Procedure 0.0 Step 40.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 22841
+CONDITIONS
+Always:
+ACTIONS
+83031 stops standing still
+83032 stops standing still
+83033 stops standing still
+AREA TRIGGER DELETE || id: 83031
+AREA TRIGGER DELETE || id: 828822
+NPC RANDOM REMOVE || id: 83031
+NPC RANDOM REMOVE || id: 83032
+NPC RANDOM REMOVE || id: 83033
+Zeke stops standing still
+Mort stops standing still
+END MISSION 1800303

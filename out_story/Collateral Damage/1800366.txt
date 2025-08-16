@@ -1,0 +1,98 @@
+Reading Mission 1800366: Collateral Damage
+
+<onlyinclude>{{Infobox mission
+|name = Collateral Damage
+|image =
+|description = The battle for Sandrock took a toll on not just the people, but also the structures around town. Help fix them up to get things back to normal.
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 1250
+|reputation = 15
+|gols = 400
+|npc1 = -1
+|rp1 = 10
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200264
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Mission Unpossible is successfully completed
+ACTIONS
+Run mission What's Mine is Yours
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission The Battle of Sandrock is result 1 flag 1
+ACTIONS
+Run mission Collateral Damage
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800366
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 12 | id: 836610
+SCENEITEM DELETE || itemType: 12 | id: 836620
+SCENEITEM DELETE || itemType: 12 | id: 836630
+The player receives a letter:
+{{mail|632}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 83661 | path: S83661_Light_Mark | sceneName: Main | flagName: S83661_Light | extraParams: S83661_Light|CreatorItem|17200005_1|1547|Fix|1.4
+SCENEITEM CREATE FLAG || extraParams: S83662_SunUmbrella|CreatorItem|15400015_1|1547|Fix|1.4 | itemType: 11 | id: 83662 | sceneName: Main | flagName: S83662_SunUmbrella | path: S83662_SunUmbrella_Mark
+SCENEITEM CREATE FLAG || extraParams: S83663_MailBox|CreatorItem|19112016_3,19112017_1,19800009_4|1547|Fix|1.4 | itemType: 11 | id: 83663 | flagName: S83663_MailBox | sceneName: Main | path: S83663_MailBox_Mark
+SCENEITEM INTERACT SET || canInteract: 0 | itemType: 11 | id: 83661
+SCENEITEM INTERACT SET || itemType: 11 | canInteract: 0 | id: 83662
+SCENEITEM INTERACT SET || canInteract: 0 | itemType: 11 | id: 83663
+PICK UP RESOURCE REFRESH || id: 18003661
+RESOURCE LOCK INTERACT || id: 18003661 | set: 1
+PICK UP RESOURCE REFRESH || id: 18003662
+PICK UP RESOURCE REFRESH || id: 18003663
+PICK UP RESOURCE REFRESH || id: 18003664
+RESOURCE LOCK INTERACT || id: 18003662 | set: 1
+RESOURCE LOCK INTERACT || id: 18003663 | set: 1
+RESOURCE LOCK INTERACT || set: 1 | id: 18003664
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 632
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Sunshade of Default quality (Do not notify player)
+DELIVER MISSION 1800366
+START MISSION 1800366
+
+TRIGGER Procedure 0.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800366
+CONDITIONS
+Always:
+ACTIONS
+Run mission Collateral Damage
+END MISSION 1800366
+
+==Rewards==
+{{mission reward
+|npc1 = -1
+|rp1 = 10
+|exp = 1250
+|reputation = 15
+|gols = 400
+}}

@@ -1,0 +1,494 @@
+Reading Mission 1200029: License for Ransom
+
+<onlyinclude>{{Infobox mission
+|name = License for Ransom
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from License for Ransom:
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1200028
+START MISSION 1200028
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200028
+CONDITIONS
+Always:
+ACTIONS
+Run mission License for Ransom
+END MISSION 1200028
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200029
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Mi-an===
+
+{{mission_details
+|desc = The letter mentioned goggles and a workshop owner license. Ask Mi-an if she has received a similar letter.
+|details = Talk to Mi-an
+}}
+Set CHOICE to 0
+Set TALK to 0
+Set TALK2JASMINE to 0
+Set DAY to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Mi-an
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 179_0 starts:
+{{dialogue|Mi-an|Ahhh! Oh. It's just you, ''Player''. Sorry, you scared me!}}
+{{dialogue|Mi-an|I'm a bit on edge. Today when I woke up, I discovered someone stole my Builder's License! I can't take any commissions without it, and it'll take a while to apply for a replacement...}}
+{{dialogue|Mi-an|Huh?! What did you say? Criminal mastermind? Let me see that letter!}}
+{{dialogue|Mi-an|Chicken liver? Stupid goggles? My goggles aren't stupid! They're in style! And some 'criminal mastermind,' they couldn't even get the letter to the right person!}}
+{{dialogue|Mi-an|This makes things worse than I thought. The Civil Corps should hear about this right away... Hey, wait a sec, ''Player''! You're a key witness in this case! Can you help me out and gather some evidence?}}
+
+*''No problem.''
+*''Let's just wait for the Civil Corps' result.''
+
+{{dialogue|Mi-an|indent=true|answer=No problem.
+|I knew I could count on you! Hmm, what can we do, what can we do? Gah! I feel like I can't even think straight without my license!}}
+{{dialogue|Mi-an|indent=true|My license must have been stolen this morning, I still had it last night! Why don't you check with people who wake up really early, maybe somebody saw something. I'll go talk with the Civil Corps!}}
+{{dialogue|Mi-an|indent=true|answer=Let's just wait for the Civil Corps' result.
+|Hm... alright. Well, I'm going to look around and see if I can find anything myself.}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the first option in conversation segment 941:
+{{dialogue|Mi-an|This makes things worse than I thought. The Civil Corps should hear about this right away... Hey, wait a sec, ''Player''! You're a key witness in this case! Can you help me out and gather some evidence?}}
+
+*''No problem.'' (No unique dialogue)
+*''Let's just wait for the Civil Corps' result.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+===Ask Around===
+
+{{mission_details
+|desc = Ask the other residents in the town to see if they can provide any clues.
+|details = Ask Around
+}}
+NPC ICON ADD || missionId: 1200028 | npc: 8021 | missionIcon: 2
+NPC ICON ADD || missionId: 1200028 | npc: 8001 | missionIcon: 2
+NPC ICON ADD || missionId: 1200028 | npc: 8003 | missionIcon: 2
+Set TALK to 1
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Burgess
+CONDITIONS
+Check if TALK is == 1
+ACTIONS
+(cId 1) A conversation 944, 945, 946, 968 starts:
+{{dialogue|Burgess|Greetings! Looking kinda thirsty, need some water-?}}
+{{dialogue|Burgess|A ransom note!? Theft of a legal document! A new super criminal setting their sights on Sandrock citizens!? Forgive me, but this is a lot to take in!}}
+{{dialogue|Burgess|I haven't seen any suspicious activity, and I'm usually pretty vigilant, as I think everyone knows. Then again, this morning I ran into Cooper who had a long anecdote to regale... A very, very, very long anecdote...}}
+{{dialogue|Burgess|Well! I won't let it happen again! You have my word, I will have my eyes all over Sandrock, and I won't so much as blink until we find this criminal!}}
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON REMOVE || missionId: 1200028 | npc: 8021 | missionIcon: 2
+MISSION TARGET COUNTER CHANGE || isAdd: 1 | missionId: 1200028 | targetId: 1 | transId: 80001393
+
+TRIGGER Procedure 1.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+(cId 4) After the conversation ends:
+(cId 2) After the conversation ends:
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1200028 | targetId: 1 | canSubmit: 1
+ACTIONS
+(cId 5) A conversation 953 starts:
+{{dialogue|Player|(Another dead end. It seems the trail's gone cold... maybe it's better to wait for the Civil Corps to finish their investigation.)}}
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Cooper
+CONDITIONS
+Check if TALK is == 1
+ACTIONS
+(cId 2) A conversation 952, 969, 970, 971 starts:
+{{dialogue|Cooper|Er... what letter? I, I never saw anything like that! Maybe it's just a prank, forget about it! Killer...? That's nonsense!}}
+{{dialogue|Cooper|Ransom letter? Why of all the nonsense- Ain't no criminal mastermind!}}
+{{dialogue|Cooper|Killer E? That's the stupidest name I ever heard, just one of 'em kids let their imagination run away with itself, that's all.}}
+{{dialogue|Cooper|I ain't heard nothin' about no ransom letter, and even if I did, I didn't, so quit askin', and get that letter out of my face! Don't try to make me read!}}
+
+TRIGGER Procedure 0.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON REMOVE || missionId: 1200028 | npc: 8003 | missionIcon: 2
+MISSION TARGET COUNTER CHANGE || isAdd: 1 | missionId: 1200028 | targetId: 1 | transId: 80001393
+
+TRIGGER Procedure 0.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Owen
+CONDITIONS
+Check if TALK is == 1
+ACTIONS
+(cId 3) A conversation 947, 948 starts:
+{{dialogue|Owen|A ransom note? For Mi-an's Builder's License? Well, you don't need me to tell you how weird that is...}}
+{{dialogue|Owen|Have you tried asking Jasmine if she saw anything? She does a lot of the mail delivery in town. I'll be on the look out for that thief as well!}}
+
+TRIGGER Procedure 0.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON REMOVE || missionId: 1200028 | npc: 8001 | missionIcon: 2
+Set TALK2JASMINE to 1
+NPC ICON ADD || missionId: 1200028 | npc: 8040 | missionIcon: 2
+
+TRIGGER Procedure 0.0 Step 10.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Jasmine
+CONDITIONS
+Check if TALK2JASMINE is == 1
+ACTIONS
+(cId 4) A conversation 949, 950, 951 starts:
+{{dialogue|Jasmine|Oh, hi! How are you?}}
+{{dialogue|Jasmine|Oh, Peach! A criminal mastermind? This sounds like one of my mystery books! Cool! I mean... oh no!}}
+{{dialogue|Jasmine|But... I didn't deliver this letter. I always remember the addresses on the letters perfect so I never take a letter to the wrong house! The bad person must have delivered that letter themselves! Wow... I was in danger!}}
+
+TRIGGER Procedure 0.0 Step 11.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON REMOVE || missionId: 1200028 | npc: 8040 | missionIcon: 2
+MISSION TARGET COUNTER CHANGE || isAdd: 1 | missionId: 1200028 | targetId: 1 | transId: 80001393
+
+TRIGGER Procedure 1.0 Step 1.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the second option in conversation segment 941:
+{{dialogue|Mi-an|This makes things worse than I thought. The Civil Corps should hear about this right away... Hey, wait a sec, ''Player''! You're a key witness in this case! Can you help me out and gather some evidence?}}
+
+*''No problem.'' (No unique dialogue)
+*''Let's just wait for the Civil Corps' result.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 2
+
+TRIGGER Procedure 1.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 2
+ACTIONS
+===Wait for the Civil Corps===
+
+{{mission_details
+|desc = The trail's run cold, let's wait for the Civil Corps' investigation results.
+|details = Wait for the Civil Corps
+}}
+Set DAY to 1
+
+TRIGGER Procedure 1.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+===Wait for the Civil Corps===
+
+{{mission_details
+|desc = The trail's run cold, let's wait for the Civil Corps' investigation results.
+|details = Wait for the Civil Corps
+}}
+Set DAY to 1
+
+TRIGGER Procedure 1.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Check if DAY is == 1
+The Childhood Friend is in state 1 with flag 0
+Goodbye, Nia is in state 1 with flag 0
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+The Kidnapping is in state 1 with flag 0
+Where's Mi-an is in state 1 with flag 0
+Check if Elsie is in town
+CHECK GLOBAL BLACKBOARD || key: triallogan | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+ACTIONS
+Set DAY to 2
+Elsie stands still in Main
+
+TRIGGER Procedure 1.0 Step 7.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Elsie
+CONDITIONS
+Check if DAY is == 2
+ACTIONS
+Elsie stops standing still
+(cId 6) A conversation 955, 956, 957, 3953, 958, 959, 960, 338_0 starts:
+{{dialogue|Elsie|Um, howdy there ''Player'', heh... I need to ask your advice on a little somethin' somethin' regardin' a 'friend' of mine who's in a real dilly of a pickle and...}}
+{{dialogue|Elsie|Oh, to heck with it! It was me! I wrote the letter! And I used my Pa to deliver it! The guilt has been eatin' me up inside!}}
+{{dialogue|Elsie|It weren't meant for you, though! It was for Mi-an! I told my Pa fifty times "Don't give it to ''Player'', repeat: do not give it to ''Player''!" I guess hearin' your name so many times got things jumbled up in that noggin of his...}}
+{{dialogue|Elsie|I wasn't aimin' to cause trouble, honest!}}
+{{dialogue|Elsie|I just figured if I took her license, she'd have to take a breather! She's really been bustin' her buns lately, workin' herself to death! And if that happens, well, who's gonna go Yakmel ridin' with me?!}}
+{{dialogue|Elsie|But losin' her license didn't help her relax at all! Now she spends all her time just mopin' around and never wants to do nothin' no more! My plan didn't work one lick...}}
+{{dialogue|Elsie|I'm ready to face the music and tell her the truth but... there's just one more teensy little hiccup, I mighta messed around and... lost the license!}}
+{{dialogue|Elsie|I just went and confessed everything to you, so you're in on it too now, y'hear? It must have fallen off my horse {{textcolor|green|somewhere around the ranch}}, can you help me go look for it?}}
+
+*''Sure, I'll help you.''
+*''Too much on my plate.''
+
+{{dialogue|Elsie|indent=true|answer=Sure, I'll help you.
+|Good! Alright, now follow me! Let me show you where I was when I lost it! Dang it... that darned license better still be there!}}
+{{dialogue|Elsie|indent=true|answer=Too much on my plate.
+|I'm in a bind here, Builder! Mi-an'll kill me if the lawmen don't catch me first! I'm gonna find this license {{textcolor|green|today}}, y'hear? With or without ya, even if it kills me! So if you wanna help, better come find me soon!}}
+
+TRIGGER Procedure 1.0 Step 8.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 3
+ACTIONS
+Elsie stops standing still
+CUTSCENE UI STATE EXIT || 
+Add behavior MissionFindRanch (idName: 20291) to Elsie
+(param: -1)
+===Find the License===
+
+{{mission_details
+|desc = Mi-an's workshop owner license was lost by Elsie at the cattle farm. Let's find it with Elsie.
+|details = Find the License
+}}
+SCENEITEM CREATE FLAG || itemType: 0 | id: 20291 | path: Interact_BuilderLicense | sceneName: Main | flagName: license_license | extraParams: 0
+AREA TRIGGER CREATE || missionId: 1200029 | id: 20291 | sceneName: Main | flagName: license_trigger | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80001376
+
+TRIGGER Procedure 2.0 Step 8.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Check if CHOICE is <= (maybe?) 3
+ACTIONS
+Elsie stops standing still
+CUTSCENE UI STATE EXIT || 
+SCENEITEM CREATE FLAG || itemType: 0 | id: 20291 | path: Interact_BuilderLicense | sceneName: Main | flagName: license_license | extraParams: 0
+SCENEITEM INTERACT SET LOCKER || isAdd: 1 | itemType: 0 | id: 20291
+
+TRIGGER Procedure 1.0 Step 7.5 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 961:
+{{dialogue|Elsie|I just went and confessed everything to you, so you're in on it too now, y'hear? It must have fallen off my horse {{textcolor|green|somewhere around the ranch}}, can you help me go look for it?}}
+
+*''Sure, I'll help you.'' (No unique dialogue)
+*''Too much on my plate.'' (No unique dialogue)
+
+(cId 9) The player picks the first option in conversation segment 1671:
+{{dialogue|Elsie|Hey! ''Player'', are you ready to help me find that dang license yet?}}
+
+*''Sure, I'll help you.'' (No unique dialogue)
+*''Too much on my plate.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 3
+
+TRIGGER Procedure 1.0 Step 8.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK SCENEITEM EXIST || sceneItemType: 0 | id: 20291 | exist: 0
+ACTIONS
+===Talk to Elsie===
+
+{{mission_details
+|desc = Elsie seems to have something for you...
+|details = Talk to Elsie
+}}
+
+TRIGGER Procedure 2.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | id: 20291 | itemType: 0
+CONDITIONS
+Check if Elsie is in town
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 20291 | delayTime: 0 | durationTime: -2 | changeType: 2 | curveIndex: 0
+AREA TRIGGER DELETE || id: 20291
+
+TRIGGER Procedure 2.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 20291
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || id: 20291 | itemType: 0
+Remove behavior MissionFindRanch (idName: 20291) from Elsie
+Elsie stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: license_player2
+
+TRIGGER Procedure 2.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 20291
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 963, 964, 965, 966 starts:
+{{dialogue|Elsie|That's it, by Peach, you found it!}}
+{{dialogue|Elsie|Whew! Light at the end of the tunnel! Maybe tonight I can finally get myself a half decent rest. I can't believe this all flew so far off the handle; maybe committin' fraud ain't all it's cracked up to be!}}
+{{dialogue|Elsie|I'll go give this to Mi-an as soon as possible and tell her all what happened! I really hope she can find some way to forgive me...}}
+{{dialogue|Elsie|Say, ''Player'', you're a really good listener! And a good license-finder t'boot! You're alright in my book! Thanks for all your help! We should catch up again soon under less incriminatin' circumstances!}}
+
+TRIGGER Procedure 2.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Elsie gains 10 favor
+CUTSCENE UI STATE EXIT || 
+Elsie stops standing still
+Elsie stops standing still
+Set DAY to 3
+AREA TRIGGER CREATE || missionId: 1200029 | id: 20292 | sceneName: Main | flagName: license_trigger2 | showOnMap: 0 | mapIcon: 0 | transId: 0
+Run mission License for Ransom
+SUBMIT MISSION 1200028
+END MISSION 1200029
+
+TRIGGER Procedure 2.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if DAY is == 2
+ACTIONS
+Remove behavior MissionFindRanch (idName: 20291) from Elsie
+The player receives a letter:
+{{mail|37}}
+SCENEITEM DELETE || itemType: 0 | id: 20291
+AREA TRIGGER CREATE || missionId: 1200029 | id: 20292 | sceneName: Main | flagName: license_trigger2 | showOnMap: 0 | mapIcon: 0 | transId: 0
+Run mission License for Ransom
+FAIL MISSION || missionId: 1200028
+AREA TRIGGER DELETE || id: 20291
+
+TRIGGER Procedure 2.0 Step 7.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Elsie stops standing still
+
+TRIGGER Procedure 2.0 Step 9.0 Order 6 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Elsie
+CONDITIONS
+Check if CHOICE is <= (maybe?) 3
+ACTIONS
+(cId 9) A conversation 341_0 starts:
+{{dialogue|Elsie|Hey! ''Player'', are you ready to help me find that dang license yet?}}
+
+*''Sure, I'll help you.''
+*''Too much on my plate.''
+
+{{dialogue|Elsie|indent=true|answer=Sure, I'll help you.
+|Good! Alright, now follow me! Let me show you where I was when I lost it! Dang it... that darned license better still be there!}}
+{{dialogue|Elsie|indent=true|answer=Too much on my plate.
+|I'm in a bind here, Builder! Mi-an'll kill me if the lawmen don't catch me first! I'm gonna find this license {{textcolor|green|today}}, y'hear? With or without ya, even if it kills me! So if you wanna help, better come find me soon!}}
+
+TRIGGER Procedure 2.0 Step 10.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 3
+ACTIONS
+===Find the License===
+
+{{mission_details
+|desc = Mi-an's workshop owner license was lost by Elsie at the cattle farm. Let's find it with Elsie.
+|details = Find the License
+}}
+SCENEITEM INTERACT SET LOCKER || itemType: 0 | id: 20291 | isAdd: 0
+Add behavior MissionFindRanch (idName: 20291) to Elsie
+(param: -1)
+AREA TRIGGER CREATE || missionId: 1200029 | id: 20291 | sceneName: Main | flagName: license_trigger | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80001376

@@ -1,0 +1,107 @@
+Reading Mission 1700372: Pen's Last Words
+
+<onlyinclude>{{Infobox mission
+|name = Pen's Last Words
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Pen's Last Words:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ENTER GAMING STATE || order: 0
+CONDITIONS
+Check if accept is == 1
+ACTIONS
+START MISSION 1700371
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700371
+CONDITIONS
+Always:
+ACTIONS
+Run mission Pen's Last Words
+END MISSION 1700371
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the WildCave:
+CONDITIONS
+Always:
+ACTIONS
+MONSTER ADD TAG || isAdd: 1 | tag: Penghupart
+Set counter to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700372
+CONDITIONS
+Always:
+ACTIONS
+===Search for the Treasure===
+
+{{mission_details
+|desc = Based on what Pen told you, he left something in some Ruins, go check if there's any treasure there.
+|details = Search for the Treasure
+}}
+AREA TRIGGER CREATE || missionId: 1700371 | id: 17371 | sceneName: Main | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: -1 | flagName: FinnalPenExam
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 173721
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 173722
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 17371
+MONSTER ADD TAG || isAdd: 0 | tag: Penghupart
+SUBMIT MISSION 1700371
+END MISSION 1700372
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 10 | tag: Penghupart
+CONDITIONS
+Simply the Best is successfully completed
+Check if counter is == 8
+ACTIONS
+GEAR TRIGGER TRIGGER || id: 701 | scene: WildCave
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 0 | tag: Penghupart
+CONDITIONS
+Always:
+ACTIONS
+Increment counter by 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 10 | tag: Penghupart
+CONDITIONS
+Simply the Best is in state 3 with flag 0
+Check if counter is == 8
+ACTIONS
+GEAR TRIGGER TRIGGER || id: 702 | scene: WildCave

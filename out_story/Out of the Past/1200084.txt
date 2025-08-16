@@ -1,0 +1,559 @@
+Reading Mission 1200084: Out of the Past
+
+<onlyinclude>{{Infobox mission
+|name = Out of the Past
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Out of the Past:
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+Elsie stops standing still
+CUTSCENE UI STATE EXIT || 
+START MISSION 1200083
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200083
+CONDITIONS
+Always:
+ACTIONS
+Run mission Out of the Past
+END MISSION 1200083
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200084
+CONDITIONS
+Always:
+ACTIONS
+===Ask Around===
+
+{{mission_details
+|desc = Speak to each resident relevant to each of your photos to learn more about what happened in the past.
+|details = Ask Around
+}}
+Set global blackboard key wangxi with info 1.
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1200083 | targetId: 2 | canSubmit: 1
+ACTIONS
+===Meet Elsie at Blue Moon===
+
+{{mission_details
+|desc = You've asked everyone about the photos, go rendezvous with Elsie at the Blue Moon Saloon.
+|details = Meet Elsie at Blue Moon
+}}
+END MISSION 1200065
+GLOBAL BLACK BOARD REMOVE || key: wangxi
+AREA TRIGGER CREATE || missionId: 1200084 | id: 20841 | sceneName: Main | showOnMap: 1 | mapIcon: MissionArea | flagName: owen_food13011 | transId: 80003111
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_saloon
+ACTIONS
+Mi-an stands still in Saloon
+Elsie stands still in Saloon
+Elsie stops standing still
+Mi-an stops standing still
+CUTSCENE UI STATE ENTER || 
+UNIQUE ACTION RUN || idStr: enter_saloon
+Add behavior CommanderSit (idName: 20841) to Elsie
+(param: SeatDramaName:SaloonSeat08|TargetScene:Saloon)
+Add behavior CommanderSit (idName: 20841) to Mi-an
+(param: SeatDramaName:SaloonSeat07|TargetScene:Saloon)
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: past_player
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: SitDownFinished | behaviourName: CommanderSit | npc: 8017
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 444_0, 2034, 2035 starts:
+{{dialogue|Mi-an|You did what!?}}
+{{dialogue|Elsie|I did what I had to do!}}
+{{dialogue|Mi-an|What you did was impulsive! And you put our friend in danger! I was coming up with a plan!}}
+{{dialogue|Elsie|Alright, I reckon when you put it that way, I did what I had to do... in order to get things done in a timeframe that I could find satisfactory. Which is basically the same thing!}}
+{{dialogue|Elsie|Look, here they are now! Everything went fine, right, ''Player''?}}
+
+*''No one suspects a thing.''
+*''I was kinda nervous...''
+
+{{dialogue|Elsie|indent=true|answer=No one suspects a thing.
+|reward={{NPC2|Elsie|rp=3}}|Yeehaw! See, it's like I said: not everybody is a detective. Folks got their own problems to worry about; gettin' away with stuff is real easy! Half of the time, it works every time!}}
+{{dialogue|Mi-an|indent=true|That's very... specious reasoning...}}
+{{dialogue|Elsie|indent=true|Much obliged!}}
+{{dialogue|Elsie|indent=true|answer=I was kinda nervous...
+|Well you didn't get in trouble, didja?}}
+{{dialogue|Mi-an|indent=true|Regardless, Elsie, you pushed our friend to do something out of their comfort zone! I think you owe ''Player'' an apology.}}
+{{dialogue|Elsie|indent=true|Aw, shucks, I'm sorry, ''Player''... Sorry you're such a weenie...}}
+{{dialogue|Mi-an|Well, if you're safe, ''Player'', I guess there's no point in getting hung up on what's already happened. Can you guys just promise me that you'll be more careful in the future?}}
+{{dialogue|Elsie|Ain't y'all ever heard of: "all's well that ends well?" "Fortune favors the bold?" "Stupid is as stupid does?" I thought y'all were into book learnin'!}}
+The conversation ends.
+{{dialogue|Elsie|I- Oh, alright, fine. We promise.}}
+{{dialogue|Elsie|With that being said: ''Player'', spill the beans! What'd you find out?}}
+
+TRIGGER Procedure 0.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the first option in conversation segment 2025:
+{{dialogue|Elsie|Look, here they are now! Everything went fine, right, ''Player''?}}
+
+*''No one suspects a thing.'' (No unique dialogue)
+*''I was kinda nervous...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Elsie gains 3 favor
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 20841 | delayTime: 0 | durationTime: -2 | changeType: 2 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 20841 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 448_0 starts:
+{{dialogue|Mi-an|I see...}}
+{{dialogue|Elsie|Wow! So... what does it all mean!?}}
+{{dialogue|Mi-an|I... have no idea.}}
+{{dialogue|Elsie|What!? C'mon, you said talkin' to everyone would help us solve the case!}}
+{{dialogue|Mi-an|Elsie- could really do with a little less backseat detective-ing right now...}}
+{{dialogue|Elsie|I'm sorry, I'm just all riled up!}}
+{{dialogue|Mi-an|I think the best thing we can do for now is just wait until we have something else to go on.}}
+{{dialogue|Mi-an|''Player'', thanks for doing all you did; your summary on what you learned today was incisive and insightful!}}
+{{dialogue|Elsie|Yeah! You went out there and hit the streets like a real hard-boiled bad-egg! In fact, that gives me an idea-r... Tomorrow, I'm gonna give you a surprise!}}
+{{dialogue|Elsie|No, no, not one of thems. A real surprise! Oh ho ho, you just better be ready! Eh heh heh... I'm off!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderSit (idName: 20841) from Elsie
+(cId 2) A conversation 2046, 2047 starts:
+{{dialogue|Mi-an|Eh... Might want to double check your windows are locked tonight.}}
+{{dialogue|Mi-an|Nothing more for us to do now. Better just get back to it. See ya, ''Player''!}}
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderSit (idName: 20841) from Mi-an
+CUTSCENE UI STATE EXIT || 
+AREA TRIGGER DELETE || id: 20841
+SUBMIT MISSION 1200083
+END MISSION 1200065
+END MISSION 1200084
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1200083 | targetId: 2 | canSubmit: 1
+CHECK GLOBAL BLACKBOARD || key: wangxi | info: 1 | exist: 1
+ACTIONS
+===Meet Elsie at Blue Moon===
+
+{{mission_details
+|desc = You've asked everyone about the photos, go rendezvous with Elsie at the Blue Moon Saloon.
+|details = Meet Elsie at Blue Moon
+}}
+END MISSION 1200065
+GLOBAL BLACK BOARD REMOVE || key: wangxi
+
+TRIGGER Procedure 5.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Owen
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: wangxi | info: 1 | exist: 1
+Check if mission Where's Mi-an is result 1 flag 1
+ACTIONS
+(cId 10) A conversation 365_3_0 starts:
+{{dialogue|Owen|Hey there, ''Player''! How're you holding up?}}
+
+*''(Show Owen the photo)''
+*''Did you see Logan on the night of the Temple incident?''
+
+{{dialogue|Owen|indent=true|answer=(Show Owen the photo)
+|Wow... where'd you dig up an old relic like that? Yep, that's me in the background! But I can't say I remember too much about this day... People were always getting married in the Blue Moon back then.}}
+{{dialogue|Owen|indent=true|Logan's Ma... what was she like? I can barely remember her face if not for this photo; she skipped town not too long after Logan was born. Shocked everyone with that move. Hardly worth mentioning Logan's old man, Howlett, took it the hardest.}}
+{{dialogue|Owen|indent=true|But you'd have never guessed it from this photo. Looks like a match made in heaven. Except for the tear down the center, I guess.}}
+{{dialogue|Owen|indent=true|When Howlett came back with the disease and was put in quarantine by the Church, Logan really lost it. He started shouting for them to release his Pa outside the Temple door. Understandable: Howlett was all he had his whole life.}}
+{{dialogue|Owen|indent=true|Well, that's not completely true. I considered Logan a friend once. I really just hope he sees through all this madness and turns himself in. Then maybe the healing can begin.}}
+{{dialogue|Owen|indent=true|answer=Did you see Logan on the night of the Temple incident?
+|Yeah... not that night, but he came into the saloon that day with Haru, and they were actin' real strange, buying up a lot of supplies. It was later that I heard that they blew up the Temple in an attempt to get Howlett out and the old man died in the blast.}}
+{{dialogue|Owen|indent=true|Frankly, even if Logan did manage to get Howlett out of quarantine, it would have endangered us all with the disease. Real sad story. Other than that, though, I'm afraid I don't know much of anything...}}
+FINISH FIND NPC || npc: 8001 | missionId: 1200083 | targetId: 2
+
+TRIGGER Procedure 5.0 Step 1.5 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 10 | missionId: 1200065
+CONDITIONS
+Check if mission Where's Mi-an is result 1 flag 1
+ACTIONS
+(cId 20) A conversation 1810, 1811 starts:
+{{dialogue|Owen|So you're trying to find out more about Logan, huh? Yeah, I don't blame ya. It's all pretty weird. Never heard of a decent fella goin' bad so quick like that. My hope through all of this is that nobody else gets hurt.}}
+{{dialogue|Owen|Well, good luck with whatever it is you're doing. Let me know if there's anything else I can do to help.}}
+
+TRIGGER Procedure 5.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 21) After the conversation ends:
+CONDITIONS
+Check if mission Where's Mi-an is result 1 flag 1
+ACTIONS
+Owen gains 3 favor
+
+TRIGGER Procedure 5.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Pen
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: wangxi | info: 1 | exist: 1
+Check if mission Where's Mi-an is result 1 flag 1
+ACTIONS
+(cId 11) A conversation 373_3_0 starts:
+{{dialogue|Pen|Heyyy! It's Skinny Arms! How can the Protector serve you today?}}
+
+*''(Show him the bomb photo)''
+*''Did you see Logan the night he blew up the Temple?''
+*''Nothing, see ya.'' (No unique dialogue)
+
+{{dialogue|Pen|indent=true|answer=(Show him the bomb photo)
+|Hm, what's that? Making bombs now, are we? Haha! Finally! You're getting into building cool stuff! I meant to say something to you about all those lame screws and boards and-}}
+{{dialogue|Pen|indent=true|Oh. I see. Yes, now that you mention it, I believe I have seen these kind of bombs before. Yes, yes, it's coming back to me... That foul Logan's paramount compatriot used those kinds of bombs as his weapons of choice.}}
+{{dialogue|Pen|indent=true|A bit cowardly, if you ask me. If you don't have the guts to look someone in the eye as you punch them in the teeth, well, in my book, you shouldn't be fighting at all...}}
+{{dialogue|Pen|indent=true|Furthermore, these puny things would hardly scathe an indomitable chevalier such as myself...}}
+{{dialogue|Pen|indent=true|answer=Did you see Logan the night he blew up the Temple?
+|Ah hah! Trying to track down that dastardly Logan, are you? Good on you, Skinny!}}
+{{dialogue|Pen|indent=true|If you do find out where he is, why not tell me first? Skip the Civil Corps, skip the paperwork... you know, make sure Logan gets some real justice!}}
+{{dialogue|Pen|indent=true|Hm? No? I thought we were doing extra-judicial stuff already, it's not such a stretch from what you're doing now. Hmph, fine... What do I know? Let me think...}}
+{{dialogue|Pen|indent=true|The night Logan attacked our Temple, I was at home pumping iron! Yes, I believe I was trying to perfect a 300kg clean and press with one finger, but my darn palmar interosseous muscle was acting up!}}
+{{dialogue|Pen|indent=true|As soon as I heard the explosion, I rushed out of my room to see Burgess knocked out. That's something I see all the time. But what really caught my attention was the exploded Temple!}}
+{{dialogue|Pen|indent=true|I managed to catch a glimpse of Logan riding away with someone, but they were too far gone for me to pursue... Maybe it really is time for me to get a loyal steed to call my own... Nah. I'll just keep training to run faster!}}
+{{dialogue|Pen|indent=true|Well I hope you enjoyed listening to my story as much as I enjoyed telling it! Say, Skinny Arms, you're a good listener! I'll have to tell you stories more often!}}
+FINISH FIND NPC || npc: 8020 | missionId: 1200083 | targetId: 2
+
+TRIGGER Procedure 5.0 Step 3.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8020 | cId: 11 | missionId: 1200065
+CONDITIONS
+Check if mission Where's Mi-an is result 1 flag 1
+ACTIONS
+(cId 21) A conversation 1834 starts:
+{{dialogue|Pen|No more questions? Hm... I agree, there's a very good chance there's something around here that could aid in Logan's apprehension. Do let me know if you come up with anything good.}}
+
+TRIGGER Procedure 5.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 21) After the conversation ends:
+CONDITIONS
+Check if mission Where's Mi-an is result 1 flag 1
+ACTIONS
+Pen gains 3 favor
+
+TRIGGER Procedure 5.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Matilda
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: wangxi | info: 1 | exist: 1
+Check if mission Where's Mi-an is result 1 flag 1
+ACTIONS
+(cId 12) A conversation 381_3_0 starts:
+{{dialogue|Matilda|Howdy there, ''Player''! Any news to report on the Water Tower?}}
+
+*''(Show her the photo of the map)''
+*''Did you see Logan the night of the Temple explosion?''
+
+{{dialogue|Matilda|indent=true|answer=(Show her the photo of the map)
+|Goodness, ''Player''! Now wherever did you find this? ...Ah, I see.}}
+{{dialogue|Matilda|indent=true|You know, ''Player'', you don't need to be sneakin' around, actin' all suspicious if all you're after is information...}}
+{{dialogue|Matilda|indent=true|Yes, this makes sense. Although I must admit, this shows a level of organization from Logan I can't say I was aware he might be capable of.}}
+{{dialogue|Matilda|indent=true|No doubt you've started to put things together since your arrival, but... perhaps you'd best hear the tale in its entirety to dispel any misconceptions you might have about the whole ordeal.}}
+{{dialogue|Matilda|indent=true|Not too long before you started living in Sandrock, a great tragedy struck this town. Howlett, the monster hunter, and his son Logan, with whom you are already quite familiar with, ran into some trouble...}}
+{{dialogue|Matilda|indent=true|Howlett went diving in some ruins explicitly blocked off by the Civil Corps due to an abundance of unknown and dangerous substances. Sure enough, he became contaminated with somethin' bizarre.}}
+{{dialogue|Matilda|indent=true|Logan reacted rather wildly after Pastor Miguel quarantined his father inside the Temple and refused to let Logan come in contact with him due to fears of contamination. He couldn't believe his father would be so careless as to come in contact with dangerous Age of Corruption conconctions.}}
+{{dialogue|Matilda|indent=true|One night during the quarantine, Logan attacked the Temple with bombs. I assume it was to free his father from the quarantine?}}
+{{dialogue|Matilda|indent=true|But whatever the case, Logan botched the operation and... parts of the Temple collapsed. Us churchfolk were all outside, but Logan's father was still in there where we'd left him and... when we found him down there, he was already gone.}}
+{{dialogue|Matilda|indent=true|Logan blamed us churchfolk for what happened, and now he seems bent on some kind of revenge... and he'd sooner take down the whole town if it means gettin' to us, I reckon.}}
+{{dialogue|Matilda|indent=true|answer=Did you see Logan the night of the Temple explosion?
+|Well, of course, I was there at the scene of it all, as were most of us. I came out after the explosion, but by the time I knew what was going on, Logan was long gone.}}
+FINISH FIND NPC || npc: 8018 | missionId: 1200083 | targetId: 2
+
+TRIGGER Procedure 5.0 Step 5.5 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8018 | cId: 12 | missionId: 1200065
+CONDITIONS
+Check if mission Where's Mi-an is result 1 flag 1
+ACTIONS
+(cId 22) A conversation 1860, 1861 starts:
+{{dialogue|Matilda|I appreciate your concern on the matter, but I fear there's not much we can do but trust in the acumen of our Civil Corps to bring Logan to justice... without hurtin' him too much, I hope.}}
+{{dialogue|Matilda|Try not to get discouraged, ''Player''. There are brighter days ahead, I'm sure of it.}}
+
+TRIGGER Procedure 5.0 Step 6.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 22) After the conversation ends:
+CONDITIONS
+Check if mission Where's Mi-an is result 1 flag 1
+ACTIONS
+Matilda gains 3 favor
+
+TRIGGER Procedure 5.0 Step 7.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Burgess
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: wangxi | info: 1 | exist: 1
+Check if mission Where's Mi-an is result 1 flag 1
+ACTIONS
+(cId 13) A conversation 384_0 starts:
+{{dialogue|Burgess|Oh, hi ''Player''! You're looking kind of serious; is everything okay?}}
+{{dialogue|Burgess|Oh, gosh... You want to know about that night! Well, let me think, everything is a bit fuzzy for me...}}
+{{dialogue|Burgess|I was taking the late shift, helping out with patrols, making sure nobody snuck in to see Old Howlett, who was being quarantined.}}
+{{dialogue|Burgess|It was a stressful time for all of us, but obviously Logan was affected the most.}}
+{{dialogue|Burgess|Sure enough, he showed up and... the last thing I remember is me politely explaining to him that going into the Temple right then was against the rules!}}
+{{dialogue|Burgess|Then everything went black...}}
+{{dialogue|Burgess|When I woke up, everybody helped me to my feet and wanted to know what happened, but...}}
+{{dialogue|Burgess|I didn't really see anything!}}
+{{dialogue|Burgess|It's all... very sad. I can't help but think if Logan hadn't acted so irrationally, perhaps his father would still be...}}
+{{dialogue|Burgess|Erm... Some things are best not to dwell on. What happened, happened. No one wanted it to be this way; blaming anyone won't bring him back.}}
+{{dialogue|Burgess|I think the sooner Logan accepts that and takes responsibility for what he did... well, perhaps the sooner we can have him back in the flock.}}
+{{dialogue|Burgess|Maybe the reason no one's talked about this much since you've been here is... we're all really sad about the way things turned out. Maybe some people also fear that it's something they did that drove Logan down this path.}}
+{{dialogue|Burgess|Logan will come back to the Light one day. I'm sure of it.}}
+{{dialogue|Burgess|Just make sure to stay safe out there! And remember, we're all in this together, so don't hesitate to ask for help!}}
+The conversation ends.
+FINISH FIND NPC || npc: 8021 | missionId: 1200083 | targetId: 2
+
+TRIGGER Procedure 5.0 Step 8.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 13) After the conversation ends:
+CONDITIONS
+Check if mission Where's Mi-an is result 1 flag 1
+ACTIONS
+Burgess gains 3 favor
+
+TRIGGER Procedure 6.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Miguel
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: wangxi | info: 1 | exist: 1
+Check if mission Where's Mi-an is result 1 flag 1
+ACTIONS
+(cId 14) A conversation 385_0 starts:
+{{dialogue|Miguel|Hm. You're looking into the Logan incident, eh? Dreadful stuff, quite displeased to see things turn out the way they did. Not to mention the fallout since.}}
+{{dialogue|Miguel|But it can't be helped. To be blunt, if Howlett had stayed out of the ruins we all know are too dangerous to explore, he'd still be alive.}}
+{{dialogue|Miguel|Yes, I made the decision to put Howlett under quarantine. Yes, it did enrage Logan and drive him to madness. But I did what was best for the town. And I'd do it again if I had to.}}
+{{dialogue|Miguel|It's not a pleasant tale, just like the state of our world, unfortunately.}}
+The conversation ends.
+FINISH FIND NPC || npc: 8019 | missionId: 1200083 | targetId: 2
+
+TRIGGER Procedure 6.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Fang
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: wangxi | info: 1 | exist: 1
+Check if mission Where's Mi-an is result 1 flag 1
+ACTIONS
+(cId 15) A conversation 390_3_0 starts:
+{{dialogue|Fang|...}}
+
+*''(Show Fang the photo of the medical notes)''
+*''Did you see Logan the night of the Temple attack?''
+*''Nevermind.''
+
+{{dialogue|Fang|indent=true|answer=(Show Fang the photo of the medical notes)
+|...}}
+{{dialogue|X|indent=true|No answer? No?}}
+{{dialogue|Fang|indent=true|...}}
+{{dialogue|Fang|indent=true|answer=Did you see Logan the night of the Temple attack?
+|...}}
+{{dialogue|Fang|indent=true|answer=Nevermind.
+|...}}
+FINISH FIND NPC || npc: 8016 | missionId: 1200083 | targetId: 2
+
+TRIGGER Procedure 6.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Jasmine
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: wangxi | info: 1 | exist: 1
+Check if mission Where's Mi-an is result 1 flag 1
+ACTIONS
+(cId 16) A conversation 397_3_0 starts:
+{{dialogue|Jasmine|Hey, ''Player''! Are you okay?}}
+{{dialogue|Player|(What should I ask?)}}
+
+*''(Show her the photo of her drawing)''
+*''Did you see Logan the night of the Temple incident?''
+*''See ya.'' (No unique dialogue)
+
+{{dialogue|Jasmine|indent=true|answer=(Show her the photo of her drawing)
+|Oh. Hmph! This! I never shoulda drew this! If I knew what was gonna happen, I never would have...}}
+{{dialogue|Jasmine|indent=true|We used to go on lots of adventures. Then Logan changed. He didn't care about me or my mom or anybody!}}
+{{dialogue|Jasmine|indent=true|My mom said that if things get better, we were going to rebuild a school in Sandrock.}}
+{{dialogue|Jasmine|indent=true|But things got worse because of Logan! Now I'm the only kid in the whole town...}}
+{{dialogue|Jasmine|indent=true|answer=Did you see Logan the night of the Temple incident?
+|He told me right before the incident everything would be okay. He lied...}}
+FINISH FIND NPC || npc: 8040 | missionId: 1200083 | targetId: 2
+
+TRIGGER Procedure 6.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: -1 | cId: 16 | missionId: 1200065
+CONDITIONS
+Check if mission Where's Mi-an is result 1 flag 1
+ACTIONS
+(cId 23) A conversation 1908, 1909 starts:
+{{dialogue|Jasmine|Logan used to be my friend, but now...}}
+{{dialogue|Jasmine|...I hate him.}}
+
+TRIGGER Procedure 6.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Hugo
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: wangxi | info: 1 | exist: 1
+Check if mission Where's Mi-an is result 1 flag 1
+ACTIONS
+(cId 19) A conversation 1917 starts:
+{{dialogue|Hugo|Hey there, ''Player''. Hope the pressure's not gettin' to you too much. ...Hm? You're tryin' to find out more information about Logan, huh? Heh, heh, well ain't that cute.}}
+FINISH FIND NPC || npc: 8010 | missionId: 1200083 | targetId: 2
+
+TRIGGER Procedure 6.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8010 | cId: 19 | missionId: 1200065
+CONDITIONS
+Check if mission Where's Mi-an is result 1 flag 1
+ACTIONS
+(cId 17) A conversation 405_3_0 starts:
+{{dialogue|Hugo|I'm afraid there ain't much more to know than what's already been known. But I s'pose I wouldn't mind you provin' me wrong on that.}}
+
+*''(Show him the photo of the equipment)''
+*''Did you see Logan the night of the Temple incident?''
+
+{{dialogue|Hugo|indent=true|answer=(Show him the photo of the equipment)
+|Wha!?}}
+{{dialogue|Hugo|indent=true|Y-Yeah, I made this equipment. So what? I can't hardly be held responsible for everything that moves in and out of my shop now, can I? What are you implyin', huh, ''Player''?}}
+{{dialogue|Hugo|indent=true|You got a lot of nerve...}}
+{{dialogue|Hugo|indent=true|answer=Did you see Logan the night of the Temple incident?
+|!?}}
+{{dialogue|Hugo|indent=true|So what if I did? What was I supposed to do? His mind was made up. If he had half a mind left at all...}}
+
+TRIGGER Procedure 6.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8010 | cId: 17 | missionId: 1200065
+CONDITIONS
+Check if mission Where's Mi-an is result 1 flag 1
+ACTIONS
+(cId 24) A conversation 408_0 starts:
+{{dialogue|Hugo|Look: I was close with Howlett. And Logan as well. What happened to that man was a goshdang travesty. But that's just the way things are out here sometimes. All it takes is one slip up and you're gone.}}
+{{dialogue|Hugo|I always considered myself to be like an uncle to Logan; I woulda taken him in. But I guess he didn't see it that way.}}
+{{dialogue|Hugo|I worry about what Logan might do, and I worry about how the more things escalate, the less likely I'm ever going to see that pup I used to know ever again.}}
+{{dialogue|Hugo|There ain't gonna be an amicable settlement at the end of all this, so don't overinvolve yourself.}}
+{{dialogue|Hugo|Be seein' ya.}}
+The conversation ends.
+
+TRIGGER Procedure 6.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Arvio
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: wangxi | info: 1 | exist: 1
+Check if mission Where's Mi-an is result 1 flag 1
+ACTIONS
+(cId 18) A conversation 414_3_0 starts:
+{{dialogue|Arvio|Hello, there ''Player''! What stroke of luck has brought you my way?}}
+
+*''(Show him the photo of the recipe list)''
+*''Did you see Logan the night of the Temple incident?''
+
+{{dialogue|Arvio|indent=true|answer=(Show him the photo of the recipe list)
+|Oh boy... It seems my secret supplier has been revealed. Yes, yes, I told Mi-an that those recipes were company secrets... which was true! Only Haru and myself are privvy to such knowledge!}}
+{{dialogue|Arvio|indent=true|Whaaat? I was the only one left around here who knew how to make that stuff, I'm supposed to just give away my recipes like that? Come now, ''Player'', I've got to pay the bills too, you know?}}
+{{dialogue|Arvio|indent=true|It's really so unpleasant what happened with Haru, not only because I consider him a friend of mine, but also because of that great mind of his!}}
+{{dialogue|Arvio|indent=true|He was always coming up with inventions and such; we had a really good deal: all the products he showed me how to make, I put up in my shop and we split the earnings: fifty-fifty!}}
+{{dialogue|Arvio|indent=true|I've even put aside what he'd be making... you know, if he ever comes back.}}
+{{dialogue|Arvio|indent=true|Whatever would a bright and unassuming fellow be doing with a barbarian like Logan, anyway? I say there must be blackmail involved! Haru would never turn against us on a dime like this.}}
+{{dialogue|Arvio|indent=true|Well, friend, now that you know how to make the stuff, eh... care to... not spread it around too much?}}
+{{dialogue|Arvio|indent=true|answer=Did you see Logan the night of the Temple incident?
+|That night? When Logan attacked the Temple?}}
+{{dialogue|Arvio|indent=true|I'm afraid I didn't see anything. I was just at home going through my inventory. I found out about all the commotion later, just like everyone else.}}
+FINISH FIND NPC || npc: 8014 | missionId: 1200083 | targetId: 2
+
+TRIGGER Procedure 6.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8014 | cId: 18 | missionId: 1200065
+CONDITIONS
+Check if mission Where's Mi-an is result 1 flag 1
+ACTIONS
+(cId 25) A conversation 1952, 1955 starts:
+{{dialogue|Arvio|I think it's great that you're looking into things. Haru can't be the villain they're making him out to be, he just can't be.}}
+{{dialogue|Arvio|I wish you luck in your investigations! Let me know if there's anything else I can do to help.}}

@@ -1,0 +1,759 @@
+Reading Mission 1500394: Craft
+
+<onlyinclude>{{Infobox mission
+|name = Craft
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200133
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 5
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment 1500394 by 1
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission Craft
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1500394
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1500394 | id: 539401 | sceneName: Main | flagName: Story_5394_Area | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_saloon
+Check if Owen is in town
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_saloon
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Owen stands still in Saloon
+Grace stands still in Saloon
+AREA TRIGGER DELETE || id: 539401
+SCENEITEM CREATE FLAG || itemType: 0 | id: 539401 | path: Mission_StoryFood | sceneName: Saloon | flagName: showdown_saloon | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: Story_5394_Player
+Add behavior CommanderNPCActionLoop (idName: 5394001) to Owen
+(param: CMDAction:Story_SitEat)
+Add behavior CommanderNPCAction (idName: 5394002) to Grace
+(param: CMDAction:StandWrite)
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 539403
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCActionLoop (idName: 5394001) from Owen
+Add behavior CommanderDrama (idName: 5394002) to Owen
+(param: TargetScene:Saloon|DramaName:Story_5394_Owen|DramaType:Sit|TargetFlag:Story_539401)
+Remove behavior CommanderNPCAction (idName: 5394002) from Grace
+STOPWATCH REAL TIME SET || id: 5394100 | sec: 3
+
+TRIGGER Procedure 0.0 Step 5.1 Order 36 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 5394100
+CONDITIONS
+Always:
+ACTIONS
+(cId 539401) A conversation 19374 starts:
+{{dialogue|Owen|...}}
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 539401 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+(cId 539402) A conversation 19278 starts:
+{{dialogue|Grace|Well? Lay it on me, boss!}}
+
+TRIGGER Procedure 0.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8002 | cId: 539402 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+(cId 539403) A conversation 19279 starts:
+{{dialogue|Owen|...Let me go in for a second bite...}}
+
+TRIGGER Procedure 0.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 539403 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCActionLoop (idName: 5394003) to Owen
+(param: CMDAction:Story_SitEat)
+STOPWATCH REAL TIME SET || id: 539401 | sec: 3
+
+TRIGGER Procedure 0.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 539401
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCActionLoop (idName: 5394003) from Owen
+Add behavior CommanderDrama (idName: 5394009) to Owen
+(param: TargetScene:Saloon|DramaName:Story_5394_Owen|DramaType:Sit|TargetFlag:Story_539401)
+STOPWATCH REAL TIME SET || id: 5394101 | sec: 2
+
+TRIGGER Procedure 0.0 Step 9.1 Order 37 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 5394101
+CONDITIONS
+Always:
+ACTIONS
+(cId 539404) A conversation 19280 starts:
+{{dialogue|Owen|So, you did go with more ginger, huh?}}
+
+TRIGGER Procedure 0.0 Step 10.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 539404 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+(cId 539405) A conversation 19281 starts:
+{{dialogue|Grace|Right you are! My line of thinking: sandfish tend to be entirely too pungent; in order to balance out the fishiness of the fish, I thought I'd try to cover that particular profile with ginger!}}
+
+TRIGGER Procedure 0.0 Step 11.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8002 | cId: 539405 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+(cId 539406) A conversation 19282, 19283 starts:
+{{dialogue|Owen|Not bad! Hey, you've got one thing down; you can talk the talk!}}
+{{dialogue|Owen|However, there still remains the subject of walking the walk...}}
+
+TRIGGER Procedure 0.0 Step 12.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 539406 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+(cId 539407) A conversation 19284, 19285 starts:
+{{dialogue|Grace|Tch. Not quite there yet, huh?}}
+{{dialogue|Owen|Well...}}
+
+TRIGGER Procedure 0.0 Step 13.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 539407 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+(cId 539408) A conversation 19286 starts:
+{{dialogue|Owen|Problem is... boiling ginger in milk causes the milk to curdle...}}
+
+TRIGGER Procedure 0.0 Step 15.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 539408 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+(cId 539409) A conversation 19287 starts:
+{{dialogue|Grace|Ah!? Does it really? I had no idea...}}
+
+TRIGGER Procedure 0.0 Step 16.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8002 | cId: 539409 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+(cId 539410) A conversation 19288 starts:
+{{dialogue|Owen|Hey, don't worry! It's one of those things... the only way to know is to have it happen to you; it's just about experience. You've got the right mindset, let's keep going-!}}
+Add behavior CommanderMoveToFlagAndAction (idName: 5394004) to Player
+(param: TargetScene:Saloon|MoveMode:Run|FlagName:Story_5394_Player1)
+
+TRIGGER Procedure 0.0 Step 17.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 539411) A conversation 19289 starts:
+{{dialogue|Owen|Oh, ''Player''! How's it going!}}
+
+TRIGGER Procedure 0.0 Step 18.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 539411 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+(cId 539412) A conversation 19290, 19291 starts:
+{{dialogue|Grace|Hey, ''Player''! Come on in! I've gotten pretty decent at making stuff out of a recipe book, now I'm trying to take things to the next level by thinking up dishes of my own!}}
+{{dialogue|Grace|It's turning out to be about as tough as putting a bullet through a bunker window at five leagues...}}
+
+TRIGGER Procedure 0.0 Step 19.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8002 | cId: 539412 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+(cId 539413) A conversation 19292 starts:
+{{dialogue|Owen|Cooking... is not your enemy, Grace. It's something you have to feel flowing through you... If you think of it as a foe to be conquered, you will only wrestle with it. Instead, let go... let it take you by the hand and guide you! To dance a dance... of flavor...!}}
+
+TRIGGER Procedure 0.0 Step 20.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 539413 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+(cId 539414) A conversation 19293 starts:
+{{dialogue|Grace|Very cool and mystical, boss, but if I can't get it together, there's no reason for me to keep working with you, man! I don't need the money, and you don't need amateurs stinkin' up your kitchen, tarnishing your good name...!}}
+
+TRIGGER Procedure 0.0 Step 21.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8002 | cId: 539414 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+(cId 539415) A conversation 19294 starts:
+{{dialogue|Owen|Woah... This just got serious all of a sudden... Let's just... give it some time, alright? I can hardly imagine the Blue Moon without you, Grace...!}}
+Cooper stands still in Saloon
+
+TRIGGER Procedure 0.0 Step 23.0 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 539415 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+(cId 539416) A conversation 19295 starts:
+{{dialogue|Cooper|Quitcher yammerin', I got somethin' to talk about that's a million times better than whatever y'all are talkin' about!}}
+
+TRIGGER Procedure 0.0 Step 24.0 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8003 | cId: 539416 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 5394005) to Cooper
+(param: TargetScene:Saloon|MoveMode:Run|FlagName:Story_539403)
+
+TRIGGER Procedure 0.0 Step 25.0 Order 25 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8003 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 539417) A conversation 19296, 19297 starts:
+{{dialogue|Cooper|I've come to share with you all my latest composition! It's a concept album that can only be performed as a single, uninterrupted ditty, lest I have to start from the beginning, and... you guessed it...! It's real long...}}
+{{dialogue|Owen|Oh, shoot, Coop... We were just in the middle of trying out some new items for our menu, can it wait?}}
+
+TRIGGER Procedure 0.0 Step 26.0 Order 26 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 539417 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+(cId 539419) A conversation 19298, 19299, 19300, 19301, 19302 starts:
+{{dialogue|Cooper|No!}}
+{{dialogue|Owen|Try a bite...?}}
+{{dialogue|Cooper|No!}}
+{{dialogue|Owen|It's free...!}}
+{{dialogue|Cooper|Now why didn't ya say so!}}
+
+TRIGGER Procedure 0.0 Step 28.0 Order 28 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8003 | cId: 539419 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+(cId 539420) A conversation 19303, 19304 starts:
+{{dialogue|Grace|Er... right... well, just go ahead. Dig in. Perhaps my new dishes had no effect on our master chef, but will resonate more brightly with the common man...}}
+{{dialogue|Cooper|See, it's good that I arrived before someone genuinely in need; y'see, if you just give handouts to every Tom, Dick, and Jerry, they'll never earn the value of a hard-earned Gol! Yes, because of my interception here, someone'll be pullin' 'emselves up by the bootstraps before-}}
+
+TRIGGER Procedure 0.0 Step 29.0 Order 29 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8003 | cId: 539420 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+Cooper stands still in Saloon
+Cooper stops standing still
+Add behavior CommanderNPCActionLoop (idName: 5394007) to Cooper
+(param: CMDAction:Story_SitEat)
+STOPWATCH REAL TIME SET || id: 539402 | sec: 3
+
+TRIGGER Procedure 0.0 Step 30.0 Order 30 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 5394102
+CONDITIONS
+Always:
+ACTIONS
+(cId 539421) A conversation 19305, 6057_0 starts:
+{{dialogue|Cooper|Hngh! Ha...? It's... It's so... It's so unfathomably...}}
+{{dialogue|Grace|Unfathomably what...!?}}
+
+*''(Wink at Owen)''
+*''Good?''
+*''Bad?''
+
+{{dialogue|Owen|indent=true|answer=(Wink at Owen)
+|reward={{NPC2|Owen|rp=5}}|reward={{NPC2|Grace|rp=5}}|Ah...! It seems... our good friend Cooper is, for once, at a loss for words! Your dish has stunned him with its majesty...! His mind has been sent to another plane, a realm where there is only deliciousness...!}}
+{{dialogue|Cooper|indent=true|answer=Good?
+|reward={{NPC2|Owen|rp=5}}|reward={{NPC2|Grace|rp=5}}|Peculiar!}}
+{{dialogue|Cooper|indent=true|answer=Bad?
+|reward={{NPC2|Cooper|rp=5}}|Peculiar!}}
+
+TRIGGER Procedure 0.0 Step 32.0 Order 32 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 539421) There is a conversation segment (id 19310) that ends:
+{{dialogue|Owen|Ah...! It seems... our good friend Cooper is, for once, at a loss for words! Your dish has stunned him with its majesty...! His mind has been sent to another plane, a realm where there is only deliciousness...!}}
+CONDITIONS
+Take a Hint! is successfully completed
+ACTIONS
+(cId 539422) A conversation 19311 starts:
+{{dialogue|Grace|Let the man speak, Owen! And, you two... winking at each other again? Please never join the ACI, that's all I'm saying...}}
+
+TRIGGER Procedure 0.0 Step 33.0 Order 33 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 539421) There is a conversation segment (id 19310) that ends:
+{{dialogue|Owen|Ah...! It seems... our good friend Cooper is, for once, at a loss for words! Your dish has stunned him with its majesty...! His mind has been sent to another plane, a realm where there is only deliciousness...!}}
+CONDITIONS
+Take a Hint! is in state 3 with flag 0
+ACTIONS
+(cId 539422) A conversation 19312 starts:
+{{dialogue|Grace|You two... are not exactly subtle, you know that? I recommend for your next attempt at espionage you give a better signal than winking...}}
+
+TRIGGER Procedure 0.0 Step 35.0 Order 35 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 539421) There is a conversation segment (id 19314) that ends:
+{{dialogue|Cooper|Peculiar!}}
+CONDITIONS
+Always:
+ACTIONS
+(cId 539423) A conversation 19315 starts:
+{{dialogue|Cooper|It's like... I can taste the entire life-cycle of the fish... I can feel it, swimming upsand in a river of congealing, slightly chunky milk, and just as it's about to flop up on the shore n' complete its life's purpose and lay its eggs... it pukes its own guts out and dies.}}
+
+TRIGGER Procedure 0.0 Step 31.0 Order 38 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 539402
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCActionLoop (idName: 5394007) from Cooper
+Add behavior CommanderDrama (idName: 5394006) to Cooper
+(param: TargetScene:Saloon|DramaName:Story_5394_Cooper|DramaType:Sit|TargetFlag:Story_539404)
+STOPWATCH REAL TIME SET || id: 5394102 | sec: 2
+
+TRIGGER Procedure 0.0 Step 34.0 Order 34 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8002 | cId: 539422 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+(cId 539423) A conversation 19313 starts:
+{{dialogue|Cooper|Well, I'll tell you one thing: it ain't like nothin' I ever had before!}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8003 | cId: 539423 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+(cId 539424) A conversation 19375, 19316, 19317 starts:
+{{dialogue|0|...}}
+{{dialogue|Owen|I don't think we can print that review...}}
+{{dialogue|Grace|Yeah, it's fine. I get it. I should just give up. You don't need to sugarcoat it...}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8002 | cId: 539424 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+(cId 539425) A conversation 19318, 19444 starts:
+{{dialogue|Cooper|Sugarcoat wouldn't make it any worse!}}
+{{dialogue|Grace|...}}
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8002 | cId: 539425 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+(cId 539426) A conversation 19319 starts:
+{{dialogue|Owen|Grace...! You're being too hard on yourself! I get that you're good at everything. This is just gonna... take a little more elbow grease than you're used to, that's all. Let's take a break! Whew, I'm parched...}}
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 539426 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+(cId 539427) A conversation 19320, 19321 starts:
+{{dialogue|Owen|Can I drink this?}}
+{{dialogue|Cooper|I need it, too! To wash down all the- gulp, gulp...!}}
+
+TRIGGER Procedure 1.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8003 | cId: 539427 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 539402 | delayTime: 3 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 539402 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 539402 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 539402 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 539428) A conversation 19446 starts:
+{{dialogue|Owen|！}}
+
+TRIGGER Procedure 1.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 539428 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+(cId 539429) A conversation 19322, 19323, 19324 starts:
+{{dialogue|Cooper|Oh my Peach on a pogo stick!}}
+{{dialogue|Cooper|Tis the nectar of the gods!}}
+{{dialogue|Cooper|I... I want to bawl my eyes out!}}
+
+TRIGGER Procedure 1.0 Step 10.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8003 | cId: 539429 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+(cId 539430) A conversation 19325 starts:
+{{dialogue|Owen|Intoxicating Dream, a cocktail that will take you back to a special place in your memories...}}
+
+TRIGGER Procedure 1.0 Step 11.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 539430 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+(cId 539431) A conversation 19326 starts:
+{{dialogue|Grace|Oh. Um. I just made up some frilly stuff to put on the label. It doesn't actually work.}}
+
+TRIGGER Procedure 1.0 Step 12.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8002 | cId: 539431 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+(cId 539432) A conversation 19327 starts:
+{{dialogue|Owen|No, no, that's not the point. The point is: this drink is delicious! Did you make it yourself?}}
+
+TRIGGER Procedure 1.0 Step 13.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 539432 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+(cId 539433) A conversation 19328 starts:
+{{dialogue|Cooper|Mama...! Life had just begun...! And now I've gone and thrown it all away!}}
+
+TRIGGER Procedure 1.0 Step 14.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8003 | cId: 539433 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+(cId 539434) A conversation 19329 starts:
+{{dialogue|Grace|Yeah, um. Just some Sandberries, Raspberry juice, ice. Oh. And some mint leaves thrown in.}}
+
+TRIGGER Procedure 1.0 Step 15.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8002 | cId: 539434 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+(cId 539435) A conversation 19330 starts:
+{{dialogue|Owen|Just that? No trick to it?}}
+
+TRIGGER Procedure 1.0 Step 16.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 539435 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+(cId 539436) A conversation 19331 starts:
+{{dialogue|Cooper|I call to you, mother, on the Day of Memories... Why do you not answer...! Whyyyyyy!?}}
+
+TRIGGER Procedure 1.0 Step 17.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8003 | cId: 539436 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+(cId 539437) A conversation 19332, 19333, 19334 starts:
+{{dialogue|Grace|What counts as a trick? Hm. Now that you mention it... Yeah, while I was making it, I couldn't find a spoon and...}}
+{{dialogue|Grace|Back when I was in the service, I used to shake my grenades before throwing them at my enemies. You know, just a cute thing I liked to do...}}
+{{dialogue|Grace|So, I put another cup over the top of the drink, and shook it up! For luck, I guess.}}
+
+TRIGGER Procedure 1.0 Step 19.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8002 | cId: 539437 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+(cId 539438) A conversation 19335 starts:
+{{dialogue|Owen|Hm... shaken, not stirred... Well, whatever you did, this is a smash hit! Best thing you've ever made. Maybe we should get you mixing up a few more of your ideas, huh?}}
+
+TRIGGER Procedure 1.0 Step 20.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 539438 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+(cId 539439) A conversation 6060_0 starts:
+{{dialogue|0|(What should I say?)}}
+
+*''It's really that good?''
+*''Lemme have a sip.''
+
+{{dialogue|Owen|Try it, ''Player''! It's like there's a party in my mouth, and everyone's invited!}}
+{{dialogue|Player|(The cool beverage cascades down your throat, refreshing you. The flavors of assorted berries tingle across your tongue, and suddenly, you recall a time when you were petting a kitten, and all your troubles seemed so distant...)}}
+
+*''Wow! Delicious!''
+*''Wow, I think I felt something change inside me...''
+*''Wait a sec, how does it do the memory thing...?''
+
+{{dialogue|Owen|indent=true|answer=Wow! Delicious!
+|Ain't that the truth!}}
+{{dialogue|Owen|indent=true|answer=Wow, I think I felt something change inside me...
+|Yep! Cool and refreshing. Perfect for the scorching Sandrock summers!}}
+{{dialogue|Grace|indent=true|answer=Wait a sec, how does it do the memory thing...?
+|Huh? You guys are really having memories sparked by my drink? It's just juice and mint; gotta be a placebo effect...}}
+ACTOR BUFF ADD || npc: 8000 | buffId: 3009 | instanceId: 539401
+
+TRIGGER Procedure 1.0 Step 23.0 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 539439) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 539440) A conversation 19346, 19347, 19348 starts:
+{{dialogue|Grace|So everything I cook: kill it with fire. Every drink I mix: heaven in a glass?}}
+{{dialogue|Owen|Well, this is only your first hit. Hopefully the first of many! But let's not get too ahead of ourselves... But yeah, this is delicious! Do we look like we're faking it?}}
+{{dialogue|Grace|You don't...}}
+
+TRIGGER Procedure 1.0 Step 25.0 Order 25 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8002 | cId: 539440 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+(cId 539441) A conversation 19349, 19350 starts:
+{{dialogue|Owen|So... if I may be so bold, Grace, why don't you take the next few days to mix and shake up some drinks for us, and... if they're all even half as good as this one...}}
+{{dialogue|Owen|We could have ourselves a drinks menu! Set up a second counter over there, start calling it a cafe... Grace's Cafe? Grace's Mixology? Something like that? Incognito Infusions: by Grace... Ooh: "Squeeze the Day!"}}
+
+TRIGGER Procedure 1.0 Step 26.0 Order 26 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 539441 | missionId: 1500394
+CONDITIONS
+Always:
+ACTIONS
+(cId 539445) A conversation 19351, 19352, 19353, 19354 starts:
+{{dialogue|Grace|Come on, man... And... you don't need to do all that for me.}}
+{{dialogue|Owen|Hey, just trying to do good business! It'd be your thing, so... we can do it however you want! We'd both come try your drinks, right, ''Player''?}}
+{{dialogue|Grace|It is nice, always having you two in my corner. Alright. Let's do it! I'll start mixing more drinks...!}}
+{{dialogue|Cooper|Mabeeeeeel! I don't deserve youuuuuuu!}}
+
+TRIGGER Procedure 1.0 Step 27.0 Order 27 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 539445) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Cooper stops standing still
+Cooper stands still in Saloon
+Cooper stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 5394005) from Cooper
+Remove behavior CommanderDrama (idName: 5394006) from Cooper
+Remove behavior CommanderNPCActionLoop (idName: 5394007) from Cooper
+Cooper stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 5394008) to Cooper
+(param: TargetScene:Main|MoveMode:Run|FlagName:Story_5394_Area)
+STOPWATCH REAL TIME SET || id: 539403 | sec: 3
+
+TRIGGER Procedure 1.0 Step 28.0 Order 28 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 539403
+CONDITIONS
+Always:
+ACTIONS
+(cId 539446) A conversation 19355, 19356, 19357 starts:
+{{dialogue|Owen|I, uh... guess we're not going to hear the new Coogo concept album today...}}
+{{dialogue|Grace|Eh. You don't know that. He could be back. Seeing that that's the case, think I might start my juice journey tomorrow. Thanks, you two, for the pep talk!}}
+{{dialogue|Owen|Sounds good, take it easy!}}
+
+TRIGGER Procedure 1.0 Step 29.0 Order 29 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 539446) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Owen stops standing still
+Grace stops standing still
+Remove behavior CommanderNPCActionLoop (idName: 5394001) from Owen
+Remove behavior CommanderNPCAction (idName: 5394002) from Grace
+Remove behavior CommanderDrama (idName: 5394002) from Owen
+Remove behavior CommanderNPCActionLoop (idName: 5394003) from Owen
+Remove behavior CommanderDrama (idName: 5394009) from Owen
+Remove behavior CommanderMoveToFlagAndAction (idName: 5394004) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 5394008) from Cooper
+SCENEITEM DELETE || itemType: 0 | id: 539401
+END MISSION 1500394
+
+TRIGGER Procedure 1.0 Step 30.0 Order 30 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 539421) The player picks the first option in conversation segment 19306:
+{{dialogue|Grace|Unfathomably what...!?}}
+
+*''(Wink at Owen)'' (No unique dialogue)
+*''Good?'' (No unique dialogue)
+*''Bad?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Owen gains 5 favor
+Grace gains 5 favor
+
+TRIGGER Procedure 1.0 Step 31.0 Order 31 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 539421) The player picks the second option in conversation segment 19306:
+{{dialogue|Grace|Unfathomably what...!?}}
+
+*''(Wink at Owen)'' (No unique dialogue)
+*''Good?'' (No unique dialogue)
+*''Bad?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Owen gains 5 favor
+Grace gains 5 favor
+
+TRIGGER Procedure 1.0 Step 32.0 Order 32 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 539421) The player picks the third option in conversation segment 19306:
+{{dialogue|Grace|Unfathomably what...!?}}
+
+*''(Wink at Owen)'' (No unique dialogue)
+*''Good?'' (No unique dialogue)
+*''Bad?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Cooper gains 5 favor

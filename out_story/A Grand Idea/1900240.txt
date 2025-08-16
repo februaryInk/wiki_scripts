@@ -1,0 +1,416 @@
+Reading Mission 1900240: A Grand Idea
+
+<onlyinclude>{{Infobox mission
+|name = A Grand Idea
+|image =
+|description = After hearing that Musa is coming to Sandrock, Arvio had an idea for a fantastic investment opportunity.
+|type = Side
+|time =
+|location =
+|characters = [[Arvio]]
+|condition =
+|details =
+|exp = 900
+|reputation = 10
+|gols = 600
+|npc1 = Arvio
+|rp1 = 20
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200107
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check relationship with Arvio is Lover
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+Run mission Blessing in Disguise
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 13) After the conversation ends:
+CONDITIONS
+GROUP 0:
+The New Mascot is successfully completed
+Product Recall is successfully completed
+
+GROUP 10:
+The New Mascot has failed
+Product Recall is successfully completed
+
+GROUP 20:
+Product Recall is successfully completed
+The New Mascot has failed
+
+GROUP 30:
+Product Recall has failed
+The New Mascot has failed
+
+ACTIONS
+Run mission A Grand Idea
+Set global blackboard key 1800483 with info 1.
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1900240
+CONDITIONS
+Always:
+ACTIONS
+Set Ci to 0
+AREA TRIGGER CREATE || id: 192400 | missionId: 1900240 | flagName: T9240 | showOnMap: 1 | transId: 0 | mapIcon: MissionAreaBranch | sceneName: Main
+
+TRIGGER Procedure 0.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+A Grand Idea is in state 1 with flag 0
+ACTIONS
+AREA TRIGGER DELETE || id: 192400
+AREA TRIGGER CREATE || id: 192400 | missionId: 1900240 | flagName: T9240 | showOnMap: 1 | transId: 0 | mapIcon: MissionAreaBranch | sceneName: Main
+
+TRIGGER Procedure 0.0 Step 0.5 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 192400
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 924000 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+DELIVER MISSION 1900240
+AREA TRIGGER DELETE || id: 192400
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 924000 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 7135, 7136, 7137, 7138, 7139, 7140, 7141, 7142 starts:
+{{dialogue|Arvio|Sis, please! If Musa's coming, it would be foolish not to try and get him to invest! That way, we can buy Ma and Pa a house even sooner!}}
+{{dialogue|Amirah|What, you think you'll just ask him to buy our parents a house? Trudy literally just told you not to do a sales pitch...}}
+{{dialogue|Arvio|Am, how can you call this a sales pitch? I'm shocked! This is a movement, Am... to bring prosperity to Sandrock! It's not a pitch, it's a business opportunity!}}
+{{dialogue|Amirah|No, Arvio.}}
+{{dialogue|Arvio|Come on! This is a once in a lifetime opportunity! Think about it, the richest man in the Free Cities! Am, times like these don't come around every day! You get me, don't you Catori?}}
+{{dialogue|Catori|Ha, I was planning on throwing together a presentation of my own! Y'know, make a mood board of all my top tier business plans. When Musa arrives, hit him with the best ideas he's ever seen! I'll leave him speechless, I tell ya.}}
+{{dialogue|Arvio|See! Catori thinks it's a great idea! And she's a wildly successful businesswoman!}}
+{{dialogue|Catori|Wildly meaning chaotic then yeah, why not...}}
+
+TRIGGER Procedure 2.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Arvio stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 9240000) to Arvio
+(param: TargetScene:Main|MoveMode:Walk|FlagName:A9240_1|LookAtActor:8039)
+STOPWATCH REAL TIME SET || id: 9240004 | sec: 1.2
+
+TRIGGER Procedure 0.0 Step 1.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) The player picks the first option in conversation segment 7164:
+{{dialogue|Arvio|''Player'', you believe me, right? How about helping me out, make some glorious gift boxes? They'll have to be finished before Musa arrives... but I'll make you a partner! Arvio and ''Player'', titans of industry!}}
+
+*''Of course I'll help you!'' (No unique dialogue)
+*''I've got a lot on my plate...'' (No unique dialogue)
+*''This is a really bad idea, Arvio.'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 7171:
+{{dialogue|Arvio|So? Changed your mind?}}
+
+*''Leave it to me.'' (No unique dialogue)
+*''Sorry, I still can't help out.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set Ci to 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 7171:
+{{dialogue|Arvio|So? Changed your mind?}}
+
+*''Leave it to me.'' (No unique dialogue)
+*''Sorry, I still can't help out.'' (No unique dialogue)
+
+(cId 5) After the conversation ends:
+CONDITIONS
+Check if Ci is == 1
+ACTIONS
+START MISSION 1900240
+
+TRIGGER Procedure 0.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1900240
+CONDITIONS
+Always:
+ACTIONS
+Run mission A Grand Idea
+END MISSION 1900240
+
+TRIGGER Procedure 1.0 Step 0.3 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 924000 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: P9240 | sceneName: Main
+Arvio stands still in Main and looks at Amirah
+Amirah stands still in Main and looks at Arvio
+Vivi stands still in Main and looks at Amirah
+Catori stands still in Main and looks at Arvio
+STOPWATCH REAL TIME SET || id: 9240001 | sec: 0.2
+DELAY MASK SET || maskId: 924000 | delayTime: 0.5 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 1.5 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 9240001) to Vivi
+(param: TargetScene:Main|MoveMode:Walk|FlagName:V9240_moveto2|LookAtActor:0)
+STOPWATCH REAL TIME SET || sec: 1 | id: 9240002
+
+TRIGGER Procedure 1.0 Step 2.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+GROUP 0:
+Add behavior CommanderMoveToFlagAndAction (idName: 9240003) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:P9240_moveto|LookAtActor:0)
+STOPWATCH REAL TIME SET || id: 9240003 | sec: 1
+
+GROUP 1:
+Add behavior CommanderMoveToFlagAndAction (idName: 9240004) to Arvio
+(param: TargetScene:Main|MoveMode:Walk|FlagName:A9240_1|LookAtActor:8000)
+
+GROUP 2:
+Add behavior CommanderMoveToFlagAndAction (idName: 9240006) to Amirah
+(param: TargetScene:Main|MoveMode:Walk|FlagName:Aa9240_2|LookAtActor:8000)
+
+GROUP 3:
+(cId 3) A conversation 2099_0 starts:
+{{dialogue|Arvio|You know, just like my billboard!}}
+
+*''What are you talking about?''
+*''I love that billboard!''
+
+{{dialogue|Amirah|indent=true|answer=What are you talking about?
+|Hello, ''Player''. Sigh... Arvio wants to do a sales pitch for Musa. After being specifically told not to.}}
+{{dialogue|Arvio|indent=true|Sister, I told you! It's not a pitch...}}
+{{dialogue|Arvio|indent=true|answer=I love that billboard!
+|reward={{NPC2|Arvio|rp=5}}|Ha! See! I told you, ''Player'' has a real discerning eye!}}
+
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+GROUP 0:
+Add behavior CommanderMoveToFlagAndAction (idName: 9240002) to Catori
+(param: TargetScene:Main|MoveMode:Walk|FlagName:C9240_moveto|LookAtActor:0)
+
+GROUP 1:
+Add behavior CommanderMoveToFlagAndAction (idName: 9240007) to Arvio
+(param: TargetScene:Main|MoveMode:Walk|FlagName:A9240|LookAtActor:8015)
+
+GROUP 2:
+(cId 9) A conversation 2353_0 starts:
+{{dialogue|Arvio|Alright... let's think. Wait... wait!}}
+{{dialogue|Arvio|I've got it! Yes! This is perfect! A gift box! Oh, you knocked it out the park this time, Arvio. A beautiful box, jam packed full of goods!}}
+{{dialogue|Arvio|Though, to appeal to someone of Musa's tastes... it'd have to be really impressive...}}
+{{dialogue|Arvio|Well then it'll just have to be extra beautiful! A touch of the Arvio charm and I'm sure Musa's eyes will pop!}}
+{{dialogue|Amirah|You know gift boxes are pretty common everywhere, Arvio...}}
+{{dialogue|Arvio|But none of those have my face on them!}}
+The conversation ends.
+
+
+TRIGGER Procedure 1.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+GROUP 0:
+Add behavior CommanderNPCAction (idName: 9240009) to Amirah
+(param: CMDAction:ShakeHead_Story)
+
+GROUP 1:
+(cId 5) A conversation 2108_0 starts:
+{{dialogue|Arvio|Seriously, Am. This will be unique, and show Musa that not only am I, dare I say, the prodigy of business? But also that I have a keen sense for advertising!  He'll see it and won't even be able to resist!}}
+{{dialogue|Amirah|Arvio. Come on. Be serious. If you go to Musa without a proper plan, you'll embarass us both.}}
+{{dialogue|Arvio|Sister, trust me! I know what I'm doing!}}
+{{dialogue|Arvio|''Player'', you believe me, right? How about helping me out, make some glorious gift boxes? They'll have to be finished before Musa arrives... but I'll make you a partner! Arvio and ''Player'', titans of industry!}}
+
+*''Of course I'll help you!''
+*''I've got a lot on my plate...''
+*''This is a really bad idea, Arvio.''
+
+{{dialogue|Arvio|indent=true|answer=Of course I'll help you!
+|reward={{NPC2|Arvio|rp=2}}|Amazing! Then I'll leave it in your capable hands!}}
+{{dialogue|Amirah|indent=true|Sigh... well, I can't stop you...}}
+{{dialogue|Arvio|indent=true|answer=I've got a lot on my plate...
+|Alright, no pressure! But if you have time, then just let me know.}}
+{{dialogue|Amirah|indent=true|Maybe it'll give you some time to think it over, Arvio...}}
+{{dialogue|Arvio|indent=true|answer=This is a really bad idea, Arvio.
+|reward={{NPC2|Amirah|rp=2}}|Are you crazy? This is the idea of a lifetime!}}
+{{dialogue|Amirah|indent=true|Arvio... ''Player'' is right. You need to think about this some more.}}
+
+
+TRIGGER Procedure 2.0 Step 1.5 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 9240002
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 9240000) from Arvio
+Add behavior CommanderMoveToFlagAndAction (idName: 9240005) to Arvio
+(param: TargetScene:Main|MoveMode:Walk|FlagName:A9240|LookAtActor:8024)
+STOPWATCH REAL TIME SET || id: 9240005 | sec: 0.8
+
+TRIGGER Procedure 2.0 Step 2.5 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 92402
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 2110_0 starts:
+{{dialogue|Catori|A billboard isn't enough, Arvio! We're talking Musa here. The things he's seen... He wants something new, exciting!}}
+{{dialogue|Catori|Aw jeeze, I gotta go prepare! See you later, guys!}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 5.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8015 | cId: 5 | missionId: 1900240
+CONDITIONS
+Always:
+ACTIONS
+Amirah stops standing still
+Vivi stops standing still
+Catori stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 9240001) from Vivi
+Remove behavior CommanderMoveToFlagAndAction (idName: 9240002) from Catori
+Remove behavior CommanderMoveToFlagAndAction (idName: 9240005) from Arvio
+Remove behavior CommanderMoveToFlagAndAction (idName: 9240004) from Arvio
+Remove behavior CommanderMoveToFlagAndAction (idName: 9240006) from Amirah
+Remove behavior CommanderMoveToFlagAndAction (idName: 9240007) from Arvio
+Remove behavior CommanderMoveToFlagAndAction (idName: 9240003) from Player
+Remove behavior CommanderNPCAction (idName: 9240009) from Amirah
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 3.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 9240004
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 2111_0 starts:
+{{dialogue|Arvio|Grandma Vivi, what about you? Are you going to join us? Your clothes are boutique! If you can get some investment, I'm sure you'll be all the rage in the Free Cities!}}
+{{dialogue|Vivi|Haha, you're sweet as ever, Arvio, you flatter me too much.}}
+{{dialogue|Vivi|But no, at my age I'm content enough with the small slice of town that I have. I don't want to be kept too busy. I'll leave you young folk to your aspirations.}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 1.5 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 9240005
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 2109_0 starts:
+{{dialogue|Catori|I need to work on my pit- uh, presentation, and hit the ground running when Musa arrives! Don't want to embarass myself! Haha... imagine that...}}
+{{dialogue|Arvio|Boooring! Who wants to listen to a long speech? If you ask me, you just need something to catch his eye! Like my uncle used to say, "you just need something to catch his eye!"}}
+{{dialogue|Catori|...}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 2.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the second option in conversation segment 7149:
+{{dialogue|Arvio|You know, just like my billboard!}}
+
+*''What are you talking about?'' (No unique dialogue)
+*''I love that billboard!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Arvio gains 5 favor
+
+TRIGGER Procedure 3.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) The player picks the first option in conversation segment 7164:
+{{dialogue|Arvio|''Player'', you believe me, right? How about helping me out, make some glorious gift boxes? They'll have to be finished before Musa arrives... but I'll make you a partner! Arvio and ''Player'', titans of industry!}}
+
+*''Of course I'll help you!'' (No unique dialogue)
+*''I've got a lot on my plate...'' (No unique dialogue)
+*''This is a really bad idea, Arvio.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Arvio gains 2 favor
+
+TRIGGER Procedure 3.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) The player picks the third option in conversation segment 7164:
+{{dialogue|Arvio|''Player'', you believe me, right? How about helping me out, make some glorious gift boxes? They'll have to be finished before Musa arrives... but I'll make you a partner! Arvio and ''Player'', titans of industry!}}
+
+*''Of course I'll help you!'' (No unique dialogue)
+*''I've got a lot on my plate...'' (No unique dialogue)
+*''This is a really bad idea, Arvio.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Amirah gains 2 favor
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Arvio|So? Changed your mind?}}
+
+*''Leave it to me.'' (No unique dialogue)
+*''Sorry, I still can't help out.'' (No unique dialogue)
+
+
+==Rewards==
+{{mission reward
+|npc1 = Arvio
+|rp1 = 20
+|exp = 900
+|reputation = 10
+|gols = 600
+}}

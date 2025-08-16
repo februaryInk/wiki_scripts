@@ -1,0 +1,301 @@
+Reading Mission 1800535: Late Bloomer
+
+<onlyinclude>{{Infobox mission
+|name = Late Bloomer
+|image =
+|description = Mi-an discovered some Yimi flower buds in the desert and has become particularly attentive to these small flowers.
+|type = Side
+|time =
+|location =
+|characters = [[Mi-an]]
+|condition =
+|details =
+|exp = 1015
+|reputation = None
+|gols = 500
+|npc1 = Mi-an
+|rp1 = 30
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200030
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check relationship with Mi-an is Lover
+Check if Mi-an has favor >= 600
+Moisture Farm Blues is successfully completed
+CHECK WEATHER STATE || weather: 1 | flag: 1
+CHECK HAS LOVE DLC || 
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+Set 2800160 to 1
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check relationship with Mi-an is Lover
+Check if Mi-an has favor >= 600
+Moisture Farm Blues is successfully completed
+Classic Projection is in state 1 with flag 0
+Classic Projection is in state 2 with flag 0
+CHECK HAS LOVE DLC || 
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+Run mission Late Bloomer
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800535
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1800535 | id: 85351 | flagName: trigger_greenhouse | sceneName: Main | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 85351 | path: S8535_Item1 | flagName: S8535_Item1 | sceneName: Main | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Greenhouse:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_greenhouse
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_greenhouse
+AREA TRIGGER DELETE || id: 85351
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Greenhouse:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85351 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || flagName: S8535_0_1 | sceneName: Greenhouse
+Zeke stands still in Greenhouse and looks at Mi-an
+Mi-an stands still in Greenhouse and looks at Zeke
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Greenhouse:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85351 | delayTime: 3 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85351 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 8383_0 starts:
+{{dialogue|Mi-an|Er, well... it's short, small; green little bud...}}
+{{dialogue|Zeke|Long, needle-y leaves? Jagged edges?}}
+{{dialogue|Mi-an|Ooh, yeah, very jagged!}}
+{{dialogue|Zeke|Stem about as long as your hand, light purple gloss?}}
+{{dialogue|Mi-an|That's gotta be the one! You've seen it before?}}
+{{dialogue|Zeke|Yimi flower.}}
+{{dialogue|Mi-an|Yi... mi? Never heard of it...!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8535001) to Player
+(param: TargetScene:Greenhouse|MoveMode:Run|FlagName:S8535_0_2|Delay:0.1|LookAtActor:8033)
+
+TRIGGER Procedure 0.0 Step 8.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 8384_0 starts:
+{{dialogue|Mi-an|Hey dear, come on in!}}
+{{dialogue|Mi-an|Zeke and I were just talking about this flower bud I saw sticking out of a puddle!}}
+{{dialogue|Mi-an|The rain seems to bringing in all sorts of new types of life around the edges of town...}}
+{{dialogue|Mi-an|But this one really caught my eye as something special!}}
+{{dialogue|Zeke|Special...?I dunno about that. Ma used to keep a few back when I was a kid, but ended up gettin' rid of 'em. Bit too thirsty for what they are.}}
+{{dialogue|Zeke|That being said... they are pretty. They bloom into a four petal flower, each a different color.}}
+{{dialogue|Mi-an|Wow! How is this my first time seeing one?}}
+{{dialogue|Zeke|Well, uh... in addition to being thirsty, these buds tend to grow a bit too big; the weight of the flower strains the stem. It's generally just an unhealthy plant. They usually die out here before they bloom.}}
+{{dialogue|Zeke|Like a failure... of evolution or somethin'... That's just me shooting from the hip though. Could be any number of things...}}
+{{dialogue|Mi-an|Oh, so it's endangered...!}}
+{{dialogue|Zeke|It might be... in another ten thousand years or so. Don't uh... don't clear your schedule out just yet.}}
+{{dialogue|Mi-an|But it is rare, right!?}}
+{{dialogue|Zeke|Rare... in a four-leaf clover sense. You don't see 'em much, but... they're around.}}
+{{dialogue|Mi-an|So what you're saying is... it wouldn't really be a great use of our time and resources to try to help the Yimi Flower...}}
+{{dialogue|Zeke|Well. I mean... look. Not everything we do here has to... save the town or whatever. If you like the plant, why don't you find it again and help it out.}}
+{{dialogue|Zeke|If that goes well, snag some seeds. Plant 'em wherever you like.}}
+{{dialogue|Mi-an|Yeah? Nothing more pressing you need help with?}}
+{{dialogue|Zeke|Nah. You do plenty around here. Go have some fun.}}
+{{dialogue|Mi-an|...What if it's an invasive species?!}}
+{{dialogue|Zeke|Well, I reckon that'd be nigh impossible on the account of because-}}
+{{dialogue|Mi-an|...Because how could an invasive species be almost endangered!}}
+{{dialogue|Zeke|Oh. Yeah. That. And it's still a local plant at the end of the day.}}
+{{dialogue|Mi-an|Right! That too...!}}
+{{dialogue|Zeke|Relax...}}
+{{dialogue|Mi-an|Whew! Relax...!}}
+{{dialogue|Zeke|You said you wanted to work here cuz you enjoy planting, so...}}
+{{dialogue|Zeke|Go... enjoy planting.}}
+{{dialogue|Mi-an|A-alright...! Alright, I will!}}
+{{dialogue|Zeke|Good.}}
+{{dialogue|Mi-an|Well, what do you say, dear? Shall we add the multi-colored Yimi Flower to Sandrock's ecological profile? I wanna see what it looks like when it blooms!}}
+
+*''Yeah, let's do it!''
+*''Eh... now's not a good time for me...''
+*''Survival of the fittest; the flower deserves obscurity.''
+
+{{dialogue|Mi-an|indent=true|answer=Yeah, let's do it!
+|reward={{NPC2|Mi-an|rp=3}}|Great! I'll do a little research on what needs to be done for planting Yimi Flowers in Sandrock, then get back to you right away!}}
+{{dialogue|Mi-an|indent=true|answer=Eh... now's not a good time for me...
+|Well, let me know if you end up being able to help!}}
+{{dialogue|Mi-an|Huh!? Zeke said it'd just be harmless fun. You're serious?}}
+
+*''Just messing around, of course I'll help.''
+*''Yes. We don't need that weakness in our town.''
+*''I dunno, I'm just busy right now...''
+
+{{dialogue|Mi-an|indent=true|answer=Just messing around, of course I'll help.
+|reward={{NPC2|Mi-an|rp=3}}|Great! I'll do a little research on what needs to be done for planting Yimi Flowers in Sandrock, then get back to you right away!}}
+{{dialogue|Mi-an|indent=true|answer=Yes. We don't need that weakness in our town.
+|Ooooookay...!}}
+{{dialogue|Mi-an|indent=true|Well, let me know if you end up being able to help!}}
+{{dialogue|Mi-an|indent=true|answer=I dunno, I'm just busy right now...
+|Ooooookay...!}}
+{{dialogue|Mi-an|indent=true|Well, let me know if you end up being able to help!}}
+DELIVER MISSION 1800535
+Set 8535A to 0
+
+TRIGGER Procedure 0.0 Step 11.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Zeke stops standing still
+Mi-an stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8535001) from Player
+CUTSCENE UI STATE EXIT || 
+CAMERA PATH STOP ALL || 
+
+TRIGGER Procedure 0.0 Step 9.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the first option in conversation segment 23590:
+{{dialogue|Mi-an|Well, what do you say, dear? Shall we add the multi-colored Yimi Flower to Sandrock's ecological profile? I wanna see what it looks like when it blooms!}}
+
+*''Yeah, let's do it!'' (No unique dialogue)
+*''Eh... now's not a good time for me...'' (No unique dialogue)
+*''Survival of the fittest; the flower deserves obscurity.'' (No unique dialogue)
+
+(cId 2) The player picks the first option in conversation segment 23591:
+{{dialogue|Mi-an|Huh!? Zeke said it'd just be harmless fun. You're serious?}}
+
+*''Just messing around, of course I'll help.'' (No unique dialogue)
+*''Yes. We don't need that weakness in our town.'' (No unique dialogue)
+*''I dunno, I'm just busy right now...'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 23594:
+{{dialogue|Mi-an|Hey, darling! Any chance you could help me with my Yimi Flower thing?}}
+
+*''Yeah, let's do it!'' (No unique dialogue)
+*''Eh... now's not a good time for me...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8535A to 1
+
+TRIGGER Procedure 0.0 Step 10.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if 8535A is == 1
+ACTIONS
+START MISSION 1800535
+
+TRIGGER Procedure 0.0 Step 12.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800535
+CONDITIONS
+Always:
+ACTIONS
+Zeke stops standing still
+Mi-an stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8535001) from Player
+CUTSCENE UI STATE EXIT || 
+CAMERA PATH STOP ALL || 
+Run mission Late Bloomer
+END MISSION 1800535
+
+TRIGGER Procedure 1.0 Step 11.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 23590:
+{{dialogue|Mi-an|Well, what do you say, dear? Shall we add the multi-colored Yimi Flower to Sandrock's ecological profile? I wanna see what it looks like when it blooms!}}
+
+*''Yeah, let's do it!'' (No unique dialogue)
+*''Eh... now's not a good time for me...'' (No unique dialogue)
+*''Survival of the fittest; the flower deserves obscurity.'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 23591:
+{{dialogue|Mi-an|Huh!? Zeke said it'd just be harmless fun. You're serious?}}
+
+*''Just messing around, of course I'll help.'' (No unique dialogue)
+*''Yes. We don't need that weakness in our town.'' (No unique dialogue)
+*''I dunno, I'm just busy right now...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Mi-an gains 3 favor
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Mi-an|Hey, darling! Any chance you could help me with my Yimi Flower thing?}}
+
+*''Yeah, let's do it!''
+*''Eh... now's not a good time for me...''
+
+{{dialogue|Mi-an|indent=true|answer=Yeah, let's do it!
+|Great! I'll do a little research on what needs to be done for planting Yimi Flowers in Sandrock, then get back to you right away!}}
+{{dialogue|Mi-an|indent=true|answer=Eh... now's not a good time for me...
+|Well, let me know if you end up being able to help!}}
+
+==Rewards==
+{{mission reward
+|npc1 = Mi-an
+|rp1 = 30
+|exp = 1015
+|reputation = None
+|gols = 500
+}}
+==Post-conduct==
+
+If the player successfully completes the mission, some of the townsfolk will comment on it:
+
+{{dialogue|Burgess|Yimi Park is lovely, you should be proud of yourselves! I of course, volunteered to add the location to my safety patrol. If anyone ever messes with your flowers, ooh, you better believe everyone and their mother'll know about it!}}
+{{dialogue|-2|Your Yimi garden is so amazing! The colors, the smells... agh! You know, I tried to rescue one once... it totally died! You guys need to show me what you did!}}
+{{dialogue|Trudy|Everyone in town is talking about your flower garden. It's a hit! Thanks for helping to beautify our city, with not just your garden, but also with your lovely selves!}}
+{{dialogue|Zeke|Gotta admit, the garden you and Mi-an made looks great. Ma woulda been real impressed by you two. You all share the same kind of passion. Not, er, for the Yimi Flower specifically, but... you know, uh... the general state of... stuff.}}

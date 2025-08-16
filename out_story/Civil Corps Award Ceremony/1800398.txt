@@ -1,0 +1,937 @@
+Reading Mission 1800398: Civil Corps Award Ceremony
+
+<onlyinclude>{{Infobox mission
+|name = Civil Corps Award Ceremony
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200364
+
+TRIGGER Procedure 8.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission A Little Bundle of Joy
+
+TRIGGER Procedure 8.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+The Jewel of the Eufaula is successfully completed
+ACTIONS
+Run mission Civil Corps Award Ceremony
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800398
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|749}}
+AREA TRIGGER CREATE || missionId: 1800398 | id: 83981 | sceneName: Main | flagName: Trigger_CivilCorp | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 32 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH STOP END || order: 0 | id: 839821
+CONDITIONS
+Always:
+ACTIONS
+Trudy gains 10 favor
+Justice gains 20 favor
+Unsuur gains 20 favor
+Captain gains 20 favor
+
+TRIGGER Procedure 0.0 Step 0.1 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the CivilCorp:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_civilcorp
+ACTIONS
+AREA TRIGGER DELETE || id: 83981
+UNIQUE ACTION RUN || idStr: enter_civilcorp
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the CivilCorp:
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: CivilCorp | flagName: S8398_0_1
+Trudy stands still in CivilCorp and looks at Player
+Captain stands still in CivilCorp and looks at Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 83981 | path: S8398_Item1 | sceneName: CivilCorp | flagName: S8398_Item1 | extraParams: -1
+Justice stands still in CivilCorp and looks at Player
+Unsuur stands still in CivilCorp and looks at Player
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the CivilCorp:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 18369 starts:
+{{dialogue|Justice|Hey, ''Player''! You're here!}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 8398001) to Player
+(param: TargetScene:CivilCorp|MoveMode:Walk|FlagName:S8398_0_2|LookAtActor:8008)
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 5631_0 starts:
+{{dialogue|Justice|We've got a surprise for you today! I invited Trudy to award you a medal! All your service at the Civil Corps qualified you for our highest honors, so... On behalf of the Sandrock Civil Corps and our whole town, we're here to give it to you!}}
+{{dialogue|Justice|Mayor Trudy?}}
+{{dialogue|Trudy|Thank you, Justice! ''Player'', since you came to Sandrock, the Civil Corps has been much more efficient in just about every department! I just wanted you to know that your service hasn't gone unnoticed.}}
+{{dialogue|Trudy|This is to thank you, ''Player''! For all your hard work and diligence in protecting the town of Sandrock.}}
+{{dialogue|Trudy|You stepped up; no one made you do it, you volunteered.}}
+{{dialogue|Trudy|This medal is a symbol of all our gratitude for everything you've done as an outstanding member of the Civil Corps.}}
+{{dialogue|Trudy|I present to you, the Civil Corps Medal of Honor!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8398062) to Trudy
+(param: TargetScene:CivilCorp|MoveMode:Walk|FlagName:S8398_6_2|LookAtActor:8000|Action:Give8398)
+ACTOR FREEZ COLLIDER || npc: 8000 | freezeCollider: 1
+ACTOR FREEZ COLLIDER || npc: 8006 | freezeCollider: 1
+
+TRIGGER Procedure 0.0 Step 7.0 Order 31 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8006 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8398002) to Player
+(param: TargetScene:CivilCorp|MoveMode:Walk|FlagName:S8398_0_2|LookAtActor:8006|Action:Give|Delay:1)
+
+TRIGGER Procedure 0.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 83982
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 83981 | delayTime: 3.5 | durationTime: -2 | changeType: 0 | curveIndex: 1
+Add behavior CommanderNPCAction (idName: 8398082) to Justice
+(param: CMDAction:Applause)
+Add behavior CommanderNPCAction (idName: 8398262) to Unsuur
+(param: CMDAction:Applause)
+
+TRIGGER Procedure 0.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83981 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+ACTOR FREEZ COLLIDER || npc: 8006 | freezeCollider: 0
+ACTOR FREEZ COLLIDER || npc: 8000 | freezeCollider: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 8398062) from Trudy
+Remove behavior CommanderMoveToFlag (idName: 8398001) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8398002) from Player
+Remove behavior CommanderNPCAction (idName: 8398082) from Justice
+Remove behavior CommanderNPCAction (idName: 8398262) from Unsuur
+DELAY MASK SET || maskId: 83981 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 10.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 83981
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 18377, 18378, 18379, 5632_0 starts:
+{{dialogue|Justice|Congratulations, ''Player''!}}
+{{dialogue|Unsuur|Almost as cool as a Deputy Hat.}}
+{{dialogue|Captain|Meow!}}
+{{dialogue|Player|(What should I say?)}}
+
+*''(Finish speech)''
+*''(Thank the Civil Corps)''
+*''(Thank your fans)''
+*''(Thank Captain)''
+*''(Thank Trudy)''
+*''(Thank your parents)''
+*''(Thank the Light)''
+*''(Say you'd rather be Deputy)''
+
+{{dialogue|Trudy|indent=true|answer=(Finish speech)
+|I hope everyone can follow your example, ''Player''.}}
+{{dialogue|Justice|indent=true|Alright, that's a wrap, everyone. Let's all get back to doin' what we do best...!}}
+{{dialogue|Trudy|indent=true|Thank you, all of you brave members of the Civil Corps!}}
+{{dialogue|Justice|indent=true|answer=(Thank the Civil Corps)
+|Hey, no need to thank us. You're the star here!}}
+{{dialogue|Unsuur|indent=true|If the Civil Corps didn't exist, ''Player'' wouldn't be getting this medal. So we deserve some credit... for existing.}}
+{{dialogue|Justice|indent=true|Eh, I guess... that is technically true...}}
+{{dialogue|Captain|indent=true|Meow!}}
+{{dialogue|Unsuur|indent=true|Captain agrees.}}
+{{dialogue|Justice|indent=true|answer=(Thank your fans)
+|Oh... you have fans? I mean, yeah, that makes sense. Sorry, I don't get out much, ''Player''.}}
+{{dialogue|Unsuur|indent=true|I'm your fan.}}
+{{dialogue|Captain|indent=true|Meow!}}
+{{dialogue|Unsuur|indent=true|Captain is, too.}}
+{{dialogue|Captain|indent=true|Meow! Meow!}}
+{{dialogue|Captain|indent=true|answer=(Thank Captain)
+|Meow!}}
+{{dialogue|Unsuur|indent=true|Yeah, I think Captain was the first to put your name on the ballot.}}
+{{dialogue|Captain|indent=true|Meow, meow!}}
+{{dialogue|Unsuur|indent=true|You're right, it was me...}}
+{{dialogue|Trudy|indent=true|answer=(Thank Trudy)
+|Oh, well... You're welcome, ''Player''! I'm really just here as a formality but... as soon as I heard the news, I was more than happy to do it!}}
+{{dialogue|Justice|indent=true|It's not a real medal unless a city official is here to witness the ceremony and notarize the papers afterwards!}}
+{{dialogue|Unsuur|indent=true|Seems like it'd be a real medal the moment it came out of its metal casting. Or... maybe the moment we thought you deserved it. Why would it be the moment that we have someone sign a piece of paper? Dang... everything is so... arbitrary...}}
+{{dialogue|Captain|indent=true|Meow...}}
+{{dialogue|Justice|indent=true|answer=(Thank your parents)
+|Yeah, you gotta remember where you came from!}}
+{{dialogue|Unsuur|indent=true|''Player''... Always an absolute class act.}}
+{{dialogue|Captain|indent=true|Meow!}}
+{{dialogue|Unsuur|indent=true|answer=(Thank the Light)
+|Wait, so if I wanna be as strong as you, I just have to go to church more?}}
+{{dialogue|Justice|indent=true|Er, I think the point being made is that without the core values that we get from the teachings of the Light, none of this would be possible.}}
+{{dialogue|Unsuur|indent=true|That's one way to interpret it, yeah.}}
+{{dialogue|Captain|indent=true|Meow?}}
+{{dialogue|Unsuur|indent=true|answer=(Say you'd rather be Deputy)
+|This medal is even better than being deputy. It's what it is to go... beyond. Like super deputy.}}
+{{dialogue|Justice|indent=true|Yeah! This thing is the real deal! Wear it around and people will say "thank you for your service," and stuff!}}
+Set 8398SelectNum to 0
+Set 8398Select to 0
+Set 8398A to 0
+Set 8398B to 0
+Add 1 Civil Corps Medal of Honor of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 13.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+(cId 12) After the conversation ends:
+CONDITIONS
+Check if 8398Select is <= (maybe?) 7
+Check if 8398SelectNum is == 1
+Check if 8398B is == 0
+ACTIONS
+(cId 4) A conversation 5645_0 starts:
+{{dialogue|Player|(What should I say?)}}
+
+*''(Finish speech)''
+*''(Thank the Civil Corps)''
+*''(Thank your fans)''
+*''(Thank Captain)''
+*''(Thank Trudy)''
+*''(Thank your parents)''
+*''(Thank the Light)''
+*''(Say you'd rather be Deputy)''
+
+{{dialogue|Trudy|indent=true|answer=(Finish speech)
+|I hope everyone can follow your example, ''Player''.}}
+{{dialogue|Justice|indent=true|Alright, that's a wrap, everyone. Let's all get back to doin' what we do best...!}}
+{{dialogue|Trudy|indent=true|Thank you, all of you brave members of the Civil Corps!}}
+{{dialogue|Justice|indent=true|answer=(Thank the Civil Corps)
+|Hey, no need to thank us. You're the star here!}}
+{{dialogue|Unsuur|indent=true|If the Civil Corps didn't exist, ''Player'' wouldn't be getting this medal. So we deserve some credit... for existing.}}
+{{dialogue|Justice|indent=true|Eh, I guess... that is technically true...}}
+{{dialogue|Captain|indent=true|Meow!}}
+{{dialogue|Unsuur|indent=true|Captain agrees.}}
+{{dialogue|Justice|indent=true|answer=(Thank your fans)
+|Oh... you have fans? I mean, yeah, that makes sense. Sorry, I don't get out much, ''Player''.}}
+{{dialogue|Unsuur|indent=true|I'm your fan.}}
+{{dialogue|Captain|indent=true|Meow!}}
+{{dialogue|Unsuur|indent=true|Captain is, too.}}
+{{dialogue|Captain|indent=true|Meow! Meow!}}
+{{dialogue|Captain|indent=true|answer=(Thank Captain)
+|Meow!}}
+{{dialogue|Unsuur|indent=true|Yeah, I think Captain was the first to put your name on the ballot.}}
+{{dialogue|Captain|indent=true|Meow, meow!}}
+{{dialogue|Unsuur|indent=true|You're right, it was me...}}
+{{dialogue|Trudy|indent=true|answer=(Thank Trudy)
+|Oh, well... You're welcome, ''Player''! I'm really just here as a formality but... as soon as I heard the news, I was more than happy to do it!}}
+{{dialogue|Justice|indent=true|It's not a real medal unless a city official is here to witness the ceremony and notarize the papers afterwards!}}
+{{dialogue|Unsuur|indent=true|Seems like it'd be a real medal the moment it came out of its metal casting. Or... maybe the moment we thought you deserved it. Why would it be the moment that we have someone sign a piece of paper? Dang... everything is so... arbitrary...}}
+{{dialogue|Captain|indent=true|Meow...}}
+{{dialogue|Justice|indent=true|answer=(Thank your parents)
+|Yeah, you gotta remember where you came from!}}
+{{dialogue|Unsuur|indent=true|''Player''... Always an absolute class act.}}
+{{dialogue|Captain|indent=true|Meow!}}
+{{dialogue|Unsuur|indent=true|answer=(Thank the Light)
+|Wait, so if I wanna be as strong as you, I just have to go to church more?}}
+{{dialogue|Justice|indent=true|Er, I think the point being made is that without the core values that we get from the teachings of the Light, none of this would be possible.}}
+{{dialogue|Unsuur|indent=true|That's one way to interpret it, yeah.}}
+{{dialogue|Captain|indent=true|Meow?}}
+{{dialogue|Unsuur|indent=true|answer=(Say you'd rather be Deputy)
+|This medal is even better than being deputy. It's what it is to go... beyond. Like super deputy.}}
+{{dialogue|Justice|indent=true|Yeah! This thing is the real deal! Wear it around and people will say "thank you for your service," and stuff!}}
+
+TRIGGER Procedure 2.0 Step 10.1 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 3) There is a conversation segment (id 18379) that ends:
+{{dialogue|Captain|Meow!}}
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: CivilCorp | flagName: S8398_0_3
+
+TRIGGER Procedure 0.0 Step 11.0 Order 11 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 18380:
+{{dialogue|Player|(What should I say?)}}
+
+*''(Finish speech)'' (No unique dialogue)
+*''(Thank the Civil Corps)'' (No unique dialogue)
+*''(Thank your fans)'' (No unique dialogue)
+*''(Thank Captain)'' (No unique dialogue)
+*''(Thank Trudy)'' (No unique dialogue)
+*''(Thank your parents)'' (No unique dialogue)
+*''(Thank the Light)'' (No unique dialogue)
+*''(Say you'd rather be Deputy)'' (No unique dialogue)
+
+(cId -1) The player picks the third option in conversation segment 18380:
+{{dialogue|Player|(What should I say?)}}
+
+*''(Finish speech)'' (No unique dialogue)
+*''(Thank the Civil Corps)'' (No unique dialogue)
+*''(Thank your fans)'' (No unique dialogue)
+*''(Thank Captain)'' (No unique dialogue)
+*''(Thank Trudy)'' (No unique dialogue)
+*''(Thank your parents)'' (No unique dialogue)
+*''(Thank the Light)'' (No unique dialogue)
+*''(Say you'd rather be Deputy)'' (No unique dialogue)
+
+(cId -1) The player picks the fourth option in conversation segment 18380:
+{{dialogue|Player|(What should I say?)}}
+
+*''(Finish speech)'' (No unique dialogue)
+*''(Thank the Civil Corps)'' (No unique dialogue)
+*''(Thank your fans)'' (No unique dialogue)
+*''(Thank Captain)'' (No unique dialogue)
+*''(Thank Trudy)'' (No unique dialogue)
+*''(Thank your parents)'' (No unique dialogue)
+*''(Thank the Light)'' (No unique dialogue)
+*''(Say you'd rather be Deputy)'' (No unique dialogue)
+
+(cId -1) The player picks the fifth option in conversation segment 18380:
+{{dialogue|Player|(What should I say?)}}
+
+*''(Finish speech)'' (No unique dialogue)
+*''(Thank the Civil Corps)'' (No unique dialogue)
+*''(Thank your fans)'' (No unique dialogue)
+*''(Thank Captain)'' (No unique dialogue)
+*''(Thank Trudy)'' (No unique dialogue)
+*''(Thank your parents)'' (No unique dialogue)
+*''(Thank the Light)'' (No unique dialogue)
+*''(Say you'd rather be Deputy)'' (No unique dialogue)
+
+(cId -1) The player picks the sixth option in conversation segment 18380:
+{{dialogue|Player|(What should I say?)}}
+
+*''(Finish speech)'' (No unique dialogue)
+*''(Thank the Civil Corps)'' (No unique dialogue)
+*''(Thank your fans)'' (No unique dialogue)
+*''(Thank Captain)'' (No unique dialogue)
+*''(Thank Trudy)'' (No unique dialogue)
+*''(Thank your parents)'' (No unique dialogue)
+*''(Thank the Light)'' (No unique dialogue)
+*''(Say you'd rather be Deputy)'' (No unique dialogue)
+
+(cId -1) The player picks the seventh option in conversation segment 18380:
+{{dialogue|Player|(What should I say?)}}
+
+*''(Finish speech)'' (No unique dialogue)
+*''(Thank the Civil Corps)'' (No unique dialogue)
+*''(Thank your fans)'' (No unique dialogue)
+*''(Thank Captain)'' (No unique dialogue)
+*''(Thank Trudy)'' (No unique dialogue)
+*''(Thank your parents)'' (No unique dialogue)
+*''(Thank the Light)'' (No unique dialogue)
+*''(Say you'd rather be Deputy)'' (No unique dialogue)
+
+(cId -1) The player picks the 7 option in conversation segment 18380:
+{{dialogue|Player|(What should I say?)}}
+
+*''(Finish speech)'' (No unique dialogue)
+*''(Thank the Civil Corps)'' (No unique dialogue)
+*''(Thank your fans)'' (No unique dialogue)
+*''(Thank Captain)'' (No unique dialogue)
+*''(Thank Trudy)'' (No unique dialogue)
+*''(Thank your parents)'' (No unique dialogue)
+*''(Thank the Light)'' (No unique dialogue)
+*''(Say you'd rather be Deputy)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Increment 8398SelectNum by 1
+
+TRIGGER Procedure 0.0 Step 12.0 Order 13 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 18380:
+{{dialogue|Player|(What should I say?)}}
+
+*''(Finish speech)'' (No unique dialogue)
+*''(Thank the Civil Corps)'' (No unique dialogue)
+*''(Thank your fans)'' (No unique dialogue)
+*''(Thank Captain)'' (No unique dialogue)
+*''(Thank Trudy)'' (No unique dialogue)
+*''(Thank your parents)'' (No unique dialogue)
+*''(Thank the Light)'' (No unique dialogue)
+*''(Say you'd rather be Deputy)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8398Select to 7
+
+TRIGGER Procedure 0.0 Step 12.3 Order 26 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the 7 option in conversation segment 18380:
+{{dialogue|Player|(What should I say?)}}
+
+*''(Finish speech)'' (No unique dialogue)
+*''(Thank the Civil Corps)'' (No unique dialogue)
+*''(Thank your fans)'' (No unique dialogue)
+*''(Thank Captain)'' (No unique dialogue)
+*''(Thank Trudy)'' (No unique dialogue)
+*''(Thank your parents)'' (No unique dialogue)
+*''(Thank the Light)'' (No unique dialogue)
+*''(Say you'd rather be Deputy)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8398B to 1
+
+TRIGGER Procedure 0.0 Step 14.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+(cId 12) After the conversation ends:
+CONDITIONS
+Check if 8398Select is <= (maybe?) 7
+Check if 8398SelectNum is == 2
+Check if 8398B is == 0
+ACTIONS
+(cId 5) A conversation 5646_0 starts:
+{{dialogue|Player|(What should I say?)}}
+
+*''(Finish speech)''
+*''(Thank the Civil Corps)''
+*''(Thank your fans)''
+*''(Thank Captain)''
+*''(Thank Trudy)''
+*''(Thank your parents)''
+*''(Thank the Light)''
+*''(Say you'd rather be Deputy)''
+
+{{dialogue|Trudy|indent=true|answer=(Finish speech)
+|I hope everyone can follow your example, ''Player''.}}
+{{dialogue|Justice|indent=true|Alright, that's a wrap, everyone. Let's all get back to doin' what we do best...!}}
+{{dialogue|Trudy|indent=true|Thank you, all of you brave members of the Civil Corps!}}
+{{dialogue|Justice|indent=true|answer=(Thank the Civil Corps)
+|Hey, no need to thank us. You're the star here!}}
+{{dialogue|Unsuur|indent=true|If the Civil Corps didn't exist, ''Player'' wouldn't be getting this medal. So we deserve some credit... for existing.}}
+{{dialogue|Justice|indent=true|Eh, I guess... that is technically true...}}
+{{dialogue|Captain|indent=true|Meow!}}
+{{dialogue|Unsuur|indent=true|Captain agrees.}}
+{{dialogue|Justice|indent=true|answer=(Thank your fans)
+|Oh... you have fans? I mean, yeah, that makes sense. Sorry, I don't get out much, ''Player''.}}
+{{dialogue|Unsuur|indent=true|I'm your fan.}}
+{{dialogue|Captain|indent=true|Meow!}}
+{{dialogue|Unsuur|indent=true|Captain is, too.}}
+{{dialogue|Captain|indent=true|Meow! Meow!}}
+{{dialogue|Captain|indent=true|answer=(Thank Captain)
+|Meow!}}
+{{dialogue|Unsuur|indent=true|Yeah, I think Captain was the first to put your name on the ballot.}}
+{{dialogue|Captain|indent=true|Meow, meow!}}
+{{dialogue|Unsuur|indent=true|You're right, it was me...}}
+{{dialogue|Trudy|indent=true|answer=(Thank Trudy)
+|Oh, well... You're welcome, ''Player''! I'm really just here as a formality but... as soon as I heard the news, I was more than happy to do it!}}
+{{dialogue|Justice|indent=true|It's not a real medal unless a city official is here to witness the ceremony and notarize the papers afterwards!}}
+{{dialogue|Unsuur|indent=true|Seems like it'd be a real medal the moment it came out of its metal casting. Or... maybe the moment we thought you deserved it. Why would it be the moment that we have someone sign a piece of paper? Dang... everything is so... arbitrary...}}
+{{dialogue|Captain|indent=true|Meow...}}
+{{dialogue|Justice|indent=true|answer=(Thank your parents)
+|Yeah, you gotta remember where you came from!}}
+{{dialogue|Unsuur|indent=true|''Player''... Always an absolute class act.}}
+{{dialogue|Captain|indent=true|Meow!}}
+{{dialogue|Unsuur|indent=true|answer=(Thank the Light)
+|Wait, so if I wanna be as strong as you, I just have to go to church more?}}
+{{dialogue|Justice|indent=true|Er, I think the point being made is that without the core values that we get from the teachings of the Light, none of this would be possible.}}
+{{dialogue|Unsuur|indent=true|That's one way to interpret it, yeah.}}
+{{dialogue|Captain|indent=true|Meow?}}
+{{dialogue|Unsuur|indent=true|answer=(Say you'd rather be Deputy)
+|This medal is even better than being deputy. It's what it is to go... beyond. Like super deputy.}}
+{{dialogue|Justice|indent=true|Yeah! This thing is the real deal! Wear it around and people will say "thank you for your service," and stuff!}}
+
+TRIGGER Procedure 0.0 Step 15.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+(cId 12) After the conversation ends:
+CONDITIONS
+Check if 8398Select is <= (maybe?) 7
+Check if 8398SelectNum is == 3
+Check if 8398B is == 0
+ACTIONS
+(cId 6) A conversation 5647_0 starts:
+{{dialogue|Player|(What should I say?)}}
+
+*''(Finish speech)''
+*''(Thank the Civil Corps)''
+*''(Thank your fans)''
+*''(Thank Captain)''
+*''(Thank Trudy)''
+*''(Thank your parents)''
+*''(Thank the Light)''
+*''(Say you'd rather be Deputy)''
+
+{{dialogue|Trudy|indent=true|answer=(Finish speech)
+|I hope everyone can follow your example, ''Player''.}}
+{{dialogue|Justice|indent=true|Alright, that's a wrap, everyone. Let's all get back to doin' what we do best...!}}
+{{dialogue|Trudy|indent=true|Thank you, all of you brave members of the Civil Corps!}}
+{{dialogue|Justice|indent=true|answer=(Thank the Civil Corps)
+|Hey, no need to thank us. You're the star here!}}
+{{dialogue|Unsuur|indent=true|If the Civil Corps didn't exist, ''Player'' wouldn't be getting this medal. So we deserve some credit... for existing.}}
+{{dialogue|Justice|indent=true|Eh, I guess... that is technically true...}}
+{{dialogue|Captain|indent=true|Meow!}}
+{{dialogue|Unsuur|indent=true|Captain agrees.}}
+{{dialogue|Justice|indent=true|answer=(Thank your fans)
+|Oh... you have fans? I mean, yeah, that makes sense. Sorry, I don't get out much, ''Player''.}}
+{{dialogue|Unsuur|indent=true|I'm your fan.}}
+{{dialogue|Captain|indent=true|Meow!}}
+{{dialogue|Unsuur|indent=true|Captain is, too.}}
+{{dialogue|Captain|indent=true|Meow! Meow!}}
+{{dialogue|Captain|indent=true|answer=(Thank Captain)
+|Meow!}}
+{{dialogue|Unsuur|indent=true|Yeah, I think Captain was the first to put your name on the ballot.}}
+{{dialogue|Captain|indent=true|Meow, meow!}}
+{{dialogue|Unsuur|indent=true|You're right, it was me...}}
+{{dialogue|Trudy|indent=true|answer=(Thank Trudy)
+|Oh, well... You're welcome, ''Player''! I'm really just here as a formality but... as soon as I heard the news, I was more than happy to do it!}}
+{{dialogue|Justice|indent=true|It's not a real medal unless a city official is here to witness the ceremony and notarize the papers afterwards!}}
+{{dialogue|Unsuur|indent=true|Seems like it'd be a real medal the moment it came out of its metal casting. Or... maybe the moment we thought you deserved it. Why would it be the moment that we have someone sign a piece of paper? Dang... everything is so... arbitrary...}}
+{{dialogue|Captain|indent=true|Meow...}}
+{{dialogue|Justice|indent=true|answer=(Thank your parents)
+|Yeah, you gotta remember where you came from!}}
+{{dialogue|Unsuur|indent=true|''Player''... Always an absolute class act.}}
+{{dialogue|Captain|indent=true|Meow!}}
+{{dialogue|Unsuur|indent=true|answer=(Thank the Light)
+|Wait, so if I wanna be as strong as you, I just have to go to church more?}}
+{{dialogue|Justice|indent=true|Er, I think the point being made is that without the core values that we get from the teachings of the Light, none of this would be possible.}}
+{{dialogue|Unsuur|indent=true|That's one way to interpret it, yeah.}}
+{{dialogue|Captain|indent=true|Meow?}}
+{{dialogue|Unsuur|indent=true|answer=(Say you'd rather be Deputy)
+|This medal is even better than being deputy. It's what it is to go... beyond. Like super deputy.}}
+{{dialogue|Justice|indent=true|Yeah! This thing is the real deal! Wear it around and people will say "thank you for your service," and stuff!}}
+
+TRIGGER Procedure 0.0 Step 16.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+(cId 12) After the conversation ends:
+CONDITIONS
+Check if 8398Select is <= (maybe?) 7
+Check if 8398SelectNum is == 4
+Check if 8398B is == 0
+ACTIONS
+(cId 7) A conversation 5648_0 starts:
+{{dialogue|Player|(What should I say?)}}
+
+*''(Finish speech)''
+*''(Thank the Civil Corps)''
+*''(Thank your fans)''
+*''(Thank Captain)''
+*''(Thank Trudy)''
+*''(Thank your parents)''
+*''(Thank the Light)''
+*''(Say you'd rather be Deputy)''
+
+{{dialogue|Trudy|indent=true|answer=(Finish speech)
+|I hope everyone can follow your example, ''Player''.}}
+{{dialogue|Justice|indent=true|Alright, that's a wrap, everyone. Let's all get back to doin' what we do best...!}}
+{{dialogue|Trudy|indent=true|Thank you, all of you brave members of the Civil Corps!}}
+{{dialogue|Justice|indent=true|answer=(Thank the Civil Corps)
+|Hey, no need to thank us. You're the star here!}}
+{{dialogue|Unsuur|indent=true|If the Civil Corps didn't exist, ''Player'' wouldn't be getting this medal. So we deserve some credit... for existing.}}
+{{dialogue|Justice|indent=true|Eh, I guess... that is technically true...}}
+{{dialogue|Captain|indent=true|Meow!}}
+{{dialogue|Unsuur|indent=true|Captain agrees.}}
+{{dialogue|Justice|indent=true|answer=(Thank your fans)
+|Oh... you have fans? I mean, yeah, that makes sense. Sorry, I don't get out much, ''Player''.}}
+{{dialogue|Unsuur|indent=true|I'm your fan.}}
+{{dialogue|Captain|indent=true|Meow!}}
+{{dialogue|Unsuur|indent=true|Captain is, too.}}
+{{dialogue|Captain|indent=true|Meow! Meow!}}
+{{dialogue|Captain|indent=true|answer=(Thank Captain)
+|Meow!}}
+{{dialogue|Unsuur|indent=true|Yeah, I think Captain was the first to put your name on the ballot.}}
+{{dialogue|Captain|indent=true|Meow, meow!}}
+{{dialogue|Unsuur|indent=true|You're right, it was me...}}
+{{dialogue|Trudy|indent=true|answer=(Thank Trudy)
+|Oh, well... You're welcome, ''Player''! I'm really just here as a formality but... as soon as I heard the news, I was more than happy to do it!}}
+{{dialogue|Justice|indent=true|It's not a real medal unless a city official is here to witness the ceremony and notarize the papers afterwards!}}
+{{dialogue|Unsuur|indent=true|Seems like it'd be a real medal the moment it came out of its metal casting. Or... maybe the moment we thought you deserved it. Why would it be the moment that we have someone sign a piece of paper? Dang... everything is so... arbitrary...}}
+{{dialogue|Captain|indent=true|Meow...}}
+{{dialogue|Justice|indent=true|answer=(Thank your parents)
+|Yeah, you gotta remember where you came from!}}
+{{dialogue|Unsuur|indent=true|''Player''... Always an absolute class act.}}
+{{dialogue|Captain|indent=true|Meow!}}
+{{dialogue|Unsuur|indent=true|answer=(Thank the Light)
+|Wait, so if I wanna be as strong as you, I just have to go to church more?}}
+{{dialogue|Justice|indent=true|Er, I think the point being made is that without the core values that we get from the teachings of the Light, none of this would be possible.}}
+{{dialogue|Unsuur|indent=true|That's one way to interpret it, yeah.}}
+{{dialogue|Captain|indent=true|Meow?}}
+{{dialogue|Unsuur|indent=true|answer=(Say you'd rather be Deputy)
+|This medal is even better than being deputy. It's what it is to go... beyond. Like super deputy.}}
+{{dialogue|Justice|indent=true|Yeah! This thing is the real deal! Wear it around and people will say "thank you for your service," and stuff!}}
+
+TRIGGER Procedure 0.0 Step 18.0 Order 27 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 8) There is a conversation segment (id 18413) that ends:
+{{dialogue|Captain|Meowwww! Meow meow meow!}}
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 83982
+SCENEITEM CREATE FLAG || itemType: 0 | id: 83982 | path: S8398_Item2 | flagName: S8398_Item2 | sceneName: CivilCorp | extraParams: -1
+
+TRIGGER Procedure 0.0 Step 20.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+(cId 12) After the conversation ends:
+CONDITIONS
+Check if 8398Select is <= (maybe?) 7
+Check if 8398SelectNum is >= 5
+Check if 8398A is == 0
+Check if 8398B is == 0
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8398492) to Captain
+(param: TargetScene:CivilCorp|MoveMode:Walk|FlagName:S8398_49_2)
+
+TRIGGER Procedure 0.0 Step 21.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8049 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 83982 | path: S8398_Item2 | flagName: S8398_Item1 | sceneName: CivilCorp | extraParams: -1
+STOPWATCH REAL TIME SET || id: 83989 | sec: 2
+
+TRIGGER Procedure 0.0 Step 22.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 83989
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Unsuur|Ooh. Love this song.}}
+
+TRIGGER Procedure 0.0 Step 23.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC BUBBLE STATE CHANGE || order: 0 | npc: 8026 | flag: 0
+CONDITIONS
+Always:
+ACTIONS
+(cId 8) A conversation 5641_0 starts:
+{{dialogue|Player|(What should I say?)}}
+
+*''I'm not DONE YET!''
+*''A Huh? You guys want me to wrap it up?''
+*''I still have so many people to thank!''
+*''You all are NOTHING without me! You hear me? NOTHING!'' (No unique dialogue)
+*''(Gracefully bow and end your speech)''
+
+{{dialogue|Captain|indent=true|answer=I'm not DONE YET!
+|Meowwww! Meow meow meow!}}
+{{dialogue|Justice|indent=true|Er, what Captain means is... well, we appreciate you, truly we do. But, er, well, I guess some people are just itchin' to get back to work.}}
+{{dialogue|Unsuur|indent=true|I could do twenty, thirty more minutes of speech.}}
+{{dialogue|Trudy|indent=true|Me too! Ah, but we don't want an angry Captain on our hands, better go ahead bring this monumentous medal moment to a close...!}}
+{{dialogue|Trudy|indent=true|I hope everyone can follow your example, ''Player''.}}
+{{dialogue|Justice|indent=true|Alright, that's a wrap, everyone. Let's all get back to doin' what we do best...!}}
+{{dialogue|Trudy|indent=true|Thank you, all of you brave members of the Civil Corps!}}
+{{dialogue|Captain|indent=true|answer=A Huh? You guys want me to wrap it up?
+|Meowwww! Meow meow meow!}}
+{{dialogue|Justice|indent=true|Er, what Captain means is... well, we appreciate you, truly we do. But, er, well, I guess some people are just itchin' to get back to work.}}
+{{dialogue|Unsuur|indent=true|I could do twenty, thirty more minutes of speech.}}
+{{dialogue|Trudy|indent=true|Me too! Ah, but we don't want an angry Captain on our hands, better go ahead bring this monumentous medal moment to a close...!}}
+{{dialogue|Trudy|indent=true|I hope everyone can follow your example, ''Player''.}}
+{{dialogue|Justice|indent=true|Alright, that's a wrap, everyone. Let's all get back to doin' what we do best...!}}
+{{dialogue|Trudy|indent=true|Thank you, all of you brave members of the Civil Corps!}}
+{{dialogue|Captain|indent=true|answer=I still have so many people to thank!
+|Meowwww! Meow meow meow!}}
+{{dialogue|Justice|indent=true|Er, what Captain means is... well, we appreciate you, truly we do. But, er, well, I guess some people are just itchin' to get back to work.}}
+{{dialogue|Unsuur|indent=true|I could do twenty, thirty more minutes of speech.}}
+{{dialogue|Trudy|indent=true|Me too! Ah, but we don't want an angry Captain on our hands, better go ahead bring this monumentous medal moment to a close...!}}
+{{dialogue|Trudy|indent=true|I hope everyone can follow your example, ''Player''.}}
+{{dialogue|Justice|indent=true|Alright, that's a wrap, everyone. Let's all get back to doin' what we do best...!}}
+{{dialogue|Trudy|indent=true|Thank you, all of you brave members of the Civil Corps!}}
+{{dialogue|Trudy|indent=true|answer=(Gracefully bow and end your speech)
+|Thank you, ''Player'', for your lovely acceptance speech!}}
+{{dialogue|Trudy|indent=true|I hope everyone can follow your example, ''Player''.}}
+{{dialogue|Justice|indent=true|Alright, that's a wrap, everyone. Let's all get back to doin' what we do best...!}}
+{{dialogue|Trudy|indent=true|Thank you, all of you brave members of the Civil Corps!}}
+Set 8398A to 1
+
+TRIGGER Procedure 0.0 Step 25.0 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) After the conversation ends:
+CONDITIONS
+Check if 8398A is == 2
+ACTIONS
+In a speech bubble:
+{{dialogue|Trudy|...}}
+In a speech bubble:
+{{dialogue|Justice|...}}
+In a speech bubble:
+{{dialogue|Unsuur|...}}
+In a speech bubble:
+{{dialogue|Captain|...}}
+STOPWATCH REAL TIME SET || id: 83988 | sec: 2
+
+TRIGGER Procedure 0.0 Step 31.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) After the conversation ends:
+CONDITIONS
+Check if 8398A is == 1
+ACTIONS
+Trudy stops standing still
+Justice stops standing still
+Unsuur stops standing still
+Captain stops standing still
+CUTSCENE UI STATE EXIT || 
+Set global blackboard key CivilHonor with info 1.
+Townsfolk respond to the event:
+
+{{dialogue|Justice|Congratulations again on that medal. Some people spend their lives in the Corps and never get such an honor. It only comes up ever so often, and it has to be an unanimous vote!}}
+
+{{dialogue|Trudy|A medal is really nothing compared to what you've done for us, ''Player''. But we hope it'll at least serve as a reminder of our appreciation!}}
+
+{{dialogue|Unsuur|Don't you already have like... a war medal? Hope our Civil Corps medal isn't too dinky for you.}}
+
+Remove behavior CommanderMoveToFlagAndAction (idName: 8398492) from Captain
+
+TRIGGER Procedure 0.0 Step 24.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) The player picks the fourth option in conversation segment 18412:
+{{dialogue|Player|(What should I say?)}}
+
+*''I'm not DONE YET!'' (No unique dialogue)
+*''A Huh? You guys want me to wrap it up?'' (No unique dialogue)
+*''I still have so many people to thank!'' (No unique dialogue)
+*''You all are NOTHING without me! You hear me? NOTHING!'' (No unique dialogue)
+*''(Gracefully bow and end your speech)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8398A to 2
+
+TRIGGER Procedure 0.0 Step 26.0 Order 25 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 83988
+CONDITIONS
+Always:
+ACTIONS
+(cId 9) A conversation 18417, 18418, 18420, 18421, 18422 starts:
+{{dialogue|Trudy|Uh oh... think we're having a biiiit of a moment here...}}
+{{dialogue|Trudy|Alriiiight! Thanks everyone for coming out, this has been a monumentous occasion, hasn't it! We're so grateful for everything you've done, ''Player''! And with that, I think it's about time to bring this ceremony to a close...!}}
+{{dialogue|Trudy|I hope everyone can follow your example, ''Player''.}}
+{{dialogue|Justice|Alright, that's a wrap, everyone. Let's all get back to doin' what we do best...!}}
+{{dialogue|Trudy|Thank you, all of you brave members of the Civil Corps!}}
+
+TRIGGER Procedure 0.0 Step 32.0 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Trudy stops standing still
+Justice stops standing still
+Unsuur stops standing still
+Captain stops standing still
+CUTSCENE UI STATE EXIT || 
+Set global blackboard key CivilHonor with info 1.
+Townsfolk respond to the event:
+
+{{dialogue|Justice|Congratulations again on that medal. Some people spend their lives in the Corps and never get such an honor. It only comes up ever so often, and it has to be an unanimous vote!}}
+
+{{dialogue|Trudy|A medal is really nothing compared to what you've done for us, ''Player''. But we hope it'll at least serve as a reminder of our appreciation!}}
+
+{{dialogue|Unsuur|Don't you already have like... a war medal? Hope our Civil Corps medal isn't too dinky for you.}}
+
+Remove behavior CommanderMoveToFlagAndAction (idName: 8398492) from Captain
+
+TRIGGER Procedure 0.0 Step 30.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+(cId 3) After the conversation ends:
+CONDITIONS
+Check if 8398Select is == 7
+Check if 8398A is == 0
+ACTIONS
+Trudy stops standing still
+Justice stops standing still
+Unsuur stops standing still
+Captain stops standing still
+CUTSCENE UI STATE EXIT || 
+Set global blackboard key CivilHonor with info 1.
+Townsfolk respond to the event:
+
+{{dialogue|Justice|Congratulations again on that medal. Some people spend their lives in the Corps and never get such an honor. It only comes up ever so often, and it has to be an unanimous vote!}}
+
+{{dialogue|Trudy|A medal is really nothing compared to what you've done for us, ''Player''. But we hope it'll at least serve as a reminder of our appreciation!}}
+
+{{dialogue|Unsuur|Don't you already have like... a war medal? Hope our Civil Corps medal isn't too dinky for you.}}
+
+
+TRIGGER Procedure 0.0 Step 35.0 Order 28 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+When the player moves from CivilCorp to the -1:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 83981
+SCENEITEM DELETE || itemType: 0 | id: 83982
+Set 8398Day to 0
+
+TRIGGER Procedure 0.0 Step 36.0 Order 29 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment 8398Day by 1
+
+TRIGGER Procedure 0.0 Step 37.0 Order 30 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 8398Day is != (maybe?) 3
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: CivilHonor
+END MISSION 1800398
+
+TRIGGER Procedure 1.0 Step 2.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+(cId 3) After the conversation ends:
+CONDITIONS
+Check if 8398Select is <= (maybe?) 7
+Check if 8398A is == 0
+Check if 8398SelectNum is > (maybe?) 5
+Check if 8398B is == 1
+ACTIONS
+In a speech bubble:
+{{dialogue|Unsuur|...I'm sorry, what?}}
+STOPWATCH REAL TIME SET || id: 839810 | sec: 2
+
+TRIGGER Procedure 1.0 Step 3.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 839810
+CONDITIONS
+Always:
+ACTIONS
+(cId 10) A conversation 18408 starts:
+{{dialogue|Justice|You could maybe even get discounts at the right place...}}
+
+TRIGGER Procedure 1.0 Step 4.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Unsuur|Wait, can we go back a bit...}}
+STOPWATCH REAL TIME SET || id: 839811 | sec: 2
+
+TRIGGER Procedure 1.0 Step 5.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 839811
+CONDITIONS
+Always:
+ACTIONS
+(cId 11) A conversation 18409 starts:
+{{dialogue|Justice|Of course, that's not what the medal is all about or what it represents...!}}
+
+TRIGGER Procedure 1.0 Step 6.0 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 11) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Unsuur|I'll... We can talk about this later...}}
+STOPWATCH REAL TIME SET || id: 839812 | sec: 2
+
+TRIGGER Procedure 1.0 Step 7.0 Order 5 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 839812
+CONDITIONS
+Always:
+ACTIONS
+(cId 12) A conversation 18410, 18411 starts:
+{{dialogue|Justice|Just trying to illustrate the point that this medal is a big deal. But, you know what? Just call yourself deputy if you want.}}
+{{dialogue|Unsuur|...}}
+Set 8398B to 0

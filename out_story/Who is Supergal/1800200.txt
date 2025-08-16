@@ -1,0 +1,446 @@
+Reading Mission 1800200: Who is Supergal?
+
+<onlyinclude>{{Infobox mission
+|name = Who is Supergal?
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Who is Supergal?:
+
+TRIGGER Procedure 0.0 Step 8.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) The player picks the first option in conversation segment 5603:
+{{dialogue|Catori|...Hey, I er, don't suppose you have time to help me out with a little favor... a commission of sorts, but, ah, just between us, see? With payment coming in the form of... non-fungible Golden Goose tokens! Better than smelly ol' Gols, am I right...?}}
+
+*''Don't stress. I can help you out.'' (No unique dialogue)
+*''I have a lot on my plate right now...'' (No unique dialogue)
+
+(cId 6) The player picks the first option in conversation segment 5603:
+{{dialogue|Catori|...Hey, I er, don't suppose you have time to help me out with a little favor... a commission of sorts, but, ah, just between us, see? With payment coming in the form of... non-fungible Golden Goose tokens! Better than smelly ol' Gols, am I right...?}}
+
+*''Don't stress. I can help you out.'' (No unique dialogue)
+*''I have a lot on my plate right now...'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 5608:
+{{dialogue|Catori|''Player'', so, how about helpin' me repair the machine, and I'll give you some shiny tokens in exchange! Don't think of it as a commission, think of it as one of my games!}}
+
+*''Don't stress. I can help you out.'' (No unique dialogue)
+*''I have a lot on my plate right now...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 1684_0 starts:
+{{dialogue|Catori|Ah, really? You will? That's great! And, er, I won't always have to pay you in tokens, this arrangement is just a temporary one pending, ah, me not being broke anymore.}}
+{{dialogue|Catori|But yeah; when you get time, just check out my machine over at the Game Center. It's the busted one.}}
+{{dialogue|Catori|Maybe you could take a look at it and see what it needs? Probably some materials and then that special little love tap you Builders do. And if it's not too much trouble, maybe reinforce it a bit with higher quality materials? Supergal'll be back...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 10.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800199
+CONDITIONS
+Always:
+ACTIONS
+Run mission Who is Supergal?
+END MISSION 1800199
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800200
+CONDITIONS
+Always:
+ACTIONS
+===Check the broken Punch-o-Tron===
+
+{{mission_details
+|desc = Go to the Game Center and check the broken Punch-o-Tron and see what materials you need to repair it.
+|details = Check the broken Punch-o-Tron
+}}
+Set DAY to 0
+NPC REMOVE TAG || tag: Boxing
+NPC ADD TAG || tag: NoBoxing
+
+TRIGGER Procedure 0.0 Step 1.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the GameCenter:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 12 | id: 1719701
+SCENEITEM DELETE || itemType: 0 | id: 1719706
+SCENEITEM CREATE FLAG || itemType: 0 | id: 82001 | path: SceneItem_BoxingMachine_Broken | sceneName: GameCenter | flagName: BoxingGame | extraParams: -1
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 82001 | missionId: 1800199 | iconType: 2
+
+TRIGGER Procedure 0.0 Step 1.1 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 82001
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 5633 starts:
+{{dialogue||You need Plastic Pipes, Copper Plates, Chromium Steel Bars to fix the Punch-o-Tron. Go and collect them.}}
+SCENEITEM INTERACT SET || itemType: 0 | id: 82001 | canInteract: 0
+SCENEITEM ADD ICON STACK || add: 0 | itemType: 0 | id: 82001 | missionId: 1800199 | iconType: 2
+
+TRIGGER Procedure 0.0 Step 1.2 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Collect Materials===
+
+{{mission_details
+|desc = You need Plastic Pipes, Copper Plates, Chromium Steel Bars to fix the Punch-o-Tron. Go and collect them.
+|details = Collect Materials
+*{{i2|Plastic Pipe|0/2}}
+*{{i2|Copper Plate|0/2}}
+*{{i2|Chromium Steel Bar|0/2}}
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1800199 | targetId: 2 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Repair the Punch-o-Tron===
+
+{{mission_details
+|desc = Now that you have all the materials, go to the Game Center to repair the Punch-o-Tron.
+|details = Repair the Punch-o-Tron
+*{{i2|Plastic Pipe|0/2}}
+*{{i2|Copper Plate|0/2}}
+*{{i2|Chromium Steel Bar|0/2}}
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 82002 | path: BoxingGameMC_Mark | flagName: BoxingGame | sceneName: GameCenter | extraParams: SceneItem_BoxingMachinePro|CreatorItem|19800008_2,19111001_2,19112018_2|1371|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 82002 | missionId: 1800199 | iconType: 2
+
+TRIGGER Procedure 0.0 Step 3.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 82002
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 82001
+CUTSCENE UI STATE ENTER || 
+{{cutscene|id = 4505}}
+A cutscene CG_HEIDIPUNCH (duration: 1.0) starts playing
+Heidi's Record - So Heidi's the Supergal! Who would've known? Well, anyone who's seen her punch...
+ACTION ONEPUNCH CLEAR DATA || 
+
+TRIGGER Procedure 0.0 Step 5.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_HEIDIPUNCH | state: 8
+CONDITIONS
+Always:
+ACTIONS
+Heidi stands still in GameCenter and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: GameCenter | flagName: Stroy_82001_Haidi_Stand
+
+TRIGGER Procedure 0.0 Step 6.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 82001
+CONDITIONS
+Check relationship with Heidi is 6 Friend
+ACTIONS
+(cId 2) A conversation 1687_0 starts:
+{{dialogue|Heidi|Whew! I feel like a million Gols! Alright, you got ups, ''Player''!}}
+
+*''Let me try!''
+*''I dunno...''
+
+{{dialogue|Heidi|indent=true|answer=Let me try!
+|Okay, let me see what you're made of! Just imagine the punching bag as being something in your life that's giving you trouble; that's my secret! Well, part of it, anyway...}}
+{{dialogue|Heidi|indent=true|answer=I dunno...
+|C'mon, everybody needs a way to blow off a bit of steam! Ain't nothin' like Ol' Punchy here to wind you down. It's easily about as sanative as knockin' over a building! Cheaper, too...}}
+
+TRIGGER Procedure 0.0 Step 7.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Try the Punch-o-Tron===
+
+{{mission_details
+|desc = Heidi is so strong! See if you can break her record in three attempts.
+|details = Try the Punch-o-Tron
+}}
+Set BoxingTime to 0
+Add behavior CommanderMoveToFlagAndAction (idName: 200090) to Heidi
+(param: TargetScene:GameCenter|MoveMode:Walk|FlagName:Stroy_82001_Haidi_Stand)
+Heidi stops standing still
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 6.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 82001
+CONDITIONS
+Check relationship with Heidi is Friend
+ACTIONS
+(cId 3) A conversation 1688_0 starts:
+{{dialogue|Heidi|Whew! I feel like a million Gols! Alright, you got ups, ''Player''!}}
+
+*''Let me try!''
+*''I dunno...''
+*''How did you learn to do that?''
+
+{{dialogue|Heidi|indent=true|answer=Let me try!
+|Okay, let me see what you're made of! Just imagine the punching bag as being something in your life that's giving you trouble; that's my secret! Well, part of it, anyway...}}
+{{dialogue|Heidi|indent=true|answer=I dunno...
+|C'mon, everybody needs a way to blow off a bit of steam! Ain't nothin' like Ol' Punchy here to wind you down. It's easily about as sanative as knockin' over a building! Cheaper, too...}}
+{{dialogue|Heidi|Ah? Well, I've been told that my Grandma went out lookin' for food when she was young, stumbled into some gases or somethin'. I didn't get any diseases or such, but my Pa came out real strong, ever since he was a baby.}}
+{{dialogue|Heidi|I dunno if it's just them pulling my leg or what, but I tell ya, me an' my Pa both got a real mean right hook!}}
+
+*''Let me try!''
+*''I dunno...''
+
+{{dialogue|Heidi|indent=true|answer=Let me try!
+|Okay, let me see what you're made of! Just imagine the punching bag as being something in your life that's giving you trouble; that's my secret! Well, part of it, anyway...}}
+{{dialogue|Heidi|indent=true|answer=I dunno...
+|C'mon, everybody needs a way to blow off a bit of steam! Ain't nothin' like Ol' Punchy here to wind you down. It's easily about as sanative as knockin' over a building! Cheaper, too...}}
+
+TRIGGER Procedure 0.0 Step 8.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON ONE PUNCHGAME END || order: 0
+CONDITIONS
+Always:
+ACTIONS
+Increment BoxingTime by 1
+
+TRIGGER Procedure 0.0 Step 9.0 Order 18 Repeat 4
+------------------------------------------------------------
+EVENTS
+ON ONE PUNCHGAME END || order: 0
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1800199 | targetId: 4 | transId: 80008890 | isAdd: 1
+
+TRIGGER Procedure 0.0 Step 10.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ONE PUNCHGAME END || order: 0
+CONDITIONS
+Check if BoxingTime is == 3
+ACTIONS
+ACTION ONE PUNCH QUIT || 
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || delayTime: 0 | maskId: 82001 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 11.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82001 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: Stroy_82001_Player_Stand | sceneName: GameCenter
+Heidi stands still in GameCenter and looks at Player
+DELAY MASK SET || maskId: 82001 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Catori stands still in GameCenter and looks at Heidi
+Remove behavior CommanderMoveToFlagAndAction (idName: 200090) from Heidi
+
+TRIGGER Procedure 0.0 Step 12.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82001 | eventType: 5
+CONDITIONS
+COMPARE ACTOR ONE PUNCH RANKING || actorID1: 8000 | actorID2: 8009 | compare: 5
+ACTIONS
+(cId 4) A conversation 6164, 1692_0 starts:
+{{dialogue|Heidi|How's it goin'? Hey, don't worry about the score, just playing the game feels like a weight off your shoulders, huh?}}
+{{dialogue|Heidi|Well? Feel all that negativity leave you? Feelin' like all your worries flew outta your fist as it hit the bag, right?}}
+
+*''You're right, it worked!''
+*''I don't think it's really my thing...''
+*{{flirt}}''If you need stress relief, just spar with me.''
+
+{{dialogue|Heidi|indent=true|answer=You're right, it worked!
+|I told you! That's why I'm here every day like clockwork!}}
+{{dialogue|Heidi|indent=true|answer=I don't think it's really my thing...
+|Yeah I get it. Different strokes for different folks. I feel bad for Amirah; a real workaholic, but this game does nothing for her! Takes her forever to unwind. Not me though, I clock in over here at the Game Center and it's zen time!}}
+{{dialogue|Heidi|indent=true|answer=If you need stress relief, just spar with me.
+|reward={{NPC2|Heidi|rp=3}}|Hahaha! How very sweet of you. Well, be careful: I might just take you up on that!}}
+{{dialogue|Heidi|Ah... Without this baby in town, I'd go stir crazy! Thanks for fixing it, ''Player''!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 12.5 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 82001 | sec: 2
+SOUND PLAY 2D || idStr: Play_story_machine_punch_hitch
+
+TRIGGER Procedure 0.0 Step 12.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 41) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderTeleport (idName: 200093) to Heidi
+(param: TargetScene:Main|Delay:2.0|TargetFlag:S81991_Haidi_End)
+Heidi stops standing still
+Heidi stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 200090) from Heidi
+
+TRIGGER Procedure 0.0 Step 12.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82001 | eventType: 5
+CONDITIONS
+COMPARE ACTOR ONE PUNCH RANKING || actorID1: 8000 | actorID2: 8009 | compare: 1
+ACTIONS
+(cId 4) A conversation 6163, 1692_0 starts:
+{{dialogue|Heidi|Dang! And here I was thinkin' this game was all in the family. I never seen anyone but Pa hit like that! You been workin' out?}}
+{{dialogue|Heidi|Well? Feel all that negativity leave you? Feelin' like all your worries flew outta your fist as it hit the bag, right?}}
+
+*''You're right, it worked!''
+*''I don't think it's really my thing...''
+*{{flirt}}''If you need stress relief, just spar with me.''
+
+{{dialogue|Heidi|indent=true|answer=You're right, it worked!
+|I told you! That's why I'm here every day like clockwork!}}
+{{dialogue|Heidi|indent=true|answer=I don't think it's really my thing...
+|Yeah I get it. Different strokes for different folks. I feel bad for Amirah; a real workaholic, but this game does nothing for her! Takes her forever to unwind. Not me though, I clock in over here at the Game Center and it's zen time!}}
+{{dialogue|Heidi|indent=true|answer=If you need stress relief, just spar with me.
+|reward={{NPC2|Heidi|rp=3}}|Hahaha! How very sweet of you. Well, be careful: I might just take you up on that!}}
+{{dialogue|Heidi|Ah... Without this baby in town, I'd go stir crazy! Thanks for fixing it, ''Player''!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 12.2 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: Teleported | behaviourName: CommanderTeleport | npc: 8009
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderTeleport (idName: 200093) from Heidi
+
+TRIGGER Procedure 0.0 Step 12.6 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 82001
+CONDITIONS
+Always:
+ACTIONS
+(cId 41) A conversation 5620 starts:
+{{dialogue|Heidi|That'll do it for me, I'm off. See you later!}}
+
+TRIGGER Procedure 0.0 Step 13.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 41) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 200243) to Catori
+(param: TargetScene:GameCenter|MoveMode:Walk|FlagName:Stroy_82001_Katuoli_Stand_End)
+
+TRIGGER Procedure 0.0 Step 14.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: MoveToFlagOver | behaviourName: CommanderMoveToFlagAndAction | npc: 8024
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 1696_0 starts:
+{{dialogue|Catori|Well, there she goes. Supergal. Scourge of the Arcade. Breaker of Machines. Emptier of Wallets. The Game Center is safe... for now.}}
+{{dialogue|Catori|But, hey, looks like the Punch-o-Tron held up against even the most ferocious of blows from our dear friend back there; maybe you really fixed this thing for good this time!}}
+{{dialogue|Catori|Thanks for all your hard work, Builder.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 20.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Catori stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 200243) from Catori
+CUTSCENE UI STATE EXIT || 
+NPC REMOVE TAG || tag: NoBoxing
+NPC ADD TAG || tag: Boxing
+SUBMIT MISSION 1800199
+END MISSION 1800200
+
+TRIGGER Procedure 1.0 Step 12.1 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) The player picks the third option in conversation segment 5615:
+{{dialogue|Heidi|Well? Feel all that negativity leave you? Feelin' like all your worries flew outta your fist as it hit the bag, right?}}
+
+*''You're right, it worked!'' (No unique dialogue)
+*''I don't think it's really my thing...'' (No unique dialogue)
+*{{flirt}}''If you need stress relief, just spar with me.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Heidi gains 3 favor
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if BoxingTime is < 3
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 200090) from Heidi
+
+TRIGGER Procedure 2.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1800200
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 12 | id: 1719701
+SCENEITEM DELETE || itemType: 0 | id: 1719706
+Remove behavior CommanderMoveToFlagAndAction (idName: 200090) from Heidi
+Heidi stops standing still
+Heidi stops standing still
+SCENEITEM ADD ICON STACK || add: 0 | itemType: 0 | id: 82001 | missionId: 1800199 | iconType: 2
+SCENEITEM DELETE || itemType: 0 | id: 82001
+SCENEITEM DELETE || itemType: 11 | id: 82002
+SCENEITEM DELETE || itemType: 12 | id: 82002
+SCENEITEM CREATE FLAG || itemType: 12 | id: 82002 | extraParams: -1 | sceneName: GameCenter | path: SceneItem_BoxingMachinePro | flagName: BoxingGame
+The player receives a letter:
+{{mail|365}}
+NPC REMOVE TAG || tag: NoBoxing
+NPC ADD TAG || tag: Boxing
+END MISSION 1800200

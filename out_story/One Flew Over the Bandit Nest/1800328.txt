@@ -1,0 +1,151 @@
+Reading Mission 1800328: One Flew Over the Bandit Nest
+
+<onlyinclude>{{Infobox mission
+|name = One Flew Over the Bandit Nest
+|image =
+|description = Haru is heading off to Atara to attend university. Help his friends give him a warm farewell.
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 2100
+|reputation = 10
+|gols = 200
+|npc1 = Logan
+|rp1 = 10
+|npc2 = Andy
+|rp2 = 10
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200332
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1700299 is result 1 flag 1
+Just Give a Whistle is in state 3 with flag 0
+ACTIONS
+Run mission #1800325
+
+TRIGGER Procedure 0.0 Step 0.5 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Just Give a Whistle is successfully completed
+ACTIONS
+Run mission One Flew Over the Bandit Nest
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800328
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key 8328GO with info 0.
+
+TRIGGER Procedure 0.0 Step 0.3 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+Where's Mi-an is in state 1 with flag 0
+The Childhood Friend is in state 1 with flag 0
+Goodbye, Nia is in state 1 with flag 0
+The Kidnapping is in state 1 with flag 0
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: triallogan | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Logan stops standing still
+Logan stands still in Main and looks at Player
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || flagName: player_beforehome | sceneName: Main
+Logan stops standing still
+Logan stops standing still
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 3915_0 starts:
+{{dialogue|Logan|Hey, ''Player'', I wanted to talk to ya. Dunno if you've heard, but Haru's leavin' Sandrock the day after tomorrow to go an' study in Atara.}}
+{{dialogue|Logan|He's like a little brother to me, I gotta do somethin' for him. Nice an' simple. So I'm plannin' for us to get together at the old camp, have a meal like old times. Do you have time to come along? I'm sure he'll appreciate it!}}
+
+*''Of course!''
+*''Phew, I'm kinda busy...''
+
+{{dialogue|Logan|indent=true|answer=Of course!
+|Well, alright. I gotta go prepare my gift for him, I know he's gonna be doin' a whole bunch of experiments over there. Maybe Fang has some test tubes or somethin'...}}
+{{dialogue|Logan|indent=true|Come to the cave tomorrow any time after 18:00PM. I'll tell Rambo to wait for you.}}
+{{dialogue|Logan|indent=true|answer=Phew, I'm kinda busy...
+|Yeah, I get it, full plate an' all. I gotta go get a gift for him, I know he's gonna be doin' a whole bunch of experiments over there. Maybe Fang has some test tubes or somethin'...}}
+{{dialogue|Logan|indent=true|Well, if ya change yer mind, come to the cave tomorrow any time after 18:00PM. I'll tell Rambo to wait for you.}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+DELIVER MISSION 1800328
+Logan stops standing still
+START MISSION 1800328
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 13120:
+{{dialogue|Logan|He's like a little brother to me, I gotta do somethin' for him. Nice an' simple. So I'm plannin' for us to get together at the old camp, have a meal like old times. Do you have time to come along? I'm sure he'll appreciate it!}}
+
+*''Of course!'' (No unique dialogue)
+*''Phew, I'm kinda busy...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key 8328GO with info 1.
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800328
+CONDITIONS
+Always:
+ACTIONS
+Run mission One Flew Over the Bandit Nest
+END MISSION 1800328
+
+==Rewards==
+{{mission reward
+|npc1 = Logan
+|rp1 = 10
+|npc2 = Andy
+|rp2 = 10
+|exp = 2100
+|reputation = 10
+|gols = 200
+}}

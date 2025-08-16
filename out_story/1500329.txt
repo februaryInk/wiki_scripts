@@ -1,0 +1,165 @@
+Reading Mission 1500329: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200333
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK SCENEITEM EXIST || id: 23101 | sceneItemType: 0 | exist: 1
+ACTIONS
+Run mission New Teacher
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1500329
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the School:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_school
+ACTIONS
+Andy stands still in School
+Pebbles stands still in School
+Jasmine stands still in School
+Jane stands still in School
+UNIQUE ACTION RUN || idStr: enter_school
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 53291
+
+TRIGGER Procedure 0.0 Step 1.5 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the School:
+CONDITIONS
+Always:
+ACTIONS
+(cId 532901) A conversation 14523 starts:
+{{dialogue|Andy|"...And then I'm gonna use my super duper space laser to blast open the clouds! Boom! Pow! Kabloowey!"}}
+PLAYER SET POS ROT FLAG || sceneName: School | flagName: Story_5329_Player
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8013 | cId: 532901 | missionId: 1500329
+CONDITIONS
+Always:
+ACTIONS
+(cId 532902) A conversation 14524 starts:
+{{dialogue|Pebbles|Peach! Peach! Peach!}}
+
+TRIGGER Procedure 0.0 Step 2.5 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8058 | cId: 532902 | missionId: 1500329
+CONDITIONS
+Always:
+ACTIONS
+(cId 532903) A conversation 14525 starts:
+{{dialogue|Jasmine|Who do you think you are!? These clouds have covered our world for hundreds of years! Peach, you foolhardy, reckless young man! We need to go back to our caves, and embrace the darkness! Nyeah...!}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8040 | cId: 532903 | missionId: 1500329
+CONDITIONS
+Always:
+ACTIONS
+(cId 532904) A conversation 14526 starts:
+{{dialogue|Jane|Good job, Jasmine!  Ahem... Many people questioned Peach's radical ideas, thinking he was bound to fail. But he perservered, and aimed his machine at the sky, and fired a massive burst of energy!}}
+
+TRIGGER Procedure 0.0 Step 3.5 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8062 | cId: 532904 | missionId: 1500329
+CONDITIONS
+Always:
+ACTIONS
+(cId 532905) A conversation 4275_0 starts:
+{{dialogue|Andy|Uh-uh, I'm gonna do it! I'm gonna... I'm gonna... LINE!}}
+{{dialogue|Jane|I'm going to break a hole in the sky, and let the sun shine down on us...}}
+{{dialogue|Andy|Yeah! I'm gonna do it! I reckon I'ma gonna break me a big ol' hole in that there sky, an'... uh... let the sun shine on down... on... On us...!}}
+{{dialogue|Andy|...Nailed it.}}
+{{dialogue|Andy|...Hasta la vista... cloudie. Pckooooowwwww!}}
+{{dialogue|Jane|...Aaand against all odds, Peach achieved this miraculous feat, and brought the light back into everyone's life!}}
+{{dialogue|Pebbles|Wow! Wow, wow, wow!}}
+{{dialogue|Jasmine|Teacher, I should be Peach! I did a way better job than Andy, he can't even remember his lines! No offense, Andy.}}
+{{dialogue|Andy|Hehe... Feedback received. Well, you know, sometimes it's less about the words and more about the charisma... that X factor, that presence, that star power... It gets the people goin'! I'm talkin' pizzaz-!}}
+{{dialogue|Jane|Everyone gave an amazing performance today! Yes, Andy forgot his lines, but he brought life to the character! It was almost as if Peach was right in front of me! And of course, Jasmine and little Pebbles were as wonderful as ever!}}
+{{dialogue|Jasmine|Why were so many people against Peach? Wasn't he doing the right thing? I don't understand.}}
+{{dialogue|Jane|Well, you have to understand the society at the time...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 532905) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+STOPWATCH REAL TIME SET || id: 532902 | sec: 1
+STOPWATCH REAL TIME SET || id: 532903 | sec: 3
+Jane gains 10 favor
+Jasmine gains 5 favor
+Andy gains 5 favor
+Pebbles gains 5 favor
+
+TRIGGER Procedure 0.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 532902
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 532905) to Jane
+(param: CMDAction:Talk)
+
+TRIGGER Procedure 0.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 532903
+CONDITIONS
+Always:
+ACTIONS
+Andy stops standing still
+Pebbles stops standing still
+Jasmine stops standing still
+Jane stops standing still
+Remove behavior CommanderNPCAction (idName: 532905) from Jane
+END MISSION 1500329
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1500329
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || flagName: SchoolMeeting_Trudy | missionId: 1500329 | id: 53291 | sceneName: Main | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0

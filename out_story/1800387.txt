@@ -1,0 +1,112 @@
+Reading Mission 1800387: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200332
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+The Outpost is successfully completed
+Andy's Last Wish is in state 3 with flag 0
+
+GROUP 10:
+The Outpost is successfully completed
+Andy's Last Wish is in state 4 with flag 0
+
+ACTIONS
+Run mission #1800386
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Andy's Last Wish is successfully completed
+ACTIONS
+Run mission #1800387
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800387
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || id: 83871 | sceneName: Main | flagName: Trigger_Science | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0 | missionId: 1800387
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Science:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_science
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_science
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Science:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 83871
+Andy stands still in Science and looks at Qi
+Qi stands still in Science and looks at Andy
+PLAYER SET POS ROT FLAG || sceneName: Science | flagName: S8387_0_1
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Science:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 5256_0 starts:
+{{dialogue|Andy|Yo, doc!}}
+{{dialogue|Qi|Director.}}
+{{dialogue|Andy|Doc-rector! Check it out! Got me right here some of that there test data for the Super Shield Mark II!}}
+{{dialogue|Qi|Hm. These numbers are good.}}
+{{dialogue|Qi|Effective force?}}
+{{dialogue|Andy|Effective force... is good!}}
+{{dialogue|Qi|Good is not a number. Have you forgotten the formula?}}
+{{dialogue|Andy|Effective force formula, well, sure I remember it...! Easy as pie, that one...}}
+{{dialogue|Qi|If you remember it, why has this conversation continued so far beyond the original question asked?}}
+{{dialogue|Andy|Well... of course... to create a little bit of suspense, you see, heh heh...!}}
+{{dialogue|Andy|Length times width times... uh oh....}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Qi stops standing still
+Andy stops standing still
+CUTSCENE UI STATE EXIT || 
+Andy gains 5 favor
+Qi gains 5 favor
+END MISSION 1800387

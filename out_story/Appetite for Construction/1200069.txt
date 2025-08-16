@@ -1,0 +1,275 @@
+Reading Mission 1200069: Appetite for Construction
+
+<onlyinclude>{{Infobox mission
+|name = Appetite for Construction
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Appetite for Construction:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200068
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1200068
+The player receives a letter:
+{{mail|70}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200068
+CONDITIONS
+Always:
+ACTIONS
+Run mission Appetite for Construction
+AREA TRIGGER CREATE || missionId: 1200068 | id: 20681 | sceneName: Main | flagName: fixwatertower_trigger | showOnMap: 1 | mapIcon: MissionArea | transId: 80002572
+END MISSION 1200068
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200069
+CONDITIONS
+Always:
+ACTIONS
+===Recycle Water Tower===
+
+{{mission_details
+|desc = Use your Pickhammer to recycle what's left of the old Water Tower to help you with your repairs.
+|details = Recycle Water Tower
+}}
+Set CLOSE to 0
+SCENEITEM DELETE || itemType: 0 | id: 20641
+SCENEITEM DELETE || itemType: 0 | id: 20640
+PICK UP RESOURCE REFRESH || id: 1100200
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON RESOURCE PICK UP || order: 0 | npc: 8000 | id: 1100200
+CONDITIONS
+Always:
+ACTIONS
+===Construct Water Tower Component===
+
+{{mission_details
+|desc = You and Mi-an need to work together to rebuild the Water Tower. Fix it according to the diagram! (You need to have an upgraded {{textcolor|green|Assembly Station}} to build it. If you don't have one, head over to {{textcolor|green|Construction Junction}} to get it!)
+|details = Construct Water Tower Component
+*{{i2|Water Tank|0/1}}
+*{{i2|Tower Frame|0/1}}
+*{{i2|Water Filter|0/1}}
+}}
+AREA TRIGGER DELETE || id: 20681
+Set FRESH to 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200068 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Install Water Tower Component===
+
+{{mission_details
+|desc = You've finished your half of the job. Time to take your component to the oasis and install your part.
+|details = Install Water Tower Component
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 20691 | path: Mission_WaterTower_empty_01 | flagName: mission_shuita | sceneName: Main | extraParams: Mission_WaterTower_02|CreatorItem|14000002_1|80002571|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 20691 | iconType: 3 | missionId: 1200068
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 20691
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1200068 | targetId: 2 | transId: 91002131 | isAdd: 1
+SCENEITEM CREATE FLAG || itemType: 11 | id: 20692 | path: Mission_WaterTower_empty_01 | sceneName: Main | flagName: mission_shuita | extraParams: Mission_WaterTower_03|CreatorItem|14000003_1|80002571|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 20692 | missionId: 1200068 | iconType: 3
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 20692
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1200068 | targetId: 2 | transId: 91002135 | isAdd: 1
+SCENEITEM CREATE FLAG || itemType: 11 | id: 20693 | path: Mission_WaterTower_empty_01 | sceneName: Main | flagName: mission_shuita | extraParams: -1|CreatorItem|14000001_1|80002571|-1|0
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 20693 | missionId: 1200068 | iconType: 3
+
+TRIGGER Procedure 0.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+PICK UP RESOURCE REFRESH || id: 1100200
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 20693
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || transId: 91002133 | isAdd: 1 | missionId: 1200068 | targetId: 2
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 20691 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 20691 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: newwatertower_player
+Burgess stands still in Main
+Matilda stands still in Main
+Yan stands still in Main
+Mi-an stands still in Main
+DELAY MASK SET || maskId: 20691 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+{{cutscene|id = 1241}}
+A cutscene CG_NEWWATERTOWER (duration: 0.0) starts playing
+Logan-proof - With the help of Mi-an and a new design, I rebuilt the water tower for the town stronger than before, so nothing like the previous incident would ever happen again.
+SCENEITEM CREATE FLAG || itemType: 0 | id: 20696 | path: Mission_WaterTower | sceneName: Main | extraParams: 0 | flagName: mission_shuita
+SCENEITEM DELETE || itemType: 12 | id: 20691
+SCENEITEM DELETE || itemType: 12 | id: 20692
+SCENEITEM DELETE || itemType: 12 | id: 20693
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_NEWWATERTOWER | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 1658, 1659, 1660 starts:
+{{dialogue|Matilda|You Builders did a mighty fine job once again! Just in time, too! I believe our next shipment of water is scheduled to arrive tomorrow! Our town owes you two our gratitude.}}
+{{dialogue|Matilda|Commissioner, you really ought to handsomely reward these Builders for their efforts.}}
+{{dialogue|Yan|R-right, I'll add that to the tab as well.}}
+GLOBAL BLACK BOARD REMOVE || key: con4brokentower
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Burgess stops standing still
+Matilda stops standing still
+Yan stops standing still
+Mi-an stops standing still
+===Talk to Yan===
+
+{{mission_details
+|desc = You've done your best to fix the Water Tower, go tell Yan to get your reward!
+|details = Talk to Yan
+}}
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Yan
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 1663, 1664, 1665, 1666, 1667, 1668 starts:
+{{dialogue|Yan|Well, well! Bang up job on the Water Tower, I must say!}}
+{{dialogue|Yan|You know, it's funny! When you and Mi-an got here, I bet ol' Mason the two of you wouldn't last a week!}}
+{{dialogue|Yan|Luckily, he's so far off now I doubt I'll ever have to make good on that bet...}}
+{{dialogue|Yan|Er, now where was I...? Ah, that's right! You did such a good job of following orders that I've decided on behalf of the Commerce Guild that you deserved a bonus for all your hard work!}}
+{{dialogue|Yan|Here's the amount promised by the city and...}}
+{{dialogue|Yan|{{textcolor|green|Fifty Gols}} on top! That's right! All for you! Don't spend it all in one place! Buh-bye, now!}}
+Increment CLOSE by 1
+
+TRIGGER Procedure 1.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+MONEY PLAYER ADD || money: 50
+AREA TRIGGER DELETE || id: 20681
+SUBMIT MISSION 1200068
+
+TRIGGER Procedure 1.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+(cId 2) After the conversation ends:
+CONDITIONS
+Check if CLOSE is >= 2
+ACTIONS
+END MISSION 1200069
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Burgess
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 1661, 1662 starts:
+{{dialogue|Burgess|You know, if it were just Mason and his diligence-averse style of building, I'm not sure we'd have been able to be back on track in such a timely manner. Who knows what kinds of terrible things might've happened if we had nowhere to store our water...}}
+{{dialogue|Burgess|Oh well, no sense in imagining up scenarios to scare myself, I do plenty of that in my own free time.}}
+Increment CLOSE by 1
+
+TRIGGER Procedure 2.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Set FRESH to 0
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if FRESH is <= (maybe?) 1
+ACTIONS
+PICK UP RESOURCE REFRESH || id: 1100200
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 20691 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 20646
+SCENEITEM DELETE || itemType: 0 | id: 20647
+SCENEITEM DELETE || itemType: 0 | id: 20648
+SCENEITEM DELETE || itemType: 0 | id: 20649
+SCENEITEM CREATE FLAG || path: Mission_fence0 | itemType: 0 | id: 20642 | sceneName: Main | flagName: bridge_kaimu | extraParams: 0
+SCENEITEM CREATE FLAG || flagName: bridge_kaimu | itemType: 0 | id: 20643 | path: Mission_fence1 | sceneName: Main | extraParams: 0
+SCENEITEM CREATE FLAG || flagName: bridge_kaimu | itemType: 0 | id: 20644 | path: Mission_fence2 | sceneName: Main | extraParams: 0
+SCENEITEM CREATE FLAG || flagName: bridge_kaimu | itemType: 0 | id: 20645 | path: Mission_fence3 | sceneName: Main | extraParams: 0

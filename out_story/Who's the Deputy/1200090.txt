@@ -1,0 +1,372 @@
+Reading Mission 1200090: Who's the Deputy
+
+<onlyinclude>{{Infobox mission
+|name = Who's the Deputy
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Who's the Deputy:
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+START MISSION 1200089
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200089
+CONDITIONS
+Always:
+ACTIONS
+Run mission Who's the Deputy
+END MISSION 1200090
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200090
+CONDITIONS
+Always:
+ACTIONS
+===Make a Deputy Cap===
+
+{{mission_details
+|desc = Make a Deputy Cap for Justice's ceremony. You can make this on {{textcolor|green|Worktable}}.
+|details = Make a Deputy Cap
+*{{i2|Deputy Cap|0/1}}
+}}
+Set DAY to 0
+Add 1 Deputy Cap of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200089 | targetId: 0 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Justice===
+
+{{mission_details
+|desc = You've made the cap, go give it to Justice.
+|details = Talk to Justice
+*{{i2|Deputy Cap|0/1}}
+*{{i2|Justice|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Justice
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1200089 | targetId: 1 | canSubmit: 1
+ACTIONS
+(cId 0) A conversation 2061, 2062 starts:
+{{dialogue|Justice|Now that's what I call a Deputy Hat! You can really feel the authority flowing out of it... And you know what? I think with such fine handiwork, you might have just improved your chances of becoming our next deputy...}}
+{{dialogue|Justice|{{textcolor|green|The ceremony is tomorrow in Martle Square at 9:00am sharp!}} Don't be late!}}
+BAG MODIFY BY TARGET || missionId: 1200089 | targetId: 1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Attend the ceremony===
+
+{{mission_details
+|desc = The ceremony will be at 9:00 in the morning, be on time to find out who Sandrock's new deputy will be.
+|details = Attend the ceremony
+}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DAY START FOR WEATHER || order: 0 | weather: 2
+CONDITIONS
+Always:
+ACTIONS
+WEATHER SET STATE || WeatherState: 0
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Set DAY to 1
+CALENDAR SET REMINDER || addDays: 0 | transId: 80003461 | hour: 8
+
+TRIGGER Procedure 1.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 7:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+ACTION NPC GEN CLUSTER || cluster: deputy | behavior: RegularMeetingRoot0 | min: 3 | max: 4 | npcs: 8026,8049,8017 | leader: 8008 | randomNpcs: 8008,8017,8043,8015,8020,8033
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 8:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1200090 | id: 20901 | sceneName: Main | flagName: trigger_guildhall | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80003405
+SCENEITEM CREATE FLAG || itemType: 0 | id: 20901 | path: ScenItem_Microphone_0 | sceneName: Main | flagName: f_maikefeng | extraParams: 0
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 20901
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 20901
+DELAY MASK SET || maskId: 20901 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 3.6 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 2 | name: CG_CAPTAINCAT
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 20901
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 20901 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: 1200090_Player
+Mi-an stands still in Main and looks at Justice
+Unsuur stands still in Main and looks at Justice
+Justice stands still in Main and looks at Mi-an
+Captain stands still in Main and looks at Justice
+Add behavior CommanderMoveToFlagAndAction (idName: 2090001) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:1200090_Player|LookAtActor:8008)
+DELAY MASK SET || maskId: 20901 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 20901 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 467_0 starts:
+{{dialogue|Justice|Alright, now that everyone is here, let the official Civil Corps Deputy Promotion Ceremony begin!}}
+{{dialogue|Justice|Now I don't need to remind y'all: we've had plenty of ups and downs, highs and lows, as well as no shortage of stormy weather out here in Sandrock...}}
+{{dialogue|Justice|And without all of you giving it your all, Sandrock wouldn't be the safe and secure place it is here today!}}
+{{dialogue|Justice|Nevertheless, there is still one who stands out among the rest... One whose tireless dedication to law and order has earned them the right to call themselves... Deputy of the Sandrock Civil Corps!}}
+{{dialogue|Justice|...}}
+{{dialogue|Mi-an|Wow! I don't know why, but I'm really nervous all of a sudden! ''Player'', you don't think he's going to pick one of us, do you? I mean, I know we're just Builders but-}}
+{{dialogue|Justice|Now, heh heh, I don't mean to tantalize you all; I'm sure you're on the tip of your toes wondering who I've chosen to be my deputy, so without further ado:}}
+{{dialogue|Justice|Ahem! Our next deputy is known not for brute strength, but nimbleness! And wisdom!}}
+{{dialogue|Justice|Our deputy brings a uniqueness to the team, and fills in the gaps in our Corps skillset with raw, individual talent.}}
+{{dialogue|Justice|...With flowing black hair that shimmers in the sunlight as they dish out hearty, heaping helpings of justice with elegance and finesse!}}
+{{dialogue|Justice|Let's give it up for our next deputy: Captain Caaaaat!}}
+{{dialogue|Captain|Meow!}}
+{{dialogue|Mi-an|What the? The cat!?}}
+{{dialogue|Justice|Yes, Captain, or should I say, Deputy Captain has not only been diligent in patrol work, but this year's mice incidents have fallen to an all-time low, yes, there really is no question that Captain is the most deserving of this title.}}
+{{dialogue|Justice|One more time, a round of applause for our new deputy!}}
+{{dialogue|Mi-an|I'm so embarrased! But congrats!}}
+{{dialogue|Unsuur|Congratulations, Captain.}}
+{{dialogue|Captain|Meow!}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 2068) that ends:
+{{dialogue|Justice|Now, heh heh, I don't mean to tantalize you all; I'm sure you're on the tip of your toes wondering who I've chosen to be my deputy, so without further ado:}}
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 20905 | sec: 1.5
+
+TRIGGER Procedure 2.0 Step 0.1 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 2069) that ends:
+{{dialogue|Justice|Ahem! Our next deputy is known not for brute strength, but nimbleness! And wisdom!}}
+ON STOPWATCH REAL TIME END || order: 0 | id: 20905
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Mi-an|Wisdom- Do you think he could be talking about... me!?}}
+
+TRIGGER Procedure 2.0 Step 1.1 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 2069) that ends:
+{{dialogue|Justice|Ahem! Our next deputy is known not for brute strength, but nimbleness! And wisdom!}}
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 20906 | sec: 1
+
+TRIGGER Procedure 2.0 Step 1.2 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 2070) that ends:
+{{dialogue|Justice|Our deputy brings a uniqueness to the team, and fills in the gaps in our Corps skillset with raw, individual talent.}}
+ON STOPWATCH REAL TIME END || order: 0 | id: 20906
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Mi-an|Oh my gosh! I think he is!}}
+
+TRIGGER Procedure 2.0 Step 2.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 2070) that ends:
+{{dialogue|Justice|Our deputy brings a uniqueness to the team, and fills in the gaps in our Corps skillset with raw, individual talent.}}
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 20907 | sec: 0.5
+
+TRIGGER Procedure 2.0 Step 2.2 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 2071) that ends:
+{{dialogue|Justice|...With flowing black hair that shimmers in the sunlight as they dish out hearty, heaping helpings of justice with elegance and finesse!}}
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 20908 | sec: 1
+
+TRIGGER Procedure 2.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 2073) that ends:
+{{dialogue|Mi-an|What the? The cat!?}}
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Unsuur|I thought I caught the most mice...}}
+Remove behavior CommanderNPCAction (idName: 20902) from Captain
+Mi-an stops standing still
+Remove behavior CommanderNPCAction (idName: 20904) from Mi-an
+Mi-an stands still in Main and looks at Justice
+
+TRIGGER Procedure 2.0 Step 3.6 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 2041}}
+A cutscene CG_CAPTAINCAT (duration: -2.0) starts playing
+New Deputy in Town - Justice thanked all of us for our service in clearing out Gecko Station but was perhaps most impressed by Captain's performance, and decided to grant him the rank of Deputy. Unsuur seemed a bit disappointed, but still as determined as ever.
+
+TRIGGER Procedure 1.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 18:00 (order: 0):
+CONDITIONS
+Who's the Deputy is in state 3 with flag 0
+ACTIONS
+AREA TRIGGER DELETE || id: 20901
+SCENEITEM DELETE || id: 20901 | itemType: 0
+ACTION NPC REMOVE CLUSTER || cluster: deputy
+FAIL MISSION || missionId: 1200089
+
+TRIGGER Procedure 2.0 Step 2.1 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 20907
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Mi-an|Oh, Justice, really, you're too much!}}
+
+TRIGGER Procedure 2.0 Step 3.7 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_CAPTAINCAT | state: 8
+CONDITIONS
+Always:
+ACTIONS
+ACTION ACTOR ADD ATTACH MODEL || npc: 8049 | modelId: 6001 | archive: 1 | scale: 1
+ACTION NPC RENAME || npc: 8049 | nameTransId: 30038046 | title: 30038046
+
+TRIGGER Procedure 2.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_CAPTAINCAT | state: 8
+CONDITIONS
+Always:
+ACTIONS
+GROUP 0:
+Remove behavior CommanderMoveToFlagAndAction (idName: 2090001) from Player
+Unsuur stops standing still
+Justice stops standing still
+Mi-an stops standing still
+ACTION NPC REMOVE CLUSTER || cluster: deputy
+CUTSCENE UI STATE EXIT || 
+Captain stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 12909) to Justice
+(param: TargetScene:Main|MoveMode:Walk|FlagName:1200090_8008_2|Action:PatShoulder|LookAtActor:8026|Delay:8)
+SUBMIT MISSION 1200089
+
+GROUP 1:
+Unsuur stands still in Main and looks at Justice
+
+
+TRIGGER Procedure 2.0 Step 5.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8008 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Justice|Sorry, pal. It just wasn't your time.}}
+STOPWATCH REAL TIME SET || id: 12909 | sec: 6
+
+TRIGGER Procedure 2.0 Step 6.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 12909
+CONDITIONS
+Always:
+ACTIONS
+GROUP 0:
+Unsuur stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 12909) from Justice
+
+GROUP 1:
+END MISSION 1200090
+

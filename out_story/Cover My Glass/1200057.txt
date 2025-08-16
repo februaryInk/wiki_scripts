@@ -1,0 +1,160 @@
+Reading Mission 1200057: Cover My Glass
+
+<onlyinclude>{{Infobox mission
+|name = Cover My Glass
+|image =
+|description = Logan broke a window when he escaped from the train. In order to get the train running again, Yan needs you to repair the window.
+|type = Main
+|time =
+|location =
+|characters = [[Yan]]
+|condition =
+|details =
+|exp = 400
+|reputation = 15
+|gols = 200
+|npc1 = Jensen
+|rp1 = 20
+|npc2 = Yan
+|rp2 = 10
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Cover My Glass:
+
+TRIGGER Procedure 0.0 Step 0.5 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200055
+CONDITIONS
+Always:
+ACTIONS
+Set DAY to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1200055 | id: 20551 | sceneName: Main | flagName: trainrob_trigger | showOnMap: 1 | mapIcon: MissionArea | transId: 80002428
+ACTION AREA TRIGGER SET RADIUS || id: 20551 | radius: 20
+Justice stands still in Main
+Rhok stands still in Main
+Ernest stands still in Main
+Pembe stands still in Main
+Bram stands still in Main
+NPC SET CAN INTERACT || npc: 8029 | canInteract: 0
+NPC SET CAN INTERACT || npc: 8069 | canInteract: 0
+NPC SET CAN INTERACT || npc: 8036 | canInteract: 0
+NPC SET CAN INTERACT || npc: 8030 | canInteract: 0
+Run mission Cover My Glass
+Add behavior MissionAfterRobTrain0 (idName: 20553) to Rhok
+(param: -1)
+Add behavior MissionAfterRobTrain0 (idName: 20553) to Bram
+(param: -1)
+Add behavior MissionAfterRobTrain0 (idName: 20553) to Ernest
+(param: -1)
+Add behavior MissionAfterRobTrain0 (idName: 20553) to Pembe
+(param: -1)
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200057
+CONDITIONS
+Always:
+ACTIONS
+Yan stands still in Main
+Set global blackboard key brokentrain with info 1.
+SCENEITEM CREATE FLAG || itemType: 0 | id: 20581 | path: Mission_TrainWB | sceneName: Main | flagName: trainrob_window | extraParams: 0
+DELIVER MISSION 1200057
+Set DAY to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Yan
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 1507, 1508, 1509, 1510, 1511 starts:
+{{dialogue|Yan|Ah hah! Wandering around aimlessly, eh, ''Player''? That is so you! Great news, I've got something you can do right here!}}
+{{dialogue|Yan|Ahem, yes, I was hoping to run into one of you Builders; you see, that pesky Logan has struck again! More specifically, he's struck this here train window, and uh, yeah you know the drill. Guess who needs to fix it?}}
+{{dialogue|Yan|Jensen called me over all in a huff, "Wah wah wah, my poor widdle twain;" normally I wouldn't entertain, let alone reward such baby-ry, but Matilda was standing right there, sooo... yeah, better get it done quick...}}
+{{dialogue|Yan|But all of that is neither here nor there since you're here, clearly with nothing better to do, so you'll have no trouble accepting this commission, am I right!?}}
+{{dialogue|Yan|The train is stopped now at the station, {{textcolor|green|just get some glass and fix the window}}. Should be easy as pie! Well, off you go then, scoot! Come see me when it's done for your pay!}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1200057
+Yan stops standing still
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200057
+CONDITIONS
+Always:
+ACTIONS
+Run mission Cover My Glass
+END MISSION 1200057
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 12:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Yan stops standing still
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment DAY by 1
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if DAY is >= 2
+ACTIONS
+Set global blackboard key 1200057missed with info 1.
+
+==Rewards==
+{{mission reward
+|npc1 = Jensen
+|rp1 = 20
+|npc2 = Yan
+|rp2 = 10
+|exp = 400
+|reputation = 15
+|gols = 200
+}}
+==Post-conduct==
+
+If the player successfully completes the mission, some of the townsfolk will comment on it:
+
+{{dialogue|Jensen|''Player''! Did you fix the train window? Golly, that's swell!}}
+{{dialogue|Jensen|You know how I feel about my trains... Gosh, who would've thought it'd be so easy to break a window? I really hope someone catches that darn Logan and teaches him a lesson he won't forget!}}
+{{dialogue|Jensen|But for now... Thank you, ''Player''. The windows are fixed and the Ataran Express runs once more!}}
+
+If the player fails the mission, some of the townsfolk will comment on it:
+
+{{dialogue|Yan|Geez, ''Player''! Can't even fix a flippin' window, for Peach sake. Of all the- Guh! And the worst part about all this is that pencil-pushing poindexter, Jensen, has been breathing down my neck this whole time, throroughly souring my days off!}}
+{{dialogue|Yan|Luckily I was able to shovel it off onto Mi-an, so you're off the hook for now... but I won't forget the trouble you've caused me; listen, ''Player'', try to think of someone other than yourself for once, y'hear me?}}
+{{dialogue|Yan|Just look at Mi-an! She handled that window like a champ! How do you expect to compete with her, bungling such a lay-up of a task, huh?! I can pretty much tell you right now who won't be placing second on the Builder Charts this year. Here's a hint: you!}}

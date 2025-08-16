@@ -1,0 +1,469 @@
+Reading Mission 1800376: Luna's Invitation
+
+<onlyinclude>{{Infobox mission
+|name = Luna's Invitation
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 1600
+|reputation = None
+|gols = None
+|npc1 = Ernest
+|rp1 = 20
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200364
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200311
+CONDITIONS
+Always:
+ACTIONS
+Run mission Pen's Last Words
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player wakes up:
+CONDITIONS
+The Jewel of the Eufaula is successfully completed
+Check relationship with Ernest is Lover
+Check if DAY is == 0
+ACTIONS
+Run mission Luna's Invitation
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800376
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|654}}
+AREA TRIGGER CREATE || id: 83761 | sceneName: Main | flagName: Trigger_Saloon | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0 | missionId: 1800376
+Set 8376Day to 0
+Set 8376Go to 0
+NPC RANDOM ADD || dailyBehavior: RandomNPC | flagName: default | instId: 83761 | id: 1 | scene: Main
+NPC RANDOM ADD || dailyBehavior: RandomNPC | flagName: default | instId: 83762 | id: 1 | scene: Main
+NPC RANDOM ADD || id: 1 | instId: 83763 | scene: Main | flagName: default | dailyBehavior: RandomNPC
+
+TRIGGER Procedure 0.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_saloon
+CHECK GLOBAL BLACKBOARD || key: musacomes | exist: 0 | info: 1
+Check if 8376Day is == 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_saloon
+AREA TRIGGER DELETE || id: 83761
+Set 8376Go to 1
+
+TRIGGER Procedure 0.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: S8376_0_1
+Add behavior CommanderSit (idName: 8376691) to Ernest
+(param: SeatDramaName:SaloonSeat01-2|TargetScene:Saloon)
+Add behavior CommanderSit (idName: 83761241) to Luna
+(param: SeatDramaName:SaloonSeat02-1|TargetScene:Saloon)
+DELAY MASK SET || maskId: 83761 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 83761 | flagName: S8376_Item1 | extraParams: -1 | sceneName: Saloon | path: S8376_Item1
+Set 8376Move2 to 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 4.3 Order 34 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8069 | behaviourName: CommanderSit | eventName: SitDownFinished
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8124 | behaviourName: CommanderSit | eventName: SitDownFinished
+CONDITIONS
+Always:
+ACTIONS
+Increment 8376Move2 by 1
+
+TRIGGER Procedure 0.0 Step 5.0 Order 35 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8124 | behaviourName: CommanderSit | eventName: SitDownFinished
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8069 | behaviourName: CommanderSit | eventName: SitDownFinished
+CONDITIONS
+Check if 8376Move2 is >= 2
+ACTIONS
+DELAY MASK SET || maskId: 83761 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 6.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 83761
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 16918 starts:
+{{dialogue|Ernest|Over here, honey.}}
+
+TRIGGER Procedure 0.0 Step 7.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8376001) to Player
+(param: TargetScene:Saloon|MoveMode:Run|FlagName:S8376_0_2)
+DELAY MASK SET || delayTime: 1 | durationTime: -2 | maskId: 83762 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 8.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 83762
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 83762 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 8376001) from Player
+Add behavior CommanderPlayerSit (idName: 8376002) to Player
+(param: SeatDramaName:SaloonSeat01-1|TargetScene:Saloon)
+Set 8376A to 0
+
+TRIGGER Procedure 0.0 Step 9.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83762 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 5156_0 starts:
+{{dialogue|Luna|Hello hello! I've been meaning to meet you properly ever since I arrived, but, well, yesterday was just impossible with my show and everything... Anyway, here we are! Finally!}}
+{{dialogue|Luna|I took a stroll earlier and wherever I went, people were telling me you built this, you planted that, basically everything I laid eyes on was your work! That's some concrete accomplishments... Much more concrete than my brother's paperbacks!}}
+{{dialogue|Ernest|Hey now...}}
+{{dialogue|Luna|I suppose Peach is looking out for him, 'cos you're way out of his league!}}
+{{dialogue|Luna|Oh, and Ernie said you were the reason his new book was so successful! We were all shocked when our Ernie wrote a love story... and a good one at that! Goes to show that reality is the best inspiration for fiction...}}
+{{dialogue|Luna|...Including my breakthrough song! Well, technically he didn't write it, I just copied his love letter from when he was a kid... Guess what? That girl who received it reached out after hearing that song! After all these years!}}
+{{dialogue|Ernest|Please, Luna...!}}
+{{dialogue|Luna|What did ya think I was gonna say? Hiding anything, Ernie?}}
+{{dialogue|Ernest|Of course not. Honey, this is the love letter I told you about. Our butler accidentally sent it out before I finished it. Looking back, that letter was but a poor imitation of love. I had no clue what love meant until I met you...}}
+
+*''Oh yes, that letter! I remember it.''
+*''I don't recall this conversation...''
+*''You don't have to explain anything. I trust you.''
+
+{{dialogue|Ernest|indent=true|answer=Oh yes, that letter! I remember it.
+|Of course, you'd remember. I hold onto every word you've ever said, too.}}
+{{dialogue|Ernest|indent=true|answer=I don't recall this conversation...
+|Really? I thought I mentioned it after my failed attempt at the housewarming party...}}
+{{dialogue|Ernest|indent=true|Maybe I didn't. Starting to doubt myself now. Don't worry, honey, you have all the time in the world to hear about my childhood stories.}}
+{{dialogue|Ernest|indent=true|answer=You don't have to explain anything. I trust you.
+|That's wonderful to hear, honey. Your trust means the world to me. I'll never break it, not in a million years.}}
+{{dialogue|Luna|Alright, alright, lovebirds! For those interested, that's how it ended. Ernie never saw that girl again after he was, what, nine?}}
+{{dialogue|Ernest|She didn't reach out to meet me anyways. She was only interested in getting Luna's autographs...}}
+{{dialogue|Luna|No kidding! She asked for twenty autographs to give her "friends," at a good price, I suppose. To think that Ernie used to have a crush on this gem...}}
+{{dialogue|Ernest|Let's not dwell on the past, huh? So... how long are you planning to stay in Sandrock?}}
+{{dialogue|Luna|Already trying to get rid of me? I only just got here! I'd say a couple more days before Ma and Pa start getting suspicious about my tour dragging on for too long... They've been hounding me to get back home.}}
+{{dialogue|Ernest|Then let's not waste any time. Let's eat! I've ordered all the local specialties, so forget about your diet –}}
+{{dialogue|Luna|Wait, one more thing!}}
+{{dialogue|Ernest|...}}
+{{dialogue|Luna|Let me take a photo of you two being all lovey-dovey! Ma and Pa have been asking for a picture of you together, but, you know, they wouldn't intrude on your privacy like I am right now, hehe.}}
+
+*''Of course!'' (No unique dialogue)
+*''Now's not a good time...''
+*''What do you think, Ernest?''
+
+{{dialogue|Luna|indent=true|answer=Now's not a good time...
+|You're right. What was I thinking? The lighting here is terrible! You don't need to take a picture now. Take your time!}}
+{{dialogue|Luna|indent=true|Hmm... You two look so good together...}}
+{{dialogue|Luna|indent=true|As his little sister who's always worrying about him, thanks for being there for him. My brother's always been wandering about never really fitting in. I think he's finally found the place he's looking for.}}
+{{dialogue|Luna|indent=true|reward={{i2|Autographed Photo of Luna|1}}|Oh, and I meant to give this to you earlier, but I kept forgetting. It's my autographed photo from way back when I released my first single. Limited edition, and this is the last one I have. All yours now!}}
+{{dialogue|Luna|indent=true|Now, these dishes look delicious! Shall we?}}
+{{dialogue|Ernest|Honey, it's up to you...}}
+{{dialogue|Luna|Hear that? You make the call here!}}
+
+*''Of course!'' (No unique dialogue)
+*''Now's not a good time...''
+
+{{dialogue|Luna|indent=true|answer=Now's not a good time...
+|You're right. What was I thinking? The lighting here is terrible! You don't need to take a picture now. Take your time!}}
+{{dialogue|Luna|indent=true|Hmm... You two look so good together...}}
+{{dialogue|Luna|indent=true|As his little sister who's always worrying about him, thanks for being there for him. My brother's always been wandering about never really fitting in. I think he's finally found the place he's looking for.}}
+{{dialogue|Luna|indent=true|reward={{i2|Autographed Photo of Luna|1}}|Oh, and I meant to give this to you earlier, but I kept forgetting. It's my autographed photo from way back when I released my first single. Limited edition, and this is the last one I have. All yours now!}}
+{{dialogue|Luna|indent=true|Now, these dishes look delicious! Shall we?}}
+
+TRIGGER Procedure 0.0 Step 11.3 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Check if 8376A is == 1
+ACTIONS
+DELAY MASK SET || maskId: 83763 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 28.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Check if 8376A is == 0
+ACTIONS
+DELAY MASK SET || maskId: 83766 | delayTime: 1 | durationTime: 3 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 10.4 Order 31 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 16949) that ends:
+{{dialogue|Luna|Oh, and I meant to give this to you earlier, but I kept forgetting. It's my autographed photo from way back when I released my first single. Limited edition, and this is the last one I have. All yours now!}}
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Autographed Photo of Luna of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 11.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the first option in conversation segment 16941:
+{{dialogue|Luna|Let me take a photo of you two being all lovey-dovey! Ma and Pa have been asking for a picture of you together, but, you know, they wouldn't intrude on your privacy like I am right now, hehe.}}
+
+*''Of course!'' (No unique dialogue)
+*''Now's not a good time...'' (No unique dialogue)
+*''What do you think, Ernest?'' (No unique dialogue)
+
+(cId 2) The player picks the first option in conversation segment 16943:
+{{dialogue|Luna|Hear that? You make the call here!}}
+
+*''Of course!'' (No unique dialogue)
+*''Now's not a good time...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8376A to 1
+
+TRIGGER Procedure 0.0 Step 11.5 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83763 | eventType: 2
+CONDITIONS
+Check if 8376A is == 1
+ACTIONS
+Remove behavior CommanderPlayerSit (idName: 8376002) from Player
+Add behavior CommanderMoveToFlagAndAction (idName: 8376003) to Player
+(param: TargetScene:Saloon|MoveMode:Run|FlagName:S8376_0_3)
+Remove behavior CommanderSit (idName: 8376691) from Ernest
+Remove behavior CommanderSit (idName: 83761241) from Luna
+Luna stands still in Saloon and looks at Player
+Ernest stands still in Saloon and looks at Luna
+DELAY MASK SET || maskId: 83763 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+PLAYER SET POS ROT FLAG || flagName: S8376_0_3 | sceneName: Saloon
+
+TRIGGER Procedure 0.0 Step 11.6 Order 36 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON DELAY MASK EVENT || order: 0 | maskId: 83763 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Increment 8376Move3 by 1
+
+TRIGGER Procedure 0.0 Step 11.8 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 10 | eventType: 5 | maskId: 83763
+ON ACTOR BEHAVIOUR EVENT || order: 10 | eventName: MoveToFlagOver | behaviourName: CommanderMoveToFlagAndAction | npc: 8000
+CONDITIONS
+Check if 8376Move3 is >= 2
+ACTIONS
+(cId 3) A conversation 16945 starts:
+{{dialogue|Luna|Fantastic! Ready? Show me your biggest, toothiest smile! Yep, keep that up... Three, two, one –}}
+
+TRIGGER Procedure 0.0 Step 14.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Check if 8376A is == 1
+ACTIONS
+DELAY MASK SET || maskId: 83764 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 16.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83764 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+ACTION CAPTURE ENTER STORY MODE || npc: 8069 | photoId: 45 | poseIds: 3010
+DELAY MASK SET || maskId: 83764 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 18.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAPTURE MODE EXIT || order: 0 | isStory: 1
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 83761243) from Luna
+(cId 5) A conversation 16946 starts:
+{{dialogue|Luna|Perfecto!}}
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 23.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 83765 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 24.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83765 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: S8376_0_1
+Add behavior CommanderSit (idName: 8376695) to Ernest
+(param: SeatDramaName:SaloonSeat01-2|TargetScene:Saloon)
+Add behavior CommanderPlayerSit (idName: 8372005) to Player
+(param: SeatDramaName:SaloonSeat01-1|TargetScene:Saloon)
+Add behavior CommanderSit (idName: 83761245) to Luna
+(param: SeatDramaName:SaloonSeat02-1|TargetScene:Saloon)
+DELAY MASK SET || maskId: 83765 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 8376003) from Player
+Remove behavior CommanderNPCAction (idName: 83761243) from Luna
+
+TRIGGER Procedure 0.0 Step 25.1 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 83765
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 16947, 16948, 16949, 16950
+ starts:
+{{dialogue|Luna|Hmm... You two look so good together...}}
+{{dialogue|Luna|As his little sister who's always worrying about him, thanks for being there for him. My brother's always been wandering about never really fitting in. I think he's finally found the place he's looking for.}}
+{{dialogue|Luna|Oh, and I meant to give this to you earlier, but I kept forgetting. It's my autographed photo from way back when I released my first single. Limited edition, and this is the last one I have. All yours now!}}
+{{dialogue|Luna|Now, these dishes look delicious! Shall we?}}
+
+TRIGGER Procedure 0.0 Step 27.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 83766 | delayTime: 1 | durationTime: 3 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 34.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83766 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 83766 | delayTime: 2 | durationTime: 3 | changeType: 1 | curveIndex: 0
+CUTSCENE UI STATE EXIT || 
+SCENEITEM DELETE || itemType: 0 | id: 83761
+Remove behavior CommanderPlayerSit (idName: 8376002) from Player
+Remove behavior CommanderPlayerSit (idName: 8372005) from Player
+Remove behavior CommanderNPCActionLoop (idName: 83761243) from Luna
+Remove behavior CommanderSit (idName: 8376695) from Ernest
+Remove behavior CommanderSit (idName: 83761245) from Luna
+Luna stops standing still
+Luna stops standing still
+Ernest stops standing still
+Remove behavior CommanderSit (idName: 8376691) from Ernest
+Remove behavior CommanderSit (idName: 83761241) from Luna
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 40.0 Order 30 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 8376Day is >= 14
+Check if 8376A is == 1
+ACTIONS
+The player receives a letter:
+{{mail|657}}
+
+TRIGGER Procedure 0.0 Step 41.0 Order 32 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 8376Day is >= 14
+Check if 8376A is == 0
+ACTIONS
+The player receives a letter:
+{{mail|657}}
+
+TRIGGER Procedure 0.0 Step 44.0 Order 33 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 8376Day is >= 15
+ACTIONS
+NPC RANDOM REMOVE || id: 83761
+NPC RANDOM REMOVE || id: 83762
+NPC RANDOM REMOVE || id: 83763
+END MISSION 1800376
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment 8376Day by 1
+
+TRIGGER Procedure 1.0 Step 8.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 8376Go is == 0
+ACTIONS
+AREA TRIGGER DELETE || id: 83761
+The player receives a letter:
+{{mail|655}}
+
+TRIGGER Procedure 1.0 Step 10.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 8376Day is >= 3
+ACTIONS
+NPC RANDOM REMOVE || id: 83761
+NPC RANDOM REMOVE || id: 83762
+NPC RANDOM REMOVE || id: 83763
+
+==Rewards==
+{{mission reward
+|npc1 = Ernest
+|rp1 = 20
+|exp = 1600
+|reputation = None
+|gols = None
+}}

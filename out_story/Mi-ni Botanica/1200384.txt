@@ -1,0 +1,274 @@
+Reading Mission 1200384: Mi-ni Botanica
+
+<onlyinclude>{{Infobox mission
+|name = Mi-ni Botanica
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Mi-ni Botanica:
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 19494:
+{{dialogue|Nia|Hey ''Player'', ready to help with our shop?}}
+
+*''I can help grow some flowers.'' (No unique dialogue)
+*''I can help build the display rack.'' (No unique dialogue)
+*''Still too much on my plate...'' (No unique dialogue)
+
+(cId -1) The player picks the second option in conversation segment 19492:
+{{dialogue|Nia|We have a name and a location. Now, I need to prepare some flowers for sale, and of course, the flower display rack. Anything you can help with ''Player''?}}
+
+*''I can help grow some flowers.'' (No unique dialogue)
+*''I can help build the display rack.'' (No unique dialogue)
+*''Good luck ladies... too many plates...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key mini with info 1.
+Set CHOICE to 1
+
+TRIGGER Procedure 3.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200383
+CONDITIONS
+Always:
+ACTIONS
+Run mission Mi-ni Botanica
+END MISSION 1200383
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200384
+CONDITIONS
+Always:
+ACTIONS
+===Wait for a Letter===
+
+{{mission_details
+|desc = Mi-an and Nia are still figuring out exactly what they want to do. Wait for them to contact you.
+|details = Wait for a Letter
+}}
+Mi-an stops standing still
+Nia stops standing still
+CUTSCENE UI STATE EXIT || 
+Set DAY to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: mini | info: 0 | exist: 1
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: mini
+The player receives a letter:
+{{mail|778}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: mini | info: 1 | exist: 1
+ACTIONS
+The player receives a letter:
+{{mail|779}}
+GLOBAL BLACK BOARD REMOVE || key: mini
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 778
+CONDITIONS
+CHECK PLAYER ITEM || item: 16200029 | itemGrade: -1 | set: 6 | count: 10
+ACTIONS
+===Plant Mountain Roses===
+
+{{mission_details
+|desc = Gardening shops need flowers. Help Mi-an and Nia out by getting them some.
+|details = Plant Mountain Roses
+*{{i2|Mountain Rose|0/10}}
+}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 779
+CONDITIONS
+Always:
+ACTIONS
+===Construct Display Rack===
+
+{{mission_details
+|desc = A Display Rack is nice to have for a flower shop, use the recipe you got to make one for Nia and Mi-an at their new shop. Make one on your Assembly Station.
+|details = Construct Display Rack
+*{{i2|Display Case|0/1}}
+}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 778
+CONDITIONS
+CHECK PLAYER ITEM || item: 16200029 | itemGrade: -1 | set: 2 | count: 10
+ACTIONS
+===Talk to Nia===
+
+{{mission_details
+|desc = You've finished what you need for the garden shop, go tell Nia the good news.
+|details = Talk to Nia
+*{{i2|Mountain Rose|0/10}}
+*{{i2|Nia|0/1}}
+}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | targetId: 2 | missionId: 1200383 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Nia===
+
+{{mission_details
+|desc = You've finished what you need for the garden shop, go tell Nia the good news.
+|details = Talk to Nia
+*{{i2|Mountain Rose|0/10}}
+*{{i2|Nia|0/1}}
+}}
+
+TRIGGER Procedure 2.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Nia
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1200383 | targetId: 3 | canSubmit: 1
+ACTIONS
+(cId 0) A conversation 19505, 19506 starts:
+{{dialogue|Nia|Oh! You're already done! Mi-an and I are almost done as well, and we're all set to open in three days! Don't forget to stop by and show my business some love!}}
+{{dialogue|Nia|If you can't make it during the day, no worries. Mi-an and I plan to have a celebratory dinner at {{textcolor|green|18:00PM on that day at the Blue Moon}}. I'd love to have you there!}}
+BAG MODIFY BY TARGET || missionId: 1200383 | targetId: 3
+
+TRIGGER Procedure 2.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Wait for Opening Day===
+
+{{mission_details
+|desc = In three days, the Mi-ni Botanica flower shop will open. Be there for opening day and join the celebration!
+|details = Wait for Opening Day
+}}
+SCENEITEM CREATE FLAG || itemType: 0 | id: 83472 | path: S8347_Item2 | flagName: S8347_Item1 | sceneName: Main | extraParams: -1
+
+TRIGGER Procedure 2.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | targetId: 2 | missionId: 1200383 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Nia===
+
+{{mission_details
+|desc = You've finished what you need for the garden shop, go tell Nia the good news.
+|details = Talk to Nia
+*{{i2|Display Case|0/1}}
+*{{i2|Nia|0/1}}
+}}
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Mi-an
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 19391, 19392 starts:
+{{dialogue|Mi-an|I thought my dream of running a shop was forever lost once I became a Builder. But here we are! Just like Ma said – give your all everyday, so you can seize those once-in-a-lifetime opportunities when they come your way.}}
+{{dialogue|Mi-an|If I hadn't worked hard as a Builder, I wouldn't have the money to invest in Nia's idea, and I wouldn't be a shop owner now.}}
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Nia
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 19393 starts:
+{{dialogue|Nia|I can't wait for our Mi-ni Botanica to open! It may not be much, but it's something I can call my own.It'd make my Ma and Pa proud! Probably your parents as well, haha!}}
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 2
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment DAY by 1
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+===Head towards Mi-ni Botanica===
+
+{{mission_details
+|desc = Today is Mi-ni Botanica's opening day. Go check out the new shop.
+|details = Head towards Mi-ni Botanica
+}}
+Run mission Mi-ni Botanica
+Run mission Mi-ni Botanica
+SCENEITEM CREATE FLAG || path: Mission_FlowersStore | id: 23841 | itemType: 0 | sceneName: Main | extraParams: 0 | flagName: bridge_kaimu
+SCENEITEM CREATE FLAG || path: SceneItem_Store_MiniGardenShop | itemType: 3 | id: 17 | sceneName: Main | extraParams: 0 | flagName: MiniGardenShop
+
+TRIGGER Procedure 4.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+When the time is 18:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+===Go to Blue Moon at 18:00PM===
+
+{{mission_details
+|desc = Tonight, Mi-an and Nia are having a little get-together at the saloon to celebrate their successful opening.
+|details = Go to Blue Moon at 18:00PM
+}}
+
+TRIGGER Procedure 4.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 83481
+END MISSION 1800348
+SUBMIT MISSION 1200383
+END MISSION 1200384

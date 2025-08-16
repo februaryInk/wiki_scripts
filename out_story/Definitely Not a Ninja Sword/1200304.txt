@@ -1,0 +1,310 @@
+Reading Mission 1200304: Definitely Not a Ninja Sword
+
+<onlyinclude>{{Infobox mission
+|name = Definitely Not a Ninja Sword
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Definitely Not a Ninja Sword:
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1200303
+START MISSION 1200303
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200303
+CONDITIONS
+Always:
+ACTIONS
+Run mission Definitely Not a Ninja Sword
+END MISSION 1200303
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200304
+CONDITIONS
+Always:
+ACTIONS
+===Go to the Civil Corps===
+
+{{mission_details
+|desc = As the resident "space-case," Qi may have some insight as to what the chip could be used for.
+|details = Go to the Civil Corps
+}}
+AREA TRIGGER CREATE || missionId: 1200303 | id: 23041 | flagName: S8265_Trigger1 | sceneName: Main | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+Set STOP to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1200303
+Remove 1 Broken Sword of Default quality (Notify player)
+END MISSION 1200304
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 23041
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 23041 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 23041
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23041 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Qi stands still in Main
+Justice stands still in Main and looks at Qi
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8265_0_1
+DELAY MASK SET || maskId: 23041 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23041 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 3592_0 starts:
+{{dialogue|Qi|...Shot into space, you say?}}
+{{dialogue|Justice|That's right. Straight into space! I couldn't believe it. Heck, I had no idea there were spaceships there at all! Loada bunkers, stairs, factory lookin' things. Saw a bunch of spaceship parts, man, it was huge! Never seen anythin' like it...}}
+{{dialogue|Qi|...Did you happen to see... the name of the ship?}}
+{{dialogue|Justice|Yeah, it was like, "Olive Pea" or something. I figured it was some sorta space food delivery service or somethin'.}}
+{{dialogue|Qi|The Olympia...}}
+{{dialogue|Justice|Uh... yeah, that coulda been it, too. I mean, the food stuff was just a theory... Matilda was in that robot, and came real close to me. I jus' thought back to my training, and...}}
+{{dialogue|Qi|Olympia... found the Olympia...}}
+{{dialogue|Qi|Haha... haha... hahaha!}}
+{{dialogue|Qi|I need to go... It's finally here... I've waited so long for this moment...}}
+{{dialogue|Justice|Uh... are you okay Director...?}}
+{{dialogue|Qi|Okay?! I'm way more than okay! This is fascinating! Do you know what this means?}}
+{{dialogue|Justice|That... I have to take you there...?}}
+{{dialogue|Qi|It means that the people of the Old World really did travel to the stars! When the Day of Calamity happened, there were people out there amongst the stars! They probably survived! And yes, you have to take me there...!}}
+{{dialogue|Justice|Oh hey ''Player'', just in time. Director Qi wants to know more about the Olympathing, maybe you can enlighten him? I've got uh... things to do, so I've gotta run, seeya!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 23042) to Qi
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8265_8_2|LookAtActor:8000)
+Add behavior CommanderMoveToFlag (idName: 23042) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8265_0_2|Delay:1.0)
+Justice stops standing still
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 3593_0 starts:
+{{dialogue|Qi|Oh yes! I'm still wondering about Matilda's mech. The Sheriff said it's got an escape mechanism that's strong enough to send the control pod into space. That's incredible!}}
+{{dialogue|Qi|The energy output must've been massive to be able to move such a heavy object to escape velocity. It must have even out-produced the R47 Ultra! I'm so glad that-}}
+{{dialogue|Qi|...I feel like this conversation is very one sided, ''Player''. It is almost as if you did not come to discuss the wonders of robotics.}}
+
+*''I found this chip...''
+*''Could we add thrusters to the cockpit?''
+
+{{dialogue|Qi|indent=true|answer=Could we add thrusters to the cockpit?
+|reward={{NPC2|Qi|rp=3}}|I cannot deny that the thought has crossed my mind... It could prove useful in dire situations for the control pod to have an escape function... but based on the best available technology that we have, it would significantly enlarge the structure itself.}}
+{{dialogue|Qi|indent=true|The mobile suit would require fuel tanks for the thrusters, which would introduce further combat vulnerabilities.}}
+{{dialogue|Qi|indent=true|If we balanced it correctly it shouldn't affect flight dynamics, however having fuel tanks attached to the control pod would be a constant risk.}}
+{{dialogue|Qi|indent=true|Exciting.}}
+{{dialogue|Qi|indent=true|Ah, but I assume you had something else to talk to me about?}}
+{{dialogue|Qi|Hm? A chip? Let me take a look...}}
+{{dialogue|Qi|You found this in the Mecha-Tilda? Wait a minute... this looks familiar... hang on, I'll be right back.}}
+The conversation ends.
+Remove behavior CommanderMoveToFlag (idName: 23042) from Player
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 23042 | delayTime: 0 | durationTime: -2 | changeType: 2 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the second option in conversation segment 11903:
+{{dialogue|Qi|...I feel like this conversation is very one sided, ''Player''. It is almost as if you did not come to discuss the wonders of robotics.}}
+
+*''I found this chip...'' (No unique dialogue)
+*''Could we add thrusters to the cockpit?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Qi gains 3 favor
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 23042
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 11911, 11912, 11913 starts:
+{{dialogue|Qi|I was right! This is a RX76 chip. I cross referenced the serial number with a database of relic technology that I had been compiling. It's an Old World military chip.}}
+{{dialogue|Qi|It was used in a very cool sword called the {{textcolor|green|Plasma Saber}}, which was the weapon of choice of Gangum pilots everywhere. I... did a lot of scientific research to figure this out.}}
+{{dialogue|Qi|If only I could get my hands one of these Plasma Sabers... I would be able to recreate it and we'd have a real, working model! Alas, it's but a dream...}}
+Remove 1 Mysterious Chip of Default quality (Notify player)
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8007 | cId: 2 | missionId: 1200304
+CONDITIONS
+CHECK PLAYER ITEM || item: 11000039 | itemGrade: -1 | set: 2 | count: 1
+ACTIONS
+(cId 3) A conversation 11914, 11915 starts:
+{{dialogue|Qi|Hold on... is that a...! Why do you have a broken Plasma Saber with you? No matter, c-can I see it? I'd like to try to restore it, in the name of science and Gungam pilots everywhere...}}
+{{dialogue|Qi|Wow... I'll try to have it back to you soon...}}
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove 1 Broken Sword of Default quality (Notify player)
+Remove behavior CommanderMoveToFlagAndAction (idName: 23042) from Qi
+CUTSCENE UI STATE EXIT || 
+Qi stops standing still
+SUBMIT MISSION 1200303
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 23043) to Qi
+(param: TargetScene:Science|MoveMode:Run|FlagName:1211_8007_1)
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8007 | cId: 2 | missionId: 1200304
+CONDITIONS
+CHECK PLAYER ITEM || item: 11000039 | itemGrade: -1 | set: 3 | count: 0
+ACTIONS
+(cId 4) A conversation 11916 starts:
+{{dialogue|Qi|Still, if you're interested, I do have some idea on where you might be able to find a relic saber. I know of several areas around Sandrock that had been under Old World military control. Maybe you can take a look around these places.}}
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 23042) from Qi
+CUTSCENE UI STATE EXIT || 
+===Search for the Broken Sword===
+
+{{mission_details
+|desc = Qi believes the chip was used in the construction of a powerful Old World blade weapon. Try to find the prototype for restoration.
+|details = Search for the Broken Sword
+*{{i2|Broken Sword|0/1}}
+}}
+AREA TRIGGER CREATE || missionId: 1200303 | id: 23042 | sceneName: MysteriousCave_Dungeon | showOnMap: 1 | flagName: showdown_dungeon_sword | mapIcon: MissionAreaBranch | transId: 0
+AREA TRIGGER ONCE CREATE || missionId: 1200303 | id: 23043 | sceneName: Main | flagName: showdown_trigger4 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+Qi stops standing still
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON BAG CHANGE || order: 0 | item: 11000039 | changeType: 0 | itemGrade: -1
+CONDITIONS
+Always:
+ACTIONS
+===Ask Qi===
+
+{{mission_details
+|desc = You've found the blade prototype, it matches Qi's description. Head back and show him what you've found.
+|details = Ask Qi
+*{{i2|Broken Sword|0/1}}
+*{{i2|Qi|0/1}}
+}}
+AREA TRIGGER DELETE || id: 23042
+(cId 7) A conversation 11917 starts:
+{{dialogue|Player|(This must be the sword Qi was talking about. I should take it back to him.)}}
+
+TRIGGER Procedure 3.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 11918, 11919, 11920 starts:
+{{dialogue|Qi|You've found a copy of the saber?!}}
+{{dialogue|Qi|Wonderful. It looks quite exquisite, besides its condition, mind. No matter, c-can I see it? I'd like to try to restore it, in the name of science and Gungam pilots everywhere...}}
+{{dialogue|Qi|Wow... I'll try to have it back to you soon...}}
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8007 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Check if STOP is == 0
+ACTIONS
+Add behavior CommanderBubbleTag (idName: 23044) to Qi
+(param: BubbleTag:Story1200303_8007|BubbleTime:6|minTime:12)
+Remove behavior CommanderMoveToFlag (idName: 23043) from Qi
+
+TRIGGER Procedure 4.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|790}}
+Remove behavior CommanderBubbleTag (idName: 23044) from Qi
+Remove behavior CommanderMoveToFlag (idName: 23043) from Qi
+Set STOP to 1
+END MISSION 1200304

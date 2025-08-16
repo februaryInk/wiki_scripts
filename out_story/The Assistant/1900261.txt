@@ -1,0 +1,1516 @@
+Reading Mission 1900261: The Assistant
+
+<onlyinclude>{{Infobox mission
+|name = The Assistant
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from The Assistant:
+
+TRIGGER Procedure 1.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 1902602 | sec: 0.2
+STOPWATCH REAL TIME SET || id: 1902603 | sec: 0.6
+
+TRIGGER Procedure 1.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1900260
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 19261
+SCENEITEM DELETE || itemType: 0 | id: 19263
+Run mission The Assistant
+END MISSION 1900260
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1900261
+CONDITIONS
+Always:
+ACTIONS
+===Be on Time!===
+
+{{mission_details
+|desc = You've promised Qi to work as an assistant in the Research Center. Remember to turn up on time!
+|details = Be on Time!
+}}
+Set Zero to 0
+Set TwoB to 0
+Set Part to 0
+Set Sr to 0
+Add behavior Story1900260 (idName: 192601) to Qi
+(param: -1)
+
+TRIGGER Procedure 0.0 Step 1.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+===Go to the Research Center===
+
+{{mission_details
+|desc = Today is the first day of your work as Qi's assistant. Go to the Research Center.
+|details = Go to the Research Center
+}}
+SCENEITEM CREATE FLAG || path: Q9256_lj1 | itemType: 0 | id: 92601 | sceneName: Science | extraParams: -1 | flagName: LJ9256_1
+SCENEITEM CREATE FLAG || itemType: 0 | id: 92602 | path: Q9256_lj2 | sceneName: Science | flagName: LJ9256_2 | extraParams: -1
+SCENEITEM CREATE FLAG || path: Q9256_lj3 | extraParams: -1 | flagName: LJ9256_3 | sceneName: Science | itemType: 0 | id: 92603
+SCENEITEM CREATE FLAG || itemType: 0 | id: 92604 | path: Q9256_hc4 | sceneName: Science | flagName: HC9256_1 | extraParams: -1
+SCENEITEM CREATE FLAG || extraParams: -1 | flagName: HC9256_2 | sceneName: Science | itemType: 0 | id: 92605 | path: Q9256_hc5
+SCENEITEM CREATE FLAG || itemType: 0 | id: 92606 | path: Q9256_hc6 | sceneName: Science | flagName: HC9256_3 | extraParams: -1
+SCENEITEM INTERACT SET LOCKER || itemType: 0 | id: 92601 | isAdd: 1
+SCENEITEM INTERACT SET LOCKER || itemType: 0 | id: 92602 | isAdd: 1
+SCENEITEM INTERACT SET LOCKER || itemType: 0 | id: 92603 | isAdd: 1
+SCENEITEM INTERACT SET LOCKER || itemType: 0 | id: 92604 | isAdd: 1
+SCENEITEM INTERACT SET LOCKER || itemType: 0 | id: 92605 | isAdd: 1
+SCENEITEM INTERACT SET LOCKER || id: 92606 | itemType: 0 | isAdd: 1
+SCENEITEM CREATE FLAG || itemType: 0 | id: 92607 | path: Qi9256_c | sceneName: Science | flagName: C9256 | extraParams: 0
+SCENEITEM INTERACT SET LOCKER || itemType: 0 | id: 92607 | isAdd: 1
+Set Part to 1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | id: 92607 | itemType: 0
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 1926007) to Player
+(param: CMDAction:PickUp_Story)
+Add 1 Feather Duster of Perfect quality (Notify player)
+SCENEITEM DELETE || itemType: 0 | id: 92607
+
+TRIGGER Procedure 0.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 92601
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 1926001) to Player
+(param: CMDAction:PickUp_Story)
+SCENEITEM DELETE || itemType: 0 | id: 9260111
+STOPWATCH REAL TIME SET || id: 9260103 | sec: 0.4
+
+TRIGGER Procedure 0.0 Step 4.5 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 9260103
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9260101 | path: Q9256_ef | sceneName: Science | flagName: LJ9256_1 | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: NPCActionOver | behaviourName: CommanderPlayerAction | npc: 8000
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1900260 | targetId: 2 | isAdd: 1 | transId: 80012719
+SCENEITEM DELETE || itemType: 0 | id: 92601
+Remove behavior CommanderPlayerAction (idName: 1926001) from Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9260102 | path: Q9256_efc | flagName: LJ9256_1 | sceneName: Science | extraParams: 0
+SCENEITEM DELETE || itemType: 0 | id: 9260101
+STOPWATCH REAL TIME SET || id: 926001 | sec: 3
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 926001
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 9260102
+
+TRIGGER Procedure 0.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 92604
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 1926004) to Player
+(param: CMDAction:Clean_Story)
+SCENEITEM DELETE || itemType: 0 | id: 9260411
+STOPWATCH REAL TIME SET || id: 9260403 | sec: 0.5
+
+TRIGGER Procedure 0.0 Step 7.5 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 9260403
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9260401 | path: Q9256_ef | sceneName: Science | flagName: HC9256_1 | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 8.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1900260 | targetId: 2 | transId: 80012720 | isAdd: 1
+SCENEITEM DELETE || itemType: 0 | id: 92604
+Remove behavior CommanderPlayerAction (idName: 1926004) from Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9260402 | path: Q9256_efc | sceneName: Science | flagName: HC9256_1 | extraParams: 0
+SCENEITEM DELETE || itemType: 0 | id: 9260401
+STOPWATCH REAL TIME SET || id: 926004 | sec: 3
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 9.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 926004
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 9260402
+
+TRIGGER Procedure 0.0 Step 10.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1900261
+ON MISSION END || order: 0 | missionId: 1900260 | missionEndResult: -1
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior Story1900260 (idName: 192601) from Qi
+
+TRIGGER Procedure 0.5 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Science:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_science
+Check if Part is == 1
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_science
+
+TRIGGER Procedure 0.5 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Science:
+CONDITIONS
+Always:
+ACTIONS
+Qi stands still in Science
+NPC ICON ADD || missionId: 1900261 | npc: 8007 | missionIcon: 2
+Add behavior CommanderMoveToFlagAndAction (idName: 9260) to Qi
+(param: TargetScene:Science|MoveMode:Walk|FlagName:Q9256)
+Set Part to 2
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+Check if Part is == 0
+ACTIONS
+(cId 9) A conversation 7997, 7998 starts:
+{{dialogue|Qi|We will begin tomorrow. You can report to the Research Center at your convenience. There are many things to be done, so come prepared.}}
+{{dialogue|Qi|For the sake of clarity: I will be paying you according to Sandrock regulation. See you tomorrow.}}
+
+TRIGGER Procedure 4.0 Step 8.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderPlayerAction (idName: 2926103) from Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9261302 | path: Q9256_efc | sceneName: Science | flagName: Egg | extraParams: 0
+Add behavior CommanderPlayerAction (idName: 2926113) to Player
+(param: CMDAction:PickUp_Story)
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+Check if Part is == 2
+Check relationship with Qi is Friend
+ACTIONS
+(cId 1) A conversation 2370_0, 2294_0 starts:
+{{dialogue|Qi|''Player'', you're here. Today is your first day as assistant to the Director.}}
+{{dialogue|Qi|Preliminary notice: When we are in the Research Center, our relationship is strictly professional. I need to focus on my work, so I don't have time for pleasantries.}}
+{{dialogue|Qi|So please understand, when you are in this lab, you are my assistant. No more, no less. In return, I hope you maintain the same level of professionalism.}}
+The conversation ends.
+{{dialogue|Qi|Your first job is of utmost importance. My previous experiment produced much detritus, and it is in need of disposal.}}
+
+*''Right away, boss.''
+*''So... an assistant is a fancy word for cleaner?''
+
+{{dialogue|Qi|indent=true|answer=Right away, boss.
+|Director, and good.}}
+{{dialogue|Qi|indent=true|answer=So... an assistant is a fancy word for cleaner?
+|"Responsibilities may include treatment and disposal of waste material." The terms of employment are quite clear.}}
+{{dialogue|Qi|indent=true|If I were not the only one with qualifications to do this research, I would be excited to dispose of such fascinating waste. Perhaps you do not see the scientific value in biohazardous waste?}}
+{{dialogue|Qi|Now, before you finish, please do not disturb me. There should be a Feather Duster somewhere if you need it.}}
+The conversation ends.
+NPC ICON REMOVE || missionId: 1900261 | npc: 8007 | missionIcon: 2
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Clean up Research Center===
+
+{{mission_details
+|desc = You didn't know that being Qi's assistant would consist of cleaning, but you don't really have much of a choice.
+|details = Clean up Research Center
+*{{i2|Qi|0/1}}
+}}
+SCENEITEM INTERACT SET LOCKER || itemType: 0 | id: 92601 | isAdd: 0
+SCENEITEM INTERACT SET LOCKER || itemType: 0 | id: 92602 | isAdd: 0
+SCENEITEM INTERACT SET LOCKER || itemType: 0 | id: 92603 | isAdd: 0
+SCENEITEM INTERACT SET LOCKER || itemType: 0 | id: 92604 | isAdd: 0
+SCENEITEM INTERACT SET LOCKER || itemType: 0 | id: 92605 | isAdd: 0
+SCENEITEM INTERACT SET LOCKER || itemType: 0 | id: 92606 | isAdd: 0
+SCENEITEM INTERACT SET LOCKER || itemType: 0 | id: 92607 | isAdd: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9260111 | path: Mission_fxpickup | sceneName: Science | flagName: LJ9256_1 | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9260211 | path: Mission_fxpickup | sceneName: Science | flagName: LJ9256_2 | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9260311 | path: Mission_fxpickup | sceneName: Science | flagName: LJ9256_3 | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9260411 | path: Mission_fxpickup | sceneName: Science | flagName: HC9256_1 | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9260511 | path: Mission_fxpickup | sceneName: Science | flagName: HC9256_2 | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9260611 | path: Mission_fxpickup | sceneName: Science | flagName: HC9256_3 | extraParams: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 9260) from Qi
+Qi stops standing still
+Set Sr to 1
+Add tag "QiWorking" to Qi
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+Check if Part is == 2
+Check relationship with Qi is 6 Friend
+ACTIONS
+(cId 2) A conversation 8000, 2294_0 starts:
+{{dialogue|Qi|''Player'', you're here. Today is your first day as assistant to the Director.}}
+{{dialogue|Qi|Your first job is of utmost importance. My previous experiment produced much detritus, and it is in need of disposal.}}
+
+*''Right away, boss.''
+*''So... an assistant is a fancy word for cleaner?''
+
+{{dialogue|Qi|indent=true|answer=Right away, boss.
+|Director, and good.}}
+{{dialogue|Qi|indent=true|answer=So... an assistant is a fancy word for cleaner?
+|"Responsibilities may include treatment and disposal of waste material." The terms of employment are quite clear.}}
+{{dialogue|Qi|indent=true|If I were not the only one with qualifications to do this research, I would be excited to dispose of such fascinating waste. Perhaps you do not see the scientific value in biohazardous waste?}}
+{{dialogue|Qi|Now, before you finish, please do not disturb me. There should be a Feather Duster somewhere if you need it.}}
+The conversation ends.
+NPC ICON REMOVE || missionId: 1900261 | npc: 8007 | missionIcon: 2
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 92602
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 1926002) to Player
+(param: CMDAction:PickUp_Story)
+SCENEITEM DELETE || itemType: 0 | id: 9260211
+STOPWATCH REAL TIME SET || id: 9260203 | sec: 0.4
+
+TRIGGER Procedure 1.0 Step 4.5 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 9260203
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9260201 | path: Q9256_ef | sceneName: Science | flagName: LJ9256_2 | extraParams: 0
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: NPCActionOver | behaviourName: CommanderPlayerAction | npc: 8000
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1900260 | targetId: 2 | isAdd: 1 | transId: 80012719
+SCENEITEM DELETE || itemType: 0 | id: 92602
+Remove behavior CommanderPlayerAction (idName: 1926002) from Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9260202 | path: Q9256_efc | flagName: LJ9256_2 | sceneName: Science | extraParams: 0
+SCENEITEM DELETE || itemType: 0 | id: 9260201
+STOPWATCH REAL TIME SET || id: 926002 | sec: 3
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 926002
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 9260202
+
+TRIGGER Procedure 1.0 Step 7.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 92605
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 1926005) to Player
+(param: CMDAction:Clean_Story)
+SCENEITEM DELETE || itemType: 0 | id: 9260511
+STOPWATCH REAL TIME SET || id: 9260503 | sec: 0.5
+
+TRIGGER Procedure 1.0 Step 7.5 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 9260503
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9260501 | path: Q9256_ef | sceneName: Science | flagName: HC9256_2 | extraParams: 0
+
+TRIGGER Procedure 1.0 Step 8.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1900260 | targetId: 2 | transId: 80012720 | isAdd: 1
+SCENEITEM DELETE || itemType: 0 | id: 92605
+Remove behavior CommanderPlayerAction (idName: 1926005) from Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9260502 | path: Q9256_efc | sceneName: Science | flagName: HC9256_2 | extraParams: 0
+SCENEITEM DELETE || itemType: 0 | id: 9260501
+STOPWATCH REAL TIME SET || id: 926005 | sec: 3
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 9.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 926005
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 9260502
+
+TRIGGER Procedure 2.0 Step 0.0 Order 7 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1900260 | targetId: 2 | canSubmit: 0
+Check if Sr is == 1
+ACTIONS
+(cId 3) A conversation 8008 starts:
+{{dialogue|Qi|Shh. Do not distract me from my work.}}
+
+TRIGGER Procedure 2.0 Step 1.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | canSubmit: 1 | missionId: 1900260 | targetId: 2
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Qi===
+
+{{mission_details
+|desc = You've finished cleaning the Research Center. Go and tell Qi.
+|details = Talk to Qi
+}}
+SCENEITEM DELETE || itemType: 0 | id: 9260102
+SCENEITEM DELETE || id: 9260202 | itemType: 0
+SCENEITEM DELETE || itemType: 0 | id: 9260302
+SCENEITEM DELETE || itemType: 0 | id: 9260402
+SCENEITEM DELETE || itemType: 0 | id: 9260502
+SCENEITEM DELETE || itemType: 0 | id: 9260602
+Remove behavior CommanderPlayerAction (idName: 1926007) from Player
+Set Sr to 2
+
+TRIGGER Procedure 2.0 Step 2.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 2297_0 starts:
+{{dialogue|Qi|Very good. Now I will assign you your next task.}}
+{{dialogue|Qi|There are many relics in that cabinet. Organize them for analysis, and write a preliminary report.}}
+The conversation ends.
+===Check the Cupboard===
+
+{{mission_details
+|desc = Qi has given you the task of writing reports on the relics in the cabinet. Go and see which relics are stored there.
+|details = Check the Cupboard
+}}
+AREA TRIGGER CREATE || missionId: 1900261 | id: 392601 | sceneName: Science | flagName: T9261 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 2.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 926003
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 9260302
+
+TRIGGER Procedure 2.0 Step 3.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 292600) to Qi
+(param: TargetScene:Science|MoveMode:Walk|FlagName:Q9260_to|LookAtActor:8000)
+
+TRIGGER Procedure 2.0 Step 4.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 92603
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 1926003) to Player
+(param: CMDAction:PickUp_Story)
+SCENEITEM DELETE || itemType: 0 | id: 9260311
+STOPWATCH REAL TIME SET || id: 9260303 | sec: 0.4
+
+TRIGGER Procedure 2.0 Step 4.5 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 9260303
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9260301 | path: Q9256_ef | sceneName: Science | flagName: LJ9256_3 | extraParams: 0
+
+TRIGGER Procedure 2.0 Step 5.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: NPCActionOver | behaviourName: CommanderPlayerAction | npc: 8000
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1900260 | targetId: 2 | isAdd: 1 | transId: 80012719
+SCENEITEM DELETE || itemType: 0 | id: 92603
+Remove behavior CommanderPlayerAction (idName: 1926003) from Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9260302 | path: Q9256_efc | flagName: LJ9256_3 | sceneName: Science | extraParams: 0
+SCENEITEM DELETE || itemType: 0 | id: 9260301
+STOPWATCH REAL TIME SET || id: 926003 | sec: 3
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 2.0 Step 7.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 92606
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 1926006) to Player
+(param: CMDAction:Clean_Story)
+SCENEITEM DELETE || itemType: 0 | id: 9260611
+STOPWATCH REAL TIME SET || id: 9260603 | sec: 0.5
+
+TRIGGER Procedure 2.0 Step 7.5 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 9260603
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9260601 | path: Q9256_ef | sceneName: Science | flagName: HC9256_3 | extraParams: 0
+
+TRIGGER Procedure 2.0 Step 8.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1900260 | targetId: 2 | transId: 80012720 | isAdd: 1
+SCENEITEM DELETE || itemType: 0 | id: 92606
+Remove behavior CommanderPlayerAction (idName: 1926006) from Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9260602 | path: Q9256_efc | sceneName: Science | flagName: HC9256_3 | extraParams: 0
+SCENEITEM DELETE || itemType: 0 | id: 9260601
+STOPWATCH REAL TIME SET || id: 926006 | sec: 3
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 2.0 Step 9.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 926006
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 9260602
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1900261
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|443}}
+
+TRIGGER Procedure 3.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 392601
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 6520}}
+A cutscene CG_CABINETOPEN (duration: 1.0) starts playing
+Qi the Uncaring - Why are his cabinets so full!? And why didn't he come to help me!
+
+TRIGGER Procedure 3.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_CABINETOPEN | state: 8
+CONDITIONS
+Always:
+ACTIONS
+Qi stands still in Science
+PLAYER SET POS ROT FLAG || sceneName: Science | flagName: P9260
+STOPWATCH REAL TIME SET || id: 926007 | sec: 0.6
+CUTSCENE UI STATE ENTER || 
+SCENEITEM CREATE FLAG || itemType: 0 | id: 92611 | path: Qi9261_YoYo | sceneName: Science | flagName: YoYo | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 92612 | path: Qi9261_DNA | sceneName: Science | flagName: Dna | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 92613 | path: Qi9261_Egg | sceneName: Science | flagName: Egg | extraParams: 0
+SCENEITEM INTERACT SET LOCKER || itemType: 0 | id: 92611 | isAdd: 1
+SCENEITEM INTERACT SET LOCKER || itemType: 0 | id: 92612 | isAdd: 1
+SCENEITEM INTERACT SET LOCKER || itemType: 0 | id: 92613 | isAdd: 1
+AREA TRIGGER DELETE || id: 392601
+ACTION NPC REMOVE TAG || npc: 8007 | tag: QiWorking
+
+TRIGGER Procedure 3.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 926007
+CONDITIONS
+Always:
+ACTIONS
+GROUP 0:
+
+GROUP 1:
+(cId 5) A conversation 2298_0 starts:
+{{dialogue|Qi|...}}
+
+*''Your cabinet almost killed me!''
+*{{flirt}}''Don't you care about me?''
+
+{{dialogue|Qi|indent=true|answer=Your cabinet almost killed me!
+|I am sorry about that. Do not worry about it for now. Let's carry on.}}
+{{dialogue|Qi|Of course I do. You are my assistant, and we still have much work to be done.}}
+
+*''Do you need me to fix it?''
+*''You don't care about me at all!''
+
+{{dialogue|Qi|indent=true|answer=Do you need me to fix it?
+|No. That is beyond your responsibilities as assistant. Now let us begin.}}
+{{dialogue|Qi|indent=true|answer=You don't care about me at all!
+|Of course I do. Your work performance is directly related to your compensation, so I care a lot about you. I need to ensure my research fund is not being used negligently.}}
+
+
+TRIGGER Procedure 3.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8007 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 2371_0 starts:
+{{dialogue|Qi|Now, let us continue. As a Builder, I suppose you are not particularly familiar with report writing. I will give you a briefing.}}
+
+*''Yes, please explain.''
+*''I know how to write a report.''
+
+{{dialogue|Qi|indent=true|answer=Yes, please explain.
+|Take the relics from the shelf, with care, observe, and research. The information gathered should be divided into appearance, form, and assigned research value. It is then written in the preliminary report in VGA format.}}
+{{dialogue|Qi|indent=true|answer=I know how to write a report.
+|You know? Then good. Remember to pay attention to format and structure. We will be using VGA standard for formatting.}}
+{{dialogue|Qi|Since it is your first day, I will not assign you too many. We are aiming to focus on quality rather than quantity...}}
+{{dialogue|Qi|Fifty reports should be adequate.}}
+
+*''Right away, buddy!''
+*''Can we do it tomorrow instead?''
+*''Fifty?!''
+
+{{dialogue|Qi|indent=true|answer=Right away, buddy!
+|reward={{NPC2|Qi|rp=2}}|...Director. And good. Well, let's get on with it then. And please don't bother me unless there is an imminent catastrophic disaster.}}
+{{dialogue|Qi|indent=true|answer=Can we do it tomorrow instead?
+|This is today's work. By 24:00, please. Not a second later.}}
+{{dialogue|Qi|indent=true|answer=Fifty?!
+|I don't understand your logic. As a new assistant in the research field, shouldn't you want to be associated with as many relics as possible to get familiar with the research process?}}
+
+TRIGGER Procedure 4.0 Step 4.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 6) There is a conversation segment (id 8024) that ends:
+{{dialogue|Qi|This is today's work. By 24:00, please. Not a second later.}}
+(cId: 6) There is a conversation segment (id 8025) that ends:
+{{dialogue|Qi|I don't understand your logic. As a new assistant in the research field, shouldn't you want to be associated with as many relics as possible to get familiar with the research process?}}
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 9261005 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 4.0 Step 5.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 6) There is a conversation segment (id 8023) that ends:
+{{dialogue|Qi|...Director. And good. Well, let's get on with it then. And please don't bother me unless there is an imminent catastrophic disaster.}}
+CONDITIONS
+Always:
+ACTIONS
+===Write Reports===
+
+{{mission_details
+|desc = You need to the reports correctly to fulfill your assistant duties. Make sure you write them in the appropriate style.
+|details = Write Reports
+*{{i2|Qi|0/1}}
+}}
+SCENEITEM INTERACT SET LOCKER || itemType: 0 | id: 92611 | isAdd: 0
+SCENEITEM INTERACT SET LOCKER || itemType: 0 | id: 92612 | isAdd: 0
+SCENEITEM INTERACT SET LOCKER || itemType: 0 | id: 92613 | isAdd: 0
+Qi stops standing still
+Dan-bi stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 292600) from Qi
+Remove behavior CommanderNPCAction (idName: 292610) from Dan-bi
+Remove behavior CommanderMoveToFlagAndAction (idName: 292611) from Dan-bi
+Remove behavior CommanderMoveToFlagAndAction (idName: 292612) from Qi
+Remove behavior CommanderMoveToFlagAndAction (idName: 292613) from Dan-bi
+CUTSCENE UI STATE EXIT || 
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9261111 | path: Mission_fxpickup | sceneName: Science | flagName: YoYo | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9261211 | path: Mission_fxpickup | sceneName: Science | flagName: Dna | extraParams: 0
+SCENEITEM CREATE FLAG || id: 9261311 | itemType: 0 | path: Mission_fxpickup | sceneName: Science | flagName: Egg | extraParams: 0
+
+TRIGGER Procedure 3.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 92611
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 2926101) to Player
+(param: CMDAction:Nod_Story)
+(cId 7) A conversation 2315_0 starts:
+{{dialogue||What should the report say?}}
+
+*''The principles of yo-yo physics.''
+*''How to do the trick "Around the World."''
+*''Uhhh...''
+
+{{dialogue|Player|indent=true|answer=The principles of yo-yo physics.
+|reward={{NPC2|Qi|rp=2}}|The mechanical clutch yo-yo is equipped with a clutch mechanism that triggers when the yo-yo reaches the lowest point during the spin. The centrifugal force created by the yo-yo causes the clutch to open, and the yo-yo will remain in position. As the yo-yo slows down, the clutch is closed, and the yo-yo will rise again due to inertia. (I have no idea what this means, found it in a book.)}}
+{{dialogue|Player|indent=true|answer=How to do the trick "Around the World."
+|First, sleep the yo-yo after a forward pass. You don't want to jerk it back and return it! Make sure you sleep it properly. Then you spin it round, and do a full circle before returning it to your hand. (I have no idea what this means, found it in a book.)}}
+{{dialogue|Player|indent=true|answer=Uhhh...
+|I don't know what I'm supposed to be doing. I'm writing a report on a yo-yo? It goes up and down I guess... what even is VGA standard?}}
+SCENEITEM DELETE || itemType: 0 | id: 9261111
+
+TRIGGER Procedure 4.0 Step 6.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderPlayerAction (idName: 2926101) from Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9261102 | path: Q9256_efc | sceneName: Science | flagName: YoYo | extraParams: 0
+Add behavior CommanderPlayerAction (idName: 2926111) to Player
+(param: CMDAction:PickUp_Story)
+
+TRIGGER Procedure 3.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 92612
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 2926102) to Player
+(param: CMDAction:Nod_Story)
+(cId 8) A conversation 2319_0 starts:
+{{dialogue||What should the report say?}}
+
+*''Relic restoration.''
+*''Possibilities of gene editing.''
+*''How cool the spinny bits are.''
+
+{{dialogue|Player|indent=true|answer=Relic restoration.
+|The model is made form a synthetic resin, which has different properties to natural resin. The fossil form of natural resin is amber. When repairing this model, materials such as different fibers and steel cables could be used.}}
+{{dialogue|Player|indent=true|answer=Possibilities of gene editing.
+|reward={{NPC2|Qi|rp=2}}|Gene editing has a plurality of uses and applications. If we could acquire some of the knowledge from the Old World, we could rediscover the practical uses, such as hybridization, in-vitro gene editing, or even creating new, resilient crops. (I just copied words from a book, not sure what some of them mean...)}}
+{{dialogue|Player|indent=true|answer=How cool the spinny bits are.
+|The way the sides spin is really awesome! I bet that when they spin they go really, really fast! I think it's called aerodynamics.}}
+SCENEITEM DELETE || itemType: 0 | id: 9261211
+
+TRIGGER Procedure 4.0 Step 7.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderPlayerAction (idName: 2926102) from Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9261202 | path: Q9256_efc | sceneName: Science | flagName: Dna | extraParams: 0
+Add behavior CommanderPlayerAction (idName: 2926112) to Player
+(param: CMDAction:PickUp_Story)
+
+TRIGGER Procedure 3.0 Step 8.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 92613
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 2926103) to Player
+(param: CMDAction:Nod_Story)
+(cId 9) A conversation 2323_0 starts:
+{{dialogue||What should the report say?}}
+
+*''Use of eggshells in agriculture.''
+*''Analyze the tools used in construction.''
+*''I'm sooooo booooored!''
+
+{{dialogue|Player|indent=true|answer=Use of eggshells in agriculture.
+|Eggshell is sometimes ground into a powder and can be used as a fertilizer. Soaking them in water for fermentation is also helpful for crop growth, supposedly.}}
+{{dialogue|Player|indent=true|answer=Analyze the tools used in construction.
+|reward={{NPC2|Qi|rp=2}}|The incisions are smooth, and the surface is polished. It is likely made through advanced techniques. Unlike stone and silverware, eggshells are delicate, so finely tuned technology is required.}}
+{{dialogue|Player|indent=true|answer=I'm sooooo booooored!
+|Boredom: A treatise on the human condition. What is boredom? If we conceptualize boredom as simply an absence of entertainment, then how do we understand a concept by absence? For millenia, it is presumed that man has struggled with entertainment. By the end of the Old World, it seems that humankind had invented such a plethora of entertainment services, that "option paralysis" occured, the provision of so many options that choosing alone is frightening, and people thus return to our old nemesis; boredom. Counteracting boredom in face of a diminishing need for work became human kind's priority. Once labor was outsourced to machines, humankind no longer had to focus on creation, and instead turned to consumption. Perhaps, we can hypothesize, this was the beginning of the end for the peoples of the Old World. We may never know. All we may do is realize that boredom is humankind's oldest and most persistent nemesis.}}
+SCENEITEM DELETE || itemType: 0 | id: 9261311
+
+TRIGGER Procedure 3.0 Step 11.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 9261000 | eventType: 2
+CONDITIONS
+Check if Zero is == 1
+ACTIONS
+Qi stands still in Science and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Science | flagName: P9261_to
+DELAY MASK SET || maskId: 9261000 | delayTime: 1.5 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 12.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 9261000 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 11) A conversation 8059 starts:
+{{dialogue|Qi|Good work. This all seems to be in order. You are an excellent assistant.}}
+PLAYER SET POS ROT FLAG || sceneName: Science | flagName: P9260
+
+TRIGGER Procedure 3.5 Step 9.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | canSubmit: 1 | missionId: 1900260 | targetId: 5
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1900260 | targetId: 15 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+(cId 10) A conversation 8058 starts:
+{{dialogue|Player|(The work is endless... I'm... so very tired... Just lay my head down for a moment...)}}
+
+*''Push through.[Stamina reduced by 20]'' (No unique dialogue)
+*''Just a little nap...'' (No unique dialogue)
+
+
+TRIGGER Procedure 3.5 Step 10.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 9261000 | delayTime: 0.5 | durationTime: 1 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 3.5 Step 15.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 192604
+CONDITIONS
+Always:
+ACTIONS
+(cId 30) A conversation 8063 starts:
+{{dialogue|Qi|Take this cup of Sand Tea. It will help you concentrate.}}
+
+TRIGGER Procedure 4.0 Step 16.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 30) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Summer Sand Tea of Unknown quality (Notify player)
+(cId 14) A conversation 2330_0 starts:
+{{dialogue|Qi|These relics may seem ordinary, but each piece has valuable information to be gleaned. You never know how each one could invariably help the human race move forward.}}
+{{dialogue|Qi|It seems, however, that your productivity has diminished. We may stop for today. Do you have any questions?}}
+
+*''How did I do?''
+*''No questions.''
+
+{{dialogue|Qi|indent=true|answer=No questions.
+|Very well. We begin again tomorrow.}}
+{{dialogue|Qi|I have not had time to read your reports, but although you are lacking the desired experience, I was impressed with your dedication. You have lasted longer any other assistant. Well done.}}
+
+*''Thank you for your feedback.''
+*{{flirt}}''So, you like spending time with me?''
+
+{{dialogue|Qi|indent=true|answer=Thank you for your feedback.
+|You are welcome.}}
+{{dialogue|Qi|indent=true|answer=So, you like spending time with me?
+|Perhaps. I did enjoy researching with my friend when I was younger. But I have mostly sought solitude for my work ever since a certain cretin took credit for my effort back during my university days...}}
+{{dialogue|Qi|indent=true|Working with you today have given me second thoughts on going at everything alone.}}
+{{dialogue|Qi|indent=true|Regardless, I've certainly appreciated having you as an assistant.}}
+{{dialogue|Qi|You may leave now. I've got more work to do. Goodbye.}}
+The conversation ends.
+Run mission The Assistant
+
+TRIGGER Procedure 3.5 Step 15.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 13) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 30) A conversation 8063 starts:
+{{dialogue|Qi|Take this cup of Sand Tea. It will help you concentrate.}}
+
+TRIGGER Procedure 4.0 Step 10.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) The player picks the first option in conversation segment 8058:
+{{dialogue|Player|(The work is endless... I'm... so very tired... Just lay my head down for a moment...)}}
+
+*''Push through.[Stamina reduced by 20]'' (No unique dialogue)
+*''Just a little nap...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set Zero to 1
+
+TRIGGER Procedure 4.0 Step 11.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) The player picks the second option in conversation segment 8058:
+{{dialogue|Player|(The work is endless... I'm... so very tired... Just lay my head down for a moment...)}}
+
+*''Push through.[Stamina reduced by 20]'' (No unique dialogue)
+*''Just a little nap...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set Zero to 2
+
+TRIGGER Procedure 4.0 Step 11.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 9261000 | eventType: 2
+CONDITIONS
+Check if Zero is == 2
+ACTIONS
+Qi stands still in Science and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Science | flagName: P9260
+DELAY MASK SET || maskId: 9261000 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 4.0 Step 11.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 92600001
+CONDITIONS
+Always:
+ACTIONS
+(cId 24) A conversation 8045 starts:
+{{dialogue|Qi|Finally some peace and quiet. Please start the relic reports.}}
+Dan-bi stands still in Main
+
+TRIGGER Procedure 5.0 Step 20.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 24) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+===Write Reports===
+
+{{mission_details
+|desc = You need to the reports correctly to fulfill your assistant duties. Make sure you write them in the appropriate style.
+|details = Write Reports
+*{{i2|Qi|0/1}}
+}}
+SCENEITEM INTERACT SET LOCKER || itemType: 0 | id: 92611 | isAdd: 0
+SCENEITEM INTERACT SET LOCKER || itemType: 0 | id: 92612 | isAdd: 0
+SCENEITEM INTERACT SET LOCKER || itemType: 0 | id: 92613 | isAdd: 0
+Qi stops standing still
+Dan-bi stops standing still
+Dan-bi stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 292600) from Qi
+Remove behavior CommanderNPCAction (idName: 292610) from Dan-bi
+Remove behavior CommanderMoveToFlagAndAction (idName: 292611) from Dan-bi
+Remove behavior CommanderMoveToFlagAndAction (idName: 292612) from Qi
+Remove behavior CommanderMoveToFlagAndAction (idName: 292613) from Dan-bi
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9261111 | path: Mission_fxpickup | sceneName: Science | flagName: YoYo | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9261211 | path: Mission_fxpickup | sceneName: Science | flagName: Dna | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | path: Mission_fxpickup | id: 9261311 | sceneName: Science | flagName: Egg | extraParams: 0
+
+TRIGGER Procedure 4.0 Step 12.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 9261000 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 12) A conversation 8060 starts:
+{{dialogue|Qi|Wake up, ''Player''.}}
+
+TRIGGER Procedure 4.0 Step 13.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 12) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 13) A conversation 2329_0 starts:
+{{dialogue|Qi|I finished all of the reports while you were asleep.}}
+{{dialogue|Qi|This was a considerable hindrance on my research. I understand that this is your first day, but this was a less than exemplary performance. Tomorrow you will not sleep.}}
+The conversation ends.
+
+TRIGGER Procedure 5.0 Step 4.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 9261005 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 9261005 | delayTime: 0.5 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Dan-bi stands still in Science and looks at Player
+
+TRIGGER Procedure 5.0 Step 5.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 9261005 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 292610) to Dan-bi
+(param: CMDAction:Hi)
+
+TRIGGER Procedure 5.0 Step 6.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8074 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 21) A conversation 8026 starts:
+{{dialogue|Dan-bi|''Player''? Where's the Builder? Ah! Phew, you're a hard one to find!}}
+
+TRIGGER Procedure 6.0 Step 6.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 21) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 9261007 | delayTime: 0.4 | durationTime: -2 | changeType: 0 | curveIndex: 0
+Add behavior CommanderMoveToFlagAndAction (idName: 292611) to Dan-bi
+(param: TargetScene:Science|MoveMode:Run|FlagName:D9260_to|LookAtActor:8000)
+
+TRIGGER Procedure 5.0 Step 6.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+SCENEITEM DELETE || itemType: 0 | id: 9261102
+SCENEITEM DELETE || itemType: 0 | id: 92611
+SCENEITEM CREATE FLAG || id: 9261103 | itemType: 0 | path: Qi9261_YoYo2 | sceneName: Science | flagName: YoYo | extraParams: 0
+MISSION TARGET COUNTER CHANGE || missionId: 1900260 | targetId: 5 | transId: 80012726 | isAdd: 1
+MISSION TARGET COUNTER CHANGE || missionId: 1900260 | targetId: 15 | transId: 80012726 | isAdd: 1
+SCENEITEM INTERACT SET LOCKER || itemType: 0 | id: 9261103 | isAdd: 1
+
+TRIGGER Procedure 5.0 Step 7.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+SCENEITEM DELETE || itemType: 0 | id: 9261202
+SCENEITEM DELETE || itemType: 0 | id: 92612
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9261203 | path: Qi9261_DNA2 | sceneName: Science | flagName: Dna | extraParams: 0
+MISSION TARGET COUNTER CHANGE || missionId: 1900260 | targetId: 5 | transId: 80012726 | isAdd: 1
+MISSION TARGET COUNTER CHANGE || missionId: 1900260 | targetId: 15 | transId: 80012726 | isAdd: 1
+SCENEITEM INTERACT SET LOCKER || itemType: 0 | id: 9261203 | isAdd: 1
+
+TRIGGER Procedure 5.0 Step 8.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+SCENEITEM DELETE || itemType: 0 | id: 9261302
+SCENEITEM DELETE || itemType: 0 | id: 92613
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9261303 | path: Qi9261_Egg2 | sceneName: Science | flagName: Egg | extraParams: 0
+MISSION TARGET COUNTER CHANGE || missionId: 1900260 | targetId: 5 | transId: 80012726 | isAdd: 1
+MISSION TARGET COUNTER CHANGE || missionId: 1900260 | targetId: 15 | transId: 80012726 | isAdd: 1
+SCENEITEM INTERACT SET LOCKER || itemType: 0 | id: 9261303 | isAdd: 1
+
+TRIGGER Procedure 5.0 Step 11.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 23) There is a conversation segment (id 8036) that ends:
+{{dialogue|Dan-bi|Really? He got to you, too? Fine! I give up!}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 292613) to Dan-bi
+(param: TargetScene:Science|MoveMode:Walk|FlagName:P9256)
+In a speech bubble:
+{{dialogue|Dan-bi|I'll find my own Builder... Someone's gotta want to help me!}}
+
+TRIGGER Procedure 5.0 Step 12.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 192607
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 92600001 | sec: 3
+
+TRIGGER Procedure 5.0 Step 13.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 23) The player picks the first option in conversation segment 8035:
+{{dialogue|Qi|...Assistant, please show our intruder the door.}}
+
+*''We have to do research. Please leave.'' (No unique dialogue)
+*''Sorry Qi, Sandrock needs me. I am... a Builder.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Qi gains 2 favor
+
+TRIGGER Procedure 5.0 Step 13.5 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) The player picks the first option in conversation segment 8022:
+{{dialogue|Qi|Fifty reports should be adequate.}}
+
+*''Right away, buddy!'' (No unique dialogue)
+*''Can we do it tomorrow instead?'' (No unique dialogue)
+*''Fifty?!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Qi gains 2 favor
+
+TRIGGER Procedure 5.0 Step 15.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 14) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1900260
+CUTSCENE UI STATE EXIT || 
+Qi stops standing still
+Qi stops standing still
+Qi stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 292600) from Qi
+SCENEITEM DELETE || itemType: 0 | id: 9261103
+SCENEITEM DELETE || itemType: 0 | id: 9261203
+SCENEITEM DELETE || itemType: 0 | id: 9261303
+Remove behavior CommanderPlayerAction (idName: 2926111) from Player
+Remove behavior CommanderPlayerAction (idName: 2926112) from Player
+Remove behavior CommanderPlayerAction (idName: 2926113) from Player
+ACTION PLAYER ADD ATTR VALUE || attrType: 3 | value: 1
+ACTION SHOW CUSTOM IMAGE TIPS || preset: LevelUp | content: 80012710
+END MISSION 1900261
+
+TRIGGER Procedure 6.0 Step 8.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 9261007 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 9261007 | delayTime: 0.5 | durationTime: -2 | changeType: 1 | curveIndex: 0
+PLAYER SET POS ROT FLAG || sceneName: Science | flagName: P9260_to
+
+TRIGGER Procedure 6.0 Step 9.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 9261007 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 22) A conversation 2308_0 starts:
+{{dialogue|Qi|You're looking for my assistant? Is something the matter?}}
+{{dialogue|Dan-bi|Huh? Your assi- wha? Director, we have an urgent situation here, enough of the jokes already! ''Player'', you have to help us out at the Temple! A pew broke!}}
+{{dialogue|Qi|Wait. ''Player'' was hired by me through official means, and according to regulation. If you leave now, you are leaving without permission, and I will take that as an official resignation.}}
+{{dialogue|Qi|In addition, if ''Player'' goes to help your Church, then what? They repair some tables and chairs? How does that compare to important research? Do you not understand what's at stake here?}}
+{{dialogue|Dan-bi|The Church's work is also important! Besides, all work is important! Everything is the same under the Light.}}
+{{dialogue|Qi|Ah. I understand. You wish to sabotage my research. Has your disgust with the Old World no limits?! You would interfere with the progress of science?! Science!?}}
+{{dialogue|Dan-bi|You know I love your silly voices, Director, but now is not the time!}}
+The conversation ends.
+
+TRIGGER Procedure 6.0 Step 10.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 22) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 292612) to Qi
+(param: TargetScene:Science|MoveMode:Walk|FlagName:Q9260)
+
+TRIGGER Procedure 6.0 Step 10.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8007 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 23) A conversation 2372_0 starts:
+{{dialogue|Qi|...Assistant, please show our intruder the door.}}
+
+*''We have to do research. Please leave.''
+*''Sorry Qi, Sandrock needs me. I am... a Builder.''
+
+{{dialogue|Dan-bi|indent=true|answer=We have to do research. Please leave.
+|reward={{NPC2|Qi|rp=2}}|Really? He got to you, too? Fine! I give up!}}
+{{dialogue|Qi|indent=true|answer=Sorry Qi, Sandrock needs me. I am... a Builder.
+|reward={{NPC2|Qi|rp=-5}}|reward={{NPC2|Dan-bi|rp=5}}|You wish to resign!?}}
+
+TRIGGER Procedure 6.0 Step 11.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 23) There is a conversation segment (id 8037) that ends:
+{{dialogue|Qi|You wish to resign!?}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 292614) to Qi
+(param: TargetScene:Science|MoveMode:Walk|FlagName:Q9260_to|LookAtActor:8000)
+
+TRIGGER Procedure 6.0 Step 12.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8007 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 25) A conversation 2311_0 starts:
+{{dialogue|Dan-bi|You heard the Builder! They're resigning and you can't stop them!}}
+{{dialogue|Qi|...}}
+{{dialogue|Qi|Very well. This is your pay for your working hours. ''Player'', I'm not angry, I'm just disappointed. Now if you don't mind, I have work to do.}}
+The conversation ends.
+
+TRIGGER Procedure 6.0 Step 15.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 25) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 9261009 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+MONEY PLAYER ADD || money: 250
+
+TRIGGER Procedure 6.0 Step 13.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 1926100001
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1926100002 | path: Qi9261_Chair01 | sceneName: Main | flagName: T2_9261 | extraParams: 0
+SUBMIT MISSION 1900260
+STOPWATCH GAME TIME SET || id: 39261 | minute: 30
+MONEY PLAYER ADD || money: 50
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1926100004 | path: Q9256_efc | sceneName: Main | flagName: T2_9261 | extraParams: 0
+STOPWATCH REAL TIME SET || id: 1926100005 | sec: 2
+SCENEITEM INTERACT SET LOCKER || itemType: 0 | id: 1926100002 | isAdd: 1
+
+TRIGGER Procedure 6.0 Step 13.5 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 1926100005
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 1926100004
+
+TRIGGER Procedure 6.0 Step 14.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH GAME TIME END || order: 0 | id: 39261
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderPlayerAction (idName: 39261) from Player
+SCENEITEM DELETE || itemType: 0 | id: 1926100002
+END MISSION 1900261
+
+TRIGGER Procedure 6.0 Step 16.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 9261009 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Dan-bi stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: P9261
+DELAY MASK SET || maskId: 9261009 | delayTime: 0.5 | durationTime: 1 | changeType: 1 | curveIndex: 0
+SCENEITEM DELETE || itemType: 0 | id: 92607
+SCENEITEM DELETE || itemType: 0 | id: 92611
+SCENEITEM DELETE || itemType: 0 | id: 92612
+SCENEITEM DELETE || itemType: 0 | id: 92613
+Qi stops standing still
+Dan-bi stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 292600) from Qi
+Remove behavior CommanderNPCAction (idName: 292610) from Dan-bi
+Remove behavior CommanderMoveToFlagAndAction (idName: 292611) from Dan-bi
+Remove behavior CommanderMoveToFlagAndAction (idName: 292612) from Qi
+Remove behavior CommanderMoveToFlagAndAction (idName: 292613) from Dan-bi
+Remove behavior CommanderMoveToFlagAndAction (idName: 292614) from Qi
+
+TRIGGER Procedure 7.0 Step 5.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 23) The player picks the second option in conversation segment 8035:
+{{dialogue|Qi|...Assistant, please show our intruder the door.}}
+
+*''We have to do research. Please leave.'' (No unique dialogue)
+*''Sorry Qi, Sandrock needs me. I am... a Builder.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Qi gains -5 favor
+Dan-bi gains 5 favor
+
+TRIGGER Procedure 7.0 Step 6.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) The player picks the first option in conversation segment 8058:
+{{dialogue|Player|(The work is endless... I'm... so very tired... Just lay my head down for a moment...)}}
+
+*''Push through.[Stamina reduced by 20]'' (No unique dialogue)
+*''Just a little nap...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+ACTOR BUFF ADD || npc: 8000 | buffId: 6101 | instanceId: 31
+
+TRIGGER Procedure 7.0 Step 7.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) The player picks the first option in conversation segment 8046:
+{{dialogue||What should the report say?}}
+
+*''The principles of yo-yo physics.'' (No unique dialogue)
+*''How to do the trick "Around the World."'' (No unique dialogue)
+*''Uhhh...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Qi gains 2 favor
+
+TRIGGER Procedure 7.0 Step 8.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) The player picks the second option in conversation segment 8050:
+{{dialogue||What should the report say?}}
+
+*''Relic restoration.'' (No unique dialogue)
+*''Possibilities of gene editing.'' (No unique dialogue)
+*''How cool the spinny bits are.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Qi gains 2 favor
+
+TRIGGER Procedure 7.0 Step 9.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) The player picks the second option in conversation segment 8054:
+{{dialogue||What should the report say?}}
+
+*''Use of eggshells in agriculture.'' (No unique dialogue)
+*''Analyze the tools used in construction.'' (No unique dialogue)
+*''I'm sooooo booooored!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Qi gains 2 favor
+
+TRIGGER Procedure 7.0 Step 10.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 9261009 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 26) A conversation 2312_0 starts:
+{{dialogue|Dan-bi|Wow, I didn't notice back there, but ''Player'', you look awful. The things you must have seen... I can't even imagine. Are you still okay to help repair the Temple?}}
+
+*''No problem at all!''
+*''I think I need to go and rest...''
+
+{{dialogue|Dan-bi|indent=true|answer=No problem at all!
+|Phew! I'm glad you're okay! Thank you for your help. See you later!}}
+{{dialogue|Dan-bi|indent=true|answer=I think I need to go and rest...
+|I understand. I'll find someone else to make it, you go and rest. See you later.}}
+
+TRIGGER Procedure 7.0 Step 11.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 26) After the conversation ends:
+CONDITIONS
+Check if TwoB is == 2
+ACTIONS
+===Repair the Pew===
+
+{{mission_details
+|desc = Dan-bi has come in with an urgent request. Finally you can escape Qi's clutches.
+|details = Repair the Pew
+}}
+Dan-bi stops standing still
+CUTSCENE UI STATE EXIT || 
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1926100001 | path: Qi9261_Chair02 | sceneName: Main | flagName: T2_9261 | extraParams: 0
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 1926100001 | missionId: 1900260 | iconType: 2
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1926100003 | path: Mission_fxpickup | sceneName: Main | flagName: T2_9261 | extraParams: 0
+
+TRIGGER Procedure 7.0 Step 13.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 26) After the conversation ends:
+CONDITIONS
+Check if TwoB is == 1
+ACTIONS
+Dan-bi stops standing still
+CUTSCENE UI STATE EXIT || 
+FAIL MISSION || missionId: 1900260
+END MISSION 1900261
+
+TRIGGER Procedure 7.0 Step 10.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 26) The player picks the first option in conversation segment 8041:
+{{dialogue|Dan-bi|Wow, I didn't notice back there, but ''Player'', you look awful. The things you must have seen... I can't even imagine. Are you still okay to help repair the Temple?}}
+
+*''No problem at all!'' (No unique dialogue)
+*''I think I need to go and rest...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set TwoB to 2
+
+TRIGGER Procedure 7.0 Step 12.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 1926100001
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 1926100001
+Add behavior CommanderPlayerAction (idName: 39261) to Player
+(param: CMDAction:Fix)
+SCENEITEM DELETE || itemType: 0 | id: 1926100003
+
+TRIGGER Procedure 7.0 Step 13.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 26) The player picks the second option in conversation segment 8041:
+{{dialogue|Dan-bi|Wow, I didn't notice back there, but ''Player'', you look awful. The things you must have seen... I can't even imagine. Are you still okay to help repair the Temple?}}
+
+*''No problem at all!'' (No unique dialogue)
+*''I think I need to go and rest...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set TwoB to 1
+
+TRIGGER Procedure 7.0 Step 16.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 20) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+MONEY PLAYER ADD || money: 200
+END MISSION 1900261
+
+TRIGGER Procedure 8.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1900260
+END MISSION 1900261

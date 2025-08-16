@@ -1,0 +1,142 @@
+Reading Mission 1800270: Watching Paint Dry
+
+<onlyinclude>{{Infobox mission
+|name = Watching Paint Dry
+|image =
+|description = Unsuur wants to paint the walls of his house, and would like your help making some paint.
+|type = Side
+|time =
+|location =
+|characters = [[Unsuur]]
+|condition =
+|details =
+|exp = 1300
+|reputation = 5
+|gols = 100
+|npc1 = Unsuur
+|rp1 = 20
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200280
+
+TRIGGER Procedure 0.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 489
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 9722 starts:
+{{dialogue|Player|(Whoever has been writing these letters seems to really support me. There certainly is a familiar style to them... Why won't this person come see me face to face?)}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if Unsuur has favor >= 100
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+Run mission Watching Paint Dry
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800270
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1800270
+The player receives a letter:
+{{mail|480}}
+Set 8270A to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Unsuur
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 2649_0 starts:
+{{dialogue|Unsuur|Hey. I wanted to commission some Homemade Paint, but your boss said it was too small of a task to put on the board. Then he said some kinda greedy stuff. Do you think you could help me out?}}
+
+*''Sure!''
+*''Too much on my plate right now.''
+
+{{dialogue|Unsuur|indent=true|answer=Too much on my plate right now.
+|Oh. Okay, sure. Let me know if you get time.}}
+{{dialogue|Unsuur|Cool. Actually, I was thinking we could enjoy the paint together. I'm taking the day off to paint my walls 3 days from now; do you want to bring over the paint then so we can... paint... then?}}
+
+*''Sounds good.''
+*''Oh, actually, no thanks.''
+
+{{dialogue|Unsuur|indent=true|answer=Sounds good.
+|That's great news. We're going to have a really good time. See you then. Don't forget the paint. That's the most important part... of painting.}}
+{{dialogue|Unsuur|indent=true|answer=Oh, actually, no thanks.
+|Oh. Okay, sure. Let me know if you get time.}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 9474:
+{{dialogue|Unsuur|Oh, hey. Did you get time to help me paint my house?}}
+
+*''Sounds good.'' (No unique dialogue)
+*''Oh, actually, no thanks.'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 9471:
+{{dialogue|Unsuur|Cool. Actually, I was thinking we could enjoy the paint together. I'm taking the day off to paint my walls 3 days from now; do you want to bring over the paint then so we can... paint... then?}}
+
+*''Sounds good.'' (No unique dialogue)
+*''Oh, actually, no thanks.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8270A to 1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if 8270A is == 1
+ACTIONS
+START MISSION 1800270
+Add 1 Paint of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800270
+CONDITIONS
+Always:
+ACTIONS
+Run mission Watching Paint Dry
+END MISSION 1800270
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Unsuur|Oh, hey. Did you get time to help me paint my house?}}
+
+*''Sounds good.''
+*''Oh, actually, no thanks.''
+
+{{dialogue|Unsuur|indent=true|answer=Sounds good.
+|That's great news. We're going to have a really good time. See you then. Don't forget the paint. That's the most important part... of painting.}}
+{{dialogue|Unsuur|indent=true|answer=Oh, actually, no thanks.
+|Oh. Okay, sure. Let me know if you get time.}}
+
+==Rewards==
+{{mission reward
+|npc1 = Unsuur
+|rp1 = 20
+|exp = 1300
+|reputation = 5
+|gols = 100
+}}

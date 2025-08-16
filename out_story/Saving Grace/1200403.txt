@@ -1,0 +1,103 @@
+Reading Mission 1200403: Saving Grace
+
+<onlyinclude>{{Infobox mission
+|name = Saving Grace
+|image =
+|description = Dear Grace, where have you gone?! The note she left doesn't mention anything, leaving us all worried... But Grace promised she wouldn't go back to her old ways...
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 1435
+|reputation = None
+|gols = None
+|npc1 = Grace
+|rp1 = 25
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200133
+
+TRIGGER Procedure 2.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+At the beginning of the day:
+CONDITIONS
+Check if mission Graceful Farewell is result 1 flag 1
+Graceful Farewell is in state 2 with flag 0
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: graceleave
+
+TRIGGER Procedure 3.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check relationship with Grace is Married
+Citrus Infusion Avenue is successfully completed
+ACTIONS
+Run mission Saving Grace
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200403
+CONDITIONS
+Always:
+ACTIONS
+NPC LEAVE || npc: 8002
+DELIVER MISSION 1200403
+The player receives a letter:
+{{mail|834}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 834
+CONDITIONS
+Always:
+ACTIONS
+Set 834 to 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ENTER GAMING STATE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 24163 starts:
+{{dialogue|Player|This is an odd letter for Grace to leave... She's gone? Maybe Owen will know something.}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1200403
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200403
+CONDITIONS
+Always:
+ACTIONS
+Run mission Saving Grace
+END MISSION 1200403
+
+==Rewards==
+{{mission reward
+|npc1 = Grace
+|rp1 = 25
+|exp = 1435
+|reputation = None
+|gols = None
+}}

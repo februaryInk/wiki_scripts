@@ -1,0 +1,202 @@
+Reading Mission 1600109: The New Mascot
+
+<onlyinclude>{{Infobox mission
+|name = The New Mascot
+|image =
+|description = Arvio seems to be mulling something over. Maybe he could use your help?
+|type = Side
+|time =
+|location =
+|characters = [[Arvio]]
+|condition =
+|details =
+|exp = 700
+|reputation = 20
+|gols = 350
+|npc1 = Arvio
+|rp1 = 20
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200107
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if Arvio has favor >= 20
+Duvos Attacks! is in state 2 with flag 0
+ACTIONS
+Run mission Runner-Up
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if Arvio has favor >= 100
+Check if Pablo is in town
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+Run mission The New Mascot
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1600109
+CONDITIONS
+Always:
+ACTIONS
+Set IsAccept to 0
+Set IsAddFavor to 0
+NPC ICON ADD || missionId: 1600109 | npc: 8014 | missionIcon: 0
+
+TRIGGER Procedure 0.0 Step 0.1 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Arvio
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+(cId 0) A conversation 661_0 starts:
+{{dialogue|Arvio|Hey, ''Player''! How's the workshop these days? Uh huh? Great! Say, have you noticed that a lot more tourists have been around lately? And yet, hardly any of them stop into By the Stairs! Hard to believe, I know!}}
+{{dialogue|Arvio|What could I possibly do to remedy such a situation... ah, I know! How about a big billboard right there on the train platform! That way, the second they step off the train...}}
+{{dialogue|Arvio|Yes! They'll see it straight away! They'll think "Wow, By the Stairs! Such a nondescript shop name means they don't care about being popular; they must have great stuff!"}}
+{{dialogue|Arvio|Hm? Still have doubts? Well, this idea of mine has only been existent for thirty seconds or so; I still have some details to iron out! Given time, well... the sky's the limit, I suppose!}}
+{{dialogue|Arvio|You have a keen eye, ''Player'': what image would you put on the billboard? What's something that would really grab everyone's attention?}}
+
+*''Some quality goods.''
+*''A map to the store.''
+*''Why not a beaming image of you, Arvio?''
+
+{{dialogue|Arvio|indent=true|answer=Some quality goods.
+|Hm, that is the traditional approach, true... but most of the things I sell are rather ordinary and hardly eye-catching...}}
+{{dialogue|Arvio|indent=true|I've got it! Nothing grabs attention in an ad like a friendly face! And being that I am the sole proprietor of By the Stairs, limited liability storefront, whose friendly face could it be other than... me! Er, mine!}}
+{{dialogue|Arvio|indent=true|answer=A map to the store.
+|Hm, well, the thing is, ''Player''. The directions to my shop are in the name: "By the Stairs!" I fear we'd just be wasting valuable ad space...}}
+{{dialogue|Arvio|indent=true|I've got it! Nothing grabs attention in an ad like a friendly face! And being that I am the sole proprietor of By the Stairs, limited liability storefront, whose friendly face could it be other than... me! Er, mine!}}
+{{dialogue|Arvio|indent=true|answer=Why not a beaming image of you, Arvio?
+|Why, that's a brilliant idea! Why didn't I think of that? Nothing grabs attention in an ad like a friendly face!}}
+{{dialogue|Arvio|indent=true|Say, we make a pretty good team, wouldn't you say? We could sell honey to Bumble Ants, I bet!}}
+{{dialogue|Arvio|Yes, our discussion has been rather enlightening, I must say! Tonight I should have time to draw up a design for a billboard; once it's done, can I trouble you to build it for me?}}
+
+*''Of course!''
+*''I'm really busy now...''
+
+{{dialogue|Arvio|indent=true|answer=Of course!
+|Wonderful! I'll get the design to you as soon as possible! Make sure you remember to check your mailbox. Thanks again for your insightful advice!}}
+{{dialogue|Arvio|indent=true|answer=I'm really busy now...
+|Ah, couldn't that other stuff wait a bit? Hm, maybe that is a bit much to ask for... Alright, well, please let me know if you do get time!}}
+DELIVER MISSION 1600109
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the first option in conversation segment 2659:
+{{dialogue|Arvio|Yes, our discussion has been rather enlightening, I must say! Tonight I should have time to draw up a design for a billboard; once it's done, can I trouble you to build it for me?}}
+
+*''Of course!'' (No unique dialogue)
+*''I'm really busy now...'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 2662:
+{{dialogue|Arvio|I know almost exactly what I want for the billboard design, I'm sure it would hardly be any trouble to an experienced Builder like you! Are you sure you don't have time to work on it?}}
+
+*''Of course!'' (No unique dialogue)
+*''I'm really busy now...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set IsAccept to 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the third option in conversation segment 2652:
+{{dialogue|Arvio|You have a keen eye, ''Player'': what image would you put on the billboard? What's something that would really grab everyone's attention?}}
+
+*''Some quality goods.'' (No unique dialogue)
+*''A map to the store.'' (No unique dialogue)
+*''Why not a beaming image of you, Arvio?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set IsAddFavor to 1
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if IsAccept is == 0
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 0.1 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if IsAccept is == 1
+ACTIONS
+NPC ICON REMOVE || missionId: 1600109 | npc: 8014 | missionIcon: 0
+CUTSCENE UI STATE EXIT || 
+START MISSION 1600109
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1600109
+CONDITIONS
+Always:
+ACTIONS
+Run mission The New Mascot
+END MISSION 1600109
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1600109
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON REMOVE || missionId: 1600109 | npc: 8014 | missionIcon: 0
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1200217 is result 1 flag 1
+ACTIONS
+NPC ICON ADD || missionIcon: 0 | npc: 8014 | missionId: 1600109
+CLOSE MISSION || missionId: 1600109
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Arvio|I know almost exactly what I want for the billboard design, I'm sure it would hardly be any trouble to an experienced Builder like you! Are you sure you don't have time to work on it?}}
+
+*''Of course!''
+*''I'm really busy now...''
+
+{{dialogue|Arvio|indent=true|answer=Of course!
+|Wonderful! I'll get the design to you as soon as possible! Make sure you remember to check your mailbox. Thanks again for your insightful advice!}}
+{{dialogue|Arvio|indent=true|answer=I'm really busy now...
+|Ah, couldn't that other stuff wait a bit? Hm, maybe that is a bit much to ask for... Alright, well, please let me know if you do get time!}}
+
+==Rewards==
+{{mission reward
+|npc1 = Arvio
+|rp1 = 20
+|exp = 700
+|reputation = 20
+|gols = 350
+}}

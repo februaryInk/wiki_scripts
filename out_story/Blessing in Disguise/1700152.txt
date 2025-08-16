@@ -1,0 +1,603 @@
+Reading Mission 1700152: Blessing in Disguise
+
+<onlyinclude>{{Infobox mission
+|name = Blessing in Disguise
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Blessing in Disguise:
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 3741) that ends:
+{{dialogue|Arvio|I really would be just delighted if you were to wear that to the masquerade! Oh, speaking of which... Masquerade! My place! See you there, ''Player''! You won't regret it!}}
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1700151
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700151
+CONDITIONS
+Always:
+ACTIONS
+Run mission Blessing in Disguise
+END MISSION 1700151
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700152
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Masquerade Ball Mask of Default quality (Notify player)
+===Make Mask===
+
+{{mission_details
+|desc = To attend the party, you'll need to first prepare a Mask. Make a Mask on the Tailoring Machine according to Arvio's recipe.
+|details = Make Mask
+*{{i2|Masquerade Ball Mask|0/1}}
+}}
+Set QUIT to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PLAYER LOVER || order: 0 | id: -1
+ON PLAYER MARRIAGE || order: 0 | id: -1
+CONDITIONS
+Check relationship with Arvio is 6 Lover
+ACTIONS
+FAIL MISSION || missionId: 1700151
+END MISSION 1700152
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1700151 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Arvio===
+
+{{mission_details
+|desc = Now that you have prepared your mask, go and talk to Arvio to attend the party.
+|details = Talk to Arvio
+*{{i2|Arvio|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 1.1 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Arvio
+CONDITIONS
+Always:
+ACTIONS
+(cId 8014) A conversation 5353 starts:
+{{dialogue|Arvio|Amazing, it looks so... mysterious, so mystical, so magnificent! Well, Amirah's certainly going to be happy! I'm going to do some final preparations, be there tomorrow at 019:00! See you then!}}
+
+TRIGGER Procedure 0.0 Step 1.2 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8014) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Wait for Masquerade Ball===
+
+{{mission_details
+|desc = Get ready for the Masquerade Ball to begin at 19:00PM at Arvio's home.
+|details = Wait for Masquerade Ball
+}}
+SCENEITEM INTERACT SET || itemType: 9 | id: 16 | canInteract: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 171521 | path: Interact_arvioq3_1 | sceneName: Main | flagName: MB_door_1 | extraParams: 0
+CALENDAR SET REMINDER || addDays: 1 | hour: 18 | transId: 80009396
+Set global blackboard key mbready with info 1.
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+===Attend Masquerade Ball===
+
+{{mission_details
+|desc = Today is the day of the Masquerade Ball. Go to Arvio's home to attend.
+|details = Attend Masquerade Ball
+}}
+GLOBAL BLACK BOARD REMOVE || key: mbready
+NPC ADD TAG || tag: Masquerade
+
+TRIGGER Procedure 0.0 Step 2.1 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+NPC REMOVE TAG || tag: Masquerade
+SUBMIT MISSION 1700151
+END MISSION 1700152
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Store:
+CONDITIONS
+Check if QUIT is == 0
+ACTIONS
+(cId 2) A conversation 1028_0 starts:
+{{dialogue|Arvio|Aha! ''Player'', you wore my mask! Welcome, welcome, welcome! To the first ever Sandrock Masquerade! Where are the other guests, you ask? Well, ''Player'', I have a confession to make!}}
+{{dialogue|Arvio|When I told you today was my sister's birthday-plus, it was all a ruse! I prepared this just for you!}}
+{{dialogue|Arvio|There will be no other guests tonight. The leading roles will be played by only you and I, undisturbed by the outside world. And now! To commence the festivities, it is my honor to ask: "''Player'', may I have this dance?"}}
+
+*''Two person masquerade?''
+*{{flirt}}''You may.'' (No unique dialogue)
+*''Yikes. I gotta go, actually...''
+
+{{dialogue|Arvio|indent=true|answer=Yikes. I gotta go, actually...
+|W-wait...!}}
+{{dialogue|Arvio|Hm. Yes. I admit some of the mystique is removed without a larger pool of mask wearers to mingle amongst... nevertheless, I must say, you look smashing in that outfit!}}
+{{dialogue|Arvio|May I have this dance?}}
+
+*{{flirt}}''You may.'' (No unique dialogue)
+*''Yikes. I gotta go, actually...''
+
+{{dialogue|Arvio|indent=true|answer=Yikes. I gotta go, actually...
+|W-wait...!}}
+SCENEITEM DELETE || itemType: 0 | id: 1715200
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1715201 | path: Store_mb | sceneName: Store | flagName: default | extraParams: -1
+Set camera to 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the first option in conversation segment 3754:
+{{dialogue|Arvio|May I have this dance?}}
+
+*{{flirt}}''You may.'' (No unique dialogue)
+*''Yikes. I gotta go, actually...'' (No unique dialogue)
+
+(cId 2) The player picks the second option in conversation segment 3752:
+{{dialogue|Arvio|There will be no other guests tonight. The leading roles will be played by only you and I, undisturbed by the outside world. And now! To commence the festivities, it is my honor to ask: "''Player'', may I have this dance?"}}
+
+*''Two person masquerade?'' (No unique dialogue)
+*{{flirt}}''You may.'' (No unique dialogue)
+*''Yikes. I gotta go, actually...'' (No unique dialogue)
+
+(cId 5) The player picks the first option in conversation segment 3757:
+{{dialogue|Arvio|The music hasn't stopped, do you... accept the invitation to dance with me?}}
+
+*{{flirt}}''You may.'' (No unique dialogue)
+*''Yikes. I gotta go, actually...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 7031}}
+A cutscene CG_ARVIODANCE (duration: 1.0) starts playing
+Masquerade Ball - When I stepped into the Masquerade Ball, I realized that actually, Arvio had arranged it all for me.
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_ARVIODANCE | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 1031_0 starts:
+{{dialogue|Arvio|For a long time now, ever since I first saw you, there has been a question burning a hole in my heart, deeper and deeper for every day that goes past, and now, I can't hold it back any longer...}}
+{{dialogue|Arvio|You're kind, dedicated, eager to help... You're a leader and a follower, graceful in both victory and defeat... and...}}
+{{dialogue|Arvio|I, ah-... I'm momentarily speechless trying to come up with adequate descriptions for you, you're just so grand!}}
+{{dialogue|Arvio|I digress. These past two days have been the most difficult of all. That burning question, finally, I can let it out! ''Player'', will you... be in a relationship with me?}}
+
+*{{flirt}}''I will!''
+*''I'll think about it....''
+*''This was nice and all, but... I just want to be friends.''
+
+{{dialogue|Arvio|indent=true|answer=I will!
+|I'll remember this moment, let's seal it... with a kiss...}}
+{{dialogue|Arvio|indent=true|answer=I'll think about it....
+|Ah, of course... It is all a bit sudden, isn't it? Can you tell me, is there a chance you'll say "yes?" No! No, don't answer! I'm sorry. Tell me when you're ready.}}
+{{dialogue|Arvio|indent=true|It is late already... You should rest, ''Player''! I shall earnestly await your answer!}}
+{{dialogue|Arvio|indent=true|answer=This was nice and all, but... I just want to be friends.
+|Ahh... I can't say that I'm not a little upset... but I treasure your friendship more than anything. I understand. Well, then let's just carry on being best friends! I promise, no more surprises.}}
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 3762) that ends:
+{{dialogue|Arvio|I'll remember this moment, let's seal it... with a kiss...}}
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || delayTime: 0 | durationTime: 1 | changeType: 0 | curveIndex: 0 | maskId: 1715201
+
+TRIGGER Procedure 0.0 Step 7.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 1715201
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: 0 | maskId: 1715201
+STOPWATCH REAL TIME SET || id: 17152 | sec: 1.1
+
+TRIGGER Procedure 0.0 Step 7.1 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 17152
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 171521) to Arvio
+(param: CMDAction:KissHead)
+Add behavior CommanderPlayerAction (idName: 171521) to Player
+(param: CMDAction:KissHead)
+
+TRIGGER Procedure 0.0 Step 7.2 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 171522
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 1715202 | delayTime: 7.5 | durationTime: 2 | changeType: 2 | curveIndex: 0
+STOPWATCH REAL TIME SET || id: 171522 | sec: 4.7
+
+TRIGGER Procedure 0.0 Step 7.4 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 1715202
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 171521) from Arvio
+Remove behavior CommanderPlayerAction (idName: 171521) from Player
+
+TRIGGER Procedure 0.0 Step 7.5 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 1715202
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 1034_0 starts:
+{{dialogue|Arvio|''Player'', I'm a businessman at heart, and as such, I know how just to sweeten a deal and make it irresistable. Being with me offers certain... benefits... a boyfriend's call of duty, so to speak.}}
+{{dialogue|Arvio|Now make your choice! Will you take the daily romantic greetings package, or perhaps I could interest you in the breakfast delivery package...?}}
+
+*''Daily greetings.''
+*''Breakfast.''
+*''It's hard to decide...!''
+
+{{dialogue|Arvio|indent=true|answer=Daily greetings.
+|reward={{NPC2|Arvio|rp=3}}|Wise choice! Then I'll be at your door every morning when you wake up with supportive pep talks, romantic gestures, and, if ever required, heaven forbid, a shoulder to cry on! You... always wake up at the same time, right?}}
+{{dialogue|Arvio|indent=true|answer=Breakfast.
+|reward={{NPC2|Arvio|rp=3}}|Eggs-cellent choice, ''Player''. In that case, you had best egg-spect an eggs-tra special delivery egg-ry morning; a dish brought straight from my coop to your nest, made with tender love and care... and eggs.}}
+{{dialogue|Arvio|indent=true|answer=It's hard to decide...!
+|reward={{NPC2|Arvio|rp=5}}|Then decide not, darling, for you shall have both! There's nothing I won't do to bring you happiness!}}
+{{dialogue|Arvio|It's getting late... And the moon has long since chased the sun from the sky. I don't want this dream to ever end, but alas, I am afraid the cursed rotation of this darned earth is destined to force us apart...}}
+{{dialogue|Arvio|Our separation will be brief, my love, but to me it will feel like a lifetime... I pray only that I can survive the night to greet your shining face on the morrow.}}
+{{dialogue|Arvio|You must rest... go now! Before I lose my nerve to let you leave me...}}
+{{dialogue|Arvio|Good night, ''Player''! Pleasant dreams!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 3771) that ends:
+{{dialogue|Arvio|Good night, ''Player''! Pleasant dreams!}}
+CONDITIONS
+Always:
+ACTIONS
+Arvio stops standing still
+SUBMIT MISSION 1700151
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Store to the -1:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 1715201
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1715200 | path: Store_normal | sceneName: Store | flagName: default | extraParams: -1
+ACTION NPC RECOVER ACCESSORY || npc: 8014 | part: Knee
+ACTION NPC RECOVER ACCESSORY || npc: 8014 | part: Finger
+ACTION NPC PUT UNEQUIP || npc: 8014 | itemId: 12201017
+ACTION NPC PUT UNEQUIP || npc: 8014 | itemId: 12401003
+END MISSION 1700152
+
+TRIGGER Procedure 0.0 Step 10.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_ARVIODANCE | state: 7
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Store | flagName: MB_player
+Set camera to 1
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 3755) that ends:
+{{dialogue|Arvio|W-wait...!}}
+(cId: -1) There is a conversation segment (id 3773) that ends:
+{{dialogue|Arvio|It is late already... You should rest, ''Player''! I shall earnestly await your answer!}}
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: MB_player_esc
+Set QUIT to 1
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Store:
+CONDITIONS
+Check if QUIT is == 1
+ACTIONS
+(cId 5) A conversation 1054_0 starts:
+{{dialogue|Arvio|Ahah... you really frightened me there, ''Player''...}}
+{{dialogue|Arvio|The music hasn't stopped, do you... accept the invitation to dance with me?}}
+
+*{{flirt}}''You may.'' (No unique dialogue)
+*''Yikes. I gotta go, actually...''
+
+{{dialogue|Arvio|indent=true|answer=Yikes. I gotta go, actually...
+|W-wait...!}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 171521
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: mbready | info: 1 | exist: 1
+ACTIONS
+(cId -1) A conversation 45054 starts:
+{{dialogue||Masquerade Preparations}}
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 3773) that ends:
+{{dialogue|Arvio|It is late already... You should rest, ''Player''! I shall earnestly await your answer!}}
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: MB_player_esc
+Set QUIT to 2
+SCENEITEM INTERACT SET || itemType: 9 | id: 16 | canInteract: 0
+ACTION NPC RECOVER ACCESSORY || npc: 8014 | part: Finger
+ACTION NPC RECOVER ACCESSORY || npc: 8014 | part: Knee
+ACTION NPC PUT UNEQUIP || npc: 8014 | itemId: 12401003
+ACTION NPC PUT UNEQUIP || npc: 8014 | itemId: 12201017
+
+TRIGGER Procedure 3.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 5583) that ends:
+{{dialogue|Arvio|Ahh... I can't say that I'm not a little upset... but I treasure your friendship more than anything. I understand. Well, then let's just carry on being best friends! I promise, no more surprises.}}
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: MB_player_esc
+ACTION NPC RECOVER ACCESSORY || npc: 8014 | part: Finger
+ACTION NPC RECOVER ACCESSORY || npc: 8014 | part: Knee
+ACTION NPC PUT UNEQUIP || npc: 8014 | itemId: 12401003
+ACTION NPC PUT UNEQUIP || npc: 8014 | itemId: 12201017
+Arvio stops standing still
+SUBMIT MISSION 1700151
+END MISSION 1700152
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 171521
+CONDITIONS
+CHECK TIME || compare: 6 | hour: 19 | minute: 0
+CHECK GLOBAL BLACKBOARD || key: mbready | info: 1 | exist: 0
+ACTIONS
+(cId -1) A conversation 45055 starts:
+{{dialogue||Wear your mask and attend the Masquerade Party at 19:00 this evening.}}
+
+TRIGGER Procedure 1.0 Step 3.5 Order 6 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 171521
+CONDITIONS
+CHECK TIME || compare: 2 | hour: 19 | minute: 0
+CHECK GLOBAL BLACKBOARD || key: mbready | info: 1 | exist: 0
+CHECK PLAYER IS EQUIPED ITEM || state: 0 | item: 12200014
+ACTIONS
+(cId -1) A conversation 45055 starts:
+{{dialogue||Wear your mask and attend the Masquerade Party at 19:00 this evening.}}
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 171521
+CONDITIONS
+CHECK PLAYER IS EQUIPED ITEM || item: 12200014 | state: 1
+CHECK TIME || compare: 2 | hour: 19 | minute: 0
+CHECK GLOBAL BLACKBOARD || key: mbready | info: 1 | exist: 0
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+(cId -1) A conversation 45056 starts:
+{{dialogue||Wear your mask and attend the Masquerade Party at 19:00 this evening.}}
+
+*''Enter'' (No unique dialogue)
+*''Leave'' (No unique dialogue)
+
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 45056:
+{{dialogue||Wear your mask and attend the Masquerade Party at 19:00 this evening.}}
+
+*''Enter'' (No unique dialogue)
+*''Leave'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM INTERACT SET || itemType: 9 | id: 16 | canInteract: 1
+SCENEITEM DELETE || itemType: 0 | id: 171521
+PLAYER SET POS ROT FLAG || sceneName: Store | flagName: MB_player_enter
+Arvio stands still in Store and looks at Player
+ACTION NPC PUT EQUIP || npc: 8014 | itemId: 12201017
+ACTION NPC PUT EQUIP || npc: 8014 | itemId: 12401003
+ACTION NPC REMOVE ACCESSORY || npc: 8014 | part: Knee
+ACTION NPC REMOVE ACCESSORY || npc: 8014 | part: Finger
+
+TRIGGER Procedure 2.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Amirah
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: mbready | info: 1 | exist: 1
+ACTIONS
+(cId 80151) A conversation 1024_0 starts:
+{{dialogue|Amirah|Masquerade? Yes... I'm quite curious as to what the result will be as, well. Arvio certainly has been busy.}}
+
+*''It's your birthday-plus! It'll be good.''
+*''Arvio's working hard on it!''
+*''Is it really your birthday that day?''
+
+{{dialogue|Amirah|indent=true|answer=It's your birthday-plus! It'll be good.
+|Hm... Yes... so you're going to be there, right? He kept going on about needing to invite you.}}
+{{dialogue|Amirah|indent=true|answer=Arvio's working hard on it!
+|Hm, yes. He's always like this when he's doing something for someone he cares about...}}
+{{dialogue|Amirah|indent=true|answer=Is it really your birthday that day?
+|Uh, yes. The Barnarock tradition, birthday-plus. It's a... very, very valid tradition. Not something made-up at all.}}
+{{dialogue|Amirah|You should go. I mean- You should come... See you there. Possibly.}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Amirah
+CONDITIONS
+Blessing in Disguise is successfully completed
+ACTIONS
+(cId 80152) A conversation 3796, 3797, 3798 starts:
+{{dialogue|Amirah|I apologize for not telling you about Arvio's true intentions. Though I loathe dishonesty, I believe a case can be made for it if conditions are benign enough...}}
+{{dialogue|Amirah|Oh. And in case you hadn't figured it out: birthday-plus is not a thing.}}
+{{dialogue|Amirah|Though, perhaps it should be... heh.}}
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Store to the Main:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1700151
+END MISSION 1700152
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1700152
+CONDITIONS
+Check if QUIT is == 0
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: mbready
+The player receives a letter:
+{{mail|268}}
+SCENEITEM DELETE || itemType: 0 | id: 171521
+SCENEITEM INTERACT SET || itemType: 9 | id: 16 | canInteract: 1
+ACTION NPC RECOVER ACCESSORY || npc: 8014 | part: Finger
+ACTION NPC RECOVER ACCESSORY || npc: 8014 | part: Knee
+ACTION NPC PUT UNEQUIP || npc: 8014 | itemId: 12401003
+ACTION NPC PUT UNEQUIP || npc: 8014 | itemId: 12201017
+NPC REMOVE TAG || tag: Masquerade
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1700152
+CONDITIONS
+Check if QUIT is <= (maybe?) 0
+ACTIONS
+Arvio stops standing still
+ACTION NPC RECOVER ACCESSORY || npc: 8014 | part: Finger
+ACTION NPC RECOVER ACCESSORY || npc: 8014 | part: Knee
+ACTION NPC PUT UNEQUIP || npc: 8014 | itemId: 12201017
+ACTION NPC PUT UNEQUIP || npc: 8014 | itemId: 12401003
+The player receives a letter:
+{{mail|269}}
+Run mission Blessing in Disguise
+GLOBAL BLACK BOARD REMOVE || key: mbready
+NPC REMOVE TAG || tag: Masquerade
+
+TRIGGER Procedure 4.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1700152
+CONDITIONS
+CHECK SCENEITEM EXIST || sceneItemType: 0 | id: 1715200 | exist: 0
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 1715201
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1715200 | path: Store_normal | sceneName: Store | flagName: default | extraParams: -1
+
+TRIGGER Procedure 5.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 3764:
+{{dialogue|Arvio|Now make your choice! Will you take the daily romantic greetings package, or perhaps I could interest you in the breakfast delivery package...?}}
+
+*''Daily greetings.'' (No unique dialogue)
+*''Breakfast.'' (No unique dialogue)
+*''It's hard to decide...!'' (No unique dialogue)
+
+(cId -1) The player picks the second option in conversation segment 3764:
+{{dialogue|Arvio|Now make your choice! Will you take the daily romantic greetings package, or perhaps I could interest you in the breakfast delivery package...?}}
+
+*''Daily greetings.'' (No unique dialogue)
+*''Breakfast.'' (No unique dialogue)
+*''It's hard to decide...!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Arvio gains 3 favor
+
+TRIGGER Procedure 5.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the third option in conversation segment 3764:
+{{dialogue|Arvio|Now make your choice! Will you take the daily romantic greetings package, or perhaps I could interest you in the breakfast delivery package...?}}
+
+*''Daily greetings.'' (No unique dialogue)
+*''Breakfast.'' (No unique dialogue)
+*''It's hard to decide...!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Arvio gains 5 favor

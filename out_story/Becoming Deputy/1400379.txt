@@ -1,0 +1,563 @@
+Reading Mission 1400379: Becoming Deputy
+
+<onlyinclude>{{Infobox mission
+|name = Becoming Deputy
+|image =
+|description = After years of hard work, will Unsuur finally become the deputy of the Sandrock Civil Corp?
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 2150
+|reputation = 20
+|gols = 500
+|npc1 = Unsuur
+|rp1 = 20
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200280
+
+TRIGGER Procedure 2.0 Step 6.0 Order 7 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 172751
+CONDITIONS
+Crush is successfully completed
+ACTIONS
+(cId -1) A conversation 11457 starts:
+{{dialogue|Player|Loads of rocks, lying in a box.}}
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Who's the Deputy is successfully completed
+Check if mission 1700298 is result 1 flag 1
+Just Give a Whistle is successfully completed
+
+GROUP 10:
+Who's the Deputy has failed
+Check if mission 1700298 is result 1 flag 1
+Just Give a Whistle is successfully completed
+
+ACTIONS
+Run mission Becoming Deputy
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1400379
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1400379 | id: 4379001 | sceneName: Main | flagName: S4379_TriggerA | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+Set cnt to -1
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 4379001
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 4379001
+DELAY MASK SET || maskId: 4379101 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 4379101 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Unsuur stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S4379_8000A0_Init
+SCENEITEM CREATE FLAG || itemType: 0 | id: 4379901 | path: S4379_Item_Garbage | sceneName: Main | flagName: S4379_Garbage | extraParams: 0
+DELAY MASK SET || maskId: 4379101 | delayTime: 0 | durationTime: 2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 4379101 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Unsuur stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 4379502) to Unsuur
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S4379_8026A1_Step)
+
+TRIGGER Procedure 0.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8026 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 4379401) A conversation 18581 starts:
+{{dialogue|Unsuur|...And that's the Blue Moon, where people put food in their mouths and go "nummy nummy nu-" Woah!}}
+
+TRIGGER Procedure 0.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4379401) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 4379502) from Unsuur
+Add behavior CommanderMoveToFlagAndAction (idName: 4379503) to Unsuur
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S4379_8026A2_Fall)
+STOPWATCH REAL TIME SET || id: 4379201 | sec: 2
+STOPWATCH REAL TIME SET || id: 4379207 | sec: 4.5
+
+TRIGGER Procedure 0.0 Step 8.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 4379207
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 4379504) to Unsuur
+(param: CMDAction:Fall_Walk_Story)
+STOPWATCH REAL TIME SET || id: 4379202 | sec: 1
+
+TRIGGER Procedure 0.0 Step 9.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 4379202
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 4379203 | sec: 2.5
+SCENEITEM CREATE FLAG || itemType: 0 | id: 4379902 | path: S4379_Item_WilsonFly | sceneName: Main | flagName: S4379_WilsonFly | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 10.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 4379203
+CONDITIONS
+Always:
+ACTIONS
+(cId 4379402) A conversation 18582, 18583 starts:
+{{dialogue|Unsuur|Wilson!}}
+{{dialogue|Unsuur|WILSOOOOOOOOON!}}
+
+TRIGGER Procedure 0.0 Step 11.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4379402) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 4379102 | delayTime: 0 | durationTime: 2 | changeType: 2 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 12.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 4379102 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 4379503) from Unsuur
+Remove behavior CommanderNPCAction (idName: 4379504) from Unsuur
+Burgess stands still in Main and looks at Unsuur
+Unsuur stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S4379_8000A3_0
+Add behavior CommanderMoveToFlag (idName: 4379508) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S4379_8000A3)
+SCENEITEM DELETE || itemType: 0 | id: 4379901
+SCENEITEM DELETE || itemType: 0 | id: 4379902
+STOPWATCH REAL TIME SET || sec: 2.5 | id: 4379208
+
+TRIGGER Procedure 0.0 Step 13.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 4379208
+CONDITIONS
+Always:
+ACTIONS
+(cId 4379403) A conversation 5694_0 starts:
+{{dialogue|Burgess|Look, buddy. I know what you're going through right now is really hard...}}
+{{dialogue|Unsuur|Gruh...}}
+{{dialogue|Unsuur|GRAAAAAH!}}
+{{dialogue|Burgess|The rules, soldier! The rules! Keep it together!}}
+
+*''Calm down, buddy...''
+*''Screw the rules, our friend's in danger!''
+*''Maybe I can fish him out?''
+
+{{dialogue|Unsuur|indent=true|answer=Calm down, buddy...
+|Forgive me, ''Player''. I have to go all out. Just this once.}}
+{{dialogue|Unsuur|indent=true|answer=Screw the rules, our friend's in danger!
+|reward={{NPC2|Unsuur|rp=5}}|You're right.}}
+{{dialogue|Unsuur|indent=true|answer=Maybe I can fish him out?
+|There's no TIME!}}
+
+TRIGGER Procedure 0.0 Step 14.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4379403) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 4379509) to Unsuur
+(param: TargetScene:Main|MoveMode:Run|FlagName:S4379_8026A3_Runto)
+
+TRIGGER Procedure 0.0 Step 13.5 Order 26 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4379403) The player picks the second option in conversation segment 18587:
+{{dialogue|Burgess|The rules, soldier! The rules! Keep it together!}}
+
+*''Calm down, buddy...'' (No unique dialogue)
+*''Screw the rules, our friend's in danger!'' (No unique dialogue)
+*''Maybe I can fish him out?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Unsuur gains 5 favor
+
+TRIGGER Procedure 0.0 Step 14.1 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8026 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Burgess stands still in Main and looks at Unsuur
+(cId 4379406) A conversation 18591, 18592 starts:
+{{dialogue|Burgess|Ow! Why does this always happen to me?}}
+{{dialogue|Burgess|NOOOOOOOOOO...!}}
+
+TRIGGER Procedure 0.0 Step 14.2 Order 25 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4379406) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 4379103 | delayTime: 0 | durationTime: 1 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 15.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 4379103 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 4379204 | sec: 1
+
+TRIGGER Procedure 0.0 Step 16.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 4379204
+CONDITIONS
+Always:
+ACTIONS
+SOUND PLAY 2D || idStr: Play_diving_swimming
+STOPWATCH REAL TIME SET || id: 4379205 | sec: 2
+
+TRIGGER Procedure 0.0 Step 17.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 4379205
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 4379103 | delayTime: 1 | durationTime: 2 | changeType: 1 | curveIndex: 0
+Justice stands still in Main and looks at Unsuur
+Burgess stands still in Main and looks at Unsuur
+Unsuur stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S4379_8000A4
+SCENEITEM CREATE FLAG || itemType: 0 | id: 4379903 | flagName: S4379_Wilson | path: S4379_Item_Wilson | sceneName: Main | extraParams: 0
+Burgess stops standing still
+Unsuur stops standing still
+Remove behavior CommanderMoveToFlag (idName: 4379508) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 4379509) from Unsuur
+Burgess stops standing still
+Add behavior CommanderNPCAction (idName: 4379529) to Unsuur
+(param: CMDAction:Crouch_Story)
+
+TRIGGER Procedure 0.0 Step 18.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 4379716
+CONDITIONS
+Always:
+ACTIONS
+(cId 4379404) A conversation 5698_0 starts:
+{{dialogue|Burgess|He... he was out of control, sir! I couldn't stop him!}}
+{{dialogue|0|It's true. Lock me up and throw away the key.}}
+{{dialogue|Justice|Now just wait a sec-}}
+{{dialogue|Unsuur|''Player''... It looks like I'm going away for a while...}}
+{{dialogue|Unsuur|Take care of Wilson while I'm in the clink. I'll... I'll write you every day.}}
+{{dialogue|Unsuur|Don't... Don't forget about me.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 18.3 Order 37 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 4379404) There is a conversation segment (id 18594) that ends:
+{{dialogue|0|It's true. Lock me up and throw away the key.}}
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 4379529) from Unsuur
+
+TRIGGER Procedure 0.0 Step 19.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4379404) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 4379513) to Unsuur
+(param: TargetScene:Main|MoveMode:Run|FlagName:S4379_8026A4_Leave)
+STOPWATCH REAL TIME SET || id: 4379206 | sec: 2
+
+TRIGGER Procedure 0.0 Step 20.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 4379206
+CONDITIONS
+Always:
+ACTIONS
+(cId 4379405) A conversation 5699_0 starts:
+{{dialogue|Justice|Eh... I'll let him hang in there for a couple days then find a loophole that'll get him off. That should take care of things.}}
+{{dialogue|Burgess|A couple of days!?}}
+{{dialogue|Justice|Listen, Burgess, for the last time: we cannot put people in the slammer for stepping in the oasis, choppin' down trees, or any of that nuisancery!}}
+{{dialogue|Burgess|Why NOT!?}}
+{{dialogue|Justice|Like... maybe he got some sand in there, some germs... Man, birds crap in there sometimes, we always have to boil our water! This is just not that big of a deal.}}
+{{dialogue|Burgess|To think... I used to look up to you...}}
+{{dialogue|Justice|Yeah, yeah. Well, you're just gonna have to get over it. Sorry you had to see this, ''Player''. Eh... maybe you should visit Unsuur in {{textcolor|green|jail}} sometime. I'd imagine he's already locked himself in there...}}
+The conversation ends.
+Burgess stops standing still
+Justice stops standing still
+Justice stands still in Main
+Burgess stands still in Main
+
+TRIGGER Procedure 0.0 Step 21.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4379405) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 4379104 | delayTime: 0 | durationTime: 1 | changeType: 2 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 22.0 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 4379104 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 4379513) from Unsuur
+Unsuur stops standing still
+Justice stops standing still
+Burgess stops standing still
+Unsuur stands still in CivilCorp
+SCENEITEM DELETE || itemType: 0 | id: 4379903
+
+TRIGGER Procedure 0.0 Step 23.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 4379104 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1400379 | id: 4379002 | sceneName: Main | flagName: S4379_TriggerB | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+CUTSCENE UI STATE EXIT || 
+Set cnt to 0
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the CivilCorp:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_civilcorp
+CHECK GLOBAL BLACKBOARD || key: WeiCome | info: 1 | exist: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_civilcorp
+AREA TRIGGER DELETE || id: 4379002
+DELAY MASK SET || maskId: 4379105 | delayTime: 0 | durationTime: 0.1 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the CivilCorp:
+CONDITIONS
+Always:
+ACTIONS
+Justice stands still in CivilCorp
+PLAYER SET POS ROT FLAG || sceneName: CivilCorp | flagName: S4379_8000B0_Init
+Add behavior CommanderMoveToFlagAndAction (idName: 4379523) to Player
+(param: TargetScene:CivilCorp|MoveMode:Walk|FlagName:S4379_8000B1)
+DELAY MASK SET || maskId: 4379105 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 4379523) from Player
+(cId 4379411) A conversation 5700_0 starts:
+{{dialogue|Unsuur|Hey, ''Player''. Thanks for visiting me.}}
+{{dialogue|Unsuur|Looks like things got real mixed up. Now I'm on the other side of the law. Never thought I'd see this happen.}}
+{{dialogue|Unsuur|I'm like the oasis version of Logan. Driven to madness by my raging emotions. Suddenly I have a lot more sympathy for that guy.}}
+
+*''You did the right thing.''
+*''You were a bit hasty.''
+*''Somehow I think... Wilson would have survived...''
+
+{{dialogue|Unsuur|indent=true|answer=You did the right thing.
+|Thanks for saying that, ''Player''. I hope you're right.}}
+{{dialogue|Unsuur|indent=true|answer=You were a bit hasty.
+|He can't swim.}}
+{{dialogue|Unsuur|indent=true|answer=Somehow I think... Wilson would have survived...
+|Yeah. You're right. Wilson can breathe underwater. I kinda forgot about that in the heat of the moment.}}
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4379411) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 4379524) to Justice
+(param: TargetScene:CivilCorp|MoveMode:Walk|FlagName:S4379_8008B1)
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8008 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Justice stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 4379524) from Justice
+Justice stands still in CivilCorp and looks at Unsuur
+(cId 4379412) A conversation 5704_0 starts:
+{{dialogue|Justice|Now I hate to break up this uh... teary little, reunion but...}}
+{{dialogue|Justice|I did some pokin' through the Civil Corps official code... bit of crosschecking through the town charter...}}
+{{dialogue|Unsuur|...?}}
+{{dialogue|Justice|As it turns out, in section seven, subsection B of the town charter, which clearly states: "No citizens shall contaminate the oasis in any capacity under penalty of..." eh, well, skip that part...}}
+{{dialogue|Justice|There is a clause! That just as clearly states! The aforementioned penalty shall not be incurred to any officer of the law who deems it necessary, at or above a certain rank...}}
+{{dialogue|Unsuur|......!?}}
+{{dialogue|Justice|Furthermore, it is Civil Corps tradition to reward those who go above and beyond the call of duty, those who risk their lives for that of another, those who throw all caution to the wind and do what they know in their hearts to be right!}}
+{{dialogue|Unsuur|.........!?!?!?!??}}
+{{dialogue|Justice|Unsuur, I hereby award you the title of...}}
+{{dialogue|Justice|DEPUTY!}}
+{{dialogue|Unsuur|Oh my... I... wha...}}
+{{dialogue|Justice|Which also means you are free to go. So... get back out on patrol, please.}}
+{{dialogue|Unsuur|...Just when I was about to get a face tattoo...}}
+{{dialogue|Unsuur|Better go. Chat later, ''Player''.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4379412) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 4379212 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 4379212 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Unsuur stops standing still
+Unsuur stands still in CivilCorp
+Justice stops standing still
+Justice stands still in CivilCorp and looks at Player
+DELAY MASK SET || maskId: 4379212 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 4379212 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 4379413) A conversation 5705_0 starts:
+{{dialogue|Justice|''Player'', I hope I can once again count on you to come through as our town's most reliable Builder... And fix us up {{textcolor|green|one more hat}}...?}}
+{{dialogue|Justice|Oh, that's right! We even got a new design in. You know the hat business; feels like every time you get a new one it's obsolete in a few months...}}
+{{dialogue|Justice|Yeah, here you go! A recipe for a Super Deluxe Deputy Hat with built in plating for extra protection. For the most extreme of combat situations...}}
+{{dialogue|Justice|Ceremony? Oh. Shoot. Uhhh... see if Unsuur brings it up. Like I said, this whole deputy, sheriff thing: it's all just something I made up! I mean, come on, I made the cat deputy, heh heh...}}
+{{dialogue|Justice|I thought everyone would get a kick out of that, but a couple people got kinda mad...}}
+{{dialogue|Justice|Anyway, Unsuur takes it real serious... But yeah, it's not really a thing.}}
+{{dialogue|Justice|Just take the Super Deluxe Deputy Hat to Unsuur when it's ready, he'll be over the moon...}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4379413) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Justice stops standing still
+Unsuur stops standing still
+CUTSCENE UI STATE EXIT || 
+Add 1 Super Deputy Hat of Default quality (Notify player)
+CAMERA PATH STOP DEFAULT || id: 4379727
+CAMERA PATH STOP DEFAULT || id: 4379728
+CAMERA PATH STOP DEFAULT || id: 4379729
+CAMERA PATH STOP DEFAULT || id: 4379730
+CAMERA PATH STOP DEFAULT || id: 4379731
+CAMERA PATH STOP DEFAULT || id: 4379732
+CAMERA PATH STOP DEFAULT || id: 4379733
+CAMERA PATH STOP DEFAULT || id: 4379734
+CAMERA PATH STOP DEFAULT || id: 4379735
+DELIVER MISSION 1400379
+START MISSION 1400379
+END MISSION 1400379
+Run mission Becoming Deputy
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if cnt is >= 0
+ACTIONS
+Increment cnt by 1
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if cnt is >= 5
+ACTIONS
+Unsuur stands still in CivilCorp
+Unsuur stops standing still
+Unsuur stops standing still
+The player receives a letter:
+{{mail|753}}
+AREA TRIGGER DELETE || id: 4379002
+END MISSION 1400379
+
+==Rewards==
+{{mission reward
+|npc1 = Unsuur
+|rp1 = 20
+|exp = 2150
+|reputation = 20
+|gols = 500
+}}

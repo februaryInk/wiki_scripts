@@ -32,6 +32,7 @@ _event_names = {
     1800376: "Luna's Invitation",
     1800383: 'Clean Shave', # Logan - Smooth Face
     1800388: 'Redemption', # Miguel - Redemption 1
+    1800394: 'Canyon Phantom', # Day of Memories
     1800398: 'Civil Corps Award Ceremony', # Militia Player Award
     1800484: 'End Marriage Loop',
     1900379: 'Grace\'s Return'
@@ -74,6 +75,7 @@ _general_mission_controllers = {
     1200127: 'Nia and Mom\'s Letters',
     1200128: 'Mission Failure Follow-up',
     1200364: 'Side Mission Controller (Chapter 3)',
+    1700145: 'Newspaper'
 }
 
 # Decode URL-encoded strings in the XML so we can read the properties properly.
@@ -114,7 +116,9 @@ class Mission:
     @property
     def description(self) -> str:
         if len(self.properties) == 4:
-            description_id = int(self.properties[0])
+            # Mission 1200085 repeats its description number four times for unknown reasons, so we only use the first one.
+            description_id = int(self.properties[0].split(';')[0])
+
             if description_id != -1:
                 return text(description_id)
         
@@ -143,6 +147,10 @@ class Mission:
         
         return self.root.get('isMain').lower() == 'true'
     
+    @property
+    def meta_name(self) -> str:
+        return self.root.get('name', '')
+
     @property
     def name(self) -> str:
         return self.get_name()
@@ -300,6 +308,16 @@ class Mission:
         
         return vars_by_mission_id
     
+    def get_mail_ids(self) -> list[int]:
+        mail_ids_by_mission_id = {}
+        for trigger in self.triggers:
+            mission_id, mail_ids = trigger.get_mail_id_by_mission_id()
+            if mission_id not in mail_ids_by_mission_id:
+                mail_ids_by_mission_id[mission_id] = []
+            mail_ids_by_mission_id[mission_id] += mail_ids
+        
+        return mail_ids_by_mission_id
+    
     def get_name(self, stack_level: int = 0) -> str:
         if self.name_native:
             return self.name_native
@@ -312,17 +330,19 @@ class Mission:
         
         parent_name = self.parents[0].get_name(stack_level + 1) if len(self.parents) else ''
         return parent_name
-    
-    def get_mail_ids(self) -> list[int]:
-        mail_ids_by_mission_id = {}
-        for trigger in self.triggers:
-            mission_id, mail_ids = trigger.get_mail_id_by_mission_id()
-            if mission_id not in mail_ids_by_mission_id:
-                mail_ids_by_mission_id[mission_id] = []
-            mail_ids_by_mission_id[mission_id] += mail_ids
+
+    # Some newspapers are explicitly set by STMTs, but some have a mission ID
+    # that causes them to show up. The ones from STMT are already included, so
+    # this method gets the extra ones from DesignerConfig.
+    def get_config_newspapers(self) -> list[NewspaperContent]:
+        config_newspapers = []
+
+        for id, newspaper in DesignerConfig.NewspaperContent.items():
+            if newspaper.get('missionIdAdd') == self.id:
+                config_newspapers.append(NewspaperContent(id))
         
-        return mail_ids_by_mission_id
-    
+        return config_newspapers
+
     def get_received_gifts(self) -> dict[tuple, list[int]]:
         gift_ids_by_mission_id = {}
         for trigger in self.triggers:
@@ -384,7 +404,17 @@ class Mission:
                 in_mission_talks.append(talk)
                 
         return in_mission_talks
-    
+
+    def read_config_newspapers(self) -> list[str]:
+        lines = []
+
+        for newspaper in self.get_config_newspapers():
+            lines += ['The start (or end?) of the mission causes new newspaper content to appear:']
+            lines += newspaper.read()
+            lines += ['']
+
+        return lines
+
     def read_in_mission_talk(self) -> list[str]:
         lines = []
 
@@ -529,6 +559,8 @@ class Mission:
         lines += ['']
         lines += self.read_infobox()
         lines += ['']
+
+        lines += self.read_config_newspapers()
 
         lines += self.read_run_conditions()
 

@@ -1,0 +1,220 @@
+Reading Mission 1800485: Mysterious Benefactor
+
+<onlyinclude>{{Infobox mission
+|name = Mysterious Benefactor
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Mysterious Benefactor:
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if 8483A is == 1
+ACTIONS
+START MISSION 1800483
+
+TRIGGER Procedure 0.0 Step 6.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800483
+CONDITIONS
+Always:
+ACTIONS
+Run mission Mysterious Benefactor
+END MISSION 1800483
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800485
+CONDITIONS
+Always:
+ACTIONS
+===Wait for Recipe===
+
+{{mission_details
+|desc = After promising Arvio that you'll help with Tony's request, he said he first needs to talk about the details with Vivi. Wait for Vivi to send the diagram.
+|details = Wait for Recipe
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|810}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 810
+CONDITIONS
+Always:
+ACTIONS
+===Make Pet Shoes===
+
+{{mission_details
+|desc = You've got the diagram from Vivi, now you need to build them on the Tailoring Machine. If you don't have a Tailoring Machine, you can get the diagram from the Research Center.
+|details = Make Pet Shoes
+*{{i2|Captain's Shoes|0/1}}
+*{{i2|Sandy's Shoes|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | canSubmit: 1 | missionId: 1800483 | targetId: 2
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Arvio===
+
+{{mission_details
+|desc = You've made all the Pet Shoes. Give them to Arvio.
+|details = Talk to Arvio
+*{{i2|Captain's Shoes|0/1}}
+*{{i2|Sandy's Shoes|0/1}}
+*{{i2|Arvio|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Arvio
+CONDITIONS
+CHECK PLAYER ITEM || item: 19500018 | itemGrade: -1 | set: 2 | count: 1
+CHECK PLAYER ITEM || item: 19500019 | itemGrade: -1 | set: 2 | count: 1
+ACTIONS
+(cId 1) A conversation 7809_0 starts:
+{{dialogue|Arvio|Ah, wonderful! I'll distribute these to the pets of Sandrock early tomorrow morning. Take a look around when you wake up!}}
+{{dialogue|Arvio|As it turned out, though, it wasn't exactly practical to make shoes for cats. Camels either for that matter...}}
+{{dialogue|Arvio|...Hm.}}
+{{dialogue|Arvio|''Player'', do you think it was right? For us to do something so incredibly pointless, for someone who will never even see that we did it, and even if they did, they probably wouldn't even care that much?}}
+
+*''We did it because we have integrity.''
+*''Wow... yeah, I guess this was a waste of time...''
+*''I don't care as long as you pay me.''
+*''I'm excited the pets will have shoes, too.''
+
+{{dialogue|Arvio|indent=true|answer=We did it because we have integrity.
+|reward={{NPC2|Arvio|rp=2}}|Yeah... Yeah! You know what? You're right! Maybe it didn't mean much to this person, maybe for them, money grows on trees. But to me, it was important. And now I can accept his investment proudly, knowing that I've done the right thing.}}
+{{dialogue|Arvio|indent=true|answer=Wow... yeah, I guess this was a waste of time...
+|Hm...}}
+{{dialogue|Arvio|indent=true|Well, what's done is done. We shouldn't worry ourselves over it now.}}
+{{dialogue|Arvio|indent=true|answer=I don't care as long as you pay me.
+|Haha... I see... Yes, of course, I will pay you your usual rate.}}
+{{dialogue|Arvio|indent=true|answer=I'm excited the pets will have shoes, too.
+|reward={{NPC2|Arvio|rp=2}}|Ah? Really? Haha! Well, now I feel more than justified in fulfilling Tony's strange request. If we made one person happy then that makes it all worthwhile, doesn't it?}}
+{{dialogue|Arvio|Alright, then, ''Player''. As I said, I'll try to get these shoes on the pets by tomorrow. And... who knows. Maybe Tony really will find out about this...}}
+The conversation ends.
+BAG MODIFY BY TARGET || missionId: 1800483 | targetId: 3
+Set 8485Day to 0
+
+TRIGGER Procedure 0.0 Step 5.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1800483
+
+TRIGGER Procedure 0.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+ACTION NPC PUT EQUIP || npc: 8049 | itemId: 12403002
+ACTION NPC PUT EQUIP || npc: 8047 | itemId: 12403003
+NPC ICON ADD || missionId: 1800485 | npc: 8008 | missionIcon: 6
+NPC ICON ADD || missionId: 1800485 | npc: 8026 | missionIcon: 6
+
+TRIGGER Procedure 0.0 Step 6.1 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Justice
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 22066 starts:
+{{dialogue|Justice|Some folks just got too much money... 20K on pet shoes? C'mon. Wish I had cash to burn on something so- I mean- Er... Thanks for the pet shoes, ''Player''! They, uh... look great! Captain loves 'em!}}
+NPC ICON REMOVE || missionId: 1800485 | npc: 8008 | missionIcon: 6
+
+TRIGGER Procedure 0.0 Step 6.3 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Unsuur
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 22067 starts:
+{{dialogue|Unsuur|I admire Captain's decision to wear equipment that makes him less effective in combat, but look way cooler.}}
+NPC ICON REMOVE || missionId: 1800485 | npc: 8026 | missionIcon: 6
+
+TRIGGER Procedure 0.0 Step 7.0 Order 7 Repeat 6
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment 8485Day by 1
+
+TRIGGER Procedure 0.0 Step 9.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|811}}
+NPC ICON REMOVE || missionId: 1800485 | npc: 8008 | missionIcon: 6
+NPC ICON REMOVE || missionId: 1800485 | npc: 8026 | missionIcon: 6
+END MISSION 1800485
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 22059:
+{{dialogue|Arvio|''Player'', do you think it was right? For us to do something so incredibly pointless, for someone who will never even see that we did it, and even if they did, they probably wouldn't even care that much?}}
+
+*''We did it because we have integrity.'' (No unique dialogue)
+*''Wow... yeah, I guess this was a waste of time...'' (No unique dialogue)
+*''I don't care as long as you pay me.'' (No unique dialogue)
+*''I'm excited the pets will have shoes, too.'' (No unique dialogue)
+
+(cId 1) The player picks the fourth option in conversation segment 22059:
+{{dialogue|Arvio|''Player'', do you think it was right? For us to do something so incredibly pointless, for someone who will never even see that we did it, and even if they did, they probably wouldn't even care that much?}}
+
+*''We did it because we have integrity.'' (No unique dialogue)
+*''Wow... yeah, I guess this was a waste of time...'' (No unique dialogue)
+*''I don't care as long as you pay me.'' (No unique dialogue)
+*''I'm excited the pets will have shoes, too.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Arvio gains 2 favor

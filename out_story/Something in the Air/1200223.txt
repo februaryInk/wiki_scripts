@@ -1,0 +1,310 @@
+Reading Mission 1200223: Something in the Air
+
+<onlyinclude>{{Infobox mission
+|name = Something in the Air
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Something in the Air:
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Trudy stops standing still
+Justice stops standing still
+Mi-an stops standing still
+Run mission Something in the Air
+Run mission Something in the Air
+Run mission Something in the Air
+START MISSION 1200222
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200222
+CONDITIONS
+Always:
+ACTIONS
+Run mission Something in the Air
+END MISSION 1200222
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200223
+CONDITIONS
+GROUP 0:
+CHECK PLAYER ITEM || item: 19111007 | itemGrade: -1 | set: 6 | count: 6
+
+GROUP 10:
+CHECK PLAYER ITEM || item: 19110007 | itemGrade: -1 | set: 6 | count: 6
+
+GROUP 20:
+CHECK PLAYER ITEM || item: 19800007 | itemGrade: -1 | set: 6 | count: 9
+
+ACTIONS
+===Collect Materials===
+
+{{mission_details
+|desc = Turns out the drawing Unsuur made was useful. Collect the materials and fix the leaking pipes. The Valley of Whispers is heavily polluted, and has many mutated monsters. Just to be safe, it's probably best that you upgrade your Protective Suit on the Refiner before entering. (Recommended level: 35)
+|details = Collect Materials
+*{{i2|Chromium Steel Plate|0/6}}
+*{{i2|Iron Latch|0/6}}
+*{{i2|Iron Wire|0/9}}
+}}
+Set DAY to 0
+Set CHOICE to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200223
+CONDITIONS
+CHECK PLAYER ITEM || item: 19111007 | itemGrade: -1 | set: 2 | count: 6
+CHECK PLAYER ITEM || item: 19110007 | itemGrade: -1 | set: 2 | count: 6
+CHECK PLAYER ITEM || item: 19800007 | itemGrade: -1 | set: 2 | count: 9
+ACTIONS
+===Wait Until Tomorrow===
+
+{{mission_details
+|desc = The materials are all ready, meet up with the group tomorrow.
+|details = Wait Until Tomorrow
+}}
+Set DAY to 0
+Set CHOICE to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200222 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Check if DAY is == 0
+ACTIONS
+===Wait Until Tomorrow===
+
+{{mission_details
+|desc = The materials are all ready, meet up with the group tomorrow.
+|details = Wait Until Tomorrow
+}}
+ACTION SHOW CUSTOM IMAGE TIPS || content: 80012794 | preset: Mission
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Set DAY to 1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200222 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Check if DAY is == 1
+ACTIONS
+===Talk to Justice===
+
+{{mission_details
+|desc = Go to the agreed upon location to meet the Civil Corps. For safety, make sure you have all the materials and Protective Suits before heading out.
+|details = Talk to Justice
+}}
+AREA TRIGGER CREATE || missionId: 1200222 | id: 22231 | flagName: greenbaby_trigger1 | sceneName: Main | showOnMap: 1 | mapIcon: MissionArea | transId: 80010101
+ACTION SHOW CUSTOM IMAGE TIPS || content: 80012794 | preset: Mission
+
+TRIGGER Procedure 0.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Justice===
+
+{{mission_details
+|desc = Go to the agreed upon location to meet the Civil Corps. For safety, make sure you have all the materials and Protective Suits before heading out.
+|details = Talk to Justice
+}}
+AREA TRIGGER CREATE || transId: 80010101 | flagName: greenbaby_trigger1 | id: 22231 | missionId: 1200222 | sceneName: Main | showOnMap: 1 | mapIcon: MissionArea
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Yan
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 6318 starts:
+{{dialogue|Yan|What are you looking at newbie? Never seen a man wear eyeliner before? Can't say I envy your myopic view of the world. Now get back to work, before I really give you something to myoposize about!}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22231
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 22231 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+ACTOR BLIND SET || set: 1
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 22231 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Justice stands still in Main and looks at Player
+Unsuur stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || flagName: greenbaby_player | sceneName: Main
+DELAY MASK SET || maskId: 22231 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Set CAMERA to 0
+ACTION NPC PUT EQUIP || npc: 8008 | itemId: 12501003
+ACTION NPC PUT EQUIP || itemId: 12501004 | npc: 8026
+NPC ANIM FLOAT ADD || npc: 8026 | animValue: 1 | paramName: IsProtected | requestID: 22231
+ACTOR BUFF ADD || npc: 8008 | buffId: 1153 | instanceId: 22231
+ACTOR BUFF ADD || buffId: 1153 | npc: 8026 | instanceId: 22231
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 22231
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 1886_0 starts:
+{{dialogue|Justice|You ready? Mi-an already brought us our Protective Suits this morning, so we're good to go. Be sure to {{textcolor|green|bring some weapons}}, not sure what we'll run into down there.}}
+
+*''Let's roll out!''
+*''Can I meet you guys later? Still need to prep.''
+
+{{dialogue|Justice|indent=true|answer=Let's roll out!
+|Hey, that's my line! But, uh... yeah, nothin' to it but to do it...}}
+{{dialogue|Justice|indent=true|We're gonna go on ahead and wait for you there, already got our suits on. Never can be too careful.}}
+{{dialogue|Unsuur|indent=true|The gas is pretty far from here, Sheriff, think we really need to wear them right now? It's hot.}}
+{{dialogue|Justice|indent=true|Look, partner, know how I've been able to stick around for so long?}}
+{{dialogue|Unsuur|indent=true|By being cool under pressure? Or having that never say die attitude? Maybe always defending the weak? I don't know.}}
+{{dialogue|Justice|indent=true|Uh... right, I mean, no! By being careful.}}
+{{dialogue|Unsuur|indent=true|Hmm.}}
+{{dialogue|Justice|indent=true|One slip up, and that's the end of it out here in the Eufaula. You know that, man.}}
+{{dialogue|Justice|indent=true|answer=Can I meet you guys later? Still need to prep.
+|Oh, totally. No rush, I mean... gas ain't goin' anywhere, heh...}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 6 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 22232
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 1889_0 starts:
+{{dialogue|Justice|You ready for the canyon?}}
+
+*''Let's roll out!''
+*''Can I meet you guys later? Still need to prep.''
+
+{{dialogue|Justice|indent=true|answer=Let's roll out!
+|Hey, that's my line! But, uh... yeah, nothin' to it but to do it...}}
+{{dialogue|Justice|indent=true|We're gonna go on ahead and wait for you there, already got our suits on. Never can be too careful.}}
+{{dialogue|Unsuur|indent=true|The gas is pretty far from here, Sheriff, think we really need to wear them right now? It's hot.}}
+{{dialogue|Justice|indent=true|Look, partner, know how I've been able to stick around for so long?}}
+{{dialogue|Unsuur|indent=true|By being cool under pressure? Or having that never say die attitude? Maybe always defending the weak? I don't know.}}
+{{dialogue|Justice|indent=true|Uh... right, I mean, no! By being careful.}}
+{{dialogue|Unsuur|indent=true|Hmm.}}
+{{dialogue|Justice|indent=true|One slip up, and that's the end of it out here in the Eufaula. You know that, man.}}
+{{dialogue|Justice|indent=true|answer=Can I meet you guys later? Still need to prep.
+|Oh, totally. No rush, I mean... gas ain't goin' anywhere, heh...}}
+Remove behavior CommanderMoveToFlag (idName: 22231) from Player
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the first option in conversation segment 6369:
+{{dialogue|Justice|You ready? Mi-an already brought us our Protective Suits this morning, so we're good to go. Be sure to {{textcolor|green|bring some weapons}}, not sure what we'll run into down there.}}
+
+*''Let's roll out!'' (No unique dialogue)
+*''Can I meet you guys later? Still need to prep.'' (No unique dialogue)
+
+(cId 0) The player picks the first option in conversation segment 6372:
+{{dialogue|Justice|You ready for the canyon?}}
+
+*''Let's roll out!'' (No unique dialogue)
+*''Can I meet you guys later? Still need to prep.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 1
+
+TRIGGER Procedure 1.0 Step 3.0 Order 7 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 0
+Check if CAMERA is == 1
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+ACTOR BLIND SET || set: 0
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+ACTOR BLIND SET || set: 0
+Justice stops standing still
+Unsuur stops standing still
+AREA TRIGGER DELETE || id: 22231
+CUTSCENE UI STATE EXIT || 
+Run mission Leak and Destroy
+SUBMIT MISSION 1200222
+END MISSION 1200223
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 0
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+ACTOR BLIND SET || set: 0
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22231
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Justice stops standing still
+Unsuur stops standing still
+Justice stands still in Main and looks at Player
+Unsuur stands still in Main and looks at Player
+Add behavior CommanderMoveToFlag (idName: 22231) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:greenbaby_player)
+Set CAMERA to 1

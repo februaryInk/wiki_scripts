@@ -1,0 +1,188 @@
+Reading Mission 1200331: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200310
+
+TRIGGER Procedure 9.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+I am Gungam! is successfully completed
+ACTIONS
+Run mission Operation Greenland
+
+TRIGGER Procedure 9.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Operation Greenland is successfully completed
+Check if mission Luo and the Tree is result 1 flag 1
+ACTIONS
+Run mission #1200331
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200331
+CONDITIONS
+Always:
+ACTIONS
+ACTION SOCIAL ADD CHILD FLAG || flag: StoryBlock
+Set CHOICE to 0
+AREA TRIGGER DELETE || id: 83351
+END MISSION 1800335
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player wakes up:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: 1700364 | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+NPC LEAVE || npc: 8120
+Set global blackboard key leavehome with info 1.
+(cId 1) A conversation 18353 starts:
+{{dialogue|Player|(Luo and Nia leave today. I should see them off at the station.)}}
+
+TRIGGER Procedure 0.0 Step 1.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 23311 | delayTime: 2 | durationTime: 2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 23311
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: nialeave_player1 | sceneName: Main
+DELAY MASK SET || maskId: 23311 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Nia stands still in Main and looks at Player
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+ACTION CUTSCENE START AUDIO TYPE || id: CG_LUOLEAVE | duration: 0 | audioType: NoTransitionOff
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 9 | name: CG_LUOLEAVE
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 4200_0 starts:
+{{dialogue|Nia|Hehe, got you!}}
+
+*''What's going on?''
+*''I thought you left!''
+*{{flirt}}''I was so worried I'd missed you!''
+
+{{dialogue|Nia|indent=true|answer=What's going on?
+|I wanted to surprise you!}}
+{{dialogue|Nia|indent=true|answer=I thought you left!
+|Hehe, sorry, I just wanted to play a little trick on you!}}
+{{dialogue|Nia|indent=true|answer=I was so worried I'd missed you!
+|You'd never have missed me... if you weren't there, I couldn't bear to leave. But...}}
+{{dialogue|Nia|I didn't want to tell you before... but, I've talked to Mayor Trudy, and I've rented an apartment at Oldtown Lodge!}}
+{{dialogue|Nia|That's right. I'm staying!}}
+
+*''That's amazing!''
+*{{flirt}}''(Hug Nia)'' (No unique dialogue)
+*''Oh...''
+
+{{dialogue|Nia|indent=true|answer=That's amazing!
+|I knew you'd be happy!}}
+{{dialogue|Nia|indent=true|So, I'm sorry, but you'll be seeing a lot more of me from now on.}}
+{{dialogue|Nia|indent=true|Hehe. I'm so thrilled about it, I've been thinking about moving here since I finished my studies. It took a little longer than planned because I managed to get a mentorship with Professor Luo.}}
+{{dialogue|Nia|indent=true|But he said I can carry on working with Zeke in the Moisture Farm, and he'd give me post-grad credits for it.}}
+{{dialogue|Nia|indent=true|Anyway, I'm going to go get everything set up. Take me out for dinner soon, okay?}}
+{{dialogue|Nia|indent=true|answer=Oh...
+|Oh come on! I've been planning this for ages! At least pretend to be excited!}}
+{{dialogue|Nia|indent=true|So, I'm sorry, but you'll be seeing a lot more of me from now on.}}
+{{dialogue|Nia|indent=true|Hehe. I'm so thrilled about it, I've been thinking about moving here since I finished my studies. It took a little longer than planned because I managed to get a mentorship with Professor Luo.}}
+{{dialogue|Nia|indent=true|But he said I can carry on working with Zeke in the Moisture Farm, and he'd give me post-grad credits for it.}}
+{{dialogue|Nia|indent=true|Anyway, I'm going to go get everything set up. Take me out for dinner soon, okay?}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the second option in conversation segment 14188:
+{{dialogue|Nia|That's right. I'm staying!}}
+
+*''That's amazing!'' (No unique dialogue)
+*{{flirt}}''(Hug Nia)'' (No unique dialogue)
+*''Oh...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+The player interacts (type 2, option 0) with Nia
+Set CHOICE to 1
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON INTERACTIVE EXIT || order: 0 | instID: 8059
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 14190, 4207_0 starts:
+{{dialogue|Nia|I've missed you so much...}}
+{{dialogue|Nia|So, I'm sorry, but you'll be seeing a lot more of me from now on.}}
+{{dialogue|Nia|Hehe. I'm so thrilled about it, I've been thinking about moving here since I finished my studies. It took a little longer than planned because I managed to get a mentorship with Professor Luo.}}
+{{dialogue|Nia|But he said I can carry on working with Zeke in the Moisture Farm, and he'd give me post-grad credits for it.}}
+{{dialogue|Nia|Anyway, I'm going to go get everything set up. Take me out for dinner soon, okay?}}
+The conversation ends.
+Set CHOICE to 0
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 0
+ACTIONS
+ACTION SOCIAL REMOVE CHILD FLAG || flag: StoryBlock
+CUTSCENE UI STATE EXIT || 
+GLOBAL BLACK BOARD REMOVE || key: leavehome
+Nia stops standing still
+END MISSION 1200331

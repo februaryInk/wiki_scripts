@@ -1,0 +1,83 @@
+Reading Mission 1200266: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1800269
+
+TRIGGER Procedure 0.0 Step 15.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Andy stands still in LoganCave_Dungeon
+Logan stands still in LoganCave_Dungeon
+Haru stands still in LoganCave_Dungeon
+SCENEITEM CREATE FLAG || itemType: 0 | id: 82692 | path: Mission_BackLoganCave | sceneName: Main | flagName: bridge_kaimu | extraParams: 0
+SCENEITEM DELETE || itemType: 0 | id: 82691
+ACTION NPC REMOVE CLUSTER || cluster: Story1800269_8011
+END MISSION 1200266
+Remove behavior CommanderBubbleTag (idName: 22662) from Logan
+END MISSION 1800269
+
+TRIGGER Procedure 1.0 Step 7.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Guildhall to the Main:
+CONDITIONS
+Always:
+ACTIONS
+ACTION NPC REMOVE CLUSTER || cluster: Story1800269_8011
+Run mission #1200266
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200266
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 22661) to Logan
+(param: TargetScene:Main|MoveMode:Walk|FlagName:howlettsgrave_logan)
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1200266
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+ACTION NPC PUT EQUIP || itemId: 12401015 | npc: 8011
+Remove behavior CommanderBubbleTag (idName: 22662) from Logan
+Remove behavior CommanderMoveToFlagAndAction (idName: 22661) from Logan
+END MISSION 1200266
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8011 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderBubbleTag (idName: 22662) to Logan
+(param: BubbleTag:Story1200266_8011|BubbleTime:6|minTime:12)
+Remove behavior CommanderMoveToFlagAndAction (idName: 22661) from Logan
+ACTION NPC PUT UNEQUIP || itemId: 12401015 | npc: 8011

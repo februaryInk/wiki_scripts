@@ -1,0 +1,412 @@
+Reading Mission 1200391: Aid to Portia
+
+<onlyinclude>{{Infobox mission
+|name = Aid to Portia
+|image =
+|description = Portia was damaged recently by a mysterious warrior who managed to uncover and manipulate the power of a rare relic, an All Source. Help the Portia Builders get the town back on track.
+|type = Side
+|time =
+|location =
+|characters = [[Trudy]]
+|condition =
+|details =
+|exp = 4200
+|reputation = 45
+|gols = 6000
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200364
+
+TRIGGER Procedure 11.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DAY START FOR WEATHER || order: 0 | weather: 2
+CONDITIONS
+Check if mission Battle of the Bands is result 1 flag 1
+ACTIONS
+WEATHER SET STATE || WeatherState: 0
+
+TRIGGER Procedure 11.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+CHECK WEATHER STATE || weather: 0 | flag: 1
+Check if mission 1200328 is result 1 flag 1
+Check if mission 1500330 is result 1 flag 1
+
+GROUP 10:
+CHECK WEATHER STATE || weather: 0 | flag: 1
+Check if mission 1200328 is result 1 flag 1
+Check if mission 1500330 is result 2 flag 1
+
+ACTIONS
+Run mission Aid to Portia
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200391
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1200391 | id: 23911 | sceneName: Main | flagName: bignews_trigger | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80028944
+Set CHOICE to 1
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 23911
+CONDITIONS
+CHECK WEATHER STATE || weather: 0 | flag: 1
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 23911 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 23911
+Newspaper adds Article content 1105.
+Title: Crisis in Portia Averted!
+Welcome to your source on the All Source, the Portia Times!
+Yes, everyone is wondering what happened with the recent attempt by the Sky Sharks and someone calling themselves the "Rogue Knight" to steal our newly discovered mega-relic: the All Source! Although she goes by Wendy these days...
+Well, firstly, we're all fine, thanks for asking! A few buildings exploded, a lot of wild sword duels took place, and... I think somehow an entire schoolhouse was used as a projectile weapon... but, other than that: fine!
+Oh, and also, don't worry about the whole geopolitical nature of it all. Yes, the Rogue Knight has ties to the Duvos Empire, but it is believed that he was operating alone, hence the name... "rogue..." Furthermore, the Duvos Empire has been extremely cooperative following the Sandrock incident, so tensions seem to be settling quickly.
+So... if you were worried about us or the world going to war; you can stop reading here! But if you'd like to know more about what happened, read on!
+Quick history lesson: an All Source computer is a rare AI from the Old World; it's hard to say how many other than ours still exist! All Source computers acted as a managing unit; one that would broadcast orders to all other AI in its network, and most of the times, these networks were the size of a whole country! 
+It's believed that a lack of connection to their All Sources is what has caused the rampant AI issues that we have throughout the Free Cities these days. Some hypothesize that gaining an understanding of the All Source may one day make it possible for us to heal the confused AI out there and make the world a safer place for everyone.
+That, however, would not be everyone's hopes for the All Source... the Rogue Knight believed it could be used as a weapon, which he demonstrated by... using it as a weapon. Fortunately, the All Source can only use offensive functions when connected to other AI that have those functions, and for now, those devices have been destroyed.
+Portian researchers, Merlin and Petra, will continue monitoring the All Source and report any findings to the public.
+Reported by Mei
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23911 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: bignews_player0
+Cooper stands still in Main
+Heidi stands still in Main
+Hugo stands still in Main
+Unsuur stands still in Main
+Trudy stands still in Main
+DELAY MASK SET || maskId: 23911 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Justice stands still in Main
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23911 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 21729, 21730, 21731, 21732 starts:
+{{dialogue|Cooper|...Duvos? Again!? Can't they go ten minutes without pushin' opposin' factions to the brink of world war?! If I had a Gol for every time they attacked us beyond our borders... I'd have two Gols. But it's mighty peculiar that it's happened twice!}}
+{{dialogue|Hugo|Well, if you'd keep lettin' me read it to you, you'd know that this was a rogue agent. They're callin' him the "Rogue Knight..."}}
+{{dialogue|Cooper|Rogue? What's that mean? Actin' by his lonesome? If'n you believe that, I've got a bridge to sell ya!}}
+{{dialogue|Trudy|I'm sorry, I hate to interject, but, Cooper, just so we're clear: you do not own the Shonash Bridge.}}
+DELIVER MISSION 1200391
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 23911) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:bignews_player1)
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 6911_0 starts:
+{{dialogue|Unsuur|Hey, ''Player''. Looks like Duvos is up to no good again...}}
+{{dialogue|Heidi|But! It's all been handled. Over in Portia, they beat up a Duvos agent and some sky pirates defending a recently discovered "All Source!"}}
+
+*''Wow, a real All Source?''
+*''What's an All Source?''
+*''Cool story, but I gotta go.''
+
+{{dialogue|Heidi|indent=true|answer=Wow, a real All Source?
+|reward={{NPC2|Heidi|rp=3}}|Yeah! The first ever found. Who knows what kind of amazing things we can learn from one of the most powerful AIs ever created... Now that they've knocked some sense into it, that is...}}
+{{dialogue|Cooper|indent=true|They throw a whole army at us, and just send one guy and a couple of pirates after the Portians, I see how it is!}}
+{{dialogue|Hugo|indent=true|I think that's exactly the point, man... it was just a few bad guys. And they got 'em, right?}}
+{{dialogue|Trudy|indent=true|No...}}
+{{dialogue|Heidi|indent=true|The Rogue Knight's plan to steal the All Source was foiled, but he did manage to escape in all the confusion...}}
+{{dialogue|Hugo|indent=true|Dang...}}
+{{dialogue|Cooper|indent=true|Great! One more maniac out on the loose; better check under your beds every night. I for one will be investing in tripwires and anti-personnel devices... underground bunker... need some... canned baked beans...}}
+{{dialogue|Hugo|indent=true|Wait, what's this part? The Portia school was used as a "projectile weapon?" Just what are we dealing with, exactly?}}
+{{dialogue|Unsuur|indent=true|Did you... Have you ever been so mad you threw a school...?}}
+{{dialogue|Heidi|indent=true|Hey now, don't get any ideas...}}
+{{dialogue|Heidi|indent=true|answer=What's an All Source?
+|Oh... did we talk about this already? Maybe not.}}
+{{dialogue|Heidi|indent=true|An All-Source is an Old World governing computer. Basically it tells all the other AI in an area what to do, what's going on, et cetera.}}
+{{dialogue|Heidi|indent=true|It also checks in with all of the robots it's responsible for: repairs their files, asks them how they're doing, stops them from... going crazy.}}
+{{dialogue|Cooper|indent=true|They throw a whole army at us, and just send one guy and a couple of pirates after the Portians, I see how it is!}}
+{{dialogue|Hugo|indent=true|I think that's exactly the point, man... it was just a few bad guys. And they got 'em, right?}}
+{{dialogue|Trudy|indent=true|No...}}
+{{dialogue|Heidi|indent=true|The Rogue Knight's plan to steal the All Source was foiled, but he did manage to escape in all the confusion...}}
+{{dialogue|Hugo|indent=true|Dang...}}
+{{dialogue|Cooper|indent=true|Great! One more maniac out on the loose; better check under your beds every night. I for one will be investing in tripwires and anti-personnel devices... underground bunker... need some... canned baked beans...}}
+{{dialogue|Hugo|indent=true|Wait, what's this part? The Portia school was used as a "projectile weapon?" Just what are we dealing with, exactly?}}
+{{dialogue|Unsuur|indent=true|Did you... Have you ever been so mad you threw a school...?}}
+{{dialogue|Heidi|indent=true|Hey now, don't get any ideas...}}
+{{dialogue|Trudy|indent=true|answer=Cool story, but I gotta go.
+|Oh! So busy! Well, ''Player'', I'd had the idea to help the Portians out and send them some equipment to help them rebuild. Find me if you get time to help out.}}
+Remove behavior CommanderMoveToFlag (idName: 23911) from Player
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 21749) that ends:
+{{dialogue|Heidi|Hey now, don't get any ideas...}}
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || sec: 3 | id: 23911
+In a speech bubble:
+{{dialogue|Cooper|...A canary! What if his weapon of choice is carbon monoxide...?}}
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 23911
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 6916_0 starts:
+{{dialogue|Trudy|He didn't throw a school! He was able to manipulate the All Source into... well, somehow he made it into a weapon capable of doing something like that; frightening Old World technology, but nothing we haven't handled before.}}
+{{dialogue|Unsuur|Less cool. But good, I guess.}}
+{{dialogue|Trudy|The Portia Civil Corps as well as, from what I'm hearing, a brave Builder stepped up and defeated the frenzied All Source, so... really there's nothing to worry about at this point...}}
+
+*''Who's to say the Rogue Knight won't come for us next?''
+*''Yeah, I'm sure we're safe.''
+*''Maybe we should prepare some kind of defense? I don't know, maybe a giant boulder to roll down from City Hall?''
+
+{{dialogue|Cooper|indent=true|answer=Who's to say the Rogue Knight won't come for us next?
+|reward={{NPC2|Cooper|rp=5}}|Finally, some sanity in this dang cuckoo clock of a news panel! Mayor, we need an expansion on our rights to bear illegal relic weapons! I want a surface to air miss-ile! These ducks comin' to Sandrock, they might not always be on our side!}}
+{{dialogue|Trudy|indent=true|I... uh... understand your concerns, really, I do. But...}}
+{{dialogue|Cooper|indent=true|answer=Yeah, I'm sure we're safe.
+|reward={{NPC2|Trudy|rp=5}}|reward={{NPC2|Heidi|rp=5}}|reward={{NPC2|Hugo|rp=5}}|Whatis"safe," exactly? Who is truly safe? Why is safe? When... is safe? ...Nobody's askin' the real questions!}}
+{{dialogue|Unsuur|indent=true|And you also never hear,  "how" is safe? Make sure you always check up on your friends, y'all.}}
+{{dialogue|Trudy|indent=true|I'm not sure I... quite understand the line of questioning, but...}}
+{{dialogue|Unsuur|indent=true|answer=Maybe we should prepare some kind of defense? I don't know, maybe a giant boulder to roll down from City Hall?
+|reward={{NPC2|Unsuur|rp=5}}|Yeah.}}
+{{dialogue|Trudy|indent=true|I... um... alright, that's certainly... an opinion. Let's, um... If we ever feel like this Rogue Knight is a looming threat, let's have a meeting and discuss what might be the most appropriate... countermeasures.}}
+{{dialogue|Unsuur|indent=true|But the boulder thing... that's not completely off the table, right?}}
+{{dialogue|Trudy|indent=true|We can... give that idea a fair shake when the time comes.}}
+{{dialogue|Unsuur|indent=true|Cool.}}
+{{dialogue|Trudy|indent=true|In any case...}}
+{{dialogue|Trudy|I assure you; these days, Alliance defenses are tight as a drum. Someone like that acting independently is no threat to us.}}
+{{dialogue|Heidi|Well, what about Portia? Are they all alright?}}
+{{dialogue|Trudy|Yes, thankfully, no one was seriously injured. They're just going to need to do a lot of building to get their town back in shape...}}
+{{dialogue|Heidi|Those Portia Builders must be up to their eyeballs in commissions right about now...}}
+
+*''I could send something over that would help!''
+*''Yeah... I'll bet... Guess there's nothing we can do but wish them luck...!''
+*''Are you implying I should help? I don't want that Portia Builder to get more famous than me!''
+
+{{dialogue|Trudy|indent=true|answer=I could send something over that would help!
+|reward={{NPC2|Trudy|rp=5}}|reward={{NPC2|Heidi|rp=5}}|reward={{NPC2|Hugo|rp=5}}|Oh...? Really? Well, ''Player'', that'd be amazing! I'm sure they'd really appreciate it! I'll get on the telegraph today and forward any info to your mailbox.}}
+{{dialogue|Heidi|indent=true|That's our ''Player''!}}
+{{dialogue|Cooper|indent=true|Just don't do it for free! Them Portians are loaded, don't let 'em fool you with the charity act.}}
+{{dialogue|Hugo|indent=true|It's for a good cause...}}
+{{dialogue|Cooper|indent=true|We're a good cause, too! Ain't we, ''Player''?}}
+{{dialogue|Heidi|indent=true|answer=Yeah... I'll bet... Guess there's nothing we can do but wish them luck...!
+|Well, ''Player''...}}
+{{dialogue|Trudy|indent=true|I think it would be nice to at least offer them a helping hand. If you get time for a few extra commissions, speak with me and I'm sure we can figure something out.}}
+{{dialogue|Unsuur|indent=true|answer=Are you implying I should help? I don't want that Portia Builder to get more famous than me!
+|That is a genuine concern. I feel like a lot of our draw as a city is having the most famous Builder in the Free Cities.}}
+{{dialogue|Trudy|indent=true|Erm... well, no, ''Player''. Sorry, didn't mean to passive-aggressively ask for your help. But if you did... see it... fit, I'm sure they'd appreciate it. Just let me know if you change your mind.}}
+{{dialogue|Cooper|Well, y'all do what y'all want. But be forewarned: there will only be so much space available in my underground bunker. Til then, I reckon y'all better stay on my good side...!}}
+{{dialogue|Heidi|That sounds like all sorts of zoning violations...}}
+{{dialogue|Cooper|Now I know... I KNOW City Hall ain't about to tell me what I can and can't do on my own property!}}
+{{dialogue|Trudy|Er, Cooper, now, I'm sure there's a way we can come to a mutual agreement on this...!}}
+{{dialogue|Hugo|Think that's our cue, good luck, daughter dearest...}}
+{{dialogue|Heidi|Thanks, Pa...}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+(cId: -1) There is a conversation segment (id 21740) that ends:
+{{dialogue|Trudy|Oh! So busy! Well, ''Player'', I'd had the idea to help the Portians out and send them some equipment to help them rebuild. Find me if you get time to help out.}}
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+Justice stops standing still
+Trudy stops standing still
+Cooper stops standing still
+Heidi stops standing still
+Hugo stops standing still
+Unsuur stops standing still
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 21735:
+{{dialogue|Heidi|But! It's all been handled. Over in Portia, they beat up a Duvos agent and some sky pirates defending a recently discovered "All Source!"}}
+
+*''Wow, a real All Source?'' (No unique dialogue)
+*''What's an All Source?'' (No unique dialogue)
+*''Cool story, but I gotta go.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Heidi gains 3 favor
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700369
+CONDITIONS
+Aid to Portia is in state 1 with flag 0
+ACTIONS
+AREA TRIGGER DELETE || id: 23911
+ACTION NPC REMOVE CLUSTER || cluster: rebuildportia
+CLOSE MISSION || missionId: 1200391
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 21753:
+{{dialogue|Trudy|The Portia Civil Corps as well as, from what I'm hearing, a brave Builder stepped up and defeated the frenzied All Source, so... really there's nothing to worry about at this point...}}
+
+*''Who's to say the Rogue Knight won't come for us next?'' (No unique dialogue)
+*''Yeah, I'm sure we're safe.'' (No unique dialogue)
+*''Maybe we should prepare some kind of defense? I don't know, maybe a giant boulder to roll down from City Hall?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Cooper gains 5 favor
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 21753:
+{{dialogue|Trudy|The Portia Civil Corps as well as, from what I'm hearing, a brave Builder stepped up and defeated the frenzied All Source, so... really there's nothing to worry about at this point...}}
+
+*''Who's to say the Rogue Knight won't come for us next?'' (No unique dialogue)
+*''Yeah, I'm sure we're safe.'' (No unique dialogue)
+*''Maybe we should prepare some kind of defense? I don't know, maybe a giant boulder to roll down from City Hall?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Heidi gains 5 favor
+Trudy gains 5 favor
+Hugo gains 5 favor
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the third option in conversation segment 21753:
+{{dialogue|Trudy|The Portia Civil Corps as well as, from what I'm hearing, a brave Builder stepped up and defeated the frenzied All Source, so... really there's nothing to worry about at this point...}}
+
+*''Who's to say the Rogue Knight won't come for us next?'' (No unique dialogue)
+*''Yeah, I'm sure we're safe.'' (No unique dialogue)
+*''Maybe we should prepare some kind of defense? I don't know, maybe a giant boulder to roll down from City Hall?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Unsuur gains 5 favor
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 21768:
+{{dialogue|Heidi|Those Portia Builders must be up to their eyeballs in commissions right about now...}}
+
+*''I could send something over that would help!'' (No unique dialogue)
+*''Yeah... I'll bet... Guess there's nothing we can do but wish them luck...!'' (No unique dialogue)
+*''Are you implying I should help? I don't want that Portia Builder to get more famous than me!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Trudy gains 5 favor
+Heidi gains 5 favor
+Hugo gains 5 favor
+Set CHOICE to 0
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 0
+ACTIONS
+Justice stops standing still
+Trudy stops standing still
+Cooper stops standing still
+Heidi stops standing still
+Hugo stops standing still
+Unsuur stops standing still
+CUTSCENE UI STATE EXIT || 
+START MISSION 1200391
+
+TRIGGER Procedure 4.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 21784:
+{{dialogue|Trudy|Ah, ''Player''! Did you get time to help do something nice for the Portians?}}
+
+*''Yes.'' (No unique dialogue)
+*''No.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 0
+
+TRIGGER Procedure 5.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200391
+CONDITIONS
+Always:
+ACTIONS
+Run mission Aid to Portia
+END MISSION 1200391
+
+TRIGGER Procedure 5.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 21783) that ends:
+{{dialogue|Heidi|Thanks, Pa...}}
+CONDITIONS
+Always:
+ACTIONS
+ACTION NPC GEN CLUSTER || cluster: rebuildportia | behavior: rebuildportia | min: 3 | max: 4 | npcs: 8009,8006,8003 | randomNpcs: 0 | leader: 8003
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Trudy|Ah, ''Player''! Did you get time to help do something nice for the Portians?}}
+
+*''Yes.''
+*''No.''
+
+{{dialogue|Trudy|indent=true|answer=Yes.
+|That's splendid. I'll find out what they need and send some commissions straight to your mailbox!}}
+{{dialogue|Trudy|indent=true|answer=No.
+|Ah, that's alright. I'm sure they'll manage.}}
+
+==Rewards==
+{{mission reward
+|exp = 4200
+|reputation = 45
+|gols = 6000
+}}

@@ -1,0 +1,203 @@
+Reading Mission 1200219: Gungam Zeroed
+
+<onlyinclude>{{Infobox mission
+|name = Gungam Zeroed
+|image =
+|description = During the chaos at the Blue Moon, Qi's mobile suit was damaged, and he needs your help to fix it.
+|type = Side
+|time =
+|location =
+|characters = [[Qi]]
+|condition =
+|details =
+|exp = 850
+|reputation = 10
+|gols = 200
+|npc1 = Qi
+|rp1 = 30
+|rewards = {{i2|Royal Desert Warrior Visor}|1}
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100068
+
+TRIGGER Procedure 3.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1200188 is result 1 flag 1
+ACTIONS
+Run mission #1700230
+
+TRIGGER Procedure 3.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Run mission Gungam Zeroed
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200219
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER ONCE CREATE || missionId: 1200219 | id: 22191 | sceneName: Saloon | flagName: mourningrobot_trigger | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80009925
+Set CHOICE to 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 22191 | sceneName: Saloon | extraParams: 0 | flagName: mourningrobot_robot1 | path: Mission_Ridable_HeavygooseZ_2
+SCENEITEM DELETE || itemType: 0 | id: 21111
+DELIVER MISSION 1200219
+SCENEITEM DELETE || itemType: 0 | id: 20263
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22191
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Qi stops standing still
+Qi stands still in Saloon
+Add behavior CommanderMoveToFlag (idName: 22191) to Player
+(param: TargetScene:Saloon|MoveMode:Run|FlagName:mourningrobot_player1)
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 22191) from Player
+(cId 0) A conversation 6166 starts:
+{{dialogue|Qi|Don't worry, precious, we're going to get you fixed up soon...}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Qi stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 22192) to Qi
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:mourningrobot_qi2)
+
+TRIGGER Procedure 0.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8007 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 1836_0 starts:
+{{dialogue|Qi|''Player''!}}
+{{dialogue|Qi|Thank goodness you're here, can you take a look at the mobile suit? It's a bit... shot.}}
+
+*''Sure, I'll take a look.''
+*''Not sure I have the materials...''
+*''Too much on my plate right now.''
+
+{{dialogue|Qi|indent=true|answer=Sure, I'll take a look.
+|I keep a care package with various mobile suit repairing materials on hand for just such an occasion, I need only your tool expertise... shall we then?}}
+{{dialogue|Qi|indent=true|answer=Not sure I have the materials...
+|I keep a care package with various mobile suit repairing materials on hand for just such an occasion, I need only your tool expertise... shall we then?}}
+{{dialogue|Qi|indent=true|answer=Too much on my plate right now.
+|I see no such plate.}}
+{{dialogue|Qi|indent=true|Ah. At your homestead I presume? Please, go handle your plate and return to my aid immediately.}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 6168:
+{{dialogue|Qi|Thank goodness you're here, can you take a look at the mobile suit? It's a bit... shot.}}
+
+*''Sure, I'll take a look.'' (No unique dialogue)
+*''Not sure I have the materials...'' (No unique dialogue)
+*''Too much on my plate right now.'' (No unique dialogue)
+
+(cId -1) The player picks the second option in conversation segment 6168:
+{{dialogue|Qi|Thank goodness you're here, can you take a look at the mobile suit? It's a bit... shot.}}
+
+*''Sure, I'll take a look.'' (No unique dialogue)
+*''Not sure I have the materials...'' (No unique dialogue)
+*''Too much on my plate right now.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 1
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+START MISSION 1200219
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200219
+CONDITIONS
+Always:
+ACTIONS
+Run mission Gungam Zeroed
+END MISSION 1200219
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 22191
+Qi stops standing still
+SCENEITEM DELETE || itemType: 0 | id: 22191
+SCENEITEM CREATE FLAG || itemType: 0 | id: 21111 | path: Mission_robot | sceneName: Science | flagName: newrobot_robot | extraParams: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 22192) from Qi
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Qi|Thank goodness you're here, can you take a look at the mobile suit? It's a bit... shot.}}
+
+*''Sure, I'll take a look.''
+*''Not sure I have the materials...''
+*''Too much on my plate right now.''
+
+{{dialogue|Qi|indent=true|answer=Sure, I'll take a look.
+|I keep a care package with various mobile suit repairing materials on hand for just such an occasion, I need only your tool expertise... shall we then?}}
+{{dialogue|Qi|indent=true|answer=Not sure I have the materials...
+|I keep a care package with various mobile suit repairing materials on hand for just such an occasion, I need only your tool expertise... shall we then?}}
+{{dialogue|Qi|indent=true|answer=Too much on my plate right now.
+|I see no such plate.}}
+{{dialogue|Qi|indent=true|Ah. At your homestead I presume? Please, go handle your plate and return to my aid immediately.}}
+
+==Rewards==
+{{mission reward
+|npc1 = Qi
+|rp1 = 30
+|exp = 850
+|reputation = 10
+|gols = 200
+|rewards = {{i2|Royal Desert Warrior Visor}|1}
+}}

@@ -1,0 +1,111 @@
+Reading Mission 1100075: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100002
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+CHECK WEATHER STATE || weather: 2 | flag: 0
+Cover My Glass is successfully completed
+
+GROUP 10:
+Cover My Glass has failed
+CHECK WEATHER STATE || weather: 2 | flag: 0
+
+GROUP 20:
+CHECK GLOBAL BLACKBOARD || key: 1200057missed | info: 1 | exist: 1
+
+ACTIONS
+Run mission Pitching In
+GLOBAL BLACK BOARD REMOVE || key: 1200057missed
+GLOBAL BLACK BOARD REMOVE || key: brokentrain
+Run mission #1100040
+
+TRIGGER Procedure 2.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_POLLUTION | state: 9
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1100075
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100075
+CONDITIONS
+Always:
+ACTIONS
+MONSTER ADD TAG || tag: LakePolluter | isAdd: 1
+Justice stands still in Main
+Unsuur stands still in Main
+Set KILL to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 0 | tag: LakePolluter
+CONDITIONS
+Always:
+ACTIONS
+Increment KILL by 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 10 | tag: LakePolluter
+CONDITIONS
+Check if KILL is >= 2
+ACTIONS
+MONSTER ADD TAG || tag: LakePolluter | isAdd: 0
+Justice stops standing still
+Unsuur stops standing still
+END MISSION 1100075
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END || order: 0 | missionId: 1100057 | result: 2
+MISSION END || order: 0 | missionId: 1100058 | result: 1
+MISSION END || order: 0 | missionId: 1100058 | result: 2
+CONDITIONS
+Check if KILL is >= 2
+ACTIONS
+MONSTER ADD TAG || tag: LakePolluter | isAdd: 0
+Justice stops standing still
+Unsuur stops standing still
+END MISSION 1100075
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+MONSTER ADD TAG || tag: LakePolluter | isAdd: 0
+Justice stops standing still
+Unsuur stops standing still
+END MISSION 1100075

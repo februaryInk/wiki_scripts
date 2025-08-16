@@ -1,0 +1,476 @@
+Reading Mission 1900397: The Stars Align
+
+<onlyinclude>{{Infobox mission
+|name = The Stars Align
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from The Stars Align:
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 0) There is a conversation segment (id 18778) that ends:
+{{dialogue|Catori|Alright! See you then!}}
+(cId: -1) There is a conversation segment (id 18778) that ends:
+{{dialogue|Catori|Alright! See you then!}}
+(cId: 0) There is a conversation segment (id 18779) that ends:
+{{dialogue|Catori|Haha, sure. It's a date! See you then!}}
+(cId: -1) There is a conversation segment (id 18779) that ends:
+{{dialogue|Catori|Haha, sure. It's a date! See you then!}}
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1900396
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1900396
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON REMOVE || missionId: 1900396 | npc: 8024 | missionIcon: 0
+Set Aq to 1
+Set SP to 1
+Run mission The Stars Align
+END MISSION 1900396
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1900397
+CONDITIONS
+Always:
+ACTIONS
+===Meet Catori at 18:00PM===
+
+{{mission_details
+|desc = You've arranged a walk with Catori, meet her behind the Temple at 18:00PM.
+|details = Meet Catori at 18:00PM
+}}
+AREA TRIGGER CREATE || missionId: 1900397 | id: 9397 | sceneName: Main | flagName: T9397 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80028915
+Set Love to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 9397
+CONDITIONS
+CHECK TIME || compare: 2 | hour: 18 | minute: 0
+ACTIONS
+DELAY MASK SET || maskId: 9397 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 9397
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 9397 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Catori stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: P9397
+DELAY MASK SET || maskId: 9397 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Add behavior CommanderMoveToFlagAndAction (idName: 2939700) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:P9397_1|LookAtActor:8024)
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 939701
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 13407 starts:
+{{dialogue|Catori|You came! I was worried you were gonna get caught up with work.}}
+Remove behavior CommanderMoveToFlagAndAction (idName: 2939700) from Player
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 2939701) to Catori
+(param: TargetScene:Main|MoveMode:Walk|FlagName:CaT9397_2|LookAtActor:0)
+Add behavior CommanderMoveToFlagAndAction (idName: 2939702) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:P9397_2|LookAtActor:8024)
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 939720
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 13408, 13410, 13411 starts:
+{{dialogue|Catori|Phew, another day almost over. Y'know, it's the first time I've come here with anyone... You can see so far from here. Really puts things into perspective.}}
+{{dialogue|Catori|Did you get Alo's letter?}}
+{{dialogue|Catori|I was surprised he wrote to you! Ma says he's been talkin' about you all the time. I've never seen him do that before, he never even writes to his Pa...}}
+Remove behavior CommanderMoveToFlagAndAction (idName: 2939702) from Player
+
+TRIGGER Procedure 0.0 Step 8.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 9939711 | sec: 3
+
+TRIGGER Procedure 0.0 Step 9.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 9939711
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 13412, 13413 starts:
+{{dialogue|Catori|Y'know he's taken it real tough since he left. My ex... well, he took off before the ink dried on the divorce papers.}}
+{{dialogue|Catori|Sometimes I wonder if he was ever really there at all.}}
+
+TRIGGER Procedure 0.0 Step 10.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 993970 | sec: 3
+
+TRIGGER Procedure 1.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1900397
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 9397
+
+TRIGGER Procedure 1.0 Step 4.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) The player picks the second option in conversation segment 13415:
+{{dialogue|Catori|Ma sent me pictures from my boy's party. Take a look at this one. You can see by his smile how much he loves the train model.}}
+
+*''I'm glad it made him happy.'' (No unique dialogue)
+*{{flirt}}''He has your beautiful eyes.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Increment Love by 1
+
+TRIGGER Procedure 1.0 Step 4.5 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) The player picks the second option in conversation segment 13425:
+{{dialogue|Catori|I didn't think my own happiness was important right now. But you showed me I was wrong.}}
+
+*''Everyone deserves to be happy.'' (No unique dialogue)
+*{{flirt}}''Your happiness is my top priority.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Increment Love by 1
+
+TRIGGER Procedure 1.0 Step 5.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 993970
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 4939700) to Catori
+(param: TargetScene:Main|MoveMode:Walk|FlagName:CaT9397_3|LookAtActor:8000)
+(cId 4) A conversation 5819_0 starts:
+{{dialogue|Catori|Anyway. Enough about that.}}
+{{dialogue|Catori|Ma sent me pictures from my boy's party. Take a look at this one. You can see by his smile how much he loves the train model.}}
+
+*''I'm glad it made him happy.''
+*{{flirt}}''He has your beautiful eyes.''
+
+{{dialogue|Catori|indent=true|answer=I'm glad it made him happy.
+|It made me happy, too. I haven't always been able to give him the things he wants. It was nice to be able to spoil him a little for once.}}
+{{dialogue|Catori|indent=true|answer=He has your beautiful eyes.
+|You always know exactly what to say to make me smile.}}
+{{dialogue|Catori|You know, the more I get to know you, the more I think you have such a big heart, and you work harder than anybody in this town to make it grow.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 6.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 993971 | sec: 2
+
+TRIGGER Procedure 2.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 4) There is a conversation segment (id 13415) that ends:
+{{dialogue|Catori|Ma sent me pictures from my boy's party. Take a look at this one. You can see by his smile how much he loves the train model.}}
+
+*''I'm glad it made him happy.'' (No unique dialogue)
+*{{flirt}}''He has your beautiful eyes.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+PHOTO UNLOCK PRESTORE || id: 46
+
+TRIGGER Procedure 1.0 Step 7.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 993971
+CONDITIONS
+GROUP 0:
+Goodbye, Nia is in state 3 with flag 0
+
+GROUP 1:
+Goodbye, Nia has failed
+
+ACTIONS
+(cId 5) A conversation 5823_0 starts:
+{{dialogue|Catori|Look at me, prattling on. Tell me more about yourself! What were you like as a child? Or how about plans for the future?}}
+
+*''(Talk about you and Nia)''
+*''I want to know more about you.''
+
+{{dialogue|Catori|indent=true|answer=(Talk about you and Nia)
+|What a beautiful name! She must be a great person, being your friend!}}
+{{dialogue|Catori|indent=true|answer=I want to know more about you.
+|Haha, you know a lot about me already, eh? Divorced, broke, workaholic...}}
+{{dialogue|Catori|Y'know, I always thought my future would be business and motherhood. Friendship, love... all that was left behind me. I never imagined wanting anything other than bringing my son here.}}
+{{dialogue|Catori|I didn't think my own happiness was important right now. But you showed me I was wrong.}}
+
+*''Everyone deserves to be happy.''
+*{{flirt}}''Your happiness is my top priority.''
+
+{{dialogue|Catori|indent=true|answer=Everyone deserves to be happy.
+|I never understood that until you came along. But I believe you're right. Happiness shouldn't be dependent on how hard someone works. It just... is.}}
+{{dialogue|Catori|indent=true|answer=Your happiness is my top priority.
+|No one's ever put me first like that before. I never expected to have a person like you in my life.}}
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Check if Love is < 2
+ACTIONS
+(cId 10) A conversation 5833_0 starts:
+{{dialogue|Catori|Well. Just thought I'd tell you that I appreciate you being such a great friend to me. It's nice to... be able to trust someone. And, y'know, if you ever need help with anything. Know I've got your back, too!}}
+{{dialogue|Catori|Time to get back to it, eh? See you around!}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Check if Love is >= 2
+ACTIONS
+(cId 11) A conversation 5834_0 starts:
+{{dialogue|Catori|What I'm trying to say is, your friendship means the world to me. But maybe there's more between us than friendship. I would certainly be... open to something more if you are.}}
+
+*''I'm not sure I'm ready for that.''
+*{{flirt}}''I want to be more than friends, too.''
+*''Let's stick with being friends.''
+
+{{dialogue|Catori|indent=true|answer=I'm not sure I'm ready for that.
+|Oh, of course! You take your time. I don't want to put any pressure on you. If you decide you want to give us a chance, you know where to find me.}}
+{{dialogue|Catori|indent=true|reward={{NPC2|Catori|rp=3}}|For now, I'm just happy to have you in my life as my friend.}}
+{{dialogue|Catori|indent=true|answer=Let's stick with being friends.
+|Sure, sure. If it's what you want, then we'll stick with that. Probably better not to risk the friendship, right?}}
+{{dialogue|Catori|indent=true|reward={{NPC2|Catori|rp=3}}|I'm just happy you're in my life. Best friends forever.}}
+{{dialogue|Catori|Yeah? I'm so glad you feel that way too...}}
+
+*''Why now?''
+*''Yeah. I like you a lot.''
+
+{{dialogue|Catori|indent=true|answer=Why now?
+|Well... just being with you makes me happy. I tried to fight it, but I realized, why should I? Why shouldn't I be happy? I just needed to be brave and take that step, and not let the chance slip away...}}
+{{dialogue|Catori|Alright well... I guess that makes today our first day together. As a real couple.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 8.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 993971
+CONDITIONS
+GROUP 0:
+Goodbye, Nia is successfully completed
+Check if mission The Luo Down is result 1 flag 0
+
+GROUP 1:
+Goodbye, Nia has failed
+Check if mission The Luo Down is result 1 flag 0
+
+ACTIONS
+(cId 5) A conversation 5824_0 starts:
+{{dialogue|Catori|Look at me, prattling on. Tell me more about yourself! What were you like as a child? Or how about plans for the future?}}
+
+*''(Talk about you and Nia)''
+*''I want to know more about you.''
+
+{{dialogue|Catori|indent=true|answer=(Talk about you and Nia)
+|Ah! I remember her! I think I saw her running around Sandrock, heard she was a friend of yours!}}
+{{dialogue|Catori|indent=true|answer=I want to know more about you.
+|Haha, you know a lot about me already, eh? Divorced, broke, workaholic...}}
+{{dialogue|Catori|Y'know, I always thought my future would be business and motherhood. Friendship, love... all that was left behind me. I never imagined wanting anything other than bringing my son here.}}
+{{dialogue|Catori|I didn't think my own happiness was important right now. But you showed me I was wrong.}}
+
+*''Everyone deserves to be happy.''
+*{{flirt}}''Your happiness is my top priority.''
+
+{{dialogue|Catori|indent=true|answer=Everyone deserves to be happy.
+|I never understood that until you came along. But I believe you're right. Happiness shouldn't be dependent on how hard someone works. It just... is.}}
+{{dialogue|Catori|indent=true|answer=Your happiness is my top priority.
+|No one's ever put me first like that before. I never expected to have a person like you in my life.}}
+
+TRIGGER Procedure 1.0 Step 9.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 993971
+CONDITIONS
+Check if mission The Luo Down is result 1 flag 1
+ACTIONS
+(cId 5) A conversation 5825_0 starts:
+{{dialogue|Catori|Look at me, prattling on. Tell me more about yourself! What were you like as a child? Or how about plans for the future?}}
+
+*''(Talk about you and Nia)''
+*''I want to know more about you.''
+
+{{dialogue|Catori|indent=true|answer=(Talk about you and Nia)
+|Came to Sandrock following in your footsteps, eh? Seems like you two are real close.}}
+{{dialogue|Catori|indent=true|answer=I want to know more about you.
+|Haha, you know a lot about me already, eh? Divorced, broke, workaholic...}}
+{{dialogue|Catori|Y'know, I always thought my future would be business and motherhood. Friendship, love... all that was left behind me. I never imagined wanting anything other than bringing my son here.}}
+{{dialogue|Catori|I didn't think my own happiness was important right now. But you showed me I was wrong.}}
+
+*''Everyone deserves to be happy.''
+*{{flirt}}''Your happiness is my top priority.''
+
+{{dialogue|Catori|indent=true|answer=Everyone deserves to be happy.
+|I never understood that until you came along. But I believe you're right. Happiness shouldn't be dependent on how hard someone works. It just... is.}}
+{{dialogue|Catori|indent=true|answer=Your happiness is my top priority.
+|No one's ever put me first like that before. I never expected to have a person like you in my life.}}
+
+TRIGGER Procedure 3.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 11) There is a conversation segment (id 13439) that ends:
+{{dialogue|Catori|Alright well... I guess that makes today our first day together. As a real couple.}}
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = CG_HappyKiss}}
+A cutscene CG_HappyKiss (duration: 0.0) starts playing
+
+TRIGGER Procedure 3.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 11) There is a conversation segment (id 13432) that ends:
+{{dialogue|Catori|For now, I'm just happy to have you in my life as my friend.}}
+CONDITIONS
+Always:
+ACTIONS
+Catori gains 3 favor
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 2939701) from Catori
+Remove behavior CommanderMoveToFlagAndAction (idName: 4939700) from Catori
+Catori stops standing still
+SUBMIT MISSION 1900396
+END MISSION 1900396
+END MISSION 1900397
+
+TRIGGER Procedure 3.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 11) There is a conversation segment (id 13434) that ends:
+{{dialogue|Catori|I'm just happy you're in my life. Best friends forever.}}
+CONDITIONS
+Always:
+ACTIONS
+Catori gains 3 favor
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 2939701) from Catori
+Remove behavior CommanderMoveToFlagAndAction (idName: 4939700) from Catori
+Catori stops standing still
+SUBMIT MISSION 1900396
+END MISSION 1900396
+END MISSION 1900397
+
+TRIGGER Procedure 3.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_HappyKiss | state: 7
+CONDITIONS
+Always:
+ACTIONS
+(cId 20) A conversation 5840_0 starts:
+{{dialogue|Catori|You're really something, you know? But... it's getting late. Maybe we ought to say goodnight.}}
+
+*''Sweet dreams.''
+*''Good night.''
+
+{{dialogue|Catori|You too.}}
+The conversation ends.
+
+TRIGGER Procedure 4.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 20) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+NPC DO CONFESSION || npc: 8024
+The special gift rule 47 for giving Heart Knot to Catori is disabled. The rule was:
+The gift is accepted with:
+{{dialogue|-2|Uh... how do I say this politely... we don't really know each other that well. I'm sorry.}}
+
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 2939701) from Catori
+Remove behavior CommanderMoveToFlagAndAction (idName: 4939700) from Catori
+Catori stops standing still
+SUBMIT MISSION 1900396
+END MISSION 1900396
+END MISSION 1900397
+
+TRIGGER Procedure 4.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 2939701) from Catori
+Remove behavior CommanderMoveToFlagAndAction (idName: 4939700) from Catori
+Catori stops standing still
+The special gift rule 47 for giving Heart Knot to Catori is disabled. The rule was:
+The gift is accepted with:
+{{dialogue|-2|Uh... how do I say this politely... we don't really know each other that well. I'm sorry.}}
+
+SUBMIT MISSION 1900396
+END MISSION 1900396
+END MISSION 1900397

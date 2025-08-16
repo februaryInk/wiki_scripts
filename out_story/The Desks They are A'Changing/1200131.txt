@@ -1,0 +1,174 @@
+Reading Mission 1200131: The Desks They are A'Changing
+
+<onlyinclude>{{Infobox mission
+|name = The Desks They are A'Changing
+|image =
+|description = Trudy, the Mayor of Sandrock, has returned to town. She needs your help with a small matter.
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 2600
+|reputation = 35
+|gols = 1500
+|npc1 = Trudy
+|rp1 = 20
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200135
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200135
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Desks They are A'Changing
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200131
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+CHECK WEATHER STATE || weather: 2 | flag: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+Trudy stands still in Main
+SCENEITEM DELETE || id: 21311 | itemType: 0
+SCENEITEM DELETE || itemType: 0 | id: 21312
+SCENEITEM CREATE FLAG || itemType: 0 | id: 21313 | path: Mission_guildhallchair0 | sceneName: Temple | extraParams: 0 | flagName: trudycome_chair1
+SCENEITEM CREATE FLAG || path: Mission_guildhalldesk0 | flagName: trudycome_desk1 | itemType: 0 | id: 21314 | sceneName: Temple | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+DELIVER MISSION 1200131
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 877_0 starts:
+{{dialogue|Trudy|Hello, there, ''Player''! I've heard all about you, so glad to finally meet you face to face! I'm Trudy, the Mayor of Sandrock!}}
+
+*''Nice to meet you, too!''
+*''The Mayor? Where have you been all this time?''
+
+{{dialogue|Trudy|indent=true|answer=The Mayor? Where have you been all this time?
+|I'm sorry, I've been off on official mayoral business. Someone needs to try to control the growth of the Eufaula Desert to preserve our town, and that someone may as well be me!}}
+{{dialogue|Trudy|indent=true|Not everyone seems to have faith in the methods I'm using though...}}
+{{dialogue|Trudy|Anyway, I just wanted to come by and introduce myself, since I just got back in town. We don't get a lot of new folks, so I'm mighty glad you're here!}}
+{{dialogue|Trudy|I'd also like to extend an invitation to the next Fireside on Sunday, we've got a lot to talk about. No doubt you've heard about what Logan's done... (sigh)}}
+{{dialogue|Trudy|You seem to be adjusting quite well to Sandrock, and we're happy to have you! See you around!}}
+
+*''Any commissions? Town business?''
+*''Okay, see ya.'' (No unique dialogue)
+
+{{dialogue|Trudy|Oh, erm, commissions? I hadn't checked on any of that yet... I'll have Matilda and the Church fill me in right away and get back to you!}}
+{{dialogue|Trudy|Er, actually, there is one small thing I guess I could use help with. Although, I'm sure you're very busy...}}
+
+*''What is it?''
+*''Yeah, I am pretty busy.''
+
+{{dialogue|Trudy|indent=true|answer=What is it?
+|You don't need to trouble yourself too much with this, but... I do need a new desk at City Hall. It seems Matilda took a liking to my old one and made off with it, ahah!}}
+{{dialogue|Trudy|indent=true|I'm sure she'd give it back if I asked, but... perhaps it would just be easier if we both had nice desks, don't you think? So if you do get time, it would be quite nice of you to help me with this minor thing. Thank you!}}
+{{dialogue|Trudy|indent=true|answer=Yeah, I am pretty busy.
+|Right, right. I shouldn't have even mentioned it, eheh. Well, so long!}}
+NPC ADD TAG || tag: TrudyBack
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the first option in conversation segment 3242:
+{{dialogue|Trudy|Er, actually, there is one small thing I guess I could use help with. Although, I'm sure you're very busy...}}
+
+*''What is it?'' (No unique dialogue)
+*''Yeah, I am pretty busy.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 1
+
+TRIGGER Procedure 1.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Trudy stops standing still
+
+TRIGGER Procedure 1.0 Step 1.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || path: Mission_templechair0 | itemType: 0 | id: 21315 | sceneName: Guildhall | flagName: trudycome_chair0 | extraParams: 0
+SCENEITEM CREATE FLAG || path: Mission_templedesk0 | itemType: 0 | id: 21316 | sceneName: Guildhall | flagName: trudycome_desk0 | extraParams: 0
+Run mission The Desks They are A'Changing
+CLOSE MISSION || missionId: 1200131
+END MISSION 1200131
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Trudy stops standing still
+START MISSION 1200131
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200131
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Desks They are A'Changing
+END MISSION 1200131
+
+NPC in-mission talks:
+
+{{dialogue|Trudy|How's the work on my desk? No worries, get it to me at your leisure, I'll... just work in a corner or somethin'.}}
+
+==Rewards==
+{{mission reward
+|npc1 = Trudy
+|rp1 = 20
+|exp = 2600
+|reputation = 35
+|gols = 1500
+}}

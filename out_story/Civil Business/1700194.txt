@@ -1,0 +1,435 @@
+Reading Mission 1700194: Civil Business
+
+<onlyinclude>{{Infobox mission
+|name = Civil Business
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Civil Business:
+
+TRIGGER Procedure 0.0 Step 4.5 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Justice stops standing still
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700193
+CONDITIONS
+Always:
+ACTIONS
+Run mission Civil Business
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700194
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Iron Ladder of Default quality (Notify player)
+===Make Iron Ladder===
+
+{{mission_details
+|desc = To help any would-be adventurers, Justice needs your help making an Iron Ladder.
+|details = Make Iron Ladder
+*{{i2|Iron Ladder|0/3}}
+}}
+Set accept to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 171932 | delayTime: 0 | durationTime: 1 | changeType: 0 | curveIndex: -2
+Remove behavior CommanderMoveToFlagAndAction (idName: 171941) from Player
+
+TRIGGER Procedure 0.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 1719401
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 5071, 5072 starts:
+{{dialogue|Justice|Here's the first one.}}
+{{dialogue|Justice|Can you fix it?}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 4867) that ends:
+{{dialogue|Justice|Alright, let's go, stick close.}}
+CONDITIONS
+Always:
+ACTIONS
+===Repair Doors===
+
+{{mission_details
+|desc = The doors in the Shipwreck Ruins need to be repaired. Go into the ruins with Justice and find them.
+|details = Repair Doors
+}}
+CUTSCENE UI STATE EXIT || 
+SCENEITEM CREATE FLAG || itemType: 0 | id: 171941 | path: Mission_FixDoorInMainMark | sceneName: Main | flagName: CB_Door | extraParams: -1
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8008 | state: Attack
+AREA TRIGGER ONCE CREATE || missionId: 1700194 | id: 1719401 | sceneName: Main | flagName: CB_Player2 | showOnMap: 0 | mapIcon: 0 | transId: 0
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 171941 | missionId: 1700193 | iconType: 5
+
+TRIGGER Procedure 1.0 Step 3.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM INTERACT SET || itemType: 9 | id: 18 | canInteract: 0
+Justice stops standing still
+SUBMIT MISSION 1700193
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 4865) that ends:
+{{dialogue|Justice|Great let's- oh... okay. Well, once you're ready, let's go. I'll wait for you here.}}
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Justice===
+
+{{mission_details
+|desc = Entering the Shipwreck Ruins will definitely be dangerous. Make sure you're stocked up on weapons and medicine. Speak to Justice when you're ready.
+|details = Talk to Justice
+}}
+Set accept to 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 1719402
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Justice|Here's the other one.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 171932 | delayTime: 0 | durationTime: 1 | changeType: 0 | curveIndex: -2
+Remove behavior CommanderMoveToFlagAndAction (idName: 171941) from Player
+
+TRIGGER Procedure 0.0 Step 0.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key EEafterWD with info 1.
+AREA TRIGGER CREATE || missionId: 1700193 | id: 17001940 | flagName: trigger_civilcorp | showOnMap: 1 | mapIcon: MissionArea | transId: -1 | sceneName: Main
+
+TRIGGER Procedure 0.0 Step 0.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|343}}
+END MISSION 1700193
+END MISSION 1700194
+
+TRIGGER Procedure 0.0 Step 0.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Justice stops standing still
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1700193 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Install Iron Ladder===
+
+{{mission_details
+|desc = The Iron Ladder has been built. Install it at the Shipwreck Ruins entrance.
+|details = Install Iron Ladder
+*{{i2|Iron Ladder|0/3}}
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 171931 | sceneName: Main | path: Mission_FixLadderAtOctopusDungeon_Flag | extraParams: Mission_FixLadderAtOctopusDungeon|CreatorItem|19810022_3|1547|Fix|1.4 | flagName: CB_Ladder
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 171931 | missionId: 1700193 | iconType: 5
+
+TRIGGER Procedure 0.0 Step 1.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+CHECK SCENEITEM EXIST || sceneItemType: 11 | id: 171931 | exist: 0
+CHECK SCENEITEM EXIST || sceneItemType: 12 | id: 171931 | exist: 0
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 11 | id: 171931 | sceneName: Main | path: Mission_FixLadderAtOctopusDungeon_Flag | extraParams: Mission_FixLadderAtOctopusDungeon|CreatorItem|19810022_3|1547|Fix|1.4 | flagName: CB_Ladder
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 171931 | missionId: 1700193 | iconType: 5
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 171931
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 171931 | delayTime: 0 | durationTime: 1.5 | changeType: 0 | curveIndex: -2
+SCENEITEM CREATE FLAG || itemType: 0 | id: 171943 | path: Mission_FixLadder_Tp1 | sceneName: Main | flagName: CB_Ladder | extraParams: -1
+SCENEITEM CREATE FLAG || itemType: 0 | id: 171944 | path: Mission_FixLadder_Tp2 | sceneName: Main | flagName: CB_Ladder | extraParams: -1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 171931 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Justice stands still in Main
+DELAY MASK SET || maskId: 171931 | delayTime: 0 | durationTime: 1.5 | changeType: 1 | curveIndex: -2
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: CB_Player1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from TrialDungeon_Wreck to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Justice stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: CB_Player1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from TrialDungeon_Wreck to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 1448_0 starts:
+{{dialogue|Justice|Great work in there ''Player''! All that's left is some paperwork for me, which is never fun. I'll let you know when this ruin opens up.}}
+{{dialogue|Justice|Speakin' of paperwork, I just finished some important paperwork relating to... you. Why don't you come by the Civil Corps Office any time from tomorrow on? I've got somethin' for you.}}
+{{dialogue|Justice|See you there pardner!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 171931 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 1445_0 starts:
+{{dialogue|Justice|Well, dang! You got this Ladder done before the Yakmels came home! Thanks ''Player''!}}
+{{dialogue|Justice|You ready to go in and fix the doors as well? I hope you brought some weapons, since it's still plenty dangerous inside.}}
+
+*''Yeah let's go!''
+*''Wait, I'm not ready yet.''
+
+{{dialogue|Justice|indent=true|answer=Yeah let's go!
+|Alright, let's go, stick close.}}
+{{dialogue|Justice|indent=true|answer=Wait, I'm not ready yet.
+|Great let's- oh... okay. Well, once you're ready, let's go. I'll wait for you here.}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 171941
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderMoveToFlagAndAction (idName: 171941) to Player
+(param: Action:Fix|TargetScene:Main|FlagName:CB_Player2)
+
+TRIGGER Procedure 1.0 Step 1.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 171945
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderMoveToFlagAndAction (idName: 171941) to Player
+(param: Action:Fix|TargetScene:TrialDungeon_Wreck|FlagName:WD_FixPoint)
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 171932 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 171942 | path: Mission_FixDoorInMain | sceneName: Main | flagName: CB_Door2 | extraParams: -1
+SCENEITEM DELETE || itemType: 0 | id: 171941
+DELAY MASK SET || maskId: 171942 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: -2
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 171932 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 5073 starts:
+{{dialogue|Justice|Nice one, one more inside.}}
+SCENEITEM INTERACT SET || canInteract: 1 | itemType: 9 | id: 18
+Set Layer to 0
+===Enter the Shipwreck Ruins===
+
+{{mission_details
+|desc = The exit of the Shipwreck Ruins needs to be repaired. find the Exit Door and repair it.
+|details = Enter the Shipwreck Ruins
+}}
+ACTION MAP SHOW BUILDING TEXT || id: 43
+
+TRIGGER Procedure 1.0 Step 3.0 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the TrialDungeon_Wreck:
+CONDITIONS
+Always:
+ACTIONS
+Increment Layer by 1
+
+TRIGGER Procedure 1.0 Step 3.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the TrialDungeon_Wreck:
+CONDITIONS
+Check if Layer is == 3
+ACTIONS
+SCENEITEM CREATE SCENE POINT || itemType: 0 | id: 171945 | path: Mission_FixDoorInWreckMark | sceneName: TrialDungeon_Wreck | scenePointName: Door4Story | extraParams: -1
+AREA TRIGGER ONCE CREATE || missionId: 1700194 | id: 1719402 | sceneName: TrialDungeon_Wreck | flagName: WD_trigger | showOnMap: 0 | mapIcon: 0 | transId: 0
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 171945 | missionId: 1700193 | iconType: 5
+
+TRIGGER Procedure 1.0 Step 3.0 Order 6 Repeat -1
+------------------------------------------------------------
+EVENTS
+When the player moves from TrialDungeon_Wreck to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Set Layer to 0
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8008
+
+TRIGGER Procedure 1.0 Step 3.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the TrialDungeon_Wreck:
+CONDITIONS
+Always:
+ACTIONS
+===Repair Doors===
+
+{{mission_details
+|desc = The doors in the Shipwreck Ruins need to be repaired. Go into the ruins with Justice and find them.
+|details = Repair Doors
+}}
+MISSION TARGET COUNTER SET || missionId: 1700193 | targetId: 44 | transId: 80008533 | count: 1
+
+TRIGGER Procedure 1.0 Step 3.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 171932 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE SCENE POINT || itemType: 0 | id: 171946 | path: Mission_FixDoorInWreck | sceneName: TrialDungeon_Wreck | scenePointName: Door4Story | extraParams: -1
+SCENEITEM DELETE || itemType: 0 | id: 171945
+DELAY MASK SET || maskId: 171942 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: -2
+CUTSCENE UI STATE EXIT || 
+===Leave the Shipwreck Ruins===
+
+{{mission_details
+|desc = The doors in the Shipwreck Ruins have been repaired. Head to the exit and leave with Justice.
+|details = Leave the Shipwreck Ruins
+}}
+
+TRIGGER Procedure 1.0 Step 3.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 171932 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 4868 starts:
+{{dialogue|Justice|Alright! That should do it! Let's get outta here.}}
+
+TRIGGER Procedure 1.0 Step 3.0 Order 12 Repeat -1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the TrialDungeon_Wreck:
+CONDITIONS
+Always:
+ACTIONS
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8008 | state: Attack
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Justice
+CONDITIONS
+Check if accept is == 1
+ACTIONS
+(cId -1) A conversation 4866 starts:
+{{dialogue|Justice|You ready to go in and fix the doors as well? I hope you brought some weapons, since it's still plenty dangerous inside.}}
+
+*''Yeah let's go!'' (No unique dialogue)
+*''Wait, I'm not ready yet.'' (No unique dialogue)
+
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 4866:
+{{dialogue|Justice|You ready to go in and fix the doors as well? I hope you brought some weapons, since it's still plenty dangerous inside.}}
+
+*''Yeah let's go!'' (No unique dialogue)
+*''Wait, I'm not ready yet.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 4867 starts:
+{{dialogue|Justice|Alright, let's go, stick close.}}
+Set accept to 0

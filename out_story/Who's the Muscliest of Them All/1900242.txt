@@ -1,0 +1,384 @@
+Reading Mission 1900242: Who's the Muscliest of Them All
+
+<onlyinclude>{{Infobox mission
+|name = Who's the Muscliest of Them All
+|image =
+|description = Pen had an altercation with his old mirror, and he wants you to create a new, more advanced mirror to reflect his "perfect" body.
+|type = Side
+|time =
+|location =
+|characters = [[Pen]]
+|condition =
+|details =
+|exp = 1950
+|reputation = 10
+|gols = 200
+|npc1 = Pen
+|rp1 = 30
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200248
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player wakes up:
+CONDITIONS
+Check if Pen has favor >= 50
+The Kidnapping is in state 1 with flag 0
+The Kidnapping is in state 2 with flag 0
+The Goat is in state 2 with flag 0
+The Goat is in state 3 with flag 0
+Operation De-Geeglate is successfully completed
+Check if mission 1200265 is result 1 flag 0
+ACTIONS
+Run mission Who's the Muscliest of Them All
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1900242
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER ONCE CREATE || flagName: T9242 | sceneName: Main | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0 | id: 9242 | missionId: 1900242
+Set P to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION BEGIN || order: 0 | npc: 8020 | cId: 0 | missionId: 1900242
+CONDITIONS
+Always:
+ACTIONS
+SOUND PLAY 2D || idStr: Play_Pen_angry_01
+
+TRIGGER Procedure 0.0 Step 0.5 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 9242
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 92420 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+DELIVER MISSION 1900242
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 92420 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 7866, 7867, 7868 starts:
+{{dialogue|Pen|Arrrrgh!}}
+{{dialogue|Pen|How could you betray me like this!?}}
+{{dialogue|Pen|To think... I loved you once! Hrraaaaagh!}}
+
+TRIGGER Procedure 0.0 Step 1.5 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the first option in conversation segment 7893:
+{{dialogue|Pen|Alright, Skinny! Here's the plan! You run over to the research guy's house and order up an extra jumbo, high-tech mirror, meanwhile, I'll sit around and wait for you to build it! Can you handle this for your Protector!?}}
+
+*''On it!'' (No unique dialogue)
+*''Got a lot on my plate...'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 7898:
+{{dialogue|Pen|How's the mirror coming, Skinny? What? You haven't started? Chop chop, Skinny.}}
+
+*''On it!'' (No unique dialogue)
+*''Got a lot on my plate...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set P to 1
+
+TRIGGER Procedure 0.0 Step 2.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if P is == 1
+ACTIONS
+START MISSION 1900242
+Pen stops standing still
+Pen stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 192422) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 192423) from Pen
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Pen stops standing still
+Pen stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 192422) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 192423) from Pen
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END || order: 0 | result: 1 | missionId: 1200265
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 9242
+CLOSE MISSION || missionId: 1900242
+END MISSION 1900242
+
+TRIGGER Procedure 1.0 Step 0.3 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 92420 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: P9242 | sceneName: Main
+Pen stands still in Temple and looks at Player
+STOPWATCH REAL TIME SET || id: 92422 | sec: 0.1
+DELAY MASK SET || maskId: 92420 | delayTime: 0.5 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 0.75 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 92421 | delayTime: 0.6 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 1.2 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 92421 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Pen stands still in Main and looks at Player
+Add behavior CommanderMoveToFlagAndAction (idName: 192423) to Pen
+(param: TargetScene:Main|MoveMode:Walk|FlagName:Ph9242_to|LookAtActor:8000)
+DELAY MASK SET || maskId: 92421 | delayTime: 1.5 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 3.5 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1900242
+CONDITIONS
+Always:
+ACTIONS
+Run mission Who's the Muscliest of Them All
+END MISSION 1900242
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1900242
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|438}}
+
+TRIGGER Procedure 2.0 Step 0.75 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8020 | cId: 0 | missionId: 1900242
+CONDITIONS
+Always:
+ACTIONS
+SOUND PLAY 2D || idStr: Play_Pen_angry_02
+
+TRIGGER Procedure 2.0 Step 1.5 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8020 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 2253_0 starts:
+{{dialogue|Pen|Oho! Well, if it isn't my good-ish friend, Skinny Arms! Skulking outside my chamber door, on the off chance you might bask in my stout-hearted, rock-ribbed emanations, no doubt! Well, today is your lucky day!}}
+
+*''I heard some noises...''
+*''How's it going Pen...?''
+*''Was there... someone else in there?''
+
+{{dialogue|Pen|indent=true|answer=I heard some noises...
+|Some...? Ah... haha! That was simply an unfortunate altercation. I seem to have been let down somewhat...}}
+{{dialogue|Pen|indent=true|answer=How's it going Pen...?
+|Excellent, as always, Skinny. Excellent indeed... Well, almost excellent. I seem to have been somewhat let down...}}
+{{dialogue|Pen|indent=true|answer=Was there... someone else in there?
+|Aha! Just me, myself, and I, Skinny! What's with the third degree?}}
+{{dialogue|Pen|...Ah, Skinny! I can't hide it any longer. As the Sandrocker I respect the most and whose demeanor is also the most Pen-like in disposition, perhaps it would ease my heart to confess to you...}}
+{{dialogue|Pen|You see, I was action rolling over to my mirror after finishing my new ten thousand squat routine to check my post-workout pump when I discovered to a mix of glee and horror...}}
+{{dialogue|Pen|My muscles are now too burdgeoning to be contained by the surface area of my mirror!}}
+{{dialogue|Pen|And in my moment of despair and anger... I killed...}}
+{{dialogue|Pen|...It. My mirror. I broke my mirror, Skinny! I smashed it to a thousand pieces!}}
+{{dialogue|Pen|You must... understand, these muscles, this perfectly crafted form, they do not come cheap or easy.}}
+{{dialogue|Pen|No! They need constant care and attention. People have labelled my physique "quantum musculature," as only through observation does it take a defined shape.}}
+{{dialogue|Pen|But I digress. The undeniable truth is... my gains have been exceptional lately. Look at my pecs. No, no. I mean, really look at them. Outstanding. I mean it's amazing they fit anywhere...}}
+
+*''Sure, buddy.''
+*''What are "pecs?"''
+*{{flirt}}''They are magnificent.''
+*''That's cool but I kinda gotta go...''
+
+{{dialogue|Pen|indent=true|answer=What are "pecs?"
+|Hm? Oh, come on, you know! Pecs! Pectoral muscles, the upper chest, chesticles, the crown jewels of the diligent bench presser! Try to keep up over here, Skinny...}}
+{{dialogue|Pen|indent=true|answer=They are magnificent.
+|Oho! It seems then you understand the urgency of the situation...}}
+{{dialogue|Pen|indent=true|answer=That's cool but I kinda gotta go...
+|Hm, you're right. I don't need you getting lost in them for hours...}}
+{{dialogue|Pen|indent=true|But wait... hear me out...! Since I've broken my mirror for being too small, you could go and build me...}}
+{{dialogue|Pen|So, without a full and complete view of my body, I cannot truly know whether or not I've maintained my expected level of perfection. I need vision! I need a true view of my developments!}}
+
+*''...I could build you a bigger mirror?''
+*{{flirt}}''...You want me to caress you?''
+*''Sorry, did you say something? Your pecs...''
+
+{{dialogue|Pen|indent=true|answer=...I could build you a bigger mirror?
+|reward={{NPC2|Pen|rp=2}}|Why... that would be precisely what I need! Ah, Skinny, you read me like an open book! Ew. Well, like something cooler than a fluttery old book... But yes, you're exactly right!}}
+{{dialogue|Pen|indent=true|A larger mirror! Oh, but why stop there...?}}
+{{dialogue|Pen|indent=true|Not just larger. Better, faster, stronger... The most advanced mirror known to man! Yes... Hm, but a pinnacle of scientific achievement such as this...}}
+{{dialogue|Pen|indent=true|You'd only be able to build something so advanced with the assistance of...}}
+{{dialogue|Pen|indent=true|The research guy! Oh, yeah... It's all coming together...}}
+{{dialogue|Pen|indent=true|answer=...You want me to caress you?
+|reward={{NPC2|Pen|rp=3}}|Haha! Hey, buy me dinner first, will ya? Bold move, though, Skinny. Dig that mindset. But hark, let us save our caressing for a date sometime after I have solved this conundrum of mine...}}
+{{dialogue|Pen|indent=true|A larger mirror! Oh, but why stop there...?}}
+{{dialogue|Pen|indent=true|Not just larger. Better, faster, stronger... The most advanced mirror known to man! Yes... Hm, but a pinnacle of scientific achievement such as this...}}
+{{dialogue|Pen|indent=true|You'd only be able to build something so advanced with the assistance of...}}
+{{dialogue|Pen|indent=true|The research guy! Oh, yeah... It's all coming together...}}
+{{dialogue|Pen|Eyes up here, Skinny.}}
+{{dialogue|Pen|So, without a full and complete view of my body, I cannot truly know whether or not I've maintained my expected level of perfection. I need vision! I need a true view of my developments!}}
+
+*''...I could build you a bigger mirror?''
+*{{flirt}}''...You want me to caress you?''
+*''Sorry, did you say something? Your pecs...''
+
+{{dialogue|Pen|indent=true|answer=...I could build you a bigger mirror?
+|reward={{NPC2|Pen|rp=2}}|Why... that would be precisely what I need! Ah, Skinny, you read me like an open book! Ew. Well, like something cooler than a fluttery old book... But yes, you're exactly right!}}
+{{dialogue|Pen|indent=true|A larger mirror! Oh, but why stop there...?}}
+{{dialogue|Pen|indent=true|Not just larger. Better, faster, stronger... The most advanced mirror known to man! Yes... Hm, but a pinnacle of scientific achievement such as this...}}
+{{dialogue|Pen|indent=true|You'd only be able to build something so advanced with the assistance of...}}
+{{dialogue|Pen|indent=true|The research guy! Oh, yeah... It's all coming together...}}
+{{dialogue|Pen|indent=true|answer=...You want me to caress you?
+|reward={{NPC2|Pen|rp=3}}|Haha! Hey, buy me dinner first, will ya? Bold move, though, Skinny. Dig that mindset. But hark, let us save our caressing for a date sometime after I have solved this conundrum of mine...}}
+{{dialogue|Pen|indent=true|A larger mirror! Oh, but why stop there...?}}
+{{dialogue|Pen|indent=true|Not just larger. Better, faster, stronger... The most advanced mirror known to man! Yes... Hm, but a pinnacle of scientific achievement such as this...}}
+{{dialogue|Pen|indent=true|You'd only be able to build something so advanced with the assistance of...}}
+{{dialogue|Pen|indent=true|The research guy! Oh, yeah... It's all coming together...}}
+{{dialogue|Pen|indent=true|answer=Sorry, did you say something? Your pecs...
+|Eyes up here, Skinny.}}
+{{dialogue|Pen|indent=true|So, without a full and complete view of my body, I cannot truly know whether or not I've maintained my expected level of perfection. I need vision! I need a true view of my developments!}}
+
+:*''...I could build you a bigger mirror?''
+:*{{flirt}}''...You want me to caress you?''
+
+{{dialogue|Pen|indent=double|answer=...I could build you a bigger mirror?
+|reward={{NPC2|Pen|rp=2}}|Why... that would be precisely what I need! Ah, Skinny, you read me like an open book! Ew. Well, like something cooler than a fluttery old book... But yes, you're exactly right!}}
+{{dialogue|Pen|indent=double|A larger mirror! Oh, but why stop there...?}}
+{{dialogue|Pen|indent=double|Not just larger. Better, faster, stronger... The most advanced mirror known to man! Yes... Hm, but a pinnacle of scientific achievement such as this...}}
+{{dialogue|Pen|indent=double|You'd only be able to build something so advanced with the assistance of...}}
+{{dialogue|Pen|indent=double|The research guy! Oh, yeah... It's all coming together...}}
+{{dialogue|Pen|indent=double|answer=...You want me to caress you?
+|reward={{NPC2|Pen|rp=3}}|Haha! Hey, buy me dinner first, will ya? Bold move, though, Skinny. Dig that mindset. But hark, let us save our caressing for a date sometime after I have solved this conundrum of mine...}}
+{{dialogue|Pen|indent=double|A larger mirror! Oh, but why stop there...?}}
+{{dialogue|Pen|indent=double|Not just larger. Better, faster, stronger... The most advanced mirror known to man! Yes... Hm, but a pinnacle of scientific achievement such as this...}}
+{{dialogue|Pen|indent=double|You'd only be able to build something so advanced with the assistance of...}}
+{{dialogue|Pen|indent=double|The research guy! Oh, yeah... It's all coming together...}}
+
+TRIGGER Procedure 2.0 Step 2.2 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 7892) that ends:
+{{dialogue|Pen|The research guy! Oh, yeah... It's all coming together...}}
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 2289_0 starts:
+{{dialogue|Pen|Alright, Skinny! Here's the plan! You run over to the research guy's house and order up an extra jumbo, high-tech mirror, meanwhile, I'll sit around and wait for you to build it! Can you handle this for your Protector!?}}
+
+*''On it!''
+*''Got a lot on my plate...''
+
+{{dialogue|Pen|indent=true|answer=On it!
+|The ever reliable Skinny Arms. I knew you wouldn't let me down. Off to the research building then, chop chop! My muscles aren't going to gawk at themselves you know!}}
+{{dialogue|Pen|indent=true|answer=Got a lot on my plate...
+|Splendid! Look at you, doing something with your life, putting all these things on your plate.}}
+{{dialogue|Pen|indent=true|Not to worry, you can just expedite whatever assortment of trifling affairs you've garnered up to make room on that plate of yours for an extra heaping of helping Pen!}}
+{{dialogue|Pen|indent=true|And since it'll take a few days to get one of those wacky diagrams anyway, why don't you just head over right now? Go on, then, Skinny. Chop chop! My muscles aren't going to gawk at themselves, you know!}}
+
+TRIGGER Procedure 3.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 0) There is a conversation segment (id 7866) that ends:
+{{dialogue|Pen|Arrrrgh!}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 192422) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:P9242_to)
+
+TRIGGER Procedure 3.0 Step 3.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 7885:
+{{dialogue|Pen|So, without a full and complete view of my body, I cannot truly know whether or not I've maintained my expected level of perfection. I need vision! I need a true view of my developments!}}
+
+*''...I could build you a bigger mirror?'' (No unique dialogue)
+*{{flirt}}''...You want me to caress you?'' (No unique dialogue)
+*''Sorry, did you say something? Your pecs...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Pen gains 2 favor
+
+TRIGGER Procedure 3.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the second option in conversation segment 7885:
+{{dialogue|Pen|So, without a full and complete view of my body, I cannot truly know whether or not I've maintained my expected level of perfection. I need vision! I need a true view of my developments!}}
+
+*''...I could build you a bigger mirror?'' (No unique dialogue)
+*{{flirt}}''...You want me to caress you?'' (No unique dialogue)
+*''Sorry, did you say something? Your pecs...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Pen gains 3 favor
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Pen|How's the mirror coming, Skinny? What? You haven't started? Chop chop, Skinny.}}
+
+*''On it!''
+*''Got a lot on my plate...''
+
+{{dialogue|Pen|indent=true|answer=On it!
+|The ever reliable Skinny Arms. I knew you wouldn't let me down. Off to the research building then, chop chop! My muscles aren't going to gawk at themselves you know!}}
+{{dialogue|Pen|indent=true|answer=Got a lot on my plate...
+|Splendid! Look at you, doing something with your life, putting all these things on your plate.}}
+{{dialogue|Pen|indent=true|Not to worry, you can just expedite whatever assortment of trifling affairs you've garnered up to make room on that plate of yours for an extra heaping of helping Pen!}}
+{{dialogue|Pen|indent=true|And since it'll take a few days to get one of those wacky diagrams anyway, why don't you just head over right now? Go on, then, Skinny. Chop chop! My muscles aren't going to gawk at themselves, you know!}}
+
+==Rewards==
+{{mission reward
+|npc1 = Pen
+|rp1 = 30
+|exp = 1950
+|reputation = 10
+|gols = 200
+}}

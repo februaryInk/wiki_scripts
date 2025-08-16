@@ -1,0 +1,193 @@
+Reading Mission 1200178: Clean Slates
+
+<onlyinclude>{{Infobox mission
+|name = Clean Slates
+|image =
+|description = Mort says Fang comes to the cemetary every week to clean the graves. He thinks Fang might have a cold exterior, but has a warm heart.
+|type = Side
+|time =
+|location =
+|characters = [[Mort]]
+|condition =
+|details =
+|exp = 600
+|reputation = None
+|gols = None
+|npc1 = Fang
+|rp1 = 10
+|npc2 = Mort
+|rp2 = 10
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200106
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 10
+------------------------------------------------------------
+EVENTS
+ON REAGENT FINISH || order: 0
+CONDITIONS
+Always:
+ACTIONS
+Increment REAGENT by 1
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Cheery Conspiracy is successfully completed
+CHECK DAY OF WEEK || dayOfWeek: 0 | set: 1
+Check if Mort is in town
+ACTIONS
+Run mission Clean Slates
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200178
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1200178 | id: 21781 | sceneName: Main | flagName: cleanslates_trigger1 | showOnMap: 0 | mapIcon: 0 | transId: 0
+Set CHOICE to 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 21781 | path: sandtest4 | sceneName: Main | flagName: cleanslates_sand1 | extraParams: 0
+SCENEITEM CREATE FLAG || flagName: cleanslates_sand2 | extraParams: 0 | sceneName: Main | path: sandtest5 | id: 21782 | itemType: 0
+SAND SET CLEAN ENABLE || id: 21781 | enable: 1
+SAND SET CLEAN ENABLE || enable: 1 | id: 21782
+SAND VOLUME SET || id: 21781 | percent: 100
+SAND VOLUME SET || id: 21782 | percent: 100
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 21781
+CONDITIONS
+CHECK DAY OF WEEK || dayOfWeek: 0 | set: 1
+Check if Mort is in town
+Check if X is in town
+Check if Fang is in town
+ACTIONS
+Mort stops standing still
+Mort stands still in Main
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderMoveToFlag (idName: 21781) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:cleanslates_player1)
+AREA TRIGGER DELETE || id: 21781
+Fang stands still in Clinic
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 21781) from Player
+(cId 0) A conversation 1256_0 starts:
+{{dialogue|Mort|Oh, hello, ''Player''. Are you here to sweep the graves, too?}}
+{{dialogue|Mort|Mm, one shouldn't assume... I thought you were young Fang's friend, here to help him with the cleaning. That boy comes here every weekend; hardly ever says a word, that one.}}
+{{dialogue|Mort|Makes you wonder, but can't say I mind the company, quiet as it may be.}}
+{{dialogue|Mort|Well, if you're here, perhaps you could help young Fang? It's easier with help, and I'd hate to burden the boy further. He insists on coming every week, perhaps out of sympathy for these aging bones of mine...}}
+{{dialogue|Mort|Yes, yes, just give him a hand sweeping up. He might not say anything, but I know deep down he'll be thankful. That is, if you're willing?}}
+
+*''Okay, I'll help.''
+*''I have a lot on my plate right now...''
+
+{{dialogue|Mort|indent=true|answer=Okay, I'll help.
+|Well, thank you young one. When you're done, I'll treat you to a warm cup of tea.}}
+{{dialogue|Mort|indent=true|answer=I have a lot on my plate right now...
+|I understand. Well, fortunately grave sweeping isn't particularly tough. Fang keeps it pretty clean and tidy himself...}}
+DELIVER MISSION 1200178
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the first option in conversation segment 4402:
+{{dialogue|Mort|Yes, yes, just give him a hand sweeping up. He might not say anything, but I know deep down he'll be thankful. That is, if you're willing?}}
+
+*''Okay, I'll help.'' (No unique dialogue)
+*''I have a lot on my plate right now...'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 4405:
+{{dialogue|Mort|That Fang always cleans the cemetery so quietly by himself. I wish he had someone to help him. Ah, but this arthritis...}}
+
+*''Okay, I'll help.'' (No unique dialogue)
+*''I have a lot on my plate right now...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 1
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 0
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Mort stops standing still
+Fang stops standing still
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Mort stops standing still
+START MISSION 1200178
+SAND SET CLEAN ENABLE || enable: 0 | id: 21781
+SAND SET CLEAN ENABLE || enable: 0 | id: 21782
+Fang stops standing still
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200178
+CONDITIONS
+Always:
+ACTIONS
+Run mission Clean Slates
+END MISSION 1200178
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if Mort has left town
+ACTIONS
+AREA TRIGGER DELETE || id: 21781
+SCENEITEM DELETE || itemType: 0 | id: 21781
+SCENEITEM DELETE || itemType: 0 | id: 21782
+CLOSE MISSION || missionId: 1200178
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Mort|That Fang always cleans the cemetery so quietly by himself. I wish he had someone to help him. Ah, but this arthritis...}}
+
+*''Okay, I'll help.''
+*''I have a lot on my plate right now...''
+
+{{dialogue|Mort|indent=true|answer=Okay, I'll help.
+|Well, thank you young one. When you're done, I'll treat you to a warm cup of tea.}}
+{{dialogue|Mort|indent=true|answer=I have a lot on my plate right now...
+|I understand. Well, fortunately grave sweeping isn't particularly tough. Fang keeps it pretty clean and tidy himself...}}
+
+==Rewards==
+{{mission reward
+|npc1 = Fang
+|rp1 = 10
+|npc2 = Mort
+|rp2 = 10
+|exp = 600
+|reputation = None
+|gols = None
+}}

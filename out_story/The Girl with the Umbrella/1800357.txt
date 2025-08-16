@@ -1,0 +1,356 @@
+Reading Mission 1800357: The Girl with the Umbrella
+
+<onlyinclude>{{Infobox mission
+|name = The Girl with the Umbrella
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from The Girl with the Umbrella:
+
+TRIGGER Procedure 0.0 Step 33.0 Order 26 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Fang stops standing still
+Fang stops standing still
+Remove behavior CommanderMoveToFlag (idName: 8356423) from X
+CUTSCENE UI STATE EXIT STOPX || 
+START MISSION 1800356
+
+TRIGGER Procedure 0.0 Step 35.0 Order 27 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800356
+CONDITIONS
+Always:
+ACTIONS
+ACTION BUS REMOVE HIDE || hideId: 23561
+Run mission The Girl with the Umbrella
+END MISSION 1800356
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800357
+CONDITIONS
+Always:
+ACTIONS
+===Wait for Tomorrow===
+
+{{mission_details
+|desc = Ginger's consultation with Dr. Fang has ended, he needs some time to study the case. You could go back tomorrow to see if he's come up with anything.
+|details = Wait for Tomorrow
+}}
+Set 8357Day1 to 0
+Remove behavior Story1800358_8016 (idName: 83580161) from Fang
+Add behavior Story1800358_8016 (idName: 83580161) to Fang
+(param: -1)
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Set 8357Day1 to 1
+===Go to Clinic===
+
+{{mission_details
+|desc = Dr. Fang may have something to say about Ginger's illness today.
+|details = Go to Clinic
+}}
+The player receives a letter:
+{{mail|783}}
+AREA TRIGGER CREATE || missionId: 1800357 | id: 83571 | sceneName: Main | flagName: Trigger_Clinic | showOnMap: 1 | mapIcon: BranchTalk | transId: 0
+NPC LEAVE || npc: 8110
+
+TRIGGER Procedure 0.0 Step 2.1 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 83571
+FAIL MISSION || missionId: 1800356
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Gust
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 20081 starts:
+{{dialogue|Gust|...I'm not in the mood to chat.}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Ginger
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 20082 starts:
+{{dialogue|Ginger|I'm sorry you had to see that... honestly, my brother is just worried about me. I've been causing a lot of trouble for everyone... sigh...}}
+
+TRIGGER Procedure 0.0 Step 14.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_clinic
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_clinic
+DELAY MASK SET || maskId: 83571 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 83571
+
+TRIGGER Procedure 0.0 Step 15.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: S8357_0_1 | sceneName: Clinic
+Gust stands still in Clinic and looks at Fang
+Add behavior CommanderSit (idName: 83571071) to Ginger
+(param: SeatDramaName:8356Seat107|DelayTime:0|TargetScene:Clinic)
+SCENEITEM CREATE FLAG || itemType: 0 | id: 83571 | path: S8357_Item1 | flagName: S8357_Item1 | extraParams: -1 | sceneName: Clinic
+Fang stands still in Clinic and looks at Ginger
+DELAY MASK SET || maskId: 83571 | delayTime: 3 | durationTime: -2 | changeType: 1 | curveIndex: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 83572 | path: S8357_Item2 | flagName: S8357_Item2 | sceneName: Clinic | extraParams: -1
+X stands still in Main
+CUTSCENE UI STATE ENTER || 
+SCENEITEM DELETE || itemType: 0 | id: 171781
+SCENEITEM DELETE || itemType: 0 | id: 171782
+
+TRIGGER Procedure 0.0 Step 16.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 20083, 20084 starts:
+{{dialogue|Fang|''Player''... you came.}}
+{{dialogue|Fang|I have... a treatment plan for Ginger's condition.}}
+
+TRIGGER Procedure 0.0 Step 17.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8357162) to Fang
+(param: TargetScene:Clinic|MoveMode:Walk|FlagName:S8357_16_1|Action:Give)
+Add behavior CommanderMoveToFlagAndAction (idName: 8357001) to Player
+(param: TargetScene:Clinic|MoveMode:Walk|FlagName:S8357_0_1|Action:Give|Delay:1.0)
+Set 8357Move1 to 0
+
+TRIGGER Procedure 0.0 Step 18.0 Order 9 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8016 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | eventName: MoveToFlagAndActionOver | behaviourName: CommanderMoveToFlagAndAction
+CONDITIONS
+Always:
+ACTIONS
+Increment 8357Move1 by 1
+
+TRIGGER Procedure 0.0 Step 19.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver | npc: 8016
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8000 | eventName: MoveToFlagAndActionOver | behaviourName: CommanderMoveToFlagAndAction
+CONDITIONS
+Check if 8357Move1 is >= 2
+ACTIONS
+(cId 4) A conversation 20085, 6383_3_0, 6387_0 starts:
+{{dialogue|Fang|The prescription... is written here.}}
+{{dialogue|Gust|What's on there?}}
+
+*''Scorpion Tail.''
+*''Cliffside Flowers.''
+*''Ground Yakmel Horn.''
+
+{{dialogue|Ginger|indent=true|answer=Scorpion Tail.
+|Scorpion... tail?}}
+{{dialogue|Fang|indent=true|Yes. Dried scorpion tail.}}
+{{dialogue|Ginger|indent=true|answer=Cliffside Flowers.
+|Flowers... can be medicine?}}
+{{dialogue|Fang|indent=true|These flowers... are rich in nutrients.}}
+{{dialogue|Fang|indent=true|answer=Ground Yakmel Horn.
+|Yakmel horn. Ground.}}
+{{dialogue|Ginger|Do I have to drink all of this...}}
+{{dialogue|Gust|What is this? Witchcraft? This is totally different from anything I've heard about. Besides, some of these are poisonous!}}
+{{dialogue|Fang|If my prescription... is the same as the one you used...}}
+{{dialogue|Fang|Then there's no need... for you to come see me.}}
+{{dialogue|Ginger|Brother... please, you promised Pa... don't argue...}}
+{{dialogue|Gust|...I'm not angry, Ginger, I'm just asking questions. Why would a rational person use poison as medicine.}}
+{{dialogue|Fang|My medicine is not fake.}}
+{{dialogue|Fang|I have done research on her condition.}}
+{{dialogue|Fang|Read the books. It is in there.}}
+{{dialogue|Gust|...}}
+{{dialogue|Fang|Your immune system... is fragile.}}
+{{dialogue|Fang|It tries to protect you... but attacks your body.}}
+{{dialogue|Fang|I need to suppress adverse reactions and reduce burden on skin and internal organs.}}
+{{dialogue|Fang|I wish to restore balance in the immune system.}}
+{{dialogue|Fang|These ingredients... will help.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 20.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderSit (idName: 83571071) from Ginger
+STOPWATCH REAL TIME SET || id: 83571 | sec: 1
+Remove behavior CommanderMoveToFlagAndAction (idName: 8357162) from Fang
+
+TRIGGER Procedure 0.0 Step 21.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 83571
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 83571072) to Ginger
+(param: TargetScene:Clinic|MoveMode:Walk|FlagName:S8357_107_2|Delay:0.0|LookAtActor:8016)
+
+TRIGGER Procedure 0.0 Step 22.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver | npc: 8107
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 6388_0 starts:
+{{dialogue|Ginger|Dr Fang... if I drink this... my condition will get better?}}
+{{dialogue|Ginger|I will try.}}
+{{dialogue|Gust|Ginger!}}
+{{dialogue|Ginger|Brother, do you remember when you left Portia for Atara University?}}
+{{dialogue|Gust|Of course I remember. It was a sunny day, you and Pa saw me off at the port. You weren't sick at the time. You wanted to hug me...}}
+{{dialogue|Gust|But I pushed you away.}}
+{{dialogue|Ginger|I've almost forgotten what it's like to enjoy the sun. And I've always lived in the shadow of that day...}}
+{{dialogue|Ginger|I don't want to live in the shadows. And I don't need your protection anymore. I need to be my own woman, and stop relying on others. Not just for me, but for everyone. For Pa, Dr Xu, the Builder in Portia...}}
+{{dialogue|Ginger|My condition makes me rely on everyone. Even if there's a glimmer of hope for me to stand on my own two feet... I'll take it.}}
+{{dialogue|Ginger|So please... don't worry about me. I'm trusting Dr Fang. But I just need you to trust me, okay?}}
+{{dialogue|Gust|...}}
+{{dialogue|Gust|Then we'll see how this treatment works.}}
+{{dialogue|Ginger|OK!}}
+{{dialogue|Fang|Please be aware. The medicine is very bitter.}}
+{{dialogue|Ginger|I'm sure it can't be that bad...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 23.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 83571072) from Ginger
+Add behavior CommanderMoveToFlagAndAction (idName: 83571073) to Ginger
+(param: TargetScene:Clinic|MoveMode:Walk|FlagName:S8357_107_3|Delay:0.0|Action:DrinkMedicine)
+
+TRIGGER Procedure 0.0 Step 23.1 Order 27 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver | npc: 8107
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 83572
+
+TRIGGER Procedure 0.0 Step 24.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver | npc: 8107
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 20123, 20124, 20125 starts:
+{{dialogue|Ginger|Ah... it is... a little bitter...}}
+{{dialogue|Fang|This medicine, please take it for three days. Stay in the clinic for observation.}}
+{{dialogue|Gust|Well, let's head to the Blue Moon then.}}
+
+TRIGGER Procedure 0.0 Step 25.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 83571073) from Ginger
+Gust stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 8357163) to Fang
+(param: TargetScene:Clinic|MoveMode:Walk|FlagName:S8357_16_3)
+
+TRIGGER Procedure 0.0 Step 27.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver | npc: 8016
+CONDITIONS
+Check relationship with Fang is Married
+ACTIONS
+(cId 7) A conversation 20126, 20129 starts:
+{{dialogue|Fang|I will be busy, and won't be able to come home. I will... miss you.}}
+{{dialogue|Fang|I need to work. Goodbye.}}
+
+TRIGGER Procedure 0.0 Step 30.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+X stops standing still
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 8357163) from Fang
+Fang stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8357162) from Fang
+Remove behavior CommanderMoveToFlagAndAction (idName: 8357001) from Player
+SCENEITEM DELETE || itemType: 0 | id: 83571
+SUBMIT MISSION 1800356
+
+TRIGGER Procedure 0.0 Step 28.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver | npc: 8016
+CONDITIONS
+Check relationship with Fang is 5 Lover Deepest
+ACTIONS
+(cId 7) A conversation 20127, 20128, 20129 starts:
+{{dialogue|Fang|''Player'', thank you for being with me.}}
+{{dialogue|Fang|I hope... things go well.}}
+{{dialogue|Fang|I need to work. Goodbye.}}
+
+TRIGGER Procedure 0.0 Step 32.1 Order 28 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+END MISSION 1800357

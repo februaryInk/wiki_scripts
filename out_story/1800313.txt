@@ -1,0 +1,186 @@
+Reading Mission 1800313: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200310
+
+TRIGGER Procedure 5.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Ghost Recon is successfully completed
+Just Give a Whistle is successfully completed
+
+GROUP 10:
+Ghost Recon is successfully completed
+Just Give a Whistle is in state 2 with flag 1
+
+ACTIONS
+Run mission #1700314
+
+TRIGGER Procedure 5.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1200309 is result 1 flag 1
+ACTIONS
+Run mission #1800313
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800313
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1800313 | id: 83131 | sceneName: Main | flagName: Trigger_83131 | showOnMap: 1 | mapIcon: MissionArea | transId: 0
+
+TRIGGER Procedure 0.0 Step 0.1 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 83131
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 83131 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 83131
+
+TRIGGER Procedure 0.0 Step 0.2 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83131 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+NPC RANDOM ADD || id: 1 | instId: 83131 | scene: Main | flagName: S8313_RNPC1_1 | dailyBehavior: RandomNPC
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8313_0_1
+83131 stands still in Main
+Add behavior CommanderMoveToFlagAndAction (idName: 8313001) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8313_0_2|Delay:1.0)
+Larry stands still in Main and looks at 83131
+SCENEITEM CREATE FLAG || itemType: 0 | id: 83131 | path: S8313_Item1 | flagName: S8313_Item1 | extraParams: -1 | sceneName: Main
+SCENEITEM CREATE FLAG || itemType: 0 | id: 83132 | path: S8313_Item2 | flagName: S8313_Item2 | extraParams: -1 | sceneName: Main
+DELAY MASK SET || maskId: 83131 | delayTime: 0.5 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83131 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 3758_0 starts:
+{{dialogue|Larry|Human customer, please try some of this delicious... food.}}
+{{dialogue|83131|Holy Yakmel on a stick! They weren't kiddin' about a lizardman working here!}}
+{{dialogue|83131|And it even speaks our tongue! Now I have seen everything!}}
+{{dialogue|Larry|Sigh... ''Player'', can you care to help me? I am uncomfortable with all the attention...}}
+
+*''He's a Sandrocker!''
+*''Aaaaaah! It's a Geegler!''
+*''You're being rude!''
+
+{{dialogue|83131|indent=true|answer=He's a Sandrocker!
+|reward={{NPC2|Larry|rp=2}}|A Sandrocker? Really? But didn't they use to fight against Sandrock? Did this dude get captured?}}
+{{dialogue|83131|indent=true|I've been all around, seen a lot, but this takes the biscuit.}}
+{{dialogue|83131|indent=true|I know, this is so interesting!}}
+{{dialogue|Larry|indent=true|This is... overwhelming...}}
+{{dialogue|83131|indent=true|answer=Aaaaaah! It's a Geegler!
+|Yeah! I know right? Didn't they use to fight against Sandrock? Did this dude get captured?}}
+{{dialogue|Larry|indent=true|''Player''... do you not recognize me? Ah, you are joking, are you not? I'm not well versed human customs.}}
+{{dialogue|83131|indent=true|Hey, hey, do you cook here? What do you eat? Where did you learn our language?}}
+{{dialogue|83131|indent=true|Is it true if we cut off your tail it'll grow back?}}
+{{dialogue|Larry|indent=true|This is... overwhelming...}}
+{{dialogue|83131|indent=true|answer=You're being rude!
+|reward={{NPC2|Larry|rp=2}}|Rude? But we're just interested in him! I've never seen a lizardman serve in a saloon before! Didn't they use to fight against Sandrock? Did this dude get captured?}}
+{{dialogue|83131|indent=true|Oh hey! Tell us some stories of your time with the other Geeglers!}}
+{{dialogue|83131|indent=true|Did you know the legendary Howlett?}}
+{{dialogue|Larry|indent=true|This is... overwhelming...}}
+
+TRIGGER Procedure 0.0 Step 8.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+83131 stops standing still
+Larry stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8313001) from Player
+CUTSCENE UI STATE EXIT || 
+Add behavior CommanderNPCAction (idName: 8313973) to Larry
+(param: CMDAction:Dejection_Story)
+
+TRIGGER Procedure 0.0 Step 13.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8097 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 8313973) from Larry
+
+TRIGGER Procedure 0.0 Step 40.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 83131
+SCENEITEM DELETE || itemType: 0 | id: 83132
+Remove behavior CommanderNPCAction (idName: 8313973) from Larry
+NPC LEAVE || npc: 83131
+NPC RANDOM REMOVE || id: 83131
+END MISSION 1800313
+
+TRIGGER Procedure 1.0 Step 3.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 12394:
+{{dialogue|Larry|Sigh... ''Player'', can you care to help me? I am uncomfortable with all the attention...}}
+
+*''He's a Sandrocker!'' (No unique dialogue)
+*''Aaaaaah! It's a Geegler!'' (No unique dialogue)
+*''You're being rude!'' (No unique dialogue)
+
+(cId 1) The player picks the third option in conversation segment 12394:
+{{dialogue|Larry|Sigh... ''Player'', can you care to help me? I am uncomfortable with all the attention...}}
+
+*''He's a Sandrocker!'' (No unique dialogue)
+*''Aaaaaah! It's a Geegler!'' (No unique dialogue)
+*''You're being rude!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Larry gains 2 favor
+
+TRIGGER Procedure 1.0 Step 20.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 83132
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Sweet Potato Pie of Default quality (Notify player)
+SCENEITEM DELETE || itemType: 0 | id: 83132

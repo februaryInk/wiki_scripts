@@ -1,0 +1,186 @@
+Reading Mission 1700279: Stacks
+
+<onlyinclude>{{Infobox mission
+|name = Stacks
+|image =
+|description = Unsuur wants to go on a date, but didn't say what he wanted to do. Is he planning something romantic?
+|type = Side
+|time =
+|location =
+|characters = [[Unsuur]]
+|condition =
+|details =
+|exp = 1200
+|reputation = 10
+|gols = 500
+|npc1 = Unsuur
+|rp1 = 20
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200280
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Check relationship with Unsuur is Friend Good
+Watching Paint Dry is successfully completed
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+
+GROUP 10:
+Check relationship with Unsuur is Lover
+Watching Paint Dry is successfully completed
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+
+ACTIONS
+Run mission Avalanche
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Avalanche is successfully completed
+Check relationship with Unsuur is Lover
+CHECK WEATHER STATE || weather: 0 | flag: 1
+IS MARRIAGE || isMarriage: 0
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+
+GROUP 10:
+Avalanche is successfully completed
+Check relationship with Unsuur is Married
+CHECK WEATHER STATE || weather: 0 | flag: 1
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+
+ACTIONS
+Run mission Stacks
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+Where's Mi-an is in state 1 with flag 0
+The Childhood Friend is in state 1 with flag 0
+Goodbye, Nia is in state 1 with flag 0
+The Kidnapping is in state 1 with flag 0
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+CHECK TIME || compare: 5 | hour: 12 | minute: 0
+CHECK GLOBAL BLACKBOARD || key: triallogan | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Unsuur stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 9993, 9994 starts:
+{{dialogue|Unsuur|Good. You're up. I'm also up. I like daytime, because that's when the sun is out. It makes it much easier to see everything.}}
+{{dialogue|Unsuur|Hey, I have an idea for something that will be really fun. Well. Unless we get attacked by monsters or something along the way. But if that doesn't happen, should be good. Can you meet me tomorrow at 20:00PM?}}
+
+*''I'd love to!'' (No unique dialogue)
+*''I already have plans tomorrow evening. Can we do it another time?'' (No unique dialogue)
+
+DELIVER MISSION 1700279
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Unsuur stops standing still
+
+TRIGGER Procedure 0.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 9998) that ends:
+{{dialogue|Unsuur|Don't forget, tomorrow at 20:00PM. I'll have everything ready.}}
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1700279
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 9994:
+{{dialogue|Unsuur|Hey, I have an idea for something that will be really fun. Well. Unless we get attacked by monsters or something along the way. But if that doesn't happen, should be good. Can you meet me tomorrow at 20:00PM?}}
+
+*''I'd love to!'' (No unique dialogue)
+*''I already have plans tomorrow evening. Can we do it another time?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 9997, 9998 starts:
+{{dialogue|Unsuur|Great. Bring that rock with you, too. The one I gave you that looks like a cartoon heart, but not a real heart, because that would be weird...}}
+{{dialogue|Unsuur|Don't forget, tomorrow at 20:00PM. I'll have everything ready.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 9994:
+{{dialogue|Unsuur|Hey, I have an idea for something that will be really fun. Well. Unless we get attacked by monsters or something along the way. But if that doesn't happen, should be good. Can you meet me tomorrow at 20:00PM?}}
+
+*''I'd love to!'' (No unique dialogue)
+*''I already have plans tomorrow evening. Can we do it another time?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 9995, 9996 starts:
+{{dialogue|Unsuur|Sure, another night is fine. Unless the place I want to meet you at disappears or something. But what are the odds of that happening? Yeah, tomorrow is good. Or... whenever.}}
+{{dialogue|Unsuur|Let me know when you have time. I kinda don't like it when we don't do stuff for a long time.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700279
+CONDITIONS
+Always:
+ACTIONS
+Run mission Stacks
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Unsuur|Hey, I have an idea for something that will be really fun. Well. Unless we get attacked by monsters or something along the way. But if that doesn't happen, should be good. Can you meet me tomorrow at 20:00PM?}}
+
+*''I'd love to!'' (No unique dialogue)
+*''I already have plans tomorrow evening. Can we do it another time?'' (No unique dialogue)
+
+
+==Rewards==
+{{mission reward
+|npc1 = Unsuur
+|rp1 = 20
+|exp = 1200
+|reputation = 10
+|gols = 500
+}}

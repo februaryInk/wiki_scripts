@@ -1,0 +1,179 @@
+Reading Mission 1500406: Hard Pill to Swallow
+
+<onlyinclude>{{Infobox mission
+|name = Hard Pill to Swallow
+|image =
+|description = Fang is not completely convinced Ginger's illness is cured; he wants you to help him build a machine that will help make it easier to send her medicine.
+|type = Side
+|time =
+|location =
+|characters = [[Fang]]
+|condition =
+|details =
+|exp = 3250
+|reputation = 25
+|gols = 2400
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200364
+
+TRIGGER Procedure 8.0 Step 8.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Class Reunion is successfully completed
+One Night in Sandrock is successfully completed
+
+GROUP 10:
+Class Reunion is successfully completed
+One Night in Sandrock has failed
+
+GROUP 20:
+CHECK GLOBAL BLACKBOARD || key: 1900405 | info: 1 | exist: 1
+
+GROUP 30:
+Class Reunion has failed
+
+GROUP 40:
+Class Reunion is successfully completed
+One Night in Sandrock is in state 2 with flag 0
+
+ACTIONS
+Run mission Sunrise
+GLOBAL BLACK BOARD REMOVE || key: 1900405
+
+TRIGGER Procedure 8.0 Step 9.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Sunrise is successfully completed
+
+GROUP 10:
+Sunrise has failed
+
+ACTIONS
+Run mission Hard Pill to Swallow
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1500406
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1500406
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Fang
+CONDITIONS
+Always:
+ACTIONS
+(cId 540601) A conversation 21537, 21538, 21539, 21540, 21541, 6802_0 starts:
+{{dialogue|Fang|''Player'', I made some improvements to Miss Ginger's medicine.}}
+{{dialogue|Fang|The previous medicine was quite bitter.}}
+{{dialogue|Fang|For the new formula... I have added honey and licorice.}}
+{{dialogue|Fang|This is a diagram I got from the Research Center. It's for a Pill Machine.}}
+{{dialogue|Fang|I want to make pills... for easier shipping and use..}}
+{{dialogue|Fang|''Player'', can you help me?}}
+
+*''Sure, no problem!''
+*''I've got loads of stuff all over my plate...''
+
+{{dialogue|Fang|indent=true|answer=Sure, no problem!
+|reward={{i2|Pill Machine|1}}|Thank you. Can you please... hurry?}}
+{{dialogue|Fang|indent=true|answer=I've got loads of stuff all over my plate...
+|That is fine. If you have time, find me.}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 21545) that ends:
+{{dialogue|Fang|Thank you. Can you please... hurry?}}
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1500406
+===Construct Pill Machine===
+
+{{mission_details
+|desc = Fang got a diagram from the Research Center for the machine he needs; make it for him on your Assembly Station.
+|details = Construct Pill Machine
+*{{i2|Pill Machine|0/1}}
+*{{i2|Fang|0/1}}
+}}
+Add 1 Pill Machine of Default quality (Notify player)
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1500406 | targetId: 540601 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Fang===
+
+{{mission_details
+|desc = The Pill Machine is done, take it to Fang.
+|details = Talk to Fang
+*{{i2|Pill Machine|0/1}}
+*{{i2|Fang|0/1}}
+}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Fang
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1500406 | targetId: 540602 | canSubmit: 1
+ACTIONS
+(cId 540602) A conversation 21548, 21549 starts:
+{{dialogue|Fang|You have finished? Thank you. I will try it tomorrow.}}
+{{dialogue|Fang|It will be convenient...for postage to Portia.}}
+Remove 1 Pill Machine of Default quality (Notify player)
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 540602) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1500406
+
+TRIGGER Procedure 1.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 540601 | path: Mission_MedicineMachine | sceneName: Clinic | flagName: Story_5406_Item | extraParams: 0
+END MISSION 1500406
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Fang|Can you help me make the Pill Machine?}}
+
+*''Sure, no problem!''
+*''I've got loads of stuff all over my plate...''
+
+{{dialogue|Fang|indent=true|answer=Sure, no problem!
+|Thank you. Can you please... hurry?}}
+{{dialogue|Fang|indent=true|answer=I've got loads of stuff all over my plate...
+|That is fine. If you have time, find me.}}
+
+==Rewards==
+{{mission reward
+|exp = 3250
+|reputation = 25
+|gols = 2400
+}}

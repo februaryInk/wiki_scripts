@@ -1,0 +1,108 @@
+Reading Mission 1200100: A Man of Quality
+
+<onlyinclude>{{Infobox mission
+|name = A Man of Quality
+|image =
+|description = Owen wants to prepare gifts for someone important. Help him make a high quality item.
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 600
+|reputation = 15
+|gols = 150
+|npc1 = Owen
+|rp1 = 10
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100068
+
+TRIGGER Procedure 2.0 Step 3.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1200271 is result 1 flag 1
+ACTIONS
+Run mission #1200273
+
+TRIGGER Procedure 2.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission A Man of Quality
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200100
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key amanofquality with info 0.
+Set aquiredjlj to 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200100
+CONDITIONS
+Always:
+ACTIONS
+Run mission A Man of Quality
+END MISSION 1200100
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON BAG CHANGE || order: 0 | item: 13000019 | changeType: 0 | itemGrade: -1
+CONDITIONS
+Always:
+ACTIONS
+Set aquiredjlj to 1
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Check if aquiredjlj is == 1
+Check relationship with Owen is Lover
+
+GROUP 1:
+Check if aquiredjlj is == 1
+Check relationship with Amirah is Lover
+
+ACTIONS
+The player receives a letter:
+{{mail|92}}
+Set aquiredjlj to 0
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 92
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1200100
+Set global blackboard key amanofquality with info 2.
+START MISSION 1200100
+
+==Rewards==
+{{mission reward
+|npc1 = Owen
+|rp1 = 10
+|exp = 600
+|reputation = 15
+|gols = 150
+}}

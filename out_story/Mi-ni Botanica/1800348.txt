@@ -1,0 +1,206 @@
+Reading Mission 1800348: Mi-ni Botanica
+
+<onlyinclude>{{Infobox mission
+|name = Mi-ni Botanica
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Mi-ni Botanica:
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 2
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment DAY by 1
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+===Head towards Mi-ni Botanica===
+
+{{mission_details
+|desc = Today is Mi-ni Botanica's opening day. Go check out the new shop.
+|details = Head towards Mi-ni Botanica
+}}
+Run mission Mi-ni Botanica
+Run mission Mi-ni Botanica
+SCENEITEM CREATE FLAG || path: Mission_FlowersStore | id: 23841 | itemType: 0 | sceneName: Main | extraParams: 0 | flagName: bridge_kaimu
+SCENEITEM CREATE FLAG || path: SceneItem_Store_MiniGardenShop | itemType: 3 | id: 17 | sceneName: Main | extraParams: 0 | flagName: MiniGardenShop
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 18:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || id: 83481 | sceneName: Main | flagName: Trigger_Saloon | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0 | missionId: 1800348
+
+TRIGGER Procedure 0.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_saloon
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_saloon
+AREA TRIGGER DELETE || id: 83481
+
+TRIGGER Procedure 0.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: S8348_0_1
+Add behavior CommanderDramaWithIndex (idName: 8348591) to Nia
+(param: SeatDramaName:SaloonSeat01-2|TargetScene:Saloon|DramaIndex:13|TriggerTag:834959RaiseGlasses)
+Add behavior CommanderDramaWithIndex (idName: 8348171) to Mi-an
+(param: SeatDramaName:SaloonSeat01-1|TargetScene:Saloon|DramaIndex:13|TriggerTag:834917RaiseGlasses)
+Add behavior CommanderDramaWithIndexPlayer (idName: 8348001) to Player
+(param: SeatDramaName:SaloonSeat02-1|TargetScene:Saloon|DramaIndex:13|TriggerTag:834900RaiseGlasses)
+DELAY MASK SET || maskId: 83481 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 83481 | flagName: S8376_Item1 | extraParams: -1 | sceneName: Saloon | path: S8348_Item1
+Set 8348Move1 to 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 83481 | delayTime: 4 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 83481
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 6069_0 starts:
+{{dialogue|Nia|Hey, ''Player'', you made it! We've already ordered the food.}}
+{{dialogue|Mi-an|Yeah, come join the celebration!}}
+{{dialogue|Nia|I was a bit worried about starting a new business selling flowers and plants... but it turned out great! Going by our sales today, we'll break even very quickly!}}
+{{dialogue|Nia|We knew exactly the types of flora that Sandrockers liked, all thanks to Mi-an's research!}}
+{{dialogue|Mi-an|Hehe, thanks! All I did was ask around... You're the one that's amazing! Getting everything setup in such a short time.}}
+
+*''Wishing you all the best with your new business!''
+*''Wow, you really thought this through! Impressive!''
+
+{{dialogue|Nia|indent=true|answer=Wishing you all the best with your new business!
+|Thank you! Yes, I do hope our Mi-ni Botanica will grow into something special!}}
+{{dialogue|Mi-an|indent=true|answer=Wow, you really thought this through! Impressive!
+|Yeah we did, didn't we, Nia? Yay! Go us!}}
+{{dialogue|Mi-an|Alright, let's raise our glasses for a toast!}}
+{{dialogue|Mi-an|First, a big thanks to ''Player'' for all their help. Second, let's celebrate the realization of Nia's and my dreams! And lastly, let's toast to Nia spreading roots in Sandrock with her business up and running!}}
+{{dialogue|Nia|Cheers!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 7.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add tag "834917RaiseGlasses" to Mi-an
+Add tag "834959RaiseGlasses" to Nia
+Add tag "834900RaiseGlasses" to Player
+STOPWATCH REAL TIME SET || id: 83482 | sec: 5
+
+TRIGGER Procedure 0.0 Step 8.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 83482
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 19404 starts:
+{{dialogue|Nia|Okay, time to dig in! That was a busy day, and now I'm starving!}}
+
+TRIGGER Procedure 0.0 Step 9.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 83482 | delayTime: 3 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 11.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 83482
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderDramaWithIndexPlayer (idName: 8348001) from Player
+Remove behavior CommanderDramaWithIndex (idName: 8348171) from Mi-an
+Remove behavior CommanderDramaWithIndex (idName: 8348591) from Nia
+Mi-an stands still in Main
+Nia stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8348_0_1
+
+TRIGGER Procedure 0.0 Step 11.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Mi-an stops standing still
+Nia stops standing still
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1200383
+END MISSION 1200384
+END MISSION 1800348
+
+TRIGGER Procedure 0.0 Step 14.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Saloon to the Main:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 83482 | delayTime: 3 | durationTime: -2 | changeType: 1 | curveIndex: 0
+SCENEITEM DELETE || itemType: 0 | id: 83481
+PLAYER SET POS ROT FLAG || flagName: S8348_0_1 | sceneName: Main
+
+TRIGGER Procedure 0.0 Step 16.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 83482
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 6072_0 starts:
+{{dialogue|Nia|Starting today, I'm not just botanist Nia; I'm the proud owner of the Mi-ni Botanica! Of course, I'll still come to you two for advice and guidance in the days to come!}}
+{{dialogue|Mi-an|Haha, of course, Nia! I'm the shop's co-owner and your partner. I'll always have your back!}}
+{{dialogue|Nia|Tomorrow marks a new chapter in my life in Sandrock. Thanks for everything today, ''Player'' and Mi-an! It's getting late and I should head home. See you both later!}}
+{{dialogue|Mi-an|Bye! Take care, ''Player''!}}
+The conversation ends.
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8348_0_1

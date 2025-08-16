@@ -1,0 +1,806 @@
+Reading Mission 1400372: Catori World
+
+<onlyinclude>{{Infobox mission
+|name = Catori World
+|image =
+|description = Catori World is finally complete. Catori is having a grand opening to let the world know of her wonderful new amusement park.
+|type = Main
+|time =
+|location =
+|characters = [[Catori]]
+|condition =
+|details =
+|exp = 2800
+|reputation = None
+|gols = None
+|npc1 = Catori
+|rp1 = 20
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200310
+
+TRIGGER Procedure 10.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+The Happiest Place in the Free Cities is successfully completed
+ACTIONS
+Run mission A Family Reunited
+
+TRIGGER Procedure 10.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+The Makings of a Park is successfully completed
+CHECK SCENEITEM EXIST || sceneItemType: 0 | id: 23679 | exist: 1
+Check if Alo is in town
+ACTIONS
+Run mission Catori World
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1400372
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|652}}
+Set cnt to 1
+Set update to 0
+Set visited to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 652
+CONDITIONS
+Check if cnt is == 1
+ACTIONS
+Set update to 1
+DELIVER MISSION 1400372
+START MISSION 1400372
+===Wait for Tomorrow===
+
+{{mission_details
+|desc = The grand opening is set for tomorrow night. Wait until then to attend the ceremony.
+|details = Wait for Tomorrow
+}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment cnt by 1
+
+TRIGGER Procedure 1.0 Step 0.5 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if update is == 1
+Check if cnt is == 2
+ACTIONS
+===Attend Grand Opening at 20:00PM===
+
+{{mission_details
+|desc = The grand opening of Catori World is set for 20:00PM tonight. Go to the front gates of Catori World in the Valley of Whispers to join in.
+|details = Attend Grand Opening at 20:00PM
+}}
+CALENDAR SET REMINDER || addDays: 0 | hour: 19 | transId: 80027913
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 20:00 (order: 10):
+CONDITIONS
+Check if cnt is == 2
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1400372 | id: 437201 | sceneName: Main | flagName: S4372_Trigger1 | showOnMap: 1 | mapIcon: MissionArea | transId: 80027601
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 437201
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 437202 | delayTime: 0 | durationTime: 2 | changeType: 2 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+Set visited to 1
+AREA TRIGGER DELETE || id: 437201
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437202 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S4372_8000Pre
+Catori stands still in Main
+Alo stands still in Main and looks at Catori
+Trudy stands still in Main and looks at Catori
+Owen stands still in Main and looks at Catori
+Heidi stands still in Main and looks at Catori
+Add behavior CommanderMoveToFlag (idName: 4372117) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:S4372_8000|LookAtActor:8024)
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 4372522
+CONDITIONS
+Always:
+ACTIONS
+(cId 437221) A conversation 5100_0 starts:
+{{dialogue|Catori|Thank you all for coming today! I just want to say a few words before we're officially open. Don't worry! I won't make you wait too long! Haha!}}
+{{dialogue|Catori|Ever since I was a little girl, I've dreamed about this place. A place of pure happiness and wonder. Other people, they didn't see it that way, they thought I had my head stuck in the clouds!}}
+{{dialogue|Catori|When I came to Sandrock, everything changed. The people of Sandrock believed in me. They believed in my dream.}}
+{{dialogue|Catori|Sandrockers are something truly special. I want to thank them for believing in me when all I had was a shack with some old games and an empty museum. They gave me their hard earned money and time when no one else would.}}
+{{dialogue|Heidi|You go girl!}}
+{{dialogue|Owen|♫!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 7.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 437221) There is a conversation segment (id 16689) that ends:
+{{dialogue|Catori|Sandrockers are something truly special. I want to thank them for believing in me when all I had was a shack with some old games and an empty museum. They gave me their hard earned money and time when no one else would.}}
+CONDITIONS
+Always:
+ACTIONS
+SOUND PLAY 2D || idStr: mission_claph
+
+TRIGGER Procedure 1.0 Step 8.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 437221) There is a conversation segment (id 16691) that ends:
+{{dialogue|Owen|♫!}}
+CONDITIONS
+Always:
+ACTIONS
+(cId 437229) A conversation 5101_0 starts:
+{{dialogue|Catori|I also want to thank my son and Ma for sticking with me through the good times and the bad. You don't know how much that means to me!}}
+{{dialogue|Alo|You're the best, Ma!}}
+{{dialogue|Catori|And finally, I especially owe my thanks to you, ''Player''. You were always willing to lend a hand whenever I needed it. Without you, Catori World might never have been possible.}}
+{{dialogue|Catori|So I want to invite you, ''Player'', to be the first official guest to Catori World! Come on up!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 9.1 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 437229) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 4372117) from Player
+Add behavior CommanderMoveToFlagAndAction (idName: 4372122) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S4372_8000B|Action:Hi)
+Catori stands still in Main and looks at Player
+
+TRIGGER Procedure 1.0 Step 9.2 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 437222) A conversation 5102_0 starts:
+{{dialogue|Catori|To everyone here today, and to all the folks who come after, welcome! This park is for you. Here adults can be children, and children can dream of a bright future.}}
+{{dialogue|Catori|Welcome to Catori World, the happiest place in the Free Cities!}}
+The conversation ends.
+Catori stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 4372122) from Player
+
+TRIGGER Procedure 1.0 Step 11.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 437222) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SOUND PLAY 2D || idStr: mission_claph
+{{cutscene|id = 1399}}
+A cutscene CG_OPENPARK (duration: -2.0) starts playing
+Grand Opening - With joyous buzzers and bells ringing in the distance, fireworks blossoming in the sky, the opening day of Catori World was captivating.
+
+TRIGGER Procedure 1.0 Step 13.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_OPENPARK | state: 9
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 4372122) from Player
+CUTSCENE UI STATE EXIT || 
+STOPWATCH REAL TIME SET || sec: 2 | id: 437212
+STOPWATCH REAL TIME SET || sec: 6 | id: 437213
+SUBMIT MISSION 1400372
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 437203
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 437214 | delayTime: 0 | durationTime: 1 | changeType: 2 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 437203
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437214 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 437223) A conversation 5103_0 starts:
+{{dialogue|Catori|Have you gone on all the rides?}}
+{{dialogue|Alo|Oh yeah, the Roller Coaster is awesome!}}
+{{dialogue|Catori|Well? What do you think of the park?}}
+{{dialogue|Alo|It's... really great! Fantastic! I'm really impressed, Ma!}}
+{{dialogue|Alo|I'm proud of ya!}}
+{{dialogue|Catori|Oh honey, c'mere!}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 437223) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 4372144) to Catori
+(param: CMDAction:HugSon|LookAtActor:8118)
+Add behavior CommanderNPCAction (idName: 4372145) to Alo
+(param: CMDAction:HugMother)
+STOPWATCH REAL TIME SET || id: 437214 | sec: 4
+ACTOR FREEZ COLLIDER || npc: 8024 | freezeCollider: 1
+ACTOR FREEZ COLLIDER || npc: 8118 | freezeCollider: 1
+
+TRIGGER Procedure 2.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437214 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Catori stands still in Main and looks at Alo
+Alo stands still in Main and looks at Catori
+Remove behavior CommanderMoveToFlagAndAction (idName: 4372131) from Catori
+Remove behavior CommanderMoveToFlagAndAction (idName: 4372132) from Alo
+
+TRIGGER Procedure 2.0 Step 4.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_OPENPARK | state: 7
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM ADD || id: 21 | instId: 7301 | scene: Main | dailyBehavior: NPC_VisitPlayGround | flagName: Visitor1
+NPC RANDOM ADD || flagName: Visitor2 | id: 21 | instId: 7302 | scene: Main | dailyBehavior: NPC_VisitPlayGround
+NPC RANDOM ADD || dailyBehavior: NPC_VisitPlayGround | flagName: Visitor3 | instId: 7303 | scene: Main | id: 21
+NPC RANDOM ADD || dailyBehavior: NPC_VisitPlayGround | flagName: Visitor4 | instId: 7304 | scene: Main | id: 21
+NPC RANDOM ADD || dailyBehavior: NPC_VisitPlayGround | flagName: Visitor5 | instId: 7305 | scene: Main | id: 21
+NPC RANDOM ADD || dailyBehavior: NPC_VisitPlayGround | flagName: Visitor6 | instId: 7306 | scene: Main | id: 21
+NPC RANDOM ADD || dailyBehavior: NPC_VisitPlayGround | flagName: Visitor7 | instId: 3501 | scene: Main | id: 22
+NPC RANDOM ADD || dailyBehavior: NPC_VisitPlayGround | flagName: Visitor8 | instId: 3502 | scene: Main | id: 22
+NPC RANDOM ADD || dailyBehavior: NPC_VisitPlayGround | flagName: Visitor9 | instId: 3503 | scene: Main | id: 22
+NPC RANDOM ADD || dailyBehavior: NPC_VisitPlayGround | flagName: Visitor10 | instId: 3504 | scene: Main | id: 22
+NPC RANDOM ADD || dailyBehavior: NPC_VisitPlayGround | flagName: Visitor11 | instId: 3505 | scene: Main | id: 22
+NPC RANDOM ADD || dailyBehavior: NPC_VisitPlayGround | id: 22 | flagName: Visitor12 | instId: 3506 | scene: Main
+NPC RANDOM ADD || dailyBehavior: NPC_VisitPlayGround | instId: 3601 | scene: Main | id: 23 | flagName: Visitor13
+SCENEITEM CREATE FLAG || itemType: 0 | id: 236718 | path: Preload_PlayGroundNPC | flagName: default | sceneName: Main | extraParams: -1
+
+TRIGGER Procedure 2.0 Step 5.5 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 437214
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 437215 | delayTime: 0 | durationTime: 1 | changeType: 2 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437215 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Catori stops standing still
+Alo stops standing still
+Remove behavior CommanderNPCAction (idName: 4372144) from Catori
+Remove behavior CommanderNPCAction (idName: 4372145) from Alo
+ACTOR FREEZ COLLIDER || npc: 8024 | freezeCollider: 0
+ACTOR FREEZ COLLIDER || npc: 8118 | freezeCollider: 0
+
+TRIGGER Procedure 2.0 Step 7.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437215 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 437204
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 437216 | delayTime: 0 | durationTime: 1 | changeType: 2 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 437204
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437216 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Jasmine stands still in Main and looks at Andy
+Andy stands still in Main and looks at Jasmine
+Remove behavior CommanderMoveToFlagAndAction (idName: 4372138) from Jasmine
+Remove behavior CommanderMoveToFlagAndAction (idName: 4372141) from Andy
+
+TRIGGER Procedure 3.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437216 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 437224) A conversation 5104_0 starts:
+{{dialogue|Andy|I told ya Jasmine, it's cilantro! If you ain't eatin' it you ain't gonna grow! Didya see? I can go on any ride I want!}}
+{{dialogue|Jasmine|I saw you on the Roller Coaster! You were bawling your eyes out!}}
+{{dialogue|Andy|Was not! I was jumpin' off cliffs back in my bandit days!}}
+{{dialogue|Jasmine|Really? That's not what this picture says...}}
+{{dialogue|Andy|You... you have a camera...?}}
+{{dialogue|Jasmine|I work for the paper, remember?}}
+{{dialogue|Andy|Gimme that pic...}}
+{{dialogue|Jasmine|Uh-uh-uh, magic word...}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 437224) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 437217 | delayTime: 0 | durationTime: 1 | changeType: 2 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 10.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437217 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Andy stops standing still
+Jasmine stops standing still
+
+TRIGGER Procedure 3.0 Step 11.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437217 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 437205
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 437218 | delayTime: 0 | durationTime: 1 | changeType: 2 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 437205
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437218 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM ADD || id: 14 | instId: 84371 | scene: Main | flagName: S4372_84371 | dailyBehavior: RandomNPC
+NPC RANDOM ADD || id: 1 | instId: 84372 | scene: Main | flagName: S4372_84372 | dailyBehavior: RandomNPC
+84371 stands still in Main and looks at 84372
+84372 stands still in Main and looks at 84371
+Remove behavior CommanderMoveToFlagAndAction (idName: 4372135) from 84371
+Remove behavior CommanderMoveToFlagAndAction (idName: 4372136) from 84372
+ACTION NPC RENAME || npc: 84371 | nameTransId: 80031427
+ACTION NPC RENAME || npc: 84372 | nameTransId: 80031427
+
+TRIGGER Procedure 4.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437218 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 437225) A conversation 5105_0 starts:
+{{dialogue|84371|Wasn't that splendid, Gertrude. What a darling experience.}}
+{{dialogue|84372|Quite, quite. This Catori World is a rather dashing experience all round.}}
+{{dialogue|84371|Indubitably. Now, let us depart one more time for Coaster World!}}
+{{dialogue|84372|What a wonderful idea, Cornelius.}}
+The conversation ends.
+
+TRIGGER Procedure 4.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 437225) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 437219 | delayTime: 0 | durationTime: 1 | changeType: 2 | curveIndex: 0
+
+TRIGGER Procedure 4.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437219 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+84371 stops standing still
+84372 stops standing still
+
+TRIGGER Procedure 4.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437219 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 5.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 437206
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 437220 | delayTime: 0 | durationTime: 1 | changeType: 2 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 437206
+
+TRIGGER Procedure 5.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Check if cnt is >= 2
+Check if visited is <= (maybe?) 0
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 4372131) from Catori
+Remove behavior CommanderMoveToFlagAndAction (idName: 4372132) from Alo
+Remove behavior CommanderMoveToFlagAndAction (idName: 4372133) from Trudy
+Remove behavior CommanderMoveToFlagAndAction (idName: 4372134) from Heidi
+Remove behavior CommanderMoveToFlagAndAction (idName: 4372135) from 84371
+Remove behavior CommanderMoveToFlagAndAction (idName: 4372136) from 84372
+Remove behavior CommanderMoveToFlagAndAction (idName: 4372138) from Jasmine
+Remove behavior CommanderMoveToFlagAndAction (idName: 4372139) from 84373
+Remove behavior CommanderMoveToFlagAndAction (idName: 4372140) from 84374
+Remove behavior CommanderMoveToFlagAndAction (idName: 4372141) from Andy
+Remove behavior CommanderMoveToFlagAndAction (idName: 4372142) from 84375
+Remove behavior CommanderMoveToFlagAndAction (idName: 4372143) from 84376
+AREA TRIGGER DELETE || id: 437201
+AREA TRIGGER DELETE || id: 437203
+AREA TRIGGER DELETE || id: 437204
+AREA TRIGGER DELETE || id: 437205
+AREA TRIGGER DELETE || id: 437206
+AREA TRIGGER DELETE || id: 437207
+AREA TRIGGER DELETE || id: 437208
+NPC RANDOM REMOVE || id: 84371
+NPC RANDOM REMOVE || id: 84372
+NPC RANDOM REMOVE || id: 84373
+NPC RANDOM REMOVE || id: 84374
+NPC RANDOM REMOVE || id: 84375
+NPC RANDOM REMOVE || id: 84376
+Owen stops standing still
+Jasmine stops standing still
+Andy stops standing still
+84373 stops standing still
+84374 stops standing still
+84375 stops standing still
+84376 stops standing still
+END MISSION 1400372
+
+TRIGGER Procedure 5.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if cnt is == 3
+Check if visited is == 0
+ACTIONS
+AREA TRIGGER DELETE || id: 437201
+The player receives a letter:
+{{mail|653}}
+SUBMIT MISSION 1400372
+END MISSION 1400372
+
+TRIGGER Procedure 5.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437220 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM ADD || id: 14 | instId: 84373 | scene: Main | flagName: S4372_84373 | dailyBehavior: RandomNPC
+NPC RANDOM ADD || id: 14 | instId: 84374 | scene: Main | flagName: S4372_84374 | dailyBehavior: RandomNPC
+84373 stands still in Main and looks at 84374
+84374 stands still in Main and looks at 84373
+Remove behavior CommanderMoveToFlagAndAction (idName: 4372139) from 84373
+Remove behavior CommanderMoveToFlagAndAction (idName: 4372140) from 84374
+
+TRIGGER Procedure 5.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437220 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 437226) A conversation 5106_0 starts:
+{{dialogue|84373|I hear this place used to be some crazy Old World shampoo-ey place.}}
+{{dialogue|84374|Phooey! Ain't no shampoo round these parts.}}
+{{dialogue|84373|That's 'cause they done cleaned up. Got it all sparklin' like. Then they built this here amusement park.}}
+{{dialogue|84374|Them crazy Sandrockers... what'll they do next?}}
+The conversation ends.
+
+TRIGGER Procedure 5.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 437226) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 437221 | delayTime: 0 | durationTime: 1 | changeType: 2 | curveIndex: 0
+
+TRIGGER Procedure 5.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437221 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+84373 stops standing still
+84374 stops standing still
+
+TRIGGER Procedure 5.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437221 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 6.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 437207
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 437222 | delayTime: 0 | durationTime: 1 | changeType: 2 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 437207
+
+TRIGGER Procedure 6.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437222 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM ADD || id: 1 | instId: 84375 | scene: Main | flagName: S4372_84375 | dailyBehavior: RandomNPC
+NPC RANDOM ADD || id: 14 | instId: 84376 | scene: Main | flagName: S4372_84376 | dailyBehavior: RandomNPC
+84375 stands still in Main and looks at 84376
+84376 stands still in Main and looks at 84375
+Remove behavior CommanderMoveToFlagAndAction (idName: 4372142) from 84375
+Remove behavior CommanderMoveToFlagAndAction (idName: 4372143) from 84376
+
+TRIGGER Procedure 6.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437222 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 437227) A conversation 5107_0 starts:
+{{dialogue|84375|I'm glad I'm visiting before this place becomes famous! Before the wait times increase!}}
+{{dialogue|84376|What? Will the wait time really increase?}}
+{{dialogue|84375|Oh yeah! They'll add a special higher priced membership for you to skip all the lines. I've forseen it!}}
+The conversation ends.
+
+TRIGGER Procedure 6.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 437227) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 437223 | delayTime: 0 | durationTime: 1 | changeType: 2 | curveIndex: 0
+
+TRIGGER Procedure 6.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437223 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+84375 stops standing still
+84376 stops standing still
+
+TRIGGER Procedure 6.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437223 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 7.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 437208
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 437224 | delayTime: 0 | durationTime: 1 | changeType: 2 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 437208
+
+TRIGGER Procedure 7.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437224 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Heidi stands still in Main and looks at Trudy
+Trudy stands still in Main and looks at Heidi
+Remove behavior CommanderMoveToFlagAndAction (idName: 4372134) from Heidi
+Remove behavior CommanderMoveToFlagAndAction (idName: 4372133) from Trudy
+
+TRIGGER Procedure 7.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437224 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 437228) A conversation 5108_0 starts:
+{{dialogue|Heidi|Well, dang. She did it.}}
+{{dialogue|Trudy|I'm happy for her. It's been tough for her, coming here, leaving her family. She tried to do something special, and Sandrock hit her like a ton of bricks. But she came out the other side, stronger than ever.}}
+{{dialogue|Heidi|Yeah, really proud of her.}}
+{{dialogue|Trudy|So... did you try all the rides?}}
+{{dialogue|Heidi|Mmhmm. I was the one doing final inspections... so I rode them all a zillion times already, you know, for safety.}}
+{{dialogue|Trudy|Right, for safety.}}
+The conversation ends.
+
+TRIGGER Procedure 7.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 437228) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 437225 | delayTime: 0 | durationTime: 1 | changeType: 2 | curveIndex: 0
+
+TRIGGER Procedure 7.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437225 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Heidi stops standing still
+Trudy stops standing still
+
+TRIGGER Procedure 7.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437225 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 13.0 Step 12.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_OPENPARK | state: 7
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 4372131) to Catori
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S4372_8024C1)
+Add behavior CommanderMoveToFlagAndAction (idName: 4372132) to Alo
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S4372_8118C1)
+Add behavior CommanderMoveToFlagAndAction (idName: 4372133) to Trudy
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S4372_8006C6)
+Add behavior CommanderMoveToFlagAndAction (idName: 4372134) to Heidi
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S4372_8009C6)
+AREA TRIGGER CREATE || missionId: 1400372 | id: 437203 | sceneName: Main | flagName: S4372_Trigger2 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80027601
+AREA TRIGGER CREATE || missionId: 1400372 | id: 437204 | sceneName: Main | flagName: S4372_Trigger3 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80027601
+AREA TRIGGER CREATE || id: 437205 | transId: 80027601 | missionId: 1400372 | sceneName: Main | flagName: S4372_Trigger4 | showOnMap: 1 | mapIcon: MissionAreaBranch
+AREA TRIGGER CREATE || id: 437206 | transId: 80027601 | missionId: 1400372 | sceneName: Main | flagName: S4372_Trigger5 | showOnMap: 1 | mapIcon: MissionAreaBranch
+AREA TRIGGER CREATE || id: 437207 | transId: 80027601 | missionId: 1400372 | sceneName: Main | flagName: S4372_Trigger6 | showOnMap: 1 | mapIcon: MissionAreaBranch
+AREA TRIGGER CREATE || id: 437208 | transId: 80027601 | missionId: 1400372 | sceneName: Main | flagName: S4372_Trigger7 | showOnMap: 1 | mapIcon: MissionAreaBranch
+Catori stops standing still
+Alo stops standing still
+Trudy stops standing still
+Heidi stops standing still
+Owen stops standing still
+
+==Rewards==
+{{mission reward
+|npc1 = Catori
+|rp1 = 20
+|exp = 2800
+|reputation = None
+|gols = None
+}}
+==Post-conduct==
+
+If the player successfully completes the mission, some of the townsfolk will comment on it:
+
+{{dialogue|Amirah|I must say I'm absolutely terrified of that rollercoaster. But... if you asked me to go with you, I wouldn't say no.}}
+{{dialogue|Andy|Here's how to really have fun on that coaster: when you get to the top, put both hands in the air and just scream, "Waaaaaaaaooohhhh...!" Feels like you're fallin' off a cliff...! Oh, that really happened to you, huh? Sorry to reopen old sores...}}
+{{dialogue|Arvio|Catori's got me supplying some of the everyday items she needs for the park. Great to see how more businesses in Sandrock can help each other grow!}}
+{{dialogue|Burgess|Unfortunately, rollercoaster inspection goes beyond my area of expertise as a safety inspector! Luckily we had a group of highly trained engineers check and double-check every aspect of the park. I can however offer my seal of approval when it comes... to fun!}}
+{{dialogue|Catori|Well! We did it, ''Player''! Catori World is open for business. And business is booming! Gosh... I can hardly get over it. Every moment since we opened the park has really just been a dream come true...}}
+{{dialogue|Cooper|Shucks. Can't believe I ain't never thought to make my own theme park! Tie a kid to a Yakmel, kick it in the butt; there's a ride they'll never forget! Let 'em bounce around on the rubber scrap... Shoot. Maybe it's not too late for me to be bootleg Catori World...}}
+{{dialogue|Dan-bi|My only regret is that Catori's theme park wasn't around when Ri-ri and I were dating. I could've used him screaming in terror on the rollercoaster ride as an excuse to grab his hand, hahaha...!}}
+{{dialogue|Elsie|That rollercoaster is a league a minute! I must have ridden it fifty times by now! It's like... breakin' in a Yakmel with... rockets attached to the sides!}}
+{{dialogue|Ernest|Suddenly my mailbox is blowing up... "You know Catori?" "What's the theme park like?" "How can I invest in Catori...?" Hm... should I be Catori's connection to Atara? Do I even have time for that...?}}
+{{dialogue|Fang|X has said... many people are now gathering by the canyon...}}
+{{dialogue|Grace|If you ever hear me say I'm tired of rollercoasters, go ahead and take me out. I've been replaced by a Duvos doppleganger.}}
+{{dialogue|Heidi|I love looking off into the distance and seeing that theme park. Not just because we helped build it, but because it represents the story of a woman who gambled everything on a better life for her family and won... I admire that.}}
+{{dialogue|Hugo|Have you gone to Catori World yet? It's a miracle of modern engineering, I tell ya! Think I'm gonna have to stay off the rollercoaster though. Too many ups and downs.}}
+{{dialogue|Jane|There must be some way I can spin going to a theme park as educational... Ah! Physics and engineering of rollercoaster science. There it is. Field trip, here we come!}}
+{{dialogue|Jasmine|When I was five, on the Day of Memories, I used my lantern to wish for a rollercoaster park. I... I gotta be careful what I wish for...!}}
+{{dialogue|Jensen|If you think about it, a roller coaster is just a train in the sky. The pathing... incredibly inefficient. But... I suppose that's what some people consider "fun..."}}
+{{dialogue|Justice|Watch out for the carnival games at Catori World; they're rigged I tell ya! You know as well as anybody I could shoot a fly out of a teacup half a league away, but... those games, man... Don't say I didn't warn ya.}}
+{{dialogue|Krystal|Glad Catori didn't forget her primary demographic by including a few kiddie rides in the back where I can take lil Pebbles...!}}
+{{dialogue|Larry|All you humans think I'm some kind of costumed freak whenever I walk around at that Catori World! But the cotton candy is so delectable, that I will endure such mockery... for now.}}
+{{dialogue|Logan|Think I've blown my ears out sittin' next to Andy on that rollercoaster ride...}}
+{{dialogue|Mabel|I'm tempted to help Catori get into the concocting of fair food, but... it's all so unhealthy! I hear in some places back in the Old World, they'll even deep fry a candy bar...}}
+{{dialogue|Mi-an|Elsie loves the new rollercoaster! And I did, too...! The first twelve times... Now I get sick just lookin' at it... I'll be fine, though, ''Player''. This, too... shall pass...}}
+{{dialogue|Miguel|Ms. Catori really did end up having a theme park built? Well, it seems there's nothing that can stop you now...}}
+{{dialogue|Mort|With prosperity, some luxury can be afforded. It brings a smile to my face, to see our children having such fun at the theme park.}}
+{{dialogue|Nia|Catori World! Rollercoasters, flashing lights, and candy apples? You betcha! Just... do one thing for me, will you, ''Player''? If I'm going to the theme park too often, if you think I have a problem... You'll tell me, right?}}
+{{dialogue|Owen|You wouldn't believe how many bookings we've got since Catori World opened; I couldn't give a room at the Blue Moon to my own parents for the next month easy...!}}
+{{dialogue|Pablo|Catori World is blowing up. And I'll be first on the scene to report! I've got exclusives lined up across every magazine in the Free Cities... And if I don't get the cover in Walnut Groove... we riot!}}
+{{dialogue|Qi|You may have noticed that Catori's rollercoaster is fast. Very fast. This is because the aerodynamic designs were based off that of spacecraft I analyzed in the Starship Ruins. I highly recommend riding it, as it's the only currently known way to experience a brief moment of zero gravity.}}
+{{dialogue|Rian|Whew... good thing there was no Catori World when me and Dan-dan were dating. Otherwise she might've seen me screaming like a little girl on one of those crazy rides and dumped me...}}
+{{dialogue|Rocky|Maaaan, I love them theme park rides. First I was like, "What, this is just a mine cart," then... bam! We're off! I was on cloud nine, drinkin' soda and havin' some cotton candy... then I threw up. But it was worth it! I'll do it again.}}
+{{dialogue|Trudy|Catori World! It's an astounding achievement, really. But, whew... safety regulations are a real headache. And Jasmine asks me to take her there about ten times a day...}}
+{{dialogue|Unsuur|I had plenty of ideas for Catori World. Wet paint museum. Boulder races. Rock stacking competitions. All rejected. So... hate to be bitter, but... I probably won't be spending much time at Catori World. Unless someone invites me.}}
+{{dialogue|Venti|Rocky loves Catori World! And I'll say the excitement of it all really seems to calm him down! He says we can go there for teambuilding exercises; everybody has to ride the coaster! Peck was so happy to hear this that he turned completely pale!}}
+{{dialogue|Vivi|No one is too old to enjoy the fun of rollercoasters! Unless, of course, you have a heart condition. Consult your doctor!}}
+{{dialogue|Wei|Me? I'm not one for the rollercoasters. Give me the good ol' carousel any day of the week! One speed, one direction, that's my idea of a good time! No unpleasant twists or turns...}}
+{{dialogue|Xena|Ride the thundrous speed machine at that canyon park; face your fears! If you never risk your life, you never know what it is to be alive!}}
+{{dialogue|Zeke|Valley of Whispers is now grounds for a theme park. A place that used to make people sick... well, it still makes people sick, but... they like it, I guess.}}

@@ -1,0 +1,102 @@
+Reading Mission 1900413: Recipe for Love
+
+<onlyinclude>{{Infobox mission
+|name = Recipe for Love
+|image =
+|description = Elsie is definitely planning something. Hopefully it's a good surprise and not a bad one...
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 2800
+|reputation = 15
+|gols = 500
+|npc1 = Elsie
+|rp1 = 20
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200062
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Flaming Saddles is successfully completed
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+Run mission Away from It All
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check relationship with Elsie is Lover
+Check if mission 1800273 is result 1 flag 1
+ACTIONS
+Run mission Recipe for Love
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1900413
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|799}}
+DELIVER MISSION 1900413
+Set M8005 to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 799
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1900413
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1900413
+CONDITIONS
+Always:
+ACTIONS
+Run mission Recipe for Love
+END MISSION 1900413
+
+TRIGGER Procedure 1.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PLAYER MARRIAGE || order: 0 | id: 8005
+CONDITIONS
+Always:
+ACTIONS
+Set M8005 to 1
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PLAYER MARRIAGE || order: 0 | id: -1
+CONDITIONS
+Check if M8005 is == 0
+ACTIONS
+CLOSE MISSION || missionId: 1900413
+
+==Rewards==
+{{mission reward
+|npc1 = Elsie
+|rp1 = 20
+|exp = 2800
+|reputation = 15
+|gols = 500
+}}

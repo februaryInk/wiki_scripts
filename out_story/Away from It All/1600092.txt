@@ -1,0 +1,214 @@
+Reading Mission 1600092: Away from It All
+
+<onlyinclude>{{Infobox mission
+|name = Away from It All
+|image =
+|description = To thank you, Elsie has invited you out on a horse ride.
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 1000
+|reputation = None
+|gols = None
+|npc1 = Elsie
+|rp1 = 15
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200062
+
+TRIGGER Procedure 0.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if Elsie has favor >= 200
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+Run mission Flaming Saddles
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Flaming Saddles is successfully completed
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+Run mission Away from It All
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+Where's Mi-an is in state 1 with flag 0
+The Childhood Friend is in state 1 with flag 0
+Goodbye, Nia is in state 1 with flag 0
+The Kidnapping is in state 1 with flag 0
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+CHECK WEATHER STATE || weather: 0 | flag: 1
+Check if Elsie is in town
+CHECK GLOBAL BLACKBOARD || key: triallogan | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+
+TRIGGER Procedure 0.0 Step 0.1 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key NoCutSceneObstacle with info 1.
+Elsie stands still in Main and looks at Player
+RIDABLE CREATE || protoId: 102 | instanceId: 16929 | ownerId: 8005 | sceneFlag: Main:1600092_G1_Horse_1
+Set IsAcceptInvite to 0
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: 1600092_G1_Player_1
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId 10) A conversation 2237, 507_0 starts:
+{{dialogue|Elsie|''Player''! Rise and shine! Dang, you rise late. I've been waitin' forever! Almost ten minutes now!}}
+{{dialogue|Elsie|But that's neither here nor there; c'mon, I brought lil' Belle, we're goin' ridin'!}}
+
+*''Okay, let's go!''
+*''Both of us on the same horse?''
+*''Maybe next time, I'm busy.''
+
+{{dialogue|Elsie|indent=true|answer=Okay, let's go!
+|Swell! Saddle up and let's get a move on! I'm fixin' to take you to my favorite spot!}}
+{{dialogue|Elsie|indent=true|answer=Maybe next time, I'm busy.
+|Next time? Hmph! What makes you so sure there'll be a next time? Yah, Belle! Yah!}}
+{{dialogue|Elsie|Of course! Buds always ride together, ain't it? I wanna try out this new saddle, whaddya say?}}
+
+*''Okay, let's go!''
+*''Maybe next time, I'm busy.''
+
+{{dialogue|Elsie|indent=true|answer=Okay, let's go!
+|Swell! Saddle up and let's get a move on! I'm fixin' to take you to my favorite spot!}}
+{{dialogue|Elsie|indent=true|answer=Maybe next time, I'm busy.
+|Next time? Hmph! What makes you so sure there'll be a next time? Yah, Belle! Yah!}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Check if IsAcceptInvite is == 1
+ACTIONS
+Elsie stops standing still
+Add behavior NPC_RideMount (idName: 16920512) to Elsie
+(param: RideInstID:16929|MoveMode:Run)
+DELIVER MISSION 1600092
+START MISSION 1600092
+
+TRIGGER Procedure 1.0 Step 3.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Check if IsAcceptInvite is == 0
+ACTIONS
+Elsie stops standing still
+Add behavior NPC_RideMount (idName: 16920512) to Elsie
+(param: RideInstID:16929)
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 1.1 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) The player picks the first option in conversation segment 2238:
+{{dialogue|Elsie|But that's neither here nor there; c'mon, I brought lil' Belle, we're goin' ridin'!}}
+
+*''Okay, let's go!'' (No unique dialogue)
+*''Both of us on the same horse?'' (No unique dialogue)
+*''Maybe next time, I'm busy.'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 6385:
+{{dialogue|Elsie|Of course! Buds always ride together, ain't it? I wanna try out this new saddle, whaddya say?}}
+
+*''Okay, let's go!'' (No unique dialogue)
+*''Maybe next time, I'm busy.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set IsAcceptInvite to 1
+
+TRIGGER Procedure 0.0 Step 4.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1600092
+CONDITIONS
+Always:
+ACTIONS
+Run mission Away from It All
+END MISSION 1600092
+
+TRIGGER Procedure 1.0 Step 4.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8005 | behaviourName: NPC_RideMount | eventName: HaveRiddenOnMount
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagRiding (idName: 16920513) to Elsie
+(param: TargetScene:Main|MoveMode:Walk|FlagName:1600092_G1_8005_2)
+
+TRIGGER Procedure 1.0 Step 5.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8005 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagRidingOver
+CONDITIONS
+Always:
+ACTIONS
+Add behavior NPC_RideMount_Removal (idName: 16920514) to Elsie
+(param: 0)
+
+TRIGGER Procedure 1.0 Step 6.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8005 | behaviourName: NPC_RideMount_Removal | eventName: HaveLeftMount
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior NPC_RideMount (idName: 16920512) from Elsie
+Remove behavior CommanderMoveToFlagRiding (idName: 16920513) from Elsie
+Remove behavior NPC_RideMount_Removal (idName: 16920514) from Elsie
+
+TRIGGER Procedure 1.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior NPC_RideMount (idName: 16920512) from Elsie
+Remove behavior CommanderMoveToFlagRiding (idName: 16920513) from Elsie
+Remove behavior NPC_RideMount_Removal (idName: 16920514) from Elsie
+RIDABLE DESTROY || id: 16929
+END MISSION 1600092
+
+==Rewards==
+{{mission reward
+|npc1 = Elsie
+|rp1 = 15
+|exp = 1000
+|reputation = None
+|gols = None
+}}

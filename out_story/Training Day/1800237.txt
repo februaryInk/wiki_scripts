@@ -1,0 +1,706 @@
+Reading Mission 1800237: Training Day
+
+<onlyinclude>{{Infobox mission
+|name = Training Day
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Training Day:
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 6822) that ends:
+{{dialogue|Justice|Ain't no thing, pardner. Just meet me by the shootin' range, behind the Civil Corps office. Oh, an' remember to bring that gun I gave ya!}}
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1800236
+
+TRIGGER Procedure 0.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800236
+CONDITIONS
+Always:
+ACTIONS
+Run mission Training Day
+END MISSION 1800236
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800237
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER ONCE CREATE || missionId: 1800236 | id: 82371 | sceneName: Main | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80011842 | flagName: Trigger_82371
+===Go to the Shooting Range===
+
+{{mission_details
+|desc = Justice is waiting for you at the range, so head over if you want to practice your shooting skills.
+|details = Go to the Shooting Range
+}}
+Set 8237HitNum to 0
+Set isHeart8237 to 0
+Set 8237Play to 0
+Set 8237B to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 42 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+END MISSION 1800237
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 82371
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 82371 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82371 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: S8237_Player_1 | sceneName: Main
+DELAY MASK SET || maskId: 82371 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Justice stands still in Main
+
+TRIGGER Procedure 0.0 Step 3.0 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82371 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8237082) to Justice
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8237_Justice_1|Action:GunAttack_Story)
+STOPWATCH REAL TIME SET || id: 82370 | sec: 3
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 82370
+CONDITIONS
+Always:
+ACTIONS
+Justice stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8237082) from Justice
+Add behavior CommanderMoveToFlagAndAction (idName: 8237083) to Justice
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8237_Justice_2)
+
+TRIGGER Procedure 0.0 Step 5.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_HANDY | state: 8
+CONDITIONS
+Always:
+ACTIONS
+Justice stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8237_Player_2
+
+TRIGGER Procedure 0.0 Step 5.0 Order 27 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8008 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 6826 starts:
+{{dialogue|Justice|Good to see you, pardner! So, let's get started.}}
+
+TRIGGER Procedure 0.0 Step 5.1 Order 28 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8237001) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8237_Player_2)
+
+TRIGGER Procedure 0.0 Step 5.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | behaviourName: CommanderMoveToFlagAndAction | npc: 8000 | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 99) A conversation 6827 starts:
+{{dialogue|Justice|Take your position. We got a free lane over there, get over there an' show me your best stance.}}
+Remove behavior CommanderMoveToFlagAndAction (idName: 8237001) from Player
+
+TRIGGER Procedure 0.0 Step 5.6 Order 29 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 99) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8237003) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8237_Player_3|Action:Shoot_Story)
+STOPWATCH REAL TIME SET || sec: 3 | id: 82371
+
+TRIGGER Procedure 0.0 Step 5.6 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 2016_0 starts:
+{{dialogue|Justice|Alright, that ain't bad. You wanna keep your stance strong an' secure. Remember, when you shoot you're gonna have a crazy recoil, good shootin's about control.}}
+{{dialogue|Justice|Now watch me shoot, tell me what you notice.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 8.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8237085) to Justice
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8237_Justice_1|Action:GunAttack_Story)
+Remove behavior CommanderMoveToFlagAndAction (idName: 8237003) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8237004) from Player
+Add behavior CommanderMoveToFlagAndAction (idName: 8237002) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8237_Player_2)
+STOPWATCH REAL TIME SET || id: 82371 | sec: 2.5
+
+TRIGGER Procedure 0.0 Step 8.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || sec: 4 | id: 82375
+Add behavior CommanderMoveToFlagAndAction (idName: 8237086) to Justice
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8237_Justice_1|Action:GunAttack4_Story)
+
+TRIGGER Procedure 0.0 Step 8.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Check if isHeart8237 is == 2
+ACTIONS
+(cId 10) A conversation 2025_0 starts:
+{{dialogue|Justice|Tell ya what, how about we make it interesting, if I win, we hit the Blue Moon, an' you're buyin'! If you win, ha, well I reckon that ain't gonna happen, so you choose.}}
+
+*''Whac-a-Mole!''
+*''I don't want to bet.''
+*''We hit the Game Center.''
+
+{{dialogue|Justice|indent=true|answer=Whac-a-Mole!
+|Ain't a bad idea! Round 2, melee weapons trainin'!}}
+{{dialogue|Justice|indent=true|answer=I don't want to bet.
+|I mean, it ain't really a serious bet... But it's cool, I get that. Everybody's got their principles! How about this: if I win, nothing happens. If you win, I'll go with you to do whatever you want! Not a bet!}}
+{{dialogue|Justice|indent=true|I mean... not really much of a prize, either, I'd probably do whatever you wanna do anyway... Gah, whatever.}}
+{{dialogue|Justice|indent=true|answer=We hit the Game Center.
+|Ha, I ain't gone to the Game Center in a while, I might be a little rusty. I guess that'll be round 2!}}
+{{dialogue|Justice|Let's shoot some targets!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 8.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 10) A conversation 2026_0 starts:
+{{dialogue|Justice|Tell ya what, how about we make it interesting, if I win, we hit the Blue Moon, an' you're buyin'! If you win, ha, well I reckon that ain't gonna happen, so you choose.}}
+
+*''Whac-a-Mole!''
+*''I don't want to bet.''
+*''We hit the Game Center.''
+*{{flirt}}''How about a date?''
+
+{{dialogue|Justice|indent=true|answer=Whac-a-Mole!
+|Ain't a bad idea! Round 2, melee weapons trainin'!}}
+{{dialogue|Justice|indent=true|answer=I don't want to bet.
+|I mean, it ain't really a serious bet... But it's cool, I get that. Everybody's got their principles! How about this: if I win, nothing happens. If you win, I'll go with you to do whatever you want! Not a bet!}}
+{{dialogue|Justice|indent=true|I mean... not really much of a prize, either, I'd probably do whatever you wanna do anyway... Gah, whatever.}}
+{{dialogue|Justice|indent=true|answer=We hit the Game Center.
+|Ha, I ain't gone to the Game Center in a while, I might be a little rusty. I guess that'll be round 2!}}
+{{dialogue|Justice|indent=true|answer=How about a date?
+|Uhh... I, uh... Aw shucks, I mean, it ain't really that kinda bet, but... Let's just hang out an' see!}}
+{{dialogue|Justice|Let's shoot some targets!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 8.1 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 82375
+CONDITIONS
+Always:
+ACTIONS
+(cId 11) A conversation 2031_0 starts:
+{{dialogue|Justice|Alright, three outta four ain't bad! Let's see how you do. 15 seconds, let's go!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 8.2 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8237002) from Player
+===Shoot the Targets===
+
+{{mission_details
+|desc = Justice has challenged you to a shooting competition. See how many you can hit in 15 seconds.
+|details = Shoot the Targets
+}}
+Remove behavior CommanderMoveToFlagAndAction (idName: 8237083) from Justice
+Remove behavior CommanderMoveToFlagAndAction (idName: 8237085) from Justice
+Remove behavior CommanderMoveToFlagAndAction (idName: 8237001) from Player
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 8237086) from Justice
+Justice stops standing still
+STOPWATCH REAL TIME SET || id: 82379 | sec: 10
+SCENEITEM CREATE FLAG || itemType: 0 | id: 82372 | path: S8237_Item_1 | sceneName: Main | extraParams: 0 | flagName: S8237_Item_1
+Remove behavior CommanderMoveToFlagAndAction (idName: 8237009) from Player
+
+TRIGGER Procedure 0.0 Step 8.3 Order 34 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 82379
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Justice|Grip it tighter, pardner!}}
+ACTION START SHOOTINGGAME || 
+STOPWATCH REAL TIME SET || sec: 20 | id: 82374
+
+TRIGGER Procedure 0.0 Step 8.3 Order 35 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SHOOTING TARGET || order: 1
+CONDITIONS
+Check if 8237HitNum is == 3
+ACTIONS
+In a speech bubble:
+{{dialogue|Justice|Good aim!}}
+
+TRIGGER Procedure 0.0 Step 8.3 Order 36 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SHOOTING TARGET || order: 1
+CONDITIONS
+Check if 8237HitNum is == 1
+ACTIONS
+In a speech bubble:
+{{dialogue|Justice|Dang, good one!}}
+
+TRIGGER Procedure 0.0 Step 8.3 Order 37 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SHOOTING TARGET || order: 1
+CONDITIONS
+Check if 8237HitNum is == 2
+ACTIONS
+In a speech bubble:
+{{dialogue|Justice|Alright, again!}}
+
+TRIGGER Procedure 0.0 Step 10.0 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 82371
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 82371 | path: SceneItem8237_WestTarget | flagName: S8237_Target_1 | sceneName: Main | extraParams: -1
+STOPWATCH REAL TIME SET || id: 82373 | sec: 1.5
+
+TRIGGER Procedure 0.0 Step 10.0 Order 40 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 82372
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Vintage Pistol of Default quality (Notify player)
+SCENEITEM DELETE || itemType: 0 | id: 82372
+Set 8237B to 1
+
+TRIGGER Procedure 0.0 Step 11.0 Order 30 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 82374
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1800236 | targetId: 2 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 82372 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 11.0 Order 32 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 82373
+CONDITIONS
+Always:
+ACTIONS
+Justice stands still in Main and looks at Player
+STOPWATCH REAL TIME SET || id: 82374 | sec: 2
+
+TRIGGER Procedure 0.0 Step 12.0 Order 31 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82372 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || flagName: S8237_Player_2 | sceneName: Main
+DELAY MASK SET || maskId: 82372 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Justice stands still in Main
+
+TRIGGER Procedure 0.0 Step 15.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 82374
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 2017_0 starts:
+{{dialogue|Justice|So whaddya think?}}
+
+*''You look really stable.''
+*''You look so cool!''
+*''Wow, good shot!''
+*''Uh... pew pew?''
+
+{{dialogue|Justice|indent=true|answer=You look really stable.
+|That's right. My stance gives me complete control. I'm stable enough to reduce the recoil, and my aim is solid.}}
+{{dialogue|Justice|indent=true|answer=You look so cool!
+|Ah... haha, well, I mean... I wasn't fishin' for compliments or nothin'... Ahem. Thanks! Lookin' cool when shootin's part of the job, I guess... haha!}}
+{{dialogue|Justice|indent=true|answer=Wow, good shot!
+|Yeah, it's all about controlling your breathin' and holdin' a strong stance and grip. After that, it's just aim an' fire.}}
+{{dialogue|Justice|indent=true|Anyway... uh...}}
+{{dialogue|Justice|indent=true|answer=Uh... pew pew?
+|Yeah, the pew pew comes from this end here and... Hey! C'mon, you gotta take this seriously, okay? If yer gonna come out with us again, I need to know I can rely on you.}}
+{{dialogue|Justice|A strong stance is really the first important step. If you aren't in control, your aim is gonna be all over the place, if you aren't holdin' strong, then that recoil is gonna be kickin' you onto your backside real quick.}}
+{{dialogue|Justice|Y'know, you shoulda seen my old boss shoot. Guy could shoot the goggles off a Geegler an' not even draw blood. Heck, I seen folks just throw down their weapons after a look from the guy!}}
+{{dialogue|Justice|Anyway. Next up is grip. Grip is just as important as your stance, alright? With a weak grip, that gun of yours'll kick right outta your hands when you shoot.}}
+{{dialogue|Justice|During Unsuur's training, gun shot outta his hand an' knocked out a couple teeth. Had to get 'em replaced, don't remember which ones though...}}
+{{dialogue|Justice|You want to cover all the gaps on the grip with your hands. Get your main hand holding the gun, thumb pointing forward. Get it right up there, don't hold too low, now.}}
+{{dialogue|Justice|Next up wrap your other hand around, makin' sure you're supporting it. Also means you got the freedom to react if necessary.}}
+
+*''Like this?''
+*''Easy.''
+*{{flirt}}''Can you come and show me?''
+
+{{dialogue|Justice|indent=true|answer=Like this?
+|Yeah that's it. Now when you're holding it properly, you're not gonna get as much recoil, you'll be controlled.}}
+{{dialogue|Justice|indent=true|Once you got your stance and grip down, well, that's the basics. There's much more to shootin' than this, mind, but that'll come with practice. Alright, let's have a little competition, eh?}}
+{{dialogue|Justice|indent=true|answer=Easy.
+|Haha, I like your confidence! Jus' don't blame me if ya lose a couple teeth!}}
+{{dialogue|Justice|indent=true|Once you got your stance and grip down, well, that's the basics. There's much more to shootin' than this, mind, but that'll come with practice. Alright, let's have a little competition, eh?}}
+{{dialogue|Justice|indent=true|answer=Can you come and show me?
+|Here, let me show you.}}
+
+TRIGGER Procedure 0.0 Step 20.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Check if isHeart8237 is == 1
+ACTIONS
+{{cutscene|id = 7501}}
+A cutscene CG_HANDY (duration: 1.0) starts playing
+Just a Little to the Left - Justice asked me to come and practice with him at the firing range. He gave me a hand showing me how to shoot. He really knows his stuff!
+Increment isHeart8237 by 1
+
+TRIGGER Procedure 0.0 Step 15.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 82375
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 6846 starts:
+{{dialogue|Justice|Once you got your stance and grip down, well, that's the basics. There's much more to shootin' than this, mind, but that'll come with practice. Alright, let's have a little competition, eh?}}
+
+TRIGGER Procedure 0.0 Step 15.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82372 | eventType: 5
+CONDITIONS
+Check if 8237HitNum is != (maybe?) 3
+ACTIONS
+(cId 12) A conversation 2032_0 starts:
+{{dialogue|Justice|You got quite the draw, ain't ya pardner? Your shapin' up to be a real sharpshooter.}}
+{{dialogue|Justice|We used to have competitions like this back when I was just a regular Civil Corps officer. Haha, whoever won used to have to buy the rounds at the Blue Moon!}}
+{{dialogue|Justice|Then when B3 left, I was really the only one left to become sheriff. I never thought I was ready, big boots an' all. But you do what you gotta, right?}}
+
+*''You're a great sheriff!''
+*''Yeah, it must be a tough job.''
+*''Do you think your old boss was a better sheriff?''
+
+{{dialogue|Justice|indent=true|answer=You're a great sheriff!
+|Ha, thanks, but you ain't gotta flatter me, pardner. I do what I can for this town. It means everythin' to me.}}
+{{dialogue|Justice|indent=true|answer=Yeah, it must be a tough job.
+|It's usually alright, Sandrock's remote enough that we ain't usually got so many day-to-day problems, y'know? But with this Logan thing...}}
+{{dialogue|Justice|indent=true|answer=Do you think your old boss was a better sheriff?
+|Are you kiddin'? I mean, I ain't bad, I do what I can! But man, B3 was somethin' special.}}
+{{dialogue|Justice|Every day I'm tryin' to be half the man he was... well, I mean, with his missin' eye, leg, an' arm... I guess all I have to be is jus' a quarter of a man? Dang, an' I can't even get that!}}
+{{dialogue|Justice|Unsuur came shortly after that, never met the old man, but he fit in to the Civil Corps well enough, an' we were lackin' for members at the time.}}
+{{dialogue|Justice|Main thing B3 taught me about guns, though? Safety. Last lesson, an' by far, most important.}}
+{{dialogue|Justice|Number one: trigger discipline. You keep that finger off the trigger 'less your aiming to shoot.}}
+{{dialogue|Justice|Don't want you takin' a trip to Fang's 'cause you shot your own foot off by bein' careless. Let alone what you could do to others.}}
+{{dialogue|Justice|Number two: never, I repeat never, aim your gun at somethin' you ain't fixin' to take down. These things ain't toys, pardner. That's an order straight from Civil Corps. I ain't messin' around. You hear me?}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 17.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 12) After the conversation ends:
+CONDITIONS
+Check if 8237HitNum is != (maybe?) 3
+ACTIONS
+(cId 15) A conversation 2039_0 starts:
+{{dialogue|Justice|Alright. That about wraps it up for today. So... you won our bet. That means you're callin' the shots now! Er... do you want to go now?}}
+
+*''Yeah, let's hang out.''
+*''Nah, not right now.''
+
+{{dialogue|Justice|indent=true|answer=Yeah, let's hang out.
+|After you, pardner!}}
+{{dialogue|Justice|indent=true|answer=Nah, not right now.
+|Alright, just let me know if you wanna hang. I'll call it a team building event.}}
+
+TRIGGER Procedure 0.0 Step 17.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 12) After the conversation ends:
+CONDITIONS
+Check if 8237HitNum is > (maybe?) 3
+ACTIONS
+(cId 15) A conversation 2038_0 starts:
+{{dialogue|Justice|But that about wraps it up for today. You did real good. So how about my offer? Wanna hit the town for a while?}}
+
+*''Yeah, let's hang out.''
+*''Nah, not right now.''
+
+{{dialogue|Justice|indent=true|answer=Yeah, let's hang out.
+|After you, pardner!}}
+{{dialogue|Justice|indent=true|answer=Nah, not right now.
+|Alright, just let me know if you wanna hang. I'll call it a team building event.}}
+
+TRIGGER Procedure 0.0 Step 15.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82372 | eventType: 5
+CONDITIONS
+Check if 8237HitNum is < 3
+ACTIONS
+(cId 12) A conversation 2033_0 starts:
+{{dialogue|Justice|Ain't a problem, pardner! Just keep it up.}}
+{{dialogue|Justice|We used to have competitions like this back when I was just a regular Civil Corps officer. Haha, whoever won used to have to buy the rounds at the Blue Moon!}}
+{{dialogue|Justice|Then when B3 left, I was really the only one left to become sheriff. I never thought I was ready, big boots an' all. But you do what you gotta, right?}}
+
+*''You're a great sheriff!''
+*''Yeah, it must be a tough job.''
+*''Do you think your old boss was a better sheriff?''
+
+{{dialogue|Justice|indent=true|answer=You're a great sheriff!
+|Ha, thanks, but you ain't gotta flatter me, pardner. I do what I can for this town. It means everythin' to me.}}
+{{dialogue|Justice|indent=true|answer=Yeah, it must be a tough job.
+|It's usually alright, Sandrock's remote enough that we ain't usually got so many day-to-day problems, y'know? But with this Logan thing...}}
+{{dialogue|Justice|indent=true|answer=Do you think your old boss was a better sheriff?
+|Are you kiddin'? I mean, I ain't bad, I do what I can! But man, B3 was somethin' special.}}
+{{dialogue|Justice|Every day I'm tryin' to be half the man he was... well, I mean, with his missin' eye, leg, an' arm... I guess all I have to be is jus' a quarter of a man? Dang, an' I can't even get that!}}
+{{dialogue|Justice|Unsuur came shortly after that, never met the old man, but he fit in to the Civil Corps well enough, an' we were lackin' for members at the time.}}
+{{dialogue|Justice|Main thing B3 taught me about guns, though? Safety. Last lesson, an' by far, most important.}}
+{{dialogue|Justice|Number one: trigger discipline. You keep that finger off the trigger 'less your aiming to shoot.}}
+{{dialogue|Justice|Don't want you takin' a trip to Fang's 'cause you shot your own foot off by bein' careless. Let alone what you could do to others.}}
+{{dialogue|Justice|Number two: never, I repeat never, aim your gun at somethin' you ain't fixin' to take down. These things ain't toys, pardner. That's an order straight from Civil Corps. I ain't messin' around. You hear me?}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 15.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82372 | eventType: 5
+CONDITIONS
+Check if 8237HitNum is == 3
+ACTIONS
+(cId 12) A conversation 2034_0 starts:
+{{dialogue|Justice|Phew, good shootin'! Neither of us got that edge, though, eh?}}
+{{dialogue|Justice|We used to have competitions like this back when I was just a regular Civil Corps officer. Haha, whoever won used to have to buy the rounds at the Blue Moon!}}
+{{dialogue|Justice|Then when B3 left, I was really the only one left to become sheriff. I never thought I was ready, big boots an' all. But you do what you gotta, right?}}
+
+*''You're a great sheriff!''
+*''Yeah, it must be a tough job.''
+*''Do you think your old boss was a better sheriff?''
+
+{{dialogue|Justice|indent=true|answer=You're a great sheriff!
+|Ha, thanks, but you ain't gotta flatter me, pardner. I do what I can for this town. It means everythin' to me.}}
+{{dialogue|Justice|indent=true|answer=Yeah, it must be a tough job.
+|It's usually alright, Sandrock's remote enough that we ain't usually got so many day-to-day problems, y'know? But with this Logan thing...}}
+{{dialogue|Justice|indent=true|answer=Do you think your old boss was a better sheriff?
+|Are you kiddin'? I mean, I ain't bad, I do what I can! But man, B3 was somethin' special.}}
+{{dialogue|Justice|Every day I'm tryin' to be half the man he was... well, I mean, with his missin' eye, leg, an' arm... I guess all I have to be is jus' a quarter of a man? Dang, an' I can't even get that!}}
+{{dialogue|Justice|Unsuur came shortly after that, never met the old man, but he fit in to the Civil Corps well enough, an' we were lackin' for members at the time.}}
+{{dialogue|Justice|Main thing B3 taught me about guns, though? Safety. Last lesson, an' by far, most important.}}
+{{dialogue|Justice|Number one: trigger discipline. You keep that finger off the trigger 'less your aiming to shoot.}}
+{{dialogue|Justice|Don't want you takin' a trip to Fang's 'cause you shot your own foot off by bein' careless. Let alone what you could do to others.}}
+{{dialogue|Justice|Number two: never, I repeat never, aim your gun at somethin' you ain't fixin' to take down. These things ain't toys, pardner. That's an order straight from Civil Corps. I ain't messin' around. You hear me?}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 19.0 Order 39 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 15) The player picks the first option in conversation segment 6874:
+{{dialogue|Justice|But that about wraps it up for today. You did real good. So how about my offer? Wanna hit the town for a while?}}
+
+*''Yeah, let's hang out.'' (No unique dialogue)
+*''Nah, not right now.'' (No unique dialogue)
+
+(cId 15) The player picks the first option in conversation segment 6875:
+{{dialogue|Justice|Alright. That about wraps it up for today. So... you won our bet. That means you're callin' the shots now! Er... do you want to go now?}}
+
+*''Yeah, let's hang out.'' (No unique dialogue)
+*''Nah, not right now.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8237Play to 1
+STOP ENGAGEMENT || stopType: 2
+
+TRIGGER Procedure 0.0 Step 20.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 15) There is a conversation segment (id 6876) that ends:
+{{dialogue|Justice|After you, pardner!}}
+CONDITIONS
+Always:
+ACTIONS
+Justice stops standing still
+Justice stops standing still
+Justice stops standing still
+Justice stops standing still
+
+TRIGGER Procedure 0.0 Step 20.0 Order 25 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the first option in conversation segment 6841:
+{{dialogue|Justice|Next up wrap your other hand around, makin' sure you're supporting it. Also means you got the freedom to react if necessary.}}
+
+*''Like this?'' (No unique dialogue)
+*''Easy.'' (No unique dialogue)
+*{{flirt}}''Can you come and show me?'' (No unique dialogue)
+
+(cId 3) The player picks the second option in conversation segment 6841:
+{{dialogue|Justice|Next up wrap your other hand around, makin' sure you're supporting it. Also means you got the freedom to react if necessary.}}
+
+*''Like this?'' (No unique dialogue)
+*''Easy.'' (No unique dialogue)
+*{{flirt}}''Can you come and show me?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set isHeart8237 to 2
+
+TRIGGER Procedure 0.0 Step 20.0 Order 26 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SHOOTING TARGET || order: 0
+CONDITIONS
+Always:
+ACTIONS
+Increment 8237HitNum by 1
+MISSION TARGET COUNTER CHANGE || missionId: 1800236 | targetId: 2 | transId: 1339 | isAdd: 1
+
+TRIGGER Procedure 0.0 Step 20.0 Order 33 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the third option in conversation segment 6841:
+{{dialogue|Justice|Next up wrap your other hand around, makin' sure you're supporting it. Also means you got the freedom to react if necessary.}}
+
+*''Like this?'' (No unique dialogue)
+*''Easy.'' (No unique dialogue)
+*{{flirt}}''Can you come and show me?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set isHeart8237 to 1
+
+TRIGGER Procedure 0.0 Step 20.0 Order 38 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 15) After the conversation ends:
+CONDITIONS
+Check if 8237Play is == 1
+ACTIONS
+DO ENGAGEMENT || npc: 8008 | isData: 0 | power: 10
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1800236
+
+TRIGGER Procedure 0.0 Step 20.0 Order 41 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 15) After the conversation ends:
+CONDITIONS
+Check if 8237Play is <= (maybe?) 1
+ACTIONS
+Justice stops standing still
+Justice stops standing still
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1800236
+
+TRIGGER Procedure 0.0 Step 30.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 15) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 82371
+CUTSCENE UI STATE EXIT || 
+Justice stops standing still
+Justice stops standing still
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1800236
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 82371
+Justice stops standing still
+Justice stops standing still
+Justice stops standing still
+Justice stops standing still
+SCENEITEM DELETE || itemType: 0 | id: 82371

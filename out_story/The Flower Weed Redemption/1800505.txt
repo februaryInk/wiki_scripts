@@ -1,0 +1,378 @@
+Reading Mission 1800505: The Flower Weed Redemption
+
+<onlyinclude>{{Infobox mission
+|name = The Flower Weed Redemption
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from The Flower Weed Redemption:
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if 8504A is == 1
+ACTIONS
+START MISSION 1800504
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800504
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Flower Weed Redemption
+END MISSION 1800504
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800505
+CONDITIONS
+GROUP 1:
+CHECK PLAYER ITEM || item: 16200028 | itemGrade: -1 | set: 6 | count: 4
+
+GROUP 2:
+CHECK PLAYER ITEM || item: 19300070 | itemGrade: -1 | set: 6 | count: 6
+
+ACTIONS
+===Prepare Flowers===
+
+{{mission_details
+|desc = Miguel has suggested redecorating the temple garden, and many people in town are donating flowers. He hopes you can participate as well.
+|details = Prepare Flowers
+*{{i2|Rhino Horn Cactus|0/4}}
+*{{i2|Cactus Flower|0/6}}
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800505
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1800504 | targetId: 1 | canSubmit: 1
+CONDITIONS
+CHECK PLAYER ITEM || item: 16200028 | itemGrade: -1 | set: 2 | count: 4
+CHECK PLAYER ITEM || item: 19300070 | itemGrade: -1 | set: 2 | count: 6
+ACTIONS
+===Talk to Miguel===
+
+{{mission_details
+|desc = The flowers are ready. Take them to Miguel now.
+|details = Talk to Miguel
+*{{i2|Rhino Horn Cactus|0/4}}
+*{{i2|Cactus Flower|0/6}}
+*{{i2|Miguel|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Miguel
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1800504 | targetId: 2 | canSubmit: 1
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+(cId 1) A conversation 22500 starts:
+{{dialogue|Miguel|These are magnificent samples. Thank you, ''Player''. Let us plant them in the community garden.}}
+BAG MODIFY BY TARGET || missionId: 1800504 | targetId: 1
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85051 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85051 | eventType: 2
+CONDITIONS
+CHECK CURRENT SCENE || flag: 1 | name: Main
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8505_0_1
+DELAY MASK SET || maskId: 85051 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Miguel stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || flagName: S8505_0_1 | sceneName: Main
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85051 | eventType: 2
+CONDITIONS
+CHECK CURRENT SCENE || flag: 0 | name: Main
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8505_0_1
+
+TRIGGER Procedure 0.0 Step 7.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Main:
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8505_0_1
+Miguel stands still in Main and looks at Player
+DELAY MASK SET || maskId: 85051 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 8.0 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 850511
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 22501, 22502 starts:
+{{dialogue|Miguel|A Miguel of days gone would have scoffed at the idea of such an idea. I suppose a little of Minister Burgess' optimism has rubbed off on me.}}
+{{dialogue|Miguel|I am slowly trying to make amends with the people here. Now that my veil has been lifted I truly see the warmth of Sandrock.}}
+
+TRIGGER Procedure 0.0 Step 8.1 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85052 | delayTime: 0 | durationTime: -1 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 9.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85052 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8505_0_2
+Set 8505Move1 to 0
+Add behavior CommanderMoveToFlagAndAction (idName: 8505192) to Miguel
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8505_19_2|Action:GetGift)
+Add behavior CommanderMoveToFlagAndAction (idName: 8505001) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8505_0_2|LookAtActor:8019|Delay:0.0|Action:Seed)
+DELAY MASK SET || maskId: 85052 | delayTime: 0 | durationTime: -1 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 10.0 Order 9 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8019 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Increment 8505Move1 by 1
+
+TRIGGER Procedure 0.0 Step 11.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8019 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Check if 8505Move1 is >= 2
+ACTIONS
+DELAY MASK SET || maskId: 85053 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 11.1 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85053 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8505_0_1
+Miguel stands still in Main
+SCENEITEM CREATE FLAG || id: 85051 | path: S8505_Item1 | sceneName: Main | flagName: S8505_Item1 | extraParams: 0 | itemType: 0
+DELAY MASK SET || maskId: 85053 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Logan stands still in Main and looks at Miguel
+
+TRIGGER Procedure 0.0 Step 11.2 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85053 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 22503 starts:
+{{dialogue|Miguel|There. Beautiful. The colors of the flower...}}
+
+TRIGGER Procedure 0.0 Step 12.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8505001) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8505192) from Miguel
+Set 8505Move1 to 0
+Add behavior CommanderMoveToFlagAndAction (idName: 8505112) to Logan
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8505_11_5|LookAtActor:8019|Delay:0.0)
+STOPWATCH REAL TIME SET || sec: 0.2 | id: 850511
+
+TRIGGER Procedure 0.0 Step 13.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 850533
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85054 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 14.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85054 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8505112) from Logan
+Remove behavior CommanderNPCAction (idName: 8505112) from Logan
+Add behavior CommanderMoveToFlagAndAction (idName: 8505193) to Miguel
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8505_19_3|LookAtActor:8011|Delay:1.4)
+Add behavior CommanderMoveToFlagAndAction (idName: 8505002) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8505_0_3|LookAtActor:8011|Delay:0.0)
+Add behavior CommanderNPCActionLoop (idName: 8505113) to Logan
+(param: CMDAction:WalkWithMilk|LookAtActor:8019)
+DELAY MASK SET || maskId: 85054 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 15.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85054 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 22504 starts:
+{{dialogue||I seen ya workin' all day in the sun. Thought uh... thought this could do ya some good.}}
+
+TRIGGER Procedure 0.0 Step 16.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8505193) from Miguel
+Add behavior CommanderMoveToFlagAndAction (idName: 8505114) to Logan
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8505_11_3|Action:GiveMilk|Delay:0.0)
+Add behavior CommanderMoveToFlagAndAction (idName: 8505194) to Miguel
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8505_19_3|Action:GetMilk|Delay:1.1)
+Set 8505Move2 to 0
+Remove behavior CommanderNPCActionLoop (idName: 8505113) from Logan
+
+TRIGGER Procedure 0.0 Step 17.0 Order 16 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8019 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8011 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Increment 8505Move2 by 1
+
+TRIGGER Procedure 0.0 Step 18.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8019 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8011 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Check if 8505Move2 is >= 2
+ACTIONS
+(cId 5) A conversation 7965_0 starts:
+{{dialogue|Logan|Sorry, ''Player''... I didn't know you were up here with him... otherwise I'da got you one too.}}
+{{dialogue|Miguel|...Ah... Thank you... Logan.}}
+{{dialogue|Logan|Ah... don't mention it.}}
+{{dialogue|Logan|...}}
+{{dialogue|Miguel|Logan... I-}}
+{{dialogue|Logan|Listen. I uh... I jus' wanna say... I heard you an' Pen talkin' in the cell. I know you ain't had nothin' to do with my Pa.}}
+{{dialogue|Miguel|...If I'd have known...}}
+{{dialogue|Logan|You ain't no monster. I know you tried your best... callin' the doc and all.}}
+{{dialogue|Miguel|I truly wanted to help him...}}
+{{dialogue|Logan|I been watchin' you lately... and well, me of all people know folks can change.}}
+{{dialogue|Miguel|Logan...}}
+{{dialogue|Logan|An' hey: ain't no one ever took a shot at me like that before. Took guts.}}
+{{dialogue|Miguel|I'm sorry... for ev-}}
+{{dialogue|Logan|Save it, Pastor. Water under the bridge.}}
+{{dialogue|Miguel|Thank you.}}
+{{dialogue|Logan|Oh, an' Pastor? Looks like ya got a weed over there. Might wanna take care of that.}}
+{{dialogue|Miguel|That is a common Blue Violet. Although a weed, with a little time, care, and nurturing... it can blossom... into something beautiful...}}
+{{dialogue|Logan|Well, you do you, Pastor. Take 'er easy now.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 18.4 Order 29 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 5) There is a conversation segment (id 22519) that ends:
+{{dialogue|Miguel|Thank you.}}
+CONDITIONS
+Always:
+ACTIONS
+Justice stands still in Main
+
+TRIGGER Procedure 0.0 Step 19.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Logan stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8505114) from Logan
+Remove behavior CommanderNPCAction (idName: 8505194) from Miguel
+Add behavior CommanderMoveToFlag (idName: 8505115) to Logan
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8505_11_4|Delay:0)
+Add behavior CommanderMoveToFlagAndAction (idName: 8505195) to Miguel
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8505_19_4|LookAtActor:8000|Delay:1.5)
+Justice stops standing still
+
+TRIGGER Procedure 0.0 Step 20.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8019 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 7966_0 starts:
+{{dialogue|Miguel|...}}
+{{dialogue|Miguel|It seems at least to some, actions speak louder than words.}}
+{{dialogue|Miguel|Logan is among the last I'd expect to once again call friend. A pleasant surprise, to be sure. Soldiers don't hold grudges, I suppose.}}
+{{dialogue|Miguel|To look in the eyes of those I've harmed; there is always... that sting. But the aches in my soul, and the shadows of my doubts in the deepest reaches of my mind... are waning... now that I know...}}
+{{dialogue|Miguel|This is what's right. Truly right.}}
+{{dialogue|Miguel|Sigh... I will live my life with the wrongs of my past, but...}}
+{{dialogue|Miguel|I am healing.}}
+{{dialogue|Miguel|Thank you, ''Player''. For your donation. For everything.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 22.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8505002) from Player
+Logan stops standing still
+Remove behavior CommanderMoveToFlag (idName: 8505115) from Logan
+Miguel stops standing still
+Miguel stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8505194) from Miguel
+Remove behavior CommanderMoveToFlagAndAction (idName: 8505195) from Miguel
+Remove behavior CommanderMoveToFlag (idName: 8505001) from Player
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1800504
+END MISSION 1800505

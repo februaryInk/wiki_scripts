@@ -1,0 +1,615 @@
+Reading Mission 1500382: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200072
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check relationship with Owen is Lover
+Check if Owen has favor >= 800
+CHECK DAY OF WEEK || dayOfWeek: 0 | set: 1
+IS MARRIAGE || isMarriage: 0
+Check if Owen is in town
+ACTIONS
+Run mission Big Story on Little Stage
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Something in the Air is successfully completed
+Clear the Air is in state 3 with flag 0
+Check if Owen is in town
+ACTIONS
+Run mission #1500382
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1500382
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1500382 | id: 538201 | sceneName: Main | flagName: Story_538201_Area | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH STOP END || order: 0 | id: 538201
+CONDITIONS
+Always:
+ACTIONS
+Owen gains 20 favor
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_saloon
+Check if Owen is in town
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_saloon
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Owen stands still in Saloon
+AREA TRIGGER DELETE || id: 538201
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: Story_5382_Player
+STOPWATCH REAL TIME SET || id: 538201 | sec: 5
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 538201
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 538202 | sec: 5
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 538202
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 5382001) to Player
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:Story_5382_Player1)
+
+TRIGGER Procedure 0.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 538201) A conversation 18651, 18652 starts:
+{{dialogue|Owen|Come on in-!}}
+{{dialogue|Owen|Ah. Sorry, ''Player''. Thought you were a customer...}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 538201) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 5382001) from Player
+Add behavior CommanderPlayerAction (idName: 5382002) to Player
+(param: CMDAction:Puzzled)
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 538202) A conversation 18653, 18654, 18655 starts:
+{{dialogue|Owen|How's it going? Ah, yeah. Slow day here! Lotta slow days lately as a matter of fact...}}
+{{dialogue|Owen|Usually I don't mind it so much; nice to have a quiet afternoon or two to myself, but, eh...}}
+{{dialogue|Owen|Well. It is what it is. Can I get you anything? How 'bout a drink, on the house!}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 538202) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 5382003) to Owen
+(param: CMDAction:Get)
+DELAY MASK SET || maskId: 538201 | delayTime: 1.5 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 538201 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 538201 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: Story_5382_Player2
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 538201 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 538203) A conversation 5708_0 starts:
+{{dialogue|Owen|Here ya go!}}
+
+*''Everything okay, Owen?''
+*''Cheers!''
+
+{{dialogue|Owen|indent=true|answer=Everything okay, Owen?
+|reward={{NPC2|Owen|rp=5}}|Ah... yeah... nah... Just tired, that's all.}}
+{{dialogue|Owen|indent=true|answer=Cheers!
+|Cheers! To... an empty bar...}}
+
+TRIGGER Procedure 1.0 Step 4.1 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 538203) The player picks the first option in conversation segment 18656:
+{{dialogue|Owen|Here ya go!}}
+
+*''Everything okay, Owen?'' (No unique dialogue)
+*''Cheers!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Owen gains 5 favor
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 538203 | missionId: 1500382
+CONDITIONS
+Always:
+ACTIONS
+(cId 538204) A conversation 18661, 18662, 18663, 18664 starts:
+{{dialogue|Owen|Ah...}}
+{{dialogue|Owen|Y'know...}}
+{{dialogue|Owen|Actually there is something kinda bothering me. I just got this letter from my folks the other day, checkin' in on the whole "green canyon" situation...}}
+{{dialogue|Owen|Here, you can take a look if you like...}}
+
+TRIGGER Procedure 1.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 538204 | missionId: 1500382
+CONDITIONS
+Always:
+ACTIONS
+(cId 538205) A conversation 5711_0 starts:
+{{dialogue|Player|(What should I say?)}}
+
+*''They seem pretty worried...''
+*''Pshh, Sandrock will be fine.''
+*''Are you thinking of going to Atara?''
+
+{{dialogue|Owen|indent=true|answer=They seem pretty worried...
+|Yeah, I never in a million years thought they'd ask me to give up the Blue Moon, but... here we are. Have to admit I'm a bit worried myself... But...}}
+{{dialogue|Owen|indent=true|answer=Pshh, Sandrock will be fine.
+|I hope you're right. You do have to admit, things don't look great right now. Especially from the outside looking in. But...}}
+{{dialogue|Owen|indent=true|answer=Are you thinking of going to Atara?
+|Nah...}}
+{{dialogue|Owen|indent=true|Certainly not just gonna up and run on you all. Not without at least knowing this place was in good hands. But...}}
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 538205 | missionId: 1500382
+CONDITIONS
+Check relationship with Owen is 6 Lover
+ACTIONS
+(cId 538206) A conversation 5715_0 starts:
+{{dialogue|Owen|Eh, nevermind. Don't worry about it, ''Player''. Not your problem. I'll get it sorted out. I know you're out there every day doing all you can for this place, so... thanks for that.}}
+
+*''C'mon, you can tell me.'' (No unique dialogue)
+*''Yeah, good luck with your thing, whatever it is.''
+
+{{dialogue|Owen|indent=true|answer=Yeah, good luck with your thing, whatever it is.
+|Sure thing...}}
+{{dialogue|Owen|indent=true|Yeah, I'll figure it out. Just need to get my thoughts together. You take care!}}
+Set choosea to 0
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 538206) The player picks the second option in conversation segment 18672:
+{{dialogue|Owen|Eh, nevermind. Don't worry about it, ''Player''. Not your problem. I'll get it sorted out. I know you're out there every day doing all you can for this place, so... thanks for that.}}
+
+*''C'mon, you can tell me.'' (No unique dialogue)
+*''Yeah, good luck with your thing, whatever it is.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Owen stops standing still
+Remove behavior CommanderNPCAction (idName: 5382003) from Owen
+Remove behavior CommanderMoveToFlagAndAction (idName: 5382001) from Player
+Remove behavior CommanderPlayerAction (idName: 5382002) from Player
+CUTSCENE UI STATE EXIT || 
+END MISSION 1500382
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 538206) The player picks the first option in conversation segment 18672:
+{{dialogue|Owen|Eh, nevermind. Don't worry about it, ''Player''. Not your problem. I'll get it sorted out. I know you're out there every day doing all you can for this place, so... thanks for that.}}
+
+*''C'mon, you can tell me.'' (No unique dialogue)
+*''Yeah, good luck with your thing, whatever it is.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set choosea to 1
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 538205 | missionId: 1500382
+CONDITIONS
+Check relationship with Owen is Lover
+ACTIONS
+(cId 538206) A conversation 5717_0 starts:
+{{dialogue|Owen|Well, I guess there was something I was hoping to bounce off you, darling. Do you mind if I... share a little?}}
+
+*''Not at all, what's on your mind?'' (No unique dialogue)
+*''Sorry, kinda busy...''
+
+{{dialogue|Owen|indent=true|answer=Sorry, kinda busy...
+|I see... That's alright, then... You go ahead.}}
+Set choosea to 0
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 538206) The player picks the second option in conversation segment 18677:
+{{dialogue|Owen|Well, I guess there was something I was hoping to bounce off you, darling. Do you mind if I... share a little?}}
+
+*''Not at all, what's on your mind?'' (No unique dialogue)
+*''Sorry, kinda busy...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Owen stops standing still
+Remove behavior CommanderNPCAction (idName: 5382003) from Owen
+Remove behavior CommanderMoveToFlagAndAction (idName: 5382001) from Player
+Remove behavior CommanderPlayerAction (idName: 5382002) from Player
+CUTSCENE UI STATE EXIT || 
+END MISSION 1500382
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 538206) The player picks the first option in conversation segment 18677:
+{{dialogue|Owen|Well, I guess there was something I was hoping to bounce off you, darling. Do you mind if I... share a little?}}
+
+*''Not at all, what's on your mind?'' (No unique dialogue)
+*''Sorry, kinda busy...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set choosea to 1
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 538206 | missionId: 1500382
+CONDITIONS
+Check if choosea is == 1
+ACTIONS
+(cId 538207) A conversation 18681 starts:
+{{dialogue|Owen|Yeah...}}
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 538207 | missionId: 1500382
+CONDITIONS
+Always:
+ACTIONS
+(cId 538208) A conversation 18682, 18683 starts:
+{{dialogue|Owen|Well, I guess I just don't know what to say to my folks. They're gettin' on in years, retired out in Atara, and... it's working out for them, they love it.}}
+{{dialogue|Owen|It feels strange trying to convince them that the place that they built with blood, sweat, tears, and then entrusted to me, is worth fighting for. My Pa used to be right there at the door half the time, greeting people as they came in...}}
+
+TRIGGER Procedure 4.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 538208 | missionId: 1500382
+CONDITIONS
+Always:
+ACTIONS
+(cId 538209) A conversation 18684, 18685 starts:
+{{dialogue|Owen|Haha, when I was a kid, I used to hide under the tables and listen to him chat with all the adventurers. They'd spin tales about huge monsters and brag about laughing in the face of danger! Heh, then I'd go tell Justice to try'n scare him...}}
+{{dialogue|Owen|Er, what I mean to say is, this place is everything to me. I can't just give it up. But I don't want my parents to keep worrying about me either...}}
+
+TRIGGER Procedure 4.0 Step 3.1 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 538209 | missionId: 1500382
+CONDITIONS
+Check relationship with Owen is 6 Lover
+ACTIONS
+(cId 538210) A conversation 18686, 5842_0 starts:
+{{dialogue|Owen|Even if I did know what to say, I've never been much with a pen. Some stuff just doesn't come out right on paper, I find. I don't think there's any way I can change their mind...}}
+{{dialogue|Owen|I dunno. What would you do in my shoes?}}
+
+*''Tell 'em we're working hard to turn things around.''
+*''Tell them the story you just told me.''
+*''No idea...''
+
+{{dialogue|Owen|indent=true|answer=Tell 'em we're working hard to turn things around.
+|Yeah, that's not a bad start.}}
+{{dialogue|Owen|indent=true|I mean... are they only reading the bad news? You put the miners back in business, fixed the Water Tower... Everyone else is out there trying their best, too. It's like Mort said back at that whole Musa debacle, no one here's given up, you know. Paraphrasing...}}
+{{dialogue|Owen|indent=true|Yeah, I'll go with something like that. Thanks, ''Player''. I think if they understand how hard we're fighting, maybe they'll have the same hope that I do.}}
+{{dialogue|Owen|indent=true|Dear Ma and Pa, I know what you've been seeing in the papers lately-}}
+{{dialogue|Owen|indent=true|answer=Tell them the story you just told me.
+|Oh... yeah... you liked that, huh? I mean, yeah... my memories and... the stories of everyone who comes through here, they all mean something. Maybe they just need to be reminded how much this place means to people.}}
+{{dialogue|Owen|indent=true|And hey, with people like you behind the scenes, there're always going to be more stories to tell here at the Blue Moon...}}
+{{dialogue|Owen|indent=true|Dear Ma and Pa, I know what you've been seeing in the papers lately-}}
+{{dialogue|Owen|indent=true|answer=No idea...
+|Yeah... Well, thanks for listening anyway. Didn't mean to try to put that on you or anything. I'm sure I'll figure something out.}}
+NPC RANDOM ADD || id: 1 | instId: 538201 | scene: Saloon | flagName: Story_538202 | dailyBehavior: CommanderIdle
+Set choosed to 0
+
+TRIGGER Procedure 4.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 538208 | missionId: 1500382
+CONDITIONS
+Check relationship with Owen is Lover
+ACTIONS
+(cId 538210) A conversation 18686, 5720_0 starts:
+{{dialogue|Owen|Even if I did know what to say, I've never been much with a pen. Some stuff just doesn't come out right on paper, I find. I don't think there's any way I can change their mind...}}
+{{dialogue|Owen|I dunno. What would you do in my shoes?}}
+
+*''Tell 'em we're working hard to turn things around.''
+*''Tell them the story you just told me.''
+*''Tell them about... us.''
+*''No idea...''
+
+{{dialogue|Owen|indent=true|answer=Tell 'em we're working hard to turn things around.
+|Yeah, that's not a bad start.}}
+{{dialogue|Owen|indent=true|I mean... are they only reading the bad news? You put the miners back in business, fixed the Water Tower... Everyone else is out there trying their best, too. It's like Mort said back at that whole Musa debacle, no one here's given up, you know. Paraphrasing...}}
+{{dialogue|Owen|indent=true|Yeah, I'll go with something like that. Thanks, ''Player''. I think if they understand how hard we're fighting, maybe they'll have the same hope that I do.}}
+{{dialogue|Owen|indent=true|Dear Ma and Pa, I know what you've been seeing in the papers lately-}}
+{{dialogue|Owen|indent=true|answer=Tell them the story you just told me.
+|Oh... yeah... you liked that, huh? I mean, yeah... my memories and... the stories of everyone who comes through here, they all mean something. Maybe they just need to be reminded how much this place means to people.}}
+{{dialogue|Owen|indent=true|And hey, with people like you behind the scenes, there're always going to be more stories to tell here at the Blue Moon...}}
+{{dialogue|Owen|indent=true|Dear Ma and Pa, I know what you've been seeing in the papers lately-}}
+{{dialogue|Owen|indent=true|answer=Tell them about... us.
+|Oh. Yeah, I mean... they know about you, ''Player''... I've told them everything. Well. Not everything, everything... They want me to bring you to Atara.}}
+{{dialogue|Owen|indent=true|Well, I guess I could tell them that... as long as you're here... we've got each other! Nothing to really worry about...}}
+{{dialogue|Owen|indent=true|Dear Ma and Pa, I know what you've been seeing in the papers lately-}}
+{{dialogue|Owen|indent=true|answer=No idea...
+|Yeah... Well, thanks for listening anyway. Didn't mean to try to put that on you or anything. I'm sure I'll figure something out.}}
+NPC RANDOM ADD || id: 1 | instId: 538201 | scene: Saloon | flagName: Story_538202 | dailyBehavior: CommanderIdle
+Set choosed to 0
+
+TRIGGER Procedure 4.0 Step 4.1 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 538210) The player picks the fourth option in conversation segment 18687:
+{{dialogue|Owen|I dunno. What would you do in my shoes?}}
+
+*''Tell 'em we're working hard to turn things around.'' (No unique dialogue)
+*''Tell them the story you just told me.'' (No unique dialogue)
+*''Tell them about... us.'' (No unique dialogue)
+*''No idea...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set choosed to 1
+
+TRIGGER Procedure 4.0 Step 4.1 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 538210) The player picks the third option in conversation segment 18784:
+{{dialogue|Owen|I dunno. What would you do in my shoes?}}
+
+*''Tell 'em we're working hard to turn things around.'' (No unique dialogue)
+*''Tell them the story you just told me.'' (No unique dialogue)
+*''No idea...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set choosed to 1
+
+TRIGGER Procedure 4.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 538210 | missionId: 1500382
+CONDITIONS
+Always:
+ACTIONS
+(cId 538211) A conversation 18703 starts:
+{{dialogue|0|Yo, boss! Lemme order over here!}}
+
+TRIGGER Procedure 4.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 538211) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Owen|!}}
+
+TRIGGER Procedure 4.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC BUBBLE STATE CHANGE || order: 0 | npc: 8001 | flag: 0
+CONDITIONS
+Always:
+ACTIONS
+(cId 538212) A conversation 18705, 18706, 18707 starts:
+{{dialogue|Owen|Just a second!}}
+{{dialogue|Owen|Looks like break's over...!}}
+{{dialogue|Owen|These are trying times but... I'm doing my best and... I know you are, too. We'll get through this!}}
+
+TRIGGER Procedure 5.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 538212 | missionId: 1500382
+CONDITIONS
+Check relationship with Owen is 6 Lover
+ACTIONS
+(cId 538213) A conversation 18708 starts:
+{{dialogue|Owen|Thanks for chatting with me, ''Player''. Duty calls!}}
+
+TRIGGER Procedure 5.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 538213) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Owen stops standing still
+Remove behavior CommanderNPCAction (idName: 5382003) from Owen
+Remove behavior CommanderMoveToFlagAndAction (idName: 5382001) from Player
+Remove behavior CommanderPlayerAction (idName: 5382002) from Player
+CUTSCENE UI STATE EXIT || 
+Add behavior CommanderMoveToFlagAndAction (idName: 5382004) to 538201
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:Story_538203)
+STOPWATCH GAME TIME SET || id: 5382100 | minute: 60
+
+TRIGGER Procedure 5.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 538212 | missionId: 1500382
+CONDITIONS
+Check relationship with Owen is Lover
+ACTIONS
+(cId 538213) A conversation 18709, 18710 starts:
+{{dialogue|Owen|Hate to leave you, babe, but duty calls... Thanks for chatting with me about this; I feel better about it already. Have a great rest of your day!}}
+{{dialogue|Owen|See ya!}}
+
+TRIGGER Procedure 5.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH GAME TIME END || order: 0 | id: 5382100
+CONDITIONS
+Check if choosed is == 0
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 5382004) from 538201
+NPC RANDOM REMOVE || id: 538201
+
+TRIGGER Procedure 5.0 Step 3.1 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH GAME TIME END || order: 0 | id: 5382100
+CONDITIONS
+Check if choosed is == 1
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 5382004) from 538201
+NPC RANDOM REMOVE || id: 538201
+END MISSION 1500382
+
+TRIGGER Procedure 5.0 Step 4.0 Order 4 Repeat 5
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Set weekday to 0
+
+TRIGGER Procedure 5.0 Step 4.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION END || order: 0 | missionEndResult: 1 | missionId: 1200232
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 5382004) from 538201
+NPC RANDOM REMOVE || id: 538201
+NPC ICON REMOVE || missionId: 1500382 | npc: 8001 | missionIcon: 6
+AREA TRIGGER DELETE || id: 538201
+END MISSION 1500382
+
+TRIGGER Procedure 5.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON ADD || missionId: 1500382 | npc: 8001 | missionIcon: 6
+
+TRIGGER Procedure 5.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Owen
+CONDITIONS
+Always:
+ACTIONS
+(cId 538214) A conversation 18711, 18712, 18713 starts:
+{{dialogue|Owen|Hey, ''Player''! I heard back from my folks. I told 'em what you told me and... they said they were sorry for putting pressure on me and they totally get it now. Just got a little nervous seeing all the bad news, I guess.}}
+{{dialogue|Owen|Saloon is doing fine, Sandrock is getting better and better, so there's really nothing to worry about. I believe what we told 'em. I really think we're going to be able to turn things around out here.}}
+{{dialogue|Owen|So... yeah! Everything's good. All cleared up. We're all one big happy family again. Thanks again for being there!}}
+
+TRIGGER Procedure 5.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 538214) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON REMOVE || missionId: 1500382 | npc: 8001 | missionIcon: 6
+END MISSION 1500382
+
+TRIGGER Procedure 5.0 Step 8.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1500382
+CONDITIONS
+Check relationship with Owen is Married
+ACTIONS
+The player receives a letter:
+{{mail|754}}

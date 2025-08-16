@@ -1,0 +1,346 @@
+Reading Mission 1200175: Relapse
+
+<onlyinclude>{{Infobox mission
+|name = Relapse
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 550
+|reputation = None
+|gols = None
+|npc1 = Fang
+|rp1 = 20
+|npc2 = X
+|rp2 = 10
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200106
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Fragrant Memories is successfully completed
+ACTIONS
+Run mission #1200180
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission Fragrant Memories is result 1 flag 1
+Check if Fang has favor >= 200
+CHECK PLAYER HAS BED || state: 1
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+Run mission Relapse
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK PLAYER HAS BED || state: 1
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+Where's Mi-an is in state 1 with flag 0
+The Childhood Friend is in state 1 with flag 0
+Goodbye, Nia is in state 1 with flag 0
+CHECK DAY OF WEEK || dayOfWeek: 3 | set: 0
+CHECK DAY OF WEEK || dayOfWeek: 5 | set: 0
+The Kidnapping is in state 1 with flag 0
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: triallogan | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: graceleave | info: 1 | exist: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+Add behavior CommanderNPCActionLoop (idName: 21751) to Fang
+(param: CMDAction:Faint)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+X stands still in Main
+Fang stands still in Main
+Fang stops standing still
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: heal_player1
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 21752 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Fang
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 1230_0 starts:
+{{dialogue|Fang|Thank you. I'll go.}}
+
+*''What happened?''
+*''Are you still cold?'' (No unique dialogue)
+
+{{dialogue|Fang|indent=true|answer=What happened?
+|Recurring... symptom.}}
+Remove behavior 1200175_8016_1 (idName: 121753) from Fang
+
+TRIGGER Procedure 0.0 Step 0.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior 1200175_8016_1 (idName: 121753) from Fang
+Remove behavior CommanderNPCAction (idName: 121754) from Fang
+The player receives a letter:
+{{mail|341}}
+END MISSION 1200175
+
+TRIGGER Procedure 0.0 Step 0.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8016 | cId: 2 | missionId: 1200175
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 4336, 4239 starts:
+{{dialogue|X|Happens all the time! Brrrr...! So cold! Thanks, buh-bye! Bye!}}
+{{dialogue|Fang|...}}
+Fang gains 10 favor
+
+TRIGGER Procedure 0.0 Step 0.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the second option in conversation segment 4334:
+{{dialogue|Fang|Thank you. I'll go.}}
+
+*''What happened?'' (No unique dialogue)
+*''Are you still cold?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 121754) to Fang
+(param: CMDAction:ShakeHead)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior 1200177_8016 (idName: 21751) from Fang
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8016 | tActor: 8042
+END MISSION 1200175
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 4322, 5551 starts:
+{{dialogue|X|Fang! Fang!}}
+{{dialogue||(Fang fainted! What should I do?)}}
+
+*''I'll take him to my house to rest!'' (No unique dialogue)
+*''We should really call the Civil Corps...'' (No unique dialogue)
+
+Add behavior CommanderMoveToFlag (idName: 21751) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:heal_player2|Delay:1)
+
+TRIGGER Procedure 0.0 Step 3.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the PlayerHome:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 21751 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: -2
+(cId 1) A conversation 1224_0 starts:
+{{dialogue|Fang|Cold... so cold...}}
+{{dialogue|Fang|Hm...}}
+
+*''What did you say?'' (No unique dialogue)
+*''Don't speak, you're ill.'' (No unique dialogue)
+
+{{dialogue|Fang|Cold.}}
+{{dialogue|Fang|Mother... I'm still cold...}}
+
+*''You're cold?'' (No unique dialogue)
+*{{flirt}}''Don't worry, I'm here for you.'' (No unique dialogue)
+
+{{dialogue|Fang|Mother, don't leave me. Don't leave me all alone...}}
+
+*''You miss her a lot, don't you?''
+*''You need to rest.''
+
+{{dialogue|Fang|indent=true|answer=You miss her a lot, don't you?
+|... Under that tree, her final resting place... I remember the rain.}}
+
+:*''Was this in a nightmare?''
+:*''Rain? But Sandrock is a desert.''
+:*''Woah! You're talking!''
+
+{{dialogue|Fang|indent=double|answer=Was this in a nightmare?
+|Not a dream. That day... it was raining. So cold.}}
+{{dialogue|Fang|indent=double|...Ugh. (Fang falls asleep)}}
+{{dialogue|Fang|indent=double|answer=Rain? But Sandrock is a desert.
+|Not here. In... in... (Fang falls alseep)}}
+{{dialogue|Fang|indent=double|answer=Woah! You're talking!
+|Not here. In... in... (Fang falls alseep)}}
+{{dialogue|Fang|indent=true|answer=You need to rest.
+|I was there, at that tree in the rain. I could hardly breathe...}}
+
+:*''Was this in a nightmare?''
+:*''Rain? But Sandrock is a desert.''
+:*''Woah! You're talking!''
+
+{{dialogue|Fang|indent=double|answer=Was this in a nightmare?
+|Not a dream. That day... it was raining. So cold.}}
+{{dialogue|Fang|indent=double|...Ugh. (Fang falls asleep)}}
+{{dialogue|Fang|indent=double|answer=Rain? But Sandrock is a desert.
+|Not here. In... in... (Fang falls alseep)}}
+{{dialogue|Fang|indent=double|answer=Woah! You're talking!
+|Not here. In... in... (Fang falls alseep)}}
+{{dialogue|Player|(He fell asleep. For once, he was speaking clearly, but what was he talking about...?)}}
+The conversation ends.
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8016 | tActor: 8042
+Add tag "XSOLO" to X
+
+TRIGGER Procedure 0.0 Step 4.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 5551:
+{{dialogue||(Fang fainted! What should I do?)}}
+
+*''I'll take him to my house to rest!'' (No unique dialogue)
+*''We should really call the Civil Corps...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 21751) to Player
+(param: CMDAction:Pave)
+DELAY MASK SET || maskId: 21751 | delayTime: 0 | durationTime: 1 | changeType: 0 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 4.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 5551:
+{{dialogue||(Fang fainted! What should I do?)}}
+
+*''I'll take him to my house to rest!'' (No unique dialogue)
+*''We should really call the Civil Corps...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 21751) to Player
+(param: CMDAction:Hi|LookAtActor:8026)
+DELAY MASK SET || maskId: 21751 | delayTime: 5 | durationTime: 1.5 | changeType: 2 | curveIndex: -2
+Unsuur stands still in Main
+Add behavior CommanderMoveToFlagAndAction (idName: 217526) to Unsuur
+(param: FlagName:heal_unsuur2|TargetScene:Main|MoveMode:Run|Delay:0.6)
+In a speech bubble:
+{{dialogue|Unsuur|What happened? Don't worry, I'll handle it!}}
+
+TRIGGER Procedure 0.0 Step 5.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 21751 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Add behavior 1200175_8016 (idName: 21751) to Fang
+(param: -1)
+ACTION ACTOR ADD FOLLOWER || mActor: 8016 | tActor: 8042 | state: Defense
+Remove behavior CommanderMoveToFlag (idName: 21751) from Player
+Remove behavior CommanderPlayerAction (idName: 21751) from Player
+X stops standing still
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8016 | behaviourName: 1200175_8016 | eventName: 1200175sleep
+CONDITIONS
+Always:
+ACTIONS
+CAMERA PATH AT PLAYER BED START || id: 21753 | Path: heal3 | style: 0 | fadeTime: 0
+PLAYER SWITCH SCENE || scene: PlayerHome
+Remove behavior CommanderNPCActionLoop (idName: 21751) from Fang
+
+TRIGGER Procedure 0.0 Step 5.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 21752 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior 1200175_8016 (idName: 21751) from Fang
+DELAY MASK SET || maskId: 21752 | delayTime: 2 | durationTime: 2 | changeType: 1 | curveIndex: -2
+(cId 80001) A conversation 5269 starts:
+{{dialogue|-3|(It looks like Fang has woken up already, I should go and see him)}}
+CUTSCENE UI STATE EXIT || 
+Add behavior 1200175_8016_1 (idName: 121753) to Fang
+(param: -1)
+ACTION NPC REMOVE TAG || npc: 8042 | tag: XSOLO
+
+TRIGGER Procedure 0.0 Step 5.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 21751 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Add behavior 1200177_8016 (idName: 21751) to Fang
+(param: -1)
+ACTION ACTOR ADD FOLLOWER || mActor: 8016 | tActor: 8042 | state: Defense
+Remove behavior CommanderPlayerAction (idName: 21751) from Player
+X stops standing still
+Unsuur stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 217526) from Unsuur
+Unsuur stands still in Clinic
+Unsuur stops standing still
+Fang stands still in Clinic
+Remove behavior CommanderMoveToFlag (idName: 21751) from Player
+Fang stops standing still
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderNPCActionLoop (idName: 21751) from Fang
+
+==Rewards==
+{{mission reward
+|npc1 = Fang
+|rp1 = 20
+|npc2 = X
+|rp2 = 10
+|exp = 550
+|reputation = None
+|gols = None
+}}

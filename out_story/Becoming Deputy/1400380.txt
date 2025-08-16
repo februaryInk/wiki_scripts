@@ -1,0 +1,168 @@
+Reading Mission 1400380: Becoming Deputy
+
+<onlyinclude>{{Infobox mission
+|name = Becoming Deputy
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Becoming Deputy:
+
+TRIGGER Procedure 1.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 4379212 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 4379413) A conversation 5705_0 starts:
+{{dialogue|Justice|''Player'', I hope I can once again count on you to come through as our town's most reliable Builder... And fix us up {{textcolor|green|one more hat}}...?}}
+{{dialogue|Justice|Oh, that's right! We even got a new design in. You know the hat business; feels like every time you get a new one it's obsolete in a few months...}}
+{{dialogue|Justice|Yeah, here you go! A recipe for a Super Deluxe Deputy Hat with built in plating for extra protection. For the most extreme of combat situations...}}
+{{dialogue|Justice|Ceremony? Oh. Shoot. Uhhh... see if Unsuur brings it up. Like I said, this whole deputy, sheriff thing: it's all just something I made up! I mean, come on, I made the cat deputy, heh heh...}}
+{{dialogue|Justice|I thought everyone would get a kick out of that, but a couple people got kinda mad...}}
+{{dialogue|Justice|Anyway, Unsuur takes it real serious... But yeah, it's not really a thing.}}
+{{dialogue|Justice|Just take the Super Deluxe Deputy Hat to Unsuur when it's ready, he'll be over the moon...}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4379413) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Justice stops standing still
+Unsuur stops standing still
+CUTSCENE UI STATE EXIT || 
+Add 1 Super Deputy Hat of Default quality (Notify player)
+CAMERA PATH STOP DEFAULT || id: 4379727
+CAMERA PATH STOP DEFAULT || id: 4379728
+CAMERA PATH STOP DEFAULT || id: 4379729
+CAMERA PATH STOP DEFAULT || id: 4379730
+CAMERA PATH STOP DEFAULT || id: 4379731
+CAMERA PATH STOP DEFAULT || id: 4379732
+CAMERA PATH STOP DEFAULT || id: 4379733
+CAMERA PATH STOP DEFAULT || id: 4379734
+CAMERA PATH STOP DEFAULT || id: 4379735
+DELIVER MISSION 1400379
+START MISSION 1400379
+END MISSION 1400379
+Run mission Becoming Deputy
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1400380
+CONDITIONS
+Always:
+ACTIONS
+===Make Deputy Hat===
+
+{{mission_details
+|desc = To congratulate Unsuur on becoming deputy, Justice has asked you to make him a Deputy Hat. You can make it on the Worktable.
+|details = Make Deputy Hat
+*{{i2|Super Deputy Hat|0/1}}
+*{{i2|Unsuur|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Unsuur
+CONDITIONS
+Always:
+ACTIONS
+(cId 4380401) A conversation 18633 starts:
+{{dialogue|Unsuur|Holy smokes. I'm deputy now. That's crazy.}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1400379 | targetId: 4380301 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Unsuur===
+
+{{mission_details
+|desc = The Deputy Hat is ready, bring it to Unsuur to congratulate him in person!
+|details = Talk to Unsuur
+*{{i2|Super Deputy Hat|0/1}}
+*{{i2|Unsuur|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Unsuur
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1400379 | targetId: 4380401 | canSubmit: 1
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+(cId 4380402) A conversation 5706_0, 5707_0 starts:
+{{dialogue|Unsuur|So...}}
+{{dialogue|Unsuur|The day has finally come...}}
+{{dialogue|Unsuur|''Player''...}}
+{{dialogue|Unsuur|May I?}}
+The conversation ends.
+{{dialogue|Unsuur|Woah.}}
+{{dialogue|Unsuur|...Woah!}}
+{{dialogue|Unsuur|The deputy star has been polished to a mirror sheen. The sides have been reinforced. The brim and roll have been calibrated to a perfectly aerodynamic angle; it glides through the air like a shark in hot pursuit.}}
+{{dialogue|Unsuur|The buckle set is original, too. The base of the crown has been filed down to make less of a target. Not only that, every part of this hat has been expertly crafted and customized...}}
+{{dialogue|Unsuur|Thanks, ''Player''. I love it.}}
+{{dialogue|Unsuur|Well. Now... I guess I've accomplished everything I ever hoped to in my life. That's cool.}}
+{{dialogue|Unsuur|Thanks for always being there when we're doing Civil Corps stuff. I think some of the skills I learned watching you are part of what got me this far.}}
+{{dialogue|Unsuur|So... in a way... this is your Deputy Hat, too...}}
+{{dialogue|Unsuur|But, I mean, you could just crank out like fifty more if you wanted so maybe you'd better just make one for yourself, I don't think we need to share.}}
+{{dialogue|Unsuur|Unless you want to. I'm cool either way.}}
+{{dialogue|Unsuur|Well, ''Player''... I guess... I guess I'd better get out on patrol. I have to live up to the hype.}}
+{{dialogue|Unsuur|Let's do stuff soon. See ya.}}
+The conversation ends.
+BAG MODIFY BY TARGET || missionId: 1400379 | targetId: 4380401
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 4380402) There is a conversation segment (id 18637) that ends:
+{{dialogue|Unsuur|May I?}}
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 4380101 | delayTime: 0 | durationTime: 1 | changeType: 2 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4380402) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTION NPC PUT UNEQUIP || npc: 8026 | itemId: 12401028
+NPC REPLACE SUIT || npcSuitID: 49
+NPC CLOTH ADD MISSION ITEM || itemId: 12003023
+NPC CLOTH ADD MISSION ITEM || itemId: 12003024
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1400379
+END MISSION 1400380
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 4380101 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+ACTION NPC PUT EQUIP || npc: 8026 | itemId: 12401028

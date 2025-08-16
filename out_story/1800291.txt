@@ -1,0 +1,399 @@
+Reading Mission 1800291: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200135
+
+TRIGGER Procedure 9.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+We'll Be Ready For 'Em is successfully completed
+The Battle of Sandrock is in state 3 with flag 0
+ACTIONS
+NPC ADD TAG || tag: NoRandomNPCInTown
+
+TRIGGER Procedure 9.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 12) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1800290
+Run mission #1800291
+Run mission #1800292
+Run mission #1800302
+Run mission #1800303
+Run mission #1800304
+Run mission #1800299
+Run mission #1800301
+Run mission #1800300
+Run mission #1800293
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800291
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1800291 | id: 82911 | sceneName: Main | flagName: Trigger_8291 | showOnMap: 1 | mapIcon: MissionArea | transId: 0
+Set Battle to 0
+Set Lose to 0
+Set 8291Move1 to 0
+Set 8291Move to 0
+Set 8291Kill to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 9 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 82911 | behaviourName: CommanderTeleport | eventName: Teleported
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 82912 | behaviourName: CommanderTeleport | eventName: Teleported
+CONDITIONS
+Always:
+ACTIONS
+Increment 8291Move by 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 82911 | behaviourName: CommanderTeleport | eventName: Teleported
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 82912 | behaviourName: CommanderTeleport | eventName: Teleported
+CONDITIONS
+Check if 8291Move is >= 2
+ACTIONS
+Remove behavior CommanderTeleport (idName: 8291642) from 82911
+Remove behavior CommanderTeleport (idName: 8291652) from 82912
+
+TRIGGER Procedure 0.0 Step 0.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 82914 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 0.1 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 82911
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 82911 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 82911
+
+TRIGGER Procedure 0.0 Step 0.2 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82911 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8291_0_1
+Stev stands still in Main
+DELAY MASK SET || maskId: 82911 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 0.2 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800291
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM ADD || id: 10 | instId: 82911 | scene: Main | flagName: S8291_01_1 | dailyBehavior: RandomNPC
+NPC RANDOM ADD || id: 10 | instId: 82912 | scene: Main | flagName: S8291_02_1 | dailyBehavior: RandomNPC
+82911 stands still in Main
+82912 stands still in Main
+
+TRIGGER Procedure 0.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82911 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 10997, 10998, 10999, 11000 starts:
+{{dialogue|82911|Sigh... Today marks my third year of service... and the fourth year I won't be around for my son's birthday...}}
+{{dialogue|82912|Hey, at least you have some people waiting for you back home!}}
+{{dialogue|82911|After this mission, it'll just be another mission. I mean, you heard what's going on with Ethea, it'll be war sooner or later.}}
+{{dialogue|82912|Hey, I heard a lot of people are retiring after this mission 'cause it's such a big deal, maybe you qualify for honorable discharge!}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8291002) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8291_0_2)
+Add behavior CommanderMoveToFlagAndAction (idName: 8291942) to Stev
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8291_94_2)
+Add behavior CommanderMoveToFlagAndAction (idName: 8291640) to 82911
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8291_01_2)
+Add behavior CommanderMoveToFlagAndAction (idName: 8291650) to 82912
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8291_02_2)
+
+TRIGGER Procedure 0.0 Step 3.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Check if Battle is == 1
+ACTIONS
+DELAY MASK SET || maskId: 82912 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the third option in conversation segment 11001:
+{{dialogue|82911|I doubt it... If the Empire is already sending us into Alliance territory, it means they're gearing up for something.}}
+
+*''War with Ethea?'' (No unique dialogue)
+*''(Walk away.)'' (No unique dialogue)
+*''(Attack them.)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set Battle to 1
+
+TRIGGER Procedure 0.0 Step 4.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82912 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+ACTOR BLIND SET || set: 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 20 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 82911 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 82912 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Increment 8291Move1 by 1
+
+TRIGGER Procedure 0.0 Step 4.2 Order 24 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 0 | tag: DuvosSoldierEggs_2
+CONDITIONS
+Always:
+ACTIONS
+Increment 8291Kill by 1
+
+TRIGGER Procedure 0.0 Step 5.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PLAYER HP CHANGE || order: 0 | compare: 6 | percent: 0.3
+CONDITIONS
+Check if 8291Kill is <= (maybe?) 2
+ACTIONS
+Set Lose to 1
+DELAY MASK SET || maskId: 82913 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: -2
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 5.1 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 10 | tag: DuvosSoldierEggs_2
+CONDITIONS
+Check if 8291Kill is >= 2
+ACTIONS
+DELAY MASK SET || maskId: 82913 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 5.2 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82913 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+MONSTER ADD TAG || isAdd: 0 | tag: DuvosSoldierEggs_2
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8291_0_2
+Stev stands still in Main
+82911 stands still in Main
+82912 stands still in Main
+SCENEITEM DELETE || itemType: 0 | id: 82911
+ACTOR BUFF REMOVE || instanceId: 82911 | npc: 8000
+DELAY MASK SET || maskId: 82913 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+TIME SET ENABLE || bool: 1
+
+TRIGGER Procedure 0.0 Step 6.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 82911 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 82912 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Check if 8291Move1 is >= 2
+ACTIONS
+(cId 1) A conversation 3419_0 starts:
+{{dialogue|82911|I doubt it... If the Empire is already sending us into Alliance territory, it means they're gearing up for something.}}
+
+*''War with Ethea?''
+*''(Walk away.)'' (No unique dialogue)
+*''(Attack them.)''
+
+{{dialogue|82911|indent=true|answer=War with Ethea?
+|Ah? A Sandrocker's gotten out?}}
+{{dialogue|Stev|indent=true|The Commander gave the Builder permission to move about.}}
+{{dialogue|82911|indent=true|I see. We're talking about the Orzu situation. It's getting tense up there. Same thing here, I guess. Who knows how the Alliance will respond.}}
+{{dialogue|82912|indent=true|...Hey, we're not suppose to talk about this stuff... Come on.}}
+{{dialogue|82911|indent=true|answer=(Attack them.)
+|What the-}}
+{{dialogue|Stev|indent=true|Wait Builder!}}
+
+TRIGGER Procedure 0.0 Step 8.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Check if Battle is <= (maybe?) 1
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8291002) from Player
+Stev stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8291942) from Stev
+Remove behavior CommanderMoveToFlagAndAction (idName: 8291642) from 82911
+Remove behavior CommanderMoveToFlagAndAction (idName: 8291652) from 82912
+82911 stops standing still
+82912 stops standing still
+CUTSCENE UI STATE EXIT || 
+Add behavior CommanderTeleport (idName: 8291642) to 82911
+(param: TargetFlag:S8291_01_3|TargetScene:Main|Delay:8.0)
+Add behavior CommanderTeleport (idName: 8291652) to 82912
+(param: TargetFlag:S8291_02_3|TargetScene:Main|Delay:8.0)
+Remove behavior CommanderMoveToFlagAndAction (idName: 8291650) from 82912
+Remove behavior CommanderMoveToFlagAndAction (idName: 8291640) from 82911
+
+TRIGGER Procedure 0.0 Step 7.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82913 | eventType: 5
+CONDITIONS
+Check if Lose is == 1
+ACTIONS
+(cId 2) A conversation 3422_0 starts:
+{{dialogue|Stev|Sorry, the Commander gave this Builder permission to move around.}}
+{{dialogue|82911|That doesn't mean you can pick fights everywhere! Geez!}}
+{{dialogue|82912|Come on, let's just go.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 7.1 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82913 | eventType: 5
+CONDITIONS
+Check if Lose is == 0
+ACTIONS
+(cId 2) A conversation 3423_0 starts:
+{{dialogue|82911|What the heck are you doing! Call for backup!}}
+{{dialogue|Stev|Wait, wait, sorry, the Commander gave this Builder permission to move around.}}
+{{dialogue|82911|Then watch them more closely! Geez!}}
+{{dialogue|82912|Come on, let's just go.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 8.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82912 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+MONSTER ADD TAG || isAdd: 1 | tag: DuvosSoldierEggs_2
+Stev stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8291002) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8291942) from Stev
+Remove behavior CommanderMoveToFlagAndAction (idName: 8291642) from 82911
+Remove behavior CommanderMoveToFlagAndAction (idName: 8291652) from 82912
+82911 stops standing still
+82912 stops standing still
+CUTSCENE UI STATE EXIT || 
+NPC LEAVE || npc: 82911
+NPC LEAVE || npc: 82912
+ACTOR BUFF ADD || npc: 8000 | buffId: 11 | instanceId: 82911
+ACTOR BLIND SET || set: 1
+TIME SET ENABLE || bool: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 82911 | path: S8291_Item1 | sceneName: Main | flagName: S8291_Item1 | extraParams: -1
+Remove behavior CommanderMoveToFlagAndAction (idName: 8291640) from 82911
+Remove behavior CommanderMoveToFlagAndAction (idName: 8291650) from 82912
+NPC LEAVE || npc: 8094
+DELAY MASK SET || maskId: 82912 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 8.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82914 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Stev stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8291001) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8291941) from Stev
+Remove behavior CommanderMoveToFlagAndAction (idName: 8291642) from 82911
+Remove behavior CommanderMoveToFlagAndAction (idName: 8291652) from 82912
+82911 stops standing still
+82912 stops standing still
+DELAY MASK SET || maskId: 82914 | delayTime: 0 | changeType: 1 | curveIndex: 0 | durationTime: -2
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 40.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM REMOVE || id: 82911
+NPC RANDOM REMOVE || id: 82912
+END MISSION 1800291
+
+TRIGGER Procedure 0.0 Step 40.0 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 22841
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 82911
+NPC RANDOM REMOVE || id: 82911
+NPC RANDOM REMOVE || id: 82912
+END MISSION 1800291
+
+TRIGGER Procedure 0.0 Step 40.0 Order 25 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM REMOVE || id: 82911
+NPC RANDOM REMOVE || id: 82912
+NPC LEAVE || npc: 82911
+NPC LEAVE || npc: 82912
+END MISSION 1800291

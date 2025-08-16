@@ -1,0 +1,179 @@
+Reading Mission 1200191: The Childhood Friend
+
+<onlyinclude>{{Infobox mission
+|name = The Childhood Friend
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from The Childhood Friend:
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 21841
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 21841
+Remove behavior CommanderPlayerSit (idName: 21841) from Player
+Remove behavior CommanderSit (idName: 21841) from Nia
+DELAY MASK SET || maskId: 21841 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 21841
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Childhood Friend
+In a speech bubble:
+{{dialogue|Nia|Alright, you go do your Builder stuff, I'm gonna get some rest!}}
+ACTOR BUFF ADD || buffId: 21 | npc: 8000 | instanceId: 21841
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1200183
+END MISSION 1200184
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 20:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Yan stands still in Main and looks at Nia
+Nia stands still in Main and looks at Yan
+AREA TRIGGER ONCE CREATE || missionId: 1200191 | id: 21911 | sceneName: Main | flagName: niachamber_trigger1 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+Yan stops standing still
+Nia stops standing still
+ACTION NPC GEN CLUSTER || cluster: Story1200183_Root | behavior: Story1200183_Root | min: 2 | max: 3 | npcs: 8059,8043 | randomNpcs: 0 | leader: -10
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 21911
+CONDITIONS
+Always:
+ACTIONS
+ACTION NPC REMOVE CLUSTER || cluster: Story1200183_Root
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderMoveToFlag (idName: 21911) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:niachamber_player1)
+Yan stops standing still
+Nia stops standing still
+Yan stands still in Main and looks at Nia
+Nia stands still in Main and looks at Yan
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 21911) from Player
+(cId 0) A conversation 1436_0 starts:
+{{dialogue|Yan|Hoho, I have never seen you around, did you come here to see good ol' Yan?}}
+{{dialogue|Nia|Are you Mr. Yan, ''Player'''s boss?}}
+{{dialogue|Yan|It's actually President Yan, haha! But yes, you're not wrong. So, you're ''Player'''s friend? Good... good.}}
+{{dialogue|Yan|Are you by chance interested in becoming a Builder here? It's fun! It's enriching! And you could get to work with a friend! I might even be able move some numbers around and squeeze out a budget for an extra workshop...}}
+{{dialogue|Yan|So what-da-ya-say? Why don't you and I go inside for a little powwow, hm?}}
+{{dialogue|Nia|Hey! ''Player''! Look who I found! It's "President" Yan! He even suggested I try out as a Builder!}}
+{{dialogue|Yan|Haha, well, it's always a pleasure to show off my Commerce Guild, especially to such a beautiful young lady!}}
+{{dialogue|Nia|Haha, thank you very much!}}
+
+*''No! Don't go!''
+*''Okay, have a good chat.'' (No unique dialogue)
+
+{{dialogue|Yan|indent=true|answer=No! Don't go!
+|''Player'', why are you shouting? We at the Commerce Guild are the epitome of etiquette! What am I gonna do, scam her? Haha, don't be absurd! When you and Mi-an arrived in Sandrock, didn't I welcome you like a warm summer breeze?}}
+{{dialogue|Nia|indent=true|''Player'', if President Yan is being this friendly, who am I to refuse?}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 21911) to Nia
+(param: TargetScene:Main|MoveMode:Run|FlagName:zhuce_mianstart)
+Add behavior CommanderMoveToFlagAndAction (idName: 21911) to Yan
+(param: TargetScene:Main|MoveMode:Run|FlagName:zhuce_mian0)
+DELAY MASK SET || maskId: 21911 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 21911
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 21911) from Nia
+Remove behavior CommanderMoveToFlagAndAction (idName: 21911) from Yan
+DELAY MASK SET || maskId: 21911 | delayTime: 3 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 21911
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 4842, 4843, 4844 starts:
+{{dialogue|Yan|A devil! A devil I say!}}
+{{dialogue|Nia|What's wrong? President Yan, why are you crying? I thought we had such an... enlightening conversation.}}
+{{dialogue|Yan|Don't... don't let me see this girl again... ''Player'', you... you... Just keep her away from me!}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Yan|Why do bad things happen to such honest, good people!?}}
+Yan stops standing still
+(cId 2) A conversation 4846, 4847 starts:
+{{dialogue|Nia|Well, that was certainly a "fun" conversation! For me! Teehee!}}
+{{dialogue|Nia|Were you worried about me just now? It's fine, I can handle myself! Now, I'm gonna go explore a little more! See you later!}}
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Nia stops standing still
+Nia gains 5 favor
+Yan gains 5 favor
+END MISSION 1200191
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 23:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+ACTION NPC REMOVE CLUSTER || cluster: Story1200183_Root
+AREA TRIGGER DELETE || id: 21911
+Nia stops standing still
+Yan stops standing still
+END MISSION 1200191

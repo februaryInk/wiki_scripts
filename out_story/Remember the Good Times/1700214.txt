@@ -1,0 +1,419 @@
+Reading Mission 1700214: Remember the Good Times
+
+<onlyinclude>{{Infobox mission
+|name = Remember the Good Times
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Remember the Good Times:
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+X stops standing still
+DELIVER MISSION 1700213
+START MISSION 1700213
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700213
+CONDITIONS
+Always:
+ACTIONS
+Run mission Remember the Good Times
+END MISSION 1700213
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700214
+CONDITIONS
+Always:
+ACTIONS
+===Follow X===
+
+{{mission_details
+|desc = Where does X want to take you?
+|details = Follow X
+}}
+AREA TRIGGER CREATE || missionId: 1700213 | sceneName: Main | flagName: GoodMemories_X | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80009540 | id: 172141
+Add behavior CommanderMoveToFlagAndAction (idName: 172141) to X
+(param: TargetScene:Main|FlagName:GoodMemories_X|MoveMode:Run)
+Set letter to 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Fang
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1700213 | targetId: 2 | canSubmit: 0
+ACTIONS
+(cId 10) A conversation 5702 starts:
+{{dialogue|Fang|Patients... need to speak...}}
+
+*''How can I help you?'' (No unique dialogue)
+*''You have a brother?'' (No unique dialogue)
+
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 5702:
+{{dialogue|Fang|Patients... need to speak...}}
+
+*''How can I help you?'' (No unique dialogue)
+*''You have a brother?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 10) A conversation 5703 starts:
+{{dialogue|Fang|Don't... bother yourself...}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 5702:
+{{dialogue|Fang|Patients... need to speak...}}
+
+*''How can I help you?'' (No unique dialogue)
+*''You have a brother?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 10) A conversation 5704, 6259 starts:
+{{dialogue|Fang|I have... no brother...}}
+{{dialogue||Your relationship is not deep enough for Fang to open up about this.}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 172141
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 172141 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: 0
+Set letter to 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172141 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+X stands still in Main
+Catori stands still in Main
+DELAY MASK SET || maskId: 172141 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: 0
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: GoodMemories_Player
+AREA TRIGGER DELETE || id: 172141
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172141 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 5705, 5706, 1731_0 starts:
+{{dialogue|X|Book! Book! Gimme gimme gimme!}}
+{{dialogue|Catori|I told you, birdbrain, you can't win if you don't play!}}
+{{dialogue|X|Honey, I just need it for a second. I'll give it right back.}}
+{{dialogue|Catori|It doesn't work like that. I can't just be giving out prizes, it defeats the entire purpose of my patented Golden Goose non-fungible game token exchange system!}}
+{{dialogue|X|It doesn't work like that! Breh breh breh breh, defeats the entire purpose!}}
+{{dialogue|Catori|Hey! Stop it, X! I don't sound like that! ...Do I...? Urgh, ''Player'', help me out here!}}
+
+*''What's wrong?''
+*''What's special about this book?''
+
+{{dialogue|Catori|The bird really wants this new book I got in, but if I give away a prize to him, I'll have to start givin' 'em out to everybody. I'll be broker than all the relics in them ruins you're always divin' into!}}
+{{dialogue|X|Bad birdie! Fang need! Good book!}}
+{{dialogue|Catori|I run a Game Center, not a library! I ain't givin' it to ya!}}
+{{dialogue|X|Read it again, Ma! Okay, okay, but it's the last time!}}
+{{dialogue|Catori|What's he even talkin' about?!}}
+{{dialogue|Catori|Look, if you really want it, then you're going to have to find someone to win it for you, fair and square. Or grow some thumbs and win it yourself, heh heh... make fun of me, will ya, birdbrain...?}}
+{{dialogue|X|Birdie! Birdie help!}}
+{{dialogue|X|Good bird! I believe in you, you can do it!}}
+{{dialogue|Catori|See, there you go! ''Player''! They'll help you win the book, won't you, ''Player''? That'll get you to shut your beak for a while, eh...?}}
+{{dialogue|Catori|Thanks, ''Player''! You're a life-saver! You know where my exchange counter is... I hope...!}}
+{{dialogue|X|Good bird! Thank you!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Win the Book===
+
+{{mission_details
+|desc = Go to the Game Center and earn enough Tokens to win "The Eagle in the Valley" that X wants.
+|details = Win the Book
+*{{i2|The Eagle in the Valley|0/1}}
+}}
+Catori stops standing still
+X stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 172141) from X
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 6040}}
+A cutscene CG_BOOKFANG (duration: 2.0) starts playing
+Fairy Tale Fables - I brought the book to Fang, and it seemed to bring back memories. Reading it again, it seemed to bring out a desire to talk and express himself more. He just needs a bit of time.
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1700213 | targetId: 2 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Go to Clinic===
+
+{{mission_details
+|desc = Now that you have "The Eagle in the Valley," go to the Clinic and show Fang.
+|details = Go to Clinic
+*{{i2|The Eagle in the Valley|0/1}}
+}}
+AREA TRIGGER CREATE || flagName: SocialLesson_X | sceneName: Clinic | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: -1 | missionId: 1700213 | id: 172142
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_clinic
+CHECK PLAYER ITEM || item: 10000016 | itemGrade: -1 | set: 2 | count: 1
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_clinic
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+X stands still in Clinic
+PLAYER SET POS ROT FLAG || sceneName: Clinic | flagName: GoodMemoriesClinic_Player
+Fang stands still in Clinic
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 172142
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 1733_0 starts:
+{{dialogue|X|Pro-gamer! ''Player''! Got it!}}
+{{dialogue|Fang|...Huh?}}
+{{dialogue|X|Prize! Golden Goose! Help! Help!}}
+{{dialogue|Fang|...}}
+{{dialogue|X|I won't always be here. You need to speak up!}}
+
+*{{flirt}}''You can do this, Fang.''
+*''We want you to talk more.''
+*''You spoke clearly in your sleep...''
+*''You don't have to if you don't want to.''
+
+{{dialogue|X|indent=true|answer=You can do this, Fang.
+|Speak up, honey! Speak up!}}
+{{dialogue|X|indent=true|answer=We want you to talk more.
+|Speak up, honey! Speak up!}}
+{{dialogue|X|indent=true|answer=You spoke clearly in your sleep...
+|You can do it! You can do it!}}
+{{dialogue|Fang|indent=true|answer=You don't have to if you don't want to.
+|I... want to...}}
+{{dialogue|Fang|It... hurts... to speak...}}
+{{dialogue|X|Be brave, it's going to be okay! It's okay, it's okay!}}
+{{dialogue|Fang|It's all... it's too much...}}
+{{dialogue|X|Remember the good times, honey!}}
+{{dialogue|Fang|Good times are... gone.}}
+{{dialogue|X|Give! I remember, I remember!}}
+{{dialogue|Fang|...?}}
+{{dialogue|Fang|This... X... I said... we don't need it...}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 4.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1700213
+Fang gains 5 favor
+Remove behavior Story1700213_8016 (idName: 172141) from Fang
+X stops standing still
+Fang stops standing still
+Remove behavior Story1700213_8000 (idName: 172141) from Player
+END MISSION 1700214
+
+TRIGGER Procedure 1.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_BOOKFANG | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 1737_0 starts:
+{{dialogue|Fang|...}}
+{{dialogue|X|You really love this book, huh? Yeah! It's my favorite ever, Ma!}}
+
+*''Is X imitating... you?''
+*''Is this your favorite book?''
+
+{{dialogue|Fang|indent=true|answer=Is X imitating... you?
+|Yes... and...}}
+{{dialogue|Fang|indent=true|answer=Is this your favorite book?
+|As a child...}}
+{{dialogue|Fang|Mother... used to... help me... read this.}}
+{{dialogue|X|Again! Again!}}
+{{dialogue|Fang|Every night. My favorite.}}
+{{dialogue|X|I love this book, Ma!}}
+{{dialogue|Fang|The good times.}}
+{{dialogue|Fang|Before "he" came back.}}
+{{dialogue|Fang|...}}
+{{dialogue|Fang|You... brought this...?}}
+{{dialogue|Fang|Let me... show you... ''Player''...}}
+The conversation ends.
+Remove 1 The Eagle in the Valley of Default quality (Notify player)
+
+TRIGGER Procedure 1.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior Story1700213_8016 (idName: 172141) to Fang
+(param: -1)
+Add behavior Story1700213_8000 (idName: 172141) to Player
+(param: -1)
+
+TRIGGER Procedure 1.0 Step 7.5 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8016 | behaviourName: Story1700213_8016 | eventName: SitDownFinished
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 6382, 6383, 6384 starts:
+{{dialogue|Fang|Once upon a time there was a egg in a nest.  From the egg sprung a bold, young eagle, with closed eyes and a big smile on his beak.}}
+{{dialogue|Fang|He flapped his arms a bit. But didn't go anywhere...}}
+{{dialogue|Fang|The rain was getting worse, the eagle was starting to feel cold.}}
+
+TRIGGER Procedure 1.0 Step 7.6 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 6383) that ends:
+{{dialogue|Fang|He flapped his arms a bit. But didn't go anywhere...}}
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 172142 | delayTime: 1.5 | durationTime: 3 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172142 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 172142 | delayTime: 0 | durationTime: 2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172142 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 1741_0 starts:
+{{dialogue|Fang|...And then the eagle... finally found the strength to use his wings... and soared over the mountain, away from the clouds... to glide free in skies of blue... happily ever after.}}
+{{dialogue|X|Bravo! Bravo! Wonderful!}}
+
+*''That was a lovely story.''
+*''You got through it!''
+*''Still a long way to go...''
+
+{{dialogue|Fang|indent=true|answer=That was a lovely story.
+|I had... almost forgotten...}}
+{{dialogue|Fang|indent=true|answer=You got through it!
+|Was hard... but...}}
+{{dialogue|Fang|indent=true|answer=Still a long way to go...
+|Yes...}}
+{{dialogue|X|He can talk, he can talk! He can siiiiing!}}
+{{dialogue|Fang|Hm...}}
+{{dialogue|Fang|I am ready...}}
+{{dialogue|Fang|...To try.}}
+{{dialogue|Fang|For you... my...}}
+{{dialogue|Fang|Friends.}}
+{{dialogue|Fang|For now... Must return... to work...}}
+{{dialogue|Fang|Let us meet again... soon...}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if letter is == 1
+ACTIONS
+AREA TRIGGER DELETE || id: 172141
+Remove behavior CommanderMoveToFlagAndAction (idName: 172141) from X
+The player receives a letter:
+{{mail|369}}
+===Check Your Mail===
+
+{{mission_details
+|desc = You didn't follow X, but it looks like someone has left you a letter in the mail. Maybe it's related to Fang.
+|details = Check Your Mail
+}}
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 369
+CONDITIONS
+Always:
+ACTIONS
+===Win the Book===
+
+{{mission_details
+|desc = Go to the Game Center and earn enough Tokens to win "The Eagle in the Valley" that X wants.
+|details = Win the Book
+*{{i2|The Eagle in the Valley|0/1}}
+}}

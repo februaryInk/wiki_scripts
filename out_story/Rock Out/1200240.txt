@@ -1,0 +1,176 @@
+Reading Mission 1200240: Rock Out
+
+<onlyinclude>{{Infobox mission
+|name = Rock Out
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Rock Out:
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200239
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1200239
+START MISSION 1200239
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200239
+CONDITIONS
+Always:
+ACTIONS
+Run mission Rock Out
+END MISSION 1200239
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200240
+CONDITIONS
+Always:
+ACTIONS
+===Clear the Boulders===
+
+{{mission_details
+|desc = Clear the boulders from the road to create a smooth passage to the mountain.
+|details = Clear the Boulders
+}}
+PICK UP RESOURCE REFRESH || id: 120023901
+PICK UP RESOURCE REFRESH || id: 120023902
+PICK UP RESOURCE REFRESH || id: 120023903
+PICK UP RESOURCE REFRESH || id: 120023904
+RESOURCE LOCK INTERACT || id: 120023901 | set: 0
+RESOURCE LOCK INTERACT || id: 120023902 | set: 0
+RESOURCE LOCK INTERACT || id: 120023903 | set: 0
+RESOURCE LOCK INTERACT || id: 120023904 | set: 0
+AREA TRIGGER CREATE || missionId: 1200239 | id: 22401 | sceneName: Main | showOnMap: 1 | mapIcon: MissionArea | transId: 80012490 | flagName: smashrock_trigger1
+AREA TRIGGER CREATE || id: 22402 | transId: 80012490 | sceneName: Main | showOnMap: 1 | mapIcon: MissionArea | missionId: 1200239 | flagName: smashrock_trigger2
+AREA TRIGGER CREATE || id: 22403 | missionId: 1200239 | sceneName: Main | showOnMap: 1 | mapIcon: MissionArea | transId: 80012490 | flagName: smashrock_trigger3
+AREA TRIGGER CREATE || missionId: 1200239 | id: 22404 | sceneName: Main | flagName: smashrock_trigger4 | transId: 80012490 | showOnMap: 1 | mapIcon: MissionArea
+
+TRIGGER Procedure 0.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON RESOURCE PICK UP || order: 0 | npc: 8000 | id: 120023901
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 22401
+
+TRIGGER Procedure 0.0 Step 1.1 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON RESOURCE PICK UP || order: 0 | npc: 8000 | id: 120023902
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 22402
+
+TRIGGER Procedure 0.0 Step 1.2 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON RESOURCE PICK UP || order: 0 | npc: 8000 | id: 120023903
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 22403
+
+TRIGGER Procedure 0.0 Step 1.3 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON RESOURCE PICK UP || order: 0 | npc: 8000 | id: 120023904
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 22404
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 4
+------------------------------------------------------------
+EVENTS
+ON RESOURCE PICK UP || order: 0 | id: 120023901 | npc: 8000
+ON RESOURCE PICK UP || order: 0 | id: 120023902 | npc: 8000
+ON RESOURCE PICK UP || order: 0 | id: 120023903 | npc: 8000
+ON RESOURCE PICK UP || order: 0 | id: 120023904 | npc: 8000
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || transId: 80012491 | isAdd: 1 | targetId: 1 | missionId: 1200239
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200239 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 22401
+DELAY MASK SET || maskId: 22401 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22401
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: smashrock_player
+Heidi stands still in Main and looks at Player
+DELAY MASK SET || maskId: 22401 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 22401
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 7459, 7460 starts:
+{{dialogue|Heidi|Wow! Our equipment should be able to enter the construction site no problem now! In any case, fantastic work, ''Player''! Now we've got a straight shot to the tunnel site.}}
+{{dialogue|Heidi|I'm still in the process of getting the diagram for the explosives, so {{textcolor|green|watch your mail}} in the coming days.}}
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Heidi stops standing still
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1200239
+END MISSION 1200240
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+PICK UP RESOURCE REFRESH || id: 120023901
+PICK UP RESOURCE REFRESH || id: 120023902
+PICK UP RESOURCE REFRESH || id: 120023903
+PICK UP RESOURCE REFRESH || id: 120023904
+RESOURCE LOCK INTERACT || id: 120023901 | set: 0
+RESOURCE LOCK INTERACT || id: 120023902 | set: 0
+RESOURCE LOCK INTERACT || id: 120023903 | set: 0
+RESOURCE LOCK INTERACT || id: 120023904 | set: 0

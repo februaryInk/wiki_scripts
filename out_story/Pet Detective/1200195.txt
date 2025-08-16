@@ -1,0 +1,325 @@
+Reading Mission 1200195: Pet Detective
+
+<onlyinclude>{{Infobox mission
+|name = Pet Detective
+|image =
+|description = Bronco thinks that the animals in town may know more than they seem to, and that they are too pure to join the villainous side. They may be able to help if they join the right side.
+|type = Main
+|time =
+|location =
+|characters = [[Bronco the Kid]]
+|condition =
+|details =
+|exp = 1650
+|reputation = 15
+|gols = 300
+|npc1 = Grace
+|rp1 = 10
+|npc2 = Captain
+|rp2 = 10
+|npc3 = Banjo
+|rp3 = 10
+|npc4 = Nemo
+|rp4 = 10
+|rewards = {{i2|Royal Desert Warrior Shirt}|1}
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200135
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Buckin' Bronco is successfully completed
+CHECK FESTIVAL || flag: 0 | type: 9
+ACTIONS
+Run mission #1200194
+Newspaper adds Article content 1074.
+Title: Costumed Criminal Caught!
+"Eat marbles, marble eaters!" Famous last words.
+
+Last words before being caught, that is! Was that enough of a hook? See for a second there, maybe you thought... Oh, alright, maybe that wasn't a great thing to do. Sorry for misleading you, but we put out a survey and apparently more than half of our readers don't make it more than halfway down the page! So, yeah. Just trying to make things more exciting.
+
+Anyway, ''Player'' caught a bandit!
+
+Oh, maybe that was a better hook. But in any case, yes, it's true. Apparently upon receiving a highly dubious commission, ''Player'' hit the streets looking for clues leading to the revelation of the specialist's true identity and subsequent capture! Bravo, ''Player''! 
+
+Our hard-boiled Builder detective had this to say on the matter:
+
+"It all stank to high heaven. I could see trouble written all over his face, and had a feeling he couldn't even spell the word if he was lookin' at it in the mirror. He fancied himself a wolf in sheep's clothing, but when he opened his mouth all I could hear was 'baa baa baa...'"
+
+Or at least, that's what I'd expect to hear. Everyone thinks in metaphors when they're solving crimes! Unfortunately ''Player'' was not available for comment, and, well... Sorry, ''Player''! We have to get this news out while it's still hot!
+
+Andy, the bandit boy is safely in the hands of the Civil Corps, and it is planned that he will be sent to work for the Church until he can be rehabilitated.
+
+We eagerly await the arrival of the real specialist. Stay tuned to the Tumbleweed Standard for more updates on these situations. Are you still reading? Yay! Article's over now, thanks for reading!
+
+Reported by Heidi
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1200194 is result 1 flag 1
+ACTIONS
+Run mission Pet Detective
+Newspaper adds Article content 1075.
+Title: Getting to Know Bronco the Kid: How a Seemingly Bad Thing was not Actually a Good Thing and was, as it Initially Seemed, a Bad Thing
+Following up on our previous article: "The Specialist and You: How a Seemingly Bad Thing is Actually a Good Thing;" now that said specialist has actually arrived, let's look at the ongoing situation and how it might be affecting you, the reader. Are things as bad as they seem? Short answer, "yes."
+
+First off, let's hear it from the man in his own words... Who is Bronco the Kid?
+
+"I am the law," he began. He stood there for a good thirty seconds or so squinting at me and protruding his jaw slightly. Once it was clear he was not going to elaborate, I decided to go for a follow up. "What do you... mean by that exactly?" I asked.
+
+"I am the night. I am darkness. I the one who answers the call... Whenever a little old lady needs help crossing the street, I'll be there. Whenever candy is taken from a baby, I'll be there. Whenever the ice cream machine at a late night diner is very suspiciously said to be broken when it looks totally fine, I'll be there, too!"
+
+No doubt you too have been victim to one of Bronco's numerous inane and unnecessarily invasive traffic stops, as well as heard similar speeches that also go nowhere and are just oozing with delusions of grandeur. Due to multiple complaints, as of this writing, Bronco's authority to detain citizens will shortly be revoked which... should really come as no surprise to anyone.
+
+Bronco's contract includes a clause that promises he will 'capture his target or die trying,' so... expect to see a lot more of him. But do feel free to report him to City Hall if he's acting up again.
+
+Reported by Heidi
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200195
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|352}}
+Set global blackboard key roomforandy with info 1.
+Bronco the Kid stands still in Saloon
+Set read to 0
+Set ANSWER to 0
+Nemo stands still in Main
+Nemo stops standing still
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+Set read to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 20
+CONDITIONS
+Always:
+ACTIONS
+Set read to 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ENTER GAMING STATE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1200195
+===Go to Blue Moon Floor 2===
+
+{{mission_details
+|desc = Bronco lives on the second floor of the Blue Moon and can be found in his room. Before you go it's a good idea to remember his secret code.
+|details = Go to Blue Moon Floor 2
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 352
+CONDITIONS
+Check if read is == 0
+ACTIONS
+(cId 4) A conversation 5176 starts:
+{{dialogue|Player|(The message does not self-destruct.)}}
+SCENEITEM CREATE FLAG || itemType: 0 | id: 21951 | path: Interact_KidRoom2 | sceneName: Saloon | flagName: disguise_saloon_door | extraParams: 0
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 21951 | missionId: 1200195 | iconType: 1
+AREA TRIGGER CREATE || missionId: 1200195 | id: 21951 | sceneName: Main | flagName: Mission_1600096_Trigger_2 | showOnMap: 1 | mapIcon: MissionArea | transId: 80008597
+Set read to 1
+DELIVER MISSION 1200195
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 21951
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 5177, 5178, 5179 starts:
+{{dialogue|Bronco the Kid|Psst! What's the passcode?}}
+{{dialogue|Player|(The _______ barks at _______.)}}
+
+*''Bumbleant'' (No unique dialogue)
+*''Flying Crow'' (No unique dialogue)
+*''Knowing Eagle'' (No unique dialogue)
+*''Stealth Giraffe'' (No unique dialogue)
+*''Iron Crow'' (No unique dialogue)
+*''Daring Lion'' (No unique dialogue)
+
+{{dialogue|Player|(The _______ barks at _______.)}}
+
+*''9:00'' (No unique dialogue)
+*''22:00'' (No unique dialogue)
+*''23:00'' (No unique dialogue)
+*''24:00'' (No unique dialogue)
+*''1:00'' (No unique dialogue)
+*''2:00'' (No unique dialogue)
+
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the fifth option in conversation segment 5178:
+{{dialogue|Player|(The _______ barks at _______.)}}
+
+*''Bumbleant'' (No unique dialogue)
+*''Flying Crow'' (No unique dialogue)
+*''Knowing Eagle'' (No unique dialogue)
+*''Stealth Giraffe'' (No unique dialogue)
+*''Iron Crow'' (No unique dialogue)
+*''Daring Lion'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Increment ANSWER by 1
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the fourth option in conversation segment 5179:
+{{dialogue|Player|(The _______ barks at _______.)}}
+
+*''9:00'' (No unique dialogue)
+*''22:00'' (No unique dialogue)
+*''23:00'' (No unique dialogue)
+*''24:00'' (No unique dialogue)
+*''1:00'' (No unique dialogue)
+*''2:00'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Increment ANSWER by 1
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8000 | cId: 0 | missionId: 1200195
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 5181 starts:
+{{dialogue|Bronco the Kid|Correct!}}
+Bronco the Kid stops standing still
+Bronco the Kid stands still in Saloon
+AREA TRIGGER DELETE || id: 21951
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderMoveToFlagAndAction (idName: 21951) to Player
+(param: TargetScene:Saloon|MoveMode:Run|FlagName:detective_saloon_player3)
+GLOBAL BLACK BOARD REMOVE || key: roomforandy
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 21951) from Player
+(cId 3) A conversation 1536_0 starts:
+{{dialogue|Bronco the Kid|Citizen! Welcome! I had a feeling you'd have no trouble finding my secret hideout; I've heard good things about you.}}
+
+*''This is a hotel room.''
+*''Wow, nice hideout, my guy.''
+
+{{dialogue|Bronco the Kid|indent=true|answer=This is a hotel room.
+|Indeed it is, my astute associate!}}
+{{dialogue|Bronco the Kid|indent=true|answer=Wow, nice hideout, my guy.
+|Indubitably!}}
+{{dialogue|Bronco the Kid|What better place to hide, than in plain sight...?}}
+{{dialogue|Bronco the Kid|Anyway! After doing a bit of surveying in town, there's one thing I'm absolutely certain of... there is a spy in Sandrock.}}
+{{dialogue|Bronco the Kid|That's right, a mole, a double agent, a spy! Someone is relaying information to the Logan Gang from inside Sandrock... and who knows what kind of diabolical mischief they could accomplish with such a connection!?}}
+{{dialogue|Bronco the Kid|And the worst part... everyone is a suspect. Even you. I'm going out on a limb for you, citizen. Don't make me regret it.}}
+{{dialogue|Bronco the Kid|I actually did send letters to several citizens, but you're the only one that showed up, so far. That makes them extra suspicious.}}
+{{dialogue|Bronco the Kid|Now, I have only been able to clear a select few inhabitants of the town of any suspicion. Indeed, the only people we can trust are not people at all! We require the assistance from none other than...}}
+{{dialogue|Bronco the Kid|...The pets of Sandrock.}}
+
+*''Of course.'' (No unique dialogue)
+*''The pets?'' (No unique dialogue)
+
+{{dialogue|Bronco the Kid|That's right. They're the only ones who have nothing to gain by speaking with Logan. And that's where you come in, citizen.}}
+{{dialogue|Bronco the Kid|These pets...they can be bought. We need to catch some sandfish and get some dog food, then use those to coax the pets over to our side; the side of truth and justice! I'm setting up my feng shui compass, so I'll need your help for that.}}
+
+*''I won't let you down, sir.''
+*''I can't believe how ridiculous this is!''
+
+{{dialogue|Bronco the Kid|indent=true|answer=I won't let you down, sir.
+|That's what I like to hear.}}
+{{dialogue|Bronco the Kid|indent=true|answer=I can't believe how ridiculous this is!
+|The only thing ridiculous about it is how long it took me to come up with the idea!}}
+{{dialogue|Bronco the Kid|indent=true|And think of it this way, believe in me who believes in myself. Just listen to what I have to say!}}
+{{dialogue|Bronco the Kid|Once you've gained your targets' trust, ask them if they've noticed any suspicious behavior around town.}}
+{{dialogue|Bronco the Kid|Good luck, citizen. Find me when you've accomplished your part of the mission. Now back to my feng shui compass and...}}
+The conversation ends.
+SCENEITEM DELETE || itemType: 0 | id: 21951
+
+TRIGGER Procedure 3.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Check if read is == 0
+ACTIONS
+DELIVER MISSION 1200195
+CUTSCENE UI STATE EXIT || 
+Bronco the Kid stops standing still
+START MISSION 1200195
+Run mission Pet Detective
+END MISSION 1200195
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Check if read is == 1
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Bronco the Kid stops standing still
+Run mission Pet Detective
+END MISSION 1200195
+
+==Rewards==
+{{mission reward
+|npc1 = Grace
+|rp1 = 10
+|npc2 = Captain
+|rp2 = 10
+|npc3 = Banjo
+|rp3 = 10
+|npc4 = Nemo
+|rp4 = 10
+|exp = 1650
+|reputation = 15
+|gols = 300
+|rewards = {{i2|Royal Desert Warrior Shirt}|1}
+}}

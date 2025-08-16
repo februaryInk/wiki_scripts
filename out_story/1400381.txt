@@ -1,0 +1,307 @@
+Reading Mission 1400381: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200280
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Becoming Deputy is successfully completed
+ACTIONS
+Set 1400381 to 0
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1400381
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1400381
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1400381 | id: 4381001 | sceneName: Main | flagName: Mission_1400381_Trigger_Saloon | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+Set choice to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Saloon:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_saloon
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_saloon
+AREA TRIGGER DELETE || id: 4381001
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 4381101 | delayTime: 0 | durationTime: 0.1 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+Unsuur stands still in Saloon
+Add behavior CommanderSit (idName: 4381502) to Unsuur
+(param: SeatDramaName:SaloonSeat01-1|TargetScene:Saloon)
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: S4381_8000A0
+SCENEITEM CREATE FLAG || itemType: 0 | path: S4381_Item_milk | sceneName: Saloon | flagName: S4381_milk | extraParams: 0 | id: 4381901
+DELAY MASK SET || maskId: 4381101 | delayTime: 2 | durationTime: 1 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 4381101 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 4381503) to Player
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:S4381_8000A1)
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 4381503) from Player
+Add behavior CommanderPlayerSit (idName: 4381504) to Player
+(param: SeatDramaName:SaloonSeat02-1|TargetScene:Saloon)
+
+TRIGGER Procedure 0.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 4381702
+CONDITIONS
+Always:
+ACTIONS
+(cId 4381401) A conversation 5859_0 starts:
+{{dialogue|Unsuur|Oh. Hey, ''Player''.}}
+
+*''You seem kind of down.''
+*''Are you okay?''
+*''How's deputy life?''
+
+{{dialogue|Unsuur|indent=true|answer=You seem kind of down.
+|Yeah. I kind of am.}}
+{{dialogue|Unsuur|indent=true|answer=Are you okay?
+|I'm fine, I guess. It's just...}}
+{{dialogue|Unsuur|indent=true|answer=How's deputy life?
+|You know... that's the thing...}}
+{{dialogue|Unsuur|All I ever wanted in life is to be deputy. And now that I have it... I don't really feel any different. Well. I think I feel a little better. But still kinda the same, too, if that makes sense?}}
+{{dialogue|Unsuur|They told me it would be lonely at the top, but no one ever said it would be lonely at second in command. I'm happy that it happened but...}}
+{{dialogue|Unsuur|I feel like... Now I'm just gonna go back to walking around town looking for bad guys I never find and... Maybe nothing is ever going to change again.}}
+
+*''I'm still here.''
+*''You're probably right.''
+*{{flirt}}''I'll always be with you.''
+
+{{dialogue|Unsuur|indent=true|answer=I'm still here.
+|reward={{NPC2|Unsuur|rp=5}}|Yeah. You're right. Through it all... you've always been there, ''Player''. Thank you for that.}}
+{{dialogue|Unsuur|indent=true|answer=You're probably right.
+|Yeah... it's like... if I don't want anything anymore... There's nothing left for me to want. So what's next?}}
+{{dialogue|Unsuur|indent=true|answer=I'll always be with you.
+|reward={{NPC2|Unsuur|rp=5}}|Yeah. You're right. Through it all... you've always been there, ''Player''. Thank you for that.}}
+{{dialogue|Unsuur|What if... I run out things to say? If we keep having the same conversations over and over again... What if I never have a new goal I want to accomplish? Will you... get bored of me?}}
+
+*''No! Never!''
+*''Can't make any promises...''
+
+{{dialogue|Unsuur|indent=true|answer=No! Never!
+|reward={{NPC2|Unsuur|rp=3}}|That's nice of you to say.}}
+{{dialogue|Unsuur|indent=true|answer=Can't make any promises...
+|I understand.}}
+{{dialogue|Unsuur|Well. Whatever happens. I want you to know...}}
+{{dialogue|Unsuur|I love you, ''Player''.}}
+{{dialogue|Unsuur|I care about you.}}
+{{dialogue|Unsuur|All of the adventures we've had together... have meant everything to me.}}
+{{dialogue|Unsuur|Sorry... I just felt like... If I didn't say that now, I'd never say it.}}
+{{dialogue|Unsuur|Yeah. That's the truth, I think.}}
+{{dialogue|Unsuur|Um...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4381401) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 4381201 | sec: 2
+
+TRIGGER Procedure 0.0 Step 5.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4381401) The player picks the first option in conversation segment 18860:
+{{dialogue|Unsuur|I feel like... Now I'm just gonna go back to walking around town looking for bad guys I never find and... Maybe nothing is ever going to change again.}}
+
+*''I'm still here.'' (No unique dialogue)
+*''You're probably right.'' (No unique dialogue)
+*{{flirt}}''I'll always be with you.'' (No unique dialogue)
+
+(cId 4381401) The player picks the third option in conversation segment 18860:
+{{dialogue|Unsuur|I feel like... Now I'm just gonna go back to walking around town looking for bad guys I never find and... Maybe nothing is ever going to change again.}}
+
+*''I'm still here.'' (No unique dialogue)
+*''You're probably right.'' (No unique dialogue)
+*{{flirt}}''I'll always be with you.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Unsuur gains 5 favor
+
+TRIGGER Procedure 0.0 Step 6.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4381401) The player picks the first option in conversation segment 18863:
+{{dialogue|Unsuur|What if... I run out things to say? If we keep having the same conversations over and over again... What if I never have a new goal I want to accomplish? Will you... get bored of me?}}
+
+*''No! Never!'' (No unique dialogue)
+*''Can't make any promises...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Unsuur gains 3 favor
+
+TRIGGER Procedure 0.0 Step 8.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 4381201
+CONDITIONS
+Always:
+ACTIONS
+(cId 4381402) A conversation 5870_0 starts:
+{{dialogue|Unsuur|I feel a little better now.}}
+{{dialogue|Unsuur|Do you wanna... hang here... and chat a bit? Like we always do?}}
+
+*''Yes.'' (No unique dialogue)
+*''No.''
+
+{{dialogue|Unsuur|indent=true|answer=No.
+|I understand. See ya around.}}
+
+TRIGGER Procedure 0.0 Step 10.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4381402) After the conversation ends:
+CONDITIONS
+Check if choice is == 0
+ACTIONS
+DELAY MASK SET || maskId: 4381102 | delayTime: 0 | durationTime: 1 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 10.1 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4381402) After the conversation ends:
+CONDITIONS
+Check if choice is == 1
+ACTIONS
+STOPWATCH GAME TIME SET || id: 4381202 | minute: 30
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderPlayerSit (idName: 4381504) from Player
+
+TRIGGER Procedure 0.0 Step 9.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4381402) The player picks the first option in conversation segment 18874:
+{{dialogue|Unsuur|Do you wanna... hang here... and chat a bit? Like we always do?}}
+
+*''Yes.'' (No unique dialogue)
+*''No.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set choice to 0
+
+TRIGGER Procedure 0.0 Step 9.1 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4381402) The player picks the second option in conversation segment 18874:
+{{dialogue|Unsuur|Do you wanna... hang here... and chat a bit? Like we always do?}}
+
+*''Yes.'' (No unique dialogue)
+*''No.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set choice to 1
+
+TRIGGER Procedure 0.0 Step 11.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 4381102 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 4381901
+DELAY MASK SET || maskId: 4381102 | delayTime: 2 | durationTime: 2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 11.1 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH GAME TIME END || order: 0 | id: 4381202
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 4381901
+Unsuur stops standing still
+Remove behavior CommanderSit (idName: 4381502) from Unsuur
+END MISSION 1400381
+
+TRIGGER Procedure 0.0 Step 12.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 4381102 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 4381403) A conversation 5872_0 starts:
+{{dialogue|Unsuur|I better get goin'. I'm deputy now.}}
+{{dialogue|Unsuur|Lotta responsibility... you know how it is.}}
+{{dialogue|Unsuur|Well. See ya.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 13.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4381403) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Unsuur stops standing still
+Remove behavior CommanderSit (idName: 4381502) from Unsuur
+Unsuur gains 10 favor
+Remove behavior CommanderPlayerSit (idName: 4381504) from Player
+END MISSION 1400381

@@ -1,0 +1,296 @@
+Reading Mission 1900245: The Protector's Weakness
+
+<onlyinclude>{{Infobox mission
+|name = The Protector's Weakness
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from The Protector's Weakness:
+
+TRIGGER Procedure 1.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM INTERACT SET LOCKER || itemType: 0 | id: 1924601 | isAdd: 0
+CUTSCENE UI STATE EXIT || 
+NPC SET CAN INTERACT || npc: 8020 | canInteract: 0
+NPC SET CAN INTERACT || npc: 8021 | canInteract: 0
+START MISSION 1900246
+Add behavior CommanderNPCAction (idName: 92469) to Pen
+(param: CMDAction:PenPose02)
+CLOSE MISSION || missionId: 1900255
+
+TRIGGER Procedure 1.0 Step 2.5 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1900246
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Protector's Weakness
+END MISSION 1900246
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1900245
+CONDITIONS
+Always:
+ACTIONS
+===Destroy the Mirror===
+
+{{mission_details
+|desc = There is only one way to save Pen from himself. You need to destroy the Ultratech Mega Mirror 9000.
+|details = Destroy the Mirror
+}}
+Set DONE to 0
+Set DAY to 0
+Add behavior CommanderBubbleTag (idName: 392460) to Pen
+(param: BubbleTag:Story1900245_8020|BubbleTime:6|minTime:12)
+In a speech bubble:
+{{dialogue|Burgess|Well... I guess violence is never the answer. Except when it is?}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment DAY by 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1900245
+CONDITIONS
+Check if DONE is == 0
+ACTIONS
+The player receives a letter:
+{{mail|440}}
+NPC SET CAN INTERACT || npc: 8020 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8021 | canInteract: 1
+Pen stops standing still
+Pen stops standing still
+Remove behavior CommanderBubbleTag (idName: 392460) from Pen
+Burgess stops standing still
+Burgess stops standing still
+Remove behavior CommanderNPCAction (idName: 92464) from Pen
+Remove behavior CommanderNPCAction (idName: 92469) from Pen
+SCENEITEM DELETE || itemType: 0 | id: 1924601
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 1924601
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 924600 | sec: 0.75
+Add behavior CommanderPlayerAction (idName: 92461) to Player
+(param: CMDAction:KickBox)
+Increment DONE by 1
+
+TRIGGER Procedure 1.0 Step 1.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from TempleDorm to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Pen stops standing still
+Pen stops standing still
+Burgess stops standing still
+Burgess stops standing still
+Remove behavior CommanderBubbleTag (idName: 392460) from Pen
+Remove behavior CommanderNPCAction (idName: 92464) from Pen
+Remove behavior CommanderNPCAction (idName: 92469) from Pen
+NPC SET CAN INTERACT || npc: 8020 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8021 | canInteract: 1
+SCENEITEM DELETE || itemType: 0 | id: 1924601
+FAIL MISSION || missionId: 1900246
+END MISSION 1900245
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 292461 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: P9246 | sceneName: TempleDorm
+Pen stands still in TempleDorm and looks at Player
+Burgess stands still in TempleDorm and looks at Pen
+PLAYER SET POS ROT FLAG || sceneName: TempleDorm | flagName: P9246_2
+DELAY MASK SET || maskId: 292460 | delayTime: 1.2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+SCENEITEM DELETE || itemType: 0 | id: 6924600
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1900246
+Pen stops standing still
+Burgess stops standing still
+Remove behavior CommanderBubbleTag (idName: 392460) from Pen
+Burgess stops standing still
+Pen stops standing still
+Remove behavior CommanderNPCAction (idName: 92467) from Pen
+Remove behavior CommanderPlayerAction (idName: 92461) from Player
+NPC SET CAN INTERACT || npc: 8020 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8021 | canInteract: 1
+Run mission The Protector's Weakness
+END MISSION 1900246
+END MISSION 1900245
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from TempleDorm to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_templedorm
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_templedorm
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 924600
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 6924600 | path: Ph9242_Mirror_ef | sceneName: TempleDorm | flagName: Mirror_ef | extraParams: -1
+SCENEITEM DELETE || itemType: 0 | id: 1924601
+Add 3 Wood Scrap of Default quality (Notify player)
+Add 1 Glass of Default quality (Notify player)
+Remove behavior CommanderNPCAction (idName: 92464) from Pen
+Remove behavior CommanderNPCAction (idName: 92469) from Pen
+DELAY MASK SET || maskId: 292461 | delayTime: 0.25 | durationTime: 0.5 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 292461 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 2290_0, 2283_0 starts:
+{{dialogue|Pen|For your bravery today, Skinny Arms, I hereby award you the title of "Assistant Protector in Training!" Intended for recreational use only; it bears no legally binding authority.}}
+{{dialogue|Burgess|I'm... glad you're okay, but, Pen, you need to be more careful!}}
+{{dialogue|Burgess|As I recall, I did tell you using electric lightbulbs, AKA "artificial Light" was one step too close to corrupted Old World technology, didn't I? Got anything to say for yourself now, hm?}}
+{{dialogue|Pen|Yes, I believe someone is owed an apology here...}}
+{{dialogue|Burgess|Ah, well, you don't have to-}}
+{{dialogue|Pen|Ah, but I insist! Yes, perhaps Burgess if you had simply trusted my judgement and destroyed the mirror like I asked instead of bothering our friend, Skinny, who's always got something on their plate...}}
+{{dialogue|Pen|And it could've been avoided if you had been able, when the chips were down, to show just a little hint...}}
+{{dialogue|Pen|Of humility...}}
+{{dialogue|Burgess|But I...}}
+The conversation ends.
+{{dialogue|Pen|Shh... shhh.}}
+{{dialogue|Pen|Stay humble.}}
+{{dialogue|Burgess|I... I'm sorry, ''Player''! I'll be more humble next time!}}
+
+*''It's not your fault.''
+*''I... forgive you?''
+*''Isn't this Pen's fault?''
+
+{{dialogue|Pen|indent=true|answer=It's not your fault.
+|reward={{NPC2|Burgess|rp=2}}|Ahaha! Yes it is!}}
+{{dialogue|Burgess|indent=true|Thanks for your concern, ''Player'', but Pen has got a point. I should have tried to do something myself instead of asking for your help.}}
+{{dialogue|Burgess|indent=true|answer=I... forgive you?
+|reward={{NPC2|Burgess|rp=1}}|Yippee! Thanks, ''Player''!}}
+{{dialogue|Pen|indent=true|Tch... Skinny... that was supposed to be an alley oop! You're supposed to get him to do stuff for you before you forgive him! Ah, well, maybe I could've been more clear. That's on me.}}
+{{dialogue|Pen|indent=true|answer=Isn't this Pen's fault?
+|reward={{NPC2|Pen|rp=3}}|I see where this is going... Are you implying what I think you're implying?}}
+{{dialogue|Pen|indent=true|You're saying I should have been stronger! Your warning me that if enemies of Sandrock used this exact trick, as the Protector of Sandrock, I need to figure out how to power through!}}
+{{dialogue|Pen|indent=true|I see now!}}
+{{dialogue|Pen|In any case, I thank you, Skinny. You have done this world a great service.}}
+The conversation ends.
+STOPWATCH REAL TIME SET || id: 592460 | sec: 14
+
+TRIGGER Procedure 3.0 Step 1.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200163
+MISSION BEGIN 1800248
+MISSION END || order: 0 | result: 1 | missionId: 1200265
+CONDITIONS
+Always:
+ACTIONS
+NPC SET CAN INTERACT || npc: 8020 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8021 | canInteract: 1
+Pen stops standing still
+Pen stops standing still
+Remove behavior CommanderBubbleTag (idName: 392460) from Pen
+Burgess stops standing still
+Burgess stops standing still
+Remove behavior CommanderNPCAction (idName: 92464) from Pen
+Remove behavior CommanderNPCAction (idName: 92469) from Pen
+SCENEITEM DELETE || itemType: 0 | id: 1924601
+FAIL MISSION || missionId: 1900246
+END MISSION 1900245
+
+TRIGGER Procedure 3.0 Step 4.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the first option in conversation segment 7959:
+{{dialogue|Burgess|I... I'm sorry, ''Player''! I'll be more humble next time!}}
+
+*''It's not your fault.'' (No unique dialogue)
+*''I... forgive you?'' (No unique dialogue)
+*''Isn't this Pen's fault?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Burgess gains 2 favor
+
+TRIGGER Procedure 3.0 Step 5.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the second option in conversation segment 7959:
+{{dialogue|Burgess|I... I'm sorry, ''Player''! I'll be more humble next time!}}
+
+*''It's not your fault.'' (No unique dialogue)
+*''I... forgive you?'' (No unique dialogue)
+*''Isn't this Pen's fault?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Burgess gains 1 favor
+
+TRIGGER Procedure 3.0 Step 6.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the third option in conversation segment 7959:
+{{dialogue|Burgess|I... I'm sorry, ''Player''! I'll be more humble next time!}}
+
+*''It's not your fault.'' (No unique dialogue)
+*''I... forgive you?'' (No unique dialogue)
+*''Isn't this Pen's fault?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Pen gains 3 favor

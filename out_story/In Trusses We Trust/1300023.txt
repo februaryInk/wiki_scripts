@@ -1,0 +1,126 @@
+Reading Mission 1300023: In Trusses We Trust
+
+<onlyinclude>{{Infobox mission
+|name = In Trusses We Trust
+|image =
+|description = Building the canyon bridge will be a huge undertaking, take it step by step!
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 2100
+|reputation = 40
+|gols = 2000
+|npc1 = Heidi
+|rp1 = 50
+|rewards = {{i2|Froggy Explorer Vest}|1}
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100002
+
+TRIGGER Procedure 2.0 Step 9.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission Moisture Farm Blues is result 1 flag 1
+ACTIONS
+Run mission Operation De-Geeglate
+
+TRIGGER Procedure 2.0 Step 11.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1300022 is result 1 flag 1
+ACTIONS
+Run mission In Trusses We Trust
+Run mission #1300031
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1300023
+CONDITIONS
+Always:
+ACTIONS
+Set SCENECHANGE to 0
+DELIVER MISSION 1300023
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+Heidi stands still in Main
+Set SCENECHANGE to 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Check if SCENECHANGE is == 1
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Check if SCENECHANGE is == 1
+ACTIONS
+(cId 0) A conversation 232_0 starts:
+{{dialogue|Heidi|Hey there, ''Player''! Hope you had a better night than I did, haha. I'm about to crash... After the meeting with Matilda I went straight home and pulled an all-nighter working on ideas for the new bridge.}}
+{{dialogue|Heidi|But it was worth it! I've got the designs right here to ... prove it!}}
+{{dialogue|Heidi|This is going to be a huge undertaking; who knows how long it's going to take...? But the only way we're going to make it happen is if everyone gives it their all!}}
+{{dialogue|Heidi|So! I need you to construct the bridge's {{textcolor|green|Load Bearing Trusses}} for me. You know, the upper frame structure. We'll need {{textcolor|green|two}} of this design to stretch across the canyon. Here's the {{textcolor|green|diagram}}.}}
+{{dialogue|Heidi|My team will be working with Mi-an as we build the base of the bridge- In the meantime, try to get that {{textcolor|green|frame}} done!}}
+{{dialogue|Heidi|I know I said this was going to take a while, but we've been consulting experts on how to speed up the process, so I want that frame finished even before we're ready to install it.}}
+{{dialogue|Heidi|If you do finish before us, check out the Commission Board, I'll be posting all sorts of {{textcolor|green|bridge-related commissions}}, and every little bit helps!}}
+{{dialogue|Heidi|In any case, I'll be curious to check out the frame once you've built it; come show me when you're done!}}
+{{dialogue|Heidi|Okay, that's all I got for now. Good night, ''Player''! We can do this!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Truss of Unknown quality (Notify player)
+Heidi stops standing still
+CUTSCENE UI STATE EXIT || 
+AUTOSAVE TRY || 
+START MISSION 1300023
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1300023
+CONDITIONS
+Always:
+ACTIONS
+Run mission In Trusses We Trust
+END MISSION 1300023
+
+==Rewards==
+{{mission reward
+|npc1 = Heidi
+|rp1 = 50
+|exp = 2100
+|reputation = 40
+|gols = 2000
+|rewards = {{i2|Froggy Explorer Vest}|1}
+}}

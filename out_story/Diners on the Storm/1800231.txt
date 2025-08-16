@@ -1,0 +1,310 @@
+Reading Mission 1800231: Diners on the Storm
+
+<onlyinclude>{{Infobox mission
+|name = Diners on the Storm
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Diners on the Storm:
+
+TRIGGER Procedure 0.0 Step 10.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Grace stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8230022) from Grace
+Remove behavior CommanderMoveToFlagAndAction (idName: 8230023) from Grace
+CUTSCENE UI STATE EXIT || 
+START MISSION 1800230
+
+TRIGGER Procedure 0.0 Step 12.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800230
+CONDITIONS
+Always:
+ACTIONS
+Run mission Diners on the Storm
+END MISSION 1800230
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800231
+CONDITIONS
+Always:
+ACTIONS
+===Clean up the Bar===
+
+{{mission_details
+|desc = The bar is full of trash. Help Grace clear it out.
+|details = Clean up the Bar
+*{{i2|Grace|0/1}}
+}}
+SCENEITEM CREATE FLAG || path: Mission18230_1_0 | itemType: 0 | id: 82311 | sceneName: Saloon | extraParams: -1 | flagName: S8230_Item_1
+SCENEITEM CREATE FLAG || itemType: 0 | id: 82312 | path: Mission18230_2_0 | sceneName: Saloon | flagName: S8230_Item_2 | extraParams: -1
+SCENEITEM CREATE FLAG || path: Mission18230_3_0 | extraParams: -1 | flagName: S8230_Item_3 | sceneName: Saloon | itemType: 0 | id: 82313
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 82311 | missionId: 1800230 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 82312 | missionId: 1800230 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 82313 | missionId: 1800230 | iconType: 2
+SCENEITEM CREATE FLAG || itemType: 0 | id: 82314 | path: Mission18230_4_0 | sceneName: Saloon | flagName: S8230_Item_4 | extraParams: -1
+SCENEITEM CREATE FLAG || extraParams: -1 | flagName: S8230_Item_5 | sceneName: Saloon | itemType: 0 | id: 82315 | path: Mission18230_3_0
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 82314 | missionId: 1800230 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | iconType: 2 | itemType: 0 | id: 82315 | missionId: 1800230
+
+TRIGGER Procedure 0.0 Step 0.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1800231
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 82311
+SCENEITEM DELETE || itemType: 0 | id: 82312
+SCENEITEM DELETE || id: 82313 | itemType: 0
+SCENEITEM DELETE || itemType: 0 | id: 82314
+SCENEITEM DELETE || itemType: 0 | id: 82315
+Remove behavior CommanderNPCActionLoop (idName: 8230029) from Grace
+
+TRIGGER Procedure 0.0 Step 0.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 823191
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 823191
+
+TRIGGER Procedure 0.0 Step 0.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 823192
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 823192
+
+TRIGGER Procedure 0.0 Step 0.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 823193
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 823193
+
+TRIGGER Procedure 0.0 Step 0.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 823194
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 823194
+
+TRIGGER Procedure 0.0 Step 0.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 823195
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 823195
+
+TRIGGER Procedure 0.0 Step 0.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCActionLoop (idName: 8230029) from Grace
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 82312
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 8231002) to Player
+(param: CMDAction:PickUp_Story)
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1800230 | targetId: 1 | isAdd: 1 | transId: 80010309
+SCENEITEM DELETE || itemType: 0 | id: 82313
+Remove behavior CommanderPlayerAction (idName: 8231003) from Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 823193 | path: Mission18230_efx_clear | sceneName: Saloon | flagName: S8230_Item_3 | extraParams: -1
+SCENEITEM DELETE || itemType: 0 | id: 823103
+CUTSCENE UI STATE EXIT || 
+STOPWATCH REAL TIME SET || id: 823193 | sec: 3
+
+TRIGGER Procedure 0.0 Step 2.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | eventName: NPCActionOver | behaviourName: CommanderPlayerAction
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1800230 | targetId: 1 | isAdd: 1 | transId: 80010307
+SCENEITEM DELETE || itemType: 0 | id: 82312
+Remove behavior CommanderPlayerAction (idName: 8231002) from Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 823192 | flagName: S8230_Item_2 | sceneName: Saloon | extraParams: -1 | path: Mission18230_efx_clear
+CUTSCENE UI STATE EXIT || 
+STOPWATCH REAL TIME SET || id: 823192 | sec: 3
+
+TRIGGER Procedure 0.0 Step 2.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 82313
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 8231003) to Player
+(param: CMDAction:Clean_Story)
+SCENEITEM CREATE FLAG || itemType: 0 | id: 823103 | path: Mission18230_efx_clean | sceneName: Saloon | flagName: S8230_Item_3 | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 82311
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 8231001) to Player
+(param: CMDAction:Clean_Story)
+SCENEITEM CREATE FLAG || itemType: 0 | id: 823101 | path: Mission18230_efx_glassbottle | sceneName: Saloon | flagName: S8230_Item_1 | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: NPCActionOver | behaviourName: CommanderPlayerAction | npc: 8000
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1800230 | targetId: 1 | isAdd: 1 | transId: 80010308
+SCENEITEM DELETE || itemType: 0 | id: 82311
+Remove behavior CommanderPlayerAction (idName: 8231001) from Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 823191 | path: Mission18230_efx_clear | flagName: S8230_Item_1 | sceneName: Saloon | extraParams: 0
+SCENEITEM DELETE || itemType: 0 | id: 823101
+STOPWATCH REAL TIME SET || id: 823191 | sec: 3
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 2.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 82315
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 8231003) to Player
+(param: CMDAction:Clean_Story)
+SCENEITEM CREATE FLAG || itemType: 0 | id: 823105 | path: Mission18230_efx_clean | sceneName: Saloon | flagName: S8230_Item_5 | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1800230 | targetId: 1 | isAdd: 1 | transId: 80010309
+SCENEITEM DELETE || itemType: 0 | id: 82315
+Remove behavior CommanderPlayerAction (idName: 8231003) from Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 823195 | flagName: S8230_Item_5 | extraParams: -1 | sceneName: Saloon | path: Mission18230_efx_clear
+SCENEITEM DELETE || itemType: 0 | id: 823105
+CUTSCENE UI STATE EXIT || 
+STOPWATCH REAL TIME SET || id: 823195 | sec: 3
+
+TRIGGER Procedure 0.0 Step 2.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 82314
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 8231001) to Player
+(param: CMDAction:Clean_Story)
+SCENEITEM CREATE FLAG || itemType: 0 | flagName: S8230_Item_4 | id: 823104 | path: Mission18230_efx_glassbottle | extraParams: 0 | sceneName: Saloon
+
+TRIGGER Procedure 0.0 Step 2.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: NPCActionOver | behaviourName: CommanderPlayerAction | npc: 8000
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1800230 | targetId: 1 | isAdd: 1 | transId: 80010308
+SCENEITEM DELETE || itemType: 0 | id: 82314
+Remove behavior CommanderPlayerAction (idName: 8231001) from Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 823194 | path: Mission18230_efx_clear | sceneName: Saloon | flagName: S8230_Item_4 | extraParams: -1
+SCENEITEM DELETE || itemType: 0 | id: 823104
+CUTSCENE UI STATE EXIT || 
+STOPWATCH REAL TIME SET || id: 823194 | sec: 3
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | canSubmit: 1 | missionId: 1800230 | targetId: 1
+CONDITIONS
+Always:
+ACTIONS
+===Report to Grace===
+
+{{mission_details
+|desc = Everything has been cleaned up. Talk to Grace.
+|details = Report to Grace
+}}
+SCENEITEM DELETE || itemType: 0 | id: 823191
+SCENEITEM DELETE || id: 823192 | itemType: 0
+SCENEITEM DELETE || itemType: 0 | id: 823193
+SCENEITEM DELETE || itemType: 0 | id: 823194
+SCENEITEM DELETE || itemType: 0 | id: 823195
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Grace
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 6185 starts:
+{{dialogue|Grace|Hey, I really do appreciate it, ''Player''. Obviously this was an extreme example, but it's always frustrating to deal with people who forget there's an actual human being who has to deal with this stuff. Glad you're one of the good ones.}}
+
+TRIGGER Procedure 0.0 Step 10.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCActionLoop (idName: 8230029) from Grace
+SUBMIT MISSION 1800230
+END MISSION 1800231

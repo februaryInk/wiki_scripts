@@ -1,0 +1,601 @@
+Reading Mission 1800512: Rolling Sixes
+
+<onlyinclude>{{Infobox mission
+|name = Rolling Sixes
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Rolling Sixes:
+
+TRIGGER Procedure 0.0 Step 2.5 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1800511
+
+TRIGGER Procedure 0.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800511
+CONDITIONS
+Always:
+ACTIONS
+Run mission Rolling Sixes
+END MISSION 1800511
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800512
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Owen===
+
+{{mission_details
+|desc = Having received a letter from Owen's father, find Owen and inform him of the situation.
+|details = Talk to Owen
+}}
+Set 8512Tell to 0
+Set 8512Talk to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Owen
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 8068_0 starts:
+{{dialogue|Owen|Hey, ''Pet Name''...! Are you alright? You look a little pale.}}
+
+*''(Tell him about the letter)''
+*''(Say it's nothing)''
+
+{{dialogue|Owen|indent=true|answer=(Tell him about the letter)
+|Wha? A letter? Can I see it?}}
+{{dialogue|Owen|indent=true|answer=(Say it's nothing)
+|Oh? I feel like something's wrong... Well, if you're not ready to talk about it, that's fine. Just know I'm here for you.}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+(cId 2) After the conversation ends:
+CONDITIONS
+Check if 8512Tell is == 1
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 85121 | delayTime: 0 | durationTime: 1 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 1.2 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Owen
+CONDITIONS
+Check if 8512Tell is == 0
+ACTIONS
+(cId 2) A conversation 8071_0 starts:
+{{dialogue|Owen|''Pet Name'', you know you can tell me anything, right?}}
+
+*''(Tell him about the letter)''
+*''(Say it's nothing)''
+
+{{dialogue|Owen|indent=true|answer=(Tell him about the letter)
+|Wha? A letter? Can I see it?}}
+{{dialogue|Owen|indent=true|answer=(Say it's nothing)
+|Oh? I feel like something's wrong... Well, if you're not ready to talk about it, that's fine. Just know I'm here for you.}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 22968:
+{{dialogue|Owen|Hey, ''Pet Name''...! Are you alright? You look a little pale.}}
+
+*''(Tell him about the letter)'' (No unique dialogue)
+*''(Say it's nothing)'' (No unique dialogue)
+
+(cId 2) The player picks the first option in conversation segment 22970:
+{{dialogue|Owen|''Pet Name'', you know you can tell me anything, right?}}
+
+*''(Tell him about the letter)'' (No unique dialogue)
+*''(Say it's nothing)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8512Tell to 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 40 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+Where's Mi-an is in state 1 with flag 0
+The Childhood Friend is in state 1 with flag 0
+Goodbye, Nia is in state 1 with flag 0
+The Kidnapping is in state 1 with flag 0
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: triallogan | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85121 | eventType: 2
+CONDITIONS
+CHECK CURRENT SCENE || name: OwenHome | flag: 1
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: OwenHome | flagName: S8512_0_1
+Add behavior CommanderDramaWithIndexPlayer (idName: 8512001) to Player
+(param: SeatDramaName:OwenHomeLivingRoomSeat01|TargetScene:OwenHome|DramaIndex:14|TriggerTag:8512SitEat)
+Add behavior CommanderSit (idName: 8512011) to Owen
+(param: SeatDramaName:OwenHomeLivingRoomSeat02|TargetScene:OwenHome)
+DELAY MASK SET || maskId: 85121 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 5.1 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85121 | eventType: 2
+CONDITIONS
+CHECK CURRENT SCENE || name: OwenHome | flag: 0
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: OwenHome | flagName: S8512_0_1
+
+TRIGGER Procedure 0.0 Step 5.2 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the OwenHome:
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: OwenHome | flagName: S8512_0_1
+Add behavior CommanderDramaWithIndexPlayer (idName: 8512001) to Player
+(param: SeatDramaName:OwenHomeLivingRoomSeat01|TargetScene:OwenHome|DramaIndex:14|TriggerTag:8512SitEat)
+Add behavior CommanderSit (idName: 8512011) to Owen
+(param: SeatDramaName:OwenHomeLivingRoomSeat02|TargetScene:OwenHome)
+DELAY MASK SET || maskId: 85121 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85121 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 22972 starts:
+{{dialogue|Player|(You and Owen read over the letter carefully and discuss the contents...)}}
+
+TRIGGER Procedure 0.0 Step 8.1 Order 31 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 851211 | delayTime: 0 | durationTime: 1 | changeType: 2 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 851211 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 8072_0 starts:
+{{dialogue|Owen|How could he...}}
+{{dialogue|Owen|Sigh...}}
+{{dialogue|Owen|My old man's a real actor, alright. Shame they never put him on Walnut Theater.}}
+{{dialogue|Owen|Reading this... I don't know how to feel. Should I be upset? Should I be angry? Can... I be angry? How stubborn can you get...?}}
+{{dialogue|Owen|He's trying to play it off like it's no big deal, but it is. If his treatment had gone south, then that would've been it. No goodbyes, nothing...}}
+
+*''He just didn't want you to worry.''
+*''He should've told us; we could've done something.''
+*''Keeping a positive outlook improves your chances, I hear...''
+
+{{dialogue|Owen|indent=true|answer=He just didn't want you to worry.
+|Yeah... But now I'm more worried. How can I ever know he's okay if I can't be sure he'll tell me?}}
+{{dialogue|Owen|indent=true|answer=He should've told us; we could've done something.
+|Yeah, I hate to imagine my Ma putting that on herself. She's getting on in age, too. Couldn't have been easy at all...}}
+{{dialogue|Owen|indent=true|answer=Keeping a positive outlook improves your chances, I hear...
+|Guess I can't be all that surprised. He always was happy-go-lucky; you could never wipe the smile off his face, even when he'd watch a week's salary get whisked off the table in one of his silly dice games...}}
+{{dialogue|Owen|Tch. Then again, it's not like I've visited in forever either, huh? ...Well, it's clear to me now, then...}}
+{{dialogue|Owen|''Pet Name'', What do you think? Will you be alright for a couple days while I go and see my folks?}}
+
+*''Of course! I've got your back.''
+*''I'll miss you, but it's something you have to do.''
+*''Let me go with you!''
+
+{{dialogue|Owen|indent=true|answer=Of course! I've got your back.
+|reward={{NPC2|Owen|rp=5}}|Thanks, darling. Alright then. I'll set off first thing tomorrow morning.}}
+{{dialogue|Owen|indent=true|answer=I'll miss you, but it's something you have to do.
+|Don't worry, babe. I'll set off first thing tomorrow morning, then be back before you know it.}}
+{{dialogue|Owen|indent=true|answer=Let me go with you!
+|reward={{NPC2|Owen|rp=5}}|I'd love that more than anything, but I can't imagine it'd be good to pull you away from the city on such short notice. Don't worry, I'll set off first thing tomorrow morning, then be back before you know it.}}
+
+TRIGGER Procedure 0.0 Step 10.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 4) There is a conversation segment (id 22985) that ends:
+{{dialogue|Owen|I'd love that more than anything, but I can't imagine it'd be good to pull you away from the city on such short notice. Don't worry, I'll set off first thing tomorrow morning, then be back before you know it.}}
+CONDITIONS
+CHECK CHILD COUNT || compare: 2 | count: 1
+ACTIONS
+(cId 5) A conversation 22986 starts:
+{{dialogue|Owen|Plus, I mean... who'll look after the family?}}
+
+TRIGGER Procedure 0.0 Step 11.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+CHECK CHILD COUNT || compare: 2 | count: 0
+ACTIONS
+(cId 6) A conversation 22987 starts:
+{{dialogue|Owen|And, ''Pet Name'', don't worry about my folks, either. I'll let you know how they're doing as soon as I can.}}
+
+TRIGGER Procedure 0.0 Step 12.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 22987 starts:
+{{dialogue|Owen|And, ''Pet Name'', don't worry about my folks, either. I'll let you know how they're doing as soon as I can.}}
+
+TRIGGER Procedure 0.0 Step 13.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+CAMERA PATH STOP ALL || 
+Remove behavior CommanderSit (idName: 8512011) from Owen
+Remove behavior CommanderDramaWithIndexPlayer (idName: 8512001) from Player
+Set 8512Talk to 1
+===Wait for Owen===
+
+{{mission_details
+|desc = Worried about his father's condition, Owen decides to visit his parents in Atara. Wait for his return during this time.
+|details = Wait for Owen
+}}
+STORY ADD NOBED LOCKER || lockerId: 25121
+
+TRIGGER Procedure 0.0 Step 14.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Owen
+CONDITIONS
+Check if 8512Talk is == 1
+ACTIONS
+(cId 7) A conversation 22988 starts:
+{{dialogue|Owen|No need to write; I'll just pack light and head out first thing tomorrow morning, should make it there before any letter could.}}
+
+TRIGGER Procedure 0.0 Step 15.0 Order 15 Repeat 2
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Set 8512Talk to 0
+NPC LEAVE || npc: 8001
+
+TRIGGER Procedure 0.0 Step 16.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player wakes up:
+CONDITIONS
+Always:
+ACTIONS
+(cId 8) A conversation 22989 starts:
+{{dialogue|Player|(Owen should be back any day, I'll stop by the Train Station!)}}
+
+TRIGGER Procedure 0.0 Step 17.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+ACTOR FREEZ COLLIDER || npc: 8001 | freezeCollider: 1
+ACTOR FREEZ COLLIDER || npc: 8000 | freezeCollider: 1
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8512_0_1
+Add behavior CommanderMoveToFlagAndAction (idName: 8512002) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8512_0_1|Action:HugLoop|Delay:2.0)
+Add behavior CommanderNPCActionLoop (idName: 8512012) to Owen
+(param: TargetScene:Main|Delay:0.0|TargetFlag:S8512_1_1|CMDAction:HugLoop)
+
+TRIGGER Procedure 0.0 Step 18.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 5504}}
+A cutscene CG_OWENHUG (duration: -2.0) starts playing
+Absence Coda - As I stepped out, Owen gave me a big hug. After being apart for so long, both of us enjoyed this embrace filled with longing for one another.
+STORY REMOVE NOBED LOCKER || lockerId: 25121
+
+TRIGGER Procedure 0.0 Step 21.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_OWENHUG | state: 7
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85122 | delayTime: 0 | durationTime: 1 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 22.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_OWENHUG | state: 7
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85122 | delayTime: 3 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 23.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85122 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 9) A conversation 8079_0 starts:
+{{dialogue|Player|(What should I say?)}}
+
+*''H-hey... I can't breathe...!''
+*''You should hug me like this more often...''
+*''Hey, wait, does this mean...?''
+
+{{dialogue|Player|indent=true|answer=H-hey... I can't breathe...!
+|(Owen's hugging me tightly with almost all of his strength...)}}
+{{dialogue|Player|indent=true|answer=You should hug me like this more often...
+|(Owen isn't answering... he just keeps holding me tightly...)}}
+{{dialogue|Player|indent=true|answer=Hey, wait, does this mean...?
+|(Owen seems to have no intention of letting go...)}}
+{{dialogue||Do you mind... if we stay here for a moment? Just like this?}}
+{{dialogue||(You stand on the platform for a short while in each other's embrace as passengers shuffle on and off, going about their days. Slowly, you feel a sense of relief wash over you as Owen's feelings become clear.)}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 23.1 Order 32 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85123 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 23.2 Order 33 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85123 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCActionLoop (idName: 8512012) from Owen
+Remove behavior CommanderMoveToFlagAndAction (idName: 8512002) from Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8512_0_2
+DELAY MASK SET || maskId: 85123 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+ACTOR FREEZ COLLIDER || npc: 8000 | freezeCollider: 0
+ACTOR FREEZ COLLIDER || npc: 8001 | freezeCollider: 0
+Owen stands still in Main and looks at Player
+
+TRIGGER Procedure 0.0 Step 24.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85123 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 10) A conversation 8083_0 starts:
+{{dialogue|Owen|''Pet Name'', I've missed you. Let me take a good look at you... How've you been? Everything alright at home?}}
+{{dialogue|Owen|Glad to hear it. My trip was smooth sailing, and everything's fine back home.}}
+
+*''That's wonderful to hear! Tell me all about your trip!''
+*''I missed you so much...''
+
+{{dialogue|Owen|indent=true|answer=That's wonderful to hear! Tell me all about your trip!
+|Well... Pa's doing well. You'd hardly know he was sick. It was good to have a chance to catch up, have a heart to heart...}}
+{{dialogue|Owen|indent=true|answer=I missed you so much...
+|Me too. But I'm back now. It was a good trip. Short, but good. My Pa's fine... Everything's fine.}}
+{{dialogue|Owen|It's hard to get out of a letter what you get more easily from a good visit; I'm glad I went. Cleared a few things up, and I could see they were doing just fine, so I hurried on back. As a matter of fact, they almost pushed me out the door, haha...}}
+{{dialogue|Owen|My Ma stays busy these days with a little dog she adopted; surprisingly tempermental. Usually it's the little ones you have to watch out for: yapping and barking at anything in range. But no, this one is a bundle of joy.}}
+{{dialogue|Owen|My Pa's been getting back into his tabletop games, his latest obsession is mahjong. Apparently they have all sorts of clubs and competitions for it in Atara now.}}
+{{dialogue|Owen|Check it out, here he is at a club tournament. He's really been practicing.}}
+{{dialogue|Owen|Other than that... Hm... not much else to say. Oh! I fixed some of their kitchen piping!}}
+{{dialogue|Owen|Haha, managed to pick up a thing or two watching you work. Needless to say, they were very impressed.}}
+{{dialogue|Owen|reward={{i2|Yakboy Geometric Carpet|1}}|Ah, but my trip would be hardly complete if I hadn't brought back a gift for my dearly beloved...!}}
+{{dialogue|Owen|When I was on the way there, I couldn't help but have all sorts of thoughts like... "Should I bring my folks back to Sandrock...?" Maybe I got a bit carried away, but can you blame me?}}
+{{dialogue|Owen|reward={{NPC2|Owen|rp=5}}|But... we talked it all out. My Pa really was about to tell us. If the treatment he was on didn't work, but... it did. And they both agreed, from now on: no more secrets. So I think I can safely say, my mind is at ease.}}
+
+*''I hope you'll tell me, too, if something is bothering you.''
+*''We could stand to keep a closer eye on your folks.''
+
+{{dialogue|Owen|indent=true|answer=I hope you'll tell me, too, if something is bothering you.
+|Yes, ''Pet Name''. I will. I know that whatever our future holds, we can face it together.}}
+{{dialogue|Owen|indent=true|answer=We could stand to keep a closer eye on your folks.
+|Sure. And, say, while we're on the subject, say hello to your folks down in Highwind for me when you get the chance.}}
+{{dialogue|Owen|Oh, while I was on the train coming back, I had an idea for a gift for my father; do you think you could make it for me? It'd be simple; just a six sided die where each of the faces reads 6.}}
+{{dialogue|Owen|I guess I want him to remember that... any time he rolls the dice with us, he can't lose.}}
+{{dialogue|Owen|Here's the recipe: I penned it out on a dining car napkin, er... maybe you don't even need this. It's just a cube with sixes on each side. Maybe just carve it out whenever and give it to me when it's ready, I'll mail it to my folks. Whew. So glad to be home!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 24.4 Order 36 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 10) There is a conversation segment (id 23006) that ends:
+{{dialogue|Owen|Ah, but my trip would be hardly complete if I hadn't brought back a gift for my dearly beloved...!}}
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Yakboy Geometric Carpet of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 26.0 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Owen stops standing still
+CAMERA PATH STOP ALL || 
+CUTSCENE UI STATE EXIT || 
+===Make an "All Sixes" Die===
+
+{{mission_details
+|desc = Owen has finally returned and wants to ask you to create a dice with all sides showing "six" as a gift to send back. You can make one on{{textcolor|green| the Worktable}}.
+|details = Make an "All Sixes" Die
+*{{i2|All Sixes Die|0/1}}
+}}
+Add 1 All Sixes Die of Default quality (Notify player)
+Remove behavior CommanderPlayerAction (idName: 85121) from Player
+
+TRIGGER Procedure 0.0 Step 30.0 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC FAVOR LEVEL CHANGE || order: 0 | npc: 8001 | compare: 6 | level: MateUnhappy
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1800511
+END MISSION 1800512
+
+TRIGGER Procedure 0.0 Step 32.0 Order 25 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1800511 | targetId: 4 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Owen===
+
+{{mission_details
+|desc = The gift has been completed. Take it to Owen now.
+|details = Talk to Owen
+*{{i2|All Sixes Die|0/1}}
+*{{i2|Owen|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 33.0 Order 26 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Owen
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1800511 | targetId: 6 | canSubmit: 1
+ACTIONS
+(cId 11) A conversation 23014 starts:
+{{dialogue|Owen|Ah, ''Pet Name'', it looks great. I'll send it to my Pa right away. I'm sure it'll give him a pleasant surprise.}}
+BAG MODIFY BY TARGET || missionId: 1800511 | targetId: 6
+
+TRIGGER Procedure 0.0 Step 34.0 Order 27 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1800511
+
+TRIGGER Procedure 0.0 Step 35.0 Order 28 Repeat 2
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 85120 | sec: 1
+
+TRIGGER Procedure 0.0 Step 36.0 Order 29 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|824}}
+
+TRIGGER Procedure 0.0 Step 37.0 Order 30 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|825}}
+END MISSION 1800512
+
+TRIGGER Procedure 1.0 Step 26.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 22996) that ends:
+{{dialogue|Owen|''Pet Name'', I've missed you. Let me take a good look at you... How've you been? Everything alright at home?}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 85121) to Player
+(param: CMDAction:Nod_Story)
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 23008) that ends:
+{{dialogue|Owen|But... we talked it all out. My Pa really was about to tell us. If the treatment he was on didn't work, but... it did. And they both agreed, from now on: no more secrets. So I think I can safely say, my mind is at ease.}}
+
+*''I hope you'll tell me, too, if something is bothering you.'' (No unique dialogue)
+*''We could stand to keep a closer eye on your folks.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Owen gains 5 favor
+
+TRIGGER Procedure 2.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 22982:
+{{dialogue|Owen|''Pet Name'', What do you think? Will you be alright for a couple days while I go and see my folks?}}
+
+*''Of course! I've got your back.'' (No unique dialogue)
+*''I'll miss you, but it's something you have to do.'' (No unique dialogue)
+*''Let me go with you!'' (No unique dialogue)
+
+(cId -1) The player picks the third option in conversation segment 22982:
+{{dialogue|Owen|''Pet Name'', What do you think? Will you be alright for a couple days while I go and see my folks?}}
+
+*''Of course! I've got your back.'' (No unique dialogue)
+*''I'll miss you, but it's something you have to do.'' (No unique dialogue)
+*''Let me go with you!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Owen gains 5 favor

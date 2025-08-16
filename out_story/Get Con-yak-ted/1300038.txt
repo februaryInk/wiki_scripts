@@ -1,0 +1,99 @@
+Reading Mission 1300038: Get Con-yak-ted
+
+<onlyinclude>{{Infobox mission
+|name = Get Con-yak-ted
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Get Con-yak-ted:
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Yakmel Station of Default quality (Notify player)
+Yan stops standing still
+AUTOSAVE TRY || 
+START MISSION 1300037
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1300037
+CONDITIONS
+Always:
+ACTIONS
+Run mission Get Con-yak-ted
+END MISSION 1300037
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1300037 | targetId: 0 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Install Yakmel Station===
+
+{{mission_details
+|desc = Construct a new Yakmel Station on your Assembly Station, install it at the location Yan told you about.
+|details = Install Yakmel Station
+}}
+SCENEITEM CREATE FLAG || itemType: 5 | id: 5 | sceneName: Main | flagName: BusStop_5 | path: SceneItem_BusStopMark | extraParams: SceneItem_BusStop|BusStop|14000015_1|1547|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 5 | id: 5 | missionId: 1300037 | iconType: 2
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 6 | id: 5
+CONDITIONS
+Check if part is == 0
+ACTIONS
+Increment Number by 1
+GUIDE ADD CONTROL || id: 1021 | forced: 0
+STOPWATCH REAL TIME SET || id: 13038 | sec: 6.5
+SUBMIT MISSION 1300037
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 13038
+CONDITIONS
+Check if Number is == 1
+ACTIONS
+GUIDE ADD CONTROL || id: 1022 | forced: 0
+END MISSION 1300038
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1300038
+CONDITIONS
+Always:
+ACTIONS
+===Construct a Yakmel Station===
+
+{{mission_details
+|desc = Make a Yakmel Station on your Assembly Station according to the diagram.
+|details = Construct a Yakmel Station
+*{{i2|Yakmel Station|0/1}}
+}}
+Set NUMBER to 0
+Set Number to 0
+Set part to 0

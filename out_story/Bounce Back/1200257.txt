@@ -1,0 +1,208 @@
+Reading Mission 1200257: Bounce Back
+
+<onlyinclude>{{Infobox mission
+|name = Bounce Back
+|image =
+|description = Justice has found him in an interesting situation with the powered down mirror-bot. See if you can't find a way to safely make everyone happy.
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 2300
+|reputation = 10
+|gols = 800
+|npc1 = Heidi
+|rp1 = 10
+|npc2 = Justice
+|rp2 = 10
+|npc3 = Magic Mirror
+|rp3 = 50
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200264
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK CREATION CAN CREATE || creationId: 14000006 | canCreate: 1
+ACTIONS
+Run mission #1200256
+ACTION WEATHER ACTIVE || weather: 1
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1200312 is result 1 flag 1
+ACTIONS
+Run mission Bounce Back
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200257
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || flagName: trigger_civilcorp | transId: 80001216 | missionId: 1200257 | id: 22571 | sceneName: Main | showOnMap: 1 | mapIcon: MissionArea
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the CivilCorp:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_civilcorp
+Duvos Attacks! is in state 1 with flag 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_civilcorp
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 22571
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the CivilCorp:
+CONDITIONS
+Always:
+ACTIONS
+Heidi stands still in CivilCorp
+Justice stands still in CivilCorp and looks at Player
+PLAYER SET POS ROT FLAG || flagName: mirrorcle_player1 | sceneName: CivilCorp
+SCENEITEM DELETE || id: 172501 | itemType: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 172501 | path: Mission_MagicMirror | sceneName: CivilCorp | extraParams: 0 | flagName: MMirrorInCivilCorp
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the CivilCorp:
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 2446_0 starts:
+{{dialogue|Justice|Hey there, ''Player''! Come by to admire your handiwork? Heh, yeah, we got that robot good.}}
+{{dialogue|Justice|I reckon we'll leave it there for a little while, have the city work something out with Vega 5, ship it off for study. In the meantime, I went ahead and put it in the cell. Don't want it to wake up, go crazy, turn into another dancing robot fiasco...}}
+{{dialogue|Justice|Wait a sec... ''Player''... Don't tell me... You're not thinking of repairing this thing, are you?}}
+
+*''Sure, why not?''
+*''I am... now.''
+*''Nah, bad idea.''
+
+{{dialogue|Justice|indent=true|answer=Sure, why not?
+|Why not? Why n-...!}}
+{{dialogue|Justice|indent=true|Listen, ''Player'', I know that robot thinks you're attractive or whatever, but don't be lured into its flattering trap! This thing tried to kill us!}}
+{{dialogue|Justice|indent=true|answer=I am... now.
+|Ah, heck, me and my big mouth...}}
+{{dialogue|Justice|indent=true|Listen, ''Player'', I know that robot thinks you're attractive or whatever, but don't be lured into its flattering trap! This thing tried to kill us!}}
+{{dialogue|Justice|indent=true|answer=Nah, bad idea.
+|Whew! Scared me for a sec. It's just... well, you know! You and Mi-an are always... sneakin' around... fixin' things!}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Heidi stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 22572) to Heidi
+(param: TargetScene:CivilCorp|MoveMode:Walk|FlagName:mirrorcle_heidi1)
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8009 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 2450_0 starts:
+{{dialogue|Heidi|Howdy partners! Come to see the dead robot, ''Player''? I was actually hoping to talk to you two, today must be my lucky day!}}
+{{dialogue|Justice|Guess you did probably save... fifteen minutes or so of walking between where we live, but, uh, listen, whatever it is, if it's about the robot-}}
+{{dialogue|Heidi|I've found a diagram for a {{textcolor|green|Power Cell}} that will get this AI functional again!}}
+{{dialogue|Justice|What the...!? Seriously? I was literally just telling ''Player'' here how we should absolutely not do that!}}
+{{dialogue|Heidi|Come on, Justice. Think of what we could learn from this thing!}}
+{{dialogue|Justice|We're going to send it to Vega 5! Let them learn about it!}}
+{{dialogue|Heidi|Or... let Sandrock have some scientific discoveries for once! Trust me, I've read plenty about AI. It can't harm anyone unless directed by a malicious user, or... if it's gone completely insane, or maybe sentient. But we'll turn it on together! It'll be fine.}}
+{{dialogue|Justice|Sigh... Well, look... This is all far above my pay grade anyhow. Only person who can make this call is the Mayor...}}
+{{dialogue|Heidi|Trudy already said it's fine.}}
+{{dialogue|Justice|Huh?! Why didn't you lead with that...?}}
+{{dialogue|Heidi|Trudy trusted in me to get this done. I wanted you to trust me too, Justice!}}
+{{dialogue|Justice|Well, ain't that sweet. Ah, heck. 'Course I trust you...}}
+{{dialogue|Justice|Alright, alright... Seems like you're dead-set on this. Just one condition: you don't start that thing up without me, alright?}}
+{{dialogue|Heidi|Peachy. ''Player''? You in?}}
+
+*''I'm in!''
+*''Nah, let's not...''
+*''Since when do you care about AI?''
+
+{{dialogue|Heidi|indent=true|answer=I'm in!
+|Alright! Great minds think alike! Or do they think for themselves...? Seems like it couldn't be either all of the time... Anyway! Let me know when that {{textcolor|green|Power Cell}} is charged and ready to... charge!}}
+{{dialogue|Heidi|indent=true|answer=Nah, let's not...
+|Whaaaaat? Really? After my big compelling speech? Oookay, ''Player''... I can't make you do anything you don't want to. I'm just gonna give you this here diagram, aaaand... eh, you know. If the {{textcolor|green|Power Cell}} gets made, it gets made, huh?}}
+{{dialogue|Heidi|Well, I guess it all started with a little conversation that started between Qi, Grace, and myself. Grace wants to keep this thing in Sandrock to help make a name for herself, and Sandrock in the process!  Could be great for the town!}}
+{{dialogue|Heidi|And, look... you guys beat it up once, right? This thing has C-tier fighting skills at best. What's the worst that could happen?}}
+{{dialogue|Heidi|Peachy. ''Player''? You in?}}
+
+*''I'm in!''
+*''Nah, let's not...''
+*''Since when do you care about AI?''
+
+{{dialogue|Heidi|indent=true|answer=I'm in!
+|Alright! Great minds think alike! Or do they think for themselves...? Seems like it couldn't be either all of the time... Anyway! Let me know when that {{textcolor|green|Power Cell}} is charged and ready to... charge!}}
+{{dialogue|Heidi|indent=true|answer=Nah, let's not...
+|Whaaaaat? Really? After my big compelling speech? Oookay, ''Player''... I can't make you do anything you don't want to. I'm just gonna give you this here diagram, aaaand... eh, you know. If the {{textcolor|green|Power Cell}} gets made, it gets made, huh?}}
+{{dialogue|Heidi|indent=true|answer=Since when do you care about AI?
+|Well, I guess it all started with a little conversation that started between Qi, Grace, and myself. Grace wants to keep this thing in Sandrock to help make a name for herself, and Sandrock in the process!  Could be great for the town!}}
+{{dialogue|Heidi|indent=true|And, look... you guys beat it up once, right? This thing has C-tier fighting skills at best. What's the worst that could happen?}}
+{{dialogue|Heidi|indent=true|Peachy. ''Player''? You in?}}
+
+:*''I'm in!''
+:*''Nah, let's not...''
+
+{{dialogue|Heidi|indent=double|answer=I'm in!
+|Alright! Great minds think alike! Or do they think for themselves...? Seems like it couldn't be either all of the time... Anyway! Let me know when that {{textcolor|green|Power Cell}} is charged and ready to... charge!}}
+{{dialogue|Heidi|indent=double|answer=Nah, let's not...
+|Whaaaaat? Really? After my big compelling speech? Oookay, ''Player''... I can't make you do anything you don't want to. I'm just gonna give you this here diagram, aaaand... eh, you know. If the {{textcolor|green|Power Cell}} gets made, it gets made, huh?}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 22572) from Heidi
+Justice stops standing still
+DELIVER MISSION 1200257
+START MISSION 1200257
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200257
+CONDITIONS
+Always:
+ACTIONS
+Run mission Bounce Back
+END MISSION 1200257
+
+==Rewards==
+{{mission reward
+|npc1 = Heidi
+|rp1 = 10
+|npc2 = Justice
+|rp2 = 10
+|npc3 = Magic Mirror
+|rp3 = 50
+|exp = 2300
+|reputation = 10
+|gols = 800
+}}

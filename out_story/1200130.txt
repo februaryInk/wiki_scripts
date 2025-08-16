@@ -1,0 +1,225 @@
+Reading Mission 1200130: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100019
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE || compare: 2 | year: 1 | month: 2 | day: 28
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: festival
+PICK UP RESOURCE REFRESH || id: 804301
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE || compare: 3 | year: 1 | month: 3 | day: 28
+ACTIONS
+Run mission #1200130
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 11:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1200130 | id: 21301 | sceneName: Main | flagName: bull_trigger | showOnMap: 1 | mapIcon: MissionArea | transId: 80005163
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 21301
+CONDITIONS
+Check if Elsie is in town
+Check if Owen is in town
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 21301
+DELAY MASK SET || maskId: 21301 | delayTime: 0 | durationTime: 1.5 | changeType: 0 | curveIndex: 0
+NPC ADD TAG || tag: fesBullBubble
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 21301 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Owen stands still in Main
+DELAY MASK SET || maskId: 21301 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: 0
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: bull_player
+
+TRIGGER Procedure 0.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 21301 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 875_0 starts:
+{{dialogue|Owen|Welcome, one and all, to the world famous Sandrock's own, Running of the Yakmel! Shout-out to City Hall for inviting me here today! Now, I'll bet some of you are wondering...}}
+{{dialogue|Owen|Why the heck do we all get together every year to try to bump Yakmel into each other, anyhow?}}
+{{dialogue|Owen|Ahem! It is with great esteem that I shall now honor an age old tradition and regale y'all with the tale that started it all: "The Shonash Clash!"}}
+{{dialogue|Owen|...Many years ago, the great grandparents of our very own ranch couple, Cooper and Mabel, were traveling yak-back through the Eufaula, delivering various supplies up and down to the earliest settlers, long before the railways were ever built.}}
+{{dialogue|Owen|Back then, the only road was through a narrow part of the North Shonash Canyon, and one day, these two yakboys were passing through from both ends at the same time!}}
+{{dialogue|Owen|They ran into each other half way through, their carts in tow, each blocking the other's path; one called out, "You back out so I can get through!" And the other replied, "No, you back out so I can get through!"}}
+{{dialogue|Owen|"I'm more than halfway through the pass, you back out!"}}
+{{dialogue|Owen|"No you ain't, that's one-third and a quarter at best, you back out!"}}
+{{dialogue|Owen|This back and forth went on for hours, and pretty soon, other travelers showed up and were understandably peeved at the situation...}}
+{{dialogue|Owen|Funny thing about it all is this narrowest part of the pass was no more than thirty meters long; they coulda all been outta there in a couple of minutes! But no, both of those fellas was too stubborn to back down.}}
+{{dialogue|Owen|Soon enough, push came to shove; literally!}}
+{{dialogue|Owen|Other folks on yak-back started bumpin' into our two antagonists, front and back 'til it was just bumper-yak bedlam!}}
+{{dialogue|Owen|In the craziness of it all, carts were knocked over, packs were cut open, food and other supplies were getting tossed all out on the ground!}}
+{{dialogue|Owen|Before too long, everyone came to their senses; one person started to laugh... then another... and pretty soon they were all tumblin' off their mounts, howlin' over the absurdity of it all!}}
+{{dialogue|Owen|Here, I'm afraid, is where it gets dark.}}
+{{dialogue|Owen|When they all looked around, they noticed that the two fellas who started this whole debacle were both dead as doornails, both of 'em with their hands wrung around the other's neck...}}
+{{dialogue|Owen|In all the chaos, it seemed those two boys really never had let their bad blood quit boilin'...}}
+{{dialogue|Owen|The rest of them folks, they all picked up their supplies; it had gotten late.}}
+{{dialogue|Owen|They camped out there at the pass, and cooked up all the food that'd fallen off the mule-yaks and carts and such, conversin' all about what all had happened.}}
+{{dialogue|Owen|Word spread and, well, here we are, all these years later still commemoratin' the event!}}
+{{dialogue|Owen|So, all of y'all; I invite you to partake in the festivities! Hop on a Yakmel, bump into your best friend and, uh, try not to take it too personal if you get bumped yourself...}}
+{{dialogue|Owen|With all that being said, I hereby declare the Sandrock Annual Running of the Yakmel Festival... begun!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 21302 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+TIME SET CURRENT HOUR MINUTE || hour: 12 | minute: 0
+NPC REMOVE TAG || tag: fesBullBubble
+CUTSCENE UI STATE EXIT || 
+Owen stops standing still
+Cooper stands still in Main
+Mabel stands still in Main
+Elsie stands still in Main
+AREA TRIGGER ONCE CREATE || missionId: 1200130 | id: 21302 | sceneName: Main | flagName: bull_trigger2 | showOnMap: 1 | mapIcon: MissionArea | transId: -1
+STOPWATCH GAME TIME SET || id: 21301 | minute: 20
+Hugo stands still in Main
+DELAY MASK SET || maskId: 21302 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 12:00 (order: 10):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 21301
+STOPWATCH GAME TIME SET || id: 21301 | minute: 20
+AREA TRIGGER ONCE CREATE || missionId: 1200130 | id: 21302 | sceneName: Main | flagName: bull_trigger2 | showOnMap: 1 | mapIcon: MissionArea | transId: -1
+
+TRIGGER Procedure 1.0 Step 1.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH GAME TIME END || order: 20 | id: 21301
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 21302
+Cooper stops standing still
+Mabel stops standing still
+Elsie stops standing still
+Hugo stops standing still
+END MISSION 1200130
+
+TRIGGER Procedure 1.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 0 | missionId: 1200130
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 21302 | delayTime: 0 | durationTime: 1 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 21302
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 21303 | delayTime: 0 | durationTime: 1.5 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 21303 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: bull_player
+DELAY MASK SET || maskId: 21303 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 5.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 21303 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 876_0 starts:
+{{dialogue|Hugo|I mean, I dunno, man. Of course we got to respect our ancestors, but I don't think you should be proud of your grandpappy and your wife's grandpappy mutually endin' one another over a traffic incident...}}
+{{dialogue|Cooper|Hogwash! My grandpappy is a stark example of what true gumption looks like! In the face of adversity, he never gave up; a true rancher 'til the end!}}
+{{dialogue|Elsie|Ma, is Pa right? Was Pa's great granpappy justified in the killing of yours at the expense of his own life?}}
+{{dialogue|Mabel|Like heck he was! Cooper, I'm sick of soundin' like a broken record everytime this here festival rolls around; disavow the sins of your ancestors, right now! Else, I ain't cookin' supper!}}
+{{dialogue|Cooper|Er, well, sweetie pie, darlin', dumplin, I s'pose... from a certain perspective one might make that argument-}}
+{{dialogue|Mabel|Don't you try to middle ground me, disavow!}}
+{{dialogue|Cooper|But... but...}}
+{{dialogue|Mabel|No buts!}}
+{{dialogue|Cooper|Alright, alright!}}
+{{dialogue|Cooper|Killin' and dyin' over a traffic altercation... was... objectively... imbecilic.}}
+{{dialogue|Mabel|That's better!}}
+{{dialogue|Elsie|Wow, I think my worldview just got a lil' better!}}
+{{dialogue|Hugo|Y'all are... somethin' else.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 6.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 21304 | delayTime: 0 | durationTime: 1.5 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 7.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 21304 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Cooper stops standing still
+Mabel stops standing still
+Elsie stops standing still
+Hugo stops standing still
+DELAY MASK SET || maskId: 21304 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: 0
+END MISSION 1200130

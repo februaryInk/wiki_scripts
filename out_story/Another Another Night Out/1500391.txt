@@ -1,0 +1,360 @@
+Reading Mission 1500391: Another Another Night Out
+
+<onlyinclude>{{Infobox mission
+|name = Another Another Night Out
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Another Another Night Out:
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the third option in conversation segment 18312:
+{{dialogue|Venti|Hey, ''Player''! Do you want to go dig for scrap in the scrap yard again sometime soon?}}
+
+*''Sure, let's go!'' (No unique dialogue)
+*''Again? Let's take a break!'' (No unique dialogue)
+*''I don't want to continue getting scrap with you.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+CLOSE MISSION || missionId: 1500390
+END MISSION 1500390
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 18312:
+{{dialogue|Venti|Hey, ''Player''! Do you want to go dig for scrap in the scrap yard again sometime soon?}}
+
+*''Sure, let's go!'' (No unique dialogue)
+*''Again? Let's take a break!'' (No unique dialogue)
+*''I don't want to continue getting scrap with you.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set accept to 1
+DELIVER MISSION 1500390
+START MISSION 1500390
+===Go to Scrapyard After 23:00PM===
+
+{{mission_details
+|desc = You've arrived at Eufaula Salvage's scrapyard. Start salvaging some scrap and have a chat with Venti.
+|details = Go to Scrapyard After 23:00PM
+}}
+Run mission Another Another Night Out
+END MISSION 1500390
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1500391
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1500391 | id: 539101 | sceneName: Main | flagName: Story_5391_Area | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80027687
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 539101
+CONDITIONS
+CHECK TIME || compare: 2 | hour: 23 | minute: 0
+CHECK TIME || compare: 5 | hour: 23 | minute: 59
+ACTIONS
+DELAY MASK SET || maskId: 539101 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 539101
+
+TRIGGER Procedure 0.0 Step 1.5 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 539101
+CONDITIONS
+CHECK TIME || compare: 2 | hour: 0 | minute: 0
+CHECK TIME || compare: 5 | hour: 3 | minute: 0
+ACTIONS
+DELAY MASK SET || maskId: 539101 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 539101
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 539101 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 539101 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Venti stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: Story_5391_Player
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 539101 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 539101) A conversation 18321, 18322, 18323 starts:
+{{dialogue|Venti|Hey, ''Player''!}}
+{{dialogue|Venti|Nice to see you again! Come on, let's go dig for some scrap together!}}
+{{dialogue|Venti|We found a lot of new scrap from the ruins today, so we should be able to recycle a lot of good things- wait, did you hear something?!}}
+Rocky stands still in Main
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8038 | cId: 539101 | missionId: 1500391
+CONDITIONS
+Always:
+ACTIONS
+(cId 539102) A conversation 18324 starts:
+{{dialogue|Rocky|Who's there?!}}
+SOUND PLAY 2D || idStr: Play_door_metal_single_open
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8044 | cId: 539102 | missionId: 1500391
+CONDITIONS
+Always:
+ACTIONS
+(cId 539103) A conversation 18325, 18326, 18327 starts:
+{{dialogue|Venti|Uh oh! ''Player'', we need to hide, quick!}}
+{{dialogue|Rocky|Who's there?! Somebody stealin' from me?!}}
+{{dialogue|Venti|Oh no, what do we do?!}}
+Rocky stands still in Main
+
+TRIGGER Procedure 0.0 Step 6.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8038 | cId: 539103 | missionId: 1500391
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Rocky|Halt in the name of the mechanical claw, both of youse!}}
+Add behavior CommanderMoveToFlagAndAction (idName: 5391002) to Venti
+(param: TargetScene:Main|MoveMode:Run|FlagName:Story_539104)
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: Story_5391_Player1
+
+TRIGGER Procedure 0.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC BUBBLE STATE CHANGE || order: 0 | npc: 8044 | flag: 0
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 539102 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 7.1 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 539102 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Rocky stands still in Main
+DELAY MASK SET || maskId: 539102 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 8.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 539102 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 539104) A conversation 18329 starts:
+{{dialogue|Rocky|What the- Venti... and... you too, ''Player''?!}}
+
+TRIGGER Procedure 0.0 Step 9.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8044 | cId: 539104 | missionId: 1500391
+CONDITIONS
+Always:
+ACTIONS
+(cId 539105) A conversation 18330 starts:
+{{dialogue|Rocky|What in the heck is goin' on here? You two been sneakin' in here!?}}
+
+TRIGGER Procedure 0.0 Step 10.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8044 | cId: 539105 | missionId: 1500391
+CONDITIONS
+Always:
+ACTIONS
+(cId 539106) A conversation 18331 starts:
+{{dialogue|Venti|Boss, I'm sorry... it was my idea! My friend, ''Player'', had nothing to do with it!}}
+
+TRIGGER Procedure 0.0 Step 11.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8038 | cId: 539106 | missionId: 1500391
+CONDITIONS
+Always:
+ACTIONS
+(cId 539107) A conversation 18332, 18333 starts:
+{{dialogue|Rocky|Venti, I can hardly believe what I'm seein'! Am I not payin' you enough?}}
+{{dialogue|Rocky|I trust you with the keys and this is what you go and do? Then you go in and bring in an honest Builder into your little scam? Give me one good reason why I shouldn't send you packin'!}}
+
+TRIGGER Procedure 0.0 Step 12.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8044 | cId: 539107 | missionId: 1500391
+CONDITIONS
+Always:
+ACTIONS
+(cId 539108) A conversation 5609_0 starts:
+{{dialogue|Venti|I... I...}}
+
+*''I thought Venti told you we were here...''
+*''Venti has a good heart!''
+*''Venti... I didn't think you were like this...''
+
+{{dialogue|Rocky|indent=true|answer=I thought Venti told you we were here...
+|So you're saying you lied to ''Player'' and took everything for yourself?! Venti, this is fricken mutiny over here!}}
+{{dialogue|Rocky|indent=true|answer=Venti has a good heart!
+|reward={{NPC2|Venti|rp=5}}|What, she wanted to help you, ''Player''? Get free scrap? Well, guess what, if we don't get paid, we don't eat, and if we don't eat, ain't nobody to put free scrap up here for you to steal, Venti!}}
+{{dialogue|Rocky|indent=true|answer=Venti... I didn't think you were like this...
+|Right there with ya, Builder! Venti, I thought you were a stand-up gal! Even if. Even if you were tryin' to help ''Player'' here, you broke the rules, and you broke my trust!}}
+
+TRIGGER Procedure 0.0 Step 15.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 539108) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 539109) A conversation 18341, 18342, 18343 starts:
+{{dialogue|Rocky|Look, uh... ''Player''... I don't want none of this to reflect badly on Eufaula Salvage Co., aright? So... let's keep all this in the family, yeah? You keep whatever Venti gave you, I ain't gonna press charges or nothin'.}}
+{{dialogue|Rocky|Venti. You take some time off, you're benched. Clear your head. I'll do the same. We'll talk about this in a couple days.}}
+{{dialogue|Venti|Okay...}}
+
+TRIGGER Procedure 0.0 Step 13.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 539108) The player picks the second option in conversation segment 18334:
+{{dialogue|Venti|I... I...}}
+
+*''I thought Venti told you we were here...'' (No unique dialogue)
+*''Venti has a good heart!'' (No unique dialogue)
+*''Venti... I didn't think you were like this...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Venti gains 5 favor
+
+TRIGGER Procedure 0.0 Step 16.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8038 | cId: 539109 | missionId: 1500391
+CONDITIONS
+Always:
+ACTIONS
+(cId 539110) A conversation 18344 starts:
+{{dialogue|Rocky|Sorry you had to see that, ''Player''. I'm gonna try'n get some shut-eye. You wanna do the same.}}
+Add behavior CommanderMoveToFlagAndAction (idName: 5391003) to Venti
+(param: TargetScene:Main|MoveMode:Run|FlagName:Story_539105)
+
+TRIGGER Procedure 0.0 Step 17.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 539110) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 5391001) from Rocky
+Remove behavior CommanderMoveToFlagAndAction (idName: 5391002) from Venti
+Remove behavior CommanderMoveToFlagAndAction (idName: 5391003) from Venti
+Venti stops standing still
+Rocky stops standing still
+Rocky stops standing still
+SUBMIT MISSION 1500390
+Set taskend to 1
+Rocky stops standing still
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 18.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Venti
+CONDITIONS
+Check if tasktime is == 0
+ACTIONS
+(cId 539111) A conversation 18345 starts:
+{{dialogue|Venti|I... I'm sorry, ''Player''...}}
+
+TRIGGER Procedure 0.0 Step 19.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Rocky
+CONDITIONS
+Check if tasktime is == 0
+ACTIONS
+(cId 539113) A conversation 18347 starts:
+{{dialogue|Rocky|Still can't believe it was Venti... I'd've bet the farm it was some dang sand bandits. Last person on earth I'd suspect is one of my star employees. I hope she can bounce back from this one...}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Set daynum to 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Set daynum to 0
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Venti
+CONDITIONS
+Always:
+ACTIONS
+(cId 539112) A conversation 18346 starts:
+{{dialogue|Venti|How could I do something like this... sigh...}}
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 539112) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+END MISSION 1500391
+
+TRIGGER Procedure 1.0 Step 2.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Venti
+CONDITIONS
+Always:
+ACTIONS
+(cId 539112) A conversation 18346 starts:
+{{dialogue|Venti|How could I do something like this... sigh...}}

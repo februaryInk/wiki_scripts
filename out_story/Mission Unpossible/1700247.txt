@@ -1,0 +1,338 @@
+Reading Mission 1700247: Mission Unpossible
+
+<onlyinclude>{{Infobox mission
+|name = Mission Unpossible
+|image =
+|description = You've received several mysterious letters. Who could they be from? Well, that's kind of obvious, by now. Hopefully he has some interesting information.
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 3900
+|reputation = 10
+|gols = 500
+|npc1 = Justice
+|rp1 = 20
+|npc2 = Unsuur
+|rp2 = 20
+|npc3 = Magic Mirror
+|rp3 = 50
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200135
+
+TRIGGER Procedure 6.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Ain't No Mountain Wide Enough is successfully completed
+ACTIONS
+Run mission This is Not a Drill
+
+TRIGGER Procedure 6.0 Step 5.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Rock Out is successfully completed
+ACTIONS
+Run mission Mission Unpossible
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700247
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1700247
+The player receives a letter:
+{{mail|448}}
+Set READ to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 448
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: roomforandy | info: 1 | exist: 0
+Mission Unpossible is in state 2 with flag 0
+ACTIONS
+START MISSION 1700247
+===Wait Until Tomorrow===
+
+{{mission_details
+|desc = Wait Until Tomorrow
+|details = Wait Until Tomorrow
+}}
+Set READ to 1
+
+TRIGGER Procedure 0.0 Step 0.5 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER ONCE CREATE || missionId: 1700247 | id: 172471 | sceneName: Saloon | showOnMap: 1 | mapIcon: MissionArea | transId: -1 | flagName: BHR_Trigger
+Set global blackboard key roomforandy with info 1.
+ACTION AREA TRIGGER SET RADIUS || id: 172472 | radius: 15
+ACTION SHOW CUSTOM IMAGE TIPS || content: 80012876 | preset: Mission
+
+TRIGGER Procedure 0.0 Step 0.5 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+===Go to Blue Moon Floor 2===
+
+{{mission_details
+|desc = Bronco lives on the second floor of the Blue Moon and can be found in his room. Before you go it's a good idea to remember his secret code.
+|details = Go to Blue Moon Floor 2
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 172471
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 172471 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: -2
+AREA TRIGGER DELETE || id: 172472
+
+TRIGGER Procedure 0.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172471 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Pen stands still in Saloon
+Justice stands still in Saloon
+Bronco the Kid stands still in Saloon
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: BHR_Player
+DELAY MASK SET || maskId: 172471 | delayTime: 2 | durationTime: 1 | changeType: 1 | curveIndex: -2
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 3.5 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 7327) that ends:
+{{dialogue|Pen|Oh, just let everyone in already!}}
+CONDITIONS
+Always:
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: roomforandy
+Bronco the Kid stops standing still
+Bronco the Kid stands still in Saloon
+
+TRIGGER Procedure 0.0 Step 4.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 172472 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 5.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172472 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Pen stands still in Saloon
+Justice stands still in Saloon
+Bronco the Kid stands still in Saloon
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: BHR_Player2
+DELAY MASK SET || maskId: 172472 | delayTime: 2 | durationTime: 1 | changeType: 1 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172471 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 7326, 7327, 7328, 7329 starts:
+{{dialogue|Bronco the Kid|What's the password?}}
+{{dialogue|Pen|Oh, just let everyone in already!}}
+{{dialogue|Bronco the Kid|Ow, ow, ow, okay! Okay!}}
+{{dialogue|Bronco the Kid|Ah! ''Player'', welcome! You got my letters I assume? Please, please... join us!}}
+
+TRIGGER Procedure 0.0 Step 6.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172472 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 7330, 7331, 7332, 7333, 7334, 7335, 7336, 7337, 7338, 7339 starts:
+{{dialogue|Bronco the Kid|Ahem! Greetings, toughest guys of Sandrock...}}
+{{dialogue|Bronco the Kid|You may be wondering why I've brought you all here today...}}
+{{dialogue|Justice|Can we... hurry this up? Unsuur and I need to be on patrol-}}
+{{dialogue|Bronco the Kid|Heh heh heh! Indeed! Indeed... I'll make this quick. Many of you have been wondering-}}
+{{dialogue|Pen|Yeah, okay, whatever, that's cool and all, and I really hate to do this in front of everyone, but it's spaghetti breakfast day at the saloon sooo... Bronco, you're fired.}}
+{{dialogue|Bronco the Kid|{{textcolor|green|I'VE DISCOVERED THE LOCATION OF LOGAN'S HIDE OUT}}!}}
+{{dialogue|Pen|Fired... Fired up! Impassionate, filled up with the juices of life! Now, tell me, buddy boy: where is that rotten soled freebooter, so us chums can go show him once and for all that no one messes with Sandrock!}}
+{{dialogue|Bronco the Kid|FOLLOW MEEEE!}}
+{{dialogue|Pen|Hold on, I do actually need to go get some spaghetti... what say we meet in front of the {{textcolor|green|Train Station}} after brunch?}}
+{{dialogue|Player|(What should I say?)}}
+
+*''Works for me.'' (No unique dialogue)
+*''I'm kinda busy!'' (No unique dialogue)
+
+
+TRIGGER Procedure 0.0 Step 7.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 7339:
+{{dialogue|Player|(What should I say?)}}
+
+*''Works for me.'' (No unique dialogue)
+*''I'm kinda busy!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 7341, 7342, 7343, 7344 starts:
+{{dialogue|Justice|Wha... now hang on, this is Logan we're talkin' about!}}
+{{dialogue|Pen|I know, I know, but I can't fight on an empty stomach... that's my only weakness! That and mirrors.}}
+{{dialogue|Justice|...I'll pretend I didn't hear the second part.}}
+{{dialogue|Bronco the Kid|O... okay! I can... reschedule things a bit. Just... meet at the {{textcolor|green|Train Station}} when you're all ready!}}
+
+TRIGGER Procedure 0.0 Step 8.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 7339:
+{{dialogue|Player|(What should I say?)}}
+
+*''Works for me.'' (No unique dialogue)
+*''I'm kinda busy!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 7340, 7344 starts:
+{{dialogue|Justice|Wha... now hang on, this is Logan we're talkin' about! We need you for this, pardner! Why don't you use Pen's brunch time and get ready?}}
+{{dialogue|Bronco the Kid|O... okay! I can... reschedule things a bit. Just... meet at the {{textcolor|green|Train Station}} when you're all ready!}}
+
+TRIGGER Procedure 0.0 Step 9.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 172473 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 10.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172473 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Pen stops standing still
+Pen stops standing still
+Justice stops standing still
+Justice stops standing still
+Bronco the Kid stops standing still
+Bronco the Kid stops standing still
+CUTSCENE UI STATE EXIT || 
+DELAY MASK SET || maskId: 172473 | delayTime: 2 | durationTime: 1 | changeType: 1 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 11.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 10 | maskId: 172473 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1700247 | id: 172482 | sceneName: Main | flagName: BHR_Station_Kid | showOnMap: 1 | mapIcon: MissionArea | transId: -1
+Run mission Mission Unpossible
+END MISSION 1700247
+
+TRIGGER Procedure 0.0 Step 11.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172473 | eventType: 2
+CONDITIONS
+Mission Unpossible is in state 2 with flag 0
+ACTIONS
+START MISSION 1700247
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 448
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: roomforandy | info: 1 | exist: 1
+Mission Unpossible is in state 2 with flag 0
+ACTIONS
+START MISSION 1700247
+===Go to Blue Moon Floor 2===
+
+{{mission_details
+|desc = Bronco lives on the second floor of the Blue Moon and can be found in his room. Before you go it's a good idea to remember his secret code.
+|details = Go to Blue Moon Floor 2
+}}
+
+==Rewards==
+{{mission reward
+|npc1 = Justice
+|rp1 = 20
+|npc2 = Unsuur
+|rp2 = 20
+|npc3 = Magic Mirror
+|rp3 = 50
+|exp = 3900
+|reputation = 10
+|gols = 500
+}}
+==Post-conduct==
+
+If the player successfully completes the mission, some of the townsfolk will comment on it:
+
+{{dialogue|Amirah|So that mirror from the Old World you brought back... it allowed people then to change their appearance to whatever they could imagine? I wonder if that made them happy... or rather, endlessly unsatisfied?}}
+{{dialogue|Andy|What? Logan's goat? Why do you want information of Rambo...? Er... I mean Randal...}}
+{{dialogue|Arvio|Those seven moles you told me about could make for great action figures. Just have to get Amirah to churn out the same basic shape and we can paint them different colors for seven times the profit! Gotta collect them all!}}
+{{dialogue|Burgess|Interesting, so there are mole people living around Sandrock? Hope they'll pop up one morning to say hi!}}
+{{dialogue|Catori|Hey, heard you and the Civil Corps are still chasing after Logan. Careful out there, ''Player''. But if you do ever find him, sock him one for me, will ya? Tell him, "This one is for Sandrunning!"}}
+{{dialogue|Cooper|The goat is attracted to Roasted Rutabaga? The vegetable agent of chaos? By the Light, I swore I'd never allow such blasphemy into or around my household but... if it's for a good cause... I support y'all, ''Player''! For the greater good! Just keep it away from Elsie...}}
+{{dialogue|Dan-bi|So we're just gonna rebuild that killer mirror? I don't even think you have to be down with the Church of the Light to know this is a really bad idea! How many times do we have to bring up the dancing robot from Ethea before they learn...?}}
+{{dialogue|Elsie|Looks like Roasted Rutabaga is back on the menu boys! Woohoo! My favorite!}}
+{{dialogue|Ernest|Weird to think there are still kings and queens in this day and age. You'd think they'd be pure fantasy by now. Why do mutant animals have such a predisposition towards monarchy?}}
+{{dialogue|Grace|I took a look at that mirror AI, it's fascinating! People back in the Old World had all types of different AIs optimized to look after their daily needs. I'm surprised they didn't just rise up and kick out the humans.}}
+{{dialogue|Heidi|So the bounty hunter led you guys to another deadend, huh? Figures... you can't do anything nowadays on a shoestring budget!}}
+{{dialogue|Hugo|Heard you ran into some Bandirats? Tough little mutants. I ran into 'em once in some ruin once when I was young. Had to give up my favorite hammer at the time to get outta there!}}
+{{dialogue|Jasmine|I heard that mirror robot that you all found acts so weird! Who'd want someone like that doing your hair? I much prefer Mr. Pablo.}}
+{{dialogue|Jensen|I heard from Unsuur that you guys got rid of some Bandirats, is that right? Never liked 'em Bandirats, always lookin' for stuff to steal off of my trains.}}
+{{dialogue|Justice|We've got the info we need to track Logan down... I'd imagine things might get pretty serious pretty soon, so... whatever happens, just know I've got your back, ''Player''.}}
+{{dialogue|Krystal|Logan hasn't really done anything in forever, you all are still goin' after him? Ah, yeah. The crimes. What's the statute of limitations on blowing up a water tower?}}
+{{dialogue|Mabel|Cooper banned Roasted Rutabaga from our household after suspecting that it was the primary factor in imbuing our daughter with her tomboyish inclinations. Of course, I believe it to be superstition, but... take it from an old pro, in marriage, sometimes you have to just pick your battles...}}
+{{dialogue|Matilda|What a strange creature, that Bandirat Queen. Mobilizing her whole kingdom to mosey out here just to harm her own step-daughter... They couldn't have found anyone more suited for leadership over there?}}
+{{dialogue|Mi-an|Seems like more often than not the missions we go on end up going way off the rails. How come it's never, "Hey guys, we need to find this algae. Oh, here it is. Nice! Let's go home!"}}
+{{dialogue|Miguel|Sigh, I heard from Pen... we really should've spend more on a higher quality bounty hunter...}}
+{{dialogue|Mort|Logan... may not have shown us mercy. But we must do our best to show it to him. Hearing your tale... made me think of him...}}
+{{dialogue|Owen|They're putting Amirah in prison!? ...? Oh. "A mirror." Well. That's fine.}}
+{{dialogue|Pablo|Hm... so I'm hearing there might be some new information on Logan. Justice wouldn't say anymore. Come on, tell me. ...No?}}
+{{dialogue|Pen|I do sincerely apologize, Skinny. I should've fired that Bronco a long time ago... What? On whose authority? Do you really need to ask for authority to fire someone like that...?}}
+{{dialogue|Qi|The Civil Corps asked me if I wanted to take a look at the mirror AI. I was not interested. Hit me up when we're dealing with space robots.}}
+{{dialogue|Rian|Dan-dan's been super paranoid ever since you guys brought back that mirror robot. Personally, I think it's cool that robots did everything back in the day. Think of all the free time it allowed! So much room for activities...}}
+{{dialogue|Rocky|Man, heard you had some problems with Bandirats, shoulda called us boys over! We're pros in dealin' with 'em. Heck, we even chased off a Bandirat King a long time ago!}}
+{{dialogue|Trudy|So Justice told me about what happened with the mole and the top secret mission you have coming up. All I can say is: good luck.}}
+{{dialogue|Unsuur|When that mole first told us what we were gonna have to do, I thought he wanted us to chase down the 'greatest of all time,' which was a bit worrying. Luckily it turned out to be just a regular goat. But shh... we're not supposed to tell anyone.}}
+{{dialogue|Vivi|You guys have been ramping up searches for Logan recently, huh? Well, if you ever find him, tell'em... his grandma misses him.}}
+{{dialogue|Yan|Looks like you're doing some nice work out there with them little Civil Corps pals of yours. No doubt you're here to thank me for cultivating you into the jack-of-all-trades super soldier you are today! Well! I am honored, but give yourself some credit, too! You learned quick and really took my advice to heart! Unlike our other Builder...}}
+{{dialogue|Zeke|If you do ever end up squaring off with Logan again, tell him the lunch I made for him is still in my fridge. I didn't eat it, even after all this time. Cuz I'm not a bandit, like some people...}}

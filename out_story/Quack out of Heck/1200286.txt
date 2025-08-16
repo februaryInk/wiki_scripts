@@ -1,0 +1,373 @@
+Reading Mission 1200286: Quack out of Heck
+
+<onlyinclude>{{Infobox mission
+|name = Quack out of Heck
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Quack out of Heck:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200285
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1200285
+START MISSION 1200285
+NPC REMOVE TAG || tag: WEICHENG
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200285
+CONDITIONS
+Always:
+ACTIONS
+Run mission Quack out of Heck
+END MISSION 1200285
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200286
+CONDITIONS
+Always:
+ACTIONS
+===Wait for Diagram===
+
+{{mission_details
+|desc = Wait for the diagram to come to your mailbox.
+|details = Wait for Diagram
+}}
+Set CHOICE to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|538}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 538
+CONDITIONS
+Always:
+ACTIONS
+===Construct the Basket===
+
+{{mission_details
+|desc = On your Assembly Station, build the Basket now that you have the diagram.
+|details = Construct the Basket
+*{{i2|Transport Basket|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200286
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 82692
+SCENEITEM CREATE FLAG || itemType: 0 | id: 82692 | path: Mission_BackLoganCave | sceneName: Main | flagName: bridge_kaimu | extraParams: 0
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | targetId: 2 | missionId: 1200285 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Head for the Ranch===
+
+{{mission_details
+|desc = Meet Elsie at the Ranch and install the Basket!
+|details = Head for the Ranch
+*{{i2|Transport Basket|0/1}}
+}}
+AREA TRIGGER CREATE || missionId: 1200285 | id: 22861 | sceneName: Main | flagName: basket_trigger | showOnMap: 1 | mapIcon: MissionArea | transId: 80016718
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22861
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 22861 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22861
+CONDITIONS
+Always:
+ACTIONS
+Logan stops standing still
+Logan stands still in Main
+Trudy stands still in Main
+Justice stands still in Main
+Grace stands still in Main
+Unsuur stands still in Main and looks at Player
+Daisy stands still in Main and looks at Player
+Elsie stands still in Main
+DELAY MASK SET || maskId: 22861 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: basket_player1
+SCENEITEM CREATE FLAG || path: AviationStory_music_zone_main2 | itemType: 0 | id: 22861 | sceneName: Main | flagName: bridge_kaimu | extraParams: 0
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 22861
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 11071, 11072, 11073 starts:
+{{dialogue|Trudy|''Player''! You're here! You've finished the basket?}}
+{{dialogue|Trudy|Let me see... hm, well, it's as fine a duck basket as I've ever seen... Well, Daisy, let's see how it fits...!}}
+{{dialogue|Elsie|Easy there, girl. We've just got ourselves a lil ol' accessory for you here... It'll really pull your look together!}}
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 22862) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:basket_player2)
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 22862 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22862
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 22862) from Player
+SOUND PLAY 2D || idStr: player_fix
+Add behavior CommanderPlayerAction (idName: 22861) to Player
+(param: CMDAction:Fix)
+Remove 1 Transport Basket of Default quality (Notify player)
+
+TRIGGER Procedure 2.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: basket_player1
+Remove behavior CommanderPlayerAction (idName: 22861) from Player
+ACTION NPC PUT EQUIP || npc: 8093 | itemId: 12401023
+DELAY MASK SET || maskId: 22862 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 22862
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 3429_0 starts:
+{{dialogue|Grace|Looks like we could fit four or five on there easy enough.}}
+{{dialogue|Trudy|Alright... Well, I don't need to remind you I'm a bit nervous about all this. But... I know this is the right thing to do. And you all are the best we've got.}}
+{{dialogue|Trudy|And besides... We can't let Duvos waltz into our backyard like this and let them get away with it!}}
+{{dialogue|Trudy|I'm sure the Sheriff's got a masterful plan!}}
+{{dialogue|Justice|Well, about that, Trudy. A bit of the plan plans for some planned improvisation... First step is {{textcolor|green|covertly flying over to that airship}}, the second step is... well, playing it by ear.}}
+{{dialogue|Justice|But just know that we're not gonna try anything foolhardy! And we'll definitely have Daisy here at the ready to duck out if things get too feathery...}}
+{{dialogue|Elsie|No worries, I already gave Daisy a full meal. She's gonna show ya the true meanin' of duck power!}}
+{{dialogue|Logan|Good lookin' out, Else. I'm likin' this side of you.}}
+{{dialogue|Justice|Well, this is it. ''Player'', you ready?}}
+{{dialogue|Player|(What should I say?)}}
+
+*''As I'll ever be!''
+*''Will Sandrock be safe?''
+*''That's a Duvos airship alright...''
+
+{{dialogue|Elsie|indent=true|answer=As I'll ever be!
+|And y'all be careful, too! If any of ya don't come back in one piece, I won't forgive you!}}
+{{dialogue|Trudy|indent=true|I'm sure they appreciate the sentiment, but let's... not put too much pressure on our friends, hm? Well. If everyone's ready... ''Player'', do you have everything you need? Weapons, medicine?}}
+
+:*''I'm ready, let's go!''
+:*''Oh, hold on...''
+
+{{dialogue|Justice|indent=double|answer=I'm ready, let's go!
+|Let's roll out!}}
+{{dialogue|Justice|indent=double|answer=Oh, hold on...
+|No worries. We'll need everything you've got for this one. Hurry back when you're ready!}}
+{{dialogue|Trudy|indent=true|answer=Will Sandrock be safe?
+|Don't worry about us, we've still got plenty of firepower. And we're still psyched up about our victory; I don't think there's anything they can throw at us now that we won't be ready for!}}
+{{dialogue|Logan|indent=true|answer=That's a Duvos airship alright...
+|Yep. Bigger they are, harder they fall. Not unlike monster huntin'.}}
+{{dialogue|Justice|indent=true|Well. Failing that, we do have an exit plan, ''Player''. We have to at least sus out the situation, though. We'll really be kicking ourselves if it comes to light that we could've stopped whatever it is they're planning over there.}}
+{{dialogue|Player|(What should I say?)}}
+
+*''As I'll ever be!''
+*''Will Sandrock be safe?''
+*''That's a Duvos airship alright...''
+
+{{dialogue|Trudy|indent=true|answer=Will Sandrock be safe?
+|Don't worry about us, we've still got plenty of firepower. And we're still psyched up about our victory; I don't think there's anything they can throw at us now that we won't be ready for!}}
+{{dialogue|Player|indent=true|(What should I say?)}}
+
+:*''As I'll ever be!''
+:*''That's a Duvos airship alright...''
+
+{{dialogue|Logan|indent=double|answer=That's a Duvos airship alright...
+|Yep. Bigger they are, harder they fall. Not unlike monster huntin'.}}
+{{dialogue|Justice|indent=double|Well. Failing that, we do have an exit plan, ''Player''. We have to at least sus out the situation, though. We'll really be kicking ourselves if it comes to light that we could've stopped whatever it is they're planning over there.}}
+{{dialogue|Player|indent=double|(What should I say?)}}
+
+::*''As I'll ever be!''
+
+{{dialogue|Logan|indent=true|answer=That's a Duvos airship alright...
+|Yep. Bigger they are, harder they fall. Not unlike monster huntin'.}}
+{{dialogue|Justice|indent=true|Well. Failing that, we do have an exit plan, ''Player''. We have to at least sus out the situation, though. We'll really be kicking ourselves if it comes to light that we could've stopped whatever it is they're planning over there.}}
+{{dialogue|Player|indent=true|(What should I say?)}}
+
+:*''As I'll ever be!''
+:*''Will Sandrock be safe?''
+
+{{dialogue|Trudy|indent=double|answer=Will Sandrock be safe?
+|Don't worry about us, we've still got plenty of firepower. And we're still psyched up about our victory; I don't think there's anything they can throw at us now that we won't be ready for!}}
+{{dialogue|Player|indent=double|(What should I say?)}}
+
+::*''As I'll ever be!''
+
+{{dialogue|Elsie|And y'all be careful, too! If any of ya don't come back in one piece, I won't forgive you!}}
+{{dialogue|Trudy|I'm sure they appreciate the sentiment, but let's... not put too much pressure on our friends, hm? Well. If everyone's ready... ''Player'', do you have everything you need? Weapons, medicine?}}
+
+*''I'm ready, let's go!''
+*''Oh, hold on...''
+
+{{dialogue|Justice|indent=true|answer=I'm ready, let's go!
+|Let's roll out!}}
+{{dialogue|Justice|indent=true|answer=Oh, hold on...
+|No worries. We'll need everything you've got for this one. Hurry back when you're ready!}}
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+(cId 2) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+STOP ENGAGEMENT || stopType: 2
+AREA TRIGGER DELETE || id: 22861
+DELAY MASK SET || maskId: 22863 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+Run mission Sandrock Strikes Back
+END MISSION 1200286
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Trudy stops standing still
+Elsie stops standing still
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 11087:
+{{dialogue|Trudy|I'm sure they appreciate the sentiment, but let's... not put too much pressure on our friends, hm? Well. If everyone's ready... ''Player'', do you have everything you need? Weapons, medicine?}}
+
+*''I'm ready, let's go!'' (No unique dialogue)
+*''Oh, hold on...'' (No unique dialogue)
+
+(cId 2) The player picks the first option in conversation segment 11088:
+{{dialogue|Justice|''Player'', are you ready? Ready to ride that massive mallard over to teach those Duvos delinquents how we do it in Sandrock!?}}
+
+*''I'm ready, let's go!'' (No unique dialogue)
+*''Oh, hold on...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 1
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22861
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Daisy stops standing still
+Grace stops standing still
+Logan stops standing still
+Justice stops standing still
+Unsuur stops standing still
+Justice stands still in Main and looks at Player
+Unsuur stands still in Main and looks at Player
+Add behavior CommanderMoveToFlag (idName: 22861) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:basket_player1)
+Set CAMERA to 1
+Logan stands still in Main and looks at Player
+Grace stands still in Main and looks at Player
+Daisy stands still in Main and looks at Player
+
+TRIGGER Procedure 4.0 Step 2.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 22862
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 3436_0 starts:
+{{dialogue|Justice|''Player'', are you ready? Ready to ride that massive mallard over to teach those Duvos delinquents how we do it in Sandrock!?}}
+
+*''I'm ready, let's go!''
+*''Oh, hold on...''
+
+{{dialogue|Justice|indent=true|answer=I'm ready, let's go!
+|Let's roll out!}}
+{{dialogue|Justice|indent=true|answer=Oh, hold on...
+|No worries. We'll need everything you've got for this one. Hurry back when you're ready!}}
+Remove behavior CommanderMoveToFlag (idName: 22861) from Player
+
+TRIGGER Procedure 4.0 Step 3.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 0
+Check if CAMERA is == 1
+ACTIONS
+CUTSCENE UI STATE EXIT || 

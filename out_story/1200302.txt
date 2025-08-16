@@ -1,0 +1,173 @@
+Reading Mission 1200302: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200310
+
+TRIGGER Procedure 4.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1400310 is result 1 flag 1
+ACTIONS
+Run mission Another One Rides the Bus
+
+TRIGGER Procedure 4.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Another One Rides the Bus is successfully completed
+ACTIONS
+Run mission #1200302
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200302
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|581}}
+Set global blackboard key portianewgoods with info 1.
+MODIFIER ADD || typeParam: ItemTagPrice_221_-0.25_B | id: 23021
+MODIFIER ADD || typeParam: ItemTagPrice_501_-0.25_B | id: 23022
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+
+TRIGGER Procedure 1.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Trudy stands still in Main
+Qi stands still in Main
+Heidi stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: BusStationEnd_Player
+
+TRIGGER Procedure 1.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Trudy stops standing still
+Qi stops standing still
+Heidi stops standing still
+Trudy gains 5 favor
+Heidi gains 5 favor
+Qi gains 5 favor
+END MISSION 1200302
+
+TRIGGER Procedure 1.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+ACTION CUTSCENE START AUDIO TYPE || id: CG_BUSOPEN | duration: 0 | audioType: NoTransitionOff
+
+TRIGGER Procedure 1.0 Step 2.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_BUSOPEN | state: 8
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 23021 | delayTime: 0 | durationTime: 0 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 3.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23021 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 23021 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 1.0 Step 4.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23021 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+NPC LEAVE || npc: 8045
+(cId -1) A conversation 4256_0 starts:
+{{dialogue|Trudy|Looks like the road to Portia is finally open for business! A direct route that only takes a day's drive...! This is going to mean big changes around here!}}
+{{dialogue|Heidi|We should be getting in some of their imports any day now... could open some doors for you, ''Player''!}}
+{{dialogue|Trudy|Should open a lot of doors for everyone! We'll have new produce, like the Portian Fragrant Apple; cheaper imports for grain, water, and a lot more.}}
+{{dialogue|Heidi|I heard Portia's already finished their new South Block project; they're really looking to expand trade with us!}}
+{{dialogue|Heidi|Not to mention, I bet we can expect to see a bit more of your pal Mint, eh, Director?}}
+{{dialogue|Qi|Indeed. The comfort of the long distance seating combined with Sleepyhead's infamous proclivity for napping... it's almost too perfect.}}
+{{dialogue|Heidi|Everything's up up for Sandrock!}}
+{{dialogue|Trudy|And it's all thanks to you all! We wouldn't be having this conversation without all of your amazing work getting us here.}}
+
+*''And now... it's tree plantin' time!''
+*''Helloooo, cheap water!''
+*''Our work isn't done yet...''
+
+{{dialogue|Trudy|indent=true|answer=And now... it's tree plantin' time!
+|That's what I like to hear! Yes, new shipments of water will be on their way before you know it, and then we'll be ready to move forward with our desert planting. I'll speak with Zeke and update you all when I can.}}
+{{dialogue|Trudy|indent=true|Til then... just enjoy the new supplies, visitors, and reasonably priced water!}}
+{{dialogue|-2|indent=true|answer=Helloooo, cheap water!
+|You're right. We're about to have all of the water we need, and then some. Life is certainly about to become a lot less worrisome at the very least.}}
+{{dialogue|Heidi|indent=true|Plus, understanding where our oasis water comes from now... well, we can get by if need be.}}
+{{dialogue|Trudy|indent=true|Still no reason to ever stop "conserving water" if you ask me!}}
+{{dialogue|Heidi|indent=true|answer=Our work isn't done yet...
+|Right you are! With Duvos out of the way, water in our tanks, and Sandrock more connected than ever, there's nothing that can stand in our way in bringing Sandrock back to its former glory!}}
+{{dialogue|Trudy|Whatever the case, I can promise you all one thing. Good things are on the horizon!}}
+{{dialogue|Heidi|Can't argue with that! Let's mosey.}}
+{{dialogue|Qi|Wait.}}
+{{dialogue|Heidi|Hm?}}
+{{dialogue|Qi|With its tasks completed, the Mobile Suit may require a diagnostic check-up, as well as some repairs...}}
+{{dialogue|Heidi|Ah, well, don't you worry about that! By the by, my guys just wouldn't shut up about how great that thing is! You two really did a bang up job making that thing! She runs like a dream and purrs like a kitten...}}
+{{dialogue|Qi|I was... looking to inquire upon... the future storage location of the suit...}}
+{{dialogue|Heidi|...Oh! Right! Sure, uh... yeah we'll just have it dropped off at your place!}}
+{{dialogue|Qi|Yesss...!}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Trudy stops standing still
+Qi stops standing still
+Heidi stops standing still
+AREA TRIGGER DELETE || id: 23021
+NPC LEAVE || npc: 8045
+END MISSION 1200302

@@ -1,0 +1,124 @@
+Reading Mission 1100085: Welcome to Sandrock!
+
+<onlyinclude>{{Infobox mission
+|name = Welcome to Sandrock!
+|image =
+|description = You've finally arrived! Your new co-Builder, Mi-an will help you get acclimated!
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 50
+|reputation = None
+|gols = None
+|npc1 = Mi-an
+|rp1 = 10
+|npc2 = Yan
+|rp2 = 10
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100002
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100002
+CONDITIONS
+Always:
+ACTIONS
+Set KAISHI to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100002
+CONDITIONS
+Always:
+ACTIONS
+Run mission Welcome to Sandrock!
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100085
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 110864157 | path: Lable_startopera | sceneName: Main | flagName: StartOpera | extraParams: 0
+Set SAND to 0
+Set global blackboard key shileyuanopen with info 1.
+NPC ADD TAG || tag: PKeducation
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Main:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_start
+ACTION CUTSCENE START AUDIO TYPE || id: CG_START | duration: 0 | audioType: NoTransitionOff
+PICK UP RESOURCE REFRESH || id: 100
+WATERTOWER CHANGE WATER || addValue: 25
+Yan stands still in Main and looks at Player
+Mason stands still in Main and looks at Player
+TIME SET ENABLE || bool: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_START | state: 3
+CONDITIONS
+Always:
+ACTIONS
+Mi-an stands still in Main
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_START | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 10) A conversation 410, 412 starts:
+{{dialogue|Mi-an|Hi there, you must be ''Player''! I'm Mi-an, the other new Builder. I just got here a week ago. Nice to meetcha!}}
+{{dialogue|Mi-an|I'm here to take you to the Commerce Guild. The retiring Builder and the Commissioner are there, let's not keep them waiting! Follow me!}}
+DELIVER MISSION 1100085
+ACTION TRAIN SYNC || 
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+START MISSION 1100085
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1100085
+CONDITIONS
+Always:
+ACTIONS
+Run mission Welcome to Sandrock!
+END MISSION 1100085
+
+==Rewards==
+{{mission reward
+|npc1 = Mi-an
+|rp1 = 10
+|npc2 = Yan
+|rp2 = 10
+|exp = 50
+|reputation = None
+|gols = None
+}}

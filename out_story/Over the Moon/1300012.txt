@@ -1,0 +1,166 @@
+Reading Mission 1300012: Over the Moon
+
+<onlyinclude>{{Infobox mission
+|name = Over the Moon
+|image =
+|description = The sandstorm blew away Owen's "moon" sign. He wants your help to find it.
+|type = Side
+|time =
+|location =
+|characters = [[Owen]]
+|condition =
+|details =
+|exp = 400
+|reputation = None
+|gols = 120
+|npc1 = Owen
+|rp1 = 20
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100068
+
+TRIGGER Procedure 1.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Belly of the Beast is successfully completed
+ACTIONS
+Run mission The Cable Guy
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: pensandstorm | info: 1 | exist: 1
+ACTIONS
+Run mission Over the Moon
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1300012
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1300012
+SCENEITEM DELETE || itemType: 0 | id: 13013
+Set Day to 0
+Set Talk to 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1300013 | path: Interact_moonmissdown | sceneName: Main | flagName: moonmissdown | extraParams: 0
+SCENEITEM INTERACT SET LOCKER || itemType: 0 | id: 1300013 | isAdd: 1
+Set ACCEPT to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Owen
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 115_0 starts:
+{{dialogue|Owen|Hey there, Builder. Looks like you survived your first sandstorm, haha!}}
+{{dialogue|Owen|This storm really did a number on my saloon though... In addition to the stage, I don't suppose you noticed... there's something missing around here... Something very essential...}}
+
+*''Water?''
+*''The moon sign above the saloon!''
+
+{{dialogue|Owen|indent=true|answer=Water?
+|Erm... yes... that is true. Water is hard to come by these days... Though I was referring to the giant crescent moon that used to stand atop of my hotel.}}
+{{dialogue|Owen|indent=true|answer=The moon sign above the saloon!
+|Bingo! The Sandrock skyline just isn't the same without it!}}
+{{dialogue|Owen|I'm still busy patching up everything here, so I was hoping you could find it for me and bring it back... or if it's really gone-gone, make a new one for me. But let's not give up on it just yet!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 2.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 1 | missionId: 1300012
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 118_0 starts:
+{{dialogue|Owen|The sandstorm was mostly blowing {{textcolor|green|in the direction of the yakmel ranch}}; do you think you can help me find it?}}
+
+*''Yeah, I can do it.''
+*''Too much going on right now, sorry.''
+
+{{dialogue|Owen|indent=true|answer=Yeah, I can do it.
+|Great! When you go out in that direction, watch out for the {{textcolor|red|Rocket Roosters}}, not a friendly bunch. I'd consider them armed- er, winged and dangerous.}}
+{{dialogue|Owen|indent=true|Anyway, if you find it, please {{textcolor|green|install}} it for me as well. My saloon's just not the same without it!}}
+{{dialogue|Owen|indent=true|answer=Too much going on right now, sorry.
+|Ah, shucks, ''Player''. Sorry to hear that. Let me know if you get time.}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the first option in conversation segment 522:
+{{dialogue|Owen|The sandstorm was mostly blowing {{textcolor|green|in the direction of the yakmel ranch}}; do you think you can help me find it?}}
+
+*''Yeah, I can do it.'' (No unique dialogue)
+*''Too much going on right now, sorry.'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 525:
+{{dialogue|Owen|Hey, ''Player'', got time to find my moon?}}
+
+*''Yeah, I can do it.'' (No unique dialogue)
+*''Too much going on right now, sorry.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set ACCEPT to 1
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1300012
+CONDITIONS
+Always:
+ACTIONS
+Run mission Over the Moon
+END MISSION 1300012
+
+TRIGGER Procedure 1.0 Step 3.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if ACCEPT is == 1
+ACTIONS
+START MISSION 1300012
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Owen|Hey, ''Player'', got time to find my moon?}}
+
+*''Yeah, I can do it.''
+*''Too much going on right now, sorry.''
+
+{{dialogue|Owen|indent=true|answer=Yeah, I can do it.
+|Great! When you go out in that direction, watch out for the {{textcolor|red|Rocket Roosters}}, not a friendly bunch. I'd consider them armed- er, winged and dangerous.}}
+{{dialogue|Owen|indent=true|Anyway, if you find it, please {{textcolor|green|install}} it for me as well. My saloon's just not the same without it!}}
+{{dialogue|Owen|indent=true|answer=Too much going on right now, sorry.
+|Ah, shucks, ''Player''. Sorry to hear that. Let me know if you get time.}}
+
+NPC in-mission talks:
+
+{{dialogue|Owen|Any luck finding the sign? Hope we find it soon, before it gets buried by sand.}}
+
+==Rewards==
+{{mission reward
+|npc1 = Owen
+|rp1 = 20
+|exp = 400
+|reputation = None
+|gols = 120
+}}
+==Post-conduct==
+
+If the player fails the mission, some of the townsfolk will comment on it:
+
+{{dialogue|Owen|Hi, ''Player'', I ended up getting Mi-an to help out with my sign situation: she made a new one for me. I guess that means the old one is buried out there somewhere... how mysterious! Well, thanks anyway! Be seeing you.}}

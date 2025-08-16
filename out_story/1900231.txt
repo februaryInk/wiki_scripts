@@ -1,0 +1,258 @@
+Reading Mission 1900231: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200106
+
+TRIGGER Procedure 3.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check relationship with Fang is Friend Good
+CHECK DATE FLAG || flag: fang6 | compare: 2 | days: 7
+CHECK WEATHER STATE || weather: 0 | flag: 1
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+Run mission Eagles in the Oasis
+ACTION DATE REMOVE FLAG || flag: fang6
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Leaving the Nest is successfully completed
+Duvos Attacks! is in state 2 with flag 0
+
+GROUP 10:
+Leaving the Nest has failed
+Duvos Attacks! is in state 2 with flag 0
+
+ACTIONS
+Run mission #1900231
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1900231
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER ONCE CREATE || flagName: T9231 | sceneName: Main | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0 | id: 192310 | missionId: 1900231
+Set DAY to 0
+
+TRIGGER Procedure 0.0 Step 0.5 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 192310
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 923110 | delayTime: 1 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8024 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 1961_0 starts:
+{{dialogue|Catori|...You know, I remember when I came to Sandrock. Actually, I think about it almost every day. Still trying to follow that same dream! But I don't really remember, were you there at the time...?}}
+{{dialogue|Fang|Yes.}}
+{{dialogue|Catori|Really?}}
+{{dialogue|Fang|Acupuncture.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 6642) that ends:
+{{dialogue|Fang|Acupuncture.}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 9231003) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:P9231_moveto|LookAtActor:8024)
+STOPWATCH REAL TIME SET || id: 9231012 | sec: 1.5
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 9231005) from Catori
+Add behavior CommanderSit (idName: 9231004) to Catori
+(param: TargetScene:Main|SeatDramaName:MuseumSeats09)
+STOPWATCH REAL TIME SET || id: 9231007 | sec: 2
+
+TRIGGER Procedure 0.0 Step 3.5 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 2) There is a conversation segment (id 6645) that ends:
+{{dialogue|Fang|Hm... shouldn't have... done that...}}
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 9231006) from Fang
+Add behavior CommanderMoveToFlagAndAction (idName: 9231007) to Fang
+(param: TargetScene:Main|MoveMode:Walk|FlagName:F9231_Stand|TurnToActor:8000|LookAtActor:8000)
+STOPWATCH REAL TIME SET || id: 9231014 | sec: 1
+
+TRIGGER Procedure 0.0 Step 4.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 9231014
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 1966_0 starts:
+{{dialogue|Catori|Ah, I dunno. Hey, ''Player''! What do you think? Sometimes you gotta borrow money to make money, eh?}}
+
+*''That's smart!''
+*''That's not really a good idea...''
+
+{{dialogue|Catori|Ah, well, whatever the case, I paid everything back. It's not like I wanted to ruin my reputation as soon as I got to town! Bad for business, if nothing else...!}}
+{{dialogue|Fang|First see patient, pay after.}}
+{{dialogue|Catori|Really? Well I guess the doctor knows the rules of his own clinic! I mean, it shows great character for you to treat your patients that way. Though if you ask me, I think you should at least pay half first, then see the doctor.}}
+{{dialogue|Fang|No... this is right.}}
+{{dialogue|Catori|Right... well I guess different business models have different methods.}}
+{{dialogue|Fang|Mm.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Catori stops standing still
+Fang stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 9231003) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 9231005) from Catori
+Remove behavior CommanderMoveToFlagAndAction (idName: 9231006) from Fang
+Remove behavior CommanderMoveToFlagAndAction (idName: 9231007) from Fang
+Remove behavior CommanderSit (idName: 9231004) from Catori
+CUTSCENE UI STATE EXIT || 
+Fang gains 5 favor
+Catori gains 5 favor
+END MISSION 1900231
+
+TRIGGER Procedure 1.0 Step 0.5 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 923110 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: P9231_Stand | sceneName: Main
+Catori stands still in Main and looks at Fang
+Fang stands still in Main and looks at Catori
+STOPWATCH REAL TIME SET || id: 9231008 | sec: 0.2
+STOPWATCH REAL TIME SET || id: 9231009 | sec: 0.8
+STOPWATCH REAL TIME SET || id: 9231010 | sec: 1
+DELAY MASK SET || maskId: 923110 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 9231008
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 9231005) to Catori
+(param: TargetScene:Main|MoveMode:Walk|FlagName:C9231_Sit|LookAtActor:8016)
+Add behavior CommanderMoveToFlagAndAction (idName: 9231006) to Fang
+(param: TargetScene:Main|MoveMode:Walk|FlagName:F9231_Stand|LookAtActor:8024)
+
+TRIGGER Procedure 1.0 Step 1.2 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 9231010
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 9231011 | sec: 8.1
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 9231007
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 1950_0 starts:
+{{dialogue|Catori|Ah, that's right! I twisted my waist renovating the Golden Goose Game Center, and you helped me out. How could I forget! I remember I couldn't pay at the time, so Vivi helped me make a banner for our doctor.}}
+{{dialogue|Catori|Usually Vivi would need payment for this kind of thing too, but I borrowed some ore from Rocky to give to Hugo, hoping she'd call it even... then I just owed Rocky for a while...}}
+{{dialogue|Fang|Hm... shouldn't have... done that...}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 4.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the first option in conversation segment 6646:
+{{dialogue|Catori|Ah, I dunno. Hey, ''Player''! What do you think? Sometimes you gotta borrow money to make money, eh?}}
+
+*''That's smart!'' (No unique dialogue)
+*''That's not really a good idea...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Catori gains 2 favor
+
+TRIGGER Procedure 1.0 Step 4.5 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the second option in conversation segment 6646:
+{{dialogue|Catori|Ah, I dunno. Hey, ''Player''! What do you think? Sometimes you gotta borrow money to make money, eh?}}
+
+*''That's smart!'' (No unique dialogue)
+*''That's not really a good idea...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Fang gains 2 favor
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 2
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment DAY by 1
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if DAY is >= 2
+ACTIONS
+AREA TRIGGER DELETE || id: 192310
+END MISSION 1900231

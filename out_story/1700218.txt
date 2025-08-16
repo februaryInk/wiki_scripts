@@ -1,0 +1,139 @@
+Reading Mission 1700218: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100068
+
+TRIGGER Procedure 3.0 Step 5.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1800279
+
+TRIGGER Procedure 3.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100068
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1700218
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the CivilCorp:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_civilcorp
+CHECK GLOBAL BLACKBOARD || key: EEafterWD | info: 1 | exist: 1
+Duvos Attacks! is in state 1 with flag 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_civilcorp
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 17001940
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the CivilCorp:
+CONDITIONS
+Always:
+ACTIONS
+Justice stands still in CivilCorp
+Unsuur stands still in CivilCorp
+Captain stands still in CivilCorp
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the CivilCorp:
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 1449_0 starts:
+{{dialogue|Justice|Thanks for comin', ''Player''!}}
+{{dialogue|Unsuur|Hey.}}
+{{dialogue|Justice|...Well, we're gonna get this started: ''Player'', you've been such a big help for us at the Civil Corps since you've been here. Every major incident in Sandrock, you're there, ready to put your life on the line to protect everyone.}}
+{{dialogue|Justice|That's the kind of character we aspire to be. That's the kinda folk the Civil Corps was founded by. And that's the type of individual Sandrock needs!}}
+{{dialogue|Justice|What I'm saying is... it would be a pleasure to have you join us. So... after talking it over with Unsuur and Cap, and getting the paperwork with City Hall in order...}}
+{{dialogue|Justice|I, as Sheriff of Sandrock, hereby officially recognize you, ''Player'', as an honorary member of the Sandrock Civil Corps!}}
+
+*''It's an honor!''
+*''Wait, I'm busy enough as a Builder!''
+
+{{dialogue|Justice|indent=true|answer=It's an honor!
+|The honor is all ours. Let's do out best to protect Sandrock.}}
+{{dialogue|Justice|indent=true|answer=Wait, I'm busy enough as a Builder!
+|Uhm... eh, I thought you'd love this... Well, it's just a title, you don't have to put in the work here if you don't want to... I suppose.}}
+{{dialogue|Unsuur|reward={{i2|Civil Corps Jacket|1}}|reward={{i2|Civil Corps Boots|1}}|reward={{i2|Civil Corps Pants|1}}|We've prepared somethin' for you. Here.}}
+{{dialogue|Justice|I reckon you're gonna look pretty fly in the uniform!}}
+{{dialogue|Unsuur|Congratulations, ''Player''!}}
+{{dialogue|Captain|Meow.}}
+{{dialogue|Justice|From now on, you'll have all the powers granted to a Corps member. You'll be able to access our Bounty Board in the Civil Corps Office to take on any monsters or bandits that are troublin' Sandrock.}}
+{{dialogue|Justice|Maybe I don't say this enough, but you've been invaluable here. We'd be up a creek without you... but uh... a creek's got water, ain't it? Regardless, I'm happy to call you our pardner.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 171593 | delayTime: 0 | durationTime: 1 | changeType: 0 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 4880) that ends:
+{{dialogue|Unsuur|We've prepared somethin' for you. Here.}}
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Civil Corps Boots of Default quality (Notify player)
+Add 1 Civil Corps Pants of Default quality (Notify player)
+Add 1 Civil Corps Jacket of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 171593 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Justice stops standing still
+Unsuur stops standing still
+Captain stops standing still
+SCENEITEM INTERACT SET || itemType: 1 | id: 17193 | canInteract: 1
+CUTSCENE UI STATE EXIT || 
+GLOBAL BLACK BOARD REMOVE || key: EEafterWD
+DELAY MASK SET || maskId: 171593 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 171593 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+END MISSION 1700218

@@ -1,0 +1,421 @@
+Reading Mission 1700097: Keep on Rockin'
+
+<onlyinclude>{{Infobox mission
+|name = Keep on Rockin'
+|image =
+|description = Miner Bamna has decided to leave Sandrock, and Eufaula Salvage Co. has a shortage of staff. Rocky wants you to help build a Sorting Machine to improve efficiency.
+|type = Main
+|time =
+|location =
+|characters = [[Rocky]]
+|condition =
+|details =
+|exp = 900
+|reputation = 30
+|gols = 300
+|npc1 = Rocky
+|rp1 = 30
+|npc2 = Krystal
+|rp2 = 10
+|npc3 = Venti
+|rp3 = 10
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100002
+
+TRIGGER Procedure 2.0 Step 11.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1300022 is result 1 flag 1
+ACTIONS
+Run mission In Trusses We Trust
+Run mission #1300031
+
+TRIGGER Procedure 2.0 Step 12.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: hengjiaover | info: 1 | exist: 1
+ACTIONS
+END MISSION 1200038
+Run mission #1100063
+Run mission Paradise Lost and Found
+GLOBAL BLACK BOARD REMOVE || key: hengjiaover
+Run mission Keep on Rockin'
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1700097 | id: 170971 | sceneName: Main | showOnMap: 1 | mapIcon: MissionArea | transId: 80003822 | flagName: keeponrockin_trigger
+Set korlast to 7
+Set accept to 0
+Bamna stands still in Main
+Peck stands still in Main
+Venti stands still in Main
+Rocky stands still in Main
+Fei stands still in Main
+ACTION NPC PUT EQUIP || npc: 8037 | itemId: 12401001
+Add tag "BamnaWithHerBag" to Bamna
+
+TRIGGER Procedure 0.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 17:00 (order: 0):
+CONDITIONS
+Check if accept is == 0
+ACTIONS
+Rocky stops standing still
+Bamna stops standing still
+Peck stops standing still
+Fei stops standing still
+Venti stops standing still
+
+TRIGGER Procedure 0.0 Step 0.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 1729700
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 175973 | sec: 2.5
+
+TRIGGER Procedure 0.0 Step 1.0 Order 5 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if accept is == 0
+ACTIONS
+Decrement korlast by 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if korlast is == 0
+ACTIONS
+AREA TRIGGER DELETE || id: 170971
+SCENEITEM CREATE FLAG || itemType: 12 | id: 173981 | path: Mission_Kor | sceneName: Main | flagName: kor_SortingMC | extraParams: -1
+The player receives a letter:
+{{mail|101}}
+SCENEITEM INTERACT SET || itemType: 0 | id: 70982 | canInteract: 1
+END MISSION 1700097
+
+TRIGGER Procedure 0.0 Step 3.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1700097
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: noticketoffjj | info: 0 | exist: 1
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 12 | id: 173981 | path: Mission_Kor | sceneName: Main | flagName: kor_SortingMC | extraParams: -1
+The player receives a letter:
+{{mail|99}}
+GLOBAL BLACK BOARD REMOVE || key: noticketoffjj
+SCENEITEM INTERACT SET || itemType: 0 | id: 70982 | canInteract: 1
+
+TRIGGER Procedure 0.0 Step 4.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1700097
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: noticketoffjj | info: 1 | exist: 1
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 12 | id: 173981 | path: Mission_Kor | sceneName: Main | flagName: kor_SortingMC | extraParams: -1
+AREA TRIGGER DELETE || id: 170982
+The player receives a letter:
+{{mail|101}}
+GLOBAL BLACK BOARD REMOVE || key: noticketoffjj
+SCENEITEM INTERACT SET || itemType: 0 | id: 70982 | canInteract: 1
+GLOBAL BLACK BOARD REMOVE || key: SLYPurchased
+
+TRIGGER Procedure 0.0 Step 5.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 171971 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Bamna stands still in Main
+Peck stands still in Main
+Fei stands still in Main
+Rocky stands still in Main
+Venti stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: kor_player_invisible
+DELAY MASK SET || maskId: 171971 | delayTime: 0.5 | durationTime: 1 | changeType: 1 | curveIndex: 0
+DELIVER MISSION 1700097
+
+TRIGGER Procedure 0.0 Step 6.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 170971
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key NoCutSceneObstacle with info 1.
+Set accept to 1
+AREA TRIGGER DELETE || id: 170971
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 171971 | delayTime: 0 | durationTime: 1.5 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 7.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 171971 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 541_0 starts:
+{{dialogue|Rocky|Are you sure there really ain't nothin' I can do to change your mind? Anything at all?}}
+{{dialogue|Bamna|Nope. Sandrock is history. I'm out.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 175970 | sec: 0.6
+STOPWATCH REAL TIME SET || id: 175971 | sec: 1
+STOPWATCH REAL TIME SET || id: 175972 | sec: 1.5
+Add behavior CommanderNPCAction (idName: 9798044) to Rocky
+(param: CMDAction:Wavinghand|LookAtActor:8037)
+In a speech bubble:
+{{dialogue|Rocky|Well, that's just, like, your opinion, man...}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC BUBBLE STATE CHANGE || order: 0 | npc: 8031 | flag: 0
+CONDITIONS
+Always:
+ACTIONS
+Add behavior Bamna (idName: 179780371) to Bamna
+(param: -1)
+Bamna stops standing still
+Add behavior CommanderMoveToFlag (idName: 179972) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:kor_player3)
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 2353) that ends:
+{{dialogue|Rocky|Dang it. There goes the best darn sorter this company ever had...}}
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 543_0 starts:
+{{dialogue|Fei|No, I'm pretty sure she's right. Hey! Builder! Over here! Do you know anything about a Sorting Machine?}}
+
+*''I can find out.''
+*''No idea what that is.''
+
+{{dialogue|Fei|indent=true|answer=I can find out.
+|See! I knew there was such thing as a Sorting Machine! You can research it with Director Qi, right?}}
+{{dialogue|Fei|indent=true|answer=No idea what that is.
+|Shoot! But that research guy, Director Qi, he probably knows, right?}}
+{{dialogue|Fei|What do you say, boss? Can we make an official commission for a Sorting Machine?}}
+{{dialogue|Rocky|Ah... sure. I dunno, whatever. Who cares.}}
+{{dialogue|Peck|I say we go for it, I'm not doin' extra work just 'cause Bamna thinks this place is dryin' up...}}
+{{dialogue|Venti|It's our best chance to stay in business, boss. We should take it!}}
+{{dialogue|Rocky|Yeah, yeah, alright. Even if I said "no," looks like it's four- er, three against one anyway. And one thing we don't do here at Eufaula Salvage is undermine democracy! Yo, ''Player''! You heard the boys, one Sorting Machine, hold the mustard!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 4.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the first option in conversation segment 2358:
+{{dialogue|Fei|No, I'm pretty sure she's right. Hey! Builder! Over here! Do you know anything about a Sorting Machine?}}
+
+*''I can find out.'' (No unique dialogue)
+*''No idea what that is.'' (No unique dialogue)
+
+(cId 2) The player picks the second option in conversation segment 2358:
+{{dialogue|Fei|No, I'm pretty sure she's right. Hey! Builder! Over here! Do you know anything about a Sorting Machine?}}
+
+*''I can find out.'' (No unique dialogue)
+*''No idea what that is.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 179972) from Player
+Add behavior CommanderMoveToFlag (idName: 179971) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:kor_player3)
+
+TRIGGER Procedure 1.0 Step 5.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 2365) that ends:
+{{dialogue|Rocky|Yeah, yeah, alright. Even if I said "no," looks like it's four- er, three against one anyway. And one thing we don't do here at Eufaula Salvage is undermine democracy! Yo, ''Player''! You heard the boys, one Sorting Machine, hold the mustard!}}
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 9798038) from Venti
+Remove behavior CommanderNPCAction (idName: 9798031) from Peck
+Remove behavior CommanderNPCAction (idName: 9798032) from Fei
+Remove behavior CommanderNPCAction (idName: 9798044) from Rocky
+Set ST to 1
+CUTSCENE UI STATE EXIT || 
+Rocky stops standing still
+Fei stops standing still
+Peck stops standing still
+Venti stops standing still
+Remove behavior CommanderMoveToFlag (idName: 179971) from Player
+START MISSION 1700097
+
+TRIGGER Procedure 1.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Peck
+CONDITIONS
+Check if ST is == 1
+ACTIONS
+(cId 3) A conversation 2379 starts:
+{{dialogue|Peck|Now that Bamna's gone, maybe I'll get double the pay. Cool! Wait, maybe I'll have to do double work. Oh, no!}}
+
+TRIGGER Procedure 1.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Venti
+CONDITIONS
+Check if ST is == 1
+ACTIONS
+(cId 6) A conversation 2382 starts:
+{{dialogue|Venti|I've always been so fascinated by Builder work, who knew all the studying I've done in my spare time would pay off? ...Did I impress you with my knowledge?}}
+
+TRIGGER Procedure 1.0 Step 8.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Fei
+CONDITIONS
+Check if ST is == 1
+ACTIONS
+(cId 5) A conversation 2381 starts:
+{{dialogue|Fei|It's a big world, there are bound to be people who want to come over to Sandrock and work at a low-paying salvage company.}}
+
+TRIGGER Procedure 1.0 Step 9.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Rocky
+CONDITIONS
+Check if ST is == 1
+ACTIONS
+(cId 2) A conversation 2378 starts:
+{{dialogue|Rocky|Hey, sorry about bein' such a sad-sack. I just always hate to see one of my boys go... I appreciate you doin' this commission for us, honest.}}
+
+TRIGGER Procedure 1.0 Step 10.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Bamna
+CONDITIONS
+Check if ST is == 1
+ACTIONS
+(cId 4) A conversation 2380 starts:
+{{dialogue|Bamna|Oh, it's you. Look, I'll level with you: Sandrock's a dying town. Get out while you still can. Huh? You won't? Hm, well, keep an eye on the boys for me... Best of luck to you all.}}
+
+TRIGGER Procedure 2.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 175970
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Venti|We'll miss you!}}
+Add behavior CommanderNPCAction (idName: 9798038) to Venti
+(param: CMDAction:Wavinghand|LookAtActor:8037)
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 175971
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Fei|Good luck and safe travels...}}
+Add behavior CommanderNPCAction (idName: 9798032) to Fei
+(param: CMDAction:Wavinghand|LookAtActor:8037)
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 175972
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Peck|Smell ya later.}}
+Add behavior CommanderNPCAction (idName: 9798031) to Peck
+(param: CMDAction:Wavinghand|LookAtActor:8037)
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 175973
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 542_0 starts:
+{{dialogue|Rocky|Dang it. There goes the best darn sorter this company ever had...}}
+{{dialogue|Peck|What about me, sir?}}
+{{dialogue|Venti|Boss! I heard there's a machine that does sorting, maybe we could commission one from a Builder to help out now that we're short-handed!}}
+{{dialogue|Peck|Sir, what about me?}}
+{{dialogue|Rocky|Can both of youse two shut up... I'm kinda emotional over here. Besides, ain't no machine that does sorting...}}
+The conversation ends.
+NPC LEAVE BY TRAIN || npc: 8037 | isOut: 1 | params: -1
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: kor_player
+Remove behavior CommanderMoveToFlag (idName: 179972) from Player
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700097
+CONDITIONS
+Always:
+ACTIONS
+Run mission Keep on Rockin'
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if Bamna has left town
+ACTIONS
+Remove behavior Bamna (idName: 179780371) from Bamna
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Fei|What do you say, boss? Can we make an official commission for a Sorting Machine?}}
+{{dialogue|Rocky|Ah... sure. I dunno, whatever. Who cares.}}
+{{dialogue|Peck|I say we go for it, I'm not doin' extra work just 'cause Bamna thinks this place is dryin' up...}}
+{{dialogue|Venti|It's our best chance to stay in business, boss. We should take it!}}
+{{dialogue|Rocky|Yeah, yeah, alright. Even if I said "no," looks like it's four- er, three against one anyway. And one thing we don't do here at Eufaula Salvage is undermine democracy! Yo, ''Player''! You heard the boys, one Sorting Machine, hold the mustard!}}
+
+==Rewards==
+{{mission reward
+|npc1 = Rocky
+|rp1 = 30
+|npc2 = Krystal
+|rp2 = 10
+|npc3 = Venti
+|rp3 = 10
+|exp = 900
+|reputation = 30
+|gols = 300
+}}

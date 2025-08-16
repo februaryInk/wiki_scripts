@@ -1,0 +1,169 @@
+Reading Mission 1600095: Once in a Blue Moon
+
+<onlyinclude>{{Infobox mission
+|name = Once in a Blue Moon
+|image =
+|description = Mi-an has invited you out for lunch.
+|type = Side
+|time =
+|location =
+|characters = [[Mi-an]]
+|condition =
+|details =
+|exp = 1000
+|reputation = None
+|gols = None
+|npc1 = Mi-an
+|rp1 = 30
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200030
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Moisture Farm Blues is successfully completed
+Check if Mi-an has favor >= 300
+License for Ransom is successfully completed
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+
+GROUP 10:
+Moisture Farm Blues is successfully completed
+Check if Mi-an has favor >= 300
+License for Ransom has failed
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+
+ACTIONS
+Run mission Tuckered Out!
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check relationship with Owen is 6 Lover
+Check if Mi-an has favor >= 400
+CHECK CAMERA UNLOCK || set: 1
+IS MARRIAGE || isMarriage: 0
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+Run mission Once in a Blue Moon
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1600095
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1600095
+
+TRIGGER Procedure 0.0 Step 0.1 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Mi-an
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+(cId 10) A conversation 468_0 starts:
+{{dialogue|Mi-an|Hey, ''Player''! How's it going? Busy tomorrow?}}
+{{dialogue|Mi-an|I'm just about to finish a big pileup of commissions, after which I plan to do a little bit of that 'resting' thing you're always on about. Blue Moon Saloon for lunch tomorrow, on me! What do you say?}}
+
+*''Sounds good.''
+*''Too busy, sorry.''
+
+{{dialogue|Mi-an|indent=true|answer=Sounds good.
+|Great! Let's get there at 12:00 on the dot! Sometimes they run out of sandfish if you get there too late.}}
+{{dialogue|Mi-an|indent=true|answer=Too busy, sorry.
+|Alright! No worries, let me know if you get time!}}
+Set IsAcceptInvite to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) The player picks the first option in conversation segment 2083:
+{{dialogue|Mi-an|I'm just about to finish a big pileup of commissions, after which I plan to do a little bit of that 'resting' thing you're always on about. Blue Moon Saloon for lunch tomorrow, on me! What do you say?}}
+
+*''Sounds good.'' (No unique dialogue)
+*''Too busy, sorry.'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 2085:
+{{dialogue|Mi-an|Still the same deal? Want to go with me to the Blue Moon Saloon tomorrow?}}
+
+*''Sounds good.'' (No unique dialogue)
+*''Too busy, sorry.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set IsAcceptInvite to 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+(cId 10) After the conversation ends:
+CONDITIONS
+Check if IsAcceptInvite is == 1
+ACTIONS
+START MISSION 1600095
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1600095
+CONDITIONS
+Always:
+ACTIONS
+Run mission Once in a Blue Moon
+END MISSION 1600095
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC FAVOR LEVEL CHANGE || order: 0 | npc: 8001 | compare: 2 | level: Lover
+CONDITIONS
+Always:
+ACTIONS
+CLOSE MISSION || missionId: 1600095
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Mi-an|Still the same deal? Want to go with me to the Blue Moon Saloon tomorrow?}}
+
+*''Sounds good.''
+*''Too busy, sorry.''
+
+{{dialogue|Mi-an|indent=true|answer=Sounds good.
+|Great! Let's get there at 12:00 on the dot! Sometimes they run out of sandfish if you get there too late.}}
+{{dialogue|Mi-an|indent=true|answer=Too busy, sorry.
+|Alright! No worries, let me know if you get time!}}
+
+==Rewards==
+{{mission reward
+|npc1 = Mi-an
+|rp1 = 30
+|exp = 1000
+|reputation = None
+|gols = None
+}}

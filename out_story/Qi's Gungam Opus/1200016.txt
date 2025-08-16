@@ -1,0 +1,231 @@
+Reading Mission 1200016: Qi's Gungam Opus
+
+<onlyinclude>{{Infobox mission
+|name = Qi's Gungam Opus
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Qi's Gungam Opus:
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Qi stops standing still
+Heidi stops standing still
+AUTOSAVE TRY || 
+Unlock blueprint for R-47 Mobile Suit
+START MISSION 1200015
+
+TRIGGER Procedure 0.0 Step 4.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200015
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1200011
+END MISSION 1200012
+ACTION MISSION TRACE 1200015
+Run mission Qi's Gungam Opus
+END MISSION 1200015
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200016
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: acceptrobot | info: 1 | exist: 1
+ACTIONS
+===Go to the Research Center===
+
+{{mission_details
+|desc = Qi has something to share with you, so go to the Research Center as soon as possible.
+|details = Go to the Research Center
+}}
+Set SCENECHANGE to 0
+Set OVER to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Science:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_science
+CHECK GLOBAL BLACKBOARD || key: acceptrobot | info: 1 | exist: 1
+ACTIONS
+Qi stops standing still
+Heidi stops standing still
+UNIQUE ACTION RUN || idStr: enter_science
+Qi stands still in Science
+Heidi stands still in Science
+AREA TRIGGER DELETE || id: 20151
+Set SCENECHANGE to 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Science:
+CONDITIONS
+Check if SCENECHANGE is == 1
+CHECK GLOBAL BLACKBOARD || key: acceptrobot | info: 1 | exist: 1
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Science | flagName: robot_player
+
+TRIGGER Procedure 0.0 Step 2.5 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Science:
+CONDITIONS
+Check if SCENECHANGE is == 1
+CHECK GLOBAL BLACKBOARD || key: acceptrobot | info: 1 | exist: 1
+ACTIONS
+(cId 0) A conversation 148_0 starts:
+{{dialogue|Qi|Welcome. I have something very exciting to show you today.}}
+{{dialogue|Qi|Using the R47 Power Core Ultra, I was able to channel upwards of ten giga-joules per second of energy out of Condensed Power Stones without encountering any significant losses in efficiency.}}
+{{dialogue|Qi|The amplitude and frequencies of vibrations at higher joule inputs seem to be minimalized by an advanced internal stabilizer in the compression chamber, averting electro-thermal heat displacement. It's literally bending the law of thermodynamics!}}
+{{dialogue|Heidi|Why are we here?}}
+{{dialogue|Qi|I've designed a {{textcolor|green|power suit}} running on the R47 Power Core Ultra! It'll greatly enhance the speed at which we can rebuild the bridge.}}
+{{dialogue|Qi|It's a design I came up with at Vega 5, but I never believed we'd actually find the energy output to put it into practice. My inspiration for it comes from something very obscure. Something you two never would've heard of.}}
+{{dialogue|Heidi|Isn't this one of the robots from that Old World entertainment show, what was it? Gungams?}}
+{{dialogue|Qi|Erm, must be a bizarre coincidence, I've never seen anything like that! Why would I be watching some random, obscure Old World entertainment show?}}
+{{dialogue|Heidi|In any case, this will be very useful. I was planning on using cranes, but with this, we can save a lot on the budget! Good job, Director.}}
+{{dialogue|Qi|If I ever get my hands on any other R57 Cores, I'll be able to manifest even more superior designs! Ahem, here's the diagram for it.}}
+{{dialogue|Heidi|I mean, it looks exactly like one of the Gungam robots...}}
+{{dialogue|Qi|And look at the time! We all have a lot of work to do, so l'll bid you both good day.}}
+{{dialogue|Heidi|Fine. ''Player'', when you're done with this Gungam mobile suit, give it to me. We should have the budget for it.}}
+{{dialogue|Qi|I heard that!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: acceptrobot | info: 1 | exist: 1
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Unlock blueprint for R-47 Mobile Suit
+===Construct Mobile Suit===
+
+{{mission_details
+|desc = You've got Qi's diagram, construct it according to his design on the Assembly Station. Don't forget the Power Core.
+|details = Construct Mobile Suit
+*{{i2|R-47 Mobile Suit|0/1}}
+}}
+Qi stops standing still
+Heidi stops standing still
+Set DAY to 0
+Set OVER to 0
+Add 1 Strange Power Core of Outstanding quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON BAG CHANGE || order: 0 | item: 14000036 | changeType: 0 | itemGrade: -1
+CONDITIONS
+Check if OVER is == 0
+ACTIONS
+Set OVER to 1
+===Talk to Heidi===
+
+{{mission_details
+|desc = Now that the Mobile Suit's finished, take it to Heidi.
+|details = Talk to Heidi
+}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Heidi
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1200015 | targetId: 2 | canSubmit: 1
+Check if OVER is == 1
+ACTIONS
+(cId 1) A conversation 1176, 1177, 1312, 1313 starts:
+{{dialogue|Heidi|So! This is it... The definitely-not-a-Gungam Mobile suit! While you were working, I factored this thing into my construction plan, and with it, we'll be able to finish what's left of the bridge base in just {{textcolor|green|two days}}!}}
+{{dialogue|Heidi|And since that's the case, I'll send word to Atara and have them {{textcolor|green|send us a bridge inspector}} on the double; we'll have water trains back in Sandrock in no time flat!}}
+{{dialogue|Heidi|That Qi really has an amazing mind... Though you'll never hear me say it to him. If his head got any more full of hot air, I think he might just float away. And we need him here, don't we!}}
+{{dialogue|Heidi|Well, thanks again for all your efforts. I'll show Qi your work, I think he'll be very impressed with how faithful you've been to his design. Be ready to install those {{textcolor|green|Load Bearing Trusses}} you built before!}}
+BAG MODIFY BY TARGET || missionId: 1200015 | targetId: 2
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Set OVER to 2
+Set global blackboard key finishrobot with info 1.
+NPC ICON ADD || npc: 8007 | missionId: 1200015 | missionIcon: 6
+SUBMIT MISSION 1200015
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if OVER is == 2
+ACTIONS
+Increment DAY by 1
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+Check if OVER is == 2
+ACTIONS
+(cId 1) A conversation 741 starts:
+{{dialogue|Qi|Heidi showed me the Mobile Suit, it's exactly as I imagined. I've come to find that I can consistently rely on you to deliver results. That will be all.}}
+EFFECT ADD ACTOR || effectId: 40006 | npc: 8007 | id: 20161
+NPC ICON REMOVE || missionId: 1200015 | npc: 8007 | missionIcon: 6
+Qi gains 20 favor
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if DAY is == 4
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: acceptrobot
+NPC ICON REMOVE || missionId: 1200015 | npc: 8007 | missionIcon: 6
+END MISSION 1200016
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200016
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: acceptrobot | info: 2 | exist: 1
+ACTIONS
+===Construct Mobile Suit===
+
+{{mission_details
+|desc = You've got Qi's diagram, construct it according to his design on the Assembly Station. Don't forget the Power Core.
+|details = Construct Mobile Suit
+*{{i2|R-47 Mobile Suit|0/1}}
+}}
+Add 1 Strange Power Core of Outstanding quality (Notify player)
+Set DAY to 0
+Set OVER to 0
+CUTSCENE UI STATE EXIT || 

@@ -1,0 +1,238 @@
+Reading Mission 1800517: I Guess I Cook Now For Some Reason
+
+<onlyinclude>{{Infobox mission
+|name = I Guess I Cook Now For Some Reason
+|image =
+|description = Unsuur has been showcasing his cooking skills for the Civil Corp members, earning praise even from Justice. However, the hardware seems to be limiting his performance.
+|type = Side
+|time =
+|location =
+|characters = [[Unsuur]]
+|condition =
+|details =
+|exp = 1435
+|reputation = None
+|gols = None
+|npc1 = Unsuur
+|rp1 = 20
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200280
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1400381
+
+TRIGGER Procedure 3.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check relationship with Unsuur is Married
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+Run mission I Guess I Cook Now For Some Reason
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800517
+CONDITIONS
+Always:
+ACTIONS
+Set 8517A to 0
+NPC ICON ADD || missionId: 1800517 | npc: 8026 | missionIcon: 6
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Unsuur
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 23132 starts:
+{{dialogue|Unsuur|Hey, ''Pet Name''. Justice gave me a new mission: cook stuff. When I was at the store, I got you some potatoes cause I felt like maybe they'd come in handy. Here. Okay, see ya.}}
+NPC ICON REMOVE || missionId: 1800517 | npc: 8026 | missionIcon: 6
+
+TRIGGER Procedure 0.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add 4 Potato of Default quality (Notify player)
+Add 5 Tomato of Default quality (Notify player)
+Add 5 Alfalfa of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1800517 | id: 85171 | sceneName: Main | flagName: Trigger_85171 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 85171
+CONDITIONS
+CHECK WEATHER STATE || weather: 2 | flag: 0
+ACTIONS
+AREA TRIGGER DELETE || id: 85171
+DELAY MASK SET || maskId: 85171 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85171 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8517_0_1
+Justice stands still in Main and looks at Unsuur
+Unsuur stands still in Main and looks at Justice
+DELAY MASK SET || maskId: 85171 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85171 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 8128_0 starts:
+{{dialogue|Justice|Dang, buddy! I don't know what to say! Those little veggie roll things you make are just delicious!}}
+{{dialogue|Justice|Really hit the spot on patrol, too. I almost feel like going for another round!}}
+{{dialogue|Unsuur|You get cranky without your magnesium, sir.}}
+{{dialogue|Justice|Not just that, but since you started cooking around here, Captain's mouse-grabbing numbers are through the roof!}}
+{{dialogue|Unsuur|Few things captivate me in this world more than cat food, sir.}}
+{{dialogue|Justice|Uh... right on! Well, whatever it is you're doing. Keep doing it!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8517082) to Justice
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8517_8_2|Delay:0)
+Add behavior CommanderMoveToFlagAndAction (idName: 8517001) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8517_0_2|Delay:1.0|LookAtActor:8026)
+Add behavior CommanderMoveToFlagAndAction (idName: 8517262) to Unsuur
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8517_26_2|Delay:1.5|LookAtActor:8000)
+
+TRIGGER Procedure 0.0 Step 6.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800517
+CONDITIONS
+Always:
+ACTIONS
+Run mission I Guess I Cook Now For Some Reason
+END MISSION 1800517
+
+TRIGGER Procedure 0.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 8129_0 starts:
+{{dialogue|Unsuur|Hey, ''Pet Name''. I guess I'm really good at cooking now for some reason.}}
+{{dialogue|Unsuur|Sheriff gave me a mission to "make something different than yellow soup 'n lemons" and... well, now look at me.}}
+{{dialogue|Unsuur|Hey, um... would it be too big of a favor to ask for you to make me a Cooking Station? I made all the recipes I can that don't require one.}}
+
+*''Sure thing!''
+*''Plate kinda full these days...''
+
+{{dialogue|Unsuur|indent=true|answer=Sure thing!
+|Nice. If you finish and I'm not around, go ahead and put it in my old house. I'm kinda using it as the Civil Corps kitchen now.}}
+{{dialogue|Unsuur|indent=true|answer=Plate kinda full these days...
+|Yeah, I kinda just finally got what that means, now that I'm into cooking and stuff. Lot of plates.}}
+DELIVER MISSION 1800517
+
+TRIGGER Procedure 0.0 Step 11.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Unsuur stops standing still
+Justice stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8517262) from Unsuur
+Remove behavior CommanderMoveToFlagAndAction (idName: 8517001) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8517082) from Justice
+CAMERA PATH STOP ALL || 
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 10.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 23141:
+{{dialogue|Unsuur|Hey, um... would it be too big of a favor to ask for you to make me a Cooking Station? I made all the recipes I can that don't require one.}}
+
+*''Sure thing!'' (No unique dialogue)
+*''Plate kinda full these days...'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 23143:
+{{dialogue|Unsuur|Oh. ''Pet Name''. Did you ever get around to that plate situation? I'm still in the market for a Cooking Station.}}
+
+*''Sure thing!'' (No unique dialogue)
+*''Plate kinda full these days...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8517A to 1
+
+TRIGGER Procedure 0.0 Step 12.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if 8517A is == 1
+ACTIONS
+START MISSION 1800517
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Unsuur|Oh. ''Pet Name''. Did you ever get around to that plate situation? I'm still in the market for a Cooking Station.}}
+
+*''Sure thing!''
+*''Plate kinda full these days...''
+
+{{dialogue|Unsuur|indent=true|answer=Sure thing!
+|Nice. If you finish and I'm not around, go ahead and put it in my old house. I'm kinda using it as the Civil Corps kitchen now.}}
+{{dialogue|Unsuur|indent=true|answer=Plate kinda full these days...
+|Yeah, I kinda just finally got what that means, now that I'm into cooking and stuff. Lot of plates.}}
+
+==Rewards==
+{{mission reward
+|npc1 = Unsuur
+|rp1 = 20
+|exp = 1435
+|reputation = None
+|gols = None
+}}
+==Post-conduct==
+
+If the player successfully completes the mission, some of the townsfolk will comment on it:
+
+{{dialogue|Justice|You upgraded Unsuur's kitchen situation! By gum, that makes you the new sheriff of our culinary division! No, commissioner! No, wait a tick... you're the gosh darn maître d'!}}
+{{dialogue|Owen|I tried some of Unsuur's dishes, they're good! Very good. You can tell him if he ever wants to retire, we've got a spot for him over at the saloon!}}

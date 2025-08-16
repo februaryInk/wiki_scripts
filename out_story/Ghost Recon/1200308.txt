@@ -1,0 +1,273 @@
+Reading Mission 1200308: Ghost Recon
+
+<onlyinclude>{{Infobox mission
+|name = Ghost Recon
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Ghost Recon:
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+Justice stops standing still
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200307
+CONDITIONS
+Always:
+ACTIONS
+Run mission Ghost Recon
+END MISSION 1200307
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200308
+CONDITIONS
+Always:
+ACTIONS
+===Go to Shonash Canyon after 22:00PM===
+
+{{mission_details
+|desc = Head for the canyon cliff around 22:00PM to investigate the mysterious sounds.
+|details = Go to Shonash Canyon after 22:00PM
+}}
+AREA TRIGGER CREATE || missionId: 1200307 | id: 23081 | sceneName: Main | flagName: weirdnoise_trigger | showOnMap: 1 | mapIcon: MissionArea | transId: 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 23081
+CONDITIONS
+GROUP 0:
+CHECK TIME || compare: 2 | hour: 22 | minute: 0
+CHECK TIME || compare: 5 | hour: 23 | minute: 59
+
+GROUP 10:
+CHECK TIME || compare: 2 | hour: 0 | minute: 0
+CHECK TIME || compare: 5 | hour: 2 | minute: 59
+
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 23081 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 23081
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 23081
+CONDITIONS
+Always:
+ACTIONS
+Justice stands still in Main
+Unsuur stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: weirdnoise_player1
+DELAY MASK SET || maskId: 23081 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 23081
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 3690_0 starts:
+{{dialogue|Justice|Hey, ''Player'', you made it. Me an' Unsuur have been here a while, ain't noticed anythin' unusual yet. Man, I hate ghost cases.}}
+{{dialogue|Unsuur|Us waiting here is a bit unusual.}}
+{{dialogue|Justice|That's true...}}
+{{dialogue|Unsuur|Waiting in a group is fun though. I saved you a seat.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 23081) to Player
+(param: CMDAction:Nod_Story)
+DELAY MASK SET || maskId: 23082 | delayTime: 2 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 23082
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderPlayerAction (idName: 23081) from Player
+Justice stops standing still
+Unsuur stops standing still
+Justice stands still in Main
+Unsuur stands still in Main
+Larry stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: weirdnoise_player2
+DELAY MASK SET || maskId: 23082 | delayTime: 0 | durationTime: 0 | changeType: 0 | curveIndex: 0
+Add behavior CommanderNPCActionLoop (idName: 23083) to Larry
+(param: CMDAction:Sleep_Story3)
+{{cutscene|id = 1391}}
+A cutscene CG_CLIMB (duration: 0.0) starts playing
+Geegler President Returns - The Civil Corps found our former nemesis in rather bad shape by the canyon one day...
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 9 | name: CG_CLIMB
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 12094, 3691_0 starts:
+{{dialogue|Justice|Well I'll be a rooster's rocket, it's a Geegler! Haven't seen any of 'em near here since we cleared 'em out of Gecko Station.}}
+{{dialogue|Unsuur|I can confirm it's not a Geegler ghost, sir.}}
+{{dialogue|0|...}}
+{{dialogue|Unsuur|He must've really liked rock climbing, but he's hurt. What should we do with him?}}
+
+*''We should help him.''
+*''Throw him back in the canyon.''
+
+{{dialogue|Justice|indent=true|answer=We should help him.
+|Yeah, I agree. Not our style to turn away those in need. But he does look kinda familiar, don't you think?}}
+{{dialogue|Justice|indent=true|answer=Throw him back in the canyon.
+|Yeah, I agr- Hey! Wait, no! Dang, Builder, I always kinda took you for the bright and sun-shiny type, but you've got a real dark streak about ya...}}
+{{dialogue|Justice|indent=true|Aren't y'all supposed to take some kind of oath of telesis as a Builder? Whatever, it's kinda wild, I respect it. But... nah, I think it might be a bit over the top... Not our style to turn away those in need.}}
+{{dialogue|Justice|Alright, Unsuur. Let's get this guy over to Dr. Fang's. We'll decide what to do with him once he's got the strength to speak up.}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 23083 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23083 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Justice stops standing still
+Unsuur stops standing still
+Larry stops standing still
+CUTSCENE UI STATE EXIT || 
+PLAYER SET POS ROT FLAG || sceneName: Clinic | flagName: weirdnoise_clinic_player
+DELAY MASK SET || maskId: 23083 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+AREA TRIGGER CREATE || missionId: 1200307 | id: 23082 | sceneName: Main | flagName: kidintown9_trigger1 | showOnMap: 1 | mapIcon: MissionArea | transId: 0
+Remove behavior CommanderNPCActionLoop (idName: 23083) from Larry
+SCENEITEM CREATE FLAG || itemType: 0 | id: 23081 | path: Mission_HospitalBedForLarry | sceneName: Clinic | flagName: GKA_Bed | extraParams: 0
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_clinic
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_clinic
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 23082
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+Larry stands still in Clinic
+Add behavior CommanderDrama (idName: 23084) to Larry
+(param: TargetScene:Clinic|DramaName:LarryBed|DramaType:Sleep|TargetFlag:GKA_Larry)
+Justice stands still in Clinic
+Unsuur stands still in Clinic
+Fang stands still in Clinic
+X stands still in Clinic
+DELAY MASK SET || maskId: 23084 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+NPC SET CAN INTERACT || npc: 8097 | canInteract: 0
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 23084 | delayTime: 3 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23084 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 3695_0 starts:
+{{dialogue|X|Squark! Nice face! Bump yer head? Squark!}}
+{{dialogue|Unsuur|Yeah, probably. That usually happens when you fall off a cliff... oh, sorry, ''Player'', too soon?}}
+{{dialogue|X|Ooooooh! Squark!}}
+{{dialogue|Fang|It's... a Geegler...}}
+{{dialogue|Justice|Can you help him?}}
+{{dialogue|Fang|Not a vet...}}
+
+*''You got to help him, doc! He's gonna die!''
+*''Potato pot-ahto.''
+
+{{dialogue|Justice|indent=true|answer=You got to help him, doc! He's gonna die!
+|Look, he's got arms an' legs and stuff, so I guess he's kinda human... noid, right?}}
+{{dialogue|Unsuur|indent=true|answer=Potato pot-ahto.
+|It's not a potato, it's a lizard.}}
+{{dialogue|Justice|indent=true|C'mon, doc! You gotta do something!}}
+{{dialogue|Fang|I will... do what I can.}}
+{{dialogue|Justice|That's all we're askin'. Now listen, bird, and Fang... This fella here could be extremely dangerous, so if he starts wakin' up or fidgitin' or anything, you better fly over to me on the double!}}
+{{dialogue|X|Got it, got it!}}
+The conversation ends.
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Larry stops standing still
+Justice stops standing still
+Unsuur stops standing still
+Fang stops standing still
+X stops standing still
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1200307
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Logan
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 12113 starts:
+{{dialogue|Logan|Hey, I heard they found a Geegler over by the canyon. Strange, ain't it? Maybe I should investigate?}}
+END MISSION 1200308

@@ -1,0 +1,412 @@
+Reading Mission 1200410: Hot Cocoa
+
+<onlyinclude>{{Infobox mission
+|name = Hot Cocoa
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Hot Cocoa:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200409
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1200409
+START MISSION 1200409
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200409
+CONDITIONS
+Always:
+ACTIONS
+Run mission Hot Cocoa
+END MISSION 1200409
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200410
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Logan===
+
+{{mission_details
+|desc = How much does Logan still remember about his mother. Perhaps he also has moments when he wants to talk.
+|details = Talk to Logan
+}}
+Set CHOICE to 0
+Set DRINK to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Logan
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 24104, 24105, 24106, 24107 starts:
+{{dialogue|Logan|Ain't this... a photo of my old house?}}
+{{dialogue|Logan|Dang... this was a real long time ago... Haha, there's that ol' piece of junk with a fresh coat of paint!}}
+{{dialogue|Logan|A cup of hot cocoa... my Pa used to make it for me when I was a kid. He'd add a little pinch of salt, made it that little bit more special. Tasted mighty fine!}}
+{{dialogue|Logan|Haha, reckon our household had funny way of doin' things. But nowadays I can't drink it without.}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8011 | cId: 0 | missionId: 1200410
+CONDITIONS
+Check relationship with Logan is 6 Lover
+ACTIONS
+(cId 1) A conversation 8334_0 starts:
+{{dialogue|Logan|''Player'', what about you? Yer kin got any little cookin' quirks? Family recipes?}}
+
+*''My Ma makes tomato and eggs with sugar.''
+*''My Pa makes black garlic hamburgers!''
+*''My childhood friend's family eats sweet tofu brains!''
+*''Not really...''
+
+{{dialogue|Logan|indent=true|answer=My Ma makes tomato and eggs with sugar.
+|Haha, I heard about that. Brings out the tomato's flavor, right? Well, as long as it's fresh it's fine with me!}}
+{{dialogue|Logan|indent=true|answer=My Pa makes black garlic hamburgers!
+|Black garlic? Like... fermented? Huh... it's sweeter, right? Ain't as strong? Maybe I gotta give it a try!}}
+{{dialogue|Logan|indent=true|answer=My childhood friend's family eats sweet tofu brains!
+|Brains? What, like tofu with a side of brains? Or tofu in the shape of brains? You know what? Forget I asked. To each their own.}}
+{{dialogue|Logan|That really brought me back... thanks, ''Player''. I had a real good time chattin'. See ya later.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+(cId: 2) There is a conversation segment (id 24115) that ends:
+{{dialogue|Logan|Well, you head back to work, I'll see you later.}}
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1200409
+END MISSION 1200410
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8011 | cId: 0 | missionId: 1200410
+CONDITIONS
+Check relationship with Logan is Lover
+ACTIONS
+(cId 2) A conversation 8379_0 starts:
+{{dialogue|Logan|''Player'', what about you? Yer kin got any little cookin' quirks? Family recipes?}}
+
+*''My Ma makes tomato and eggs with sugar.''
+*''My Pa makes black garlic hamburgers!''
+*''My childhood friend's family eats sweet tofu brains!''
+*''Not really...''
+
+{{dialogue|Logan|indent=true|answer=My Ma makes tomato and eggs with sugar.
+|Haha, I heard about that. Brings out the tomato's flavor, right? Well, as long as it's fresh it's fine with me!}}
+{{dialogue|Logan|indent=true|answer=My Pa makes black garlic hamburgers!
+|Black garlic? Like... fermented? Huh... it's sweeter, right? Ain't as strong? Maybe I gotta give it a try!}}
+{{dialogue|Logan|indent=true|answer=My childhood friend's family eats sweet tofu brains!
+|Brains? What, like tofu with a side of brains? Or tofu in the shape of brains? You know what? Forget I asked. To each their own.}}
+{{dialogue|Logan|Say hon', would you care to try the old family recipe? I got a bit of time, what say we head on over to the ol' homestead an' I'll whip you up a cup.}}
+
+*''That sounds great! Let's go!''
+*''Sounds kind of boring...''
+
+{{dialogue|Logan|indent=true|answer=That sounds great! Let's go!
+|Haha, don't worry, it'll be just like Pa used to make it.}}
+{{dialogue|Logan|indent=true|answer=Sounds kind of boring...
+|Oh... uh, alright...}}
+{{dialogue|Logan|indent=true|Well, you head back to work, I'll see you later.}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Check if CHOICE is <= (maybe?) 1
+ACTIONS
+DELAY MASK SET || maskId: 24101 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+SCENEITEM CREATE FLAG || path: Mission_cocoa | flagName: cocoa_cocoa | itemType: 0 | id: 24101 | sceneName: LoganOldHome | extraParams: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the second option in conversation segment 24113:
+{{dialogue|Logan|Say hon', would you care to try the old family recipe? I got a bit of time, what say we head on over to the ol' homestead an' I'll whip you up a cup.}}
+
+*''That sounds great! Let's go!'' (No unique dialogue)
+*''Sounds kind of boring...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 1
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 24101 | eventType: 2
+CONDITIONS
+CHECK CURRENT SCENE || name: LoganOldHome | flag: 1
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: LoganOldHome | flagName: cocoa_player
+Logan stands still in LoganOldHome and looks at Player
+DELAY MASK SET || maskId: 24101 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Add behavior CommanderIdle (idName: 24100) to Player
+(param: LookAtActor:8011)
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 24101 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 8342_0 starts:
+{{dialogue|Player|(What should I say?)}}
+
+*''Wow it tastes amazing!''
+*''Tastes pretty much the same...''
+*''It's not really my cup of tea...''
+
+{{dialogue|Logan|indent=true|answer=Wow it tastes amazing!
+|Haha, I'm glad you like it. I was worried you mighta thought it tasted funky...}}
+{{dialogue|Logan|indent=true|Havin' a hot cup of this on a cold winter day will warm you right up. If you're ever wanna drink it again, I'll make a fresh cup for you.}}
+{{dialogue|Logan|indent=true|answer=Tastes pretty much the same...
+|Phew, really? Looks like you don't mind it at least!}}
+{{dialogue|Logan|indent=true|Havin' a hot cup of this on a cold winter day will warm you right up. If you're ever wanna drink it again, I'll make a fresh cup for you.}}
+{{dialogue|Logan|indent=true|answer=It's not really my cup of tea...
+|Huh?!}}
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Check if DRINK is == 2
+ACTIONS
+Add behavior CommanderNPCAction (idName: 24102) to Logan
+(param: CMDAction:StandDrink)
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 24101 | eventType: 2
+CONDITIONS
+CHECK CURRENT SCENE || name: LoganOldHome | flag: 0
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+PLAYER SET POS ROT FLAG || sceneName: LoganOldHome | flagName: cocoa_player
+DELAY MASK SET || maskId: 24101 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+AREA TRIGGER CREATE || missionId: 1200409 | id: 24101 | sceneName: Main | flagName: cleanloganhouse_trigger | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the LoganOldHome:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_loganoldhome
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_loganoldhome
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 24101
+
+TRIGGER Procedure 2.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the LoganOldHome:
+CONDITIONS
+Always:
+ACTIONS
+Logan stands still in LoganOldHome and looks at Player
+Add behavior CommanderIdle (idName: 24100) to Player
+(param: LookAtActor:8011)
+
+TRIGGER Procedure 2.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the LoganOldHome:
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 8342_0 starts:
+{{dialogue|Player|(What should I say?)}}
+
+*''Wow it tastes amazing!''
+*''Tastes pretty much the same...''
+*''It's not really my cup of tea...''
+
+{{dialogue|Logan|indent=true|answer=Wow it tastes amazing!
+|Haha, I'm glad you like it. I was worried you mighta thought it tasted funky...}}
+{{dialogue|Logan|indent=true|Havin' a hot cup of this on a cold winter day will warm you right up. If you're ever wanna drink it again, I'll make a fresh cup for you.}}
+{{dialogue|Logan|indent=true|answer=Tastes pretty much the same...
+|Phew, really? Looks like you don't mind it at least!}}
+{{dialogue|Logan|indent=true|Havin' a hot cup of this on a cold winter day will warm you right up. If you're ever wanna drink it again, I'll make a fresh cup for you.}}
+{{dialogue|Logan|indent=true|answer=It's not really my cup of tea...
+|Huh?!}}
+ACTOR BUFF ADD || npc: 8000 | buffId: 2000 | instanceId: 24101
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the third option in conversation segment 24173:
+{{dialogue|Player|(What should I say?)}}
+
+*''Wow it tastes amazing!'' (No unique dialogue)
+*''Tastes pretty much the same...'' (No unique dialogue)
+*''It's not really my cup of tea...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set DRINK to 2
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8011 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 8347_0 starts:
+{{dialogue|Logan|It tastes the same as when I was growin' up... an' it ain't even tea...}}
+
+*''Haha, I'm kidding! It's really delicious!''
+*''It's just... not that good...''
+
+{{dialogue|Logan|indent=true|answer=Haha, I'm kidding! It's really delicious!
+|Haha, you almost had me there! I thought you didn't like it... I'da finished it up for ya!}}
+{{dialogue|Logan|indent=true|answer=It's just... not that good...
+|Ah...}}
+{{dialogue|Logan|indent=true|I guess I'll just finish this for ya then...}}
+{{dialogue|Logan|Havin' a hot cup of this on a cold winter day will warm you right up. If you're ever wanna drink it again, I'll make a fresh cup for you.}}
+The conversation ends.
+Remove behavior CommanderNPCAction (idName: 24102) from Logan
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 24124) that ends:
+{{dialogue|Logan|Havin' a hot cup of this on a cold winter day will warm you right up. If you're ever wanna drink it again, I'll make a fresh cup for you.}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 24102) to Player
+(param: CMDAction:Nod_Story)
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderPlayerAction (idName: 24102) from Player
+The player interacts (type 2, option 0) with Logan
+
+TRIGGER Procedure 4.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON INTERACTIVE EXIT || order: 0 | instID: 8011
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 8350_0 starts:
+{{dialogue|Logan|I don't know why... after seeing that photo, I'm feeling... I dunno. A bit strange.}}
+
+*''Do you miss your Pa?''
+*''Do you miss your Ma?''
+*''(Stay silent)''
+
+{{dialogue|Logan|indent=true|answer=Do you miss your Pa?
+|Well, 'course I do...}}
+{{dialogue|Logan|indent=true|Don't worry about me. It's alright... ever since I got back into town, I get to visit with him more.}}
+{{dialogue|Logan|indent=true|answer=Do you miss your Ma?
+|Do I miss her? Heck, I don't even know.}}
+{{dialogue|Logan|indent=true|I don't really remember anything about my Ma...}}
+{{dialogue|Logan|indent=true|answer=(Stay silent)
+|...}}
+{{dialogue|Logan|Takin' a sip it kinda brings me back to my childhood... Maybe I'm thinkin' too much.}}
+
+*''It's okay, talking about it is good.''
+*''I'm here for you, Logan. I'll always be your family.''
+*''(Stay with him quietly)''
+
+{{dialogue|Logan|indent=true|answer=It's okay, talking about it is good.
+|reward={{NPC2|Logan|rp=3}}|Ah, it's nothin'.}}
+{{dialogue|Logan|indent=true|S'all the past now. You're my future.}}
+{{dialogue|Logan|indent=true|answer=I'm here for you, Logan. I'll always be your family.
+|reward={{NPC2|Logan|rp=5}}|Darlin'...}}
+{{dialogue|Logan|indent=true|...}}
+{{dialogue|Logan|indent=true|I ain't losin' anyone else. If anyone tries to take you away from me... let's jus' say there's nothin' they can do to tear us apart.}}
+{{dialogue|Logan|indent=true|answer=(Stay with him quietly)
+|Haha, you worried about me? I'm fine.}}
+{{dialogue|Logan|indent=true|As long as I got you by my side...}}
+{{dialogue|Logan|Anyway, I'm sure you got loads to do, darlin'. You head on back, we'll talk later.}}
+The conversation ends.
+
+TRIGGER Procedure 5.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 24101
+Remove behavior CommanderIdle (idName: 24100) from Player
+CAMERA PATH STOP ALL || 
+CUTSCENE UI STATE EXIT || 
+Logan stops standing still
+SUBMIT MISSION 1200409
+END MISSION 1200410
+
+TRIGGER Procedure 5.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) The player picks the first option in conversation segment 24131:
+{{dialogue|Logan|Takin' a sip it kinda brings me back to my childhood... Maybe I'm thinkin' too much.}}
+
+*''It's okay, talking about it is good.'' (No unique dialogue)
+*''I'm here for you, Logan. I'll always be your family.'' (No unique dialogue)
+*''(Stay with him quietly)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Logan gains 3 favor
+
+TRIGGER Procedure 5.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) The player picks the second option in conversation segment 24131:
+{{dialogue|Logan|Takin' a sip it kinda brings me back to my childhood... Maybe I'm thinkin' too much.}}
+
+*''It's okay, talking about it is good.'' (No unique dialogue)
+*''I'm here for you, Logan. I'll always be your family.'' (No unique dialogue)
+*''(Stay with him quietly)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Logan gains 5 favor

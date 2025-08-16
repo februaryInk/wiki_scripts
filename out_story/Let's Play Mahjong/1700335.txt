@@ -1,0 +1,370 @@
+Reading Mission 1700335: Let's Play Mahjong
+
+<onlyinclude>{{Infobox mission
+|name = Let's Play Mahjong
+|image =
+|description = Justice found a noisy Old World table that he can't seem to figure out what it's supposed to do.
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 1150
+|reputation = 10
+|gols = 800
+|npc1 = Catori
+|rp1 = 10
+|npc2 = Qi
+|rp2 = 10
+|npc3 = Fang
+|rp3 = 5
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100068
+
+TRIGGER Procedure 3.0 Step 10.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1200188 is result 1 flag 1
+ACTIONS
+Run mission #1200243
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Paradise Lost and Found is successfully completed
+Check if mission 1700266 is result 1 flag 0
+Opportunities Abound is successfully completed
+
+GROUP 10:
+Check if mission 1700266 is result 1 flag 1
+Paradise Lost and Found is successfully completed
+Sandrock Strikes Back is successfully completed
+Opportunities Abound is successfully completed
+
+ACTIONS
+Run mission Let's Play Mahjong
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700335
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1700335 | id: 173351 | sceneName: Main | flagName: Mahjong_Trigger | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: -1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 173351
+CONDITIONS
+Check if X is in town
+ACTIONS
+DELAY MASK SET || maskId: 173351 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173351 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 173351
+Justice stands still in Main
+Rian stands still in Main
+Qi stands still in Main
+SCENEITEM CREATE FLAG || itemType: 0 | id: 173351 | sceneName: Main | flagName: Mahjong_Desk | extraParams: -1 | path: MahjongTable_Broken
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: Mahjong_Player0
+NPC RANDOM ADD || id: 1 | instId: 173351 | scene: Main | flagName: Mahjong_Random | dailyBehavior: CommanderIdle
+DELAY MASK SET || maskId: 173351 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173351 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 4261_0 starts:
+{{dialogue|Justice|Whaddya mean you don't know what it is? You're a carpenter, ain't ya? How many kinds of tables could there be?}}
+{{dialogue|Rian|The table lore runs deep, my dude... Though, yes, I am indeed a carpenter of incalcuable skill... I...  uh... actually, dude, dunno what to tell you; I'm stumped. Looks like it's got a 'lil robot thing goin' on on the inside though. Does that help?}}
+{{dialogue|Justice|Er, yeah, I noticed... Was just hoping you might have a little more insight on the subject. That's alright, pal. Good hustle. Luckily I also grabbed Director Qi here for a second opinion! Go ahead, Qi. Tell us about the, uh... robot thing.}}
+{{dialogue|Qi|Procured from the Paradise Lost Hazardous Ruins?}}
+{{dialogue|Justice|Yeah, I was down there... thought I heard something that sounded like rain. Then... I heard voices... So I turned the corner, weapon drawn...!}}
+{{dialogue|Justice|But there was nothin'. Just this weird lookin' table in the center of the room. I've never seen anything like it before, there was something so alluring about the idea of bringing it to the surface... Wait a sec, this thing is starting to sound cursed. Is this thing cursed...?}}
+{{dialogue|Qi|Hm...}}
+{{dialogue|Justice|Yeah?}}
+{{dialogue|Qi|Hmmmm...}}
+{{dialogue|Justice|...Yeah!?}}
+{{dialogue|Qi|Nope. No idea. Never seen it.}}
+{{dialogue|Justice|Tch. Ahh... Strike two, then. Hey, ''Player''! How's it going? Ever seen one of these before?}}
+
+*''Might be a weapon.''
+*''Might be a toy.''
+*''It's clearly just a table.''
+
+{{dialogue|Justice|indent=true|answer=Might be a weapon.
+|You may be onto something. I shook it a bit and heard a bunch of pieces of something rattling around inside. Bullets or shrapnel... pretty insidious of someone to make a... table bomb...?}}
+{{dialogue|Justice|indent=true|answer=Might be a toy.
+|A toy, huh? I dunno, I'm not really havin' any fun. Are you? Shook it up, there's a bunch of junk in there. Maybe there's a prize inside?}}
+{{dialogue|Justice|indent=true|answer=It's clearly just a table.
+|Normal table you say? Ahaha... ''Player''! You should know as well as anyone, there's almost always more than meets the eye with any kind of Old World junk...}}
+{{dialogue|Justice|Let's see here. Lemme just review my notes here and-}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 14437) that ends:
+{{dialogue|Justice|Whaddya mean you don't know what it is? You're a carpenter, ain't ya? How many kinds of tables could there be?}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 173351) to Player
+(param: TargetScene:Main|FlagName:Mahjong_Player)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 14452) that ends:
+{{dialogue|Justice|Let's see here. Lemme just review my notes here and-}}
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 173351 | sec: 1.5
+Justice stands still in Main
+
+TRIGGER Procedure 0.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || sec: 2 | id: 173353
+Add behavior CommanderMoveToFlagAndAction (idName: 173351) to X
+(param: TargetScene:Main|FlagName:Mahjong_Bird)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 733504
+DELAY MASK SET || maskId: 173352 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+SCENEITEM DELETE || id: 733502 | itemType: 0
+SCENEITEM DELETE || id: 733503 | itemType: 0
+SCENEITEM DELETE || id: 733505 | itemType: 0
+SCENEITEM DELETE || id: 733501 | itemType: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 14452) that ends:
+{{dialogue|Justice|Let's see here. Lemme just review my notes here and-}}
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 173353 | path: MahjongTable_Broken3 | sceneName: Main | flagName: Mahjong_Desk | extraParams: -1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 14469) that ends:
+{{dialogue|Qi|Nevermind the circumstances of our survival. Let us... investigate the objects within.}}
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 173352 | path: MahjongTable_Broken2 | sceneName: Main | flagName: Mahjong_Desk | extraParams: -1
+SCENEITEM DELETE || itemType: 0 | id: 173353
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 14452) that ends:
+{{dialogue|Justice|Let's see here. Lemme just review my notes here and-}}
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 733501 | path: Story_music_zone_mahjong1 | sceneName: Main | flagName: Mahjong_Desk | extraParams: -1
+
+TRIGGER Procedure 3.0 Step 0.2 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 14455) that ends:
+{{dialogue|Justice|Listen here, table! We've got you surrounded! Surrender now! I will not hesitate to flip you!}}
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 733501
+SCENEITEM CREATE FLAG || itemType: 0 | path: Story_music_zone_mahjong4 | id: 733505 | sceneName: Main | extraParams: -1 | flagName: Mahjong_Desk
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 14464) that ends:
+{{dialogue|Justice|Okay, what now...? "Peng...?" Is this thing doin' a bit...?}}
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 733501
+SCENEITEM CREATE FLAG || itemType: 0 | id: 733502 | path: Story_music_zone_mahjong1 | sceneName: Main | flagName: Mahjong_Desk | extraParams: -1
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 14465) that ends:
+{{dialogue|0|Game over! Please wait. Shuffling... shuffling...}}
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 733502
+SCENEITEM CREATE FLAG || itemType: 0 | id: 733503 | path: Story_music_zone_mahjong2 | sceneName: Main | flagName: Mahjong_Desk | extraParams: -1
+
+TRIGGER Procedure 3.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 14468) that ends:
+{{dialogue|Rian|Close one. Nice job, Sheriff. You stared that table down into submission.}}
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 733503
+SCENEITEM CREATE FLAG || itemType: 0 | id: 733504 | path: Story_music_zone_mahjong3 | flagName: Mahjong_Desk | extraParams: -1 | sceneName: Main
+
+TRIGGER Procedure 0.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 173351
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Justice|Ah! Dancin' robot!}}
+STOPWATCH REAL TIME SET || sec: 1 | id: 173352
+X stands still in Main
+
+TRIGGER Procedure 0.0 Step 0.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 173352
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 4266_0 starts:
+{{dialogue|Justice|Everybody stand back! Situation's under control!}}
+{{dialogue|Justice|Listen here, table! We've got you surrounded! Surrender now! I will not hesitate to flip you!}}
+{{dialogue|0|...}}
+{{dialogue|0|Please get ready for the next round! Be careful not to be the one to set off... THE BOMB...}}
+{{dialogue|Justice|Tch, I hate it when I'm right...!}}
+{{dialogue|Qi|There exists no record of any table-shaped WMD. Fascinating. Also: we're in danger.}}
+{{dialogue|Rian|Please have mercy, O magical table! Me chopping up all those other tables... It was... I was just making them more portable! Please... I have a family!}}
+{{dialogue|Justice|Y'all make a run for it, I'll hold 'im off!}}
+{{dialogue|0|Stop!}}
+{{dialogue|Justice|Nobody... move... a muscle...!}}
+{{dialogue|0|Peng!}}
+{{dialogue|Justice|Okay, what now...? "Peng...?" Is this thing doin' a bit...?}}
+{{dialogue|0|Game over! Please wait. Shuffling... shuffling...}}
+{{dialogue|0|Error... error...}}
+{{dialogue|Justice|Er... perhaps the situation has resolved itself...?}}
+{{dialogue|Rian|Close one. Nice job, Sheriff. You stared that table down into submission.}}
+{{dialogue|Qi|Nevermind the circumstances of our survival. Let us... investigate the objects within.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 173353
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 4267_0 starts:
+{{dialogue|Rian|Hm... Marble-y cube things...}}
+{{dialogue|X|Wahaha! You fools!}}
+{{dialogue|Rian|Hey, c'mon, dude... uncalled for...}}
+{{dialogue|X|Mahjong! Mahjiang! Chow! Four-of-a-kind! Peng!}}
+{{dialogue|X|Winner winner, chicken dinner!}}
+{{dialogue|Justice|X is sayin' the same stuff as that table! Is it possible... this robot table was built... by the bird...!?}}
+{{dialogue|Qi|Unlikely. "Mahjong..." Yes, I've heard this term before.}}
+{{dialogue|Qi|It's a game commonly played by residents of Seesai, hence our avian associate's apparent attunement to the device. However, this is indeed Old World technology... could this be an ancient variant of the game...?}}
+{{dialogue|X|Caw!}}
+{{dialogue|Qi|Mm. Yes. The mathematical analysis of this game could make for a fine enough afternoon. Mr. Justice, sir, I believe I can take things from here. Clearly this table is a simple game machine, and nothing that poses a threat to anyone here in Sandrock.}}
+{{dialogue|Justice|Zat so...? Well... if you want to take it home, probably need to run it by the Mayor, fill out some forms... But, uh, yeah, if everything checks out... reckon we could drop it off at your place.}}
+{{dialogue|Justice|Guess that's that, then. Sorry for the overreaction. Thanks everyone for offering such sound insight... I think it's fair to say... You all brought a lot... to the table...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|622}}
+DELIVER MISSION 1700335
+
+TRIGGER Procedure 0.0 Step 0.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 622
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1700335
+Run mission Let's Play Mahjong
+END MISSION 1700335
+
+TRIGGER Procedure 0.0 Step 0.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173352 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 173352
+SCENEITEM DELETE || itemType: 0 | id: 173351
+
+TRIGGER Procedure 0.0 Step 0.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173352 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 173351) from Player
+Justice stops standing still
+Rian stops standing still
+Qi stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 173351) from X
+NPC RANDOM REMOVE || id: 173351
+X stops standing still
+CUTSCENE UI STATE EXIT || 
+SCENEITEM DELETE || itemType: 0 | id: 173351
+DELAY MASK SET || maskId: 173352 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+==Rewards==
+{{mission reward
+|npc1 = Catori
+|rp1 = 10
+|npc2 = Qi
+|rp2 = 10
+|npc3 = Fang
+|rp3 = 5
+|exp = 1150
+|reputation = 10
+|gols = 800
+}}

@@ -1,0 +1,304 @@
+Reading Mission 1800242: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200107
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1200217 is result 1 flag 1
+ACTIONS
+Set TALKMUSA to 0
+
+TRIGGER Procedure 1.0 Step 2.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+The New Mascot is successfully completed
+Check if Musa is in town
+Check if mission 1700240 is result 1 flag 0
+
+GROUP 10:
+The New Mascot has failed
+Check if Musa is in town
+Check if mission 1700240 is result 1 flag 0
+
+ACTIONS
+Run mission #1800242
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800242
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER ONCE CREATE || flagName: Trigger_S8242 | sceneName: Main | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0 | id: 82421 | missionId: 1800242
+Set 8242A to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 82421
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 82421 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82421 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8242_Player_1
+DELAY MASK SET || maskId: 82421 | delayTime: 0.5 | durationTime: -2 | changeType: 1 | curveIndex: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 82421 | path: S8242_Table | sceneName: Main | flagName: S8242_Box_1 | extraParams: -1
+SCENEITEM CREATE FLAG || itemType: 0 | id: 82422 | sceneName: Main | extraParams: -1 | path: S8242_GiftBox_Closed | flagName: S8242_Box_2
+Arvio stands still in Main
+Musa stands still in Main
+Sandy stands still in Main
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82421 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8242792) to Musa
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8242_Musa_2|Action:Idle)
+
+TRIGGER Procedure 0.0 Step 3.1 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8079 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Arvio|Mr Musa... sir! A moment of your time, please!}}
+
+TRIGGER Procedure 0.0 Step 4.1 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 824211
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8242142) to Arvio
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8242_Arvio_2)
+
+TRIGGER Procedure 0.0 Step 4.2 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8014 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 11) A conversation 2112_0 starts:
+{{dialogue|Musa|And you are...?}}
+{{dialogue|Arvio|Allow me to introduce myself. I'm Arvio, I run By the Stairs, the only general store in town! Nevertheless, I think you'll find our prices hard to beat!}}
+{{dialogue|Musa|I remember. The billboard, right? At the train station. You raised your hand the other day when I suggested you leave Sandrock.}}
+{{dialogue|Arvio|Er... well, you know, you made a really good offer... and I moved to Sandrock for the opportunities, so... it was hard to uh... ignore it... haha...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8242002) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8242_Player_2)
+
+TRIGGER Procedure 0.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 2113_0 starts:
+{{dialogue|Player|(What should I say?)}}
+
+*''Hey, what's going on?''
+*''(Stay silent)'' (No unique dialogue)
+
+{{dialogue|Arvio|indent=true|answer=Hey, what's going on?
+|''Player''! You came at the perfect time. I was about to introduce our wonderful Mr Musa here to the plan.}}
+
+TRIGGER Procedure 0.0 Step 8.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 2115_0 starts:
+{{dialogue|Arvio|Speaking of which... please, take a look at this gift box. You'll see it contains a hand picked selection of Sandrock specialties. My sister's pottery, Sandrice and Dried Sandberry. All fine goods, unavailable outside of this town.}}
+{{dialogue|Arvio|But of course, the highlight is certainly this eye-catching, dashing, beautiful gift box. This'll bring customers from all over! If you'd invest in By the Stairs, we can make these the biggest thing since... well, since ever!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 7.1 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) The player picks the first option in conversation segment 7186:
+{{dialogue|Musa|...And what do you think, ''Player''?}}
+
+*''I think it's a good idea.'' (No unique dialogue)
+*''It's a bit weak...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Arvio gains 2 favor
+
+TRIGGER Procedure 0.0 Step 7.2 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) The player picks the second option in conversation segment 7186:
+{{dialogue|Musa|...And what do you think, ''Player''?}}
+
+*''I think it's a good idea.'' (No unique dialogue)
+*''It's a bit weak...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Arvio gains -1 favor
+
+TRIGGER Procedure 0.0 Step 8.1 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 2116_0 starts:
+{{dialogue|Musa|You want me to invest? In what, a gift box?}}
+{{dialogue|Arvio|Of course! A gift box as beautiful as this... people will clamor to buy it! The billboard I set up has been bringing in customers already, why, people step off the train and first thing they ask is "where's By the Stairs?"}}
+{{dialogue|Musa|Okay. Is that it?}}
+{{dialogue|Arvio|Well... yeah... for now! If you invest, we'll be able to make better products all the time!}}
+{{dialogue|Musa|...And what do you think, ''Player''?}}
+
+*''I think it's a good idea.''
+*''It's a bit weak...''
+
+{{dialogue|Musa|indent=true|answer=I think it's a good idea.
+|reward={{NPC2|Arvio|rp=2}}|Seems your talent in your craft hasn't given you a sense of business.}}
+{{dialogue|Musa|indent=true|answer=It's a bit weak...
+|reward={{NPC2|Arvio|rp=-1}}|I agree.}}
+{{dialogue|Musa|First question. Do you know how many tourists come to Sandrock every year?}}
+{{dialogue|Arvio|Uh... several... thousand? I see a few people coming off the train every day...}}
+{{dialogue|Musa|According to my team in Atara, Sandrock sees a yearly average of less than 200 tourists.}}
+{{dialogue|Arvio|Ah... so few...}}
+{{dialogue|Musa|Your current demographic consists of tourists and local residents. With your current volume of inventory, I would estimate that your net profits are probably around 1000 Gols per month. So how much additional profit would your gift box generate?}}
+{{dialogue|Arvio|Uh... double?}}
+{{dialogue|Musa|Optimistic, but fine, let's say it doubles your income. Your monthly profits would be 2000 Gols. Let's take, for sake of argument, my previous investment into Highwind's general store. How much do you think that now makes?}}
+{{dialogue|Arvio|Ahh... I couldn't guess...}}
+{{dialogue|Musa|It now has an operational income of 100,000 Gols per month. According to our contract, I receive 20,000 Gols per month return on my investment.}}
+{{dialogue|Arvio|Wha... that's... so much...}}
+{{dialogue|Musa|Well, if that's all you have, then I think we're done here.}}
+{{dialogue|Arvio|Wait! Mr Musa! I... uh... I have more!}}
+{{dialogue|Musa|I'm listening.}}
+{{dialogue|Arvio|Uh... my billboard! Right! You saw it when you came in! That'll double my income again! It's marketing-}}
+{{dialogue|Musa|You don't understand. This "marketing" is just photos of you. What am I learning about the product? Where's the branding?}}
+{{dialogue|Musa|Alright. We're done.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8242793) to Musa
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8242_Musa_3)
+Musa stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8242792) from Musa
+
+TRIGGER Procedure 0.0 Step 13.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 82425
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 2119_0 starts:
+{{dialogue|Arvio|100,000 Gols... I... that much money...}}
+{{dialogue|Arvio|What... what am I doing wrong...}}
+{{dialogue|Player|(Arvio's devastated. What should I say?)}}
+
+*''Don't worry, you'll get another chance!''
+*''He's so condescending.''
+*''He's right you know...''
+
+{{dialogue|Arvio|Sorry, ''Player''... I need some time to think...}}
+The conversation ends.
+Set ArEmo to 1
+Arvio stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8242142) from Arvio
+Remove behavior CommanderMoveToFlagAndAction (idName: 8242002) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8242793) from Musa
+
+TRIGGER Procedure 0.0 Step 15.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Arvio stands still in Main
+Set global blackboard key talkmusa with info 1.
+Sandy stops standing still
+
+TRIGGER Procedure 0.0 Step 15.0 Order 11 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Arvio
+CONDITIONS
+Check if ArEmo is == 1
+ACTIONS
+(cId 99) A conversation 2121_0 starts:
+{{dialogue|Arvio|I was so sure...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 16.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Arvio stops standing still
+Arvio stands still in Store
+SCENEITEM DELETE || itemType: 0 | id: 82421
+SCENEITEM DELETE || itemType: 0 | id: 82422
+NPC ADD TAG || tag: AmirahStore

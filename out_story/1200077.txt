@@ -1,0 +1,134 @@
+Reading Mission 1200077: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200076
+
+TRIGGER Procedure 1.0 Step 4.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 2
+ACTIONS
+Trudy stops standing still
+CUTSCENE UI STATE EXIT || 
+START MISSION 1200076
+
+TRIGGER Procedure 1.0 Step 5.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200076
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1200077
+END MISSION 1200076
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200077
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: plantwithtrudy | info: 1 | exist: 1
+ACTIONS
+===￥not use￥===
+
+{{mission_details
+|desc = 
+|details = ￥not use￥
+}}
+Add 5 Coffee Tea Tree Seeds of Ordinary quality (Notify player)
+Add 45 Straw of Unknown quality (Notify player)
+Set COUNT to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 5
+------------------------------------------------------------
+EVENTS
+ON SEED PLANT || order: 0 | id: 16100010
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1200076 | targetId: 0 | transId: 80002770 | isAdd: 1
+Increment COUNT by 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SEED PLANT || order: 10 | id: 16100010
+CONDITIONS
+Check if COUNT is >= 5
+CHECK GLOBAL BLACKBOARD || key: plantwithtrudy | info: 1 | exist: 1
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || flagName: plantwithtrudy_player | sceneName: Main
+(cId 0) A conversation 1719, 1720, 1721, 1722 starts:
+{{dialogue|Trudy|￥not use￥}}
+{{dialogue|Trudy|￥not use￥}}
+{{dialogue|Trudy|￥not use￥}}
+{{dialogue|Trudy|￥not use￥}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1200076
+CUTSCENE UI STATE EXIT || 
+Trudy stops standing still
+GLOBAL BLACK BOARD REMOVE || key: plantwithtrudy
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1200078
+END MISSION 1200077
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200077
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: plantwithtrudy | info: 2 | exist: 1
+ACTIONS
+===￥not use￥===
+
+{{mission_details
+|desc = 
+|details = ￥not use￥
+}}
+Set COUNT to 0
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SEED PLANT || order: 10 | id: 16100010
+CONDITIONS
+Check if COUNT is >= 5
+CHECK GLOBAL BLACKBOARD || key: plantwithtrudy | info: 2 | exist: 1
+ACTIONS
+SUBMIT MISSION 1200076
+GLOBAL BLACK BOARD REMOVE || key: plantwithtrudy
+END MISSION 1200077

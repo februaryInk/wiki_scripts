@@ -1,0 +1,198 @@
+Reading Mission 1200216: First Impressions
+
+<onlyinclude>{{Infobox mission
+|name = First Impressions
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from First Impressions:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200215
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1200215
+The player receives a letter:
+{{mail|368}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200215
+CONDITIONS
+Always:
+ACTIONS
+Run mission First Impressions
+END MISSION 1200215
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200216
+CONDITIONS
+Always:
+ACTIONS
+===Construct Station Sign and Weather Vane===
+
+{{mission_details
+|desc = Construct the Station Sign and Weather Vane according to Heidi's diagrams to renovate Sandrock Station.
+|details = Construct Station Sign and Weather Vane
+*{{i2|Train Station Signboard|0/1}}
+*{{i2|Train Station Star Sign|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200215 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Install Station Sign and Weather Vane===
+
+{{mission_details
+|desc = Now you've build the parts, install them at the designated locations in the Train Station.
+|details = Install Station Sign and Weather Vane
+*{{i2|Train Station Signboard|0/1}}
+*{{i2|Train Station Star Sign|0/1}}
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 22161 | sceneName: Main | flagName: mason_start | extraParams: -1|CreatorItem|14000006_1,14000012_1|1547|-1|0 | path: Mission_hydroponic_empey
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 22161 | missionId: 1200215 | iconType: 3
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 22161
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 22161 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 22161 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 21871
+SCENEITEM DELETE || id: 22161 | itemType: 12
+SCENEITEM CREATE FLAG || itemType: 0 | id: 22162 | sceneName: Main | flagName: bridge_kaimu | extraParams: 0 | path: Mission_TrainStation_New
+Heidi stands still in Main
+Trudy stands still in Main and looks at Player
+Jensen stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: newstation_player
+DELAY MASK SET || maskId: 22161 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 0.5 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 22161 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 22161 | sec: 6
+
+TRIGGER Procedure 1.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 22161
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 22161) to Jensen
+(param: CMDAction:Salute|Delay:1)
+Add behavior CommanderNPCAction (idName: 22161) to Trudy
+(param: CMDAction:Cheer01|Delay:1)
+Add behavior CommanderNPCAction (idName: 22161) to Heidi
+(param: CMDAction:Cheer01|Delay:1)
+Add behavior CommanderMoveToFlagAndAction (idName: 22161) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:newstation_player|Action:LookSky)
+
+TRIGGER Procedure 1.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8009 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 22162) to Trudy
+(param: TargetScene:Main|MoveMode:Walk|FlagName:newstation_trudy2)
+Add behavior CommanderMoveToFlagAndAction (idName: 22162) to Heidi
+(param: TargetScene:Main|MoveMode:Walk|FlagName:newstation_heidi2)
+Add behavior CommanderMoveToFlagAndAction (idName: 22162) to Jensen
+(param: TargetScene:Main|MoveMode:Walk|FlagName:newstation_jensen2)
+Remove behavior CommanderMoveToFlagAndAction (idName: 22161) from Player
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8023 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 1728_0 starts:
+{{dialogue|Jensen|It's incredible, ''Player''! I've never felt like more of a conductor than right now...}}
+{{dialogue|Heidi|Yeah, you knocked it out of the park!}}
+{{dialogue|Trudy|Hm... In fact...}}
+{{dialogue|Trudy|''Player'', I think {{textcolor|green|you should be here when we greet Mr. Musa}}. I'd like him to meet one of the most promising additions to our township; you've really been pivotal in helping us turn the tide here in Sandrock.}}
+{{dialogue|Heidi|I agree!}}
+{{dialogue|Trudy|So what do you say?}}
+
+*''Sure!''
+*''I dunno, I'm more of a behind the scenes type...''
+
+{{dialogue|Heidi|indent=true|answer=I dunno, I'm more of a behind the scenes type...
+|Ah, shucks. Don't be bashful! C'mon, we insist!}}
+{{dialogue|Trudy|Splendid!}}
+{{dialogue|Trudy|Musa is scheduled to arrive in {{textcolor|green|two days}}, early in the morning. Just come to the station around that time. See you then!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 5.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 0) There is a conversation segment (id 5851) that ends:
+{{dialogue|Heidi|Ah, shucks. Don't be bashful! C'mon, we insist!}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 22161) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:newstation_player|Action:Nod_Story)
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Trudy stops standing still
+Heidi stops standing still
+Jensen stops standing still
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 22161) from Player
+Remove behavior CommanderNPCAction (idName: 22161) from Jensen
+Remove behavior CommanderNPCAction (idName: 22161) from Trudy
+Remove behavior CommanderNPCAction (idName: 22161) from Heidi
+Remove behavior CommanderMoveToFlagAndAction (idName: 22162) from Trudy
+Remove behavior CommanderMoveToFlagAndAction (idName: 22162) from Heidi
+Remove behavior CommanderMoveToFlagAndAction (idName: 22162) from Jensen
+SUBMIT MISSION 1200215
+END MISSION 1200216

@@ -1,0 +1,221 @@
+Reading Mission 1800273: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100068
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission The Show Must Go On is result 1 flag 1
+ACTIONS
+Run mission Salted Fish Blues
+
+TRIGGER Procedure 3.0 Step 0.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+CHECK DATE FLAG || flag: DATE:elsieleave | compare: 2 | days: 5
+
+GROUP 10:
+CHECK DATE FLAG || flag: elsieleave | compare: 2 | days: 5
+
+ACTIONS
+Run mission #1800273
+The special gift rule 5 for giving Heart Knot to Elsie is disabled. The rule was:
+The gift is accepted with:
+{{dialogue|Elsie|Huh? Is this for me? I ain't got time for all this sappy stuff right now, alright?}}
+
+ACTION DATE REMOVE FLAG || flag: DATE:elsieleave
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.3 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+Where's Mi-an is in state 1 with flag 0
+The Childhood Friend is in state 1 with flag 0
+Goodbye, Nia is in state 1 with flag 0
+The Kidnapping is in state 1 with flag 0
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: triallogan | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+CHECK NPC PK STATE || npc: 8000 | set: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+ACTION NPC UNEQUIP ALL ACCESSORY || npc: 8005
+ACTION NPC PUT EQUIP || npc: 8005 | itemId: 12202008
+ACTION NPC PUT EQUIP || npc: 8005 | itemId: 12002008
+ACTION NPC PUT EQUIP || npc: 8005 | itemId: 12102008
+ACTION NPC PUT EQUIP || npc: 8005 | itemId: 12302008
+ACTION NPC PUT UNEQUIP || npc: 8005 | itemId: 12202008
+ACTION NPC PUT UNEQUIP || npc: 8005 | itemId: 12002008
+ACTION NPC PUT UNEQUIP || npc: 8005 | itemId: 12102008
+ACTION NPC PUT UNEQUIP || npc: 8005 | itemId: 12302008
+NPC REPLACE ACTOR ICON || npc: 8005 | actorProtoID: 194
+NPC REPLACE SUIT || npcSuitID: 1
+END LOCK NPC ORDER MISSION || npc: 8005
+ACTION CUTSCENE START AUDIO TYPE || id: CG_ELSIEBACK | duration: 0 | audioType: NormalOff
+SET NPC PHOTO STAGE || npc: 8005 | stage: 1
+NPC CLOTH ADD MISSION ITEM || itemId: 12003022
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_ELSIEBACK | state: 8
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8273_0_1
+Cooper stands still in Main and looks at Mabel
+Mabel stands still in Main and looks at Elsie
+Elsie stands still in Main and looks at Cooper
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 82731
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 2695_0 starts:
+{{dialogue|Cooper|This... this duck... Yer jus' whistlin' and it does what you're sayin'? What...?}}
+{{dialogue|Mabel|Oh Elsie! You're finally home! Why're you dressed different? Are you hurt? Let Ma take a look... And the duck... what's goin' on hon'?}}
+{{dialogue|Elsie|I ain't hurt, I'm fine! Ma, Pa, I've been workin' real hard, been studyin', lookin' at their habits, an' I learned their ways, how to communicate with them real good. I call 'er {{textcolor|green|Daisy}}.}}
+{{dialogue|Cooper|Poppycock! What you talkin' 'bout, girl? Remember what happened to yer Ma-}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8273042) to Mabel
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8273_4_2|Action:ElbowHit|LookAtActor:8005)
+
+TRIGGER Procedure 0.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8004 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 2696_0 starts:
+{{dialogue|Cooper|Oof.}}
+{{dialogue|Elsie|...}}
+{{dialogue|Elsie|Y'know, Ma, Pa. I got somethin' I wanna say.}}
+{{dialogue|Elsie|Aw heck, I'm just sorry, Ma. I've... jus' been actin' a fool, really. I had a lotta time to think... and...}}
+{{dialogue|Elsie|...I'm jus' sorry for all my immature behavior before.}}
+{{dialogue|Mabel|Baby, as long as you're home safe, that's all me an' yer Pa ever wanted!}}
+{{dialogue|Cooper|I heard this one before. Now yer gonna be all good, an' do yer chores, right? Then yer gonna get some dumb idea in yer head, an' off we go again.}}
+{{dialogue|Elsie|But Pa-}}
+{{dialogue|Cooper|What? Am I wrong? Missy, I raised ya, I know what yer like. I give ya a week.}}
+{{dialogue|Elsie|Alright.}}
+{{dialogue|Cooper|I-}}
+{{dialogue|Cooper|This feels 'bit weird... normally you'd be arguin' with me by now. I dunno how to reply to that...}}
+{{dialogue|Elsie|A week. I'm gonna show you. I've changed, Pa. And I'll be expectin' an apology when this is over!}}
+{{dialogue|Cooper|Haha, in yer dreams, girly. Alright, yer on.}}
+{{dialogue|Cooper|Now get on in there, yer Ma's makin' pie. Welcome home.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 7.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8273052) to Elsie
+(param: TargetScene:CooperHome|MoveMode:Walk|FlagName:fadeelsie)
+Add behavior CommanderMoveToFlagAndAction (idName: 8273032) to Cooper
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8273_3_2|LookAtActor:8004|Reset:True)
+Add behavior CommanderMoveToFlagAndAction (idName: 8273043) to Mabel
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8273_4_2|LookAtActor:8003|Reset:True)
+UNLOCK NPC MARRIAGE || npc: 8005
+
+TRIGGER Procedure 0.0 Step 8.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 82733
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8273032) from Cooper
+Remove behavior CommanderMoveToFlagAndAction (idName: 8273043) from Mabel
+Add behavior CommanderMoveToFlag (idName: 8273033) to Cooper
+(param: TargetScene:CooperHome|MoveMode:Walk|FlagName:fadecooper2|Reset:True)
+Add behavior CommanderMoveToFlag (idName: 8273044) to Mabel
+(param: TargetScene:CooperHome|MoveMode:Walk|FlagName:fademabel|Reset:True)
+STOPWATCH REAL TIME SET || id: 82732 | sec: 2.5
+STOPWATCH REAL TIME SET || id: 82731 | sec: 2
+
+TRIGGER Procedure 0.0 Step 9.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 82731
+CONDITIONS
+Always:
+ACTIONS
+Cooper stops standing still
+Mabel stops standing still
+Elsie stops standing still
+Daisy stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8273042) from Mabel
+Remove behavior CommanderMoveToFlagAndAction (idName: 8273032) from Cooper
+Remove behavior CommanderMoveToFlagAndAction (idName: 8273043) from Mabel
+Run mission #1800274
+Cooper gains 10 favor
+Mabel gains 10 favor
+Elsie gains 10 favor
+
+TRIGGER Procedure 0.0 Step 10.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 82732
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8273042) from Mabel
+Remove behavior CommanderMoveToFlagAndAction (idName: 8273052) from Elsie
+Remove behavior CommanderMoveToFlagAndAction (idName: 8273032) from Cooper
+Remove behavior CommanderMoveToFlagAndAction (idName: 8273043) from Mabel
+Remove behavior CommanderMoveToFlag (idName: 8273033) from Cooper
+Remove behavior CommanderMoveToFlag (idName: 8273044) from Mabel
+Cooper stops standing still
+Mabel stops standing still
+Elsie stops standing still
+CUTSCENE UI STATE EXIT || 
+NPC LEAVE || npc: 8093
+END MISSION 1800273

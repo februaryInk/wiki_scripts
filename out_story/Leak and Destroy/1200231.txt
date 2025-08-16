@@ -1,0 +1,888 @@
+Reading Mission 1200231: Leak and Destroy
+
+<onlyinclude>{{Infobox mission
+|name = Leak and Destroy
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Leak and Destroy:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200230
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1200230
+START MISSION 1200230
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200230
+CONDITIONS
+Always:
+ACTIONS
+Run mission Leak and Destroy
+END MISSION 1200230
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200231
+CONDITIONS
+Always:
+ACTIONS
+===Go to the Valley of Whispers===
+
+{{mission_details
+|desc = Meet the Civil Corps at the entrance of the Valley of Whispers.
+|details = Go to the Valley of Whispers
+}}
+Add behavior CommanderMoveToFlagAndAction (idName: 22311) to Justice
+(param: TargetScene:Main|MoveMode:Run|FlagName:mist_cliff_justice1)
+Add behavior CommanderMoveToFlagAndAction (idName: 22311) to Unsuur
+(param: TargetScene:Main|MoveMode:Run|FlagName:mist_cliff_unsuur1)
+SCENEITEM DELETE || id: 21873 | itemType: 0
+Rat Queen stands still in Main
+SCENEITEM CREATE FLAG || itemType: 0 | id: 22311 | sceneName: Main | extraParams: 0 | path: Mission_Monster_Bandirat01_AttackPipeline | flagName: mist_queen_rat1
+SCENEITEM CREATE FLAG || itemType: 0 | id: 22312 | extraParams: 0 | path: Mission_Monster_Bandirat02_AttackPipeline | sceneName: Main | flagName: mist_queen_rat2
+SCENEITEM CREATE FLAG || itemType: 0 | id: 22313 | extraParams: 0 | path: Mission_Monster_Bandirat_0_AttackPipeline | sceneName: Main | flagName: mist_queen_rat3
+ACTOR BUFF ADD || npc: 8080 | buffId: 1153 | instanceId: 22311
+NPC SET CAN INTERACT || npc: 8008 | canInteract: 0
+NPC SET CAN INTERACT || npc: 8026 | canInteract: 0
+AREA TRIGGER CREATE || missionId: 1200230 | id: 22311 | flagName: mist_cliff_trigger1 | transId: 80010515 | mapIcon: MissionArea | showOnMap: 1 | sceneName: Main
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | id: 22311 | enter: 0 | npc: 8000
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 22311 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+ACTOR BLIND SET || set: 1
+AREA TRIGGER DELETE || id: 22311
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22311
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 22311) from Unsuur
+Remove behavior CommanderMoveToFlagAndAction (idName: 22311) from Justice
+Justice stands still in Main and looks at Player
+Unsuur stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || flagName: mist_cliff_player1 | sceneName: Main
+DELAY MASK SET || maskId: 22311 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 22311
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 6484 starts:
+{{dialogue|Justice|Ok, here we go. Make sure all your suits are on tight! {{textcolor|green|Find the source of the goo and stop it}}, that's our mission!}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Justice stops standing still
+Unsuur stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 22312) to Justice
+(param: TargetScene:Main|MoveMode:Walk|FlagName:mist_cliff_justice1)
+Add behavior CommanderMoveToFlagAndAction (idName: 22312) to Unsuur
+(param: TargetScene:Main|MoveMode:Walk|FlagName:mist_cliff_unsuur1)
+
+TRIGGER Procedure 1.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8008 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 6485, 6486, 6487, 6488, 6489, 6490, 6491, 6492, 6493, 6494, 6495 starts:
+{{dialogue|Unsuur|What a view. From afar I thought these pillars were rocks.}}
+{{dialogue|Justice|There's always been some pollutants in this canyon from years of reckless salvaging. So we rarely venture down here now.}}
+{{dialogue|Justice|But you know, this canyon's completely man-made! They just dug and dug until all that's left were these Old World husks.}}
+{{dialogue|Unsuur|The power of man is both awe-inspiring and terrifying.}}
+{{dialogue|Justice|Getting philosophical?}}
+{{dialogue|Unsuur|I can't wrap my head around how the buildings of the Old World were build sturdy enough to withstand both the Day of Calamity and the passing of time.}}
+{{dialogue|Unsuur|Then, hundreds of years later, people go looking for these old buildings and created this canyon.}}
+{{dialogue|Justice|Yeah...}}
+{{dialogue|Unsuur|But then I think about how I stack rocks and it all makes sense.}}
+{{dialogue|Justice|It... does?}}
+{{dialogue|Unsuur|It just takes time and patience.}}
+
+TRIGGER Procedure 1.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTOR BLIND SET || set: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 22312) from Justice
+Remove behavior CommanderMoveToFlagAndAction (idName: 22312) from Unsuur
+CUTSCENE UI STATE EXIT || 
+Add behavior CommanderMoveToFlagAndAction (idName: 22313) to Justice
+(param: TargetScene:Main|MoveMode:Run|FlagName:mist_queen_justice1)
+Add behavior CommanderMoveToFlagAndAction (idName: 22313) to Unsuur
+(param: TargetScene:Main|MoveMode:Run|FlagName:mist_queen_unsuur1)
+===Explore the Valley===
+
+{{mission_details
+|desc = This is the most contaminated area of the Valley of Whispers. Find the source of the contamination and fix it.
+|details = Explore the Valley
+}}
+AREA TRIGGER ONCE CREATE || missionId: 1200230 | id: 22312 | sceneName: Main | flagName: mist_cliff_trigger2 | showOnMap: 0 | mapIcon: 0 | transId: 0
+AREA TRIGGER ONCE CREATE || id: 22313 | missionId: 1200230 | sceneName: Main | flagName: mist_cliff_trigger3 | showOnMap: 1 | mapIcon: MissionArea | transId: 80010515
+AUTOSAVE TRY || 
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22312
+CONDITIONS
+Always:
+ACTIONS
+ACTION SHOW CUSTOM IMAGE TIPS || preset: Mission | content: 80011848
+AREA TRIGGER DELETE || id: 22311
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22313
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+STOPWATCH REAL TIME SET || id: 22311 | sec: 5
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 22311
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 6496, 6497 starts:
+{{dialogue|Rat Queen|Tearth this lodging apart until thee findeth h'r! {{textcolor|green|The wench}} might not but being hiding h're somewh're! Smoketh h'r out!}}
+{{dialogue|Rat Queen|Halt! who goeth th're?}}
+Remove behavior CommanderMoveToFlagAndAction (idName: 22313) from Justice
+Remove behavior CommanderMoveToFlagAndAction (idName: 22313) from Unsuur
+Justice stands still in Main
+Unsuur stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: mist_queen_player1
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 22314) to Player
+(param: CMDAction:LookSky)
+Add behavior CommanderNPCAction (idName: 22314) to Unsuur
+(param: CMDAction:LookAround)
+Add behavior CommanderNPCAction (idName: 22314) to Justice
+(param: CMDAction:LookAround)
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 6498 starts:
+{{dialogue|Rat Queen|Up h're!}}
+
+TRIGGER Procedure 2.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 22314) from Justice
+Remove behavior CommanderNPCAction (idName: 22314) from Unsuur
+Remove behavior CommanderPlayerAction (idName: 22314) from Player
+Add behavior CommanderMoveToFlagAndAction (idName: 22316) to Justice
+(param: TargetScene:Main|MoveMode:Walk|FlagName:mist_queen_justice2|LookAtActor:8080)
+Add behavior CommanderMoveToFlagAndAction (idName: 22316) to Unsuur
+(param: TargetScene:Main|MoveMode:Walk|FlagName:mist_queen_unsuur2|LookAtActor:8080)
+Add behavior CommanderMoveToFlag (idName: 22316) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:mist_queen_player2|LookAtActor:8080)
+STOPWATCH REAL TIME SET || id: 22314 | sec: 3
+
+TRIGGER Procedure 2.0 Step 4.3 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 223121
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || sec: 2.5 | id: 22313
+
+TRIGGER Procedure 2.0 Step 4.6 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 22313
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 6499 starts:
+{{dialogue|Rat Queen|What endues thee h're? What is thy quest?}}
+
+TRIGGER Procedure 2.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 22315) to Player
+(param: CMDAction:Talk|TargerFlag:mist_queen_ratqueen1)
+Add behavior CommanderNPCAction (idName: 22315) to Unsuur
+(param: CMDAction:Talk|TargerFlag:mist_queen_ratqueen1)
+Add behavior CommanderNPCAction (idName: 22315) to Justice
+(param: CMDAction:Talk|TargerFlag:mist_queen_ratqueen1)
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Justice stops standing still
+Unsuur stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 22316) to Justice
+(param: TargetScene:Main|MoveMode:Run|FlagName:mist_queen_justice4)
+Add behavior CommanderMoveToFlagAndAction (idName: 22316) to Unsuur
+(param: TargetScene:Main|MoveMode:Run|FlagName:mist_queen_unsuur4)
+===Repair the Pipes===
+
+{{mission_details
+|desc = Now you've found the pipes, use your prepared materials to repair them all.
+|details = Repair the Pipes
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 22311 | flagName: mist_pipe1_pipe1 | sceneName: Main | path: Mission_hydroponic_empey | extraParams: Mission_pipe1|CreatorItem|19111007_2,19110007_2,19800007_3|80010525|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 22311 | missionId: 1200230 | iconType: 3
+AREA TRIGGER ONCE CREATE || flagName: mist_pipe1_trigger1 | id: 22314 | missionId: 1200230 | sceneName: Main | showOnMap: 0 | mapIcon: MissionArea | transId: 0
+AUTOSAVE TRY || 
+SCENEITEM CREATE FLAG || path: Mission_fxpickup | itemType: 0 | id: 223111 | sceneName: Main | extraParams: 0 | flagName: mist_pipe1_pipe1
+
+TRIGGER Procedure 2.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 6500, 6501, 6502, 6503, 6504, 6505, 6506, 6507 starts:
+{{dialogue|Rat Queen|Saveth thy breath. Thou art the {{textcolor|green|princess}}'s guardeth, nay doubteth! W'rking f'r mine own stepdaught'r!}}
+{{dialogue|Unsuur|It talkth-}}
+{{dialogue|Rat Queen|I've hath heard enough! Guards, seize those folk!}}
+{{dialogue||Squeak squeak squeaaaaak! Meep meep!}}
+{{dialogue|Rat Queen|The fumes from the gas leaks art making thee dizzy?}}
+{{dialogue|Rat Queen|Yeah...  careth not.}}
+{{dialogue|Rat Queen|Destroyeth them!}}
+{{dialogue|Justice|We come in... peace?}}
+SCENEITEM DELETE || itemType: 0 | id: 22311
+SCENEITEM DELETE || id: 22312 | itemType: 0
+SCENEITEM DELETE || itemType: 0 | id: 22313
+MONSTER ADD TAG || tag: PipelineBandirat | isAdd: 1
+ACTOR BLIND SET || set: 1
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 4) There is a conversation segment (id 6502) that ends:
+{{dialogue|Rat Queen|I've hath heard enough! Guards, seize those folk!}}
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 22315) from Justice
+Remove behavior CommanderNPCAction (idName: 22315) from Unsuur
+Remove behavior CommanderPlayerAction (idName: 22315) from Player
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+ACTOR BLIND SET || set: 0
+Justice stops standing still
+Unsuur stops standing still
+===Defeat the Bandirats===
+
+{{mission_details
+|desc = Looks like Bandirats have damaged the pipes around here, and they're leaking the strange pollutant. Defeat the Bandirats!
+|details = Defeat the Bandirats
+}}
+Set PipelineBandirat to 0
+Add behavior CommanderBubbleTag (idName: 22311) to Rat Queen
+(param: BubbleTag:Story1200230_8080|BubbleTime:6|minTime:12)
+Remove behavior CommanderMoveToFlagAndAction (idName: 22316) from Justice
+Remove behavior CommanderMoveToFlagAndAction (idName: 22316) from Unsuur
+Remove behavior CommanderMoveToFlag (idName: 22316) from Player
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 3
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 0 | tag: PipelineBandirat
+CONDITIONS
+Always:
+ACTIONS
+Increment PipelineBandirat by 1
+MISSION TARGET COUNTER CHANGE || missionId: 1200230 | targetId: 3 | isAdd: 1 | transId: 80011854
+
+TRIGGER Procedure 3.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 10 | tag: PipelineBandirat
+CONDITIONS
+Check if PipelineBandirat is >= 3
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 22312 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+Remove behavior CommanderBubbleTag (idName: 22311) from Rat Queen
+MONSTER ADD TAG || tag: PipelineBandirat | isAdd: 0
+
+TRIGGER Procedure 3.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22312
+CONDITIONS
+Always:
+ACTIONS
+Justice stands still in Main
+Unsuur stands still in Main
+PLAYER SET POS ROT FLAG || flagName: mist_queen_player1 | sceneName: Main
+DELAY MASK SET || maskId: 22312 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 22312
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 6508, 6509 starts:
+{{dialogue|Rat Queen|Thee've did knock out all of mine own henchmen. I hate when people doeth that!}}
+{{dialogue|Rat Queen|We shall meeteth again, humans. And next timeth, we shall beest did prepare!}}
+
+TRIGGER Procedure 3.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Rat Queen stops standing still
+Add behavior CommanderTeleport (idName: 22312) to Rat Queen
+(param: TargetScene:Main|TargetFlag:mist_queen_ratqueen2)
+STOPWATCH REAL TIME SET || id: 22312 | sec: 2
+
+TRIGGER Procedure 3.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 22312
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderTeleport (idName: 22312) from Rat Queen
+ACTOR BUFF REMOVE || npc: 8080 | instanceId: 22311
+NPC LEAVE || npc: 8080
+(cId 6) A conversation 6510, 6511, 6512, 6513 starts:
+{{dialogue|Justice|Hm... so wait, {{textcolor|green|these rat folk were the ones causing the leaks}}? What in the...}}
+{{dialogue|Unsuur|Sir, it seems we've stumbled into some sort of mutant rodent political conflict...}}
+{{dialogue|Justice|Ugh, okay. Let's just keep our eyes on the prize: plug up the piping! We'll think about how to keep the rodents out later.}}
+{{dialogue|Justice|Alright, ''Player''. We got your back. Roll out!}}
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22314
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 22316) from Justice
+Remove behavior CommanderMoveToFlagAndAction (idName: 22316) from Unsuur
+Justice stands still in Main and looks at Player
+Unsuur stands still in Main and looks at Player
+(cId 7) A conversation 6521, 6522 starts:
+{{dialogue|Justice|Well, well, here we are.}}
+{{dialogue|Unsuur|Be careful, ''Player''.}}
+
+TRIGGER Procedure 4.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 22311
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 21877
+(cId 8) A conversation 6523, 6524 starts:
+{{dialogue|Unsuur|Nice one, Builder.}}
+{{dialogue|Justice|Good job, that's one. But it looks like there might be more than one leak, let's look around.}}
+SCENEITEM DELETE || id: 223111 | itemType: 0
+ACTOR BLIND SET || set: 1
+
+TRIGGER Procedure 4.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1200230 | targetId: 4 | transId: 80010526 | isAdd: 1
+Justice stops standing still
+Unsuur stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 22317) to Justice
+(param: TargetScene:Main|MoveMode:Run|FlagName:mist_pipe2_justice1|LookAtActor:8026)
+Add behavior CommanderMoveToFlagAndAction (idName: 22317) to Unsuur
+(param: TargetScene:Main|MoveMode:Run|FlagName:mist_pipe2_unsuur1|LookAtActor:8008)
+AREA TRIGGER ONCE CREATE || missionId: 1200230 | id: 22315 | sceneName: Main | flagName: mist_pipe2_trigger1 | showOnMap: 1 | mapIcon: MissionArea | transId: 80010515
+ACTOR BLIND SET || set: 0
+AUTOSAVE TRY || 
+
+TRIGGER Procedure 4.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22315
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 22317) from Justice
+Remove behavior CommanderMoveToFlagAndAction (idName: 22317) from Unsuur
+Justice stands still in Main and looks at Unsuur
+Unsuur stands still in Main and looks at Justice
+CUTSCENE UI STATE ENTER || 
+(cId 9) A conversation 1916_0 starts:
+{{dialogue|Unsuur|Now I remember where I've heard about these rat people before...}}
+{{dialogue|Unsuur|That rat lady was the queen of the Bandirats. They're known for stealing minor objects of sentimental value. ...My rocks could be in danger...}}
+{{dialogue|Justice|Bandirats? Where'd you hear something like that?}}
+{{dialogue|Unsuur|Well. In efforts to keep up with Captain's stellar record of mouse catching, I decided to do a bit of research on mice, meeces, and other mouse related creatures.}}
+{{dialogue|Justice|I see... You know... I don't think anyone actually expects you to catch any mice, pal. It really is more of a cat thing. It's kinda... the main reason we hired him in the first place.}}
+{{dialogue|Unsuur|You said it yourself, sir: a true Civil Corps hero knows every one of our duties inside and out, and can perform any of them on command if necessary.}}
+{{dialogue|Justice|Hm... Yeah... I did say something like that...}}
+The conversation ends.
+
+TRIGGER Procedure 4.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Justice stops standing still
+Unsuur stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 22318) to Justice
+(param: TargetScene:Main|MoveMode:Run|FlagName:mist_pipe2_justice2)
+Add behavior CommanderMoveToFlagAndAction (idName: 22318) to Unsuur
+(param: TargetScene:Main|MoveMode:Run|FlagName:mist_pipe2_unsuur2)
+SCENEITEM CREATE FLAG || itemType: 11 | id: 22312 | path: Mission_hydroponic_empey | extraParams: Mission_pipe2|CreatorItem|19111007_2,19110007_2,19800007_3|80010525|Fix|1.4 | sceneName: Main | flagName: mist_pipe2_pipe2
+CUTSCENE UI STATE EXIT || 
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 22312 | missionId: 1200230 | iconType: 3
+SCENEITEM CREATE FLAG || path: Mission_fxpickup | itemType: 0 | id: 223121 | sceneName: Main | extraParams: 0 | flagName: mist_pipe2_pipe2
+
+TRIGGER Procedure 5.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 22312
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 22313 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+SCENEITEM DELETE || itemType: 0 | id: 21878
+SCENEITEM DELETE || id: 223121 | itemType: 0
+
+TRIGGER Procedure 5.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 22313 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 22318) from Justice
+Remove behavior CommanderMoveToFlagAndAction (idName: 22318) from Unsuur
+Justice stands still in Main and looks at Player
+Unsuur stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: mist_pipe2_player2
+DELAY MASK SET || maskId: 22313 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 5.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 22313 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 10) A conversation 6527, 6528, 6529, 6530 starts:
+{{dialogue|Unsuur|Civil Corps: two. Weird poison gas: zero.}}
+{{dialogue|Justice|Nice work, ''Player''. Let's look around to see if there are any more leaks! Maybe we can get back to town in time for happy hour at the Blue Moon.}}
+{{dialogue|Unsuur|Isn't all the milk in town poisoned right now?}}
+{{dialogue|Justice|Good point...}}
+ACTOR BLIND SET || set: 1
+
+TRIGGER Procedure 5.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTOR BLIND SET || set: 0
+MISSION TARGET COUNTER CHANGE || missionId: 1200230 | targetId: 4 | transId: 80010526 | isAdd: 1
+Justice stops standing still
+Unsuur stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 22319) to Justice
+(param: TargetScene:Main|MoveMode:Run|FlagName:mist_pipe3_justice1)
+Add behavior CommanderMoveToFlagAndAction (idName: 22319) to Unsuur
+(param: TargetScene:Main|MoveMode:Run|FlagName:mist_pipe3_unsuur1)
+SCENEITEM CREATE FLAG || itemType: 11 | id: 22313 | path: Mission_pipe3_empty | sceneName: Main | flagName: mist_pipe3_pipe3 | extraParams: Mission_pipe3|CreatorItem|19111007_2,19110007_2,19800007_3|80010525|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 22313 | missionId: 1200230 | iconType: 3
+CUTSCENE UI STATE EXIT || 
+SCENEITEM CREATE FLAG || itemType: 0 | id: 223131 | sceneName: Main | extraParams: 0 | flagName: mist_pipe3_pipe3 | path: Mission_fxpickup
+
+TRIGGER Procedure 6.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 22313
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 22314 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+SCENEITEM DELETE || itemType: 0 | id: 21879
+SCENEITEM DELETE || itemType: 0 | id: 223131
+
+TRIGGER Procedure 6.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 22314 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 22319) from Justice
+Remove behavior CommanderMoveToFlagAndAction (idName: 22319) from Unsuur
+Justice stands still in Main and looks at Player
+Unsuur stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: mist_pipe3_player1
+MONSTER ADD TAG || tag: PipelineEvil | isAdd: 1
+ACTOR BLIND SET || set: 1
+DELAY MASK SET || maskId: 22314 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 6.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 22314 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 11) A conversation 6531, 6532, 6533, 6534, 6535, 6536, 6537, 6538, 6539, 6540 starts:
+{{dialogue|Justice|Nice one, this seems to be the last one, ''Player''.}}
+{{dialogue|Justice|Hm... you guys feel that?}}
+{{dialogue|Unsuur|The feeling of bonding? The feeling of accomplishment that comes with overcoming a challenge together? The feeling of friendship?}}
+{{dialogue|Justice|Uh, yeah, that. But also... the air is still {{textcolor|red|so thick}}, even through the suit... but we plugged all the leaks... What gives!?}}
+{{dialogue|Unsuur|Maybe we can ask that guy.}}
+{{dialogue|Justice|Woah!}}
+{{dialogue||{{textcolor|green|Gree... greeeno....}}}}
+{{dialogue|Unsuur|Permission to treat target as hostile, sir?}}
+{{dialogue|Justice|It's a mutant, man!}}
+{{dialogue|Unsuur|I hate it when I'm right...}}
+ACTOR BLIND SET || set: 1
+
+TRIGGER Procedure 7.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTOR BLIND SET || set: 0
+CUTSCENE UI STATE EXIT || 
+ACTOR BLIND SET || set: 0
+MISSION TARGET COUNTER CHANGE || missionId: 1200230 | targetId: 4 | isAdd: 1 | transId: 80010526
+===Defeat the Contaminated Plierimp===
+
+{{mission_details
+|desc = When you repaired the last pipe, a Contaminated Plierimp appeared! Defeat it and get out of there.
+|details = Defeat the Contaminated Plierimp
+}}
+Justice stops standing still
+Unsuur stops standing still
+AUTOSAVE TRY || 
+
+TRIGGER Procedure 7.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 0 | tag: PipelineEvil
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 22315 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+MONSTER ADD TAG || tag: PipelineEvil | isAdd: 0
+
+TRIGGER Procedure 7.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22315
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: mist_pipe3_player1
+Unsuur stands still in Main
+Justice stands still in Main
+DELAY MASK SET || maskId: 22315 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+ACTOR BLIND SET || set: 1
+
+TRIGGER Procedure 7.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 22315
+CONDITIONS
+Always:
+ACTIONS
+(cId 12) A conversation 1917_0, 7223, 7224, 7225, 2122_0 starts:
+{{dialogue|Justice|Whew! That was a close one!}}
+{{dialogue|Unsuur|Not really, we kinda owned that guy.}}
+{{dialogue|Justice|Uh, nevermind that... Did this dude {{textcolor|green|come out of the pipeworks}}? Glad ''Player'' sealed 'em up. These Old World pipes are like a box of chocolates, you never know what you gonna get.}}
+{{dialogue|Unsuur|Mission accomplished, sir?}}
+{{dialogue|Justice|Well, not exactly... All this {{textcolor|green|goo}} is still here! And it's still giving off the weird green gas... Sigh... Tell you one thing, we're gonna need more than a mop and bucket... grumble...}}
+{{dialogue|Justice|What's this then...? Seems this is the, uh "consumer" version of this here green goo...}}
+The conversation ends.
+{{dialogue|Justice|Looks like they were all ready to be shipped... "expiration date: CE 12000..."}}
+{{dialogue|Unsuur|So it's still good for another 11,320 years or so. Pass it this way.}}
+{{dialogue|Justice|Eh, alright, pal...}}
+{{dialogue|Unsuur|Hm. To use: massage through hair and rinse well... Ooh.  Ingredients. I love reading these. Alky... lamide bet... a... ine. Wow. Wonder what that is.}}
+{{dialogue|Justice|...By Peach's great ghost, you've got it!}}
+{{dialogue|Unsuur|Got it right here, sir. You just gave it to me.}}
+{{dialogue|Justice|No, no! The key to getting rid of all this gunk is right there in your hand!}}
+
+*''The bottle!''
+*''Your glove!''
+*''The magic that was in you all along!''
+
+{{dialogue|Justice|indent=true|answer=The bottle!
+|Exactly!}}
+{{dialogue|Unsuur|indent=true|answer=Your glove!
+|My... glove...?}}
+{{dialogue|Justice|indent=true|Ugh! Guys!}}
+{{dialogue|Unsuur|indent=true|answer=The magic that was in you all along!
+|Ma...gic...?}}
+{{dialogue|Justice|indent=true|Ugh! Come on, man, what are you talking about!?}}
+{{dialogue|Justice|With a {{textcolor|green|list of ingredients}}, Director Qi will know exactly how this stuff is made! Then he can put it into the... uh, I dunno, anti-chemical... spline reticulation... scanny... thing...}}
+{{dialogue|Unsuur|...Then he can invent a thing to... make it go away...?}}
+{{dialogue|Justice|Bingo! Now you're on the trolley! And, good call with the ingredients thing, too, pal. That's flippin' teamwork!}}
+{{dialogue||Civil Cooorp!}}
+{{dialogue|Unsuur|Just... Just doin' my job...}}
+{{dialogue|Justice|Alright. ''Player'', I think we're about ready to wrap this mission up. {{textcolor|green|Can you take this container to Director Qi}}? Admittedly, we're followin' up on a hunch. But it's the best lead we got.}}
+
+*''Sure thing. {{textcolor|green| (Leave area)}}''
+*''Can't you do it?''
+*''Hold on, I want to explore a bit more.''
+
+{{dialogue|Justice|indent=true|answer=Sure thing. {{textcolor|green| (Leave area)}}
+|reward={{i2|Greeno Sample|1}}|Right on! Now let's get out of here... before another one of those mutant guys shows up...}}
+{{dialogue|Justice|indent=true|answer=Hold on, I want to explore a bit more.
+|Oh. Yeah. Sure.}}
+{{dialogue|Justice|Eh, well, if I'm bein' honest, it can be kinda hard to get anything out of that guy. I think Qi likes you better than just about any of us.}}
+{{dialogue|Unsuur|The Director and I get along pretty well.}}
+{{dialogue|Justice|Yeah, but you always end up in there for hours talkin' about... rocks and stuff. I don't need you doin' that on company time!}}
+{{dialogue|Unsuur|Aye, sir.}}
+{{dialogue|Justice|''Player'', I think we're about ready to wrap this mission up. {{textcolor|green|Can you take one of these containers to Director Qi}}?}}
+
+*''Sure thing. {{textcolor|green| (Leave area)}}''
+*''Can't you do it?''
+*''Hold on, I want to explore a bit more.''
+
+{{dialogue|Justice|indent=true|answer=Sure thing. {{textcolor|green| (Leave area)}}
+|reward={{i2|Greeno Sample|1}}|Right on! Now let's get out of here... before another one of those mutant guys shows up...}}
+{{dialogue|Justice|indent=true|answer=Can't you do it?
+|Eh, well, if I'm bein' honest, it can be kinda hard to get anything out of that guy. I think Qi likes you better than just about any of us.}}
+{{dialogue|Unsuur|indent=true|The Director and I get along pretty well.}}
+{{dialogue|Justice|indent=true|Yeah, but you always end up in there for hours talkin' about... rocks and stuff. I don't need you doin' that on company time!}}
+{{dialogue|Unsuur|indent=true|Aye, sir.}}
+{{dialogue|Justice|indent=true|''Player'', I think we're about ready to wrap this mission up. {{textcolor|green|Can you take one of these containers to Director Qi}}?}}
+
+:*''Sure thing. {{textcolor|green| (Leave area)}}''
+:*''Hold on, I want to explore a bit more.''
+
+{{dialogue|Justice|indent=double|answer=Sure thing. {{textcolor|green| (Leave area)}}
+|reward={{i2|Greeno Sample|1}}|Right on! Now let's get out of here... before another one of those mutant guys shows up...}}
+{{dialogue|Justice|indent=double|answer=Hold on, I want to explore a bit more.
+|Oh. Yeah. Sure.}}
+{{dialogue|Justice|indent=true|answer=Hold on, I want to explore a bit more.
+|Oh. Yeah. Sure.}}
+
+TRIGGER Procedure 8.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 6553) that ends:
+{{dialogue|Justice|Right on! Now let's get out of here... before another one of those mutant guys shows up...}}
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 22316 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+Add 1 Greeno Sample of Default quality (Notify player)
+
+TRIGGER Procedure 8.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22316
+CONDITIONS
+Always:
+ACTIONS
+Justice stops standing still
+Unsuur stops standing still
+Justice stands still in Main
+Unsuur stands still in Main
+PLAYER SET POS ROT FLAG || flagName: mist_pipe3_player2 | sceneName: Main
+NPC SET CAN INTERACT || npc: 8008 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8026 | canInteract: 1
+DELAY MASK SET || maskId: 22316 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+ACTION NPC PUT UNEQUIP || npc: 8008 | itemId: 12501003
+ACTION NPC PUT UNEQUIP || itemId: 12501004 | npc: 8026
+NPC ANIM FLOAT REMOVE || npc: 8026 | requestID: 22231
+ACTOR BUFF REMOVE || instanceId: 22231 | npc: 8008
+ACTOR BUFF REMOVE || instanceId: 22231 | npc: 8026
+
+TRIGGER Procedure 8.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 22316
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 22311
+ACTOR BLIND SET || set: 0
+CUTSCENE UI STATE EXIT || 
+Justice stops standing still
+Unsuur stops standing still
+Run mission Clear the Air
+SUBMIT MISSION 1200230
+END MISSION 1200231
+
+TRIGGER Procedure 9.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 6547) that ends:
+{{dialogue|Justice|Oh. Yeah. Sure.}}
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+NPC SET CAN INTERACT || canInteract: 1 | npc: 8008
+===Talk to Justice===
+
+{{mission_details
+|desc = There's a lot to explore in the Valley of Whispers. When you've finished exploring, go and talk to Justice.
+|details = Talk to Justice
+}}
+ACTOR BLIND SET || set: 0
+
+TRIGGER Procedure 9.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Justice
+CONDITIONS
+Always:
+ACTIONS
+(cId 13) A conversation 1921_0 starts:
+{{dialogue|Justice|''Player'', I think we're about ready to wrap this mission up. {{textcolor|green|Can you take one of these containers to Director Qi}}?}}
+
+*''Sure thing. {{textcolor|green| (Leave area)}}''
+*''Can't you do it?''
+*''Hold on, I want to explore a bit more.''
+
+{{dialogue|Justice|indent=true|answer=Sure thing. {{textcolor|green| (Leave area)}}
+|reward={{i2|Greeno Sample|1}}|Right on! Now let's get out of here... before another one of those mutant guys shows up...}}
+{{dialogue|Justice|indent=true|answer=Hold on, I want to explore a bit more.
+|Oh. Yeah. Sure.}}
+{{dialogue|Justice|Eh, well, if I'm bein' honest, it can be kinda hard to get anything out of that guy. I think Qi likes you better than just about any of us.}}
+{{dialogue|Unsuur|The Director and I get along pretty well.}}
+{{dialogue|Justice|Yeah, but you always end up in there for hours talkin' about... rocks and stuff. I don't need you doin' that on company time!}}
+{{dialogue|Unsuur|Aye, sir.}}
+{{dialogue|Justice|''Player'', I think we're about ready to wrap this mission up. {{textcolor|green|Can you take one of these containers to Director Qi}}?}}
+
+*''Sure thing. {{textcolor|green| (Leave area)}}''
+*''Can't you do it?''
+*''Hold on, I want to explore a bit more.''
+
+{{dialogue|Justice|indent=true|answer=Sure thing. {{textcolor|green| (Leave area)}}
+|reward={{i2|Greeno Sample|1}}|Right on! Now let's get out of here... before another one of those mutant guys shows up...}}
+{{dialogue|Justice|indent=true|answer=Can't you do it?
+|Eh, well, if I'm bein' honest, it can be kinda hard to get anything out of that guy. I think Qi likes you better than just about any of us.}}
+{{dialogue|Unsuur|indent=true|The Director and I get along pretty well.}}
+{{dialogue|Justice|indent=true|Yeah, but you always end up in there for hours talkin' about... rocks and stuff. I don't need you doin' that on company time!}}
+{{dialogue|Unsuur|indent=true|Aye, sir.}}
+{{dialogue|Justice|indent=true|''Player'', I think we're about ready to wrap this mission up. {{textcolor|green|Can you take one of these containers to Director Qi}}?}}
+
+:*''Sure thing. {{textcolor|green| (Leave area)}}''
+:*''Hold on, I want to explore a bit more.''
+
+{{dialogue|Justice|indent=double|answer=Sure thing. {{textcolor|green| (Leave area)}}
+|reward={{i2|Greeno Sample|1}}|Right on! Now let's get out of here... before another one of those mutant guys shows up...}}
+{{dialogue|Justice|indent=double|answer=Hold on, I want to explore a bit more.
+|Oh. Yeah. Sure.}}
+{{dialogue|Justice|indent=true|answer=Hold on, I want to explore a bit more.
+|Oh. Yeah. Sure.}}
+
+TRIGGER Procedure 9.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Greeno Sample of Default quality (Notify player)
+Justice stops standing still
+Unsuur stops standing still
+NPC SET CAN INTERACT || npc: 8008 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8026 | canInteract: 1
+ACTION NPC PUT UNEQUIP || npc: 8008 | itemId: 12501003
+ACTION NPC PUT UNEQUIP || npc: 8026 | itemId: 12501004
+NPC ANIM FLOAT REMOVE || npc: 8026 | requestID: 22231
+ACTOR BUFF REMOVE || npc: 8008 | instanceId: 22231
+ACTOR BUFF REMOVE || instanceId: 22231 | npc: 8026
+Justice stands still in Main
+Unsuur stands still in Main
+Justice stops standing still
+Unsuur stops standing still
+Run mission Clear the Air
+SUBMIT MISSION 1200230
+END MISSION 1200231

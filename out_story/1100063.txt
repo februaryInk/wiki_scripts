@@ -1,0 +1,162 @@
+Reading Mission 1100063: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100002
+
+TRIGGER Procedure 2.0 Step 11.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1300022 is result 1 flag 1
+ACTIONS
+Run mission In Trusses We Trust
+Run mission #1300031
+
+TRIGGER Procedure 2.0 Step 12.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: hengjiaover | info: 1 | exist: 1
+ACTIONS
+END MISSION 1200038
+Run mission #1100063
+Run mission Paradise Lost and Found
+GLOBAL BLACK BOARD REMOVE || key: hengjiaover
+Run mission Keep on Rockin'
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100063
+CONDITIONS
+Always:
+ACTIONS
+Justice stands still in Main
+Unsuur stands still in Main
+Set CHOOSE to 0
+AREA TRIGGER CREATE || id: 10631 | sceneName: Main | flagName: trigger_shileyuan | showOnMap: 0 | mapIcon: MissionArea | transId: 0 | missionId: 1100063
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 10631
+CONDITIONS
+Always:
+ACTIONS
+Justice stands still in Main
+Unsuur stands still in Main
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 10631
+Add behavior CommanderMoveToFlag (idName: 20631) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:1163_G1_Player_1)
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 226, 227 starts:
+{{dialogue|Justice|Heyyy there, ''Player''. Gotta get into these ruins, huh?}}
+{{dialogue|Justice|Well, shoot... I really want to let you slip on by, but, well, you remember what happened last time we bent the rules a little...}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 10632 | durationTime: -2 | changeType: 0 | curveIndex: 0 | delayTime: 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 10632 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 10632 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+{{cutscene|id = 1171}}
+A cutscene CG_MIANDOOR (duration: 0.0) starts playing
+Ding Ding Ding! - The Civil Corps had a bit of trouble authorizing us to get into the Paradise Lost ruins; there was something wrong with the door. For better or for worse, while I was talking to Justice about how impossible it was to get through, Mi-an strolled by and fixed the door behind us. Justice decided we should just pretend nothing ever happened and let us through.
+Mi-an stands still in Main
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_MIANDOOR | state: 9
+CONDITIONS
+Always:
+ACTIONS
+GROUP 0:
+ACTION SHOW CUSTOM IMAGE TIPS || preset: Mission | content: 81000011
+CUTSCENE UI STATE EXIT || 
+SCENEITEM DELETE || itemType: 0 | id: 100320
+SCENEITEM DELETE || id: 100323 | itemType: 0
+Justice stops standing still
+Unsuur stops standing still
+Mi-an stops standing still
+Justice stops standing still
+Unsuur stops standing still
+Remove behavior CommanderMoveToFlag (idName: 20631) from Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 100331 | path: Airwall_Shileyuan1 | sceneName: Main | flagName: default | extraParams: 0
+
+GROUP 1:
+
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Justice
+CONDITIONS
+Check if mission Paradise Lost and Found is result 1 flag 0
+ACTIONS
+(cId 2) A conversation 1452, 1453, 1454, 1455, 1456, 1457, 1458 starts:
+{{dialogue|Justice|What's that, friend? You want to get into the Paradise Lost Hazardous Ruins?}}
+{{dialogue|Justice|Ooh. Yeah. I see where you're coming from; lot of good relics and what not in there, huh?}}
+{{dialogue|Justice|Well, here's how it works, I head back to HQ, fill out a few application forms, drop 'em off at City Hall, lay on the Justice charm real thick to make sure they get looked at in a timely fashion, heh, you know how that is...}}
+{{dialogue|Justice|Then, and only then can I post a commission on the Commission Board. After a Builder, perhaps even yourself, accepts it and fixes the door, then maybe I could see re-opening the Hazardous Ruins...}}
+{{dialogue|Justice|But you know! I've just got too much on my plate as it is, so I couldn't really tell you when I'm going to have time to get around to that.}}
+{{dialogue|Justice|These kinds of bureaucratic complications are really a small price to pay though for keepin' the order of things, from where I'm standin'. Hope you understand.}}
+{{dialogue|Justice|For now, take 'er easy, Builder.}}
+
+TRIGGER Procedure 1.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+END MISSION 1100063
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 8 | name: CG_MIANDOOR
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || id: 100322 | itemType: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 109299 | path: ScenItem_BasinDoor_Auto | sceneName: Main | flagName: shileyuan_door | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | sceneName: Main | extraParams: 0 | path: Mission_Basin_Door_0 | flagName: shileyuan_doorwaikuang | id: 1092991

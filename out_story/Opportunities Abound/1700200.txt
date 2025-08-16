@@ -1,0 +1,298 @@
+Reading Mission 1700200: Opportunities Abound
+
+<onlyinclude>{{Infobox mission
+|name = Opportunities Abound
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Opportunities Abound:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700197
+CONDITIONS
+Always:
+ACTIONS
+===Collect Materials===
+
+{{mission_details
+|desc = Catori needs materials in order to develop the new and improved Game Centre. She wants to make a new Game Machine and Sign.
+|details = Collect Materials
+*{{i2|Iron Plate|0/15}}
+*{{i2|Tempered Glass|0/10}}
+*{{i2|Plastic Pipe|0/5}}
+*{{i2|Hardwood Planks|0/20}}
+*{{i2|Game Center Sign|0/1}}
+*{{i2|Punch-o-Tron|0/1}}
+}}
+Add 1 Game Center Sign of Default quality (Notify player)
+Add 1 Punch-o-Tron of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|346}}
+CATORI PROFIT ACTIVE || 
+Run mission Opportunities Abound
+END MISSION 1700197
+
+Run conditions from parent mission: 1700199
+
+TRIGGER Procedure 2.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 17199) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1700198
+
+TRIGGER Procedure 2.0 Step 6.0 Order 6 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+END MISSION 1700198
+The player receives a letter:
+{{mail|346}}
+CATORI PROFIT ACTIVE || 
+Run mission Opportunities Abound
+END MISSION 1700199
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700200
+CONDITIONS
+Always:
+ACTIONS
+ACTION DATE SET FLAG || flag: catoriworld
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE FLAG || flag: catoriworld | compare: 2 | days: 10
+CHECK DATE || compare: 3 | year: -1 | month: -1 | day: 10
+ACTIONS
+The player receives a letter:
+{{mail|353}}
+ACTION DATE REMOVE FLAG || flag: catoriworld
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 353
+CONDITIONS
+Always:
+ACTIONS
+Cooper stands still in GameCenter
+Qi stands still in GameCenter
+Hugo stands still in GameCenter
+Jasmine stands still in GameCenter
+Catori stands still in GameCenter
+
+TRIGGER Procedure 0.0 Step 2.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ENTER GAMING STATE || order: 0
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: readmail
+ACTIONS
+UNIQUE ACTION RUN || idStr: readmail
+(cId 0) A conversation 5044 starts:
+{{dialogue|-3|(My share is 0 Gols? That doesn't seem quite right. Maybe I should ask Catori what happened.)}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: GameCenter | flagName: UGC_player2
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the GameCenter:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+(cId 1) A conversation 1568_0 starts:
+{{dialogue|Qi|...Furthermore, none of these new plans even remotely resemble anything space related. I cannot continue to support this unprofitable, spaceless venture. Please return my funding.}}
+{{dialogue|Catori|Well, Director, the thing is-}}
+{{dialogue|Cooper|Yeah, I want my simoleons back, too! You said we was gonna get rich quick, and it's been 'quick' already! Plus Elsie's already bored of the new game, said it's a grind fest, six out of ten at best!}}
+{{dialogue|Cooper|An' I ain't even got started on that new museum stuff. Buncha Age of Corruption nonsense. Someone's gotta think of the children!}}
+{{dialogue|Cooper|Tried it m'self, thought maybe six out of ten was a bit harsh, but still, it's no game of the year. No wonder nobody's showin' up to this thing. Upgrade? More like side-grade!}}
+{{dialogue|Cooper|And I can't sleep with you blastin those speakers day and night... Why're ya spammin' us with ads? We all live here gosh dern it! Why the heck did I invest in these durn vidja games, I can't even comprehend 'em!}}
+{{dialogue|Hugo|Yeah, I never should've invested all this money just to impress my niece... You talk a good game, Cat, but... this ain't it, I'm afraid. This whole thing is just never gonna work. So let's just cut our losses now and...}}
+{{dialogue|Catori|Right, yes... of course... I understand everyone's concerns. If... that's how you all feel about it, I'll find a way to return your investments...}}
+{{dialogue|Cooper|See to it that y'do! Else I may have to return... and yell at you some more!}}
+{{dialogue|Hugo|Uh, yeah, no pressure, but... the sooner the better.}}
+{{dialogue|Qi|Let me know if you need any help with the math.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Cooper stops standing still
+Qi stops standing still
+Hugo stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 172001) to Catori
+(param: TargetScene:GameCenter|FlagName:UGC_catori2_1)
+
+TRIGGER Procedure 1.0 Step 2.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 172000) to Player
+(param: TargetScene:GameCenter|FlagName:UGC_player3|MoveMode:Walk)
+Jasmine stops standing still
+DELAY MASK SET || maskId: 172001 | delayTime: 0 | durationTime: 1.5 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 1570_0 starts:
+{{dialogue|-3|(Catori looks really sad, what should I say?)}}
+
+*''Hey, are you okay?''
+*''About the monthly dividend...''
+
+{{dialogue|Catori|indent=true|answer=Hey, are you okay?
+|I...}}
+{{dialogue|Catori|indent=true|Ah, I'm sorry, ''Player''! I really fouled this all up... Nobody came! I... I don't know why, but nobody came... Now half of our partners want out... More! Almost everybody... and...}}
+{{dialogue|Catori|indent=true|I already spent the first round of investments! This new game center was supposed to pay for itself... How am I gonna pay everybody back?}}
+{{dialogue|Catori|indent=true|answer=About the monthly dividend...
+|...}}
+{{dialogue|Catori|indent=true|Right. About that. Well, the investments covered all the construction costs but... well, nothing rolled back in, so... profits were zero. There's nothing left to pay anyone with.}}
+{{dialogue|Catori|I'll have to sell some things, but... I'll come up with something for you guys. Just need a bit of time. I... I let you down, too, ''Player''. If you want out, I wouldn't hardly blame you...}}
+
+*''I'm not giving up yet.''
+*''Yeah, I'm out. Best of luck.''
+
+{{dialogue|Catori|indent=true|answer=I'm not giving up yet.
+|reward={{NPC2|Catori|rp=20}}|Ah... You... really? I... Thank you, ''Player''!}}
+{{dialogue|Catori|indent=true|At this point it's really just you and Owen... If not for you guys, I'd be packing it all up...}}
+{{dialogue|Catori|indent=true|Well... If you guys ain't discouraged, sure would be a bad look for me if I start waverin'! Okay. Let's keep moving forward. For now though, eh...}}
+{{dialogue|Catori|indent=true|answer=Yeah, I'm out. Best of luck.
+|Of course. I should thank you for even coming this far with me. You did a lot for the project, you should want some compensation.}}
+{{dialogue|Catori|indent=true|I... I've got a record of everything I owe, don't worry, I'll get you back as soon as possible. Just need to give me a little time.}}
+{{dialogue|Catori|I need to think on this stuff for a bit. Try to figure out where it all went wrong. Let's catch up again sometime, ''Player''. Under better circumstances.}}
+The conversation ends.
+Remove behavior CommanderMoveToFlag (idName: 172000) from Player
+
+TRIGGER Procedure 1.0 Step 1.5 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8024 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 1569_0 starts:
+{{dialogue|Catori|Well, Jasmine. You're still here. Here's your investment, repaid in full: five Gols.}}
+{{dialogue|Jasmine|It's okay, Aunt Catori. I got five more Gols today for delivering the news! I'm kinda made of money these days... You better keep it, you need it more than me.}}
+{{dialogue|Catori|Thank you, sweet pea...}}
+{{dialogue|Jasmine|Yep! Hope things get better. See ya!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172001 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 172001 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 172001) from Catori
+
+TRIGGER Procedure 2.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE FLAG || flag: catorifailed | compare: 2 | days: 30
+ACTIONS
+The player receives a letter:
+{{mail|348}}
+ACTION DATE REMOVE FLAG || flag: catorifailed
+END MISSION 1700200
+
+TRIGGER Procedure 2.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 5064:
+{{dialogue|Catori|I'll have to sell some things, but... I'll come up with something for you guys. Just need a bit of time. I... I let you down, too, ''Player''. If you want out, I wouldn't hardly blame you...}}
+
+*''I'm not giving up yet.'' (No unique dialogue)
+*''Yeah, I'm out. Best of luck.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+ACTION DATE SET FLAG || flag: catorifailed
+CUTSCENE UI STATE EXIT || 
+Catori stops standing still
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 5064:
+{{dialogue|Catori|I'll have to sell some things, but... I'll come up with something for you guys. Just need a bit of time. I... I let you down, too, ''Player''. If you want out, I wouldn't hardly blame you...}}
+
+*''I'm not giving up yet.'' (No unique dialogue)
+*''Yeah, I'm out. Best of luck.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Catori gains 20 favor
+
+TRIGGER Procedure 2.0 Step 3.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 5067) that ends:
+{{dialogue|Catori|Well... If you guys ain't discouraged, sure would be a bad look for me if I start waverin'! Okay. Let's keep moving forward. For now though, eh...}}
+CONDITIONS
+Always:
+ACTIONS
+CATORI PROFIT SET LEVEL || level: 2
+CATORI PROFIT SEND TO PLAYER || sendToPlayer: 1
+CUTSCENE UI STATE EXIT || 
+Catori stops standing still
+END MISSION 1700200

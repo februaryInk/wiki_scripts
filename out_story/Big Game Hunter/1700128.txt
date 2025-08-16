@@ -1,0 +1,400 @@
+Reading Mission 1700128: Big Game Hunter
+
+<onlyinclude>{{Infobox mission
+|name = Big Game Hunter
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Big Game Hunter:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700127
+CONDITIONS
+Always:
+ACTIONS
+Add behavior Story1700127_8005_1 (idName: 171271) to Elsie
+(param: -1)
+Set CD to 0
+ACTION DATE SET FLAG || flag: DATE:bgh
+NPC ICON ADD || missionId: 1700127 | npc: 8005 | missionIcon: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700127
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior  Story1700127_8005_1 (idName: 171271) from Elsie
+Run mission Big Game Hunter
+END MISSION 1700127
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700128
+CONDITIONS
+Always:
+ACTIONS
+===Prepare Bait===
+
+{{mission_details
+|desc = In order to catch "it," prepare some Bait according to Elsie's list.
+|details = Prepare Bait
+*{{i2|Sandworm|0/3}}
+*{{i2|Egg|0/2}}
+}}
+Set limit to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1700127 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Elsie===
+
+{{mission_details
+|desc = In order to catch "it," prepare some Bait according to Elsie's list.
+|details = Talk to Elsie
+*{{i2|Sandworm|0/3}}
+*{{i2|Egg|0/2}}
+*{{i2|Elsie|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Elsie
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1700127 | targetId: 2 | canSubmit: 1
+ACTIONS
+(cId 1) A conversation 2859 starts:
+{{dialogue|Elsie|Ooh, yeah, good stuff, ''Player''. This one looks real juicy! "It" won't be able to resist! Meet me on the outskirts of town tomorrow at 19:00 sharp! That's when we make our move, and capture... "It."}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+BAG MODIFY BY TARGET || missionId: 1700127 | targetId: 1
+===Wait Until Tomorrow===
+
+{{mission_details
+|desc = You've collected all the necessary baits. Wait until 7pm tomorrow to meet Elsie.
+|details = Wait Until Tomorrow
+}}
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+===Wait for the appointment===
+
+{{mission_details
+|desc = At 7pm tonight, go with Elsie to find "it."
+|details = Wait for the appointment
+}}
+CALENDAR SET REMINDER || addDays: 0 | hour: 18 | transId: 80006328
+
+TRIGGER Procedure 0.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 12:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndActionLoop (idName: 171282) to Elsie
+(param: TargetScene:Main|MoveMode:Run|FlagName:BGH_Elsie_Wait|Action:Squat)
+
+TRIGGER Procedure 0.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 19:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+===Be on Time!===
+
+{{mission_details
+|desc = The appointed time is up, hurry up and meet Elsie.
+|details = Be on Time!
+}}
+AREA TRIGGER ONCE CREATE || missionId: 1700127 | id: 171281 | sceneName: Main | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80004587 | flagName: BGH_Trigger1
+
+TRIGGER Procedure 1.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 7 | name: CG_FOXEAT
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: BGH_Player1
+Elsie stands still in Main
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 171281
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 2860 starts:
+{{dialogue|Elsie|Good, you're here! Sh! Don't make a sound. Gimme the goods, I'll place 'em, then we play the waiting game.}}
+Remove behavior CommanderMoveToFlagAndActionLoop (idName: 171282) from Elsie
+ACTOR BLIND SET || set: 1
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 1.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 4011}}
+A cutscene CG_FOXEAT (duration: 1.0) starts playing
+Baited Meerkat - It turned out that Elsie's legendary "It" was just a cute Meerkat. Elsie and I put some bait down to try and catch it, but it ran away. Elsie leapt to grab it, but it was just out of her grasp...
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 9 | name: CG_FOXEAT
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 737_0 starts:
+{{dialogue|Elsie|Shoot! Well I'll be a-! How could we let it get away!?}}
+{{dialogue|Elsie|That dang varmint is more cleverer than I done thinked... Lil' bugger, think you can outsmart me, do ya!?}}
+{{dialogue|Elsie|Next time... ooh, you better believe next time there won't be a next time, next time or my name ain't Elsie, the rootin'est, tootin'est Yakgirl this side of the Eu-!}}
+{{dialogue|Elsie|Oh... gosh, no! I went and hurt the lil' bugger! All I ever wanted was to have a little fun.}}
+{{dialogue|Elsie|Hey! ''Player''! You know what this means, doncha!? We gotta track 'im down again and patch it up!}}
+{{dialogue|Elsie|First, we need to get some medicine. Can you take care of that while I try to track it down again? Let's rendezvous as soon as possible!}}
+
+*''Hold on, that was "It?"''
+*''Okay.''
+
+{{dialogue|Elsie|indent=true|answer=Hold on, that was "It?"
+|Yeah! Pretty scary, huh? Okay, catch you soon, ''Player''!}}
+{{dialogue|Elsie|indent=true|answer=Okay.
+|Be quick! It must be scared and hurt!}}
+
+TRIGGER Procedure 1.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Look for Medicinal Herbs===
+
+{{mission_details
+|desc = The Meerkat seems to be injured. Collect some herbs to treat it.
+|details = Look for Medicinal Herbs
+*{{i2|Yellow Lavender|0/3}}
+*{{i2|Oregano|0/2}}
+}}
+Elsie stops standing still
+Add behavior Story1700127_8005_1 (idName: 171283) to Elsie
+(param: -1)
+Meerkat stands still in Main
+Add behavior CommanderMoveToFlagAndActionLoop (idName: 17128) to Meerkat
+(param: TargetScene:Main|MoveMode:Walk|FlagName:BGH_Meerkat|Action:BGH_Sleep)
+NPC SET CAN INTERACT || npc: 8053 | canInteract: 0
+ACTOR BLIND SET || set: 0
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Elsie
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1700127 | targetId: 5 | canSubmit: 0
+Big Game Hunter is in state 3 with flag 0
+ACTIONS
+(cId 4) A conversation 2872, 2873 starts:
+{{dialogue|Elsie|C'mon, what're you waitin' for! Get it in gear!}}
+{{dialogue|Elsie|C'mon, there's a hurt animal out there who needs our help!}}
+
+TRIGGER Procedure 1.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1700127 | targetId: 5 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Elsie===
+
+{{mission_details
+|desc = You've collected the herbs, go talk to Elsie.
+|details = Talk to Elsie
+*{{i2|Yellow Lavender|0/3}}
+*{{i2|Oregano|0/2}}
+*{{i2|Elsie|0/1}}
+}}
+
+TRIGGER Procedure 1.0 Step 8.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Elsie
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1700127 | targetId: 6 | canSubmit: 1
+ACTIONS
+Remove behavior Story1700127_8005_1 (idName: 171283) from Elsie
+(cId 5) A conversation 2870, 2871 starts:
+{{dialogue|Elsie|Hey, there you are ''Player''! Looks like you got some good stuff there!}}
+{{dialogue|Elsie|Alright, I tracked it down to a general area, c'mon!}}
+
+TRIGGER Procedure 1.0 Step 9.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Follow Elsie===
+
+{{mission_details
+|desc = Elsie knows where the Meerkat is. Follow her to find the injured animal.
+|details = Follow Elsie
+}}
+BAG MODIFY BY TARGET || missionId: 1700127 | targetId: 6
+Add behavior CommanderMoveToFlag (idName: 17128) to Elsie
+(param: TargetScene:Main|MoveMode:RunFast|FlagName:BGH_Elsie2)
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8005 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Elsie|Hey! Over here!}}
+Elsie stands still in Main and looks at Player
+Remove behavior CommanderMoveToFlag (idName: 17128) from Elsie
+AREA TRIGGER CREATE || missionId: 1700127 | id: 1282 | sceneName: Main | flagName: BGH_Trigger2 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80004587
+
+TRIGGER Procedure 2.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 1282
+CONDITIONS
+Check if Elsie is in town
+ACTIONS
+AREA TRIGGER DELETE || id: 1282
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 71281 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 1.1 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 71281 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: BGH_Player2
+Elsie stops standing still
+DELAY MASK SET || maskId: 71281 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+{{cutscene|id = 4012}}
+A cutscene CG_FOXBANDAGE (duration: 0.0) starts playing
+Helping Hand - Oh no! Elsie ended up hurting the Meerkat by grabbing its tail. She felt awful, and we went to make some medicine to heal it. After finding it again, we patched it up, and it seems right as rain!
+Remove behavior CommanderMoveToFlagAndActionLoop (idName: 17128) from Meerkat
+Remove behavior Story1700127_8005_1 (idName: 171283) from Elsie
+Elsie stands still in Main and looks at Meerkat
+
+TRIGGER Procedure 2.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 9 | name: CG_FOXBANDAGE
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 742_0 starts:
+{{dialogue|Elsie|Well, aren't you a lil' cutie! C'mon, we're friends now, ain't we?  Don't be afraid now, last time was just a misunderstandin', y'hear? We're gonna take real good care of you from now on, alright?}}
+{{dialogue|Elsie|Would ya look at that! Looks like all's forgiven, I'd go so far as t'say!}}
+{{dialogue|Elsie|Let's take you back to the ranch, alright, lil' one? I won't let anymore mean ol' Yakgirls cause you no harm.}}
+{{dialogue|Elsie|Well, alright, ''Player''. I think I can take things from here, come visit our new friend here at the ranch when you get a minute! Thanks for the help! So long for now!}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Remove behavior  Story1700127_8005_1 (idName: 171271) from Elsie
+Elsie stops standing still
+Meerkat stops standing still
+NPC SET CAN INTERACT || npc: 8053 | canInteract: 1
+SUBMIT MISSION 1700127
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC BUBBLE STATE CHANGE || order: 0 | npc: 8005 | flag: 0
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Elsie|There it is! Aw, poor thing, look at you all caught up in these brambles... ''Player'', I'll keep 'er calm, you apply the meds!}}
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1700128
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|289}}
+NPC SET CAN INTERACT || npc: 8053 | canInteract: 1
+Remove behavior Story1700127_8005_1 (idName: 171283) from Elsie
+Remove behavior CommanderMoveToFlagAndActionLoop (idName: 17128) from Meerkat
+Meerkat stops standing still
+Remove behavior CommanderMoveToFlag (idName: 17128) from Elsie
+Elsie stops standing still
+AREA TRIGGER DELETE || id: 1282
+
+TRIGGER Procedure 3.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Set limit to 1
+
+TRIGGER Procedure 3.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Elsie
+CONDITIONS
+Check if limit is == 1
+ACTIONS
+(cId 12800) A conversation 2881 starts:
+{{dialogue|Elsie|Seems like the lil' cutie really likes our town, so I'm lettin' it roam free around here. If you see it give it some food and pet on the head, I bet'cha it'll love it!}}
+END MISSION 1700128

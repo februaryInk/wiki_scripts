@@ -1,0 +1,132 @@
+Reading Mission 1900236: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200106
+
+TRIGGER Procedure 4.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Leaving the Nest is successfully completed
+Duvos Attacks! is in state 2 with flag 0
+
+GROUP 10:
+Leaving the Nest has failed
+Duvos Attacks! is in state 2 with flag 0
+
+ACTIONS
+Run mission #1900234
+
+TRIGGER Procedure 4.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if X has favor >= 400
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+Run mission #1900236
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1900236
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER ONCE CREATE || flagName: T9236 | sceneName: Main | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0 | id: 192360 | missionId: 1900236
+
+TRIGGER Procedure 0.0 Step 0.5 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 192360
+CONDITIONS
+Check if Owen is in town
+ACTIONS
+DELAY MASK SET || maskId: 923610 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 923610 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 1963_0 starts:
+{{dialogue|X|Story! Story!}}
+{{dialogue|Owen|Ha, well this isn't Saloon Night Live, but I'm always happy to accommodate my loyal listeners. I'd be glad to tell you one right now!}}
+{{dialogue|Owen|Once upon a time, there was a brave little Bumble Ant...}}
+{{dialogue|X|Bird story! Bird story!}}
+{{dialogue|Owen|Oh, uh... a story about birds, huh? Well... I guess we all like to see a bit of ourselves in the narrative... let me think...}}
+{{dialogue|Owen|Alright, so this is a bit of a longer one. You know there's a kind of bird called the Mmm bird? It got it's unique name from the distinct sound it makes, similar to someone saying, "Mmm." It's relevant, but, uh... well, we'll get back to that...}}
+{{dialogue|Owen|The stage is set with a young thief being pursued. Under the cover of the following chaos, he hides under the window of a woman's boudoir.}}
+{{dialogue|Owen|The man stood by the woman's window, pleading with her not to scream, not to draw attention. The woman readily agreed. The thief, grateful for the assistance, couldn't help but return nightly, under the cover of darkness.}}
+{{dialogue|X|Brawk! Bird story! Bird story!}}
+{{dialogue|Owen|Come on, don't interrupt... I'm getting there...}}
+{{dialogue|Owen|Anyway, this guy, he poured his heart out to her. Moving words, making even the coldest heart concede. She listened carefully, heeding his words with utterings of acceptance.}}
+{{dialogue|Owen|Now this man, he believed he had won over her heart. He truly felt his words had laid the foundation to true love. He took the final step, and confessed his love. The woman agreed without hesitation.}}
+{{dialogue|Owen|The man, pushed on by love, decided to propose. He went to the house, but the family were surprised. They were clueless, there was no woman in the window talking all night.}}
+{{dialogue|Owen|I think by now I need not say it, I'm sure you've guessed. In the window of the "boudoir," lived a caged Mmm bird. From beginning to end, the words of acceptance, were simply the utterings of a very unique bird...}}
+{{dialogue|X|Wow, what a twist! Brawk! Aw, I saw it comin' from a mile away...}}
+{{dialogue|Owen|Well, can't please everybody...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Owen stops standing still
+X stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 923603) from Player
+CUTSCENE UI STATE EXIT || 
+X gains 5 favor
+X gains 5 favor
+END MISSION 1900236
+
+TRIGGER Procedure 1.0 Step 0.3 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 923610 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: P9236_0 | sceneName: Main
+Owen stands still in Main and looks at X
+X stands still in Main and looks at Owen
+STOPWATCH REAL TIME SET || id: 923600 | sec: 0.2
+STOPWATCH REAL TIME SET || id: 9236001 | sec: 0.8
+DELAY MASK SET || maskId: 923610 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 0.6 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 923600
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 923603) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:P9236|LookAtActor:8001)

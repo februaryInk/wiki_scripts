@@ -1,0 +1,137 @@
+Reading Mission 1800315: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200310
+
+TRIGGER Procedure 5.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1800313 is result 1 flag 1
+ACTIONS
+Run mission #1800314
+
+TRIGGER Procedure 5.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1800314 is result 1 flag 1
+ACTIONS
+Run mission #1800315
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800315
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1800315 | id: 83151 | sceneName: Main | flagName: Trigger_83151 | showOnMap: 1 | mapIcon: MissionArea | transId: 0
+
+TRIGGER Procedure 0.0 Step 0.1 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 83151
+CONDITIONS
+Check if X is in town
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 83151 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 83151
+
+TRIGGER Procedure 0.0 Step 0.2 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83151 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8315_0_1
+X stands still in Main and looks at Captain
+Captain stands still in Main
+Ged stands still in Main and looks at Captain
+Larry stands still in Main and looks at Captain
+DELAY MASK SET || maskId: 83151 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Add behavior CommanderMoveToFlagAndAction (idName: 8315001) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8315_0_2|Action:Idle|Delay:1.0)
+SCENEITEM CREATE FLAG || itemType: 0 | id: 83151 | path: S8315_Item1 | flagName: S8315_Item1 | extraParams: -1 | sceneName: Main
+
+TRIGGER Procedure 0.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83151 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 3766_0 starts:
+{{dialogue|Ged|Monsieurs, I have brought le pie, it was made by the magnifique Lumi! Her cooking is only surpassed by her beauty.}}
+{{dialogue|Captain|Meow!}}
+{{dialogue|Larry|Very well, Captain. We shall begin the meeting.}}
+{{dialogue|Player|(Seems like they are having a meeting. Should I listen in?)}}
+
+*''(Stay and listen)''
+*''(Leave)'' (No unique dialogue)
+
+{{dialogue|Ged|indent=true|answer=(Stay and listen)
+|How are you fitting in? I haven't seen you in a while, President Larry.}}
+{{dialogue|Larry|indent=true|Sssss... Just Larry now. And, uh...}}
+{{dialogue|Captain|indent=true|Meow？}}
+{{dialogue|Ged|indent=true|Ah, mon chat! Sounds like Larry is having some problems.}}
+{{dialogue|Captain|indent=true|Meow!}}
+{{dialogue|Larry|indent=true|You are too kind, cat. But no, I shall not bother the Civil Corps with my matters. I will shoulder my burden alone. You see, tourists are coming to the saloon just to see me! I feel like a sandfish out of sand!}}
+{{dialogue|Ged|indent=true|Larry mon lizard companion, do not suffer these fools alone. Do not 'esitate to tell us how we can help!}}
+{{dialogue|Captain|indent=true|Meow!}}
+{{dialogue|X|indent=true|Squark!}}
+{{dialogue|Ged|indent=true|Capitaine... your words are so powerful... it makes my 'eart beg for connection... Oh Lumi! Why do you play with my heart so!? Were I not a mole in love...}}
+{{dialogue|Larry|indent=true|Ged, you are still young. Love will wait for you, do not despair.}}
+{{dialogue|Larry|indent=true|Otherwise you may grow old and become like me... a lizard alone... Xena!}}
+{{dialogue|0|indent=true|Larry!}}
+{{dialogue|Captain|indent=true|MEOW!}}
+{{dialogue|Ged|indent=true|You are correct, Capitaine, we need to control ourselves. La chat speaks wisdom, we should listen well!}}
+{{dialogue|Larry|indent=true|Yes... there is nothing to gain from weeping...}}
+{{dialogue|X|indent=true|Squark! Eat now!}}
+
+TRIGGER Procedure 0.0 Step 9.9 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+X stops standing still
+Captain stops standing still
+Ged stops standing still
+Larry stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8315001) from Player
+CUTSCENE UI STATE EXIT || 
+STOPWATCH REAL TIME SET || sec: 1.5 | id: 83151
+
+TRIGGER Procedure 0.0 Step 10.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 83151
+CONDITIONS
+Always:
+ACTIONS
+NPC LEAVE || npc: 8084
+SCENEITEM DELETE || itemType: 0 | id: 83151
+END MISSION 1800315

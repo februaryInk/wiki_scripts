@@ -1,0 +1,142 @@
+Reading Mission 1800523: Tea for Two
+
+<onlyinclude>{{Infobox mission
+|name = Tea for Two
+|image =
+|description = The herb cultivation room is now in use, and Fang wants to invite you over to relax.
+|type = Side
+|time =
+|location =
+|characters = [[Fang]]
+|condition =
+|details =
+|exp = 1435
+|reputation = None
+|gols = None
+|npc1 = Fang
+|rp1 = 30
+|npc2 = X
+|rp2 = 15
+|npc3 = CoCo
+|rp3 = 15
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200106
+
+TRIGGER Procedure 7.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check relationship with Fang is Married
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+Check if mission 1500400 is result 1 flag 1
+ACTIONS
+Run mission Secret Garden
+
+TRIGGER Procedure 7.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player wakes up:
+CONDITIONS
+CHECK SCENEITEM EXIST || id: 85142 | sceneItemType: 0 | exist: 1
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+Run mission Tea for Two
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800523
+CONDITIONS
+Always:
+ACTIONS
+Set 8523A to 0
+DELIVER MISSION 1800523
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Fang
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 8213_0 starts:
+{{dialogue|Fang|''Pet Name'', as planned, our small garden is finished, and already herbs are starting to grow.}}
+{{dialogue|Fang|I would like to invite you to see what we have made together.}}
+{{dialogue|Fang|Tomorrow afternoon, will you please join me for tea?}}
+
+*''Sounds lovely.''
+*''Tomorrow's no good...''
+
+{{dialogue|Fang|indent=true|answer=Sounds lovely.
+|Good. Let's meet there at three o'clock.}}
+{{dialogue|Fang|indent=true|answer=Tomorrow's no good...
+|Very well. Let me know if you find time.}}
+
+TRIGGER Procedure 0.0 Step 10.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 23880:
+{{dialogue|Fang|Tomorrow afternoon, will you please join me for tea?}}
+
+*''Sounds lovely.'' (No unique dialogue)
+*''Tomorrow's no good...'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 23422:
+{{dialogue|Fang|''Pet Name'', do you have time to visit our new garden for tea?}}
+
+*''Sounds lovely.'' (No unique dialogue)
+*''Tomorrow's no good...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8523A to 1
+
+TRIGGER Procedure 0.0 Step 12.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if 8523A is == 1
+ACTIONS
+START MISSION 1800523
+
+TRIGGER Procedure 0.0 Step 16.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800523
+CONDITIONS
+Always:
+ACTIONS
+Run mission Tea for Two
+END MISSION 1800523
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Fang|''Pet Name'', do you have time to visit our new garden for tea?}}
+
+*''Sounds lovely.''
+*''Tomorrow's no good...''
+
+{{dialogue|Fang|indent=true|answer=Sounds lovely.
+|Good. Let's meet there at three o'clock.}}
+{{dialogue|Fang|indent=true|answer=Tomorrow's no good...
+|Very well. Let me know if you find time.}}
+
+==Rewards==
+{{mission reward
+|npc1 = Fang
+|rp1 = 30
+|npc2 = X
+|rp2 = 15
+|npc3 = CoCo
+|rp3 = 15
+|exp = 1435
+|reputation = None
+|gols = None
+}}

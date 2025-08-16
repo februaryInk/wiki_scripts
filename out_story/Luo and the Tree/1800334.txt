@@ -1,0 +1,342 @@
+Reading Mission 1800334: Luo and the Tree
+
+<onlyinclude>{{Infobox mission
+|name = Luo and the Tree
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Luo and the Tree:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 611
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1800381
+START MISSION 1800381
+
+TRIGGER Procedure 0.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800381
+CONDITIONS
+Always:
+ACTIONS
+Run mission Luo and the Tree
+END MISSION 1800381
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800334
+CONDITIONS
+Always:
+ACTIONS
+===Wait Until Tomorrow===
+
+{{mission_details
+|desc = A tree is on top of Mount Rocksand. Go and check it out if you have time.
+|details = Wait Until Tomorrow
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 83345
+CONDITIONS
+Always:
+ACTIONS
+Mi-an stands still in Main
+
+TRIGGER Procedure 0.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1800334 | id: 83341 | sceneName: Main | flagName: Trigger_83341 | showOnMap: 1 | mapIcon: MissionArea | transId: 0
+===Go to the Tree===
+
+{{mission_details
+|desc = A tree is on top of Mount Rocksand. Go and check it out if you have time.
+|details = Go to the Tree
+}}
+
+TRIGGER Procedure 0.0 Step 3.1 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 83341
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 83341 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 83341
+
+TRIGGER Procedure 0.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83341 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8334_0_1
+Nia stands still in Main
+Mi-an stands still in Main
+Professor Luo stands still in Main
+DELAY MASK SET || maskId: 83341 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83341 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 4087_0 starts:
+{{dialogue|Nia|It's beautiful, in its own way... isn't it?}}
+{{dialogue|Mi-an|I always knew there was something special about it, just couldn't quite put my finger on it...}}
+{{dialogue|Nia|So what's the plan?}}
+{{dialogue|Professor Luo|We simply extract a small sample from the core of the tree so as to safely count the rings without harming it.}}
+{{dialogue|Nia|Oh...! Right!}}
+{{dialogue|Mi-an|Good to know! I mean... it's not every day you need to find the age of a tree, but... I always thought you had to cut them down and count the rings to know for sure.}}
+{{dialogue|Nia|Nope! You can also get a pretty good estimate just from the circumference if you compare it to the trunk of the same species. A fallen one nearby usually does the trick.}}
+{{dialogue|Nia|But! Given that this one might have survived the Age of Darkness it probably didn't have a chance to grow the way it should have! Some of its rings will be super small, which is why we need to take this sample and-}}
+{{dialogue|Professor Luo|Yes, there's no mistaking it... it is indeed exactly as I hypothesized.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 8.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8334592) to Nia
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8334_59_2|Delay:2.5|LookAtActor:8120)
+Add behavior CommanderMoveToFlagAndAction (idName: 83341202) to Professor Luo
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8334_120_2|Delay:2.5|LookAtActor:8000)
+Add behavior CommanderMoveToFlagAndAction (idName: 8334172) to Mi-an
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8334_17_2|Delay:2.5|LookAtActor:8059)
+
+TRIGGER Procedure 0.0 Step 8.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 13828) that ends:
+{{dialogue|Nia|But! Given that this one might have survived the Age of Darkness it probably didn't have a chance to grow the way it should have! Some of its rings will be super small, which is why we need to take this sample and-}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8334001) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8334_0_2|Delay:0.0)
+Set 8334Move1 to 0
+
+TRIGGER Procedure 0.0 Step 8.1 Order 10 Repeat 4
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8017 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8059 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8120 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Increment 8334Move1 by 1
+
+TRIGGER Procedure 0.0 Step 9.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8017 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8059 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8120 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Check if 8334Move1 is >= 4
+ACTIONS
+(cId 2) A conversation 4088_0 starts:
+{{dialogue|Nia|Hey, ''Player''! You made it! This tree is the other main thing we wanted to check out while we were in Sandrock...}}
+
+*''What's special about this tree?'' (No unique dialogue)
+*''It's famous?'' (No unique dialogue)
+*''I know it was important to some people...'' (No unique dialogue)
+*''I think it's creepy.'' (No unique dialogue)
+
+{{dialogue|Mi-an|To locals, I believe it's known as the Mountain Widow. Way back when people first started settling in Sandrock there were two of them up here, but now...}}
+{{dialogue|Mi-an|This jagged looking tree stands lonesome atop Mt. Rocksand; looking down mournfully, waiting for one who shall never return as the eternal wait slowly saps its life away...}}
+{{dialogue|Nia|Wooooo...! It's the Mountain Widow...! Better watch out, ''Player'', it's haunted by the ghoooost of, er...}}
+{{dialogue|Mi-an|...Martle?}}
+{{dialogue|Nia|Yeah, maybe I shouldn't have gone there...}}
+{{dialogue|Professor Luo|Populus euphratica. A species now found all throughout the Eufaula. Every tree resembling this one you see... in layman's terms, this one... this is their "mother."}}
+{{dialogue|Mi-an|Ah? So she really is a widow? I didn't know trees could be mothers...}}
+{{dialogue|Professor Luo|Indeed. This species produces trees with male or female flowers; when pollinated, the female trees produce seeds. Its male counterpart likely was that 'other' tree you spoke of, based on the location. Which, if I'm right, makes this tree...}}
+{{dialogue|Professor Luo|...The last of its species from the Old World.}}
+{{dialogue|Mi-an|Wha!? So... You mean the Mountain Widow survived the Age of Darkness?}}
+{{dialogue|Professor Luo|I believe so. By some miracle, the two poplars survived the Calamity, as well as three hundred years of darkness... this sample confirms this one's age, and my theories.}}
+{{dialogue|Professor Luo|Subsisting atop this mountain, reaching up at the dullest of sunlight, they were just only able to cling on to life long enough...}}
+{{dialogue|Professor Luo|When Peach parted the skies, they were revitalized, and shortly after, this mother tree dispersed her seeds into these windy heights to form what would eventually become the basis for the forest around Martle's Oasis.}}
+{{dialogue|Professor Luo|Hence... Sandrock.}}
+{{dialogue|Mi-an|Wow! I've never heard anything like that before!}}
+{{dialogue|Professor Luo|That's because I've just discovered it.}}
+{{dialogue|Nia|Congratulations, Dr. Luo! I smell publishing...! And awards!}}
+{{dialogue|Professor Luo|Well, let's not get too far ahead of ourselves. I still need to get back to the lab and compare their genetic material, but... To me, seeing this... my theory is all but confirmed.}}
+{{dialogue|Mi-an|Nice! What a privilege to witness such a discovery in real-time! Thanks for inviting us, Nia!}}
+{{dialogue|Professor Luo|My only regret is... This tree was doing well until just fifty years ago. The relic rush has, in the end, quietly claimed this particular relic, too, it seems.}}
+{{dialogue|Mi-an|Wow, it's been just here on the horizon, and nobody knew. I'll bet the people of the relic rush never knew either...}}
+{{dialogue|Professor Luo|Mm. Unlikely they had any clue as to its significance.}}
+{{dialogue|Nia|Yep. Might very well have be the last known Old World tree in the whole of the Eufaula. And now... yeah.}}
+{{dialogue|Professor Luo|It has lived for a long time, and now is holding on by a thread. To think... everything this tree has seen. The rise and fall of civilization, the hope of Peach, the fall of Sandrock...}}
+{{dialogue|Nia|...Which will soon be continued by the rise of Sandrock!}}
+{{dialogue|Professor Luo|One can hope.}}
+{{dialogue|Mi-an|Do you think... if we can make Sandrock green again... she could make a comeback?}}
+{{dialogue|Professor Luo|Not a chance, I'm afraid. Even under the most optimal of circumstances, this tree will be consumed by fungus and pests long before our plans even begin to come to fruition.}}
+{{dialogue|Mi-an|Sorry if this is a dumb question but... can't we just water it? Fertilizer?}}
+{{dialogue|Professor Luo|The soil up here is a hundred years away from being able to support a tree of this size. It's... impossible.}}
+{{dialogue|Mi-an|I see... I guess this is... "hello" and "goodbye," then, Ms. Mountain Widow...}}
+{{dialogue|Nia|Hm... The Mountain Widow wasn't waiting for anyone... it was just... carrying on without her husband... watching its children thrive until... Seeing the forest disappear was too much for her to bear...}}
+{{dialogue|Mi-an|Doesn't seem right calling it the Mountain Widow knowing that...}}
+{{dialogue|Nia|It doesn't... How about... Mama Tree! Mother to all the poplar trees in the Eufaula...}}
+{{dialogue|Mi-an|I like that better.}}
+{{dialogue|Professor Luo|I'll abstain from this and continue referring to it as what it is: the progenitor of the populus euphratica.}}
+{{dialogue|Mi-an|Think we need something catchier...}}
+{{dialogue|Professor Luo|Regardless of your decision, I believe I have what I need. Shall we return to town?}}
+{{dialogue|Nia|Well, wait a sec, professor...! I remember from your nutrition class that as long as the roots are drinking, there's a chance, and... you said yourself that Zeke's algae discoveries were changing soil faster than ever before...!}}
+{{dialogue|Professor Luo|Yes... perhaps "impossible" was a bit of an overstatement. I suppose if we were to divert all of our efforts towards this tree, there may yet be time to discover what this Old World tree "eats." If anything different at all.}}
+{{dialogue|Professor Luo|From there, a stable nutrient supply, meticulous care, consistent monitoring of its condition... It is theoretically possible.}}
+{{dialogue|Mi-an|Nice! So what's the first step?}}
+{{dialogue|Professor Luo|However.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 11.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Mi-an|...}}
+
+TRIGGER Procedure 0.0 Step 13.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 83344
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 4089_0 starts:
+{{dialogue|Professor Luo|Our time here is limited, Nia. We came to assist Sandrock in their efforts to reforest the desert, and then we must return to Highwind to continue our research there.}}
+{{dialogue|Nia|Ah... Don't you want to save this tree, professor? It's a piece of history!}}
+{{dialogue|Professor Luo|I do. And we will try. If there is time. But...}}
+{{dialogue|Professor Luo|Saving our future is more important than preserving our past.}}
+{{dialogue|Nia|You're right...}}
+{{dialogue|Mi-an|Hm...}}
+{{dialogue|Professor Luo|Shall we?}}
+{{dialogue|Nia|Yeah, let's go...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 17.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Nia stops standing still
+Nia stops standing still
+Nia stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8334592) from Nia
+Remove behavior CommanderMoveToFlagAndAction (idName: 83341202) from Professor Luo
+Remove behavior CommanderMoveToFlagAndAction (idName: 8334001) from Player
+Professor Luo stops standing still
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8334_0_6
+
+TRIGGER Procedure 0.0 Step 28.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 833451
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 4097_0 starts:
+{{dialogue|Mi-an|It's over now, Mama Tree... you did it!}}
+{{dialogue|Mi-an|We're... gonna take it from here.}}
+{{dialogue|Mi-an|Your family is gonna make it, I promise.}}
+{{dialogue|Mi-an|You... rest easy.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 29.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 83345 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 29.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83345 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Mi-an stops standing still
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8334_0_6
+DELAY MASK SET || maskId: 83345 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Nia stops standing still
+Nia stops standing still
+Nia stops standing still
+Mi-an stops standing still
+Mi-an stops standing still
+Professor Luo stops standing still
+Professor Luo stops standing still
+Mi-an stops standing still
+Professor Luo stops standing still
+Remove behavior CommanderMoveToFlag (idName: 8334595) from Nia
+Remove behavior CommanderMoveToFlag (idName: 83341205) from Professor Luo
+Remove behavior CommanderMoveToFlag (idName: 8334175) from Mi-an
+Remove behavior CommanderMoveToFlagAndAction (idName: 8334592) from Nia
+Remove behavior CommanderMoveToFlagAndAction (idName: 8334172) from Mi-an
+Remove behavior CommanderMoveToFlagAndAction (idName: 83341202) from Professor Luo
+Remove behavior CommanderMoveToFlagAndAction (idName: 8334001) from Player
+Remove behavior CommanderMoveToFlag (idName: 8334005) from Player
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 8334176) from Mi-an
+Remove behavior CommanderMoveToFlag (idName: 8334175) from Mi-an
+
+TRIGGER Procedure 0.0 Step 40.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 83345
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1800381
+END MISSION 1800334
+
+TRIGGER Procedure 1.0 Step 0.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200331
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1800381
+AREA TRIGGER DELETE || id: 83341
+END MISSION 1800334

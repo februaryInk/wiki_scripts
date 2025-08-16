@@ -1,0 +1,385 @@
+Reading Mission 1800253: The Next Big Thing
+
+<onlyinclude>{{Infobox mission
+|name = The Next Big Thing
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from The Next Big Thing:
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1800252
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800252
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Next Big Thing
+END MISSION 1800252
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800253
+CONDITIONS
+Always:
+ACTIONS
+===Wait Until Tomorrow===
+
+{{mission_details
+|desc = Arvio wants to meet at the Library tomorrow.
+|details = Wait Until Tomorrow
+}}
+ACTION DATE SET FLAG || flag: 8253Pao
+Run mission The Next Big Thing
+
+TRIGGER Procedure 0.0 Step 0.1 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+===Go to City Hall===
+
+{{mission_details
+|desc = Head to the second floor of City Hall to meet Arvio at the Library.
+|details = Go to City Hall
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_guildhall
+CHECK GLOBAL BLACKBOARD || key: yanreveal | info: 1 | exist: 0
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 82530
+UNIQUE ACTION RUN || idStr: enter_guildhall
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+Always:
+ACTIONS
+Arvio stands still in Guildhall
+PLAYER SET POS ROT FLAG || sceneName: Guildhall | flagName: S8253_0_1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 2427_0 starts:
+{{dialogue|Arvio|''Player''! You came! It's good you did, actually, there's uh... a lot of books here. I've been reading for hours and I don't feel like I'm even getting anywhere!}}
+{{dialogue|Arvio|Would you help me look on those shelves over there? I'll check the rest!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8253142) to Arvio
+(param: TargetScene:Guildhall|MoveMode:Walk|FlagName:S8253_14_3|Action:StandRead_Story|Delay:0.5)
+CUTSCENE UI STATE EXIT || 
+SCENEITEM CREATE FLAG || itemType: 0 | id: 82531 | path: S8253_Read1 | sceneName: Guildhall | flagName: S8253_Item_1 | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | path: S8253_Read2 | id: 82532 | sceneName: Guildhall | flagName: S8253_Item_2 | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | path: S8253_Read3 | id: 82533 | sceneName: Guildhall | flagName: S8253_Item_3 | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | path: S8253_Read4 | id: 82534 | sceneName: Guildhall | flagName: S8253_Item_4 | extraParams: 0
+===Look for Info===
+
+{{mission_details
+|desc = Flip through library books to see if you can find any interesting information for Arvio.
+|details = Look for Info
+}}
+SCENEITEM INTERACT SET || canInteract: 0 | itemType: 0 | id: 205911101
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 82531 | missionId: 1800252 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | iconType: 2 | missionId: 1800252 | id: 82532 | itemType: 0
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 82533 | missionId: 1800252 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | iconType: 2 | itemType: 0 | id: 82534 | missionId: 1800252
+
+TRIGGER Procedure 0.0 Step 5.1 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8014 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCActionLoop (idName: 82531420) to Arvio
+(param: TargetScene:Guildhall|TargetFlag:S8253_14_3|CMDAction:StandRead_Story|Delay:0.5)
+
+TRIGGER Procedure 0.0 Step 8.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 93) There is a conversation segment (id 8287) that ends:
+{{dialogue|Player|(Foamed plastic! That can help Arvio and Amirah send their ceramics over long distances!)}}
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || id: 82533 | itemType: 0
+SCENEITEM DELETE || itemType: 0 | id: 82531
+SCENEITEM DELETE || itemType: 0 | id: 82532
+SCENEITEM DELETE || itemType: 0 | id: 82534
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 82532 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+SCENEITEM INTERACT SET || id: 205911101 | itemType: 0 | canInteract: 1
+
+TRIGGER Procedure 0.0 Step 9.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82532 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Arvio stands still in Guildhall and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Guildhall | flagName: S8253_0_2
+DELAY MASK SET || maskId: 82532 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 10.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82532 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8253144) to Arvio
+(param: TargetScene:Guildhall|MoveMode:Walk|FlagName:S8253_14_2|Action:WaveBook_Story|LookAtActor:8000)
+Add behavior CommanderMoveToFlagAndAction (idName: 8253001) to Player
+(param: TargetScene:Guildhall|MoveMode:Run|FlagName:S8253_0_3|LookAtActor:8014|Delay:1.0)
+
+TRIGGER Procedure 0.0 Step 11.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 2436_0 starts:
+{{dialogue|Arvio|I found it! ''Player'', I found it! This book says there are some glazing techniques that can be made with a specific Glazing Machine. Apparently people in the Old World used these kinds of machines to mass produce ceramics!}}
+{{dialogue|Arvio|Using this kind of machine, Amirah wouldn't have to spend so much time on each piece... wouldn't be so tired... and would be able to focus on increasing her skill!}}
+{{dialogue|Arvio|Although I still don't know anything about how to deliver them... at least we can help my sister improve her craft!}}
+{{dialogue|Arvio|Did you find anything interesting?}}
+The conversation ends.
+Remove behavior CommanderMoveToFlagAndAction (idName: 8253001) from Player
+
+TRIGGER Procedure 0.0 Step 12.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8253002) to Player
+(param: TargetScene:Guildhall|MoveMode:Walk|FlagName:S8253_0_3|Action:Give_S8253|LookAtActor:8014)
+Add behavior CommanderMoveToFlagAndAction (idName: 8253145) to Arvio
+(param: TargetScene:Guildhall|MoveMode:Walk|FlagName:S8253_14_2|Action:TakeBook_Story|Delay:1.0)
+
+TRIGGER Procedure 0.0 Step 13.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8014 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 2437_0 starts:
+{{dialogue|Arvio|Looks like this foamed plastic can protect packages... precision instruments... fragile items... fragile items! That's it!}}
+{{dialogue|Arvio|It ticks all the boxes! What would I do without you? By the by... do you, perchance, know how to make this "foamed plastic" and the Glazing Machine?}}
+
+*''If you give me diagrams, I can make anything.''
+*''No, I don't have a clue.''
+
+{{dialogue|Arvio|indent=true|answer=If you give me diagrams, I can make anything.
+|reward={{NPC2|Arvio|rp=2}}|Ah, hearing you say this puts my heart at ease. Well, leave the diagrams to me, I'm on it!}}
+{{dialogue|Arvio|indent=true|answer=No, I don't have a clue.
+|Right, of course... if you knew how then we wouldn't be here, right? Ah... stupid Arvio...}}
+{{dialogue|Arvio|indent=true|But I'm sure once I get diagrams the rest should come easy enough.}}
+{{dialogue|Arvio|Thank you for coming today. Just wait for my word, when the times comes, I'll definitely need your help again.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 14.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8253001) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8253002) from Player
+Arvio stops standing still
+Arvio stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8253144) from Arvio
+Remove behavior CommanderMoveToFlagAndAction (idName: 8253145) from Arvio
+Remove behavior CommanderNPCActionLoop (idName: 82531420) from Arvio
+Remove behavior CommanderMoveToFlagAndAction (idName: 8253142) from Arvio
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1800252
+END MISSION 1800253
+
+TRIGGER Procedure 1.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 92) There is a conversation segment (id 8282) that ends:
+{{dialogue|Player|(These are all really interesting, but it's not what we're looking for.)}}
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || id: 82532 | itemType: 0
+
+TRIGGER Procedure 1.0 Step 5.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 82532
+CONDITIONS
+Always:
+ACTIONS
+(cId 92) A conversation 2430_0 starts:
+{{dialogue|Player|100 Great Inventions of the Old World}}
+{{dialogue|Player|(I wonder if some ancient invention will solve Arvio and Amirah's problem...)}}
+
+*''Check to see what's inside.''
+*''Cancel'' (No unique dialogue)
+
+{{dialogue||indent=true|answer=Check to see what's inside.
+|Papermaking--Before people in the Old World discovered how to make paper, writing was usually done on wood, stone tablets, or even animal bone. These were highly inefficient, and the advent of paper solved many issues...}}
+{{dialogue||indent=true|Electric Lamps--This Old World invention was one of the major landmarks in technological development. Even now we use them as a major part of our life. Keeping the streets bright, and the darkness at bay.}}
+{{dialogue||indent=true|Radio--This invention allowed people to quickly transmit messages over long distanced without having to use the post. Many messages were delivered in this way, and they even had stories that people would listen to at home! Unfortunately, we no longer have the know how to make use of this technology today.}}
+{{dialogue|Player|indent=true|(These are all really interesting, but it's not what we're looking for.)}}
+
+TRIGGER Procedure 1.0 Step 6.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 82531
+CONDITIONS
+Always:
+ACTIONS
+(cId 91) A conversation 2428_0 starts:
+{{dialogue|Player|Old World Civic Technology}}
+{{dialogue|Player|(Looks like this book has been worn through extensive use.)}}
+
+*''Check to see what's inside.''
+*''Cancel'' (No unique dialogue)
+
+{{dialogue||indent=true|answer=Check to see what's inside.
+|The development of spacefaring technology in the Old World may still elude us. Technology such as civil space technology, instant communication, satellite imaging, instant geographic coordination, are all based on the Old World ability to reach the stars...}}
+{{dialogue|Player|indent=true|(Instant messaging, satellites, quantum computing, high-speed rail... all amazing technology, but it doesn't help us here.)}}
+
+TRIGGER Procedure 1.0 Step 7.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 91) There is a conversation segment (id 8276) that ends:
+{{dialogue|Player|(Instant messaging, satellites, quantum computing, high-speed rail... all amazing technology, but it doesn't help us here.)}}
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || id: 82531 | itemType: 0
+
+TRIGGER Procedure 1.0 Step 13.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the first option in conversation segment 8298:
+{{dialogue|Arvio|It ticks all the boxes! What would I do without you? By the by... do you, perchance, know how to make this "foamed plastic" and the Glazing Machine?}}
+
+*''If you give me diagrams, I can make anything.'' (No unique dialogue)
+*''No, I don't have a clue.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Arvio gains 2 favor
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1800253
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM INTERACT SET || canInteract: 1 | id: 205911101 | itemType: 0
+SCENEITEM DELETE || itemType: 0 | id: 82531
+SCENEITEM DELETE || itemType: 0 | id: 82532
+SCENEITEM DELETE || itemType: 0 | id: 82533
+SCENEITEM DELETE || itemType: 0 | id: 82534
+Arvio stops standing still
+Arvio stops standing still
+Remove behavior CommanderNPCActionLoop (idName: 82531420) from Arvio
+Remove behavior CommanderMoveToFlagAndAction (idName: 8253142) from Arvio
+END MISSION 1800253
+
+TRIGGER Procedure 2.0 Step 5.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 82533
+CONDITIONS
+Always:
+ACTIONS
+(cId 93) A conversation 2432_0 starts:
+{{dialogue|Player|Application and Hazards of Plastic}}
+{{dialogue|Player|(Plastic was definitely a common materials in the Old World, perhaps it can help us out.)}}
+
+*''Check to see what's inside.''
+*''Cancel'' (No unique dialogue)
+
+{{dialogue||indent=true|answer=Check to see what's inside.
+|Plastic can be made in many ways, from blow molding directly into shapes such as bottles or barrels, to injection molding directly into a variety of complex shapes.}}
+{{dialogue||indent=true|According to records, when goods manufacturing became commonplace across the world, there needed to be a way to safely transport goods throughout the world. This became troublesome, as many valuables were damaged in the process.}}
+{{dialogue|Player|indent=true|(Foamed plastic! That can help Arvio and Amirah send their ceramics over long distances!)}}
+
+TRIGGER Procedure 3.0 Step 5.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 82534
+CONDITIONS
+Always:
+ACTIONS
+(cId 94) A conversation 2434_0 starts:
+{{dialogue|Player|An Overview of the Ceramics Craft}}
+{{dialogue|Player|(Looks like this book shows some sign of wear and tear. Perhaps Amirah has read this already?)}}
+
+*''Check to see what's inside.''
+*''Cancel'' (No unique dialogue)
+
+{{dialogue||indent=true|answer=Check to see what's inside.
+|Glazing Process--Depending on the method of firing, the glaze can be applied in a variety of ways, fully glazed, half-glazed, unglazed, thick or thin. Even the type of glaze itself can have an impact on the type of product created.}}
+{{dialogue||indent=true|Firing Process--In the pursuit of precise control of temperature and the success rate of firing, most ceramics are fired in temperature-controlled kilns, so the final piece is a flawless artifact.}}
+{{dialogue|Player|indent=true|(It's an interesting analysis on ceramics, but it's probably nothing Amirah doesn't already know.)}}
+
+TRIGGER Procedure 3.0 Step 6.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 94) There is a conversation segment (id 8292) that ends:
+{{dialogue|Player|(It's an interesting analysis on ceramics, but it's probably nothing Amirah doesn't already know.)}}
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || id: 82534 | itemType: 0

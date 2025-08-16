@@ -1,0 +1,181 @@
+Reading Mission 1100092: Picking Up the Slack
+
+<onlyinclude>{{Infobox mission
+|name = Picking Up the Slack
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Picking Up the Slack:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100091
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1100091 | id: 10921 | sceneName: Main | flagName: hruin1_trigger | showOnMap: 1 | mapIcon: MissionArea | transId: 31045
+DELIVER MISSION 1100091
+START MISSION 1100091
+ACTION MISSION TRACE 1100091
+SCENEITEM CREATE FLAG || itemType: 0 | id: 20911 | path: Mission_NewArrow | sceneName: Main | extraParams: 0 | flagName: backyarddoor
+AREA TRIGGER CREATE || missionId: 1100091 | id: 20911 | sceneName: Main | flagName: backyarddoor_trigger | showOnMap: 0 | mapIcon: 0 | transId: 0
+Set DAY to 0
+ACTION DATE LOCKER UNLOCK || id: 200322
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1100091
+CONDITIONS
+Always:
+ACTIONS
+Run mission Picking Up the Slack
+END MISSION 1100091
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100092
+CONDITIONS
+Always:
+ACTIONS
+===Construct Crane Lift===
+
+{{mission_details
+|desc = You have the diagram for a Crane Lift, construct it at your Assembly Station. If you're missing any recipes, try checking the Commerce Guild store.
+|details = Construct Crane Lift
+*{{i2|Crane Lift|0/1}}
+}}
+Set CANSUB to 0
+Unlock blueprint for Crane Lift
+Set part to 0
+NPC ADD TAG || tag: MianWork
+NPC ADD TAG || tag: ParadiseOpen
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1003201 | sceneName: Main | extraParams: 0 | flagName: default | path: Airwall_Shileyuan2
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON BAG CHANGE || order: 0 | item: 14000033 | changeType: 0 | itemGrade: 0
+CONDITIONS
+Check if CANSUB is == 0
+ACTIONS
+===Install the Crane Lift===
+
+{{mission_details
+|desc = Your Crane Lift is done, head to the back of the salvage yard and install it.
+|details = Install the Crane Lift
+}}
+Set CANSUB to 1
+SCENEITEM CREATE FLAG || itemType: 11 | path: Label_ShengJiangDiaoChe | id: 10921 | sceneName: Main | flagName: diaoche_playerinter | extraParams: -1|CreatorItem|14000033_1|1547|-1|0
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 10921 | missionId: 1100091 | iconType: 3
+AREA TRIGGER DELETE || id: 10921
+NPC REMOVE TAG || tag: MianWork
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON RESOURCE PICK UP || order: 0 | npc: 8000 | id: 1310
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 10921
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 10921
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 10921 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: 0
+GLOBAL BLACK BOARD REMOVE || key: finishcrane
+AREA TRIGGER DELETE || id: 10921
+TIME SET ENABLE || bool: 0
+SCENEITEM DELETE || itemType: 0 | id: 1003201
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 10921 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 12 | id: 10921 | path: Mission_ShengJiangDiaoChe | sceneName: Main | extraParams: -1 | flagName: diaoche1
+MISSION TARGET COUNTER CHANGE || missionId: 1100091 | targetId: 1 | transId: 80000673 | isAdd: 1
+DELAY MASK SET || maskId: 10921 | delayTime: -1 | changeType: 1 | curveIndex: 0 | durationTime: -1
+{{cutscene|id = 1061}}
+A cutscene CG_DIAOCHE (duration: -1.0) starts playing
+Overdue Commission Complete - Mi-an and I finished our first big job for the Eufaula Salvage Co. Everything went great, and the salvagers really appreciated our hard work!
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: diaoche_mian
+Rocky stands still in Main
+Mi-an stands still in Main
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_DIAOCHE | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 482 starts:
+{{dialogue|Rocky|I gotta tell you, those two lifts you made are runnin' like a dream! Looks like Yan finally did something right hiring the two of you. Maybe we don't have to move out of Sandrock afterall!}}
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+PICK UP RESOURCE REFRESH || id: 1311
+PICK UP RESOURCE DELETE || id: 1310
+TIME SET ENABLE || bool: 1
+GLOBAL BLACK BOARD REMOVE || key: shileyuanopen
+Set global blackboard key shileyuanopen1 with info 1.
+Set part to 10
+Run mission Mining Time!
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1141592 | sceneName: Main | flagName: SJDC_point | path: Mission_NewArrow | extraParams: 0
+Set global blackboard key sjdcpoint with info 1.
+NPC ADD TAG || tag: MianWorkAsMiner
+AREA TRIGGER CREATE || missionId: 1700159 | id: 171591 | sceneName: Main | flagName: trigger_chamber | showOnMap: 0 | mapIcon: MissionAreaBranch | transId: 80006537
+ACTION DATE SET FLAG || flag: DATE:EasterEggAfterDC
+SUBMIT MISSION 1100091
+CENTRAL ADD DUNGENON || style: 1 | textIds: 70045
+
+TRIGGER Procedure 1.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if part is == 10
+ACTIONS
+PICK UP RESOURCE DELETE || id: 1310
+PICK UP RESOURCE REFRESH || id: 1311
+SCENEITEM DELETE || itemType: 0 | id: 20911
+AREA TRIGGER DELETE || id: 20911
+END MISSION 1100092
+
+TRIGGER Procedure 1.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 20911
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || id: 20911 | itemType: 0
+AREA TRIGGER DELETE || id: 20911

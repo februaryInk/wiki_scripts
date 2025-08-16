@@ -1,0 +1,190 @@
+Reading Mission 1700274: Crush
+
+<onlyinclude>{{Infobox mission
+|name = Crush
+|image =
+|description = The person writing you secret letters turned out to be Unsuur! He  has run home. You should go ask him about these letters...
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 1200
+|reputation = None
+|gols = None
+|npc1 = Unsuur
+|rp1 = 20
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200280
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Belly of the Beast is successfully completed
+CHECK GLOBAL BLACKBOARD || key: UnsuurMail | info: 1 | exist: 1
+Who's the Deputy is successfully completed
+
+GROUP 10:
+Belly of the Beast is successfully completed
+CHECK GLOBAL BLACKBOARD || key: UnsuurMail | info: 1 | exist: 1
+Who's the Deputy has failed
+
+ACTIONS
+The player receives a letter:
+{{mail|488}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+In Trusses We Trust is successfully completed
+CHECK GLOBAL BLACKBOARD || key: UnsuurMail | info: 1 | exist: 1
+ACTIONS
+The player receives a letter:
+{{mail|489}}
+Run mission Crush
+GLOBAL BLACK BOARD REMOVE || key: UnsuurMail
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+ACTION CUTSCENE START AUDIO TYPE || id: CG_MAIL | duration: 0 | audioType: NoTransitionOff
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 9 | name: CG_MAIL
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+(cId 2) A conversation 9724, 9725 starts:
+{{dialogue|Unsuur|Oh. Hey there, ''Player''. I was just here putting this letter into your mailbox. On second thought, might just... not.}}
+{{dialogue|Unsuur|Oh, hey, shoot. I just remembered. I need to go home and lock myself in my closet. See ya.}}
+SCENEITEM CREATE FLAG || itemType: 0 | id: 172741 | path: Mission_UnsuurHidePos | sceneName: UnsuurHome | flagName: UnsuurQ1 | extraParams: -1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 172741 | delayTime: 0 | durationTime: 2 | changeType: 2 | curveIndex: -2
+DELIVER MISSION 1700274
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Unsuur stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172741 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 9726 starts:
+{{dialogue|Player|(The person who was writing the letters was Unsuur all along! Should I go after him?)}}
+Unsuur stops standing still
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1700274
+
+TRIGGER Procedure 0.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700274
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Run mission Crush
+END MISSION 1700274
+
+TRIGGER Procedure 0.0 Step 0.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172741 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Unsuur stops standing still
+Unsuur stands still in UnsuurHome
+
+TRIGGER Procedure 0.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+Where's Mi-an is in state 1 with flag 0
+The Childhood Friend is in state 1 with flag 0
+Goodbye, Nia is in state 1 with flag 0
+The Kidnapping is in state 1 with flag 0
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: triallogan | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+
+TRIGGER Procedure 0.0 Step 0.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Set a to 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Set a to 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Set a to 1
+
+==Rewards==
+{{mission reward
+|npc1 = Unsuur
+|rp1 = 20
+|exp = 1200
+|reputation = None
+|gols = None
+}}

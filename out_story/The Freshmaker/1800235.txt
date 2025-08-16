@@ -1,0 +1,159 @@
+Reading Mission 1800235: The Freshmaker
+
+<onlyinclude>{{Infobox mission
+|name = The Freshmaker
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from The Freshmaker:
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 6629) that ends:
+{{dialogue|Grace|Thank you so much! Alright, come show me when it's ready! I'm kind of curious to see how useful this Old World tech really is.}}
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1800234
+Add 1 Insulated Backpack of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800234
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Freshmaker
+END MISSION 1800234
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800235
+CONDITIONS
+Always:
+ACTIONS
+===Make an Insulated Backpack===
+
+{{mission_details
+|desc = Grace has designed an Insulated Backpack based on an ancient relic that can carry dishes effectively, while maintaining freshness. Build it according to her design.
+|details = Make an Insulated Backpack
+*{{i2|Insulated Backpack|0/1}}
+}}
+Set global blackboard key FreshBag with info 0.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1800235
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|441}}
+NPC ADD TAG || tag: FreshDeliver
+Set global blackboard key FreshBag with info 1.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) The player picks the second option in conversation segment 6636:
+{{dialogue|Grace|Well... anyway, thanks for your help! I'll give this to Dan-bi. They said she was more than eager to do the deliveries. And I'll be there to give her a hand when she's busy.}}
+
+*''No problem! Good luck!'' (No unique dialogue)
+*{{flirt}}''Do take care of yourself when you're going.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Grace gains 2 favor
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1800234 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Report to Grace===
+
+{{mission_details
+|desc = The backpack is ready. Give it to Grace.
+|details = Report to Grace
+*{{i2|Insulated Backpack|0/1}}
+*{{i2|Grace|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Owen
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1800234 | targetId: 1 | canSubmit: 0
+The Freshmaker is in state 2 with flag 1
+ACTIONS
+(cId 1) A conversation 1940_0 starts:
+{{dialogue|Owen|Grace recently suggested that we send food to the surrounding villages in Sandrock. Y'know, I can't believe I didn't think of it myself! She really is somethin'.}}
+{{dialogue|Owen|I took her idea right to the Church, and they said yes without hestitation. Dan-bi volunteered to be the delivery girl about two seconds after... Yeah... Quite a few people in town are from the villages originally, y'know... Burgess is, and uh... Logan's friend Haru...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Grace
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1800234 | targetId: 1 | canSubmit: 0
+The Freshmaker is in state 2 with flag 1
+ACTIONS
+(cId 2) A conversation 1941_0 starts:
+{{dialogue|Grace|How's the Insulated Backpack going? I hope I'm not setting unrealistic expectations for myself... Er... There's nothing wrong with my design, is there...?}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Grace
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1800234 | targetId: 2 | canSubmit: 1
+ACTIONS
+(cId 4) A conversation 1942_0 starts:
+{{dialogue|Grace|Got that backpack for me? Hey, nice! Looks good. If the design works, the food will not only last for hours, but also arrive at its destination looking like it's fresh out of the kitchen! Heh heh heh...}}
+{{dialogue|Grace|...You know, the more I study Old World technology, the more I realize that most of their advancements came from pure laziness! These takeout boxes, for example. It's just because they were too lazy to leave their house or cook!}}
+{{dialogue|Grace|Hm... certainly if necessity is the mother of all invention... laziness is the father. Or... uncle? Daughter? Because necessity comes first? Cousin?}}
+{{dialogue|Grace|Well... anyway, thanks for your help! I'll give this to Dan-bi. They said she was more than eager to do the deliveries. And I'll be there to give her a hand when she's busy.}}
+
+*''No problem! Good luck!''
+*{{flirt}}''Do take care of yourself when you're going.''
+
+{{dialogue|Grace|indent=true|answer=Do take care of yourself when you're going.
+|reward={{NPC2|Grace|rp=2}}|Oh, don't worry about it. If I'm in danger, I'll just call out, I'm sure the Civil Corps will come running! "We arrive in ten minutes or less, or your next rescue's free." That's the Justice guarantee! Heh...}}
+{{dialogue|Grace|See you later!}}
+The conversation ends.
+Remove 1 Insulated Backpack of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 10.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+NPC ADD TAG || tag: FreshDeliver
+SUBMIT MISSION 1800234
+Set global blackboard key FreshBag with info 1.
+END MISSION 1800235

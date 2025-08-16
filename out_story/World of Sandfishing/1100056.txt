@@ -1,0 +1,124 @@
+Reading Mission 1100056: World of Sandfishing
+
+<onlyinclude>{{Infobox mission
+|name = World of Sandfishing
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from World of Sandfishing:
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 5
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1100055
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1100055
+CONDITIONS
+Always:
+ACTIONS
+Run mission World of Sandfishing
+END MISSION 1100055
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON BAG CHANGE || order: 0 | changeType: 0 | item: 15400011 | itemGrade: -1
+CONDITIONS
+Always:
+ACTIONS
+===Sandfishing===
+
+{{mission_details
+|desc = The Sandtrap is ready, use the {{textcolor|green|Sandfish Trap}} to catch sandfish with {{textcolor|green|bait}}. Talk to Owen when you have enough Sand Carp. You can sandfish at a spot {{textcolor|green|just east of your workshop}}.
+|details = Sandfishing
+*{{i2|Sand Carp|0/3}}
+}}
+Set SUB to 0
+Add 20 Sandworm of Unknown quality (Notify player)
+AREA TRIGGER CREATE || id: 10561 | sceneName: Main | flagName: trigger_shabuquyu | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80000224 | missionId: 1100055
+
+TRIGGER Procedure 0.0 Step 0.5 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1100055 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Owen===
+
+{{mission_details
+|desc = You've got the Sand Carp Owen asked for, go deliver them to him.
+|details = Talk to Owen
+*{{i2|Sand Carp|0/3}}
+*{{i2|Owen|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Owen
+CONDITIONS
+CHECK TARGET CAN SUBMIT || targetId: 2 | missionId: 1100055 | canSubmit: 1
+ACTIONS
+(cId 1) A conversation 177, 1103, 4488 starts:
+{{dialogue|Owen|Hey! You really came through! You're a life saver!}}
+{{dialogue|Owen|I'll be posting more supply requests on the commission board in the future, so watch for those!}}
+{{dialogue|Owen|Oh, and a heads up, if you catch any more sandfish in the future, you can always give some to Elsie. She loves sandfishing, I'm sure she'd enjoy someone to share the hobby with.}}
+Set SUB to 1
+BAG MODIFY BY TARGET || targetId: 2 | missionId: 1100055
+
+TRIGGER Procedure 0.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1100055
+END MISSION 1100056
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 10561
+MISSION END BEFORE 1100056
+MISSION END BEFORE 1100056
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 10561
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100056
+CONDITIONS
+Always:
+ACTIONS
+===Make a Sandfish Trap===
+
+{{mission_details
+|desc = You will need a {{textcolor|green|Sandfish Trap}} to catch Sand Carp, make one on your {{textcolor|green|Worktable}}.
+|details = Make a Sandfish Trap
+}}
+Set SUB to 10

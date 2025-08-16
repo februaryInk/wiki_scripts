@@ -1,0 +1,472 @@
+Reading Mission 1800356: The Girl with the Umbrella
+
+<onlyinclude>{{Infobox mission
+|name = The Girl with the Umbrella
+|image =
+|description = A timid woman from Portia who is always under an umbrella has arrived in town and is seeking treatment with Dr. Fang.
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 1600
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200364
+
+TRIGGER Procedure 10.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+The Jewel of the Eufaula is successfully completed
+Check if mission 1500404 is result 1 flag 1
+ACTIONS
+Set 1800356 to 0
+
+TRIGGER Procedure 10.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: fangginger | info: 1 | exist: 0
+ACTIONS
+Run mission The Girl with the Umbrella
+Set global blackboard key fangginger with info 1.
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+Where's Mi-an is in state 1 with flag 0
+The Childhood Friend is in state 1 with flag 0
+Goodbye, Nia is in state 1 with flag 0
+The Kidnapping is in state 1 with flag 0
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: triallogan | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+CHECK WEATHER STATE || weather: 0 | flag: 1
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+
+TRIGGER Procedure 0.0 Step 3.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Gale stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8356_0_1
+CUTSCENE UI STATE ENTER STOPX || 
+
+TRIGGER Procedure 0.0 Step 4.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 20008 starts:
+{{dialogue|Gale|They should be here by now... I hope it's on time... What a long ride! It could get stuffy in there, oh no, and she might feel sick on the road...}}
+
+TRIGGER Procedure 0.0 Step 6.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 83561102) to Gale
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8356_110_2)
+Add behavior CommanderMoveToFlagAndAction (idName: 8356001) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8356_0_2)
+Set 8356Move1 to 0
+
+TRIGGER Procedure 0.0 Step 7.0 Order 4 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8110 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | eventName: MoveToFlagOver | behaviourName: CommanderMoveToFlagAndAction
+CONDITIONS
+Always:
+ACTIONS
+Increment 8356Move1 by 1
+
+TRIGGER Procedure 0.0 Step 8.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver | npc: 8110
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8000 | eventName: MoveToFlagOver | behaviourName: CommanderMoveToFlagAndAction
+CONDITIONS
+Check if 8356Move1 is >= 2
+ACTIONS
+(cId 2) A conversation 6373_0 starts:
+{{dialogue|Gale|Ah, ''Player''!}}
+
+*''Waiting for someone?''
+*''Have a safe journey back!''
+
+{{dialogue|Gale|indent=true|answer=Waiting for someone?
+|Yes, my family is coming today.}}
+{{dialogue|Gale|indent=true|answer=Have a safe journey back!
+|Oh, you must be mistaken. I'm not leaving yet...}}
+{{dialogue|Gale|indent=true|My family is visiting Sandrock. They should be here any minute now.}}
+{{dialogue|Gale|I don't mind telling you, ''Player'', that my daughter has been suffering from a strange and rare illness since she was very young. Even the best doctors in the Free Cities couldn't figure it out...}}
+{{dialogue|Gale|Last time I visited Sandrock, Doctor Fang wasn't here yet. I'm glad I got to meet him this time. I've heard great things about his skills, so I thought I'd bring my daughter here for his opinion. Who knows, something might even come out of it...}}
+{{dialogue|Gale|By the way, ''Player'', I have a small favor to ask...}}
+{{dialogue|Gale|Could you come with us to the clinic later?}}
+{{dialogue|Gale|It's just that Doctor Fang has a unique temperament, but that's not what worries me. It's my son; he can be a bit...}}
+{{dialogue|Gale|Ah, look! There they are!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 8.2 Order 32 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 2) There is a conversation segment (id 20017) that ends:
+{{dialogue|Gale|It's just that Doctor Fang has a unique temperament, but that's not what worries me. It's my son; he can be a bit...}}
+CONDITIONS
+Always:
+ACTIONS
+SOUND PLAY 2D || idStr: Play_car_horn
+
+TRIGGER Procedure 0.0 Step 9.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTION CUTSCENE START AUDIO TYPE || id: CG_GINGERCOME | audioType: NormalOff | duration: 1
+
+TRIGGER Procedure 0.0 Step 10.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_GINGERCOME | state: 7
+CONDITIONS
+Always:
+ACTIONS
+Ginger stands still in Main and looks at Gale
+Gust stands still in Main and looks at Gale
+Gale stands still in Main and looks at Ginger
+PLAYER SET POS ROT FLAG || flagName: S8356_0_3 | sceneName: Main
+
+TRIGGER Procedure 0.0 Step 11.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_GINGERCOME | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 6376_0 starts:
+{{dialogue|Ginger|Papa.}}
+{{dialogue|Gale|It's so wonderful to see both of you! How was the journey? Everything went smoothly?}}
+{{dialogue|Gust|Everything was fine. We made travel plans as soon as your telegraph arrived.}}
+{{dialogue|Gale|Let me introduce everyone. My daughter, Ginger, and my son, Gust. This is the best Builder in Sandrock, who's become a friend to me. ''Player'' has done a lot for Sandrock-}}
+{{dialogue|Gust|That's fine, Pa. We're not here to make friends. Where's the clinic?}}
+{{dialogue|Ginger|Hello, Builder. I'm Ginger. It's nice to meet you.}}
+{{dialogue|Gale|Yes, the clinic... My apologies, ''Player''. You see, my son can be a bit-}}
+{{dialogue|Gust|Pa, the clinic?}}
+{{dialogue|Gale|Yes, yes. Let's head over now!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 12.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 83561 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 13.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83561 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Clinic | flagName: S8356_0_1
+Gale stops standing still
+Gale stops standing still
+Ginger stops standing still
+Gust stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 83561102) from Gale
+Remove behavior CommanderMoveToFlagAndAction (idName: 8356001) from Player
+DELAY MASK SET || maskId: 83561 | changeType: 1 | curveIndex: 0 | durationTime: -2 | delayTime: 0
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 14.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_clinic
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_clinic
+
+TRIGGER Procedure 0.0 Step 15.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: S8356_0_1 | sceneName: Clinic
+X stands still in Clinic and looks at Ginger
+Gust stands still in Clinic and looks at Ginger
+Gale stands still in Clinic and looks at Fang
+Add behavior CommanderSit (idName: 8356161) to Fang
+(param: SeatDramaName:8356Seat16|DelayTime:0|TargetScene:Clinic)
+Add behavior CommanderSit (idName: 83561072) to Ginger
+(param: SeatDramaName:8356Seat107|DelayTime:0|TargetScene:Clinic)
+SCENEITEM CREATE FLAG || itemType: 0 | id: 83561 | path: S8356_Item1 | flagName: S8356_Item1 | extraParams: -1 | sceneName: Clinic
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 83569 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 16.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 83569 | delayTime: 3 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 20.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83569 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 6377_0 starts:
+{{dialogue|X|Squark! Tell us about your illness! Squark!}}
+{{dialogue|Ginger|Did you see that, Gust? The little bird speaks our language! How clever! Hello!}}
+{{dialogue|X|That's right, dear. When did you get sick? When did you get sick?}}
+{{dialogue|Ginger|Since I was twelve. I've been careful to keep it under control.}}
+{{dialogue|X|What medications do you take? What books do you read?Who do you like?}}
+{{dialogue|Ginger|Um, I take the medications prescribed by our local doctor. As for books, I read whatever Uncle Russo can find for me. Why do you ask about the books? And who do I like...?}}
+{{dialogue|Gust|This is ridiculous!}}
+{{dialogue|Fang|Quiet, X.}}
+{{dialogue|X|Uh uh...}}
+{{dialogue|Fang|The most recent episode...?}}
+{{dialogue|Gust|We've been careful with her diet and where she goes, so it hasn't happened since the start of the year.}}
+{{dialogue|Ginger|No, actually, it was recently...}}
+{{dialogue|-2|Recently?!}}
+{{dialogue|X|No hiding! Tell the truth! Tell everything!}}
+{{dialogue|Ginger|I'm sorry I didn't tell you about it. I was taking a walk on my own...}}
+{{dialogue|Ginger|Papa was at the Summit, and I didn't wish to worry my brother. It wasn't too bad. The Builder at Portia saw me ill, took me to the clinic, and everything was fine after Doctor Xu gave me some medication. Really, it was like it never happened...}}
+{{dialogue|Gust|Doctor Xu... How could he keep that from me!}}
+{{dialogue|X|He mad! He mad! Calm down, sweetheart. Have some Herbal Tea to help that temper!}}
+{{dialogue|Gust|...}}
+{{dialogue|Ginger|Don't blame Doctor Xu, please. I told him not to tell anyone because I didn't want you all worried.}}
+{{dialogue|Gale|My sweet daughter, had I known, I wouldn't have let you travel all the way to Sandrock! To put you through that tough journey!}}
+{{dialogue|X|Fight! Fight! Fight! Get your snacks! Grab a front-row seat!}}
+{{dialogue|Gust|What kind of clinic is this? Father, it's a talking bird and a doctor who can barely string two words together! It's a circus! How can we trust them with Ginger's health?}}
+{{dialogue|Fang|...}}
+{{dialogue|Gale|Gust, you know that appearances don't matter as long as the doctor is good at what they do.}}
+{{dialogue|X|Attention, attention, the circus show is on! First one out is X, performing, spewing out bad words!}}
+{{dialogue|Gust|Shut up, bird!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 21.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8356422) to X
+(param: TargetScene:Clinic|MoveMode:Run|FlagName:S8356_42_2|Delay:0.0)
+X stops standing still
+STOPWATCH REAL TIME SET || id: 83561 | sec: 3
+
+TRIGGER Procedure 0.0 Step 22.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 83561
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 20055, 20056 starts:
+{{dialogue|Ginger|Please, Gust! I wanted to come. I wanted to see if there's a cure.}}
+{{dialogue|Ginger|Right, Papa? Brother? That was the point, right? To find a cure once and for all.}}
+
+TRIGGER Procedure 0.0 Step 23.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderSit (idName: 8356161) from Fang
+STOPWATCH REAL TIME SET || id: 83562 | sec: 2.5
+Fang stands still in Clinic and looks at Gust
+
+TRIGGER Procedure 0.0 Step 24.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 83562
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 20057, 20058, 20059 starts:
+{{dialogue|Fang|Family, stay... composed.}}
+{{dialogue|Fang|I need to feel the pulse. Everyone, please wait outside.}}
+{{dialogue|Gale|Sure, doctor. Come with me, Gust. Let's give them some space.}}
+
+TRIGGER Procedure 0.0 Step 26.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 835652
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 20060 starts:
+{{dialogue|Fang|...It's done.}}
+
+TRIGGER Procedure 0.0 Step 27.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 83563 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 28.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83563 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Gust stops standing still
+Gale stops standing still
+PLAYER SET POS ROT FLAG || flagName: S8356_0_2 | sceneName: Clinic
+Fang stands still in Clinic and looks at Ginger
+Gust stands still in Clinic and looks at Fang
+Gale stands still in Clinic and looks at Fang
+Ginger stands still in Clinic and looks at Fang
+Remove behavior CommanderSit (idName: 83561072) from Ginger
+DELAY MASK SET || maskId: 83563 | delayTime: 3 | durationTime: -2 | changeType: 1 | curveIndex: 0
+SCENEITEM DELETE || itemType: 0 | id: 83561
+
+TRIGGER Procedure 0.0 Step 29.0 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83563 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 8) A conversation 6378_0 starts:
+{{dialogue|Fang|The recent episode... not good.}}
+{{dialogue|Fang|I need a day... to decide on a treatment.}}
+{{dialogue|Fang|Come back tomorrow, please.}}
+{{dialogue|Gust|...}}
+{{dialogue|Fang|See you. Tomorrow.}}
+{{dialogue|Gust|...Come, Ginger. You must be tired now. Let's get some rest at the saloon.}}
+{{dialogue|Ginger|Yes... Thank you, doctor. And you too, ''Player''.}}
+{{dialogue|Gale|...Goodbye, doctor. And thank you for taking the time to come with us, ''Player''.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 30.0 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Gale stops standing still
+Ginger stops standing still
+Gust stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8356422) from X
+Add behavior CommanderMoveToFlag (idName: 8356423) to X
+(param: TargetScene:Clinic|MoveMode:Walk|FlagName:S8356_42_3|Delay:2.0)
+Add behavior CommanderMoveToFlag (idName: 83561103) to Gale
+(param: TargetScene:Main|MoveMode:Walk|FlagName:default|Delay:0.0)
+STOPWATCH REAL TIME SET || id: 180035600 | sec: 10
+
+TRIGGER Procedure 0.0 Step 31.0 Order 25 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 180035600
+CONDITIONS
+Always:
+ACTIONS
+(cId 9) A conversation 6379_0 starts:
+{{dialogue|X|He's mean... X is sad...}}
+
+*''He is probably under stress...''
+*''Yes, that was quite an outburst...''
+*''X, that wasn't very nice of you...''
+
+{{dialogue|Fang|indent=true|answer=He is probably under stress...
+|...}}
+{{dialogue|Fang|indent=true|I understand.}}
+{{dialogue|Fang|indent=true|answer=Yes, that was quite an outburst...
+|It happens... Illness makes emotion run high.}}
+{{dialogue|X|indent=true|answer=X, that wasn't very nice of you...
+|Bad crow! X hates crows...}}
+{{dialogue|Fang|indent=true|Enough, X.}}
+{{dialogue|Fang|''Player'', do you know... why families get so upset?}}
+{{dialogue|Fang|They love... they are in pain too.}}
+{{dialogue|Fang|''Player'', please... come tomorrow.}}
+{{dialogue|Fang|I will have X... stay at home. I don't want a repeat of today...}}
+{{dialogue|Fang|If families are upset... it is not helpful. For anyone.}}
+{{dialogue|Fang|Thank you.}}
+The conversation ends.
+DELIVER MISSION 1800356
+Remove behavior CommanderMoveToFlag (idName: 83561103) from Gale
+
+TRIGGER Procedure 0.0 Step 33.0 Order 26 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Fang stops standing still
+Fang stops standing still
+Remove behavior CommanderMoveToFlag (idName: 8356423) from X
+CUTSCENE UI STATE EXIT STOPX || 
+START MISSION 1800356
+
+TRIGGER Procedure 0.0 Step 35.0 Order 27 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800356
+CONDITIONS
+Always:
+ACTIONS
+ACTION BUS REMOVE HIDE || hideId: 23561
+Run mission The Girl with the Umbrella
+END MISSION 1800356
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DAY START FOR WEATHER || order: 0 | weather: 2
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: set_weather
+ACTIONS
+UNIQUE ACTION RUN || idStr: set_weather
+WEATHER SET STATE || WeatherState: 0
+Set 8356A to 0
+ACTION BUS ADD HIDE || hideId: 23561
+
+==Rewards==
+{{mission reward
+|exp = 1600
+|reputation = None
+|gols = None
+}}

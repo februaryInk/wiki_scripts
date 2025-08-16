@@ -1,0 +1,136 @@
+Reading Mission 1700366: Mister Minister
+
+<onlyinclude>{{Infobox mission
+|name = Mister Minister
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Mister Minister:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 15223) that ends:
+{{dialogue|Trudy|Eh... this is not exactly the solution I had in mind for this but... it may very well be a solution. ''Player'', do you mind?}}
+
+*''Sure thing.'' (No unique dialogue)
+*''Too much on the ol' platerino I'm afraid.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1700365
+
+TRIGGER Procedure 0.0 Step 0.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 15230) that ends:
+{{dialogue|Unsuur|Yep. Bye.}}
+(cId: -1) There is a conversation segment (id 15224) that ends:
+{{dialogue|Burgess|I see... well, don't worry about it! I'm sure someone can help me out! I'll send you the design regardless, let me know if you get time!}}
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1700365
+Run mission Mister Minister
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700366
+CONDITIONS
+Always:
+ACTIONS
+===Wait for Diagram===
+
+{{mission_details
+|desc = Wait for Burgess to visit Vivi and design the Minister Hat.
+|details = Wait for Diagram
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|635}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1700365 | targetId: 2 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Burgess===
+
+{{mission_details
+|desc = You've finished making the hat, take it to Burgess.
+|details = Talk to Burgess
+*{{i2|Minister's Hat|0/1}}
+*{{i2|Burgess|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Burgess
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1700365 | targetId: 3 | canSubmit: 1
+ACTIONS
+(cId -1) A conversation 15231, 15232, 15233, 15234, 15235, 15236, 15237, 15238, 15239, 15240, 15241, 15242, 15243 starts:
+{{dialogue|Burgess|Ooh, baby... is that it? Of course it's "it," it's incredible!}}
+{{dialogue|Burgess|M-may I...?}}
+{{dialogue|Burgess|O-okay... Here goes nothing...!}}
+{{dialogue|Burgess|Wuh-}}
+{{dialogue|Burgess|Wah-}}
+{{dialogue|Burgess|Hng...!}}
+{{dialogue|Burgess|Haaaaaaaaa!}}
+{{dialogue|Burgess|Whew... whew... whew...}}
+{{dialogue|Burgess|...Oh, yeah, it's working...! I can feel holy Light energy exuding out of every pore on my body!}}
+{{dialogue|Burgess|This hat is powerful, ''Player''... Maybe too powerful...! Can any one man be trusted to wield such an awesome power...?}}
+{{dialogue|Burgess|...I'll just use it for this one sermon then lock it away...}}
+{{dialogue|Burgess|Alright! Thank you, ''Player''! I'll schedule my first sermon as soon as I'm ready... better go chat with Dan-bi about how to put on a good show...}}
+{{dialogue|Burgess|See you soon, ''Player''!}}
+BAG MODIFY BY TARGET || missionId: 1700365 | targetId: 2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1700365
+END MISSION 1700366
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 635
+CONDITIONS
+Always:
+ACTIONS
+===Make the Hat===
+
+{{mission_details
+|desc = You have the recipe for the hat, make it on your Worktable.
+|details = Make the Hat
+*{{i2|Minister's Hat|0/1}}
+}}

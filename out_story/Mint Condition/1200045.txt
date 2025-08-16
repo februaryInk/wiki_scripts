@@ -1,0 +1,109 @@
+Reading Mission 1200045: Mint Condition
+
+<onlyinclude>{{Infobox mission
+|name = Mint Condition
+|image =
+|description = To measure the safety of the bridge, Mint needs a Magneto Inductive Inspector to measure the load bearing stress of the bridge.
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 1050
+|reputation = 30
+|gols = 500
+|npc1 = Qi
+|rp1 = 10
+|rewards = {{i2|Froggy Explorer Hat}|1}
+}}</onlyinclude>
+
+==Overview==
+Run conditions from The Inspector:
+
+TRIGGER Procedure 0.0 Step 9.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 124416
+CONDITIONS
+Always:
+ACTIONS
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+GROUP 0:
+STOPWATCH REAL TIME SET || id: 120044 | sec: 5
+Add behavior CommanderMoveToFlag (idName: 20442) to Qi
+(param: TargetScene:Science|MoveMode:Walk|FlagName:robot_qi)
+Remove behavior CommanderMoveToFlagAndAction (idName: 124412) from Mint
+Remove behavior CommanderMoveToFlagAndAction (idName: 124412) from Qi
+Remove behavior CommanderMoveToFlagAndAction (idName: 124412) from Matilda
+Remove behavior CommanderMoveToFlagAndAction (idName: 124412) from Player
+CUTSCENE UI STATE EXIT || 
+Run mission Mint Condition
+Add tag "IsTeamFollow" to Mint
+Add behavior Npc_Follow (idName: 120441) to Mint
+(param: EGFollowID:8007|EGFollowTeam:True)
+SUBMIT MISSION 1200043
+
+GROUP 1:
+
+GROUP 2:
+
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200045
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: mintcomefail | info: 1 | exist: 0
+ACTIONS
+DELIVER MISSION 1200045
+START MISSION 1200045
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200045
+CONDITIONS
+Always:
+ACTIONS
+Run mission Mint Condition
+END MISSION 1200045
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200045
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: mintcomefail | info: 1 | exist: 1
+ACTIONS
+The player receives a letter:
+{{mail|54}}
+DELIVER MISSION 1200045
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 54
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: mintcomefail | info: 1 | exist: 1
+ACTIONS
+START MISSION 1200045
+
+==Rewards==
+{{mission reward
+|npc1 = Qi
+|rp1 = 10
+|exp = 1050
+|reputation = 30
+|gols = 500
+|rewards = {{i2|Froggy Explorer Hat}|1}
+}}

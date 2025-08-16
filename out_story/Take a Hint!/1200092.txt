@@ -1,0 +1,388 @@
+Reading Mission 1200092: Take a Hint!
+
+<onlyinclude>{{Infobox mission
+|name = Take a Hint!
+|image =
+|description = Grace wants to pay for damages she caused in the saloon, but Owen can't bear to let that happen.
+|type = Side
+|time =
+|location =
+|characters = [[Owen]]
+|condition =
+|details =
+|exp = 400
+|reputation = 20
+|gols = None
+|npc1 = Owen
+|rp1 = 20
+|npc2 = Grace
+|rp2 = 15
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200072
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission Pay Back
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if Owen has favor >= 100
+Check if Grace is in town
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+Check if Owen is in town
+ACTIONS
+Run mission Take a Hint!
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200092
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 0
+Set IsShashaReleased to 0
+Set Stage to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: inprison | info: 1 | exist: 0
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1200092 | sceneName: Main | flagName: 1292_G1_Trigger_20 | showOnMap: 0 | mapIcon: 0 | transId: 0 | id: 209220
+AREA TRIGGER CREATE || missionId: 1200092 | sceneName: Main | flagName: 1292_G1_Trigger_21 | id: 209221 | showOnMap: 0 | mapIcon: 0 | transId: 0
+AREA TRIGGER CREATE || missionId: 1200092 | sceneName: Main | id: 209222 | flagName: 1292_G1_Trigger_22 | showOnMap: 0 | mapIcon: 0 | transId: 0
+AREA TRIGGER CREATE || missionId: 1200092 | sceneName: Main | id: 209223 | flagName: 1292_G1_Trigger_23 | showOnMap: 0 | mapIcon: 0 | transId: 0
+Set Stage to 1
+AREA TRIGGER CREATE || missionId: 1200092 | id: 20921 | sceneName: Main | flagName: 1292_G1_Trigger_0 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80003596
+ACTION AREA TRIGGER SET RADIUS || id: 20921 | radius: 15
+
+TRIGGER Procedure 0.0 Step 2.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 209220
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 209221
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 209222
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 209223
+CONDITIONS
+Check if Stage is == 1
+CHECK GLOBAL BLACKBOARD || key: inprison | info: 1 | exist: 0
+Check if Owen is in town
+ACTIONS
+GROUP 0:
+Yan stops standing still
+Owen stops standing still
+AREA TRIGGER DELETE || id: 209220
+AREA TRIGGER DELETE || id: 209221
+AREA TRIGGER DELETE || id: 209222
+AREA TRIGGER DELETE || id: 209223
+Set Stage to 2
+NPC ADD TAG || tag: ChatKeeper
+
+GROUP 1:
+Yan stands still in Main
+Owen stands still in Main
+
+
+TRIGGER Procedure 0.0 Step 6.5 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 20921
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: inprison | info: 1 | exist: 0
+ACTIONS
+DELAY MASK SET || maskId: 120921 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 6.5 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 120921 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+GROUP 0:
+Yan stops standing still
+Owen stops standing still
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 20921
+AREA TRIGGER CREATE || missionId: 1200092 | id: 20923 | sceneName: Main | flagName: 1292_G1_Trigger_1 | showOnMap: 0 | mapIcon: 0 | transId: 0
+STOPWATCH REAL TIME SET || id: 20929 | sec: 1
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: 1292_G1_Player_0
+STOPWATCH REAL TIME SET || id: 20928 | sec: 4
+DELAY MASK SET || maskId: 120921 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+GROUP 1:
+Owen stands still in Main and looks at Yan
+Yan stands still in Main and looks at Owen
+
+GROUP 2:
+NPC REMOVE TAG || tag: ChatKeeper
+NPC REMOVE TAG || tag: ChatUpdater
+ACTION NPC REMOVE CLUSTER || cluster: CommanderChat
+
+
+TRIGGER Procedure 0.0 Step 7.3 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 120921 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 11) A conversation 2131, 2132, 2133, 2134, 2135 starts:
+{{dialogue|Yan|...And so you see, that mischievous little Mi-an made a teensy little mistake. When she said that we don't charge for overnight commissions, what she meant to say is that actually... we do!}}
+{{dialogue|Yan|In fact, that's an understatement, we charge out the wazoo for overnight commissions, hahaha!}}
+{{dialogue|Owen|Yeah, yeah, I know all about the overnight policies. It's just that Mi-an said she thought she could get us a discount-}}
+{{dialogue|Yan|Yes, well, she's been overruled! Sorry old pal, but if we made an exception for you, we'd have to start making exceptions for everyone! And that would be far too exceptional!}}
+{{dialogue|Owen|Heh heh, yeah... Well, I wouldn't want to shortchange the good folks over at the Commerce Guild...}}
+Remove behavior CommanderMoveToFlagAndAction (idName: 20921) from Player
+
+TRIGGER Procedure 0.0 Step 10.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 20926) to Owen
+(param: CMDAction:Give)
+
+TRIGGER Procedure 0.0 Step 11.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR END || order: 0 | idName: 20926 | behaviourName: CommanderNPCAction | npc: 8001
+CONDITIONS
+Always:
+ACTIONS
+(cId 12) A conversation 2136 starts:
+{{dialogue|Yan|That's what I love about you, Owen! Always so perfectly punctual with your payments! Well, I must be going. My employees won't reprimand themselves, don't you know? So long!}}
+Remove behavior CommanderNPCAction (idName: 20926) from Owen
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 12) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Yan stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 20925) to Yan
+(param: TargetScene:Chamber|MoveMode:Walk|FlagName:hint_yan2)
+STOPWATCH REAL TIME SET || id: 20927 | sec: 1
+Add behavior CommanderMoveToFlagAndAction (idName: 20922) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:1292_G1_8043_2|LookAtActor:8001|Delay:1)
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 20922) from Player
+(cId 21) A conversation 475_0 starts:
+{{dialogue|Owen|Oh, hey, ''Player''! You've come at just the right time! So, the wildest thing happened: Grace had a little spat with the oven and uh, long story short, blew the whole kitchen to smithereens!}}
+{{dialogue|Owen|Don't worry, everyone's fine, and luckily, Mi-an was available to help out with damage control.}}
+{{dialogue|Owen|So that's all well and good, my issue now is that, the night the kitchen exploded, Grace insisted that she'd take a pay cut until all the repairs were paid for, and she wouldn't take "no" for an answer! But now...}}
+{{dialogue|Owen|Now without Mi-an's discount, I just can't let Grace foot the bill! She'd be scraping by for months, if not years!}}
+{{dialogue|Owen|I paid Yan already, it's water under the bridge in my mind, 'cause... you know, these things happen! I can't stand letting her take on such a huge burden, she's just a student.}}
+{{dialogue|Owen|Alright, so here's where you come in: as a Builder, you can just convince her that the repairs aren't that expensive. Then she won't feel so bad, and maybe she'll just forget about the whole thing. It's foolproof!}}
+
+*''OK, let's go!''
+*''Too much on my plate at the moment.''
+*''This is dishonest...''
+
+{{dialogue|Owen|indent=true|answer=OK, let's go!
+|Alright! But, uh, let's not be too hasty now, we need to be prepared if we're going to change Grace's mind. She really has a way of turning things around on you. Maybe she's on the debate team or somethin'.}}
+{{dialogue|Owen|indent=true|Here's the deal: whatever she asks you, {{textcolor|green|just follow my lead}}, capiche...? Don't let her throw you off your game, stick to the plan!}}
+{{dialogue|Owen|indent=true|Guess we're as ready as we're ever gonna be. Let's go track down Grace, I'll be right behind you!}}
+{{dialogue|Owen|indent=true|answer=Too much on my plate at the moment.
+|Ah, shucks. Well if you do get the time, I could really use your help. You know, Mi-an hasn't got much of a poker face if you know what I mean, which is fine! One less politician in the world...}}
+{{dialogue|Owen|indent=true|But uh, do come and find me if you're ready to go talk to Grace.}}
+{{dialogue|Owen|Look. Grace is a capable gal. One day, she's gonna get back to Atara, finish her degree, and then soon she'll probably have more Gols than the both of us put together! Then maybe I'll hit her back for this kitchen!}}
+{{dialogue|Owen|But for now, she just can't afford this. This amount of money will set her back in a big way; we gotta do this for her, principles be darned!}}
+{{dialogue|Owen|So, whaddya say?}}
+
+*''OK, let's go!''
+*''Too much on my plate at the moment.''
+
+{{dialogue|Owen|indent=true|answer=OK, let's go!
+|Alright! But, uh, let's not be too hasty now, we need to be prepared if we're going to change Grace's mind. She really has a way of turning things around on you. Maybe she's on the debate team or somethin'.}}
+{{dialogue|Owen|indent=true|Here's the deal: whatever she asks you, {{textcolor|green|just follow my lead}}, capiche...? Don't let her throw you off your game, stick to the plan!}}
+{{dialogue|Owen|indent=true|Guess we're as ready as we're ever gonna be. Let's go track down Grace, I'll be right behind you!}}
+{{dialogue|Owen|indent=true|answer=Too much on my plate at the moment.
+|Ah, shucks. Well if you do get the time, I could really use your help. You know, Mi-an hasn't got much of a poker face if you know what I mean, which is fine! One less politician in the world...}}
+{{dialogue|Owen|indent=true|But uh, do come and find me if you're ready to go talk to Grace.}}
+DELIVER MISSION 1200092
+
+TRIGGER Procedure 2.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 21) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+Owen stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 20925) from Yan
+Remove behavior CommanderMoveToFlagAndAction (idName: 20925) from Owen
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 20922) from Player
+Set IsShashaReleased to 1
+SCENEITEM DELETE || itemType: 0 | id: 12921
+Remove behavior CommanderMoveToFlagAndAction (idName: 20923) from Owen
+Remove behavior CommanderMoveToFlagAndAction (idName: 20922) from Yan
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 0
+ACTIONS
+START MISSION 1200092
+Remove behavior CommanderMoveToFlagAndAction (idName: 20925) from Yan
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 20922) from Player
+SCENEITEM DELETE || itemType: 0 | id: 12921
+Owen stops standing still
+
+TRIGGER Procedure 2.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 21) The player picks the second option in conversation segment 2142:
+{{dialogue|Owen|Alright, so here's where you come in: as a Builder, you can just convince her that the repairs aren't that expensive. Then she won't feel so bad, and maybe she'll just forget about the whole thing. It's foolproof!}}
+
+*''OK, let's go!'' (No unique dialogue)
+*''Too much on my plate at the moment.'' (No unique dialogue)
+*''This is dishonest...'' (No unique dialogue)
+
+(cId -1) The player picks the second option in conversation segment 2147:
+{{dialogue|Owen|So, whaddya say?}}
+
+*''OK, let's go!'' (No unique dialogue)
+*''Too much on my plate at the moment.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 1
+
+TRIGGER Procedure 2.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 21) The player picks the first option in conversation segment 2142:
+{{dialogue|Owen|Alright, so here's where you come in: as a Builder, you can just convince her that the repairs aren't that expensive. Then she won't feel so bad, and maybe she'll just forget about the whole thing. It's foolproof!}}
+
+*''OK, let's go!'' (No unique dialogue)
+*''Too much on my plate at the moment.'' (No unique dialogue)
+*''This is dishonest...'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 2150:
+{{dialogue|Owen|Hey, did you find time to come talk to Grace with me?}}
+
+*''OK, let's go!'' (No unique dialogue)
+*''Too much on my plate at the moment.'' (No unique dialogue)
+*''This is dishonest...'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 2147:
+{{dialogue|Owen|So, whaddya say?}}
+
+*''OK, let's go!'' (No unique dialogue)
+*''Too much on my plate at the moment.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 0
+
+TRIGGER Procedure 2.0 Step 3.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200092
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 20922) from Yan
+Remove behavior CommanderMoveToFlagAndAction (idName: 20923) from Owen
+Set IsShashaReleased to 1
+Run mission Take a Hint!
+END MISSION 1200092
+
+TRIGGER Procedure 2.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END || order: 0 | result: 1 | missionId: 1200292
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 209220
+AREA TRIGGER DELETE || id: 209221
+AREA TRIGGER DELETE || id: 209222
+AREA TRIGGER DELETE || id: 209223
+AREA TRIGGER DELETE || id: 20921
+END MISSION 1200092
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Owen|Hey, did you find time to come talk to Grace with me?}}
+
+*''OK, let's go!''
+*''Too much on my plate at the moment.''
+*''This is dishonest...''
+
+{{dialogue|Owen|indent=true|answer=OK, let's go!
+|Alright! But, uh, let's not be too hasty now, we need to be prepared if we're going to change Grace's mind. She really has a way of turning things around on you. Maybe she's on the debate team or somethin'.}}
+{{dialogue|Owen|indent=true|Here's the deal: whatever she asks you, {{textcolor|green|just follow my lead}}, capiche...? Don't let her throw you off your game, stick to the plan!}}
+{{dialogue|Owen|indent=true|Guess we're as ready as we're ever gonna be. Let's go track down Grace, I'll be right behind you!}}
+{{dialogue|Owen|indent=true|answer=Too much on my plate at the moment.
+|Ah, shucks. Well if you do get the time, I could really use your help. You know, Mi-an hasn't got much of a poker face if you know what I mean, which is fine! One less politician in the world...}}
+{{dialogue|Owen|indent=true|But uh, do come and find me if you're ready to go talk to Grace.}}
+{{dialogue|Owen|indent=true|answer=This is dishonest...
+|Look. Grace is a capable gal. One day, she's gonna get back to Atara, finish her degree, and then soon she'll probably have more Gols than the both of us put together! Then maybe I'll hit her back for this kitchen!}}
+{{dialogue|Owen|indent=true|But for now, she just can't afford this. This amount of money will set her back in a big way; we gotta do this for her, principles be darned!}}
+{{dialogue|Owen|indent=true|So, whaddya say?}}
+
+:*''OK, let's go!''
+:*''Too much on my plate at the moment.''
+
+{{dialogue|Owen|indent=double|answer=OK, let's go!
+|Alright! But, uh, let's not be too hasty now, we need to be prepared if we're going to change Grace's mind. She really has a way of turning things around on you. Maybe she's on the debate team or somethin'.}}
+{{dialogue|Owen|indent=double|Here's the deal: whatever she asks you, {{textcolor|green|just follow my lead}}, capiche...? Don't let her throw you off your game, stick to the plan!}}
+{{dialogue|Owen|indent=double|Guess we're as ready as we're ever gonna be. Let's go track down Grace, I'll be right behind you!}}
+{{dialogue|Owen|indent=double|answer=Too much on my plate at the moment.
+|Ah, shucks. Well if you do get the time, I could really use your help. You know, Mi-an hasn't got much of a poker face if you know what I mean, which is fine! One less politician in the world...}}
+{{dialogue|Owen|indent=double|But uh, do come and find me if you're ready to go talk to Grace.}}
+
+==Rewards==
+{{mission reward
+|npc1 = Owen
+|rp1 = 20
+|npc2 = Grace
+|rp2 = 15
+|exp = 400
+|reputation = 20
+|gols = None
+}}
+==Post-conduct==
+
+If the player successfully completes the mission, some of the townsfolk will comment on it:
+
+{{dialogue|Mi-an|Yan yelled at me for giving Owen a discount the other day. Dang it! Why couldn't I just follow the rules like I usually do?}}
+
+If the player fails the mission, some of the townsfolk will comment on it:
+
+{{dialogue|Mi-an|Yan yelled at me for giving Owen a discount the other day. Dang it! Why couldn't I just follow the rules like I usually do?}}

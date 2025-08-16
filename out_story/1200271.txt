@@ -1,0 +1,290 @@
+Reading Mission 1200271: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100068
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Who's the Deputy has failed
+ACTIONS
+The player receives a letter:
+{{mail|85}}
+
+TRIGGER Procedure 2.0 Step 1.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Monster Huntin' for Dummies is successfully completed
+
+GROUP 10:
+Monster Huntin' for Dummies has failed
+
+ACTIONS
+Run mission #1200271
+Special gift rule 5 is set for giving Elsie Heart Knot:
+The gift is accepted with:
+{{dialogue|Elsie|Huh? Is this for me? I ain't got time for all this sappy stuff right now, alright?}}
+
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22711
+CONDITIONS
+Always:
+ACTIONS
+Elsie stops standing still
+Banjo stops standing still
+SCENEITEM DELETE || itemType: 0 | id: 22711
+Cooper stands still in Main
+Mabel stands still in Main
+Elsie stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: fishyfriends_player1
+DELAY MASK SET || maskId: 22711 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+{{cutscene|id = 2063}}
+A cutscene CG_DUCKATTACK (duration: 0.0) starts playing
+Duck Hunt - After Elsie made her salted fish soup, a giant duck swooped in to get the food. It ended up hurting Mabel, who wanted to protect her daughter.
+Add behavior CommanderNPCActionLoop (idName: 2271041) to Mabel
+(param: CMDAction:MHurt)
+Add behavior CommanderNPCActionLoop (idName: 2271051) to Elsie
+(param: CMDAction:HoldMabel)
+Add behavior CommanderNPCActionLoop (idName: 2271031) to Cooper
+(param: CMDAction:GunStand)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+Where's Mi-an is in state 1 with flag 0
+The Childhood Friend is in state 1 with flag 0
+Goodbye, Nia is in state 1 with flag 0
+The Kidnapping is in state 1 with flag 0
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: triallogan | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+CUTSCENE UI STATE ENTER || 
+ACTOR FREEZ COLLIDER || npc: 8005 | freezeCollider: 1
+ACTOR FREEZ COLLIDER || freezeCollider: 1 | npc: 8004
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Banjo stands still in Main
+Elsie stands still in Main
+SCENEITEM CREATE FLAG || path: Mission_Model_MoleObj_Item_3 | flagName: fishyfriends_pot | extraParams: 0 | sceneName: Main | id: 22711 | itemType: 0
+PLAYER SET POS ROT FLAG || flagName: fishyfriends_player0 | sceneName: Main
+
+TRIGGER Procedure 0.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 10442, 10443, 10444, 10445 starts:
+{{dialogue|Elsie|Ooooh fishy!}}
+{{dialogue|Elsie|Ack, ack... dang that's strong...}}
+{{dialogue|Banjo|Meow...}}
+{{dialogue|Elsie|No kitty, bad kitty! This is the soup for the monsters! Get outta here!}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 22711 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 9 | name: CG_DUCKATTACK
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Cooper|Goshdang Rutabaga! You git away from my wife!}}
+STOPWATCH REAL TIME SET || sec: 3 | id: 22711
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 22711
+CONDITIONS
+Always:
+ACTIONS
+(cId 99) A conversation 9520 starts:
+{{dialogue|Elsie|Stop it! Pa! Ma's hurt!}}
+
+TRIGGER Procedure 2.0 Step 1.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 99) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 2271032) to Cooper
+(param: TargetScene:Main|MoveMode:Walk|FlagName:fishyfriends_cooper2)
+
+TRIGGER Procedure 1.0 Step 1.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8003 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 2679_0 starts:
+{{dialogue|Elsie|Ma... Ma...}}
+
+*''Quick! Get to Fang's!''
+*''Giiiaaaanntttt Duuuuuckk!''
+*''Elsie, you're so careless!''
+*''(Stay silent)''
+
+{{dialogue|Cooper|indent=true|answer=Quick! Get to Fang's!
+|Mabel. Take my hand!}}
+{{dialogue|Cooper|indent=true|answer=Giiiaaaanntttt Duuuuuckk!
+|I shoulda shot that dang duck! Mabel, c'mon, let's get you to the doc.}}
+{{dialogue|Elsie|indent=true|answer=Elsie, you're so careless!
+|I... I...}}
+{{dialogue|Cooper|indent=true|Let's get yer Ma to the Clinic, I'll deal with you later!}}
+{{dialogue|Cooper|C'mon, Mabel, let's go see the doc!}}
+{{dialogue|Elsie|I'm comin' too!}}
+{{dialogue|Cooper|You done enough, missy! Jus' wait for me to get back.}}
+The conversation ends.
+Remove behavior CommanderNPCActionLoop (idName: 2271031) from Cooper
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 22712 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Elsie gains 10 favor
+ACTOR FREEZ COLLIDER || npc: 8004 | freezeCollider: 0
+ACTOR FREEZ COLLIDER || npc: 8005 | freezeCollider: 0
+Remove behavior CommanderNPCActionLoop (idName: 2271031) from Cooper
+Remove behavior CommanderNPCActionLoop (idName: 2271041) from Mabel
+Remove behavior CommanderNPCActionLoop (idName: 2271051) from Elsie
+CUTSCENE UI STATE EXIT || 
+Cooper stops standing still
+Mabel stops standing still
+Elsie stops standing still
+Add behavior CommanderTeleport (idName: 22712) to Cooper
+(param: TargetScene:Clinic|TargetFlag:Fang_VisitMatilda)
+Add behavior CommanderTeleport (idName: 22712) to Mabel
+(param: TargetScene:Clinic|TargetFlag:Burgess_VisitMatilda)
+Add behavior CommanderTeleport (idName: 22712) to Elsie
+(param: TargetScene:Clinic|TargetFlag:Danbi_VisitMatilda)
+AUTOSAVE TRY || 
+
+TRIGGER Procedure 1.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Mabel|Ah... it hurts...}}
+DELAY MASK SET || maskId: 22712 | delayTime: 2 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: Teleported | behaviourName: CommanderTeleport | npc: 8004
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderTeleport (idName: 22712) from Cooper
+Remove behavior CommanderTeleport (idName: 22712) from Mabel
+Remove behavior CommanderTeleport (idName: 22712) from Elsie
+Add behavior Story1200271_8004 (idName: 22723) to Mabel
+(param: -1)
+Add behavior Story1200271_Others (idName: 22723) to Cooper
+(param: -1)
+Add behavior Story1200271_Others (idName: 22723) to Elsie
+(param: -1)
+ACTION NPC PUT EQUIP || itemId: 12401021 | npc: 8004
+SCENEITEM CREATE FLAG || path: Mission_Item_Furniture_DoubleBed_CommonQuilt_0 | flagName: fishyfriends_clinic_quilt | itemType: 0 | id: 22712 | sceneName: Clinic | extraParams: 0
+DELAY MASK SET || maskId: 22712 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 2271032) from Cooper
+Add tag "Story1200271" to Fang
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+ACTION NPC REMOVE TAG || tag: Story1200271 | npc: 8016
+SCENEITEM DELETE || itemType: 0 | id: 22712
+Remove behavior Story1200271_8004 (idName: 22723) from Mabel
+Remove behavior Story1200271_Others (idName: 22723) from Cooper
+Remove behavior Story1200271_Others (idName: 22723) from Elsie
+Remove behavior Story1200271_Others (idName: 22723) from Fang
+NPC ADD TAG || tag: MabelHurtHome
+END MISSION 1200271
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Elsie
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 9529 starts:
+{{dialogue|Elsie|Ma's arm... and she keeps gettin' dizzy... Aw dang, I really messed up this time didn't I?}}
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Mabel
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 9530 starts:
+{{dialogue|Mabel|The kind doctor's given me a whole load of medicine to keep me feeling better. Elsie's been taking care of me too, so don't worry about little old me.}}
+
+TRIGGER Procedure 2.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Cooper
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 9531 starts:
+{{dialogue|Cooper|Huh. I ain't in the mood for talkin'.}}

@@ -1,0 +1,215 @@
+Reading Mission 1200179: Clean Slates
+
+<onlyinclude>{{Infobox mission
+|name = Clean Slates
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Clean Slates:
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Mort stops standing still
+START MISSION 1200178
+SAND SET CLEAN ENABLE || enable: 0 | id: 21781
+SAND SET CLEAN ENABLE || enable: 0 | id: 21782
+Fang stops standing still
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200178
+CONDITIONS
+Always:
+ACTIONS
+Run mission Clean Slates
+END MISSION 1200178
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200179
+CONDITIONS
+Always:
+ACTIONS
+===Clear the Sand in Cemetary===
+
+{{mission_details
+|desc = Use the Feather Duster to clear the sand in the cemetary to help Mort and Fang.
+|details = Clear the Sand in Cemetary
+}}
+Set CLEAR to 0
+AREA TRIGGER CREATE || missionId: 1200179 | id: 21791 | sceneName: Main | flagName: cleanslates_trigger2 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80007066
+AREA TRIGGER CREATE || id: 21792 | missionId: 1200179 | flagName: cleanslates_trigger3 | showOnMap: 1 | sceneName: Main | mapIcon: MissionAreaBranch | transId: 80007066
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SAND CLEAR || order: 0 | id: 21781 | compare: 6 | value: 20
+CONDITIONS
+Always:
+ACTIONS
+Increment CLEAR by 1
+AREA TRIGGER DELETE || id: 21791
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SAND CLEAR || order: 0 | id: 21782 | compare: 6 | value: 20
+CONDITIONS
+Always:
+ACTIONS
+Increment CLEAR by 1
+AREA TRIGGER DELETE || id: 21792
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SAND CLEAR || order: 10 | compare: 6 | value: 20 | id: 21781
+ON SAND CLEAR || order: 10 | id: 21782 | compare: 6 | value: 20
+CONDITIONS
+Check if CLEAR is == 2
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 21791 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 21791
+CONDITIONS
+Always:
+ACTIONS
+Fang stands still in Main
+X stands still in Main
+X stops standing still
+Add behavior BirdFly (idName: 21791) to X
+(param: Fly_TargetID:8016)
+Mort stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: cleanslates_player2
+DELAY MASK SET || maskId: 21791 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 0.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 21791 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 21791) to Fang
+(param: CMDAction:Talk)
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR END || order: 0 | idName: 21791 | behaviourName: CommanderNPCAction | npc: 8016
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 21791) from Fang
+Mort stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 21791) to Mort
+(param: TargetScene:Main|MoveMode:Walk|FlagName:cleanslates_mort3)
+Add behavior CommanderMoveToFlagAndAction (idName: 21792) to Fang
+(param: TargetScene:Main|MoveMode:Walk|FlagName:cleanslates_fang3)
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8041 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 1260_0 starts:
+{{dialogue|X|Mort! Mort! Hey, Gramps!}}
+{{dialogue|Mort|Oh, little X is here to help too? Well, you all are sweet. These old friends of mine are thankful. I'm sure... their spirits will find her and tell her what a fine man you've become.}}
+{{dialogue|Fang|Mmhm.}}
+{{dialogue|Mort|Young Fang, would you like to come in for a cup of tea, perhaps?}}
+{{dialogue|Mort|X, would you like a carrot?}}
+{{dialogue|X|Would I!? Carrot! Carrot!}}
+{{dialogue|Fang|Busy. Have to go.}}
+{{dialogue|Mort|Busy again, eh? As always... well, another time, perhaps...}}
+{{dialogue|X|Wait! Wait! Carrot...!}}
+{{dialogue|Fang|Come.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Fang stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 21792) from Fang
+Remove behavior BirdFly (idName: 21791) from X
+(cId 1) A conversation 1261_0 starts:
+{{dialogue|Mort|That Fang... he comes to the cemetery every weekend, and he's never taken me up on the tea. I can't help but feel a bit slighted...}}
+
+*''He comes every week?''
+*''He's pretty cold.''
+
+{{dialogue|Mort|indent=true|answer=He comes every week?
+|Without fail. It's like those old tombstones are... the only ones with whom he can reciprocate; spoken through silence. Few alive could see through the pain behind those eyes...}}
+{{dialogue|Mort|indent=true|...}}
+{{dialogue|Mort|indent=true|answer=He's pretty cold.
+|Young one, you mustn't judge so easily. Cold as he may appear, though... As you well know, gems can be found only deep within layers of stone...}}
+{{dialogue|Mort|Mm. That boy's something... what do they call it? Like the son of a poet. Some folks take to trouble like water off a duck's back; rolls right off. But... not one like that. Some folks, it sticks with you.}}
+{{dialogue|Mort|When he arrived here, he buried some things, then made a simple grave marker...}}
+{{dialogue|Mort|I must say, I wasn't proud to pry, but I asked and asked; he wouldn't say who it was that he was mourning... And though he never answered, he took notice of these old bones. He started bringing me his medicine!}}
+{{dialogue|Mort|He saw my back was ailin' me... How could a thoughtful boy like that be truly cold all the way through?}}
+{{dialogue|Mort|Some of his story, I did learn by listening to the chirpings of that bird of his... Its mimicry can be a window into the past...}}
+{{dialogue|Mort|When he was young, his mother fell terribly ill. They couldn't afford treatment, so the poor thing could do nothing but watch his mother slowly pass. After that, he didn't speak for years... perhaps that's why he struggles?}}
+{{dialogue|Mort|That's all I could ascertain, though perhaps I've just grown hard of hearing. His mother was a bird breeder before her death, or, well, maybe it was a bird tamer... Hm, these details amount to little.}}
+{{dialogue|Mort|Perhaps if you're lucky, one day he'll tell you himself. Thanks for your help, ''Player''. I'm sure both he and I appreciate it.}}
+The conversation ends.
+Add behavior CommanderTeleport (idName: 21793) to Fang
+(param: TargetScene:Clinic|TargetFlag:license_mian0)
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderTeleport (idName: 21793) from Fang
+Remove behavior CommanderMoveToFlagAndAction (idName: 21791) from Mort
+CUTSCENE UI STATE EXIT || 
+SCENEITEM DELETE || itemType: 0 | id: 21781
+SCENEITEM DELETE || itemType: 0 | id: 21782
+SUBMIT MISSION 1200178
+END MISSION 1200179
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if Mort has left town
+ACTIONS
+AREA TRIGGER DELETE || id: 21791
+AREA TRIGGER DELETE || id: 21792
+SCENEITEM DELETE || itemType: 0 | id: 21781
+SCENEITEM DELETE || itemType: 0 | id: 21782
+FAIL MISSION || missionId: 1200178
+END MISSION 1200179

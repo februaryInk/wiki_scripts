@@ -1,0 +1,106 @@
+Reading Mission 1900382: The Fleeting Youth Tea Society
+
+<onlyinclude>{{Infobox mission
+|name = The Fleeting Youth Tea Society
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from The Fleeting Youth Tea Society:
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 686
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1900383
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1900383
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Fleeting Youth Tea Society
+END MISSION 1900383
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1900382
+CONDITIONS
+Always:
+ACTIONS
+===Make Fragrant Satchels===
+
+{{mission_details
+|desc = Fragrant Satchels can be made on the Tailoring Machine. If you don't have the recipe, then you can get it from the Commerce Guild Store.
+|details = Make Fragrant Satchels
+*{{i2|Fragrant Satchel|0/2}}
+}}
+Set DA to 0
+Set Day to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Amirah
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1900383 | targetId: 0 | canSubmit: 0
+ACTIONS
+(cId 0) A conversation 18109 starts:
+{{dialogue|Amirah|Have you finished the Fragrant Satchels?}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1900383 | targetId: 0 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Amirah===
+
+{{mission_details
+|desc = The Fragrant Satchels are ready. Take them to Amirah.
+|details = Talk to Amirah
+*{{i2|Fragrant Satchel|0/2}}
+*{{i2|Amirah|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Amirah
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1900383 | targetId: 1 | canSubmit: 1
+ACTIONS
+(cId 1) A conversation 18110 starts:
+{{dialogue|Amirah|Thank you. I made some gifts for Heidi and Pablo. We have this little tea party we do from time to time, but I've been wrapped up with work recently and couldn't go. Now I have these gifts, though; I'm sure they'll forgive me for it.}}
+
+TRIGGER Procedure 0.0 Step 3.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+BAG MODIFY BY TARGET || missionId: 1900383 | targetId: 1
+SUBMIT MISSION 1900383
+Run mission Tea Party
+END MISSION 1900383
+END MISSION 1900382

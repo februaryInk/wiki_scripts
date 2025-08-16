@@ -1,0 +1,149 @@
+Reading Mission 1700378: A New Guitar
+
+<onlyinclude>{{Infobox mission
+|name = A New Guitar
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from A New Guitar:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700377
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 5381_0 starts:
+{{dialogue|Penny|Is it true? You're a Builder, ''Player''? Can you help me with the guitar?}}
+
+*''No problem, leave it to me.''
+*''Sorry, I've got a lot on my plate.''
+
+{{dialogue|Penny|indent=true|answer=No problem, leave it to me.
+|I think Cooper and Hugo were right. I probably need a sturdier guitar if I'm looking to make a career out of it.}}
+{{dialogue|Penny|indent=true|Sandrock's really dry, so it'll easily warp and crack the wood of a normal wooden guitar...}}
+{{dialogue|Penny|indent=true|But I don't want to abandon the aesthetic and feel. ''Player'', can you help me make an acoustic guitar with some sand and wind resistance, without changing the sound?}}
+{{dialogue|Penny|indent=true|You need a recipe design, right? That's how you Builders do things? Maybe it'd be good to ask a local carpenter, see if they have any ideas.}}
+{{dialogue|Penny|indent=true|Thank you so much, ''Player''!}}
+{{dialogue|Penny|indent=true|answer=Sorry, I've got a lot on my plate.
+|No problem, just let me know if you have some time.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 17840) that ends:
+{{dialogue|Penny|Thank you so much, ''Player''!}}
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1700377
+Run mission A New Guitar
+END MISSION 1700377
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700378
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Rian===
+
+{{mission_details
+|desc = Penny's new guitar needs to be able to handle the rough conditions in Sandrock, so you should consult a carpenter. Go and talk to Rian and get some advice.
+|details = Talk to Rian
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Rian
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 17841, 17842, 17843, 17844, 17845, 17846 starts:
+{{dialogue|Rian|Hey, what's up homie? I'm just catching up on an order from last year. Almost done, just about half left now.}}
+{{dialogue|Rian|You want an acoustic guitar that's resistant to Sandrock's weather?}}
+{{dialogue|Rian|That's a big ask, buddy. I got loads of recipes for guitars, but like, to make them as tough as you want? Sheesh, that's some serious wood you're talkin'.}}
+{{dialogue|Rian|We're talkin' preemo wood. I'm saying air-dried, drought resistant, knock-on wood. I'm spittin' A-grade, hyper-tough... you get the idea.}}
+{{dialogue|Rian|Look, I can't do it because I've got that thing. You know, that real debilitating thing that- Huh? You'll do it yourself? Well, why didn't you say so. Here take the recipe.}}
+{{dialogue|Rian|Well, good talking to ya, I gotta get back to completing that order...}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Make the Guitar===
+
+{{mission_details
+|desc = Rian has given you the blueprint for a guitar, make it on your Worktable.
+|details = Make the Guitar
+*{{i2|Wooden Guitar|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 17844) that ends:
+{{dialogue|Rian|We're talkin' preemo wood. I'm saying air-dried, drought resistant, knock-on wood. I'm spittin' A-grade, hyper-tough... you get the idea.}}
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Wooden Guitar of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1700377
+END MISSION 1700378
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1700377 | targetId: 2 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Return to Penny===
+
+{{mission_details
+|desc = You've made a new guitar. Give it to Penny.
+|details = Return to Penny
+*{{i2|Wooden Guitar|0/1}}
+*{{i2|Penny|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Penny
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1700377 | targetId: 3 | canSubmit: 1
+ACTIONS
+(cId -1) A conversation 17847, 17848, 17849, 17850 starts:
+{{dialogue|Penny|Wow, you're finished already!?}}
+{{dialogue|Penny|Let me try...}}
+{{dialogue|Penny|It sounds the same, but it's clearly a much stronger wood! It's amazing! I love it so much!}}
+{{dialogue|Penny|Thank you, ''Player''. I'm going to go and prepare my song, it's the best song in the world, just you wait!}}
+BAG MODIFY BY TARGET || missionId: 1700377 | targetId: 2

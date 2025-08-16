@@ -1,0 +1,993 @@
+Reading Mission 1100082: Moisture Farm Blues
+
+<onlyinclude>{{Infobox mission
+|name = Moisture Farm Blues
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Moisture Farm Blues:
+
+TRIGGER Procedure 0.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1100083
+END MISSION 1100084
+DELIVER MISSION 1100081
+START MISSION 1100081
+ACTION MISSION TRACE 1100081
+
+TRIGGER Procedure 0.0 Step 4.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1100081
+CONDITIONS
+Always:
+ACTIONS
+Run mission Moisture Farm Blues
+END MISSION 1100081
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100082
+CONDITIONS
+Always:
+ACTIONS
+===Hold off the Geeglers===
+
+{{mission_details
+|desc = Defeat the Geeglers inside the {{textcolor|red|Moisture Farm}}!
+|details = Hold off the Geeglers
+}}
+TIME SET ENABLE || bool: 0
+Set TALK to 0
+SCENEITEM INTERACT SET || itemType: 9 | id: 1 | canInteract: 1
+Set KILL to 0
+SCENEITEM DELETE || itemType: 0 | id: 10591
+Set global blackboard key wenshiattack with info 1.
+SCENEITEM INTERACT SET || itemType: 9 | id: 2 | canInteract: 0
+ACTOR BUFF ADD || npc: 8000 | buffId: 17 | instanceId: 10821
+Set QI to 0
+Set STEP to 0
+Set ADD to 0
+Set DAY to 0
+Set GET to 0
+Set PABLO to 0
+Set BOARD to 0
+Set global blackboard key newspaperwenshiyuxi with info 1.
+AREA TRIGGER CREATE || missionId: 1700159 | id: 171592 | sceneName: Main | flagName: trigger_civilcorp | showOnMap: 0 | mapIcon: MissionAreaBranch | transId: 80006536
+ACTOR BUFF ADD || buffId: 11 | npc: 8000 | instanceId: 20821
+GLOBAL BLACK BOARD REMOVE || key: afterpollution
+CUTSCENE UI STATE EXIT || 
+ACTION DATE SET FLAG || flag: DATE:EasterEggAfterGH
+
+TRIGGER Procedure 0.0 Step 1.0 Order 7 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 0 | tag: ArsonGreenHouse2
+CONDITIONS
+Always:
+ACTIONS
+Increment KILL by 1
+MISSION TARGET COUNTER CHANGE || missionId: 1100081 | targetId: 0 | transId: 32000004 | isAdd: 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 10 | tag: ArsonGreenHouse2
+CONDITIONS
+Check if KILL is >= 3
+Check if STEP is == 0
+ACTIONS
+ACTION BATTLE SET STATE || set: 0
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 10601 | delayTime: 0 | durationTime: 2 | changeType: 2 | curveIndex: 0
+Set STEP to 1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PLAYER HP CHANGE || order: 0 | compare: 5 | percent: 0.3
+CONDITIONS
+Check if STEP is == 0
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 10601 | delayTime: 0 | durationTime: 2 | changeType: 2 | curveIndex: 0
+Set STEP to 1
+
+TRIGGER Procedure 0.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 10601 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+MONSTER ADD TAG || tag: ArsonGreenHouse2 | isAdd: 0
+DELAY MASK SET || maskId: 10601 | delayTime: 0 | durationTime: -1 | changeType: 1 | curveIndex: 0
+{{cutscene|id = 1111}}
+A cutscene CG_FIGHT_INFARM (duration: 0.0) starts playing
+Moisture Farm Attack - I'd just gone looking to meet the local greenhouse keeper to learn how to farm, when I walked right into a surprise attack by the Geeglers! Luckily, with the help of Zeke, we were able to fight them off before they'd done too much damage. The Hydrogel however...
+PLAYER SET POS ROT FLAG || sceneName: Greenhouse | flagName: gh_player
+Justice stands still in Greenhouse
+Unsuur stands still in Greenhouse
+Zeke stands still in Greenhouse
+ACTOR BUFF REMOVE || npc: 8000 | instanceId: 10821
+SCENEITEM DELETE || itemType: 0 | id: 20841
+ACTOR BUFF REMOVE || npc: 8000 | instanceId: 20821
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_FIGHT_INFARM | state: 7
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 12 | id: 100311
+SCENEITEM CREATE FLAG || itemType: 0 | id: 106099 | path: Mission_Baoshiqi_Broken3 | sceneName: Greenhouse | flagName: gh_baoshiqijiaohu | extraParams: 0
+SCENEITEM DELETE || itemType: 0 | id: 105999
+SCENEITEM DELETE || itemType: 0 | id: 105998
+SCENEITEM DELETE || id: 105997 | itemType: 0
+SCENEITEM CREATE FLAG || id: 105995 | itemType: 0 | path: Mission_Greenhouse_Smoke_02 | sceneName: Greenhouse | flagName: gh_smokein | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 6.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_FIGHT_INFARM | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 203, 204, 205, 206 starts:
+{{dialogue|Zeke|Hello. You must be the new Builder.}}
+{{dialogue|Zeke|I'm Zeke.}}
+{{dialogue|Justice|Now ain't the time for pleasantries, you big palooka! Look around, the whole Moisture Farm is trashed! I can't believe those darn lizardmen could be so audacious! This is a clear escalation!}}
+{{dialogue|Zeke|The good thing about plants, Justice, is that they grow back. We'll be fine.}}
+
+TRIGGER Procedure 0.0 Step 7.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 105994 | path: Mission_GreenHouse_Bomb | sceneName: Greenhouse | flagName: gh_baoshiqijiaohu | extraParams: 0
+SOUND PLAY 2D || idStr: Play_greenhouse_boom
+STOPWATCH REAL TIME SET || id: 10602 | sec: 3.5
+
+TRIGGER Procedure 0.0 Step 8.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 105995
+GLOBAL BLACK BOARD REMOVE || key: wenshiattack
+Set global blackboard key newspaperwenshiyuxi3 with info 1.
+
+TRIGGER Procedure 0.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) The player picks the first option in conversation segment 212:
+{{dialogue|Justice|But... this is something our new Builder could help with, right? ... Right?}}
+
+*''I can do it!'' (No unique dialogue)
+*''I dunno, looks kinda complicated...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Justice gains 5 favor
+Zeke gains 5 favor
+Unsuur gains 5 favor
+
+TRIGGER Procedure 0.0 Step 10.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 20822
+CONDITIONS
+Always:
+ACTIONS
+AUTOSAVE TRY || 
+AREA TRIGGER DELETE || id: 20822
+
+TRIGGER Procedure 0.0 Step 13.0 Order 11 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 20823
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 1302 starts:
+{{dialogue|-2|Enter The Breach?{{textcolor|red| (Recommended Level 10-12)}}}}
+
+*''Confirm'' (No unique dialogue)
+*''Cancel'' (No unique dialogue)
+
+
+TRIGGER Procedure 0.0 Step 14.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION CHOICE MADE END || order: 0 | npc: -1 | id: 1302 | selectIndex: 0 | cId: 0 | missionId: 1100082
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+SCENEITEM DELETE || itemType: 0 | id: 20823
+PLAYER SET POS ROT FLAG || sceneName: Breach_Dungeon | flagName: breach_playerin
+
+TRIGGER Procedure 0.0 Step 14.5 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON BAG CHANGE || order: 0 | item: 19810008 | changeType: 0 | itemGrade: -1
+CONDITIONS
+Always:
+ACTIONS
+Set GET to 1
+
+TRIGGER Procedure 0.0 Step 15.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON BOSS HAMMER DESTROY || order: 0
+CONDITIONS
+Check if ADD is == 3
+Check if GET is <= (maybe?) 1
+ACTIONS
+(cId 15) A conversation 1506 starts:
+{{dialogue|Player|(Looks like the Geeglers are coming in through here. After I find a Condensor, I should block this hole.)}}
+
+TRIGGER Procedure 0.0 Step 16.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 15) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CAMERA PATH STOP DEFAULT || id: 20829
+
+TRIGGER Procedure 0.0 Step 17.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON BAG CHANGE || order: 0 | item: 19810008 | changeType: 0 | itemGrade: -1
+(cId 15) After the conversation ends:
+CONDITIONS
+CHECK PLAYER ITEM || item: 19810008 | itemGrade: -1 | set: 2 | count: 1
+ACTIONS
+===Close the Hole===
+
+{{mission_details
+|desc = You found a hole that the Geeglers have been using to get into The Breach! Quickly, find some materials to close the hole!
+|details = Close the Hole
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 20821 | sceneName: Breach_Dungeon | flagName: breach_emptyhole | extraParams: Breach_Wall_Stage_2|CreatorItem|	19100001_8_0|80001919|Fix|1.4 | path: Label_breachstone2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 20821 | missionId: 1100081 | iconType: 3
+MONSTER KILL TAG || tag: breachboss
+MONSTER ADD TAG || isAdd: 0 | tag: breachboss
+
+TRIGGER Procedure 1.0 Step 16.5 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 15) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CAMERA PATH STOP DEFAULT || id: 20829
+===Close the Hole===
+
+{{mission_details
+|desc = You found a hole that the Geeglers have been using to get into The Breach! Quickly, find some materials to close the hole!
+|details = Close the Hole
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 20821 | sceneName: Breach_Dungeon | flagName: breach_emptyhole | extraParams: Breach_Wall_Stage_2|CreatorItem|	19100001_8_0|80001919|Fix|1.4 | path: Label_breachstone2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 20821 | missionId: 1100081 | iconType: 3
+MONSTER KILL TAG || tag: breachboss
+MONSTER ADD TAG || isAdd: 0 | tag: breachboss
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 10602
+CONDITIONS
+Always:
+ACTIONS
+(cId 10) A conversation 40_0 starts:
+{{dialogue|Justice|Is, er, that thing over there important, Zeke? It looks pretty busted up.}}
+{{dialogue|Zeke|Oh. Yes. The {{textcolor|green|Hydrogel}}. All the crops will die without that.}}
+{{dialogue|Justice|What?!}}
+{{dialogue|Justice|You're joking, right? I can never tell if you're serious or not...}}
+{{dialogue|Zeke|No, hah hah, I'm afraid there's nothing funny about it. Without a replacement, we could be in dire straits...}}
+{{dialogue|Justice|But... this is something our new Builder could help with, right? ... Right?}}
+
+*''I can do it!''
+*''I dunno, looks kinda complicated...''
+
+{{dialogue|Justice|indent=true|answer=I can do it!
+|reward={{NPC2|Justice|rp=5}}|reward={{NPC2|Zeke|rp=5}}|reward={{NPC2|Unsuur|rp=5}}|That's the spirit, Builder!}}
+{{dialogue|Zeke|indent=true|This main part of the moisture machine... it's kind of rare. And it looks like we'll need a new one. {{textcolor|green|Qi}} might know somethin'; you should speak with him, you know, sooner or later.}}
+{{dialogue|Justice|indent=true|Alright buckeroos, looks like we got ourselves a plan! Zeke, hold down the fort. ''Player'', you head over to Qi's and figure out how to fix that hydro-thing! Unsuur, you're with me, let's secure the perimeter.}}
+{{dialogue|Justice|indent=true|answer=I dunno, looks kinda complicated...
+|Awww shucks! This is not what I want to hear! Here, just ask Director Qi and see if he knows how to fix it; we gotta do some patrollin' to make there ain't more of them Geeglers lurkin' about!}}
+{{dialogue|Justice|indent=true|Unsuur, let's ride!}}
+{{dialogue|Unsuur|indent=true|Yes, sir!}}
+SCENEITEM DELETE || itemType: 0 | id: 105994
+PICK UP RESOURCE REFRESH || id: 101
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Justice stops standing still
+Unsuur stops standing still
+(cId 11) A conversation 221, 803, 1113 starts:
+{{dialogue|Zeke|Yeah, I think our best bet would be to ask Qi; he may know a thing or two about the Hydrogel. For the rest of the damage here, I'll probably just ask the other Builder for help.}}
+{{dialogue|Zeke|Also, you can {{textcolor|green|recycle the old Hydrogel}}. Go ahead and whack it a few times with your Pickhammer, put it out of its misery.}}
+{{dialogue|Zeke|Good luck, Builder. Seriously, everyone is going to be counting on you.}}
+
+TRIGGER Procedure 1.0 Step 1.7 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Salvage the Old Hydrogel===
+
+{{mission_details
+|desc = Use your Pickhammer to salvage what's left of the old Hydrogel.
+|details = Salvage the Old Hydrogel
+}}
+SCENEITEM CREATE FLAG || itemType: 0 | id: 11091 | path: Mission_NewArrow | sceneName: Greenhouse | flagName: gh_huishou | extraParams: 0
+CAMERA PATH STOP DEFAULT || id: 10823
+Zeke stops standing still
+CUTSCENE UI STATE EXIT || 
+TIME SET ENABLE || bool: 1
+SCENEITEM INTERACT SET || itemType: 9 | id: 2 | canInteract: 1
+AUTOSAVE TRY || 
+Set global blackboard key farmattack with info 1.
+Townsfolk respond to the event:
+
+{{dialogue|Amirah|Those lizardfolk... If no one can keep the peace around here, how can we expect our situation to improve?}}
+
+{{dialogue|Arvio|Wait, let me get this straight. The Moisture Farm that provides most of the grains and vegetables for this city is out of commission...? Hmm, in every crisis, there's an opportunity!}}
+
+{{dialogue|Burgess|I feel like I've let everyone down, most of all Zeke... How did I not see the Geeglers coming? Do I even deserve the title of Chief Safety Inspector...?}}
+
+{{dialogue|Catori|If the Geeglers keep this up, my business will go bellyup in no time. Should I be coming up with a backup plan if Sandrock goes south?}}
+
+{{dialogue|Cooper|Those Geeglerrrrs! I curse their funny-sounding name!}}
+
+{{dialogue|Dan-bi|With the Moisture Farm destroyed, we have to all come together. Builder, there's no time to chat, we gotta get to work!}}
+
+{{dialogue|Elsie|If them Geeglers are brave enough to attack Zeke's farm, our ranch could be next! Pa's right! We gotta do somethin'!}}
+
+{{dialogue|Ernest|Sandrock is a truly fascinating place. So inspiring. Bandits, lizards... it seems the citizens here need to contend with a plethora of forces. I knew I was right to come here for material!}}
+
+{{dialogue|Grace|The Geeglers have graduated from aggravating antics into launching coordinated attacks. This might be a precursor to war... At least, I would assume that's the case. But what do I know? I'm just a cook.}}
+
+{{dialogue|Heidi|I could understand it if the Geeglers were trying to steal food, but attacking such an iconic piece of Sandrock architecture? Inexcusable.}}
+
+{{dialogue|Hugo|I thought me and Zeke were tight, but he hasn't asked me to do anything to help out on the greenhouse... I mean... I wanna help.}}
+
+{{dialogue|Jasmine|Why don't the Geeglers like us? We didn't do anything bad...}}
+
+{{dialogue|Jensen|If we can't produce our own grains, I guess we'll have to import lots from Highwind. I suppose the rail station will be very busy soon.}}
+
+{{dialogue|Justice|Hey, good thing we got there when we did, otherwise who knows what could have happened. Somehow we're always at the edge of danger in the nick of time! I call it my sand-sense.}}
+
+{{dialogue|Krystal|I laughed at those dumb lizard folk before, but I ain't laughin' now. Sandrock can't afford to lose the Moisture Farm. It's okay for adults to be without food for a couple days, but the kids...}}
+
+{{dialogue|Mabel|If Zeke's farm is out of commission for good, we'll have to just settle for Yakmel milk and meat here in Sandrock.}}
+
+{{dialogue|Matilda|My child, are you alright? I heard you were there when the lizardfolk attacked. I'm so sorry you had to face such a  scare... Don't worry, the Civil Corps and I will be working on a solution. Stay safe, ''Player''.}}
+
+{{dialogue|Mi-an|You were awesome in there! I heard you knocked out twenty of those Geegler guys with your bare hands! I just wish I could've been there to see it! Huh...? You're saying that's not true? But Justie said... Hm...}}
+
+{{dialogue|Miguel|I had a feeling it would come to this... the Geeglers are now striking unabashedly at us. But we will not give up! Hold fast, Builder! There is Light yet at the end of this dark tunnel!}}
+
+{{dialogue|Mort|I've been feeling lately that something big was going to happen... Then the lizardfolk attacked the Moisture Farm. I'm glad you two are alright but... where will this lead up?}}
+
+{{dialogue|Owen|Geez, I heard the Moisture Farm's out of commission. If it stays that way for too long, I'm going to have to start getting real creative with my menu: Sand Salad with sand on the side... is that doing anything for you?}}
+
+{{dialogue|Pen|It's a shame I was on my brunch break when the lizards showed up. Otherwise I definitely would've showed them my brand of justice.}}
+
+{{dialogue|Qi|Geegle... Geegler... Giggle? Ugh... where have I heard that name before? Oh, sorry, ''Player''. Just thinking out loud...}}
+
+{{dialogue|Rian|Recently it's just one lame thing after another, I feel like karma's out to get us. I really miss the old days, where I could just sit around all day. I mean... I can still sit around all day, but it's just like... more anxiety-inducing.}}
+
+{{dialogue|Rocky|What a bunch of bullies those lizardmen are. Pickin' on an old man and a bunch of plants. I'd like to see them try the same thin' on Eufaula Salvage.}}
+
+{{dialogue|Unsuur|Sorry we didn't show up in time to help you out. We came as soon as we saw the smoke, but that's not an excuse. You did good.}}
+
+{{dialogue|Vivi|I heard what everyone's sayin', but my takeaway from all this lizard business is that we need better security around here! Now back when we had that other monster huntin' fella and his son... eh- I apologize, ''Player''. Best not to be livin' in the past.}}
+
+{{dialogue|Yan|Wow, we've somehow managed to anger a sentient race of mad lizardfolk bent on ending Sandrock... but... at least it isn't my fault this time!}}
+
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON RESOURCE PICK UP || order: 0 | npc: 8000 | id: 101
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 11091
+PICK UP RESOURCE DELETE || id: 101
+===Talk to Qi===
+
+{{mission_details
+|desc = The Hydrogel in the Moisture Farn is broken. Ask Qi if he knows what to do.
+|details = Talk to Qi
+}}
+Set TALK to 1
+Set FRESH to 1
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+Check if TALK is == 1
+On the Shoulders of Buried Giants is successfully completed
+ACTIONS
+(cId 12) A conversation 222, 223 starts:
+{{dialogue|Qi|Yes?}}
+{{dialogue|Qi|Are you here for the Hydrogel? I've heard. I have a few ideas about how to make one. But, quick, bring me {{textcolor|green|5 Data Discs}} and I'm confident we can overcome this feeble challenge.}}
+
+TRIGGER Procedure 1.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 12) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Collect Data Discs===
+
+{{mission_details
+|desc = Qi needs 5 Data Discs to aid his research.
+|details = Collect Data Discs
+*{{i2|Data Disc|0/5}}
+*{{i2|Qi|0/1}}
+}}
+Set TALK to 2
+
+TRIGGER Procedure 1.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 12) After the conversation ends:
+CONDITIONS
+Check if QI is == 1
+ACTIONS
+SUBMIT MISSION 1100047
+END MISSION 1100048
+
+TRIGGER Procedure 1.0 Step 4.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+Check if TALK is == 1
+On the Shoulders of Buried Giants is in state 3 with flag 0
+ACTIONS
+(cId 12) A conversation 222, 223, 530, 531, 532, 533, 115 starts:
+{{dialogue|Qi|Yes?}}
+{{dialogue|Qi|Are you here for the Hydrogel? I've heard. I have a few ideas about how to make one. But, quick, bring me {{textcolor|green|5 Data Discs}} and I'm confident we can overcome this feeble challenge.}}
+{{dialogue|Qi|Hold on, don't tell me... you don't know what a Data Disc is?}}
+{{dialogue|Qi|I... see. They're a type of storage medium made of multiple layers of polycarbonate. While many of them don't contain anything useful, some have troves of data on how the Old World built their machines and structures.}}
+{{dialogue|Qi|Now granted, we're not yet technically proficient enough to recreate exact replicas of these relics, but with a Builder's help, we can get close enough. I create the diagrams needed, and you construct them on your Assembly Station based off of that.}}
+{{dialogue|Qi|I keep a chart of all the diagrams that I have and all the potential future plans with me at all times, so if you need to build something that's not in your Handbook, talk to me. But in exchange, I need you to bring me Data Discs. Simple enough.}}
+{{dialogue|Qi|Come here when you have more Data Discs.}}
+Set QI to 1
+
+TRIGGER Procedure 1.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+CHECK PLAYER ITEM || item: 19200001 | itemGrade: 0 | set: 2 | count: 5
+Check if TALK is >= 2
+ACTIONS
+Remove 5 Data Disc of Rare quality (Notify player)
+(cId 13) A conversation 224, 1271, 1272 starts:
+{{dialogue|Qi|Good. These will do. I'll send the diagram directly to your mailbox when I'm done researching.}}
+{{dialogue|Qi|Oh, and one more thing- I am quite certain that {{textcolor|green|one of the materials you'll need for this, a Condenser, can be acquired at The Breach}}, a ruins in town that has been closed off by the Civil Corps for some time. {{textcolor|green|Speak with Justice}} about letting you in.}}
+{{dialogue|Qi|That will be all. Goodbye, Builder.}}
+
+TRIGGER Procedure 1.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 13) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Justice===
+
+{{mission_details
+|desc = Qi said that you'll need to enter The Breach by the Civil Corps building to find a Condenser for the Hydrogel, but it's been closed off by the Civil Corps. While you're waiting for the diagrams, go ask Justice if it's alright for you to go into The Breach.
+|details = Talk to Justice
+}}
+Set ADD to 1
+
+TRIGGER Procedure 1.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Justice
+CONDITIONS
+Check if ADD is == 1
+ACTIONS
+(cId 14) A conversation 1274, 1275, 1276 starts:
+{{dialogue|Justice|You need to enter the Breach? Huh... I dunno. The Breach used to be an Abandoned Ruins, you know, one without monsters inside. It was safe for ruin divin'. But recently, they started showing up again; so we closed it until further notice.}}
+{{dialogue|Justice|We've been clearing it out, but there are still some monsters inside. On the other hand, this is a matter of life and death for us, isn't it? Well, I think I'll make an exception this time.}}
+{{dialogue|Justice|Alright, Builder. I know you can handle yourself. I'll open up the ruins for you. But be prepared. We still don't know why the monsters suddenly showed up again, so be careful.}}
+
+TRIGGER Procedure 1.0 Step 10.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 14) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Enter The Breach===
+
+{{mission_details
+|desc = Justice said you can go into The Breach, but it might be dangerous. Bring a weapon, and don't forget your Pickhammer either!
+|details = Enter The Breach
+}}
+Set ADD to 2
+SCENEITEM CREATE FLAG || itemType: 0 | flagName: breachin | path: Interact_Greenhouse | sceneName: Main | extraParams: 0 | id: 20823
+AREA TRIGGER CREATE || flagName: trigger_breachin | missionId: 1100082 | id: 20822 | sceneName: Main | showOnMap: 0 | transId: 0 | mapIcon: 0
+NPC ADD TAG || tag: MianWork
+
+TRIGGER Procedure 1.0 Step 11.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Breach_Dungeon:
+CONDITIONS
+Check if ADD is == 2
+ACTIONS
+SCENEITEM INTERACT SET || itemType: 9 | id: 6 | canInteract: 1
+===Look for the Condenser===
+
+{{mission_details
+|desc = You've made it into The Breach, look around for the Condenser Qi was talking about.
+|details = Look for the Condenser
+}}
+AREA TRIGGER CREATE || missionId: 1100082 | id: 20821 | sceneName: Breach_Dungeon | flagName: breach_boss | showOnMap: 0 | mapIcon: 0 | transId: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 20824 | sceneName: Breach_Dungeon | flagName: breach_emptyhole | extraParams: 0 | path: Mission_Brokenwall1
+MONSTER ADD TAG || isAdd: 1 | tag: breachboss
+ACTION SHOW CUSTOM IMAGE TIPS || content: 7170 | preset: Mission
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 12.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | id: 20821 | enter: 0
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 20821
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 20821 | delayTime: 0 | durationTime: -2 | changeType: 2 | curveIndex: 0
+ACTOR BLIND SET || set: 1
+Set ADD to 3
+
+TRIGGER Procedure 1.0 Step 13.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 20821
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 20821 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+{{cutscene|id = 1121}}
+A cutscene CG_BREACHBEGIN (duration: 0.0) starts playing
+Battle vs. Gary - When looking for parts for the Hydrogel in the Breach, I ran into more Geeglers; this time, I met their leaders and learned a bit more about their strange culture. Before leaving, I blocked the tunnel they were using to sneak into Sandrock, then informed the Civil Corps.
+Set ADD to 3
+PLAYER SET POS ROT FLAG || sceneName: Breach_Dungeon | flagName: breach_playerfight
+MONSTER ADD TAG || isAdd: 1 | tag: breachboss
+
+TRIGGER Procedure 1.0 Step 14.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON BOSS HAMMER DESTROY || order: 0
+CONDITIONS
+Check if ADD is == 3
+Check if GET is == 1
+ACTIONS
+(cId 15) A conversation 1277 starts:
+{{dialogue|Player|(This hole must be the way that the Geeglers are getting into The Breach. I should get some materials and close off the path.)}}
+ADD MONSTER KILL ILLUSTRATION || monsterID: 5022
+
+TRIGGER Procedure 1.0 Step 17.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 17) The player picks the first option in conversation segment 1497:
+{{dialogue|-2|(After I close this hole, I'd better go report to Justice. Fill the hole and leave?)}}
+
+*''Leave'' (No unique dialogue)
+*''I want to look around more.'' (No unique dialogue)
+
+CONDITIONS
+Check if ADD is == 4
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 20822 | delayTime: 0 | durationTime: -2 | changeType: 2 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 17.5 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Breach_Dungeon to the Main:
+CONDITIONS
+Check if ADD is == 5
+ACTIONS
+DELAY MASK SET || maskId: 10822 | delayTime: 0 | durationTime: 0 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 17.6 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 10822
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 10822 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 18.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 10822 | eventType: 5
+CONDITIONS
+Check if ADD is == 5
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 20822) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:breachout_player2)
+
+TRIGGER Procedure 1.0 Step 19.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 20822) from Player
+(cId 16) A conversation 1278, 1279, 1280, 1281, 1282, 1283, 1284, 1285, 1286 starts:
+{{dialogue|Justice|Woah! Hey, there you are! We were just about to come lookin' for you!}}
+{{dialogue|Unsuur|Justice was worried about you.}}
+{{dialogue|Justice|Uh, yeah. I started gettin' kinda nervous after sending you into The Breach by your lonesome... And, you know, a couple hours went by...}}
+{{dialogue|Justice|Wait, did you say, "Geeglers!?" And you fought 'em all by yourself? And then you closed the hole in there...}}
+{{dialogue|Justice|I see...}}
+{{dialogue|Justice|Haha, you know, Builder... You don't have to make this action hero stuff up to try to make us think you're cool; I already think you're cool!}}
+{{dialogue|Unsuur|Yeah. Me too.}}
+{{dialogue|Justice|So you just take it easy out there, alright, pardner?}}
+{{dialogue|Unsuur|See ya.}}
+
+TRIGGER Procedure 2.0 Step 19.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 16) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Justice stops standing still
+Unsuur stops standing still
+Set TALK to 3
+===Wait for Diagrams===
+
+{{mission_details
+|desc = Qi has the Data Discs. Wait for him to draw up the diagrams and send them to your {{textcolor|green|mailbox}}.
+|details = Wait for Diagrams
+}}
+Justice gains 5 favor
+Unsuur gains 5 favor
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if TALK is == 3
+ACTIONS
+Set TALK to 4
+The player receives a letter:
+{{mail|50}}
+Set ADD to 6
+The player receives a letter:
+{{mail|7}}
+SCENEITEM INTERACT SET || itemType: 9 | id: 7 | canInteract: 1
+Set YanTalk to 1
+Run mission Moisture Farm Blues
+Newspaper adds Article content 1028.
+Title: Builder Battles Beasts Beneath Breach!
+The Breach!  A mysterious Old World tower believed to have once been some kind of office building, an area once known for its rich relic deposits, now closed because of Civil Corps suspicions of danger sprouting up within; who could've known how right they were...?
+
+Just the day before the publication of this article, Workshop Owner, ''Player'', went into The Breach in search of necessary components involving the ongoing food shortage crisis. It was there that the Builder not only encountered some of the rogue AI that are par for the course around these parts, but further down, it was revealed that The Breach was harboring a secret gathering site belonging to none other than the troublesome Geegler lizardmen! 
+
+Cool under pressure, ''Player'' managed to heroically repel the Geegler scavenging party and block the path by which they were infiltrating the Breach, demonstrating impressive fighting ability and razor sharp wit!
+
+Sheriff Justice of the Civil Corps had this to say on the matter: "I mean, nobody could've ever expected something like this, I mean... to get in there, like, what, did they dig a tunnel all the way down the canyon then up again or somethin'!? We were just about to go in and look for ''Player'', so, uh, really they were never in any danger at all. We'll be headed in today to reinforce that barrier and check around for other threats, and uh... ''Player'', if you're reading this: Hope everything's cool." 
+
+Ignoring such a dubious segue, speaking of ''Player'', and... speaking of cool...! While exploring The Breach, ''Player'' found a Condensor! A rare device used for turning air into water through the process of cooling, see how I brought all that together?  
+
+In any case, this reporter brings that up as a Condensor is an essential piece of the Moisture Farm's Hydrogel; finding such a relic is a good sign that a turn around at the farm, and the end of our food crisis, is just around the corner!
+
+Stay strong out there, Sandrockers.
+
+Reported by Heidi
+
+TRIGGER Procedure 2.0 Step 2.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if YanTalk is == 1
+ACTIONS
+Set YanTalk to 0
+
+TRIGGER Procedure 2.0 Step 3.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Yan
+CONDITIONS
+Check if YanTalk is == 0
+ACTIONS
+(cId 8043) A conversation 589_0 starts:
+{{dialogue|Yan|So ''Player'', how's it going with the Hydrogel?}}
+{{dialogue|Yan|I'm going to overlook this one, since it's an emergency. But normally commissions such as this should go through the Commerce Guild, and me specifically. We'd like to be orderly out here in the desert, right?}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 4.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 7
+CONDITIONS
+Always:
+ACTIONS
+Set TALK to 5
+===Construct Hydrogel===
+
+{{mission_details
+|desc = Now that you have the diagrams for the Hydrogel, construct it on the Assembly Station.
+|details = Construct Hydrogel
+*{{i2|Condenser|0/1}}
+*{{i2|Hydrogel Door|0/1}}
+*{{i2|Hydrogel Core|0/1}}
+}}
+
+TRIGGER Procedure 2.0 Step 10.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 106029
+CONDITIONS
+Always:
+ACTIONS
+Set TALK to 6
+DELAY MASK SET || maskId: 108212 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+SCENEITEM DELETE || itemType: 0 | id: 106099
+
+TRIGGER Procedure 2.0 Step 11.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 108212
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 108212 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+{{cutscene|id = 1131}}
+A cutscene CG_BAOSHIQIDONE (duration: 0.0) starts playing
+The New Hydrogel - It wasn't easy, but I got everything I needed to build a new Hydrogel for Zeke's Moisture Farm. I followed the diagram perfectly, and the machine whirred to life right away! Zeke seemed pretty impressed.
+Zeke stands still in Greenhouse
+
+TRIGGER Procedure 2.0 Step 13.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_BREACHBEGIN | state: 9
+CONDITIONS
+Check if ADD is == 3
+ACTIONS
+ACTOR BLIND SET || set: 0
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 2.0 Step 15.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 20821
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || id: 20824 | itemType: 0
+MISSION TARGET COUNTER SET || missionId: 1100081 | targetId: 6 | transId: 80001919 | count: 8
+SCENEITEM CREATE FLAG || itemType: 11 | id: 20822 | path: Label_breachwood | sceneName: Breach_Dungeon | flagName: breach_emptyhole | extraParams: Breach_Wall_Stage_3|CreatorItem|19010001_2_0|80001918|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 20822 | missionId: 1100081 | iconType: 3
+
+TRIGGER Procedure 2.0 Step 16.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 20822
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 12 | id: 20821
+MISSION TARGET COUNTER SET || missionId: 1100081 | targetId: 6 | transId: 80001918 | count: 2
+Set ADD to 4
+(cId 17) A conversation 1497 starts:
+{{dialogue|-2|(After I close this hole, I'd better go report to Justice. Fill the hole and leave?)}}
+
+*''Leave'' (No unique dialogue)
+*''I want to look around more.'' (No unique dialogue)
+
+SCENEITEM CREATE FLAG || path: Interact_Greenhouse | itemType: 0 | id: 20825 | sceneName: Breach_Dungeon | flagName: breach_interact | extraParams: 0
+
+TRIGGER Procedure 2.0 Step 16.5 Order 7 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 20825
+CONDITIONS
+Always:
+ACTIONS
+(cId 17) A conversation 1497 starts:
+{{dialogue|-2|(After I close this hole, I'd better go report to Justice. Fill the hole and leave?)}}
+
+*''Leave'' (No unique dialogue)
+*''I want to look around more.'' (No unique dialogue)
+
+
+TRIGGER Procedure 2.0 Step 17.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 20822 | eventType: 2
+CONDITIONS
+Check if ADD is == 4
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 20825
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: breachout_player1
+Justice stands still in Main
+Unsuur stands still in Main
+SCENEITEM INTERACT SET || itemType: 9 | id: 6 | canInteract: 0
+Set ADD to 5
+
+TRIGGER Procedure 3.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_BAOSHIQIDONE | state: 7
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Greenhouse | flagName: gh_player
+
+TRIGGER Procedure 3.0 Step 4.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_BAOSHIQIDONE | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 30) A conversation 402, 1116, 1117 starts:
+{{dialogue|Zeke|You know, if you weren't able to build this, we would have had to revert back to basic farming. In this heat and condition, most of the crops would have died... and that'd be the end of Sandrock. It was that bleak.}}
+{{dialogue|Zeke|But you saved the day, for all of us. Thank you.}}
+{{dialogue|Zeke|Let me do some cleaning around here. Then I'll teach you a few things about desert farming like I promised. I'll let you know when I'm ready.}}
+
+TRIGGER Procedure 3.0 Step 6.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 30) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: farmattack
+NPC ADD TAG || tag: MianWork
+SUBMIT MISSION 1100081
+Zeke stops standing still
+TIME SET ENABLE || bool: 1
+
+TRIGGER Procedure 3.0 Step 9.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment PABLO by 1
+
+TRIGGER Procedure 3.0 Step 10.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if PABLO is >= 2
+ACTIONS
+TIME SET ENABLE || bool: 1
+
+TRIGGER Procedure 3.0 Step 11.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Moisture Farm Blues is successfully completed
+ACTIONS
+Newspaper adds Article content 1018.
+Title: Hydrogel is Hydro-well again!
+In an amazing turn of events, ''Player'', with the help of Director Qi of the Research Center, has recreated the rare Hydrogel machine that once gathered water for the crops of the Sandrock Moisture Farm!
+
+"A cursory perusal of Zeke's old Hydrogel revealed the core mechanic of the machine was a simple Condensor that compressed the air to squeeze the water out. I'm surprised no one else noticed," said Director Qi on his diagram design.
+
+With the full recovery of the Moisture Farm, Sandrock will maintain self-sufficiency, boding well for the economy. "It really is a miracle," proclaimed Minister Matilda of the Church of the Light, "We're very lucky to have happened upon such talented young Builders!"
+
+Things are expected to quickly return to normal in Sandrock. However, many are not satisfied with simple sustenance: "It's only a matter of time before them Geeglers come up with some new conspiracy to rustle our jimmies; I says we counter-rustle, lest we be rustled again!" local rancher, Cooper weighed in.
+
+Tensions will likely continue to rise until an official statement from City Hall can be made on the matter.
+
+Reported by Heidi
+END MISSION 1100082
+
+TRIGGER Procedure 3.0 Step 12.0 Order 6 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment BOARD by 1
+
+TRIGGER Procedure 3.0 Step 13.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if BOARD is >= 2
+ACTIONS
+The player receives a letter:
+{{mail|96}}
+SCENEITEM INTERACT SET || canInteract: 1 | itemType: 0 | id: 920821
+
+TRIGGER Procedure 3.0 Step 14.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Set FRESH to 0
+
+TRIGGER Procedure 3.0 Step 15.0 Order 9 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if FRESH is == 0
+ACTIONS
+PICK UP RESOURCE REFRESH || id: 101
+
+TRIGGER Procedure 4.0 Step 3.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1100081 | targetId: 9 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+Set TALK to 5
+===Install Hydrogel===
+
+{{mission_details
+|desc = You've finished the Hydrogel, now install it at the Moisture Farm.
+|details = Install Hydrogel
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 106029 | sceneName: Greenhouse | flagName: gh_baoshiqijiaohu | extraParams: Mission_Baoshiqi|CreatorItem|19810008_1,14000032_1,14000021_1|1371|-1|0 | path: Label_Baoshiqi
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 106029 | missionId: 1100081 | iconType: 3

@@ -1,0 +1,151 @@
+Reading Mission 1200225: Something in the Air
+
+<onlyinclude>{{Infobox mission
+|name = Something in the Air
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Something in the Air:
+
+TRIGGER Procedure 3.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 6279) that ends:
+{{dialogue|Trudy|Very good! Now, I didn't mean "turning green" specifically, but it's well documented that there were all sorts of {{textcolor|green|strange Old World buildings under Sandrock}}; we have been known to encounter dangerous substances from time to time...}}
+CONDITIONS
+Always:
+ACTIONS
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Trudy stops standing still
+Justice stops standing still
+Mi-an stops standing still
+Run mission Something in the Air
+Run mission Something in the Air
+Run mission Something in the Air
+START MISSION 1200222
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200225
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1200225 | flagName: kidintown9_trigger1 | id: 22251 | sceneName: Main | showOnMap: 1 | mapIcon: MissionArea | transId: 80009546
+ACTION AREA TRIGGER SET RADIUS || id: 22251 | radius: 15
+AREA TRIGGER DELETE || id: 82242
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_clinic
+Relapse is in state 2 with flag 0
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+UNIQUE ACTION RUN || idStr: enter_clinic
+AREA TRIGGER DELETE || id: 22251
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+Fang stands still in Clinic
+Rocky stands still in Clinic
+Krystal stands still in Clinic
+Pebbles stands still in Clinic
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 1873_0 starts:
+{{dialogue|Fang|Take one now... one tonight... see me in the morning.}}
+{{dialogue|Krystal|Thanks, doc. You're a life saver.}}
+{{dialogue|Pebbles|I like medicine!}}
+{{dialogue|Rocky|Hold up a minute, doc... These pills are yellow...}}
+{{dialogue|Rocky|On account of Krystal makin' me take that paintin' class to get in touch with my less aggressive emotions, I happen to know how this works, pal!}}
+{{dialogue|Fang|...}}
+{{dialogue|Rocky|Who's to say mixin' green and yellow ain't just gonna make him a lighter shade of green, huh?}}
+{{dialogue|Rocky|You tryin' to make my boy...}}
+{{dialogue|Rocky|Turq-wise!?}}
+{{dialogue|Fang|...See me... in the morning.}}
+{{dialogue|Rocky|Listen, doc, this is my boy we're talkin' about, here!}}
+{{dialogue|Krystal|Rocky, Rocky, shh, shh, shh, it's okay...}}
+{{dialogue|Rocky|I'm just... feeling really vulnerable right now! And... I'm lashing out because... I'm afraid!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 1.1 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 22251) to Rocky
+(param: CMDAction:RubbingEyes)
+
+TRIGGER Procedure 1.0 Step 1.2 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8044 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 22251) from Rocky
+(cId 1) A conversation 6315, 6316, 6317 starts:
+{{dialogue|Krystal|It's okay, Rocky. We just gotta trust the doctor, aright?}}
+{{dialogue|Rocky|...Aright... sniff...}}
+{{dialogue|Pebbles|One piece of medicine and one spoonful of sugar, right Mama?}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Fang stops standing still
+Rocky stops standing still
+Krystal stops standing still
+Pebbles stops standing still
+END MISSION 1200225
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 22251
+END MISSION 1200225

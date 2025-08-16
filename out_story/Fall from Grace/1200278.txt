@@ -1,0 +1,118 @@
+Reading Mission 1200278: Fall from Grace
+
+<onlyinclude>{{Infobox mission
+|name = Fall from Grace
+|image =
+|description = Grace and you have finally made it to the secret door. Soon your investigation will be complete, and the conspiracy to harm Sandrock will be exposed.
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 3100
+|reputation = None
+|gols = None
+|npc1 = Grace
+|rp1 = 30
+|rewards = {{i2|Flaming Action Shirt}|1}
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200135
+
+TRIGGER Procedure 7.0 Step 5.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Mission Unpossible is successfully completed
+ACTIONS
+Princess Lumi stands still in Main
+Princess Lumi stops standing still
+
+TRIGGER Procedure 8.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Buried Secrets is successfully completed
+Check if mission 1800273 is result 1 flag 1
+ACTIONS
+Run mission Fall from Grace
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+CHECK WEATHER STATE || weather: 1 | flag: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 22781 | path: S8232_Spitball | sceneName: Main | flagName: machineroom_note | extraParams: 0
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: machineroom_player1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 22781) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:machineroom_player2|Action:PickUp_Story)
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 22781
+Remove behavior CommanderMoveToFlagAndAction (idName: 22781) from Player
+(cId 0) A conversation 9808 starts:
+{{dialogue|Player|(This note is from Grace. It says to {{textcolor|green|meet at the Sandrock Storage at 24:00AM}}...)}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1200278
+START MISSION 1200278
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200278
+CONDITIONS
+Always:
+ACTIONS
+Run mission Fall from Grace
+END MISSION 1200278
+
+==Rewards==
+{{mission reward
+|npc1 = Grace
+|rp1 = 30
+|exp = 3100
+|reputation = None
+|gols = None
+|rewards = {{i2|Flaming Action Shirt}|1}
+}}

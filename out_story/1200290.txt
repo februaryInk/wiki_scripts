@@ -1,0 +1,163 @@
+Reading Mission 1200290: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200310
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1700298 is result 1 flag 1
+ACTIONS
+Run mission #1200312
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+CHECK DATE FLAG || days: 5 | flag: DATE:loganinprision | compare: 2
+
+GROUP 10:
+Check if mission 1200312 is result 1 flag 1
+
+ACTIONS
+Run mission #1200290
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+CUTSCENE UI STATE ENTER || 
+Set global blackboard key gracebye with info 1.
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Grace stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 3485_0 starts:
+{{dialogue|Grace|Hey, ''Player'', I wanted to come say goodbye to your directly. I'm going back to Atara tomorrow.}}
+
+*''You got transferred?''
+*''Owen gave you some time off?''
+
+{{dialogue|Grace|indent=true|answer=You got transferred?
+|That's right. I got the message from ACI yesterday.}}
+{{dialogue|Grace|indent=true|answer=Owen gave you some time off?
+|Hahaha, no, I've been transferred. Finally got the message yesterday.}}
+{{dialogue|Grace|I've been in Sandrock longer than any other assignment. It's getting harder and harder to accept the reality of having to leave. The friends I've made here... it's kind of taboo for an agent, but it's something really special.}}
+{{dialogue|Grace|I'm going to go and say goodbye to everyone else, I didn't expect to make so many friends here.}}
+
+*''You can always come back to see us.''
+*''I really don't want to let you go...''
+*''Well, you need to focus on your career.''
+
+{{dialogue|Grace|indent=true|answer=You can always come back to see us.
+|Well, I don't know where I'll be next. It's out of my hands now, but I have a feeling we'll see each other again.}}
+{{dialogue|Grace|indent=true|answer=I really don't want to let you go...
+|I know... but I have to go...}}
+{{dialogue|Grace|indent=true|...}}
+{{dialogue|Grace|indent=true|I don't know what will happen in the future, but I'll always treasure our time together. I'm sure somehow... I'll get to see you again.}}
+{{dialogue|Grace|indent=true|answer=Well, you need to focus on your career.
+|You're right. I can't let my feelings get in front of me. Especially in my profession.}}
+{{dialogue|Grace|Anyway, ''Player'', I really feel like you helped to make Sandrock a special place for me.}}
+{{dialogue|Grace|I'm getting on the early morning train tomorrow, so I wanted to come see you here, I know you're busy and I don't want to inconvenience you to come and see me off. So stay safe, okay?}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Grace stops standing still
+CUTSCENE UI STATE EXIT || 
+Set global blackboard key 1200290 with info 1.
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key brokentrain with info 1.
+Set global blackboard key graceleave with info 1.
+GLOBAL BLACK BOARD REMOVE || key: gracebye
+AREA TRIGGER DELETE || id: 22901
+Remove behavior CommanderBubbleTag (idName: 22902) from Owen
+Remove behavior CommanderBubbleTag (idName: 22902) from Grace
+END MISSION 1200290
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 13:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1200290 | id: 22901 | sceneName: Main | flagName: 1600069_MissionArea_2 | showOnMap: 1 | mapIcon: MissionArea | transId: 0
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 22901
+Owen stands still in Saloon
+Grace stands still in Saloon
+Owen stops standing still
+Grace stops standing still
+Add behavior CommanderBubbleTag (idName: 22902) to Owen
+(param: BubbleTag:Story1200290_8001|BubbleTime:6|minTime:12)
+Add behavior CommanderBubbleTag (idName: 22902) to Grace
+(param: BubbleTag:Story1200290_8002|BubbleTime:6|minTime:12)
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Saloon to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderBubbleTag (idName: 22902) from Owen
+Remove behavior CommanderBubbleTag (idName: 22902) from Grace

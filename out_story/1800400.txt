@@ -1,0 +1,401 @@
+Reading Mission 1800400: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200379
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 5
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment 1800400 by 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+CHECK WEATHER STATE || weather: 0 | flag: 1
+ACTIONS
+Run mission #1800400
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800400
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1800400 | id: 84001 | sceneName: Main | flagName: Trigger_84001 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 84001
+CONDITIONS
+CHECK WEATHER STATE || weather: 2 | flag: 0
+Away from It All is in state 2 with flag 0
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 84001
+DELAY MASK SET || maskId: 84001 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 84001 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8400_0_1
+Ernest stands still in Main
+SCENEITEM CREATE FLAG || itemType: 0 | id: 84001 | path: S8400_Item1 | sceneName: Main | flagName: S8400_Item1 | extraParams: -1
+DELAY MASK SET || maskId: 84001 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 84001 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 18714, 18715 starts:
+{{dialogue|Ernest|Hm... not bad, not bad...}}
+{{dialogue|Ernest|These sketches... the minutiae of detail...}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8400692) to Ernest
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8400_69_2|LookAtActor:8000|Action:BackHand)
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8069 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 18716, 18717, 5725_0 starts:
+{{dialogue|Ernest|Ah! ''Player''! Er, um, I mean, hey, what's... up?}}
+{{dialogue|Player|(Ernest is holding something in his hand...)}}
+{{dialogue|Ernest|Er, this... it's not what you think, really!}}
+
+*''What... was that?''
+*''Relax. I saw nothing.''
+*''Wow, didn't know you were that kind of guy...''
+
+{{dialogue|Ernest|indent=true|answer=What... was that?
+|It was... It was just a drawing...!}}
+{{dialogue|Ernest|indent=true|answer=Relax. I saw nothing.
+|Er, no, no, really, this is actually not what it looks like... actually!}}
+{{dialogue|Ernest|indent=true|answer=Wow, didn't know you were that kind of guy...
+|Oh? Ah! I'm not! Er, no, no, really, this is actually not what it looks like... actually!}}
+{{dialogue|Ernest|You have to let me explain! Truly, think of how many conflicts in stories could've been avoided altogether if the protagonist simply stuck around and listened when someone says, "Let me explain!"}}
+{{dialogue|Ernest|Ahem! So! This is just a drawing of a model meant to show off some clothing ideas. Yes, it's Amirah. No, I didn't draw them. And yes, she wanted to be involved.}}
+{{dialogue|Ernest|I'm a stand up guy, ''Player''! You know that! And so is Pablo-}}
+{{dialogue|Ernest|Uh oh...}}
+
+*''Pablo? What about Pablo?''
+*''How did you manage to make this more suspicious?''
+
+{{dialogue|Ernest|indent=true|answer=Pablo? What about Pablo?
+|Did I say Pablo? I think what I was saying is, "I'm a stand-up guy! And so is pablo-ly... lots of people..."}}
+{{dialogue|Ernest|indent=true|answer=How did you manage to make this more suspicious?
+|Indeed, ironically, I seem to have been hoisted by my own petard. But I do so only to protect a young man's dreams!}}
+{{dialogue|Ernest|Alright, alright! Fine... I'll come clean. Pablo asked me not to tell anyone, but... no point in hiding it now. He drew up these wonderful designs for clothing and then buried his sketchbook in the sand!}}
+{{dialogue|Ernest|He says his dream is to be a fashion designer, and I... don't really have a plan yet, but I just had to dig them up-}}
+{{dialogue|Pablo|Please tell me you just wanted to recreate your childhood sandbox experience and you're not seriously digging up my-}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8400222) to Pablo
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8400_22_2|LookAtActor:8000)
+Remove behavior CommanderMoveToFlagAndAction (idName: 8400692) from Ernest
+Ernest stands still in Main and looks at Player
+STOPWATCH REAL TIME SET || id: 84001 | sec: 5
+
+TRIGGER Procedure 0.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8022 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON STOPWATCH REAL TIME END || order: 0 | id: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 5731_0, 18748 starts:
+{{dialogue|Pablo|Ah, ''Player''... You are here as well, I see...}}
+
+*''I'm just passing by...''
+*''Never give up on your dreams!''
+
+{{dialogue|Pablo|indent=true|answer=I'm just passing by...
+|Ah, so you... don't know anything? How splendid to have run into you, but if you wouldn't mind, I need a word with our friend here. So rude of me, I know! Next haircut half off for you as an apology, ''Player''. Ta!}}
+{{dialogue|Ernest|indent=true|...They know.}}
+{{dialogue|Pablo|indent=true|answer=Never give up on your dreams!
+|Hum... I see you've managed to keep your mouth shut for all of ten seconds, Ernest... Bravo.}}
+{{dialogue|Pablo|Ugh. Drat. I wonder if the darling Vivi would find it too macabre to sew a zipper to your mouth...}}
+{{dialogue|Ernest|Yikes. Look, it was an accident! And you, ''Player'', you were just on the way to somewhere else, weren't you?}}
+{{dialogue|Pablo|Seems a bit off the beaten path to me. What luck.}}
+{{dialogue|Pablo|Yes, let's talk about luck, shall we? You like spilling secrets, why don't you try your luck as two-bit paparazzi for some trashy Ataran rag!? By the way, I read your article in "Kids Today," and it was puerile.}}
+{{dialogue|Ernest|...}}
+
+*''Ernest is just trying to help you.''
+*''Hey! Out of line, man!''
+
+{{dialogue|Pablo|indent=true|answer=Ernest is just trying to help you.
+|reward={{NPC2|Ernest|rp=1}}|Yes... apologies... I do have a tendency to... lash out.}}
+{{dialogue|Ernest|indent=true|Thanks for your concern, ''Player'', but... this is just kind of how we talk to each other.}}
+{{dialogue|-2|indent=true|answer=Hey! Out of line, man!
+|Huh? This is just how we talk.}}
+{{dialogue|Ernest|The way Pablo just rolls these snappy insults off the cuff; it's so impressive, I don't even take offense! I mean, if I could learn to write stuff like that for my characters, I think my next book could really make waves!}}
+{{dialogue|Pablo|Beware, for when waves are made, the "friend ship" may soon capsize...}}
+{{dialogue|Ernest|See? It's stuff like that that makes me want to endure pretty much any amount of scathing critique!}}
+{{dialogue|Pablo|Forgive me, Ernest. My impulses have gotten the better of me. But make no mistake, my decision to bury these drawings was not one of whim, but of careful consideration...}}
+{{dialogue|Ernest|Back at his studio he seemed absolutely adamant, but it seems he's already letting his guard a bit... I think... me being here is probably not helping... why don't you try talking to him...?}}
+The conversation ends.
+{{dialogue|Ernest|Whew... well... I hate to cut our little run-in short, but... I'm not feeling so well... How long can you leave Yakmel Milk out? Looks to be less than 24 hours... oh, hey, I guess if Pablo doesn't want his sketches, you can have them, here!}}
+
+TRIGGER Procedure 0.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Ernest stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 8400693) to Ernest
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8400_69_3)
+Add behavior CommanderMoveToFlagAndAction (idName: 840001) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8400_0_2)
+Add behavior CommanderMoveToFlagAndAction (idName: 8400223) to Pablo
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8400_22_3)
+
+TRIGGER Procedure 0.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 5736_0 starts:
+{{dialogue|Pablo|Yes, I'm feeling a bit ill as well. From your sickening performance, Ernest!}}
+
+*''Caught red-handed...''
+*''Maybe he's... really sick?''
+
+{{dialogue|Pablo|indent=true|answer=Caught red-handed...
+|Indeed. Claims to have an upset stomach, runs off like it's the hundred meter dash. At least limp a little, Ernest!}}
+{{dialogue|Pablo|indent=true|answer=Maybe he's... really sick?
+|Puh! ''Player''... Please... You're better than that. Claims to have an upset stomach, runs off like it's the hundred meter dash. At least limp a little, Ernest!}}
+{{dialogue|Pablo|I suppose he just whispered something infantile into your ear, "Don't let Pablo give up on his dreams! I'm a little baby!" Last part... last part was ad lib...}}
+{{dialogue|Pablo|He is young. Naive. Blind to the ways of the world! And he has everything given to him on a glitzy silver spoon...}}
+{{dialogue|Pablo|You think I would just give up on my dreams at the drop of a hat? No, only after being dragged through the dirt...}}
+{{dialogue|Pablo|''Player'', look around you. This town is a wasteland! Covered in trash and dust, this town is drying up. And with it, the last ounce of culture these people have ever known...}}
+{{dialogue|Pablo|Tch. A few of them don't even bathe properly! And that's one thing I don't need to gossip about, no, no... you'll know who they are, ''Player''. You can smell them!}}
+{{dialogue|Pablo|When life is on the line, when every day is a struggle, when each and every one of these yokels is wondering where their next meal is going to come from, there is no space for art. No place for beauty. No time... for dreams...}}
+
+*''You have a talent, Pablo.''
+*''They don't bathe, really?''
+
+{{dialogue|Pablo|indent=true|answer=You have a talent, Pablo.
+|reward={{NPC2|Pablo|rp=2}}|Thank you... Each time I hear such words, it gives my heart hope... And yet, with only a second thought, these hopes are, again, dashed to bits...}}
+{{dialogue|Pablo|indent=true|answer=They don't bathe, really?
+|Well. It is possible I was being ever the slightest bit hyperbolic. But let me just present to you exhibit A: Cooper the ranch guy. Exhibit B: Peck the miner... The rest you'll have to figure out for yourself...}}
+{{dialogue|Pablo|Let me pose you a question: the drawings you saw just now. Would you pay for such attire?}}
+
+*''Absolutely!''
+*''Depends on the price...''
+
+{{dialogue|Pablo|indent=true|answer=Absolutely!
+|Really? Huff... well... you're not just being contrarian are you...?}}
+{{dialogue|Pablo|indent=true|answer=Depends on the price...
+|Precisely. And, let's be honest, as a Builder, it's not like you're exactly fighting for scraps...! Erm. Oh. You are, aren't you? Rather often fighting out there for... scrap. Nevermind! Point being, if you can't afford luxuries, then no one can!}}
+{{dialogue|Pablo|Heidi, Amirah, Ernest... these are my admirers. Yes, it would be my honor to enhance their outfits; I could decorate them from their braided heads to their stilet-toes...}}
+{{dialogue|Pablo|Alas...}}
+
+*''This just sounds better and better, c'mon!''
+*''Sounds like that's enough to start!''
+
+{{dialogue|Pablo|indent=true|answer=This just sounds better and better, c'mon!
+|Hum... well... if you really like it... I suppose that means I have supporters from... Atara, Sandrock, Barnarock, and now... Highwind?}}
+{{dialogue|Pablo|indent=true|Sigh, I do wish the lovely Amirah could have been from somewhere other than Barnarock, but... nevertheless, it could be said that I have quite the national appeal, no?}}
+{{dialogue|Pablo|indent=true|answer=Sounds like that's enough to start!
+|Three customers don't make a business, I'm afraid.}}
+{{dialogue|Pablo|indent=true|Although...}}
+{{dialogue|Pablo|indent=true|Wait a second: Ernest is from Atara, you're from Highwind, Heidi's from Sandrock, Amirah... ah, well, bless her heart, she's from Barnarock, but still...!}}
+{{dialogue|Pablo|indent=true|It is as you say... I have international appeal!}}
+{{dialogue|Pablo|Alright, darling... perhaps you've made something of a point. If... and this is a big if... If Sandrock were to become a more popular travel destination... Hm, mayhaps there truly may be a chance...! A brand... a penthouse studio... a fashion show!}}
+
+*''When the time comes, I'll build the stage!''
+*''Sounds great!''
+*''I wouldn't get excited yet...''
+
+{{dialogue|Pablo|indent=true|answer=When the time comes, I'll build the stage!
+|reward={{NPC2|Pablo|rp=3}}|Thank you, ''Player''. I await the day I can rally the call.}}
+{{dialogue|Pablo|indent=true|Our discussion has been... most enlightening! Let us speak more of this at a later date, good-bye!}}
+{{dialogue|Pablo|indent=true|answer=Sounds great!
+|reward={{NPC2|Pablo|rp=2}}|Thank you, ''Player''. I await the day I can rally the call.}}
+{{dialogue|Pablo|indent=true|Our discussion has been... most enlightening! Let us speak more of this at a later date, good-bye!}}
+{{dialogue|Pablo|indent=true|answer=I wouldn't get excited yet...
+|Whatever. Like it or not: I'm inspired!}}
+{{dialogue|Pablo|indent=true|Toodles.}}
+
+TRIGGER Procedure 0.0 Step 10.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Ernest stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8400692) from Ernest
+Remove behavior CommanderMoveToFlagAndAction (idName: 8400693) from Ernest
+Remove behavior CommanderMoveToFlagAndAction (idName: 8400222) from Pablo
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 840001) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8400223) from Pablo
+Pablo gains 20 favor
+Ernest gains 5 favor
+
+TRIGGER Procedure 0.0 Step 11.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON ADD || missionId: 1800400 | npc: 8069 | missionIcon: 6
+SCENEITEM DELETE || itemType: 0 | id: 84001
+
+TRIGGER Procedure 0.0 Step 12.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|751}}
+
+TRIGGER Procedure 0.0 Step 13.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|752}}
+
+TRIGGER Procedure 0.0 Step 14.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Ernest
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 18776 starts:
+{{dialogue|Ernest|Pablo seems more inspired than ever. I think he'll really stick with it this time! I mean... he's 180'd about three times since I met him but... this time!}}
+NPC ICON REMOVE || missionId: 1800400 | npc: 8069 | missionIcon: 6
+
+TRIGGER Procedure 0.0 Step 17.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON REMOVE || missionId: 1800400 | npc: 8069 | missionIcon: 6
+SCENEITEM CREATE FLAG || itemType: 0 | id: 84003 | path: S8400_Item3 | sceneName: PabloHome | flagName: S8400_Item3 | extraParams: -1
+END MISSION 1800400
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the first option in conversation segment 18739:
+{{dialogue|Ernest|...}}
+
+*''Ernest is just trying to help you.'' (No unique dialogue)
+*''Hey! Out of line, man!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Ernest gains 1 favor
+
+TRIGGER Procedure 1.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DAY START FOR WEATHER || order: 0 | weather: 2
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: set_weather
+ACTIONS
+UNIQUE ACTION RUN || idStr: set_weather
+WEATHER SET STATE || WeatherState: 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 4) The player picks the first option in conversation segment 18757:
+{{dialogue|Pablo|When life is on the line, when every day is a struggle, when each and every one of these yokels is wondering where their next meal is going to come from, there is no space for art. No place for beauty. No time... for dreams...}}
+
+*''You have a talent, Pablo.'' (No unique dialogue)
+*''They don't bathe, really?'' (No unique dialogue)
+
+(cId 4) The player picks the second option in conversation segment 18771:
+{{dialogue|Pablo|Alright, darling... perhaps you've made something of a point. If... and this is a big if... If Sandrock were to become a more popular travel destination... Hm, mayhaps there truly may be a chance...! A brand... a penthouse studio... a fashion show!}}
+
+*''When the time comes, I'll build the stage!'' (No unique dialogue)
+*''Sounds great!'' (No unique dialogue)
+*''I wouldn't get excited yet...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Pablo gains 2 favor
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) The player picks the first option in conversation segment 18771:
+{{dialogue|Pablo|Alright, darling... perhaps you've made something of a point. If... and this is a big if... If Sandrock were to become a more popular travel destination... Hm, mayhaps there truly may be a chance...! A brand... a penthouse studio... a fashion show!}}
+
+*''When the time comes, I'll build the stage!'' (No unique dialogue)
+*''Sounds great!'' (No unique dialogue)
+*''I wouldn't get excited yet...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Pablo gains 3 favor

@@ -1,0 +1,390 @@
+Reading Mission 1800521: Private Prescription
+
+<onlyinclude>{{Infobox mission
+|name = Private Prescription
+|image =
+|description = Fang is concerned about your health and wants to do something within his capabilities to help.
+|type = Side
+|time =
+|location =
+|characters = [[Fang]]
+|condition =
+|details =
+|exp = 875
+|reputation = None
+|gols = None
+|npc1 = Fang
+|rp1 = 20
+|npc2 = X
+|rp2 = 10
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200106
+
+TRIGGER Procedure 6.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check relationship with Fang is Lover
+Ghost Recon is in state 1 with flag 0
+Ghost Recon is in state 2 with flag 0
+CHECK SCENEITEM EXIST || id: 23081 | exist: 0 | sceneItemType: 0
+Check if Ginger has left town
+Check if Talon has left town
+The Kidnapping is in state 1 with flag 0
+The Kidnapping is in state 2 with flag 0
+Words to Betray the Heart is successfully completed
+Between the Lines is in state 1 with flag 0
+Between the Lines is in state 2 with flag 0
+Check if mission Shonash Canyon Bridge Opening Ceremony is result 1 flag 1
+CHECK HAS LOVE DLC || 
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+Run mission Private Prescription
+
+TRIGGER Procedure 6.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check relationship with Fang is Lover
+Ghost Recon is in state 1 with flag 0
+Ghost Recon is in state 2 with flag 0
+CHECK SCENEITEM EXIST || id: 23081 | exist: 0 | sceneItemType: 0
+Check if Ginger has left town
+Check if Talon has left town
+The Kidnapping is in state 1 with flag 0
+The Kidnapping is in state 2 with flag 0
+Words to Betray the Heart is successfully completed
+Between the Lines is in state 1 with flag 0
+Between the Lines is in state 2 with flag 0
+Check if mission Shonash Canyon Bridge Opening Ceremony is result 1 flag 1
+Check if mission Private Prescription is result 1 flag 1
+CHECK HAS LOVE DLC || 
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+Run mission Private Prescription
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800521
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|829}}
+AREA TRIGGER CREATE || missionId: 1800521 | id: 85211 | flagName: Trigger_Clinic | sceneName: Main | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_clinic
+Check if Talon has left town
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_clinic
+AREA TRIGGER DELETE || id: 85211
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85211 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || flagName: S8521_0_1 | sceneName: Clinic
+X stands still in Clinic and looks at Player
+Add behavior CommanderPlayerDramaWithIndexEvent (idName: 8521001) to Player
+(param: DramaName:8521Seat|TargetScene:Clinic|DramaIndex:13|DramaType:Sit)
+Fang stands still in Clinic and looks at Player
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85211 | delayTime: 3 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85211 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 8182_0 starts:
+{{dialogue|Fang|''Player'', there is a reason I asked you to come here...}}
+{{dialogue|X|Ooh, I'm so worried about my baby... Are you okay? Are you okay? Mwah mwah!}}
+{{dialogue|Fang|X...}}
+{{dialogue|Fang|Regular check-ups are necessary in your line of work. The one I did for you before... I wasn't thinking clearly.}}
+{{dialogue|Fang|reward={{NPC2|Fang|rp=1}}|Let's begin.}}
+
+*''Ow! What happened to "do no harm?"''
+*''I feel fine, nothing to worry about.''
+
+{{dialogue|Fang|indent=true|answer=Ow! What happened to "do no harm?"
+|Apologies. I'll be more gentle.}}
+{{dialogue|Fang|indent=true|Next, I must hear your heartbeat.}}
+{{dialogue|Fang|indent=true|answer=I feel fine, nothing to worry about.
+|Good. But the test is not over. Next, I must hear your heartbeat.}}
+
+TRIGGER Procedure 0.0 Step 7.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 23338) that ends:
+{{dialogue|Fang|Let's begin.}}
+
+*''Ow! What happened to "do no harm?"'' (No unique dialogue)
+*''I feel fine, nothing to worry about.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Fang gains 1 favor
+
+TRIGGER Procedure 0.0 Step 10.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTION NPC PUT EQUIP || npc: 8016 | itemId: 12004005
+Add behavior CommanderMoveToFlagAndAction (idName: 8521162) to Fang
+(param: TargetScene:Clinic|MoveMode:Walk|FlagName:S8521_16_4|Action:Stethoscope|LookAtActor:8000|Delay:0.0)
+ACTOR FREEZ COLLIDER || npc: 8016 | freezeCollider: 1
+ACTOR FREEZ COLLIDER || npc: 8000 | freezeCollider: 1
+STOPWATCH REAL TIME SET || id: 85211 | sec: 13
+
+TRIGGER Procedure 0.0 Step 11.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 85211
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 8185_0 starts:
+{{dialogue|Fang|Heartbeat normal. Quite good, in fact.}}
+{{dialogue|Fang|A few questions...}}
+{{dialogue|Fang|Appetite normal?}}
+{{dialogue|Fang|Sleeping well?}}
+{{dialogue|Fang|Eight hours a night?}}
+{{dialogue|Fang|The rumors that... Builders burn the candle at both ends... often find dark circles under their eyes...}}
+{{dialogue|Fang|I want to use a particular acupuncture technique. It will help you relax.}}
+The conversation ends.
+Remove behavior CommanderMoveToFlagAndAction (idName: 8521162) from Fang
+ACTION NPC PUT UNEQUIP || npc: 8016 | itemId: 12004005
+
+TRIGGER Procedure 0.0 Step 12.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85212 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 13.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85212 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderPlayerDramaWithIndexEvent (idName: 8521001) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8521161) from Fang
+Fang stands still in Clinic
+X stops standing still
+X stands still in Main
+STOPWATCH REAL TIME SET || id: 85213 | sec: 2
+ACTOR FREEZ COLLIDER || npc: 8016 | freezeCollider: 0
+ACTOR FREEZ COLLIDER || npc: 8000 | freezeCollider: 0
+
+TRIGGER Procedure 0.0 Step 13.1 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 85213
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: S8521_0_2 | sceneName: Clinic
+Add behavior CommanderPlayerDramaWithIndexEvent (idName: 8521002) to Player
+(param: DramaName:PlayerBedLeft|DelayTime:0|TargetScene:Clinic|DramaType:LyingBed)
+DELAY MASK SET || maskId: 85212 | delayTime: 4 | durationTime: 1 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 14.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85212 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 23349 starts:
+{{dialogue||(Maybe it's the bed, maybe it's the acupuncuture, maybe you didn't sleep as well as you thought the night before... Suddenly you become very tired and go out like a light.)}}
+
+TRIGGER Procedure 0.0 Step 15.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85213 | delayTime: 0 | durationTime: 3 | changeType: 0 | curveIndex: 0
+STOPWATCH REAL TIME SET || id: 85212 | sec: 3
+
+TRIGGER Procedure 0.0 Step 15.1 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85213 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderPlayerDramaWithIndexEvent (idName: 8521002) from Player
+DELAY MASK SET || maskId: 85213 | delayTime: 3 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 16.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85213 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 8186_0 starts:
+{{dialogue|Fang|You're awake.}}
+
+*''That really was refreshing.'' (No unique dialogue)
+*''How long was I out?'' (No unique dialogue)
+
+{{dialogue|Fang|You were asleep... not long. But it was a deep sleep, induced by the acupuncture.}}
+{{dialogue|Fang|Even if you do feel rested, I think this will help you.}}
+
+*''Were you here the whole time?''
+*''I was waiting for my prince to kiss me awake...''
+*''Whew! That stuff was heavy... did I snore?''
+
+{{dialogue|Fang|indent=true|answer=Were you here the whole time?
+|Yes. It is... my responsibility to watch over you.}}
+{{dialogue|Fang|indent=true|...In more ways than one.}}
+{{dialogue|Fang|indent=true|answer=I was waiting for my prince to kiss me awake...
+|I... Hm...}}
+{{dialogue|Fang|indent=true|The thought crossed my mind.}}
+{{dialogue|Fang|indent=true|X was watching...}}
+{{dialogue|Fang|indent=true|answer=Whew! That stuff was heavy... did I snore?
+|A bit. Quietly. It was... cute.}}
+{{dialogue|Fang|''Player'', you seem to be in perfect health. However, your groggy state seems to imply you aren't getting enough deep sleep.}}
+{{dialogue|Fang|I suspect it is related to your work. All the hours. All the commissions.}}
+{{dialogue|Fang|The next step for improving your sleep will be keeping a satchel of fragrant herbs by your bedside for the next few weeks.}}
+{{dialogue|Fang|I'll need time to gather the herbs, but you'll have it soon.}}
+
+*''Why don't I help you find the herbs?''
+*''Alright, give it to me whenever.''
+
+{{dialogue|Fang|indent=true|answer=Why don't I help you find the herbs?
+|Oh. Yes, of course. Please do.}}
+{{dialogue|Fang|indent=true|We can set out tomorrow afternoon, before sunset. I'll wait for you where the herbs grow.}}
+{{dialogue|Fang|indent=true|answer=Alright, give it to me whenever.
+|Yes. It won't be long.}}
+Set 8521A to 0
+DELIVER MISSION 1800521
+
+TRIGGER Procedure 0.0 Step 19.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Fang stops standing still
+Remove behavior Story1800359_8107 (idName: 8521002) from Player
+CUTSCENE UI STATE EXIT || 
+CAMERA PATH STOP ALL || 
+X stops standing still
+Fang stops standing still
+
+TRIGGER Procedure 0.0 Step 17.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) The player picks the first option in conversation segment 23362:
+{{dialogue|Fang|I'll need time to gather the herbs, but you'll have it soon.}}
+
+*''Why don't I help you find the herbs?'' (No unique dialogue)
+*''Alright, give it to me whenever.'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 23364:
+{{dialogue|Fang|I still plan to gather those herbs for your satchel. Don't worry, I'll have them soon.}}
+
+*''Why don't I help you find the herbs?'' (No unique dialogue)
+*''Alright, give it to me whenever.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8521A to 1
+
+TRIGGER Procedure 0.0 Step 18.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if 8521A is == 1
+ACTIONS
+START MISSION 1800521
+
+TRIGGER Procedure 0.0 Step 21.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800521
+CONDITIONS
+Always:
+ACTIONS
+Fang stops standing still
+Remove behavior Story1800359_8107 (idName: 8521002) from Player
+CUTSCENE UI STATE EXIT || 
+CAMERA PATH STOP ALL || 
+X stops standing still
+Fang stops standing still
+Run mission Private Prescription
+END MISSION 1800521
+
+TRIGGER Procedure 1.0 Step 15.1 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85213 | eventType: 4
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: S8521_0_3 | sceneName: Clinic
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Fang|I still plan to gather those herbs for your satchel. Don't worry, I'll have them soon.}}
+
+*''Why don't I help you find the herbs?''
+*''Alright, give it to me whenever.''
+
+{{dialogue|Fang|indent=true|answer=Why don't I help you find the herbs?
+|Oh. Yes, of course. Please do.}}
+{{dialogue|Fang|indent=true|We can set out tomorrow afternoon, before sunset. I'll wait for you where the herbs grow.}}
+{{dialogue|Fang|indent=true|answer=Alright, give it to me whenever.
+|Yes. It won't be long.}}
+
+==Rewards==
+{{mission reward
+|npc1 = Fang
+|rp1 = 20
+|npc2 = X
+|rp2 = 10
+|exp = 875
+|reputation = None
+|gols = None
+}}

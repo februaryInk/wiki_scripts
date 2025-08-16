@@ -1,0 +1,156 @@
+Reading Mission 1500397: Citrus Infusion Avenue
+
+<onlyinclude>{{Infobox mission
+|name = Citrus Infusion Avenue
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Citrus Infusion Avenue:
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Grace
+CONDITIONS
+Always:
+ACTIONS
+(cId 539447) A conversation 6082_0 starts:
+{{dialogue|Grace|Hey! ''Player''! So...! My custom drinks are a hit! Owen thinks they're great, and... long story short, I'm going to open a little booth right out in front of the Blue Moon!}}
+{{dialogue|Grace|Yeah! I'm thinking it'll be a nice way to kind of "retire." Just sit behind the juice bar, squeeze fresh fruit into a glass, listen to folk tell me their stories...}}
+{{dialogue|Grace|Can you help me with {{textcolor|green|the booth}}? I think you'd just need a few materials and you could pop one up right there by the Blue Moon. Whaddya say? Should be no trouble for the hero Builder of Sandrock!}}
+
+*''This looks like a job for me!''
+*''Ah, I can't right now, actually...''
+
+{{dialogue|Grace|indent=true|answer=This looks like a job for me!
+|Great! I've got a few final things I can get ready, but... when you have the materials you need, go ahead and build up the booth {{textcolor|green|outside the Blue Moon.}}}}
+{{dialogue|Grace|indent=true|answer=Ah, I can't right now, actually...
+|Oh. No problem. Let me know if your schedule clears up!}}
+
+TRIGGER Procedure 0.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1500396
+CONDITIONS
+Always:
+ACTIONS
+Run mission Citrus Infusion Avenue
+END MISSION 1500396
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1500397
+CONDITIONS
+GROUP 0:
+CHECK PLAYER ITEM || item: 19800022 | itemGrade: -1 | set: 6 | count: 3
+
+GROUP 1:
+CHECK PLAYER ITEM || item: 19111002 | itemGrade: 4 | set: 6 | count: 4
+
+GROUP 2:
+CHECK PLAYER ITEM || item: 19800043 | itemGrade: -1 | set: 6 | count: 2
+
+ACTIONS
+===Gather Materials===
+
+{{mission_details
+|desc = Grace wants to open a drinks stall, help her gather some materials to build it.
+|details = Gather Materials
+*{{i2|Bronze Plate|0/4}}
+*{{i2|Cast Iron Pipe|0/2}}
+*{{i2|Plastic Shell|0/3}}
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 539501
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 539501 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+SCENEITEM ADD ICON STACK || add: 0 | itemType: 11 | id: 539501 | missionId: 1500396 | iconType: 2
+
+TRIGGER Procedure 0.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 539501 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 539501 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Grace stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: Story_539406
+
+TRIGGER Procedure 0.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 539501 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 539501) A conversation 19370, 19371, 19372 starts:
+{{dialogue|Grace|Alright, Sandrock! Get ready to "Squeeze the Day!" Heh heh... I was in a bad mood before, but I've really come around on the name...}}
+{{dialogue|Grace|Looks good, ''Player''! I can't wait to start!}}
+{{dialogue|Grace|I'll start moving things in... should be ready to open tomorrow. Don't forget to come by!}}
+
+TRIGGER Procedure 0.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 539501) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Grace stops standing still
+SUBMIT MISSION 1500396
+END MISSION 1500397
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1500396 | targetId: 539401 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Build Drinks Stall===
+
+{{mission_details
+|desc = You now have all the materials you need. Use them to build the drinks stall for Grace.
+|details = Build Drinks Stall
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 539501 | path: Mission_ColaStore | sceneName: Main | flagName: Story_5394_Item | extraParams: SceneItem_Store_Saloon1|CreatorItem|19111002_4,19800043_2,19800022_3|1547|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 539501 | missionId: 1500396 | iconType: 2
+
+TRIGGER Procedure 1.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1500397
+CONDITIONS
+CHECK PLAYER ITEM || item: 19800022 | itemGrade: -1 | set: 2 | count: 3
+CHECK PLAYER ITEM || item: 19111002 | itemGrade: -1 | set: 2 | count: 4
+CHECK PLAYER ITEM || item: 19800043 | itemGrade: -1 | set: 2 | count: 2
+ACTIONS
+===Build Drinks Stall===
+
+{{mission_details
+|desc = You now have all the materials you need. Use them to build the drinks stall for Grace.
+|details = Build Drinks Stall
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 539501 | path: Mission_ColaStore | sceneName: Main | flagName: Story_5394_Item | extraParams: SceneItem_Store_Saloon1|CreatorItem|19111002_4,19800043_2,19800022_3|1547|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 539501 | missionId: 1500396 | iconType: 2

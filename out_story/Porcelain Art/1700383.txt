@@ -1,0 +1,335 @@
+Reading Mission 1700383: Porcelain Art
+
+<onlyinclude>{{Infobox mission
+|name = Porcelain Art
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200108
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check relationship with Amirah is Friend Good
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+Tea Party is in state 2 with flag 0
+Check if Pablo is in town
+ACTIONS
+Run mission Artwork in the Sky
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+The Jewel of the Eufaula is successfully completed
+Check if Amirah has favor >= 500
+Check relationship with Amirah is Lover
+Check if 1700383 is == 0
+ACTIONS
+Run mission Porcelain Art
+Set 1700383 to 1
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700383
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1700383 | id: 173831 | sceneName: Main | flagName: Trigger_AmirahHome | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: -1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the AmirahHome:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_amirahhome
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_amirahhome
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the AmirahHome:
+CONDITIONS
+Always:
+ACTIONS
+Amirah stands still in AmirahHome
+Li-Jun stands still in AmirahHome
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 173831
+Add behavior CommanderMoveToFlag (idName: 173831) to Player
+(param: TargetScene:AmirahHome|MoveMode:Run|FlagName:MasterAmirah_Player3)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the AmirahHome:
+CONDITIONS
+CHECK CHILD COUNT || compare: 2 | count: 1
+ACTIONS
+(cId -1) A conversation 19510, 19511, 6174_0, 6178_0 starts:
+{{dialogue|Amirah|I... I need to think about it.}}
+{{dialogue|Li-Jun|It's a celebration of love! It would be wonderful to have a strong, single woman who is as dedicated to her career to join.}}
+{{dialogue|Player|(What should I ask?)}}
+
+*''What's going on?''
+*''She's not single.''
+*''She has a child...''
+
+{{dialogue|Amirah|indent=true|answer=What's going on?
+|Darling, you're here. This is Li-jun, Walnut Groove's Mayor, you must've met her at the summit before. We were discussing an upcoming ceramics exhibition. This is ''Player''.}}
+{{dialogue|Li-Jun|indent=true|Ah! Sandrock's famous ''Player'' and Amirah, you two are truly a match made in heaven. Let me clear things up a bit.}}
+{{dialogue|Li-Jun|indent=true|answer=She's not single.
+|What? Oh, I understand! I'm sorry, it appears I was mistaken!}}
+{{dialogue|Li-Jun|indent=true|Sandrock's famous ''Player'' and Amirah, you two are truly a match made in heaven. I actually wanted Amirah to contribute some works for an exhibition.}}
+{{dialogue|Li-Jun|indent=true|answer=She has a child...
+|What? Oh, I understand! I'm sorry, it appears I was mistaken!}}
+{{dialogue|Li-Jun|indent=true|Sandrock's famous ''Player'' and Amirah, you two are truly a match made in heaven. I actually wanted Amirah to contribute some works for an exhibition.}}
+{{dialogue|Li-Jun|Walnut Groove is hosting a ceramics exhibition, to the theme of love. Amirah's ceramics have made quite a name for themselves, so I was inviting her to contribute some creations since I was in the neighborhood.}}
+{{dialogue|Li-Jun|She said she would like to think about it some more.}}
+{{dialogue|Player|(What should I say?)}}
+
+*''That sounds great!''
+*''You don't want to join in?''
+
+{{dialogue|Amirah|I know that it's a really good opportunity, and it's honestly not that I'm not interested. But it's as Mayor and Li-jun says, in an exhibition about love, I wanted to make something with you.}}
+{{dialogue|Li-Jun|Isn't that just inspiring? So I guess I need to be asking her wonderful co-creator...}}
+{{dialogue|Amirah|What do you think, dear?}}
+{{dialogue|Player|(What should I say?)}}
+
+*''If you want to, then I'll do it with you.''
+*''I'm kind of busy lately...''
+
+{{dialogue|Li-Jun|indent=true|answer=If you want to, then I'll do it with you.
+|Brilliant! Seeing you two together... it's inspiring! I'll be waiting for your submission!}}
+{{dialogue|Amirah|indent=true|Come on, I have an idea.}}
+{{dialogue|Li-Jun|indent=true|answer=I'm kind of busy lately...
+|I understand, busy people. Well, the exhibition is a season from now, so you have time, be sure to join in. Any later and you'll miss it, I'm afraid. But I would just love to see your work there.}}
+{{dialogue|Amirah|indent=true|Thank you, if we finish a piece, we shall send it to Walnut Groove.}}
+{{dialogue|Li-Jun|indent=true|Good! Then I shall eagerly await your work.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 19529) that ends:
+{{dialogue|Amirah|Come with me.}}
+(cId: -1) There is a conversation segment (id 19531) that ends:
+{{dialogue|Amirah|Come on, I have an idea.}}
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 173831) from Player
+DELAY MASK SET || maskId: 173832 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 3523}}
+A cutscene CG_AMIRAHPOT (duration: 1.5) starts playing
+Art of Love - To make something truly inspired, Amirah and I worked together on a piece. Our feelings for each other soon took shape in the form of this ceramic.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTION DATE SET FLAG || flag: AmirahQ6Timer
+Amirah stops standing still
+CUTSCENE UI STATE EXIT || 
+END MISSION 1700383
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 19523:
+{{dialogue|Player|(What should I say?)}}
+
+*''If you want to, then I'll do it with you.'' (No unique dialogue)
+*''I'm kind of busy lately...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 173831) from Player
+NPC ICON ADD || missionId: 1700383 | npc: 8015 | missionIcon: 0
+Amirah stops standing still
+Li-Jun stops standing still
+
+TRIGGER Procedure 0.0 Step 0.0 Order 6 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Amirah
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 6182_0 starts:
+{{dialogue|Amirah|Honey, would you like to make the piece of ceramic with me?}}
+
+*''Let's do it!'' (No unique dialogue)
+*''Give me a little more time.'' (No unique dialogue)
+
+
+TRIGGER Procedure 0.0 Step 0.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 19527:
+{{dialogue|Amirah|Honey, would you like to make the piece of ceramic with me?}}
+
+*''Let's do it!'' (No unique dialogue)
+*''Give me a little more time.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON REMOVE || missionId: 1700383 | npc: 8015 | missionIcon: 0
+(cId -1) A conversation 19529 starts:
+{{dialogue|Amirah|Come with me.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173832 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Amirah stands still in Main
+Li-Jun stops standing still
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: AmirahQ6_Player
+DELAY MASK SET || maskId: 173832 | delayTime: 0 | durationTime: 2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173832 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 6183_0 starts:
+{{dialogue|Amirah|Ever since I met you, you've done nothing but silently support me. Our love... is respect, and understanding. You push me to achieve my dreams...}}
+{{dialogue|Amirah|Mayor Li-jun's opportunity is amazing... to be able to display my work with some of the greatest. It's wonderful, but none of this would be possible without you.}}
+{{dialogue|Amirah|So I want to use that to make something I... we can be proud of.}}
+{{dialogue|Player|(What should I say?)}}
+
+*''I'm not good at this... I don't want to hold you back.''
+*''You're already the greatest.''
+
+{{dialogue|Amirah|indent=true|answer=I'm not good at this... I don't want to hold you back.
+|Don't worry, you're the best Builder. Creativity is already in your heart.}}
+{{dialogue|Amirah|indent=true|answer=You're already the greatest.
+|Oh come on, you're the world famous Builder now, I'm the one that has to keep up with you.}}
+{{dialogue|Amirah|Ceramics isn't just about shapes... it's an artist's self-exprtession. That being said... let's start with the wheel. I want to make something really special.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_AMIRAHPOT | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 19539, 19540 starts:
+{{dialogue|Amirah|Okay, darling, I think we're done for now. I'll add the finishing touches, and send it on to Walnut Groove.}}
+{{dialogue|Amirah|Thank you... truly.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PLAYER DIVORCE || order: 0 | id: 8015
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 173831
+NPC ICON REMOVE || missionId: 1700383 | npc: 8015 | missionIcon: 0
+END MISSION 1700383
+
+TRIGGER Procedure 0.0 Step 0.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 19527:
+{{dialogue|Amirah|Honey, would you like to make the piece of ceramic with me?}}
+
+*''Let's do it!'' (No unique dialogue)
+*''Give me a little more time.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 19528 starts:
+{{dialogue|Amirah|It's okay. There isn't a rush, art takes time and patience, just let me know when you're ready.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the AmirahHome:
+CONDITIONS
+CHECK CHILD COUNT || compare: 3 | count: 0
+ACTIONS
+(cId -1) A conversation 19510, 19511, 6177_0, 6178_0 starts:
+{{dialogue|Amirah|I... I need to think about it.}}
+{{dialogue|Li-Jun|It's a celebration of love! It would be wonderful to have a strong, single woman who is as dedicated to her career to join.}}
+{{dialogue|Player|(What should I ask?)}}
+
+*''What's going on?''
+*''She's not single.''
+
+{{dialogue|Amirah|indent=true|answer=What's going on?
+|Darling, you're here. This is Li-jun, Walnut Groove's Mayor, you must've met her at the summit before. We were discussing an upcoming ceramics exhibition. This is ''Player''.}}
+{{dialogue|Li-Jun|indent=true|Ah! Sandrock's famous ''Player'' and Amirah, you two are truly a match made in heaven. Let me clear things up a bit.}}
+{{dialogue|Li-Jun|indent=true|answer=She's not single.
+|What? Oh, I understand! I'm sorry, it appears I was mistaken!}}
+{{dialogue|Li-Jun|indent=true|Sandrock's famous ''Player'' and Amirah, you two are truly a match made in heaven. I actually wanted Amirah to contribute some works for an exhibition.}}
+{{dialogue|Li-Jun|Walnut Groove is hosting a ceramics exhibition, to the theme of love. Amirah's ceramics have made quite a name for themselves, so I was inviting her to contribute some creations since I was in the neighborhood.}}
+{{dialogue|Li-Jun|She said she would like to think about it some more.}}
+{{dialogue|Player|(What should I say?)}}
+
+*''That sounds great!''
+*''You don't want to join in?''
+
+{{dialogue|Amirah|I know that it's a really good opportunity, and it's honestly not that I'm not interested. But it's as Mayor and Li-jun says, in an exhibition about love, I wanted to make something with you.}}
+{{dialogue|Li-Jun|Isn't that just inspiring? So I guess I need to be asking her wonderful co-creator...}}
+{{dialogue|Amirah|What do you think, dear?}}
+{{dialogue|Player|(What should I say?)}}
+
+*''If you want to, then I'll do it with you.''
+*''I'm kind of busy lately...''
+
+{{dialogue|Li-Jun|indent=true|answer=If you want to, then I'll do it with you.
+|Brilliant! Seeing you two together... it's inspiring! I'll be waiting for your submission!}}
+{{dialogue|Amirah|indent=true|Come on, I have an idea.}}
+{{dialogue|Li-Jun|indent=true|answer=I'm kind of busy lately...
+|I understand, busy people. Well, the exhibition is a season from now, so you have time, be sure to join in. Any later and you'll miss it, I'm afraid. But I would just love to see your work there.}}
+{{dialogue|Amirah|indent=true|Thank you, if we finish a piece, we shall send it to Walnut Groove.}}
+{{dialogue|Li-Jun|indent=true|Good! Then I shall eagerly await your work.}}

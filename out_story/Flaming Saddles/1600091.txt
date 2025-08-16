@@ -1,0 +1,95 @@
+Reading Mission 1600091: Flaming Saddles
+
+<onlyinclude>{{Infobox mission
+|name = Flaming Saddles
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Flaming Saddles:
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 82
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1600090
+START MISSION 1600090
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1600090
+CONDITIONS
+Always:
+ACTIONS
+Run mission Flaming Saddles
+END MISSION 1600090
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1600091
+CONDITIONS
+Always:
+ACTIONS
+===Build Saddle===
+
+{{mission_details
+|desc = You can make a Saddle on the Worktable.
+|details = Build Saddle
+*{{i2|Saddle|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1600090 | targetId: 0 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Elsie===
+
+{{mission_details
+|desc = The Saddle is ready. Go and give it to Elsie.
+|details = Talk to Elsie
+*{{i2|Saddle|0/1}}
+*{{i2|Elsie|0/1}}
+}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Elsie
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1600090 | targetId: 1 | canSubmit: 1
+ACTIONS
+(cId 10) A conversation 2234, 2235, 2236 starts:
+{{dialogue|Elsie|Yeehaw! Hey, this looks pretty good, ''Player''. You sure you didn't nab it from some high falutin' pro shop?}}
+{{dialogue|Elsie|Gosh, I feel all the rainclouds bein' chased away. I can't wait to get back out on the trail and try this thing out!}}
+{{dialogue|Elsie|Here's your pay as promised, ''Player'', be seein' ya!}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove 1 Saddle of Default quality (Notify player)
+SUBMIT MISSION 1600090
+END MISSION 1600091

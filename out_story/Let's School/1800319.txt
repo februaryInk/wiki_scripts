@@ -1,0 +1,288 @@
+Reading Mission 1800319: Let's School
+
+<onlyinclude>{{Infobox mission
+|name = Let's School
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Let's School:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800326
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1800326
+START MISSION 1800326
+SCENEITEM CREATE FLAG || itemType: 0 | id: 83261 | path: S8326_Item1 | flagName: S8326_Item1 | sceneName: Main | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 83262 | path: S8326_Item2 | flagName: S8326_Item2 | sceneName: Main | extraParams: 0
+
+TRIGGER Procedure 1.0 Step 4.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800326
+CONDITIONS
+Always:
+ACTIONS
+Run mission Let's School
+END MISSION 1800326
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800319
+CONDITIONS
+Always:
+ACTIONS
+===Construct School Clock===
+
+{{mission_details
+|desc = The school needs a clock to keep time for the classes. You can construct one at your Assembly Station.
+|details = Construct School Clock
+*{{i2|School Clock|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1800326 | targetId: 3 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1800326 | id: 83191 | sceneName: Main | flagName: Trigger_83191 | showOnMap: 1 | mapIcon: MissionArea | transId: 80019314
+
+TRIGGER Procedure 0.0 Step 1.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 83191
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1800326 | targetId: 3 | canSubmit: 1
+ACTIONS
+{{cutscene|id = 1392}}
+A cutscene CG_SCHOOLCONCEPT (duration: 0.0) starts playing
+Let's School - Building the school was a team effort; we all felt accomplished with making our town better for our children.
+AREA TRIGGER DELETE || id: 83191
+
+TRIGGER Procedure 0.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_SCHOOLCONCEPT | state: 7
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8319_0_1
+Trudy stands still in Main and looks at Heidi
+Heidi stands still in Main
+Mi-an stands still in Main and looks at Heidi
+SCENEITEM DELETE || itemType: 0 | id: 83262
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 5.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_SCHOOLCONCEPT | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 3838_0 starts:
+{{dialogue|Heidi|Nice School Clock, ''Player''! Thank you! We'll install it when the building's complete. With all the support we're getting, my team'll bang this thing out in no time flat!}}
+{{dialogue|Trudy|I'm looking forward to it. And... I'm sorry about the low budget; too much went into fixing the town after the Duvos occupation... Even though the Alliance agreed to help some, we still need to cover the upfront cost.}}
+{{dialogue|Heidi|It's okay, even though we're going with the super-economical plan, the school will still be safe, comfortable, and fine-tuned for children. Shame we had to throw out the original plan though...}}
+{{dialogue|Mi-an|Original plan? Well, um. Just out of curiosity, can we... see it?}}
+{{dialogue|Heidi|Well, gosh, do we have time? I have it right here, sure, why not!}}
+The conversation ends.
+BAG MODIFY BY TARGET || missionId: 1800326 | targetId: 3
+
+TRIGGER Procedure 0.0 Step 7.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8319092) to Heidi
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8319_9_2|Action:Hand_Story|Delay:0.0)
+Add behavior CommanderMoveToFlagAndAction (idName: 8319172) to Mi-an
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8319_17_2|Action:Hand_Story|Delay:1.0)
+Set 8319Act1 to 0
+
+TRIGGER Procedure 0.0 Step 7.1 Order 6 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8009 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: MoveToFlagAndActionOver | behaviourName: CommanderMoveToFlagAndAction | npc: 8017
+CONDITIONS
+Always:
+ACTIONS
+Increment 8319Act1 by 1
+
+TRIGGER Procedure 0.0 Step 8.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8009 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+ON ACTOR BEHAVIOUR EVENT || order: 10 | eventName: MoveToFlagAndActionOver | behaviourName: CommanderMoveToFlagAndAction | npc: 8017
+CONDITIONS
+Check if 8319Act1 is >= 2
+ACTIONS
+DELAY MASK SET || maskId: 831901 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 8.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 831901 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8319172) from Mi-an
+Remove behavior CommanderMoveToFlagAndAction (idName: 8319092) from Heidi
+DELAY MASK SET || delayTime: 1 | changeType: 1 | curveIndex: 0 | maskId: 831901 | durationTime: -2
+
+TRIGGER Procedure 0.0 Step 8.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 831901
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 3839_0 starts:
+{{dialogue|Mi-an|Wow! This looks great! It's even better than what we had at Tallsky! Why aren't we going with this one? Was budget really the only reason?}}
+{{dialogue|Heidi|Yeah... I know Trudy's been racking her brain about how to come up with more money, but with the reforestation plan also taking up a chunk, we just don't have enough.}}
+{{dialogue|Mi-an|Ahem...}}
+{{dialogue|Trudy|You win some you lose some. I think just having a school is a good start, we can consider upgrading when we get more people moving here. Now, let's wrap things up-}}
+{{dialogue|Mi-an|I said, "Ahem!"}}
+
+*''I think Mi-an has something to say.''
+*''Mi-an's choking!''
+*''Yeah better wrap things up...''
+
+{{dialogue|Mi-an|indent=true|answer=I think Mi-an has something to say.
+|reward={{NPC2|Mi-an|rp=2}}|I do! Thank you, ''Player''!}}
+{{dialogue|Mi-an|indent=true|answer=Mi-an's choking!
+|Ah? Er... no! I'm fine! But... now that I've got your attention...!}}
+{{dialogue|Trudy|indent=true|answer=Yeah better wrap things up...
+|I'm sorry, did you want to say something, Mi-an?}}
+{{dialogue|Mi-an|Mayor Trudy! Heidi! In order to promote the betterment of our town through education, which I consider the most valuable investment there is, I hereby pledge to donate a sum of...}}
+{{dialogue|Mi-an|Five hundred thousand Gols!}}
+{{dialogue|0|Whaaaat!?}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 12.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 3843_0 starts:
+{{dialogue|Trudy|Five hundred thousand?}}
+{{dialogue|Heidi|Girl, the heck you get that kinda money? I know Builders are well off, but still...!}}
+{{dialogue|Mi-an|Oh! You guys didn't know? Turns out Yan had just been pocketing most of my income all this time. In the end, I got a huge settlement from the Commerce Guild.}}
+{{dialogue|Mi-an|I've kind of just been sitting on the money for a while and I never wanted to use it for anything... until now!}}
+{{dialogue|Heidi|That Yan...!}}
+{{dialogue|Mi-an|With this kind of funding, we can afford Heidi's original design and then some, right?}}
+{{dialogue|Trudy|Mi-an, we're very grateful, but this is a lot. Maybe you should take some time to think this over...}}
+
+*''I'm donating, too!''
+*''How much does the nicer school cost?''
+*''Mi-an, trying to be in the spotlight!''
+*''No take-backs, Mi-an. Money belongs to the city now.''
+
+{{dialogue|Mi-an|indent=true|answer=I'm donating, too!
+|Woohoo! Builder Cruise... investment... fund... thingie!}}
+{{dialogue|Trudy|indent=true|Er, hold on, ''Player''. Let's not all rush into this...}}
+{{dialogue|Heidi|indent=true|answer=How much does the nicer school cost?
+|Certainly not five hundred thousand! I mean, that is seriously a lot of money!}}
+{{dialogue|Mi-an|indent=true|Well, if the money is more than enough, then use the rest for something else! Maybe you can build a university here! Rocksand U!}}
+{{dialogue|Trudy|indent=true|Hang on, hang on... let's all just... cool our jets for a minute, alright?}}
+{{dialogue|Mi-an|indent=true|answer=Mi-an, trying to be in the spotlight!
+|Wha...? I... I-}}
+{{dialogue|Trudy|indent=true|Come now, ''Player''! Mi-an's just trying to help.}}
+{{dialogue|Mi-an|indent=true|I just want Sandrock to succeed...}}
+{{dialogue|Mi-an|indent=true|answer=No take-backs, Mi-an. Money belongs to the city now.
+|I'm not going to change my mind about this, ''Player''. I'm serious!}}
+{{dialogue|Trudy|indent=true|Hang on, hang on... let's all just... cool our jets for a minute, alright?}}
+{{dialogue|Trudy|Mi-an... you've worked so hard for what you earned. And it was almost taken from you. I just think it's wrong for us to accept so much from you.}}
+{{dialogue|Mi-an|Huh? What do you mean? You won't accept my donation!?}}
+{{dialogue|Trudy|I jus-}}
+{{dialogue|Mi-an|Trudy, if you don't take it, I'll just "anonymously" stuff it into City Hall's mailbox!}}
+{{dialogue|Trudy|I... sigh... Heidi, how about this. How much would you need to carry out your original plan? Please make a budget plan for me.}}
+{{dialogue|Trudy|Mi-an, on behalf of Sandrock City Hall, I officially accept your donation to the construction of a new school. We will only accept the budgeted amount, and not a Gol more. Furthermore, we'll do a breakdown of costs to make sure everything is accounted for.}}
+{{dialogue|Trudy|Heidi, Mi-an, do you accept?}}
+{{dialogue|0|No problem!}}
+{{dialogue|Trudy|We truly thank you, Mi-an!}}
+{{dialogue|Heidi|Great! Now that that's settled, I think we're going to need lots of new raw materials and assets! Builders, when I get everything planned out I'll post them on the Commission Board. Be sure to keep a close eye on the board! I'm counting on ya!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 9.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 2) There is a conversation segment (id 12735) that ends:
+{{dialogue|Mi-an|Wow! This looks great! It's even better than what we had at Tallsky! Why aren't we going with this one? Was budget really the only reason?}}
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8319172) from Mi-an
+
+TRIGGER Procedure 0.0 Step 30.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 83262 | path: S8326_Item2 | flagName: S8326_Item2 | extraParams: 0 | sceneName: Main
+Trudy stops standing still
+Heidi stops standing still
+Mi-an stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8319001) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8319172) from Mi-an
+Remove behavior CommanderNPCAction (idName: 8319173) from Mi-an
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 8319092) from Heidi
+SUBMIT MISSION 1800326
+END MISSION 1800319
+
+TRIGGER Procedure 1.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1800326 | targetId: 2 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Go to School===
+
+{{mission_details
+|desc = Everything for the school is ready, talk with Heidi about putting everything together.
+|details = Go to School
+*{{i2|School Clock|0/1}}
+}}
+
+TRIGGER Procedure 1.0 Step 9.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the first option in conversation segment 12739:
+{{dialogue|Mi-an|I said, "Ahem!"}}
+
+*''I think Mi-an has something to say.'' (No unique dialogue)
+*''Mi-an's choking!'' (No unique dialogue)
+*''Yeah better wrap things up...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Mi-an gains 2 favor

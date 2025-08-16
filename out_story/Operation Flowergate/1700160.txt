@@ -1,0 +1,272 @@
+Reading Mission 1700160: Operation: Flowergate
+
+<onlyinclude>{{Infobox mission
+|name = Operation: Flowergate
+|image =
+|description = Burgess wants to decorate the town with flowers. Although Zeke isn't convinced, they've asked you to help.
+|type = Side
+|time =
+|location =
+|characters = [[Zeke]]
+|condition =
+|details =
+|exp = 1000
+|reputation = 20
+|gols = 300
+|npc1 = Burgess
+|rp1 = 20
+|npc2 = Zeke
+|rp2 = 10
+|npc3 = Dan-bi
+|rp3 = 20
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100068
+
+TRIGGER Procedure 2.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1100105 is result 1 flag 1
+ACTIONS
+Run mission You Spin Me Round
+
+TRIGGER Procedure 2.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 10:
+Check if mission Farmin' Moisture is result 1 flag 1
+
+GROUP 0:
+Check if mission Farmin' Moisture is result 2 flag 1
+
+ACTIONS
+Run mission Operation: Flowergate
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700160
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|283}}
+Set global blackboard key FlowerGate with info 1.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Builder Cruise x Operation Flowergate is in state 1 with flag 1
+ACTIONS
+AREA TRIGGER DELETE || id: 1700160
+FAIL MISSION || missionId: 1700160
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Greenhouse:
+CONDITIONS
+The Missing Leak is in state 1 with flag 0
+CHECK UNIQUE ACTION RUN || idStr: enter_greenhouse
+CHECK GLOBAL BLACKBOARD || key: themissingleak | info: 1 | exist: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_greenhouse
+Burgess stands still in Greenhouse
+Zeke stands still in Greenhouse
+Dan-bi stands still in Greenhouse
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 1700160
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Greenhouse:
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Greenhouse | flagName: FlowerGate_Player
+DELIVER MISSION 1700160
+(cId 1) A conversation 1130_0 starts:
+{{dialogue|Burgess|...We've got big plans for these plants, you hear? Big, big plans!}}
+{{dialogue|Dan-bi|Big plants! Er, I mean, plans!}}
+{{dialogue|Zeke|Yeah, yeah... I hear ya...}}
+{{dialogue|Burgess|You're the man for the job, Zeke! Go you!}}
+{{dialogue|Dan-bi|Woo! Yeah, you're number one!}}
+{{dialogue|Zeke|Cool...}}
+{{dialogue|Burgess|Afraid that's all the time I have for pep talks, I've got a date with a city zoning map!}}
+{{dialogue|Burgess|So long!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 3961) that ends:
+{{dialogue|Burgess|So long!}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 171601) to Burgess
+(param: TargetScene:Greenhouse|FlagName:FlowerGate_Burgess2)
+Add behavior CommanderMoveToFlagAndAction (idName: 171601) to Zeke
+(param: TargetScene:Greenhouse|FlagName:FlowerGate_Zeke2)
+Add behavior CommanderMoveToFlagAndAction (idName: 171601) to Dan-bi
+(param: TargetScene:Greenhouse|FlagName:FlowerGate_Danbi2)
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 3984) that ends:
+{{dialogue|Zeke|Yeah, thanks.}}
+(cId: -1) There is a conversation segment (id 3994) that ends:
+{{dialogue|Zeke|Here're those seeds I promised you, ''Player''. Plus some more to help with the project. Once you've grown the plants, place 'em in the spots Burgess wants 'em. I have a feeling... he'll let you know.}}
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1700160
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700160
+CONDITIONS
+Always:
+ACTIONS
+Run mission Operation: Flowergate
+END MISSION 1700160
+
+TRIGGER Procedure 1.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8021 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 1131_0 starts:
+{{dialogue|Burgess|''Player''! What a pleasant surprise! Oh! Say, since you're here why don't you help our good gardeners here start on the very proper, very official, and principally principal new Church initiative, fully approved, designed by me, checked by Dan-bi...}}
+{{dialogue|Burgess|Operation: Flowergate!}}
+{{dialogue|Dan-bi|Hype!}}
+{{dialogue|Burgess|Zeke and Dan-bi here will fill you in on the details: gotta run!}}
+The conversation ends.
+Remove behavior CommanderMoveToFlag (idName: 171601) from Burgess
+
+TRIGGER Procedure 1.0 Step 2.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 171602) to Burgess
+(param: TargetScene:Main|FlagName:default)
+(cId 3) A conversation 1137_0 starts:
+{{dialogue|Dan-bi|See ya!}}
+{{dialogue|Zeke|The details are: they want some plants.}}
+{{dialogue|Dan-bi|Hey now! That only scratches the surface! Operation: Flowergate goes way, waaaay deeper than that! At least a few centimeters into the ground...}}
+{{dialogue|Dan-bi|Listen, ''Player''! We're gonna beautify Sandrock! Flowers, plants, brushes, you name it! Oh, and don't forget those delightful little shrubberies! They're goin' up all over town, thanks to our pal Zeke and his Biocrust!}}
+{{dialogue|Zeke|What we really need to be doing is expanding the straw grid, maybe start planting outside of town one day... you know, taking serious measures towards the fight against the desert.}}
+{{dialogue|Zeke|Sure, putting some plants up around town will look pretty-}}
+{{dialogue|Dan-bi|Now you're getting it, Zeke-y boy! Pretty scenery all around town! What's better than that? It'll lift everyone's spirits! It's telesis in motion!}}
+{{dialogue|Zeke|Eh, well. I suppose... it couldn't hurt. ''Player'', you certainly don't need to get yourself involved if you're not interested...}}
+
+*''I can help.''
+*''Yeah, not interested.''
+
+{{dialogue|Dan-bi|indent=true|answer=I can help.
+|reward={{NPC2|Zeke|rp=5}}|reward={{NPC2|Dan-bi|rp=5}}|Woohoo! ''Player''! I always knew you were cool!}}
+{{dialogue|Zeke|indent=true|Er, right. Well, we are happy to have you. Um. All we need to do is grow a few specific plants, then place 'em around town. I'll prep the soil for you guys, so when you're ready, you can just plop 'em down and they should grow.}}
+{{dialogue|Dan-bi|indent=true|Sandrice, Mountain Rose, Rhino Horn Cactus! And this is just the first step! One day, we'll be ready to move on to phase two...}}
+{{dialogue|Dan-bi|indent=true|Which will be basically the same thing, but with different plants!}}
+{{dialogue|Zeke|indent=true|Yeeep.}}
+{{dialogue|Dan-bi|indent=true|Yep!}}
+{{dialogue|Zeke|indent=true|Here're those seeds I promised you, ''Player''. Plus some more to help with the project. Once you've grown the plants, place 'em in the spots Burgess wants 'em. I have a feeling he'll... let you know.}}
+{{dialogue|Dan-bi|indent=true|Woohoo! Thanks again, ''Player''!}}
+{{dialogue|Zeke|indent=true|Yeah, thanks.}}
+{{dialogue|Zeke|indent=true|answer=Yeah, not interested.
+|Yeah. No worries. Let me know if you change your mind.}}
+{{dialogue|Dan-bi|indent=true|More planting for us!}}
+Add behavior CommanderMoveToFlag (idName: 171603) to Player
+(param: TargetScene:Greenhouse|FlagName:FlowerGate_Burgess)
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 3984) that ends:
+{{dialogue|Zeke|Yeah, thanks.}}
+(cId: -1) There is a conversation segment (id 3975) that ends:
+{{dialogue|Dan-bi|More planting for us!}}
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 171603) from Player
+Burgess stops standing still
+Remove behavior CommanderMoveToFlag (idName: 171602) from Burgess
+Zeke stops standing still
+Dan-bi stops standing still
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 171601) from Zeke
+Remove behavior CommanderMoveToFlagAndAction (idName: 171601) from Dan-bi
+
+TRIGGER Procedure 1.0 Step 4.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 3973:
+{{dialogue|Zeke|Eh, well. I suppose... it couldn't hurt. ''Player'', you certainly don't need to get yourself involved if you're not interested...}}
+
+*''I can help.'' (No unique dialogue)
+*''Yeah, not interested.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Zeke gains 5 favor
+Dan-bi gains 5 favor
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 283
+CONDITIONS
+Operation: Flowergate is in state 1 with flag 0
+Operation: Flowergate is in state 2 with flag 0
+Operation: Flowergate is in state 3 with flag 0
+Operation: Flowergate is in state 4 with flag 0
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1700160 | sceneName: Main | id: 1700160 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80006470 | flagName: trigger_greenhouse
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Zeke|Oh. Hey. Got time to help out with the Church's project?}}
+
+*''Sure.''
+*''Nope, sorry.''
+
+{{dialogue|Zeke|indent=true|answer=Sure.
+|Cool.}}
+{{dialogue|Zeke|indent=true|Um. All we need to do is grow a few specific plants, then place 'em around town. I'll prep the soil for you guys, so when you're ready, you can just plop 'em down and they should grow.}}
+{{dialogue|Zeke|indent=true|Sandrice, Mountain Rose, Rhino Horn Cactus; those are the plants they wanted.}}
+{{dialogue|Zeke|indent=true|And shoot, I just remembered...}}
+{{dialogue|Zeke|indent=true|Here're those seeds I promised you, ''Player''. Plus some more to help with the project. Once you've grown the plants, place 'em in the spots Burgess wants 'em. I have a feeling... he'll let you know.}}
+{{dialogue|Zeke|indent=true|answer=Nope, sorry.
+|Gotcha. Yeah. No worries. Let me know if you change your mind.}}
+
+==Rewards==
+{{mission reward
+|npc1 = Burgess
+|rp1 = 20
+|npc2 = Zeke
+|rp2 = 10
+|npc3 = Dan-bi
+|rp3 = 20
+|exp = 1000
+|reputation = 20
+|gols = 300
+}}

@@ -1,0 +1,273 @@
+Reading Mission 1700150: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200128
+
+TRIGGER Procedure 5.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Jasmine Co. Official Sandrock Tour is successfully completed
+
+GROUP 10:
+Jasmine Co. Official Sandrock Tour has failed
+
+ACTIONS
+Remove behavior CommanderMoveToFlagJasmine (idName: 1100409) from Jasmine
+END MISSION 1100100
+
+TRIGGER Procedure 5.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Fortress of Sanditude is in state 3 with flag 0
+Check if mission 1700150 is result 1 flag 1
+ACTIONS
+Run mission #1700150
+
+Run conditions from Fortress of Sanditude:
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 3706) that ends:
+{{dialogue|Heidi|Great! Well if it turns out you can help, come find me over at Construction Junction. Then we can start turning that workshop of yours into the home of your dreams. So long as your dreams involve Sandwalls!}}
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1700149
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700149
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1700150
+END MISSION 1700149
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700150
+CONDITIONS
+Always:
+ACTIONS
+===Collect Materials===
+
+{{mission_details
+|desc = Collect materials for the SANDWALL.
+|details = Collect Materials
+*{{i2|Hardwood Planks|0/10}}
+*{{i2|Bronze Stick|0/5}}
+*{{i2|Switchboard|0/2}}
+}}
+Set TALK to 2
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1700149 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Heidi===
+
+{{mission_details
+|desc = After you collect the materials, talk to Heidi.
+|details = Talk to Heidi
+*{{i2|Hardwood Planks|0/10}}
+*{{i2|Bronze Stick|0/5}}
+*{{i2|Switchboard|0/2}}
+*{{i2|Heidi|0/1}}
+}}
+Set TALK to 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 2) There is a conversation segment (id 3712) that ends:
+{{dialogue|Heidi|Just head over to my catalog at Construction Junction when you get a minute to start the process. It's on the page titled "Sandwall."}}
+CONDITIONS
+Always:
+ACTIONS
+===Setup SANDWALL at Workshop===
+
+{{mission_details
+|desc = You can use the Catalog to setup the SANDWALL at Construction Junction. Go there and try.
+|details = Setup SANDWALL at Workshop
+}}
+ACTION ACTIVE SAND WALL BUILD || 
+BAG MODIFY BY TARGET || missionId: 1700149 | targetId: 2
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SAND WALL BUILDED || order: 0
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Heidi===
+
+{{mission_details
+|desc = The SANDWALL has been installed. Tell Heidi the good news.
+|details = Talk to Heidi
+}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Heidi
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1700149 | targetId: 2 | canSubmit: 1
+ACTIONS
+(cId 2) A conversation 3711, 3712 starts:
+{{dialogue|Heidi|This'll do it! Now I've got everything I need to start making the Sandwalls! You and Mi-an are at the top of the list, and as promised, you two are getting the hookups for a... decent price!}}
+{{dialogue|Heidi|Just head over to my catalog at Construction Junction when you get a minute to start the process. It's on the page titled "Sandwall."}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Heidi
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 3713, 3714 starts:
+{{dialogue|Heidi|Your Sandwall's good to go! Set it up myself. And now we play the "waiting for a sandstorm" game...}}
+{{dialogue|Heidi|By the way: Sandwall's not the only thing I can fix you up with! Take another look at that catalog of mine and we can set you up with a whole mess of edificial enhancements, ranging from the practical to those just pleasin' to the eye. I'll be on deck!}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 3) There is a conversation segment (id 3714) that ends:
+{{dialogue|Heidi|By the way: Sandwall's not the only thing I can fix you up with! Take another look at that catalog of mine and we can set you up with a whole mess of edificial enhancements, ranging from the practical to those just pleasin' to the eye. I'll be on deck!}}
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1700149
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK WEATHER STATE || weather: 2 | flag: 1
+ACTIONS
+Set TALK to 1
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if TALK is == 1
+ACTIONS
+NPC ICON ADD || missionId: 1700149 | npc: 8009 | missionIcon: 2
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Heidi
+CONDITIONS
+Check if TALK is == 1
+ACTIONS
+(cId 4) A conversation 1008_0 starts:
+{{dialogue|Heidi|Hey ''Player'', doin' alright? So! How did our Sandwall perform? Did it keep your house spic-n-span? Sand-free? Speckless, even?}}
+
+*''It's super effective!''
+*''I forgot to use it...''
+*''I didn't notice any difference.''
+
+{{dialogue|Heidi|indent=true|answer=It's super effective!
+|reward={{NPC2|Heidi|rp=5}}|Awesome! Glad to hear it! I'd had a theory that a flying sand type would be weak against walls...}}
+{{dialogue|Heidi|indent=true|answer=I forgot to use it...
+|Eh? Really? I mean, I thought the single button design was pretty user-friendly... Well! That's alright. I talked to Mi-an, and she said her land was severely lacking in lint of the arid variety, so let's call it a win!}}
+{{dialogue|Heidi|indent=true|answer=I didn't notice any difference.
+|reward={{NPC2|Heidi|rp=-3}}|Wait, hold up, you did push the button right? It doesn't work if you don't push the button...}}
+{{dialogue|Heidi|indent=true|Hmm... I wonder why you had such a different experience to Mi-an. Maybe in this location it isn't as effective? Well, nevermind. I guess this is valuable feedback for the next model!}}
+{{dialogue|Heidi|Well, in any case, this is still only a prototype! At some point, I'll look into improving my design, and call it, hm, I don't know, something along the lines of "Sandwall: Level 2."}}
+{{dialogue|Heidi|Working title, working title. In any case, don't forget to always come in and check on my catalog over at the CJ, short for Construction Junction, and stay up-to-date on what kind of architectural additions you may be in the market for!}}
+{{dialogue|Heidi|Thanks for the feedback, catch you later, ''Player''!}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 4) There is a conversation segment (id 3723) that ends:
+{{dialogue|Heidi|Thanks for the feedback, catch you later, ''Player''!}}
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON REMOVE || missionId: 1700149 | npc: 8009 | missionIcon: 2
+END MISSION 1700150
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) The player picks the first option in conversation segment 3716:
+{{dialogue|Heidi|Hey ''Player'', doin' alright? So! How did our Sandwall perform? Did it keep your house spic-n-span? Sand-free? Speckless, even?}}
+
+*''It's super effective!'' (No unique dialogue)
+*''I forgot to use it...'' (No unique dialogue)
+*''I didn't notice any difference.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Heidi gains 5 favor
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) The player picks the third option in conversation segment 3716:
+{{dialogue|Heidi|Hey ''Player'', doin' alright? So! How did our Sandwall perform? Did it keep your house spic-n-span? Sand-free? Speckless, even?}}
+
+*''It's super effective!'' (No unique dialogue)
+*''I forgot to use it...'' (No unique dialogue)
+*''I didn't notice any difference.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Heidi gains -3 favor
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Heidi
+CONDITIONS
+Check if TALK is == 2
+ACTIONS
+(cId 5) A conversation 3709 starts:
+{{dialogue|Heidi|Any luck with those materials? Well, no rush, but wouldn't it be nice to have a Sandwall before the next sandstorm hits? Assuming it works, of course...}}
+
+TRIGGER Procedure 2.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Mi-an
+CONDITIONS
+Check if TALK is == 2
+ACTIONS
+(cId 1) A conversation 3710 starts:
+{{dialogue|Mi-an|You've gotten diagrams from Heidi before, right? They're so easy to follow! I've been working on her "Sandwall" thing lately and the darn thing is almost building itself! I'm just surprised our boss never commissioned anything like this before...}}

@@ -1,0 +1,207 @@
+Reading Mission 1800304: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200135
+
+TRIGGER Procedure 9.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+We'll Be Ready For 'Em is successfully completed
+The Battle of Sandrock is in state 3 with flag 0
+ACTIONS
+NPC ADD TAG || tag: NoRandomNPCInTown
+
+TRIGGER Procedure 9.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 12) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1800290
+Run mission #1800291
+Run mission #1800292
+Run mission #1800302
+Run mission #1800303
+Run mission #1800304
+Run mission #1800299
+Run mission #1800301
+Run mission #1800300
+Run mission #1800293
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800304
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || flagName: Trigger_Temple | id: 83041 | transId: 0 | missionId: 1800304 | sceneName: Main | showOnMap: 1 | mapIcon: MissionArea
+AREA TRIGGER ONCE CREATE || missionId: 1800304 | id: 828823 | sceneName: Temple | flagName: Trigger_8288_Temple3 | showOnMap: 1 | mapIcon: MissionArea | transId: 0
+Set 8304Move to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800304
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM ADD || id: 10 | instId: 83041 | scene: Temple | flagName: S8288_T_s6 | dailyBehavior: RandomNPC
+NPC RANDOM ADD || id: 10 | instId: 83042 | scene: Temple | dailyBehavior: RandomNPC | flagName: S8288_T_s7
+83041 stands still in Temple
+83042 stands still in Temple
+
+TRIGGER Procedure 0.0 Step 1.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | id: 828823 | enter: 0 | npc: 8000
+CONDITIONS
+Always:
+ACTIONS
+Rocky stands still in Temple
+Peck stands still in Temple
+Fei stands still in Temple
+Venti stands still in Temple
+Krystal stands still in Temple
+Pebbles stands still in Temple
+Add behavior CommanderMoveToFlagAndAction (idName: 8304582) to Pebbles
+(param: FlagName:S8288_58_1|TargetScene:Temple|MoveMode:Run|Action:Attack_Story)
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 83041
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 828823
+CONDITIONS
+Always:
+ACTIONS
+(cId 23) A conversation 3353_0 starts:
+{{dialogue|Rocky|I'm losin' it over here! I'd mop the floor with you mopsticks if there wasn't so many of you... mopsticks!}}
+{{dialogue|83041|Well, duh, that's the whole point of having an army.}}
+{{dialogue|83042|This toddler is punching me... Orders, sir?}}
+{{dialogue|83041|Ah, I dunno, I think you just have to let him do it... he's just a kid.}}
+{{dialogue|Pebbles|Goo! Ga! Graaah! M-m-mopstick!}}
+{{dialogue|Krystal|You done ya Pa proud, lil Pebbles...}}
+{{dialogue|Rocky|Yeah! Get 'em!}}
+{{dialogue|Fei|We're going to find a way to defeat you goons!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 3.1 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 23) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8304312) to Peck
+(param: FlagName:S8288_31_2|TargetScene:Temple|MoveMode:Walk)
+Add behavior CommanderMoveToFlagAndAction (idName: 8304322) to Fei
+(param: FlagName:S8288_32_2|TargetScene:Temple|MoveMode:Walk)
+Add behavior CommanderMoveToFlagAndAction (idName: 8304382) to Venti
+(param: FlagName:S8288_38_2|TargetScene:Temple|MoveMode:Walk)
+
+TRIGGER Procedure 0.0 Step 3.2 Order 5 Repeat 3
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8031 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8032 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8038 | eventName: MoveToFlagOver | behaviourName: CommanderMoveToFlagAndAction
+CONDITIONS
+Always:
+ACTIONS
+Increment 8304Move by 1
+
+TRIGGER Procedure 0.0 Step 3.5 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8031 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8032 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8038 | eventName: MoveToFlagOver | behaviourName: CommanderMoveToFlagAndAction
+CONDITIONS
+Check if 8304Move is >= 3
+ACTIONS
+(cId 24) A conversation 10739, 10740, 10741, 10742, 10743, 10744 starts:
+{{dialogue|Peck|As long as I don't have to do anything, I support that.}}
+{{dialogue|Venti|This is still not as bad as the time I got trapped under a garbage pile for a week! Used to happen all the time in Baja.}}
+{{dialogue|Peck|Seriously?}}
+{{dialogue|Venti|Yep. Had to chew my way out.}}
+{{dialogue|Fei|Woah, that's really sad, Venti...}}
+{{dialogue|Venti|That's okay! I don't feel sad! Every day is bright when you compare it to being trapped by garbage!}}
+
+TRIGGER Procedure 0.0 Step 5.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 24) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Pebbles stands still in Temple
+Pebbles stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8304582) from Pebbles
+83041 stops standing still
+CUTSCENE UI STATE EXIT || 
+Rocky stops standing still
+Peck stops standing still
+Fei stops standing still
+Venti stops standing still
+Krystal stops standing still
+Pebbles stops standing still
+83041 stops standing still
+83042 stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8304312) from Peck
+Remove behavior CommanderMoveToFlagAndAction (idName: 8304322) from Fei
+Remove behavior CommanderMoveToFlagAndAction (idName: 8304382) from Venti
+
+TRIGGER Procedure 0.0 Step 40.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM REMOVE || id: 83041
+NPC RANDOM REMOVE || id: 83042
+END MISSION 1800304
+
+TRIGGER Procedure 0.0 Step 40.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 22841
+CONDITIONS
+Always:
+ACTIONS
+83041 stops standing still
+83042 stops standing still
+AREA TRIGGER DELETE || id: 83041
+AREA TRIGGER DELETE || id: 828823
+NPC RANDOM REMOVE || id: 83041
+NPC RANDOM REMOVE || id: 83042
+Rocky stops standing still
+Peck stops standing still
+Fei stops standing still
+Venti stops standing still
+Krystal stops standing still
+Pebbles stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8304582) from Pebbles
+END MISSION 1800304

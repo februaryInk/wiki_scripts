@@ -1,0 +1,1065 @@
+Reading Mission 1200217: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200135
+
+TRIGGER Procedure 5.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1200213 is result 1 flag 1
+ACTIONS
+Run mission First Impressions
+The player receives a letter:
+{{mail|445}}
+Newspaper adds Article content 1078.
+Title: Important Investor's Impending Inspection
+For those of you who haven't heard, esteemed and world famous business mogul, Musa, plans to visit Sandrock to talk business with Mayor Trudy! If all goes well, we hope to secure funding for a road to Portia, which, as many of you know, will allow Sandrock to ship in water much more easily! And who doesn't like water?
+
+So, everyone mark your calendars and plan accordingly! Mayor Trudy and I will be in discussions with Musa to organize a meet and greet sometime after an initial meeting at City Hall. 
+
+This reporter recommends that if you want anything signed, prepare it in advance. Remember that autographs written on body parts do wash off, so really consider getting an object of some sort signed. 
+
+Be aware of personal space, don't try to touch Musa or shake his hand unless he offers first. If you have something you want to say, avoid gushy statements like "omigoshiloveyoumusa!" Go with something he would want to be known for like, "The way you helped out with the Lucien refugees, that was all class."
+
+TRIGGER Procedure 5.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+First Impressions is successfully completed
+ACTIONS
+Run mission #1200217
+END MISSION 1200214
+AREA TRIGGER DELETE || id: 22141
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DAY START FOR WEATHER || order: 0 | weather: 2
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: set_weather
+ACTIONS
+UNIQUE ACTION RUN || idStr: set_weather
+WEATHER SET STATE || WeatherState: 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player wakes up:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Set global blackboard key musacomes with info 1.
+(cId 0) A conversation 5985 starts:
+{{dialogue|Player|(Today's the day Musa arrives, I'd better head to the train station.)}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22171
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: musacomes_player1
+DELAY MASK SET || maskId: 22171 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 22171 | delayTime: 2 | durationTime: 2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Musa stands still in Main and looks at Trudy
+Trudy stands still in Main
+PLAYER SET POS ROT FLAG || flagName: musacomes_player1 | sceneName: Main
+Add behavior NPC_Conversation (idName: 22171) to Player
+(param: Dialog_TargetID:8079)
+
+TRIGGER Procedure 1.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+ACTION CUTSCENE START AUDIO TYPE || id: CG_MUSACOME | duration: 0 | audioType: NoTransitionOff
+
+TRIGGER Procedure 1.0 Step 1.5 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 9 | name: CG_MUSACOME
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 1749_0 starts:
+{{dialogue|Musa|Mayor Trudy, nice to see you again. And you must be ''Player'', the Builder. I've heard you were essential in working with Heidi on the bridge project.}}
+{{dialogue|Trudy|Welcome to Sandrock, Mr. Musa. And that's right! You've really done your homework! Though I shouldn't be surprised seeing as you're the most successful man in the world, ha ha...!}}
+
+*''(Fake laugh)'' (No unique dialogue)
+*''(Look around awkwardly)'' (No unique dialogue)
+*''(Nod solemnly)'' (No unique dialogue)
+
+{{dialogue|Musa|...Right.}}
+{{dialogue|Musa|Well, let's head over to City Hall. I'd like to meet with your architect and discuss potential plans for the road to Portia on your end.}}
+{{dialogue|Trudy|Oh... sure...}}
+{{dialogue|Trudy|Um. Well, actually, we've got enough time, why don't I show you around a little bit first?}}
+{{dialogue|Musa|Wouldn't be my first choice of plans, but... I wouldn't want to be a discourteous guest, either. Please, lead the way.}}
+{{dialogue|Trudy|Splendid! Let me first bring your attention to... Our lovely {{textcolor|green|new Train Station}}! Just installed recently by...}}
+{{dialogue|Musa|Looks solid enough. The rotating star on top is a nice touch. This is your handiwork, I presume, ''Player''?}}
+
+*''Yep. I put the team on my back.''
+*''I worked with other people to make this happen.''
+*''Oh... it was nothing...''
+
+{{dialogue|Musa|indent=true|answer=Yep. I put the team on my back.
+|I was going to compliment you, but it seems like you've gotten plenty of that already...}}
+{{dialogue|Trudy|indent=true|Ahaha, ''Player''... we really do appreciate your work on the station!}}
+{{dialogue|Musa|indent=true|Hm...}}
+{{dialogue|Trudy|indent=true|answer=I worked with other people to make this happen.
+|reward={{NPC2|Trudy|rp=3}}|Y... Yes, thank you, ''Player''! Everyone plays a part around here, that's been key in our recent success!}}
+{{dialogue|Musa|indent=true|No man is an island, as they say.}}
+{{dialogue|Musa|indent=true|answer=Oh... it was nothing...
+|reward={{NPC2|Trudy|rp=1}}|Modesty is a fine enough quality, but don't be afraid to take credit where credit's due, ''Player''.}}
+{{dialogue|Trudy|indent=true|Don't worry, ''Player''. We all take notice of all the hard work you do around here!}}
+{{dialogue|Musa|Shall we continue?}}
+{{dialogue|Trudy|Of course, sir! After me, please!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the first option in conversation segment 5855:
+{{dialogue|Trudy|Welcome to Sandrock, Mr. Musa. And that's right! You've really done your homework! Though I shouldn't be surprised seeing as you're the most successful man in the world, ha ha...!}}
+
+*''(Fake laugh)'' (No unique dialogue)
+*''(Look around awkwardly)'' (No unique dialogue)
+*''(Nod solemnly)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Trudy gains 2 favor
+
+TRIGGER Procedure 1.0 Step 2.5 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the third option in conversation segment 5855:
+{{dialogue|Trudy|Welcome to Sandrock, Mr. Musa. And that's right! You've really done your homework! Though I shouldn't be surprised seeing as you're the most successful man in the world, ha ha...!}}
+
+*''(Fake laugh)'' (No unique dialogue)
+*''(Look around awkwardly)'' (No unique dialogue)
+*''(Nod solemnly)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 22171) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:musacomes_player1|Action:Nod_Story)
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the second option in conversation segment 5862:
+{{dialogue|Musa|Looks solid enough. The rotating star on top is a nice touch. This is your handiwork, I presume, ''Player''?}}
+
+*''Yep. I put the team on my back.'' (No unique dialogue)
+*''I worked with other people to make this happen.'' (No unique dialogue)
+*''Oh... it was nothing...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Trudy gains 3 favor
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the third option in conversation segment 5862:
+{{dialogue|Musa|Looks solid enough. The rotating star on top is a nice touch. This is your handiwork, I presume, ''Player''?}}
+
+*''Yep. I put the team on my back.'' (No unique dialogue)
+*''I worked with other people to make this happen.'' (No unique dialogue)
+*''Oh... it was nothing...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Trudy gains 1 favor
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 22172 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 22171) from Player
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22172
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: musacomes_gamecenter_player1
+Musa stops standing still
+Trudy stops standing still
+Musa stands still in Main
+Trudy stands still in Main
+Catori stands still in Main
+DELAY MASK SET || maskId: 22172 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Remove behavior NPC_Conversation (idName: 22171) from Player
+
+TRIGGER Procedure 2.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 22172 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 1754_0 starts:
+{{dialogue|Trudy|This here is our {{textcolor|green|Game Center}}! Ooh, ah!}}
+{{dialogue|Musa|Yes... I saw the original some time ago. I believe it was a small shack with only one game, and I didn't care for it...}}
+{{dialogue|Trudy|Well, that's all changed since now resident entrepreneur Catori moved to town; she's really turning the place around! Say, there she is now! Let's go say, "Hello!"}}
+{{dialogue|Trudy|Howdy-doo there, neighbor! I've brought a new pal around. Perhaps you might recognize him...?}}
+{{dialogue|Catori|Alright, well the promotion I was runnin' ain't runnin' no more; 'nother thing, stay outta the bathroom, toilet's clogged-}}
+The conversation ends.
+Add behavior CommanderNPCActionLoop (idName: 22172) to Catori
+(param: CMDAction:SweepTurn)
+
+TRIGGER Procedure 2.0 Step 3.1 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCActionLoop (idName: 22172) from Catori
+Catori stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 22171) to Catori
+(param: TargetScene:Main|MoveMode:Run|FlagName:musacomes_gamecenter_catori2)
+
+TRIGGER Procedure 2.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 22171) from Catori
+Add behavior CommanderMoveToFlag (idName: 22172) to Catori
+(param: TargetScene:Main|MoveMode:Run|FlagName:CheeryConspiracy_Arvio1)
+Add behavior CommanderMoveToFlagAndAction (idName: 22172) to Trudy
+(param: TargetScene:Main|MoveMode:Walk|FlagName:musacomes_gamecenter_trudy2|LookActor:8079|Delay:2)
+Add behavior CommanderMoveToFlagAndAction (idName: 22172) to Musa
+(param: TargetScene:Main|MoveMode:Walk|FlagName:musacomes_gamecenter_musa2|LookActor:8006|Delay:2)
+Add behavior CommanderMoveToFlagAndAction (idName: 22172) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:musacomes_gamecenter_player2|LookActor:8079|Delay:2)
+
+TRIGGER Procedure 2.0 Step 3.2 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8024 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 5877, 5878, 5879 starts:
+{{dialogue|Catori|Trudy? M-m-Musa! Here!?}}
+{{dialogue|Catori|H-Hi, I'm Game Center and this is my Catori and-}}
+{{dialogue|Catori|I... I'm so sorry.}}
+
+TRIGGER Procedure 2.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8006 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Trudy stops standing still
+Musa stops standing still
+(cId 2) A conversation 1755_0 starts:
+{{dialogue|Trudy|Oh. Um. Shoot. Guess we caught her at a bad time... I could swear she's a real fan of your work...}}
+{{dialogue|Musa|It's alright, it happens. More often than you'd think.}}
+{{dialogue|Trudy|I'm sure she'd love to meet you after she... gets some... air?}}
+{{dialogue|Musa|Right. Air. Gotta have that. What's next?}}
+{{dialogue|Trudy|Ah, yes! Our next stop is actually what I wanted to show you the most... our {{textcolor|green|Little Wood}}!}}
+{{dialogue|Musa|Hm, that's right. The desert planting. I read about what you're doing in the Atara Times... Interesting stuff.}}
+{{dialogue|Trudy|It is, isn't it! Let's just step over here to this Yakmel Station to your left...}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 22173 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22173
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 22172) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 22172) from Trudy
+Remove behavior CommanderMoveToFlagAndAction (idName: 22172) from Musa
+Remove behavior CommanderMoveToFlag (idName: 22172) from Catori
+PLAYER SET POS ROT FLAG || flagName: musacomes_wood_player1 | sceneName: Main
+Musa stands still in Main
+Trudy stands still in Main
+DELAY MASK SET || maskId: 22173 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 22173
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 1756_0 starts:
+{{dialogue|Trudy|Ta-daaaa! Behold, the miracle of life! These desert woods that will one day flourish into a full-fledged forest, restoring Sandrock to its former glory and greenness...!}}
+{{dialogue|Musa|Hm... Looked bigger in the photo.}}
+{{dialogue|Trudy|Ahah... well... yes, this has only been the first step-}}
+{{dialogue|Musa|I mean, this is what... a tenth of a league?}}
+{{dialogue|Trudy|Roughly that, yes...}}
+{{dialogue|Musa|And it took you how long to reach this point?}}
+{{dialogue|Trudy|...}}
+
+*''We need more water to expand...!''
+*''The point is the biocrust...''
+*''Hey, show us some respect, bub!''
+
+{{dialogue|Musa|indent=true|answer=We need more water to expand...!
+|reward={{NPC2|Trudy|rp=3}}|Right, right. Hence your own reasons for wanting the road to Portia in the first place...}}
+{{dialogue|Musa|indent=true|answer=The point is the biocrust...
+|reward={{NPC2|Trudy|rp=3}}|That's right, the major development was in the technological department; now you're terraforming soil out here?}}
+{{dialogue|Musa|indent=true|I'll admit, I'm not as well-read on the subject as perhaps I should be.}}
+{{dialogue|Trudy|indent=true|answer=Hey, show us some respect, bub!
+|...!}}
+{{dialogue|Musa|indent=true|I apologize if my questions came off as disrespectful, ''Player''. Please do not misinterpret my directness as rudeness.}}
+{{dialogue|Musa|indent=true|It's clear that great effort went into the development of the Little Wood. I will try to be more mindful of your pride, and perhaps in turn, you can work on that temper of yours.}}
+{{dialogue|Trudy|indent=true|Ahah... that's our ''Player''! Always standing up for what they think is right! It's a good quality, sir, really!}}
+{{dialogue|Musa|indent=true|It takes all kinds. In any case...}}
+{{dialogue|Musa|If I'm being honest, I'm more interested in the logistical benefits the road would provide to my businesses... I'm afraid I can't really speak to my enthusiasm for such a project at this time...}}
+{{dialogue|Musa|I'll have to come back and take a look for myself. Speak with some of my people back in Atara. Get a better picture of what all this "biocrust" stuff is really about before I can make an informed decision on how to feel about it.}}
+{{dialogue|Trudy|Of course, of course... You should also meet with our horticulture expert, Zeke! I'm sure he can answer any of the more scientific questions you might have...}}
+{{dialogue|Musa|Well, furthermore, Trudy, I'm iffy on a few other things, too.}}
+{{dialogue|Trudy|Ah...?}}
+{{dialogue|Musa|I don't go in on a project unless I'm one hundred percent on it. Gale, I'm one hundred percent on. In Portia, they're putting their own money up for their end of the project. You lot, well...}}
+{{dialogue|Musa|Everyone's heard the rumors. Sandrock's on the decline. And not everyone's convinced desert greenification is possible, either. Heard from the council they have trigger bills written; ready to classify dispersed Sandrock citizens as economic migrants...}}
+{{dialogue|Musa|Yeah, you've got yourself a hotshot new Builder, and I'm a fan of your architect's work as well. But without good citizens behind the scenes, holding everything down, I'd tend to agree with the naysayers.}}
+{{dialogue|Musa|I need to see that your people are going to stick it out, even if things get hard. Anyway, do you have anything else for me to see?}}
+{{dialogue|Trudy|Yes, yes. This way please.}}
+The conversation ends.
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 22174 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the first option in conversation segment 5893:
+{{dialogue|Trudy|...}}
+
+*''We need more water to expand...!'' (No unique dialogue)
+*''The point is the biocrust...'' (No unique dialogue)
+*''Hey, show us some respect, bub!'' (No unique dialogue)
+
+(cId 3) The player picks the second option in conversation segment 5893:
+{{dialogue|Trudy|...}}
+
+*''We need more water to expand...!'' (No unique dialogue)
+*''The point is the biocrust...'' (No unique dialogue)
+*''Hey, show us some respect, bub!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Trudy gains 3 favor
+
+TRIGGER Procedure 4.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 22174 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: musacomes_tower_player1
+Musa stops standing still
+Trudy stops standing still
+Musa stands still in Main
+Trudy stands still in Main
+DELAY MASK SET || maskId: 22174 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 4.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 22174
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 1761_0 starts:
+{{dialogue|Trudy|...Aaand, last stop on the tour... that there is our super {{textcolor|green|reinforced Water Tower}}!}}
+{{dialogue|Musa|''Player'', I take it you had a hand in this as well?}}
+
+*''Yep. With help, of course.''
+*''I mean I pretty much did it by myself.''
+*''Mi-an did more, really...''
+
+{{dialogue|Musa|indent=true|answer=Yep. With help, of course.
+|reward={{NPC2|Trudy|rp=3}}|Starting to notice a pattern here.}}
+{{dialogue|Musa|indent=true|answer=I mean I pretty much did it by myself.
+|Alright, hotshot. You're good. We get it.}}
+{{dialogue|Musa|indent=true|If you ever visit Atara, look up a Builder named Willis. You two should hang out. Let me know how it goes.}}
+{{dialogue|Musa|indent=true|answer=Mi-an did more, really...
+|I see... So there are two accomplished Builders here...?}}
+{{dialogue|Trudy|Furthermore, it is completely and utterly, one-hundred percent bandit-proof!}}
+{{dialogue|Musa|Right, I'd planned to bring that up as well...}}
+{{dialogue|Trudy|Rest assured, sir, there's really only one {{textcolor|red|bandit}} out there giving us trouble, and it's only a matter of time before he's been brought to justice.}}
+{{dialogue|Trudy|Besides that, there's really only so much one man can do! We always build back faster than he can hurt us. Isn't that right, ''Player''?}}
+{{dialogue|Musa|Best not to underestimate the power of the individual.}}
+{{dialogue|Trudy|Mm, of course, of course... We're not taking things lightly at all.}}
+{{dialogue|Trudy|How about a quick pitstop over at the Blue Moon before we meet Heidi? You must be famished after such a long journey! And our little walk, eheh...}}
+{{dialogue|Musa|The Ataran Express dining car happens to offer my favorite breakfast this side of the continent.}}
+{{dialogue|Trudy|Ah...}}
+{{dialogue|Musa|...But they didn't have Yakmel Milk.}}
+The conversation ends.
+
+TRIGGER Procedure 5.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 22175 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 4.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) The player picks the first option in conversation segment 5913:
+{{dialogue|Musa|''Player'', I take it you had a hand in this as well?}}
+
+*''Yep. With help, of course.'' (No unique dialogue)
+*''I mean I pretty much did it by myself.'' (No unique dialogue)
+*''Mi-an did more, really...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Trudy gains 3 favor
+
+TRIGGER Procedure 5.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 22175 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: musacomes_saloon_player1
+DELAY MASK SET || maskId: 22175 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 5.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+Musa stops standing still
+Trudy stops standing still
+Musa stands still in Saloon
+Trudy stands still in Saloon
+Qi stands still in Saloon
+Cooper stands still in Saloon
+Hugo stands still in Saloon
+Owen stands still in Saloon
+Grace stands still in Saloon
+Burgess stands still in Saloon
+Miguel stands still in Saloon
+Pen stands still in Saloon
+Justice stands still in Saloon
+Catori stands still in Saloon
+Mi-an stands still in Saloon
+Dan-bi stands still in Saloon
+Mabel stands still in Saloon
+Pablo stands still in Saloon
+Vivi stands still in Saloon
+Mort stands still in Saloon
+Elsie stands still in Saloon
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: musacomes_saloon_player1
+Rian stands still in Saloon
+Arvio stands still in Saloon
+Amirah stands still in Saloon
+SCENEITEM CREATE FLAG || itemType: 0 | id: 22172 | path: Mission_Scene_City_Station_Inside_GreetingMusa_0 | sceneName: Saloon | extraParams: 0 | flagName: owen_food
+Matilda stands still in Saloon
+SCENEITEM CREATE FLAG || itemType: 0 | id: 22179 | path: S2217_Huatong | flagName: mourningrobot_huatong | sceneName: Saloon | extraParams: -1
+
+TRIGGER Procedure 5.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+ACTION CUTSCENE START AUDIO TYPE || id: CG_MUSAWELCOME | duration: 0 | audioType: NoTransitionOff
+
+TRIGGER Procedure 5.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_MUSAWELCOME | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 5928, 5929, 5930 starts:
+{{dialogue|Owen|Hey there, Mr. Musa! Glad you could stop in! On behalf of everyone, I'd like to extend a big Sandrock welcome!}}
+{{dialogue|Musa|Uh, thank you.}}
+{{dialogue|Owen|Alright, boys: hit it!}}
+
+TRIGGER Procedure 6.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 5931, 5932 starts:
+{{dialogue|Cooper|This one, that I definitely didn't write today, is called {{textcolor|green| "Why not just give us all your money."}}}}
+{{dialogue|Cooper|One, two, three, and...!}}
+
+TRIGGER Procedure 5.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_MUSAWELCOME | state: 8
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || id: 22171 | path: Mission_robot | flagName: musacomes_saloon_robot1 | itemType: 0 | sceneName: Saloon | extraParams: 0
+
+TRIGGER Procedure 5.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_MESSUP | state: 8
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || id: 22172 | itemType: 0
+SCENEITEM DELETE || id: 22171 | itemType: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 22173 | path: Mission_Scene_City_Station_Inside_GreetingMusa_1 | sceneName: Saloon | flagName: owen_food | extraParams: 0
+Mabel stops standing still
+Mabel stands still in Main
+Mabel stops standing still
+Pablo stops standing still
+Pablo stands still in Main
+Pablo stops standing still
+Owen stops standing still
+Owen stands still in Saloon
+Qi stops standing still
+Qi stands still in Saloon
+
+TRIGGER Procedure 6.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 5933, 5934 starts:
+{{dialogue|Musa|Can't help but get the feeling you lot are trying to butter me up.}}
+{{dialogue|Trudy|Ahah... yes, well... it's just that... we care so much about our town-}}
+SOUND PLAY 2D || idStr: Play_MusaCome01
+
+TRIGGER Procedure 6.0 Step 1.1 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | cId: 7 | npc: 8006 | missionId: 1200217
+CONDITIONS
+Always:
+ACTIONS
+(cId 20) A conversation 6879, 5935, 5936, 5937 starts:
+{{dialogue||(The band is playing...)}}
+{{dialogue|Hugo|...You didn't run the lyrics past me, this is a song about greed!}}
+{{dialogue|Cooper|Easy, partner... Rich guy's watchin'...}}
+{{dialogue|Hugo|Overcoming greed is one of the core tenants of my Church of the Light beliefs! You made me play a song about it!}}
+PLAYER INPUT LOCK || set: 1
+STOPWATCH REAL TIME SET || id: 22172 | sec: 5
+
+TRIGGER Procedure 6.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 20) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 1332}}
+A cutscene CG_MESSUP (duration: -2.0) starts playing
+Disaster at the Blue Moon - The welcome party was... a disaster. Musa was really shocked! Who knows how this will affect the road to Portia...
+SCENEITEM DELETE || itemType: 0 | id: 22171
+
+TRIGGER Procedure 6.0 Step 1.2 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 22172
+CONDITIONS
+Always:
+ACTIONS
+PLAYER INPUT LOCK || set: 0
+SOUND PLAY 2D || idStr: Play_MusaCome02
+
+TRIGGER Procedure 6.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_MESSUP | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 8) A conversation 1766_0 starts:
+{{dialogue|Musa|You all... are maniacs!}}
+{{dialogue|Trudy|I- er- we-}}
+{{dialogue|Owen|Really terribly sorry, sir. This almost never happens...}}
+{{dialogue|Musa|Ugh. Look. The first rule of business is to invest in people. That's what I came here to check out. I'm glad I got to see this side of you all. Saved myself a pretty penny.}}
+{{dialogue|Trudy|W-w-wait, you mean-!?}}
+{{dialogue|Musa|I respect the fact that you all have lasted this long. But... I can see that y'all are prone to disaster. I see now why people are leaving this town... No matter what short term successes you might have, {{textcolor|green|I just don't see a future}}... I'm sorry.}}
+{{dialogue|Musa|And look, despite all this. I can still help.}}
+{{dialogue|Musa|I can move you all out to the Northern Eufaula, where the Alliance is setting up new settlements with their {{textcolor|green|North Development Plan}}. They have water up there, unexplored ruins, and grazing grass.}}
+{{dialogue|Musa|I can get you jobs there, safe jobs where you can't possibly harm anybody... or yourselves; help you get your lives back on the right track. The thought of you folk holding down my central hub, nah... Just not worth the risk.}}
+{{dialogue|Trudy|...}}
+{{dialogue|Musa|Huh? None of you are excited about that, none of you at all? You have an opportunity right now to move to a place where you're not always fighting an uphill battle, at my expense!}}
+The conversation ends.
+
+TRIGGER Procedure 6.0 Step 3.1 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 22175) to Arvio
+(param: CMDAction:RaiseHand)
+Add behavior CommanderNPCAction (idName: 22175) to Amirah
+(param: CMDAction:RaiseHand)
+Add behavior CommanderNPCAction (idName: 22175) to Catori
+(param: CMDAction:LookAround|Delay:4)
+
+TRIGGER Procedure 6.0 Step 3.1 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 19) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Mort stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 22175) to Mort
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:musacomes_saloon_mort2)
+
+TRIGGER Procedure 6.0 Step 3.2 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8041 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 18) A conversation 1835_0 starts:
+{{dialogue|Mort|Some time ago, there was a school a ways down the road. Sandrock was a livelier place then. When all the trees were cut down, the sandstorms got worse. We didn't notice it so much at first but...}}
+{{dialogue|Mort|The children were on their way home from school when it struck. An amber claw, the storm reached greedily over us; the skies went black.}}
+{{dialogue|Mort|Martle and I went out looking for them, but... Miya, Tang, and Aakil...}}
+{{dialogue|Mort|They did not return.}}
+{{dialogue|Musa|...}}
+{{dialogue|Mort|They'd have been... a bit older than yourself now... We made a promise then. A promise that we would save this land. For ourselves. For the people of the desert. For the children: those that will be, and those gone. Lest their sacrifice be in vain.}}
+{{dialogue|Mort|For a time, I thought I would have to break that promise. But my son, he never gave up hope.}}
+{{dialogue|Mort|And now, with more help from inspired young folk like Trudy, Heidi, ''Player''... Their discoveries... I believe we have a new hope.}}
+{{dialogue|Mort|{{textcolor|green|I believe in these people. I believe in Sandrock.}}}}
+The conversation ends.
+
+TRIGGER Procedure 6.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 18) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Trudy stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 22715) to Trudy
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:musacomes_saloon_trudy2)
+
+TRIGGER Procedure 6.0 Step 3.2 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8024 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 19) A conversation 1767_0 starts:
+{{dialogue|Musa|Sandrock's end: it's gonna happen, with or without my help, so I suggest you all think on my offer.}}
+{{dialogue|Musa|Hey, old timer. What about you? It can't possibly be safe for you to be living here. Come with me, we'll set you up with a nice place by the water.}}
+{{dialogue|Mort|Me? Oh... A kind and generous offer. Your reputation is well deserved...}}
+{{dialogue|Mort|But no, I'm afraid I won't be joining you...}}
+{{dialogue|Musa|Man. What is it with you people out in this desert? Life doesn't have to be this way. You don't have to struggle and scrape by your entire lives; yeah, I get that this is your home, but you can have a better home, somewhere else!}}
+{{dialogue|Mort|It's... more than that.}}
+{{dialogue|Musa|...}}
+{{dialogue|Mort|If I may, Mr. Musa.}}
+The conversation ends.
+
+TRIGGER Procedure 6.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8006 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 9) A conversation 5963 starts:
+{{dialogue|Trudy|I believe in Sandrock.}}
+
+TRIGGER Procedure 6.0 Step 5.1 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Heidi|I believe in Sandrock!}}
+In a speech bubble:
+{{dialogue|Justice|I believe in Sandrock!}}
+In a speech bubble:
+{{dialogue|Owen|I believe in Sandrock.}}
+In a speech bubble:
+{{dialogue|Hugo|I believe in Sandrock.}}
+In a speech bubble:
+{{dialogue|Burgess|I believe in Sandrock! Even more now!}}
+STOPWATCH REAL TIME SET || id: 22171 | sec: 3
+
+TRIGGER Procedure 7.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Rian stops standing still
+Musa stops standing still
+Elsie stops standing still
+Qi stops standing still
+Cooper stops standing still
+Hugo stops standing still
+Owen stops standing still
+Grace stops standing still
+Burgess stops standing still
+Miguel stops standing still
+Pen stops standing still
+Justice stops standing still
+Catori stops standing still
+Mi-an stops standing still
+Dan-bi stops standing still
+Mabel stops standing still
+Pablo stops standing still
+Vivi stops standing still
+Mort stops standing still
+CUTSCENE UI STATE EXIT || 
+AREA TRIGGER ONCE CREATE || missionId: 1200217 | id: 22171 | sceneName: Saloon | flagName: musacomes_saloon_trigger1 | showOnMap: 1 | transId: 0 | mapIcon: MissionArea
+AREA TRIGGER ONCE CREATE || flagName: musacomes_saloon_trigger2 | missionId: 1200217 | id: 22172 | sceneName: Saloon | showOnMap: 1 | mapIcon: MissionArea | transId: 0
+Cooper stands still in Saloon and looks at Hugo
+Hugo stands still in Saloon and looks at Cooper
+Rian stands still in Saloon and looks at Dan-bi
+Dan-bi stands still in Saloon and looks at Rian
+Remove behavior CommanderMoveToFlagAndAction (idName: 22715) from Trudy
+Remove behavior CommanderIdleRiding (idName: 22171) from Qi
+Remove behavior CommanderMoveToFlagAndAction (idName: 22175) from Mort
+Remove behavior CommanderMoveToFlagAndAction (idName: 22172) from Player
+SCENEITEM DELETE || id: 22171 | itemType: 0
+NPC ICON ADD || missionId: 1200217 | npc: 8021 | missionIcon: 6
+NPC ICON ADD || missionId: 1200217 | npc: 8001 | missionIcon: 6
+NPC ICON ADD || missionId: 1200217 | npc: 8019 | missionIcon: 6
+NPC ICON ADD || missionId: 1200217 | npc: 8017 | missionIcon: 6
+NPC ICON ADD || missionId: 1200217 | npc: 8005 | missionIcon: 6
+NPC ICON ADD || missionId: 1200217 | npc: 8041 | missionIcon: 6
+GLOBAL BLACK BOARD REMOVE || key: musacomes
+Remove behavior CommanderNPCAction (idName: 22175) from Arvio
+Remove behavior CommanderNPCAction (idName: 22175) from Amirah
+Remove behavior CommanderNPCAction (idName: 22175) from Catori
+Arvio stops standing still
+Amirah stops standing still
+Matilda stops standing still
+NPC ADD TAG || tag: ChaosClean
+Run mission #1200253
+
+TRIGGER Procedure 6.0 Step 5.2 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 22171
+CONDITIONS
+Always:
+ACTIONS
+(cId 9) A conversation 1768_0 starts:
+{{dialogue|Player|(What should I say?)}}
+
+*''I believe in Sandrock.'' (No unique dialogue)
+*''I believe in Sandrock!'' (No unique dialogue)
+*''I believe in Sandrock...?'' (No unique dialogue)
+*''(Say nothing.)'' (No unique dialogue)
+
+{{dialogue|Musa|Sheesh...}}
+{{dialogue|Trudy|Well, what do you say, Mr. Musa? Will you give us a chance?}}
+{{dialogue|Musa|...}}
+{{dialogue|Musa|Hm. Sounds like nothing I say will change your minds... Sure as heck doesn't look like you're going anywhere, either...}}
+{{dialogue|Musa|Alright, fine. We'll do things the hard way. I might have judged you all a bit rashly. I'll... observe Sandrock for a while longer. One more chance. But I need to see significantly more... inspiring behavior...}}
+{{dialogue|Trudy|That's all I could ask for.}}
+The conversation ends.
+
+TRIGGER Procedure 6.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) The player picks the first option in conversation segment 5964:
+{{dialogue|Player|(What should I say?)}}
+
+*''I believe in Sandrock.'' (No unique dialogue)
+*''I believe in Sandrock!'' (No unique dialogue)
+*''I believe in Sandrock...?'' (No unique dialogue)
+*''(Say nothing.)'' (No unique dialogue)
+
+(cId 9) The player picks the second option in conversation segment 5964:
+{{dialogue|Player|(What should I say?)}}
+
+*''I believe in Sandrock.'' (No unique dialogue)
+*''I believe in Sandrock!'' (No unique dialogue)
+*''I believe in Sandrock...?'' (No unique dialogue)
+*''(Say nothing.)'' (No unique dialogue)
+
+(cId 9) The player picks the third option in conversation segment 5964:
+{{dialogue|Player|(What should I say?)}}
+
+*''I believe in Sandrock.'' (No unique dialogue)
+*''I believe in Sandrock!'' (No unique dialogue)
+*''I believe in Sandrock...?'' (No unique dialogue)
+*''(Say nothing.)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+-1 gains 3 favor
+
+TRIGGER Procedure 6.0 Step 7.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) The player picks the first option in conversation segment 5964:
+{{dialogue|Player|(What should I say?)}}
+
+*''I believe in Sandrock.'' (No unique dialogue)
+*''I believe in Sandrock!'' (No unique dialogue)
+*''I believe in Sandrock...?'' (No unique dialogue)
+*''(Say nothing.)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 22172) to Player
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:musacomes_saloon_player1|Action:Nod_Story)
+
+TRIGGER Procedure 6.0 Step 8.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) The player picks the second option in conversation segment 5964:
+{{dialogue|Player|(What should I say?)}}
+
+*''I believe in Sandrock.'' (No unique dialogue)
+*''I believe in Sandrock!'' (No unique dialogue)
+*''I believe in Sandrock...?'' (No unique dialogue)
+*''(Say nothing.)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 22172) to Player
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:musacomes_saloon_player1|Action:Punch)
+
+TRIGGER Procedure 7.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Burgess
+CONDITIONS
+Always:
+ACTIONS
+(cId 10) A conversation 5971 starts:
+{{dialogue|Burgess|I believe in Sandrock! Did somebody say "new catchphrase?" I think somebody said "new catchphrase!"}}
+NPC ICON REMOVE || missionId: 1200217 | npc: 8021 | missionIcon: 6
+
+TRIGGER Procedure 7.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Owen
+CONDITIONS
+Always:
+ACTIONS
+(cId 11) A conversation 5972 starts:
+{{dialogue|Owen|Whew! Lotta cleaning to do. At least nothing exploded this time! I feel bad for Grace, though. She hates this part of the job... Not me though; go ahead and throw another pie at the wall, haha...! Eh, don't really do that, please...}}
+NPC ICON REMOVE || missionId: 1200217 | npc: 8001 | missionIcon: 6
+
+TRIGGER Procedure 7.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Miguel
+CONDITIONS
+Always:
+ACTIONS
+(cId 12) A conversation 5978 starts:
+{{dialogue|Miguel|Never should have built that man a such an abomination... Sigh... ''Player''... The Church... have we strayed too far from our principles...?}}
+NPC ICON REMOVE || missionId: 1200217 | npc: 8019 | missionIcon: 6
+
+TRIGGER Procedure 7.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Mi-an
+CONDITIONS
+Always:
+ACTIONS
+(cId 13) A conversation 5979 starts:
+{{dialogue|Mi-an|Sorry... just... got something in my eye... Mort's tale really got to me.}}
+NPC ICON REMOVE || missionId: 1200217 | npc: 8017 | missionIcon: 6
+
+TRIGGER Procedure 7.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Elsie
+CONDITIONS
+Always:
+ACTIONS
+(cId 14) A conversation 5980 starts:
+{{dialogue|Elsie|Well, ''Player'', let's just look on the bright side. For once there's been an awkward social event that was in no way, shape, or form my fault in any capacity!}}
+NPC ICON REMOVE || missionId: 1200217 | npc: 8005 | missionIcon: 6
+
+TRIGGER Procedure 7.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Mort
+CONDITIONS
+Always:
+ACTIONS
+(cId 15) A conversation 5981 starts:
+{{dialogue|Mort|Didn't expect to change anyone's mind... just thought... someone ought to hear their story...}}
+NPC ICON REMOVE || missionId: 1200217 | npc: 8041 | missionIcon: 6
+
+TRIGGER Procedure 8.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22171
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 8.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 221710
+CONDITIONS
+Always:
+ACTIONS
+(cId 16) A conversation 5973, 5974 starts:
+{{dialogue|Cooper|I done wrong! Soon as I heard that rich feller wanted to do an investament on us, I... Two big Gols signs appeared in my eyes, I was blind! But now I see!}}
+{{dialogue|Hugo|Happens to the best of us, brother... Now let's throw the sheet music in the fire and never speak of this again.}}
+
+TRIGGER Procedure 8.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 16) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Cooper stops standing still
+Hugo stops standing still
+
+TRIGGER Procedure 8.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22172
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 8.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 221711
+CONDITIONS
+Always:
+ACTIONS
+(cId 17) A conversation 5975, 5976, 5977 starts:
+{{dialogue|Rian|I'm gonna have to rebuff all this burned wood furniture... this is the worst disaster to ever happen in Sandrock history.}}
+{{dialogue|Dan-bi|What about the sandstorm that Mort just told us about!?}}
+{{dialogue|Rian|Yeah... Yeah, guess I forgot about that... Still top three, for sure, though...}}
+
+TRIGGER Procedure 8.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 17) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Rian stops standing still
+Dan-bi stops standing still
+
+TRIGGER Procedure 8.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Cooper stops standing still
+Hugo stops standing still
+Rian stops standing still
+Dan-bi stops standing still
+AREA TRIGGER DELETE || id: 22171
+AREA TRIGGER DELETE || id: 22172
+NPC ICON REMOVE || missionId: 1200217 | npc: 8021 | missionIcon: 6
+NPC ICON REMOVE || missionId: 1200217 | npc: 8001 | missionIcon: 6
+NPC ICON REMOVE || missionId: 1200217 | npc: 8019 | missionIcon: 6
+NPC ICON REMOVE || missionId: 1200217 | npc: 8017 | missionIcon: 6
+NPC ICON REMOVE || missionId: 1200217 | npc: 8005 | missionIcon: 6
+NPC ICON REMOVE || missionId: 1200217 | npc: 8041 | missionIcon: 6
+ACTION DATE SET FLAG || flag: 22173
+END MISSION 1200217

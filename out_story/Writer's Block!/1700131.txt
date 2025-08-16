@@ -1,0 +1,164 @@
+Reading Mission 1700131: Writer's Block!
+
+<onlyinclude>{{Infobox mission
+|name = Writer's Block!
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Writer's Block!:
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 3261) that ends:
+{{dialogue|Ernest|I got another Builder and the local carpenter to help out with the rest of the furnishings. Can't wait for everything to be ready!}}
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1700130
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700130
+CONDITIONS
+Always:
+ACTIONS
+Run mission Writer's Block!
+END MISSION 1700130
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700131
+CONDITIONS
+Always:
+ACTIONS
+===Make Furniture===
+
+{{mission_details
+|desc = For a more creative environment, Ernest needs a desk and a comfy chair.
+|details = Make Furniture
+*{{i2|Premium Wood Desk|0/1}}
+*{{i2|Comfortable Chair|0/1}}
+}}
+Add 1 Premium Wood Desk of Default quality (Notify player)
+Add 1 Comfortable Chair of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1700130 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Ernest===
+
+{{mission_details
+|desc = The furniture is ready. Take it to Ernest.
+|details = Talk to Ernest
+*{{i2|Premium Wood Desk|0/1}}
+*{{i2|Comfortable Chair|0/1}}
+*{{i2|Ernest|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Ernest
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1700130 | targetId: 1 | canSubmit: 1
+ACTIONS
+(cId 1) A conversation 888_0 starts:
+{{dialogue|Ernest|I am absolutely amazed at your craftmanship! This set is good enough to put my Pa's furniture to shame! I don't know what to say!}}
+{{dialogue|Ernest|I guess now that the furniture has been taken care of, we can get the housewarming party started!}}
+
+*''What do you mean?''
+*''Shouldn't you be writing?''
+
+{{dialogue|Ernest|indent=true|answer=What do you mean?
+|Being new to Sandrock, it might be in my best interest to make some new friends, and of course, treat my existing friends to a good night of fun!}}
+{{dialogue|Ernest|indent=true|answer=Shouldn't you be writing?
+|reward={{NPC2|Ernest|rp=-1}}|That's the idea, and that's why I invited you over! I already have a mental draft of the novel, but I just need to liven up my new place a bit to get my hands all prepped for writing!}}
+{{dialogue|Ernest|How about it? You want to come?}}
+
+*''Party time!''
+*''I might be busy...''
+
+{{dialogue|Ernest|indent=true|answer=I might be busy...
+|Out of all the Builders I've talked with, you definitely take the cake for being the hardest working. Oh well, we can talk about the party next time then. I'm not too keen on parties anyway.}}
+{{dialogue|Ernest|Good! Good! Let me tell you what you need to bring.}}
+{{dialogue|Ernest|Let's see, can you bring {{textcolor|green|one dish}}? If one person brings one dish, ten people should bring enough for a feast! I'll take care of the other stuff.}}
+{{dialogue|Ernest|One more thing. Is there anyone else I should invite, in your opinion?}}
+
+*''Everyone in Sandrock!''
+*''Minister of the Church.''
+*{{flirt}}''Just me is enough.''
+
+{{dialogue|Ernest|indent=true|answer=Everyone in Sandrock!
+|But it's just a housewarming party. Getting the whole town might be overdoing it. By my next birthday I should be more acquainted with everyone. I'll invite everyone to that party instead, and I'll even get my cook to fix up some nice dishes.}}
+{{dialogue|Ernest|indent=true|answer=Minister of the Church.
+|Though it might seem like proper etiquette, I really can't see myself doing something only my Pa would do...To be honest, I'm quite fed up already with pretentious parties with high society.}}
+{{dialogue|Ernest|indent=true|answer=Just me is enough.
+|As a gentleman, I should appreciate your initiative, but that's a bit too fast for me!}}
+{{dialogue|Ernest|indent=true|Haha, I'm just kidding. But since you already put it that way, you'd better come!}}
+{{dialogue|Ernest|Anyway, I'll write up the other invitations right now. No point in keeping you here. See you at {{textcolor|green|18:00PM tomorrow}}. Remember, bring {{textcolor|green|one dish}}!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 3275) that ends:
+{{dialogue|Ernest|Anyway, I'll write up the other invitations right now. No point in keeping you here. See you at {{textcolor|green|18:00PM tomorrow}}. Remember, bring {{textcolor|green|one dish}}!}}
+CONDITIONS
+Always:
+ACTIONS
+Run mission A Moving Story
+
+TRIGGER Procedure 1.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+BAG MODIFY BY TARGET || missionId: 1700130 | targetId: 1
+SUBMIT MISSION 1700130
+END MISSION 1700131
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1700131
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|231}}
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the second option in conversation segment 3263:
+{{dialogue|Ernest|I guess now that the furniture has been taken care of, we can get the housewarming party started!}}
+
+*''What do you mean?'' (No unique dialogue)
+*''Shouldn't you be writing?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Ernest gains -1 favor

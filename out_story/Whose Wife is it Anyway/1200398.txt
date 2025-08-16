@@ -1,0 +1,1197 @@
+Reading Mission 1200398: Whose Wife is it Anyway?
+
+<onlyinclude>{{Infobox mission
+|name = Whose Wife is it Anyway?
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Whose Wife is it Anyway?:
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+Nia stops standing still
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200397
+CONDITIONS
+Always:
+ACTIONS
+Run mission Whose Wife is it Anyway?
+END MISSION 1200397
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200398
+CONDITIONS
+Always:
+ACTIONS
+===Go to the Blue Moon Saloon===
+
+{{mission_details
+|desc = You've agreed to participate in the "Best Couple" event with Nia. Head to the saloon now.
+|details = Go to the Blue Moon Saloon
+}}
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8059 | state: Defense
+Set COUNT1 to 0
+Set COUNT2 to 0
+Set COUNT3 to 1
+Set FINAL to 2
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8059
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_saloon
+CHECK GLOBAL BLACKBOARD || key: musacomes | exist: 0 | info: 1
+Check if Owen is in town
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_saloon
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+Owen stands still in Saloon and looks at Nia
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8059
+Nia stands still in Saloon and looks at Owen
+NPC RANDOM ADD || instId: 23981 | id: 1 | scene: Saloon | flagName: test_saloon_man0 | dailyBehavior: CommanderIdle
+NPC RANDOM ADD || dailyBehavior: CommanderIdle | instId: 23982 | id: 14 | flagName: test_saloon_woman0 | scene: Saloon
+PLAYER SET POS ROT FLAG || flagName: test_saloon_player1 | sceneName: Saloon
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 7972_0 starts:
+{{dialogue|Owen|''Player'', Nia! Welcome you two!}}
+{{dialogue|Owen|You guys are... the 15th couple we've had in! And your couple's meal is on the house!}}
+{{dialogue|Nia|Ah! There are 14 couples ahead of us? I thought we came early!}}
+{{dialogue|Owen|Haha that's right, whenever we run this promotion we tend to get quite a lot of interest.}}
+{{dialogue|Owen|Do you want to apply for the "Best Couple?" Actually... no one's applied yet, so it's kind of a shoo-in...}}
+{{dialogue||Wait!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 0) There is a conversation segment (id 22558) that ends:
+{{dialogue||Wait!}}
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 23981 | sec: 1
+
+TRIGGER Procedure 1.0 Step 2.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 23981
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 23981) to 23981
+(param: TargetScene:Saloon|MoveMode:Run|FlagName:test_saloon_man6)
+Add behavior CommanderMoveToFlagAndAction (idName: 23981) to 23982
+(param: TargetScene:Saloon|MoveMode:Run|FlagName:test_saloon_woman6)
+
+TRIGGER Procedure 1.0 Step 2.6 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 23982 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 8067_0 starts:
+{{dialogue|23982|We're... here... for... the... best...}}
+{{dialogue|23981|Couple!}}
+{{dialogue|Owen|Ah...}}
+{{dialogue|Owen|Haha, well it looks like we've got some competition!}}
+{{dialogue|Owen|Well, I've prepared a few tests, so how about a little couple-off?}}
+{{dialogue|23982|Darling, there's nothing that can come between us and our title!}}
+{{dialogue|Nia|''Pet Name'', we're sure to win, right?!}}
+
+*''Come on, we're the best couple in the Free Cities!''
+*''Phew, they look kind of scary...''
+*''Ahhh... ooooh... my stomach...''
+
+{{dialogue|Nia|indent=true|answer=Come on, we're the best couple in the Free Cities!
+|Haha! That's right, me and ''Pet Name'' grew up together! There's nothing we can't do!}}
+{{dialogue|Nia|indent=true|answer=Phew, they look kind of scary...
+|Haha, don't worry... even if we lose we'll still get a free meal!}}
+{{dialogue|Nia|indent=true|answer=Ahhh... ooooh... my stomach...
+|Ah! Are you okay, ''Pet Name''?}}
+{{dialogue|Nia|indent=true|Ahh... I understand...}}
+{{dialogue|Nia|indent=true|You're trying to get them to drop their guard... then we'll be able to grab that title!}}
+{{dialogue|Owen|Well, if everyone's ready head on to the stage and we'll get the competition started!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 0) There is a conversation segment (id 22564) that ends:
+{{dialogue|23982|Darling, there's nothing that can come between us and our title!}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 23981) to Player
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:test_saloon_player1_1)
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 23981 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 23981
+CONDITIONS
+Always:
+ACTIONS
+CAMERA PATH STOP ALL || 
+Owen stops standing still
+Nia stops standing still
+Owen stands still in Saloon
+Nia stands still in Saloon and looks at Owen
+23981 stands still in Saloon and looks at Owen
+23982 stands still in Saloon and looks at Owen
+DELAY MASK SET || maskId: 23981 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: test_saloon_player2
+Remove behavior CommanderMoveToFlag (idName: 23981) from Player
+SCENEITEM DELETE || itemType: 0 | id: 20318
+SCENEITEM DELETE || itemType: 0 | id: 20319
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 23981
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 7977_0 starts:
+{{dialogue|Owen|Welcome, welcome everyone to the latest rendition of the classic Blue Moon gameshow...}}
+{{dialogue|Owen|An occasion made rare only by the fact that no one ever wants to do it...}}
+{{dialogue|Owen|Whose Wife is it Anywaaaay!}}
+{{dialogue|Owen|Our contestants will go through multiple rounds of quizzes and questioning to find out how well they really know each other.}}
+{{dialogue|Owen|Are they soulmates, ladies and gentlemen? Or just roommates...! Let's find out on...}}
+{{dialogue|Owen|Whose Wife is it Anyway...!}}
+{{dialogue|Owen|Round 1! "The Guessing Game!" Or, "Do You Know Your Boo?"}}
+{{dialogue|Owen|I'll come up with a few questions, and partners, shout your answers out at the same time. If the answers are the same, you win!}}
+{{dialogue|23982|Dear, this is just absolutely us! We always finish each other's-}}
+{{dialogue|23981|Sandwiches! Yes, rather, dear!}}
+{{dialogue|Owen|Question one: How did you meet?}}
+{{dialogue||Music festival at Walnut Groove!}}
+{{dialogue|Nia|Ah...!}}
+
+*''Your house!'' (No unique dialogue)
+*''My house!'' (No unique dialogue)
+*''At school!'' (No unique dialogue)
+
+{{dialogue|Nia|At school! I was really shy when I was young, and ''Player'' came and talked to me...}}
+{{dialogue|Owen|Question two! Favorite sport to do together?}}
+{{dialogue||Kayaking!}}
+{{dialogue|Nia|Us...}}
+
+*''Gliding!'' (No unique dialogue)
+*''Sandrunning!'' (No unique dialogue)
+*''Riding camels!'' (No unique dialogue)
+
+{{dialogue|Nia|Gliding! We always used to glide together when we were young!}}
+{{dialogue|Owen|Question 3! What's the most meaningful thing you've done together?}}
+{{dialogue|23982|Aha! This one's obvious-}}
+{{dialogue||Saved Mr. Hippo from extinction!}}
+{{dialogue|Nia|This one...}}
+
+*''We saved Mama Tree!'' (No unique dialogue)
+*''We planted some flowers!'' (No unique dialogue)
+*''We looked at the stars!'' (No unique dialogue)
+
+{{dialogue|Nia|We saved Mama Tree! I can't believe we did it!}}
+{{dialogue|Owen|Looks like these two have a real connection!}}
+{{dialogue|Owen|And as for ''Player'' and Nia...}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 3
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the third option in conversation segment 22583:
+{{dialogue|Nia|Ah...!}}
+
+*''Your house!'' (No unique dialogue)
+*''My house!'' (No unique dialogue)
+*''At school!'' (No unique dialogue)
+
+(cId 1) The player picks the first option in conversation segment 22587:
+{{dialogue|Nia|Us...}}
+
+*''Gliding!'' (No unique dialogue)
+*''Sandrunning!'' (No unique dialogue)
+*''Riding camels!'' (No unique dialogue)
+
+(cId 1) The player picks the first option in conversation segment 22592:
+{{dialogue|Nia|This one...}}
+
+*''We saved Mama Tree!'' (No unique dialogue)
+*''We planted some flowers!'' (No unique dialogue)
+*''We looked at the stars!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Increment COUNT1 by 1
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 1 | missionId: 1200398
+CONDITIONS
+Check if COUNT1 is == 3
+ACTIONS
+(cId 2) A conversation 22596 starts:
+{{dialogue|Owen|Spot on! These lovebirds are two peas in a pod.}}
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 1 | missionId: 1200398
+CONDITIONS
+Check if COUNT1 is <= (maybe?) 3
+ACTIONS
+(cId 2) A conversation 22597, 22598 starts:
+{{dialogue|Owen|Well, it looks like you're not quite on the same wavelength...}}
+{{dialogue|Owen|But there's still all to play for in the next round!}}
+
+TRIGGER Procedure 3.0 Step 3.0 Order 4 Repeat 3
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 22582) that ends:
+{{dialogue||Music festival at Walnut Groove!}}
+(cId: -1) There is a conversation segment (id 22586) that ends:
+{{dialogue||Kayaking!}}
+(cId: -1) There is a conversation segment (id 22591) that ends:
+{{dialogue||Saved Mr. Hippo from extinction!}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior NPC_Conversation (idName: 23981) to Player
+(param: Dialog_TargetID:8059)
+
+TRIGGER Procedure 3.0 Step 4.0 Order 5 Repeat 3
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 22583) that ends:
+{{dialogue|Nia|Ah...!}}
+
+*''Your house!'' (No unique dialogue)
+*''My house!'' (No unique dialogue)
+*''At school!'' (No unique dialogue)
+
+(cId: -1) There is a conversation segment (id 22587) that ends:
+{{dialogue|Nia|Us...}}
+
+*''Gliding!'' (No unique dialogue)
+*''Sandrunning!'' (No unique dialogue)
+*''Riding camels!'' (No unique dialogue)
+
+(cId: -1) There is a conversation segment (id 22592) that ends:
+{{dialogue|Nia|This one...}}
+
+*''We saved Mama Tree!'' (No unique dialogue)
+*''We planted some flowers!'' (No unique dialogue)
+*''We looked at the stars!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior NPC_Conversation (idName: 23981) from Player
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 2 | missionId: 1200398
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 7978_0, 7979_3_0 starts:
+{{dialogue|Owen|And now... our eponymous round: "Whose Wife is it Anyway?"}}
+{{dialogue|Owen|In this round one of our lovers will be blindfolded, and have to guess who their partner is from a lineup of candidates.}}
+{{dialogue|Owen|I'll ask you not to make any sound, and not make any physical contact!}}
+{{dialogue|Owen|Let's get guessing!}}
+{{dialogue|23982|Baby, I'll go up, you guess. I know you can feel my presence!}}
+{{dialogue|23981|Honey, I'd recognize you from a league away!}}
+{{dialogue|Nia|''Pet Name'', come find me...}}
+{{dialogue|Owen|Alright, our guessers and guessees have been chosen! Now to apply the blindfold!}}
+{{dialogue|Owen|Let's bring out competitors to the stage!}}
+{{dialogue|Owen|Everyone ready? Let's get guessing!}}
+{{dialogue|Owen|''Player''?}}
+The conversation ends.
+{{dialogue|Player|...}}
+
+*''(Approach the first person.)''
+*''(Approach the second person.)''
+*''(Approach the third person.)''
+*''(Approach the fourth person.)''
+
+{{dialogue|-3|indent=true|answer=(Approach the first person.)
+|(This person has extremely strong perfume... almost choking you.)}}
+{{dialogue|-3|indent=true|answer=(Approach the second person.)
+|(This person is breathing very heavily, and sounds a little nervous. There's a smell reminiscent of the sea.)}}
+{{dialogue|-3|indent=true|answer=(Approach the third person.)
+|(This person has an intimidating presence, and smells faintly of iron.)}}
+{{dialogue|-3|indent=true|answer=(Approach the fourth person.)
+|(This person smells faintly of plants, with a soft flowery fragrence. Moving closer, their breathing feels familiar. They lightly touch your palm, with soft, warm fingertips.)}}
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 3) There is a conversation segment (id 22605) that ends:
+{{dialogue|Nia|''Pet Name'', come find me...}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 23981) to Player
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:test_saloon_player2|Action:Nod_Story)
+
+TRIGGER Procedure 4.0 Step 3.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 3) There is a conversation segment (id 22607) that ends:
+{{dialogue|Owen|Let's bring out competitors to the stage!}}
+CONDITIONS
+Always:
+ACTIONS
+SOUND PLAY 2D || idStr: Play_story_footsteps_wood_3
+
+TRIGGER Procedure 5.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 3) There is a conversation segment (id 22607) that ends:
+{{dialogue|Owen|Let's bring out competitors to the stage!}}
+CONDITIONS
+Always:
+ACTIONS
+CAMERA PATH STOP ALL || 
+Nia stops standing still
+23981 stops standing still
+23982 stops standing still
+Nia stands still in Saloon and looks at Player
+23981 stands still in Saloon and looks at 23982
+23982 stands still in Saloon and looks at 23981
+NPC RANDOM ADD || id: 14 | scene: Saloon | instId: 23983 | flagName: test_saloon_random13 | dailyBehavior: CommanderIdle
+NPC RANDOM ADD || id: 14 | scene: Saloon | instId: 23984 | flagName: test_saloon_random23 | dailyBehavior: CommanderIdle
+
+TRIGGER Procedure 4.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) The player picks the fourth option in conversation segment 22614:
+{{dialogue|-3|(Which one is Nia...)}}
+
+*''Person number 1!'' (No unique dialogue)
+*''Person number 2!'' (No unique dialogue)
+*''Person number 3!'' (No unique dialogue)
+*''Person number 4!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set COUNT2 to 1
+PLAYER SET POS ROT FLAG || flagName: test_saloon_player3d | sceneName: Saloon
+
+TRIGGER Procedure 4.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8000 | cId: 3 | missionId: 1200398
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 23981) from Player
+(cId 4) A conversation 7984_0 starts:
+{{dialogue|-3|(Which one is Nia...)}}
+
+*''Person number 1!'' (No unique dialogue)
+*''Person number 2!'' (No unique dialogue)
+*''Person number 3!'' (No unique dialogue)
+*''Person number 4!'' (No unique dialogue)
+
+{{dialogue|Owen|Well, looks like ''Player'' has made their choice... please, make your choice!}}
+{{dialogue|23981|Aha! I know! It's... you!}}
+{{dialogue|23981|This is most certainly my wife!}}
+{{dialogue|Owen|Wow, that was fast! Let's take a look at your choices...}}
+{{dialogue|Owen|Looks like this couple were quick on the pick, and right as rain! Now for ''Player''...}}
+The conversation ends.
+
+TRIGGER Procedure 4.0 Step 2.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) The player picks the first option in conversation segment 22614:
+{{dialogue|-3|(Which one is Nia...)}}
+
+*''Person number 1!'' (No unique dialogue)
+*''Person number 2!'' (No unique dialogue)
+*''Person number 3!'' (No unique dialogue)
+*''Person number 4!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: test_saloon_player3a | sceneName: Saloon
+
+TRIGGER Procedure 4.0 Step 3.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) The player picks the second option in conversation segment 22614:
+{{dialogue|-3|(Which one is Nia...)}}
+
+*''Person number 1!'' (No unique dialogue)
+*''Person number 2!'' (No unique dialogue)
+*''Person number 3!'' (No unique dialogue)
+*''Person number 4!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: test_saloon_player3b | sceneName: Saloon
+
+TRIGGER Procedure 4.0 Step 4.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) The player picks the third option in conversation segment 22614:
+{{dialogue|-3|(Which one is Nia...)}}
+
+*''Person number 1!'' (No unique dialogue)
+*''Person number 2!'' (No unique dialogue)
+*''Person number 3!'' (No unique dialogue)
+*''Person number 4!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: test_saloon_player3c | sceneName: Saloon
+
+TRIGGER Procedure 4.0 Step 4.0 Order 8 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the -1 option in conversation segment 22966:
+{{dialogue|Player|...}}
+
+*''(Approach the first person.)'' (No unique dialogue)
+*''(Approach the second person.)'' (No unique dialogue)
+*''(Approach the third person.)'' (No unique dialogue)
+*''(Approach the fourth person.)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+SOUND PLAY 2D || idStr: Play_story_footsteps_wood_1
+
+TRIGGER Procedure 4.0 Step 5.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 22616) that ends:
+{{dialogue|23981|Aha! I know! It's... you!}}
+CONDITIONS
+Always:
+ACTIONS
+SOUND PLAY 2D || idStr: Play_story_footsteps_wood_1
+
+TRIGGER Procedure 5.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 4 | missionId: 1200398
+CONDITIONS
+Check if COUNT2 is == 1
+ACTIONS
+(cId 5) A conversation 22620 starts:
+{{dialogue|Owen|Absolutely right!}}
+
+TRIGGER Procedure 5.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 23984 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 5.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 4 | missionId: 1200398
+CONDITIONS
+Check if COUNT2 is == 0
+ACTIONS
+(cId 5) A conversation 22621 starts:
+{{dialogue|Owen|Looks like you were a little off...}}
+
+TRIGGER Procedure 5.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23984 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+CAMERA PATH STOP ALL || 
+Nia stops standing still
+23981 stops standing still
+23982 stops standing still
+NPC RANDOM REMOVE || id: 23983
+NPC RANDOM REMOVE || id: 23984
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: test_saloon_player4
+Nia stands still in Saloon and looks at Player
+23981 stands still in Saloon and looks at 23982
+23982 stands still in Saloon and looks at 23981
+DELAY MASK SET || maskId: 23984 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 6.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23984 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 8046_0 starts:
+{{dialogue|Owen|Last round... "Words of Love!"}}
+{{dialogue|Owen|We all know that love is formed through sweet words that speak to the heart. So let's see what our lovebirds have to say.}}
+{{dialogue|Owen|Whoever's words pluck our heartstrings the most, wins the round. Yeah, this won't be weird at all!}}
+{{dialogue|23982|I'll go first!}}
+{{dialogue|23982|Ahem!}}
+{{dialogue|23982|Your eyes... are so beautiful. I get lost in them. When I see them, I can't help but stare!}}
+{{dialogue|23981|No, your eyes are beautiful! Baby, I haven't seen anyone with eyelashes like yours!}}
+{{dialogue|-3|(What should I say...)}}
+
+*''I love you, Nia!''
+*''Nia, you're the most beautiful person I've ever met!''
+*''(This is so embarrassing...)''
+
+{{dialogue|Nia|indent=true|answer=I love you, Nia!
+|I love you too...}}
+{{dialogue|23981|indent=true|Ah... Yeah, I love you, you're beautiful... you, uh... you've got nice eyes!}}
+{{dialogue|23982|indent=true|You already said that, baby...}}
+{{dialogue|Nia|indent=true|answer=Nia, you're the most beautiful person I've ever met!
+|Teehee...}}
+{{dialogue|23981|indent=true|Ah... Yeah, I love you, you're beautiful... you, uh... you've got nice eyes!}}
+{{dialogue|23982|indent=true|You already said that, baby...}}
+{{dialogue|Nia|indent=true|answer=(This is so embarrassing...)
+|Teehee... it is a little embarrassing, isn't it?}}
+{{dialogue|23981|indent=true|Baby, I still remembered when we saved Mr Hippo... he bowed to us and gave us his favorite scarf!}}
+{{dialogue|23982|indent=true|Of course I remember! You took care of him, and gave him foot massages until he was all better... you're the most caring person I've ever met.}}
+{{dialogue|-3|(Now I really need to get heartfelt...)}}
+
+*''I can't imagine life without you...''
+*''You make me a better person...''
+*''You're the most important thing in my life...''
+*''(Describe your memories with Nia)''
+*''(Ew, this is too sappy...)''
+
+{{dialogue|Nia|indent=true|answer=I can't imagine life without you...
+|Me too...}}
+{{dialogue|Nia|indent=true|I've been so happy with you... sometimes I feel like I'm walking through a daydream. When I imagine my life before we were together...}}
+{{dialogue|Nia|indent=true|I want to treasure our life. Our future...}}
+{{dialogue|23981|indent=true|It's... it's so beautiful...}}
+{{dialogue|Nia|indent=true|answer=You make me a better person...
+|I was going to say the same thing...}}
+{{dialogue|Nia|indent=true|You've always supported me... helped me... with you by my side, I feel like nothing can stop us...}}
+{{dialogue|Nia|indent=true|We've always been there for each other.}}
+{{dialogue|23981|indent=true|It's... it's so beautiful...}}
+{{dialogue|Nia|indent=true|answer=You're the most important thing in my life...
+|Since we got married... I feel like my childhood friend, the person who's always been there for me is now my family...}}
+{{dialogue|Nia|indent=true|It's like a dream come true... something I couldn't have even imagined...}}
+{{dialogue|23981|indent=true|It's... it's so beautiful...}}
+{{dialogue|Nia|indent=true|answer=(Describe your memories with Nia)
+|I remember...}}
+{{dialogue|Nia|indent=true|When I stepped off the train, and you were there to greet me. My heart fluttered, like I'd lost a piece of myself, but suddenly I was whole again... You were there to help me achieve my dreams... Mama Tree... turning Sandrock green...}}
+{{dialogue|Nia|indent=true|We've done so much together, but I know, in my heart, that this is only just the beginning...}}
+{{dialogue|23981|indent=true|It's... it's so beautiful...}}
+{{dialogue|Nia|indent=true|answer=(Ew, this is too sappy...)
+|Haha... yeah, I don't really know what to say either...}}
+{{dialogue|Owen|Three...}}
+{{dialogue|Owen|Two...}}
+{{dialogue|Owen|One! Time's up!}}
+{{dialogue|Owen|Now... the results of our tournament are in... The best couple is...}}
+The conversation ends.
+
+TRIGGER Procedure 6.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 6) There is a conversation segment (id 22653) that ends:
+{{dialogue|Owen|One! Time's up!}}
+CONDITIONS
+Check if COUNT1 is == 3
+Check if COUNT2 is == 1
+Check if COUNT3 is == 1
+ACTIONS
+Set FINAL to 0
+
+TRIGGER Procedure 6.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 6) There is a conversation segment (id 22653) that ends:
+{{dialogue|Owen|One! Time's up!}}
+CONDITIONS
+GROUP 0:
+Check if COUNT1 is <= (maybe?) 3
+Check if COUNT2 is == 1
+Check if COUNT3 is == 1
+
+GROUP 10:
+Check if COUNT1 is == 3
+Check if COUNT2 is == 0
+Check if COUNT3 is == 1
+
+ACTIONS
+Set FINAL to 1
+
+TRIGGER Procedure 6.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 6) There is a conversation segment (id 22649) that ends:
+{{dialogue|23981|It's... it's so beautiful...}}
+(cId: 6) There is a conversation segment (id 22650) that ends:
+{{dialogue|Nia|Haha... yeah, I don't really know what to say either...}}
+CONDITIONS
+Always:
+ACTIONS
+Nia stops standing still
+23981 stops standing still
+23982 stops standing still
+Nia stands still in Saloon and looks at Owen
+23981 stands still in Saloon and looks at Owen
+23982 stands still in Saloon and looks at Owen
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: test_saloon_player2
+
+TRIGGER Procedure 6.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) The player picks the third option in conversation segment 22629:
+{{dialogue|-3|(What should I say...)}}
+
+*''I love you, Nia!'' (No unique dialogue)
+*''Nia, you're the most beautiful person I've ever met!'' (No unique dialogue)
+*''(This is so embarrassing...)'' (No unique dialogue)
+
+(cId 6) The player picks the fifth option in conversation segment 22637:
+{{dialogue|-3|(Now I really need to get heartfelt...)}}
+
+*''I can't imagine life without you...'' (No unique dialogue)
+*''You make me a better person...'' (No unique dialogue)
+*''You're the most important thing in my life...'' (No unique dialogue)
+*''(Describe your memories with Nia)'' (No unique dialogue)
+*''(Ew, this is too sappy...)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set COUNT3 to 0
+
+TRIGGER Procedure 7.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 6 | missionId: 1200398
+CONDITIONS
+Check if FINAL is == 0
+ACTIONS
+(cId 7) A conversation 22655, 22656 starts:
+{{dialogue|Owen|''Player'' and Nia! Congratulations, and enjoy your stay in the Blue Moon luxury suite!}}
+{{dialogue|Nia|''Pet Name'', did you hear that? We won!}}
+
+TRIGGER Procedure 7.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 23982) to Player
+(param: CMDAction:Nod_Story)
+
+TRIGGER Procedure 7.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderPlayerAction (idName: 23982) from Player
+(cId 8) A conversation 7997_0 starts:
+{{dialogue|23982|Oh, honey, we lost! We need to go home and write some romantic poetry. Next year is our year!}}
+{{dialogue|23981|I didn't expect their love to be so pure... I'll write two poems a day!}}
+{{dialogue|Nia|Well... we were just saying what we felt...}}
+{{dialogue|23982|Write that down! Write that down!}}
+{{dialogue|23981|Write... what... you... feel... Got it!}}
+{{dialogue|23982|Well, darling, it's our anniversary soon. Let's frolick in the snowy fields from whence we met!}}
+{{dialogue|23981|Yes! Let us depart! Goodbye, and congratulations!}}
+{{dialogue|23982|So long! Farewell! Auf wiedersehen! Goodbye!}}
+The conversation ends.
+
+TRIGGER Procedure 7.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+23981 stops standing still
+23982 stops standing still
+23981 stops standing still
+23982 stops standing still
+
+TRIGGER Procedure 8.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) After the conversation ends:
+(cId 8) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 11) A conversation 22683, 22684 starts:
+{{dialogue|Owen|Since you two won, the luxury suite is all yours!}}
+{{dialogue|Owen|Upstairs and turn left to the first room. I've got everything set up for you already! You're welcome back any time.}}
+
+TRIGGER Procedure 8.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 6 | missionId: 1200398
+CONDITIONS
+Check if FINAL is == 1
+ACTIONS
+(cId 9) A conversation 7999_0 starts:
+{{dialogue|Owen|Looks like it's all even...}}
+{{dialogue|Owen|So who should get the grand prize? Well, how about another round...}}
+{{dialogue|Owen|I've got another game... it's called "The Gauntlet:" Two couples enter, one couple leaves-}}
+{{dialogue|23982|Would you look at the time? Well, darling, it's our anniversary soon. Let's frolick in the snowy fields from whence we met!}}
+{{dialogue|23981|Yes! Let us depart! Goodbye, and congratulations!}}
+{{dialogue|23982|So long! Farewell! Auf wiedersehen! Goodbye!}}
+{{dialogue|Owen|But-}}
+The conversation ends.
+
+TRIGGER Procedure 8.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+23981 stops standing still
+23982 stops standing still
+23981 stops standing still
+23982 stops standing still
+(cId 8) A conversation 22682 starts:
+{{dialogue|Owen|Well, looks like one of our couples have left, so I guess the title of "Best Couple" goes to you, ''Player'' and Nia!}}
+
+TRIGGER Procedure 8.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Owen stops standing still
+Owen stops standing still
+(cId 13) A conversation 22685 starts:
+{{dialogue|Nia|''Pet Name'', let's go check out our room!}}
+
+TRIGGER Procedure 10.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 13) After the conversation ends:
+(cId 13) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 23983) to Player
+(param: CMDAction:Nod_Story|LookAtActor:8059)
+SCENEITEM DELETE || id: 121710 | itemType: 0
+SCENEITEM CREATE FLAG || path: Mission_Scene_City_Station_Inside_Yuehu | itemType: 0 | id: 23981 | sceneName: Saloon | flagName: test_saloon | extraParams: 0
+Remove behavior NPC_Conversation (idName: 23981) from Player
+Remove behavior NPC_Conversation (idName: 23981) from Player
+Remove behavior NPC_Conversation (idName: 23981) from Player
+
+TRIGGER Procedure 9.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 6 | missionId: 1200398
+CONDITIONS
+Check if FINAL is == 2
+ACTIONS
+(cId 10) A conversation 7998_0 starts:
+{{dialogue|Owen|Our visiting couple! Congratulations on your free stay at the luxury suite!}}
+{{dialogue|0|We won! Wow!}}
+{{dialogue|Owen|I'm sorry, Nia, ''Player''. Looks like it wasn't your year...}}
+{{dialogue|Nia|Ah...}}
+{{dialogue|Owen|Now, for the reward...}}
+{{dialogue|23982|Would you look at that, it's time for our weekly "kissing under a snowy waterfall while the soft breeze embraces our bodies!"}}
+{{dialogue|23981|Good grief! That was close, wasn't it? Well, fare thee well, tavern folk!}}
+{{dialogue|Owen|Wait... you just won the luxury suite...}}
+{{dialogue|23981|Haha, we only came to prove to everyone that we are, indeed, the world's greatest couple!}}
+{{dialogue|23982|Wonder couple- depart!}}
+The conversation ends.
+
+TRIGGER Procedure 9.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+23981 stops standing still
+23982 stops standing still
+(cId 12) A conversation 22686, 22687 starts:
+{{dialogue|Owen|Well, since our winners have left... Nia and ''Player'', the luxury suite is all yours!}}
+{{dialogue|Owen|Upstairs and turn left to the first room. I've got everything set up for you already! You're welcome back any time.}}
+
+TRIGGER Procedure 9.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 12) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Owen stops standing still
+Owen stops standing still
+(cId 13) A conversation 22688 starts:
+{{dialogue|Nia|''Pet Name'', we didn't win the game, but... we still get the grand prize! Let's go and check out the room!}}
+
+TRIGGER Procedure 10.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderPlayerAction (idName: 23983) from Player
+Nia stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 23984) to Nia
+(param: TargetScene:Saloon|MoveMode:Run|FlagName:disguise_saloon_player2)
+Add behavior CommanderMoveToFlag (idName: 23984) to Player
+(param: TargetScene:Saloon|MoveMode:Run|FlagName:disguise_saloon_player2)
+DELAY MASK SET || maskId: 23982 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 10.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 23982
+CONDITIONS
+Always:
+ACTIONS
+23981 stops standing still
+23982 stops standing still
+CAMERA PATH STOP ALL || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 23984) from Nia
+Remove behavior CommanderMoveToFlag (idName: 23984) from Player
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: test_saloon_player5
+Nia stands still in Saloon
+NPC RANDOM REMOVE || id: 23981
+NPC RANDOM REMOVE || id: 23982
+NPC RANDOM REMOVE || id: 23983
+NPC RANDOM REMOVE || id: 23984
+DELAY MASK SET || maskId: 23982 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 11.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 239818
+CONDITIONS
+Always:
+ACTIONS
+(cId 14) A conversation 22689 starts:
+{{dialogue|Nia|Wow, it's really romantic...}}
+
+TRIGGER Procedure 11.0 Step 1.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 14) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 23989) to Nia
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:test_saloon_niasit)
+
+TRIGGER Procedure 11.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8059 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 23989) from Nia
+Add behavior CommanderSit (idName: 23986) to Nia
+(param: SeatDramaName:23981|DelayTime:0|TargetScene:Saloon|Delay:0|LookAtActor:8000)
+
+TRIGGER Procedure 11.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: SitDownFinished | npc: 8059 | behaviourName: CommanderSit
+CONDITIONS
+Always:
+ACTIONS
+(cId 15) A conversation 22690 starts:
+{{dialogue|Nia|''Pet Name''... come and sit by me.}}
+
+TRIGGER Procedure 11.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 15) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 23989) to Player
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:test_saloon_playersit)
+
+TRIGGER Procedure 11.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 23989) from Player
+Add behavior CommanderPlayerSit (idName: 23986) to Player
+(param: SeatDramaName:23982|DelayTime:0|TargetScene:Saloon|Delay:0|LookAtActor:8059)
+
+TRIGGER Procedure 12.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: SitDownFinished | npc: 8000 | behaviourName: CommanderPlayerSit
+CONDITIONS
+Always:
+ACTIONS
+(cId 16) A conversation 22691, 22692, 22693 starts:
+{{dialogue|Nia|When we were speaking just now... there's actually so much more I want to say to you...}}
+{{dialogue|Nia|Now we're alone... I can say whatever I feel...}}
+{{dialogue|Nia|Come here, let me tell you...}}
+
+TRIGGER Procedure 12.0 Step 0.5 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 16) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 9009}}
+A cutscene CG_TALKLOVE (duration: -2.0) starts playing
+From the Heart - Nia wanted to say something special to me, but  kissed me instead, making actions speak louder than words.
+
+TRIGGER Procedure 12.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_TALKLOVE | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 17) A conversation 22694, 22695, 22696 starts:
+{{dialogue|Nia|Whatever happens, we'll always be the best couple to us.}}
+{{dialogue|Nia|We don't need any silly competition to show us that.}}
+{{dialogue|Nia|Haha, but you know, our house is even cosier than this! Let's head on back.}}
+
+TRIGGER Procedure 12.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 17) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderIdle (idName: 23980) to Player
+(param: TargetScene:Saloon|FlagName:test_saloon_playersitup)
+Remove behavior CommanderPlayerSit (idName: 23986) from Player
+Nia stops standing still
+CAMERA PATH STOP ALL || 
+===Leave the room===
+
+{{mission_details
+|desc = The activity has ended, if you are willing to stay a while longer, you can look around.
+|details = Leave the room
+}}
+AREA TRIGGER CREATE || missionId: 1200397 | id: 23981 | sceneName: Saloon | showOnMap: 0 | mapIcon: 0 | transId: 0 | flagName: disguise_saloon_trigger1
+NPC SET CAN INTERACT || npc: 8059 | canInteract: 0
+Remove behavior NPC_Conversation (idName: 23981) from Player
+Remove behavior NPC_Conversation (idName: 23981) from Player
+Remove behavior NPC_Conversation (idName: 23981) from Player
+STOPWATCH REAL TIME SET || id: 23982 | sec: 2
+
+TRIGGER Procedure 12.0 Step 2.1 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 23982
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderIdle (idName: 23980) from Player
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 12.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 23981
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 23981
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 23983 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+NPC SET CAN INTERACT || canInteract: 1 | npc: 8059
+
+TRIGGER Procedure 12.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || id: 23971 | itemType: 0
+SCENEITEM DELETE || itemType: 0 | id: 23981
+SCENEITEM CREATE FLAG || id: 121710 | path: Saloon_Manso'sRoom | flagName: andy_clues | extraParams: 0 | itemType: 0 | sceneName: Saloon
+NPC SET CAN INTERACT || npc: 8059 | canInteract: 1
+AREA TRIGGER DELETE || id: 23981
+SUBMIT MISSION 1200397
+END MISSION 1200398
+
+TRIGGER Procedure 13.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 23983
+CONDITIONS
+Always:
+ACTIONS
+CAMERA PATH STOP ALL || 
+Nia stands still in Saloon
+Owen stands still in Saloon and looks at Owen
+Cooper stands still in Saloon
+Mabel stands still in Saloon
+DELAY MASK SET || maskId: 23983 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Rocky stands still in Saloon
+Krystal stands still in Saloon
+ACTOR FREEZ COLLIDER || freezeCollider: 0 | npc: 8059
+PLAYER SET POS ROT FLAG || flagName: test_saloon_player6 | sceneName: Saloon
+Remove behavior CommanderSit (idName: 23986) from Nia
+Remove behavior CommanderPlayerSit (idName: 23986) from Player
+
+TRIGGER Procedure 13.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23983 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 18) A conversation 8000_0 starts:
+{{dialogue|Mabel|We've been over this, Coop! 10 cases of Yakmel Milk, 10 cases of Bacon! How many times've we done this, an' you still don't bring enough!}}
+{{dialogue|Cooper|Alright, alright, I get it!}}
+{{dialogue|Mabel|I'm so sorry, Owen. Look, we'll make it up to ya, alright?}}
+{{dialogue|Owen|It's alright, Mabel. These things slip my mind, too. Besides, Cooper's thrown in more than enough freebies for me before.}}
+{{dialogue|Cooper|Huh!? Freebies!? What freebies!?}}
+{{dialogue|Owen|Yesterday...?}}
+{{dialogue|Cooper|That's why it ain't look right when I was checkin' the holdin' shed!}}
+{{dialogue|Mabel|Urgh... I think Elsie learned her Math from you...}}
+The conversation ends.
+
+TRIGGER Procedure 13.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 18) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Rocky stops standing still
+Krystal stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 23988) to Rocky
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:test_saloon_player1)
+Add behavior CommanderMoveToFlagAndAction (idName: 23988) to Krystal
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:test_saloon_nia1)
+Mabel stops standing still
+Cooper stops standing still
+Add behavior CommanderMoveToFlag (idName: 23988) to Cooper
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:test_saloon_man6)
+Add behavior CommanderMoveToFlag (idName: 23988) to Mabel
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:test_saloon_woman6)
+
+TRIGGER Procedure 13.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8044 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 19) A conversation 8001_0 starts:
+{{dialogue|Rocky|Owen! Get me an' Krystal two of your finest steaks! We dug up some real treasures today, an' I'm feelin' lucky!}}
+{{dialogue|Krystal|Ah, don't listen to him, Owen. He's gettin' all excited over nothing. He's trying to throw money around like a bigshot.}}
+{{dialogue|Rocky|Hey, if I wanna spend money, I'll spend money!}}
+{{dialogue|Krystal|Ah, come on Rocky, let's just eat.}}
+{{dialogue|Rocky|Alright, you go sit down, I'll be over in a second.}}
+{{dialogue|Rocky|Hey, uh, Owen. How's about throwin' in a little something extra for Krystal? She's been working real hard lately, I wanna give her somethin' nice.}}
+{{dialogue|Owen|Haha, I've got you, Rocky. Coming right up.}}
+{{dialogue|Nia|Hahaha!}}
+{{dialogue|Nia|I was just thinking about this whole "best couple" thing. It feels silly now. Look, there are best couples everywhere.}}
+{{dialogue|Nia|Everyone is happy in their own way, right?}}
+{{dialogue|Nia|I want to spend the rest of my life with you...}}
+{{dialogue|Nia|I don't care about a competition. We're the best couple to me.}}
+The conversation ends.
+Remove behavior CommanderMoveToFlag (idName: 23988) from Cooper
+Remove behavior CommanderMoveToFlag (idName: 23988) from Mabel
+
+TRIGGER Procedure 14.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 19) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+CAMERA PATH STOP ALL || 
+Nia stops standing still
+Owen stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 23988) from Rocky
+Remove behavior CommanderMoveToFlagAndAction (idName: 23988) from Krystal
+SUBMIT MISSION 1200397
+
+TRIGGER Procedure 14.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || id: 23971 | itemType: 0
+SCENEITEM DELETE || itemType: 0 | id: 23981
+SCENEITEM CREATE FLAG || id: 121710 | path: Saloon_Manso'sRoom | flagName: andy_clues | extraParams: 0 | itemType: 0 | sceneName: Saloon
+END MISSION 1200398

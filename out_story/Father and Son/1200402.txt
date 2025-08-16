@@ -1,0 +1,300 @@
+Reading Mission 1200402: Father and Son
+
+<onlyinclude>{{Infobox mission
+|name = Father and Son
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Father and Son:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200401
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1200401
+START MISSION 1200401
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200401
+CONDITIONS
+Always:
+ACTIONS
+Run mission Father and Son
+END MISSION 1200401
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200402
+CONDITIONS
+Always:
+ACTIONS
+===Head to the High Noon Arena===
+
+{{mission_details
+|desc = Go and find Logan! Maybe he still remembers the events from back then!
+|details = Head to the High Noon Arena
+}}
+AREA TRIGGER CREATE || missionId: 1200401 | id: 24021 | sceneName: Main | flagName: fatherandson_trigger | showOnMap: 1 | transId: 0 | mapIcon: MissionAreaBranch
+Set CHOICE1 to 0
+Set RESULT to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 24021
+CONDITIONS
+CHECK FESTIVAL || type: 9 | flag: 0
+ACTIONS
+DELAY MASK SET || maskId: 24021 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 24021
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 24021 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: fatherandson_player0
+Justice stands still in Main and looks at Logan
+Logan stands still in Main and looks at Justice
+DELAY MASK SET || maskId: 24021 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 10 | npc: 8000 | enter: 0 | id: 24021
+CONDITIONS
+CHECK FESTIVAL || type: 9 | flag: 1
+ACTIONS
+ACTION SHOW CUSTOM IMAGE TIPS || preset: Mission | content: 80031474
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 24021 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 24079, 24080, 24081, 24082 starts:
+{{dialogue|Justice|Phew, if you were a bandit, heck, I'da been done for...}}
+{{dialogue|Logan|Ah, c'mon Sheriff, don't do yerself dirty like that. You got some mean moves. Reckon the score's still somewhere in the ballpark of a hundred to a hundred and two. Couldn't say in whose favor...}}
+{{dialogue|Justice|Well, at any rate, I appreciate the time, Logan! You keep me on my toes when we're sparring! See ya later.}}
+{{dialogue|Logan|Later, Justice.}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Justice stops standing still
+Add behavior CommanderMoveToFlag (idName: 24021) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:fatherandson_justice1)
+Logan stops standing still
+Logan stands still in Main and looks at Player
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 24083 starts:
+{{dialogue|Logan|Hey, ''Player'', fancy seein' you here, too.}}
+Remove behavior CommanderMoveToFlag (idName: 24021) from Player
+Add behavior CommanderIdle (idName: 24022) to Player
+(param: LookAtActor:8011)
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 24023) to Player
+(param: CMDAction:Give)
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 24084, 8327_0 starts:
+{{dialogue|Logan|Huh? A photo... Ah, I remember this...}}
+{{dialogue|Logan|This was my first time competin' in the Showdown at High Noon. I was greener'en a Spoiled Honey Bumble Ant back then.}}
+{{dialogue|Logan|Haha, was after this that they made it so I couldn't team up with my Pa. Pa an' B3 couldn't team up neither.}}
+{{dialogue|Logan|I get it, y'know? S'all about makin' it fun an' fair. Make it all uneven, everyone's gonna be leavin' in a huff.}}
+{{dialogue|Logan|I always wanted to face my Pa in the tournament, but I never got the chance. Wasn't long after this that B3 went missin' an' all, too.}}
+{{dialogue|Logan|Say, while we're here, how about a little spar?}}
+
+*''Sure! I'll take you down.''
+*''Nah, not today...''
+
+{{dialogue|Logan|indent=true|answer=Sure! I'll take you down.
+|Haha, that's the spirit!}}
+{{dialogue|Logan|indent=true|answer=Nah, not today...
+|Alright, no pressure. Next time.}}
+Remove behavior CommanderPlayerAction (idName: 24023) from Player
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+(cId 3) After the conversation ends:
+CONDITIONS
+Check if CHOICE1 is == 1
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+CUTSCENE UI STATE EXIT || 
+Logan stops standing still
+CAMERA PATH STOP ALL || 
+Remove behavior CommanderIdle (idName: 24022) from Player
+SUBMIT MISSION 1200401
+END MISSION 1200402
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Check if CHOICE1 is == 0
+ACTIONS
+NPC START PK || sponsor: 8011 | recipient: 8000 | fieldName: -1 | isReplace: 0 | time: -1 | hasCountDown: 1 | startBubble: 1 | noResultAnim: 0
+===Sparring with Logan===
+
+{{mission_details
+|desc = Why not seize the moment and spar with Logan, exchange some combat techniques!
+|details = Sparring with Logan
+}}
+CAMERA PATH STOP ALL || 
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the second option in conversation segment 24089:
+{{dialogue|Logan|Say, while we're here, how about a little spar?}}
+
+*''Sure! I'll take you down.'' (No unique dialogue)
+*''Nah, not today...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE1 to 1
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PK STATE CHANGE || order: 0 | sponsor: 8011 | recipient: 8000 | state: Running
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Logan stops standing still
+CAMERA PATH STOP ALL || 
+Remove behavior CommanderIdle (idName: 24022) from Player
+Set CHOICE1 to 1
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PK RESULT || order: 0 | sponsor: 8011 | recipient: 8000 | result: 3
+CONDITIONS
+Always:
+ACTIONS
+Set RESULT to 2
+
+TRIGGER Procedure 3.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PK RESULT || order: 0 | sponsor: 8011 | recipient: 8000 | result: 1
+ON PK RESULT || order: 0 | result: 2 | sponsor: 8011 | recipient: 8000
+CONDITIONS
+Always:
+ACTIONS
+Set RESULT to 1
+
+TRIGGER Procedure 4.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PK STATE CHANGE || order: 0 | sponsor: 8011 | recipient: 8000 | state: Complete
+CONDITIONS
+Check if RESULT is == 2
+ACTIONS
+Logan stands still in Main and looks at Player
+CUTSCENE UI STATE ENTER || 
+(cId 3) A conversation 24092, 24093, 24094 starts:
+{{dialogue|Logan|Sorry, I reckon I kinda lost my cool there.}}
+{{dialogue|Logan|But you nearly got me a few times there! I reckon next time you're gonna get me for sure.}}
+{{dialogue|Logan|Let's spar again when you got the time.}}
+
+TRIGGER Procedure 4.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PK STATE CHANGE || order: 0 | sponsor: 8011 | recipient: 8000 | state: Complete
+CONDITIONS
+Check if RESULT is == 1
+Check relationship with Logan is Lover
+ACTIONS
+Logan stands still in Main and looks at Player
+CUTSCENE UI STATE ENTER || 
+(cId 3) A conversation 8330_0 starts:
+{{dialogue|Logan|Haha, I shoulda known I couldn't beat you, hon'! No way I coulda blocked that.}}
+{{dialogue|Logan|I reckon if you were around back then, me an' B3 wouldn'ta stood a chance.}}
+
+*''You're so tough, honey!''
+*''You always look so handsome when you fight...''
+*''Heck yeah, we could definitely beat B3!''
+
+{{dialogue|Logan|indent=true|answer=You're so tough, honey!
+|...Doesn't matter how long we've been together.}}
+{{dialogue|Logan|indent=true|I still get a weird feelin' when you say stuff like that. Makes me feel all fuzzy inside...}}
+{{dialogue|Logan|indent=true|An' you bet you're lookin' real good when you're up there.}}
+{{dialogue|Logan|indent=true|answer=You always look so handsome when you fight...
+|...Doesn't matter how long we've been together.}}
+{{dialogue|Logan|indent=true|I still get a weird feelin' when you say stuff like that. Makes me feel all fuzzy inside...}}
+{{dialogue|Logan|indent=true|An' you bet you're lookin' real good when you're up there.}}
+{{dialogue|Logan|indent=true|answer=Heck yeah, we could definitely beat B3!
+|Haha, definitely in his later years! But with both eyes an' both hands, that guy could hold up a mean fight!}}
+{{dialogue|Logan|Let's stop here for today. Whenever you feel like do this again, just let me know!}}
+The conversation ends.
+
+TRIGGER Procedure 4.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PK STATE CHANGE || order: 0 | sponsor: 8011 | recipient: 8000 | state: Complete
+CONDITIONS
+Check if RESULT is == 1
+Check relationship with Logan is 6 Lover
+ACTIONS
+Logan stands still in Main and looks at Player
+CUTSCENE UI STATE ENTER || 
+(cId 3) A conversation 24102, 24103 starts:
+{{dialogue|Logan|''Player'', you got some serious skills! That was amazing.}}
+{{dialogue|Logan|How about we make this a regular thing? I reckon there ain't a better partner in town.}}

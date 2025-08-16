@@ -1,0 +1,312 @@
+Reading Mission 1200097: Old Familiar Face
+
+<onlyinclude>{{Infobox mission
+|name = Old Familiar Face
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Old Familiar Face:
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+(cId 0) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+START MISSION 1200096
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200096
+CONDITIONS
+Always:
+ACTIONS
+Run mission Old Familiar Face
+END MISSION 1200096
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200097
+CONDITIONS
+Always:
+ACTIONS
+===Head for the Saloon===
+
+{{mission_details
+|desc = Take the traveler to the Blue Moon Saloon.
+|details = Head for the Saloon
+}}
+Set DAY to 0
+Add tag "BubbleOfLostButch" to Lost Tourist
+ACTION ACTOR ADD FOLLOWER PARAM || mActor: 8000 | tActor: 8063 | state: Attack | param: EGBubbleTag=BubbleOfLostButch;
+Lost Tourist stops standing still
+NPC ADD TAG || tag: ButchBubble
+NPC SET CAN INTERACT || npc: 8063 | canInteract: 0
+Set IsLongShot to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_saloon
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_saloon
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Owen stands still in Saloon
+Lost Tourist stands still in Saloon
+PLAYER SET POS ROT FLAG || flagName: 1297_Player_2 | sceneName: Saloon
+ACTION NPC RENAME || npc: 8063 | title: 30038064 | nameTransId: 30038064
+ACTION NPC REMOVE TAG || npc: 8063 | tag: BubbleOfLostButch
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 2291, 2292, 2293, 2294, 2295 starts:
+{{dialogue|Owen|Well, well, look what the yak dragged in! You crotchedy old geezer, I thought you were scared to come out to the desert, where'd you get the gall all of a sudden?}}
+{{dialogue|Lost Tourist|Haha! That's how you greet an old friend?}}
+{{dialogue|Owen|It's good to see you Butch, it's been so long.}}
+{{dialogue|Lost Tourist|I saw your pictures! I had to come and experience the magic for myself, rumors or no... otherwise I think I'd regret it for the rest of my life!}}
+{{dialogue|Lost Tourist|Which was nearly cut short in that desert of yours, I may add! Luckily, I ran into this fine person who helped me find my way; I am in your debt! And... I don't even know your name!}}
+NPC SET CAN INTERACT || npc: 8063 | canInteract: 1
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 2294) that ends:
+{{dialogue|Lost Tourist|I saw your pictures! I had to come and experience the magic for myself, rumors or no... otherwise I think I'd regret it for the rest of my life!}}
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 12971 | sec: 2
+
+TRIGGER Procedure 0.0 Step 5.1 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 12971
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 12971) to Player
+(param: TargetScene:Saloon|MoveMode:Run|FlagName:losttourist_player|LookAtActor:8063)
+
+TRIGGER Procedure 0.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 11) A conversation 529_0 starts:
+{{dialogue|Owen|''Player''! Ah-hah! What a coincidence! Hey, ''Player'', this is Butch, an old traveling buddy of mine. I've been tryin' to get him to come to Sandrock, but he was scared off by those rumors I told you about!}}
+{{dialogue|Lost Tourist|Yes, yes, ''Player''! You are a kind soul indeed!}}
+{{dialogue|Lost Tourist|Back to the matter at hand! Owen, my good man, those photos were enough to set my plans in motion, but now that I'm here, I expect the finest in hospitality!}}
+{{dialogue|Lost Tourist|Otherwise I might be forced to spill a few details about our sordid past affairs in front of your friend here...}}
+
+*{{flirt}}''Sordid past affairs, eh?''
+*''What photos?''
+*''I'll leave you two to it.''
+
+{{dialogue|Owen|indent=true|answer=Sordid past affairs, eh?
+|Oh, c'mon man, don't say it like that! I don't even know what you're on about; and ''Player'', hey! Quit stirrin' the pot!}}
+{{dialogue|Lost Tourist|indent=true|Oh, you know exactly what I'm "on about!" ''Player'', this bohemian retiree you see before you is a different man than the one I knew in our traveling days! Yes, we were young and carefree, never knowing where we'd lay our heads next...}}
+{{dialogue|Lost Tourist|indent=true|And of course, wherever we found ourselves, there were always women chasing him. Say, Owen, remember that lady who tried to kiss you right when you walked into that bar in Lucien? Does she still send you love letters?}}
+{{dialogue|Owen|indent=true|Man, can you cut it out? You're really embarrassing me! But. if you must know... No, she does not.}}
+{{dialogue|Lost Tourist|indent=true|Hahah! Alright, I had my fun. But you know, Owen, there's one thing we're all still trying to understand: why take up your Pa's old post? Why Sandrock? You could've landed anywhere with your talent and looks.}}
+{{dialogue|Owen|indent=true|Eh, well. My roots are here. I've been all over the Free Cities, and there's nowhere like here. There's the scenery to speak of, plus I found some people that I feel at home with, and that's enough for me, I reckon.}}
+{{dialogue|Lost Tourist|indent=true|Fair, I suppose! I must admit that my horizons have been broadened simply by way of stumbling here; I'll have to keep looking around! Perhaps I'll see whatever it is you're seeing.}}
+{{dialogue|Owen|indent=true|Hey, ''Player'', thanks for helpin' my friend out here; you should take a little something for your trouble. You deserve it for puttin' up with this guy!}}
+{{dialogue|Lost Tourist|indent=true|answer=What photos?
+|Yes, the ones posted in the Atara Times! I never would've come here if not for those photos, and I can hardly be blamed!}}
+{{dialogue|Lost Tourist|indent=true|Those rumors are rather macabre; they say you fight over water and drink Yakmel blood when there's not enough to go around! I'd be a fool not to at least take the rumors into consideration...}}
+{{dialogue|Owen|indent=true|Yo, Butch, here's the big twist: you know who took those photos?}}
+{{dialogue|Lost Tourist|indent=true|What? ''Player''?! I'd thanked you for aiding me on the last leg of my journey, but in fact it was you who brought me every step of the way!}}
+{{dialogue|Lost Tourist|indent=true|I must say, I was moved by your photography; I apologize, I thought you just to be a kind-hearted traveler!}}
+{{dialogue|Owen|indent=true|Nah, ''Player'' does it all! Photography, farmin', sword-swingin', gun-slingin'... but they're mainly known in Sandrock for being a Builder.}}
+{{dialogue|Lost Tourist|indent=true|My stars! They keep churning out these young folk more and more talented, I swear! Well, I really must thank you, ''Player''. I wouldn't be here if not for your photographs.}}
+{{dialogue|Owen|indent=true|Thanks a lot, ''Player''! Hey, let me get this rabid fan outta your hair, him and I got some serious catching up to do! Let's hang out soon!}}
+{{dialogue|Lost Tourist|indent=true|So long, ''Player''!}}
+{{dialogue|Owen|indent=true|answer=I'll leave you two to it.
+|Sure thing, and thanks again, ''Player''! If not for you, I'll bet this guy would still be out wanderin' in the desert; and what a tragedy that would be!}}
+{{dialogue|Lost Tourist|indent=true|I believe you're right! I was very fortunate to run into you, ''Player''. Hope to see you around!}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+GROUP 0:
+Lost Tourist stops standing still
+Owen stops standing still
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8063
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1200096
+ACTION NPC GEN CLUSTER || cluster: ButchBubble | behavior: CommanderButchBubble | min: 2 | max: 3 | npcs: 8001,8063 | randomNpcs: 0 | leader: 8001
+Set ButchLeave to 1
+Remove behavior CommanderMoveToFlagAndAction (idName: 12971) from Player
+
+GROUP 1:
+
+
+TRIGGER Procedure 0.0 Step 8.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) The player picks the first option in conversation segment 2299:
+{{dialogue|Lost Tourist|Otherwise I might be forced to spill a few details about our sordid past affairs in front of your friend here...}}
+
+*{{flirt}}''Sordid past affairs, eh?'' (No unique dialogue)
+*''What photos?'' (No unique dialogue)
+*''I'll leave you two to it.'' (No unique dialogue)
+
+(cId 11) The player picks the second option in conversation segment 2299:
+{{dialogue|Lost Tourist|Otherwise I might be forced to spill a few details about our sordid past affairs in front of your friend here...}}
+
+*{{flirt}}''Sordid past affairs, eh?'' (No unique dialogue)
+*''What photos?'' (No unique dialogue)
+*''I'll leave you two to it.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set IsLongShot to 1
+
+TRIGGER Procedure 1.0 Step 0.5 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+NPC REMOVE TAG || tag: ButchBubble
+ACTION NPC REMOVE CLUSTER || cluster: ButchBubble
+
+TRIGGER Procedure 1.0 Step 1.0 Order 8 Repeat 4
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment ButchLeave by 1
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if ButchLeave is >= 4
+ACTIONS
+NPC LEAVE || npc: 8063
+NPC REMOVE TAG || tag: ButchBubble
+ACTION NPC REMOVE CLUSTER || cluster: ButchBubble
+Set MailtoBeSent to 1
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Owen
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 533_0 starts:
+{{dialogue|Owen|Hey, ''Player''! Was just lookin for ya!}}
+{{dialogue|Owen|I was just seein' my friend Butch off at the train station, you remember him, right? Real gushy guy, really liked your photography.}}
+{{dialogue|Owen|reward={{i2|Lucien Crepe|5}}|He wanted to see you again, but I didn't want to bug you. He did insist that I share some of his hometown specialties with you, though. Pretty cool stuff, rare around these parts.}}
+{{dialogue|Owen|Well that turned out pretty fun, didn't it? That little photography stunt went a long way! Oh, hey, I realized it was kind of not cool of me to be charging people for prints of your photos, haha...!}}
+{{dialogue|Owen|So here's a little something from me, too. Catch you around, ''Player''!}}
+The conversation ends.
+NPC ICON REMOVE || missionId: 1200096 | npc: 8001 | missionIcon: 4
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 2321) that ends:
+{{dialogue|Owen|He wanted to see you again, but I didn't want to bug you. He did insist that I share some of his hometown specialties with you, though. Pretty cool stuff, rare around these parts.}}
+CONDITIONS
+Always:
+ACTIONS
+Add 5 Lucien Crepe of Default quality (Notify player)
+
+TRIGGER Procedure 1.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add 3 Roasted Eel of Default quality (Notify player)
+
+TRIGGER Procedure 1.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if MailtoBeSent is >= 7
+ACTIONS
+The player receives a letter:
+{{mail|206}}
+
+TRIGGER Procedure 1.0 Step 7.0 Order 6 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment MailtoBeSent by 1
+
+TRIGGER Procedure 1.0 Step 8.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 206
+CONDITIONS
+Always:
+ACTIONS
+PHOTO UNLOCK PRESTORE || id: 8
+PHOTO UNLOCK PRESTORE || id: 9
+END MISSION 1200097
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1200097
+CONDITIONS
+Always:
+ACTIONS
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8063
+NPC LEAVE || npc: 8063
+NPC REMOVE TAG || tag: ButchBubble
+ACTION NPC REMOVE CLUSTER || cluster: ButchBubble
+ACTION NPC REMOVE TAG || tag: BubbleOfLostButch | npc: 8063

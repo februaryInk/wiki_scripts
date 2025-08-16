@@ -1,0 +1,406 @@
+Reading Mission 1200098: How to Tune your Banjo
+
+<onlyinclude>{{Infobox mission
+|name = How to Tune your Banjo
+|image =
+|description = Fei from Eufaula Salvage has found a stray cat. Surprisingly, he's unruly and generally disliked around Sandrock. Someone needs to find a way to change his habits and help him behave.
+|type = Side
+|time =
+|location =
+|characters = [[Elsie]]
+|condition =
+|details =
+|exp = 750
+|reputation = 20
+|gols = 100
+|npc1 = Elsie
+|rp1 = 20
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100068
+
+TRIGGER Procedure 2.0 Step 1.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Monster Huntin' for Dummies is successfully completed
+
+GROUP 10:
+Monster Huntin' for Dummies has failed
+
+ACTIONS
+Run mission #1200271
+Special gift rule 5 is set for giving Elsie Heart Knot:
+The gift is accepted with:
+{{dialogue|Elsie|Huh? Is this for me? I ain't got time for all this sappy stuff right now, alright?}}
+
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Mint Condition is successfully completed
+In Trusses We Trust is successfully completed
+ACTIONS
+Run mission How to Tune your Banjo
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200098
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1200098 | id: 20981 | sceneName: Main | flagName: tunebanjo_trigger1 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80004302
+ACTION AREA TRIGGER SET RADIUS || id: 20981 | radius: 30
+Set CHOICE to 0
+Set DAY to 0
+Set NOTALK to 0
+Set DAY0 to 0
+Cooper stands still in Main and looks at Rocky
+Mabel stands still in Main and looks at Rocky
+Elsie stands still in Main and looks at Banjo
+Rocky stands still in Main and looks at Cooper
+Banjo stands still in Main
+NPC ADD TAG || tag: BanjoRanch
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 20981
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 20981
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderMoveToFlag (idName: 20981) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:tunebanjo_player)
+Cooper stops standing still
+Mabel stops standing still
+Elsie stops standing still
+Rocky stops standing still
+Banjo stops standing still
+Banjo stands still in Main
+Cooper stands still in Main and looks at Rocky
+Mabel stands still in Main and looks at Rocky
+Elsie stands still in Main and looks at Banjo
+Rocky stands still in Main and looks at Cooper
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 20981
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 20981) from Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: tunebanjo_player
+(cId 0) A conversation 534_0 starts:
+{{dialogue|Rocky|Yeah, one of my guys, Fei, found this little rascal scroungin' around in our scrap yard a little while back; we liked 'im at first, but he's got some real behavioral problems that, ah, I guess you could say we ain't been equipped to deal with...}}
+{{dialogue|Rocky|We had a house meetin' and made a unanimous decision to get rid of the cat. So, uh, do you guys want 'im or nah?}}
+{{dialogue|Elsie|Aw, look at how cute he is! We'll take him off your hands, won't we? Ma? Pa?}}
+{{dialogue|Mabel|Mm, Coop? I reckon it's alright by me. We wouldn't want this little fella endin' up a stray.}}
+{{dialogue|Cooper|Never met a critter I couldn't whip into shape! We'll take this mongrel off yer hands and turn 'im into a regular, upstandin' cat-izen; by the time I'm done with 'im, I'll have this little tuna sniffer playin' the piano in thirteen keys!}}
+{{dialogue|Elsie|Woohoo!}}
+{{dialogue|Rocky|I should probably warn ya-}}
+{{dialogue|Cooper|Now, now, let me just go ahead and put yer doubts to rest, pardner. See, us folk in the ranch business, we believe in a little thing called "discipline." Backed up by another little thing I like to call, "integrity." See, our methodology-}}
+{{dialogue|Rocky|Yeah, alright, pal. Thanks for takin' the cat. Clearly you got it under control. Good luck to ya, then.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Rocky stops standing still
+CUTSCENE UI STATE EXIT || 
+Cooper stops standing still
+Mabel stops standing still
+Elsie stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 209811) to Cooper
+(param: TargetScene:Main|MoveMode:Walk|FlagName:tunebanjo_cooper)
+Add behavior CommanderMoveToFlagAndAction (idName: 209811) to Mabel
+(param: TargetScene:Main|MoveMode:Walk|FlagName:tunebanjo_mabel)
+Add behavior CommanderMoveToFlagAndAction (idName: 209811) to Elsie
+(param: TargetScene:Main|MoveMode:Walk|FlagName:tunebanjo_elsie)
+AUTOSAVE TRY || 
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Elsie
+CONDITIONS
+Check if NOTALK is == 0
+ACTIONS
+(cId 1) A conversation 2337 starts:
+{{dialogue|Elsie|Hey, ''Player''! Look at this little goober here, we're gonna call him "Banjo," ain't that swell? You should come and visit him once he's good and well-behaved!}}
+
+TRIGGER Procedure 0.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 209811) from Elsie
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Cooper
+CONDITIONS
+Check if NOTALK is == 0
+ACTIONS
+(cId 2) A conversation 2338 starts:
+{{dialogue|Cooper|Feast your eyes, ''Player'': yer lookin' at the future best-behaved cat in all of Sandrock; we're gonna give that dumb cop cat a run for its money, I tell you what.}}
+
+TRIGGER Procedure 0.0 Step 10.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 209811) from Cooper
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Mabel
+CONDITIONS
+Check if NOTALK is == 0
+ACTIONS
+(cId 3) A conversation 2339 starts:
+{{dialogue|Mabel|Hello, ''Player''! Would you just look at this little bundle of joy? I can't imagine why those minin' folk wanted to get rid of him...}}
+
+TRIGGER Procedure 0.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 209811) from Mabel
+
+TRIGGER Procedure 0.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Banjo stops standing still
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Set NOTALK to 1
+Cooper stops standing still
+Mabel stops standing still
+Elsie stops standing still
+Banjo stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 209811) from Cooper
+Remove behavior CommanderMoveToFlagAndAction (idName: 209811) from Mabel
+Remove behavior CommanderMoveToFlagAndAction (idName: 209811) from Elsie
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 20982
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 20982
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 20982 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 20982 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Elsie stands still in Main
+Banjo stands still in Main
+DELAY MASK SET || maskId: 20982 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+{{cutscene|id = 2061}}
+A cutscene CG_BANJOPISS (duration: 0.0) starts playing
+Banjo Attacks - Cooper had to eat his words after confidently accepting the behaviorally impaired feral cat, Banjo. It seems some animals are beyond even his husbandry skills.
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: tunebanjo_player
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_BANJOPISS | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 535_0 starts:
+{{dialogue|Elsie|''Player''! So glad you're here! You like kitty-cats doncha? Well, our new friend Banjo here is in a bit of a pickle; see, he can't seem to stop markin' territory 'round the ranch and... everywhere in our homestead. Now my Pa wants to kick 'im to the curb!}}
+{{dialogue|Elsie|But I know just what to do! Banjo just ain't got a place he feels like he can call his own, what with all the other animals gettin' their scents all over. I take it you've heard of a "dog house," yeah?}}
+{{dialogue|Elsie|Well, I got together with Heidi on the issue, and we came up with somethin' we're callin' a "Animal House;" I've got the diagram for it right here! Can you build it up for me? Maybe this'll cure Banjo's affliction, and he can safely be a pet again!}}
+
+*''Sure, I can do it.''
+*''Too much on my plate right now.''
+
+{{dialogue|Elsie|indent=true|answer=Too much on my plate right now.
+|Oh, shucks, what are we gonna do? Don't cry, lil Banjo, we'll find a way...}}
+{{dialogue|Elsie|Swell! In the meantime, we can keep Banjo safe at your house, least 'til he's got a place of his own!}}
+
+*''Sure.''
+*''Woah, woah, hold on...''
+
+{{dialogue|Elsie|indent=true|answer=Sure.
+|Great! I'll take Banjo over right now!}}
+{{dialogue|Elsie|indent=true|Oh, and before I forget, here's the diagram!}}
+{{dialogue|Elsie|indent=true|answer=Woah, woah, hold on...
+|Fine, I'll take him to Mi-an's place.}}
+DELIVER MISSION 1200098
+
+TRIGGER Procedure 1.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 0
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Elsie stops standing still
+Banjo stops standing still
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 2345:
+{{dialogue|Elsie|Swell! In the meantime, we can keep Banjo safe at your house, least 'til he's got a place of his own!}}
+
+*''Sure.'' (No unique dialogue)
+*''Woah, woah, hold on...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 1
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Elsie stops standing still
+Banjo stops standing still
+START MISSION 1200098
+NPC ADD TAG || tag: BanjoPlayer
+NPC REMOVE TAG || tag: BanjoRanch
+
+TRIGGER Procedure 1.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200098
+CONDITIONS
+Always:
+ACTIONS
+Run mission How to Tune your Banjo
+END MISSION 1200098
+
+TRIGGER Procedure 1.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 20:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Cooper stops standing still
+Mabel stops standing still
+Elsie stops standing still
+Banjo stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 209811) from Elsie
+Remove behavior CommanderMoveToFlagAndAction (idName: 209811) from Mabel
+Remove behavior CommanderMoveToFlagAndAction (idName: 209811) from Cooper
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment DAY by 1
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if DAY is >= 6
+ACTIONS
+The player receives a letter:
+{{mail|90}}
+NPC REMOVE TAG || tag: BanjoRanch
+SCENEITEM CREATE FLAG || itemType: 12 | id: 20991 | path: Mission_CatHouse | sceneName: Main | flagName: tunebanjo_cathouse | extraParams: -1
+CLOSE MISSION || missionId: 1200098
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment DAY0 by 1
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if DAY0 is >= 3
+ACTIONS
+ACTION AREA TRIGGER SET RADIUS || id: 20982 | radius: 30
+AREA TRIGGER CREATE || missionId: 1200098 | id: 20982 | sceneName: Main | flagName: tunebanjo_trigger1 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80004303
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Elsie|''Player''! Did you get time to help make that Animal House for poor lil Banjo?}}
+
+*''Sure, I can do it.''
+*''Too much on my plate right now.''
+
+{{dialogue|Elsie|indent=true|answer=Sure, I can do it.
+|Swell! In the meantime, we can keep Banjo safe at your house, least 'til he's got a place of his own!}}
+
+:*''Sure.''
+:*''Woah, woah, hold on...''
+
+{{dialogue|Elsie|indent=double|answer=Sure.
+|Great! I'll take Banjo over right now!}}
+{{dialogue|Elsie|indent=double|Oh, and before I forget, here's the diagram!}}
+{{dialogue|Elsie|indent=double|answer=Woah, woah, hold on...
+|Fine, I'll take him to Mi-an's place.}}
+{{dialogue|Elsie|indent=true|answer=Too much on my plate right now.
+|Oh, shucks, what are we gonna do? Don't cry, lil Banjo, we'll find a way...}}
+
+==Rewards==
+{{mission reward
+|npc1 = Elsie
+|rp1 = 20
+|exp = 750
+|reputation = 20
+|gols = 100
+}}

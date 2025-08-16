@@ -1,0 +1,861 @@
+Reading Mission 1200288: Sandrock Strikes Back
+
+<onlyinclude>{{Infobox mission
+|name = Sandrock Strikes Back
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Sandrock Strikes Back:
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 22878
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 11106, 11107, 11108, 11109 starts:
+{{dialogue|Justice|What is this thing...? A spaceship? Is this what they're salvaging...?}}
+{{dialogue|Logan|Shhh, keep it down! C'mon!}}
+{{dialogue|Justice|Let's keep goin'! This is gonna be one tough fight. Let's make sure we're all working together, alright?}}
+{{dialogue|Logan|You got it, Sheriff.}}
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 22874) from Justice
+Remove behavior CommanderMoveToFlagAndAction (idName: 22874) from Logan
+Remove behavior CommanderMoveToFlagAndAction (idName: 22874) from Player
+NPC SET CAN INTERACT || npc: 8008 | canInteract: 0
+NPC SET CAN INTERACT || npc: 8011 | canInteract: 0
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8008 | state: Defense
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8011 | state: Defense
+DELIVER MISSION 1200287
+START MISSION 1200287
+Run mission Sandrock Strikes Back
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200288
+CONDITIONS
+Always:
+ACTIONS
+===Expore the Starship Ruins===
+
+{{mission_details
+|desc = Be careful as you delve deeper into the Northern Ruins, danger could be lurking at every turn...
+|details = Expore the Starship Ruins
+}}
+AREA TRIGGER CREATE || missionId: 1200288 | id: 22881 | sceneName: Aviation_Dungeon | flagName: aviation_probe_trigger | showOnMap: 0 | mapIcon: MissionArea | transId: 0
+NPC REPLACE SUIT || npcSuitID: 2
+NPC REPLACE SUIT || npcSuitID: 3
+ACTOR SET LEVEL || npc: 8011 | level: 45
+ACTOR SET LEVEL || npc: 8008 | level: 45
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | id: 22881 | enter: 0 | npc: 8000
+CONDITIONS
+CHECK PROBEMACHINE DESTROY || destroy: 0 | scene: Aviation_Dungeon | triggerID: 1001 | executorID: 30
+ACTIONS
+SOUND PLAY 2D || idStr: Play_MQ_087_walla_087_01
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 22881
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 22881
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 11110 starts:
+{{dialogue|Logan|Dang, it saw us!}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTOR BLIND SET || set: 1
+Add behavior CommanderMoveToFlagAndAction (idName: 22881) to Justice
+(param: TargetScene:Aviation_Dungeon|MoveMode:Run|FlagName:aviation_probe_justice|Action:GunAttack60)
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8008 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 22881) from Justice
+GEAR TRIGGER TRIGGER || scene: Aviation_Dungeon | id: 5001
+(cId 1) A conversation 11111 starts:
+{{dialogue|Logan|That's one way to do it.}}
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTOR BLIND SET || set: 0
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 5.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200288
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER ONCE CREATE || missionId: 1200288 | id: 22882 | sceneName: Aviation_Dungeon | flagName: aviation_soldiers_trigger | showOnMap: 0 | mapIcon: 0 | transId: 0
+NPC RANDOM ADD || id: 9 | instId: 22881 | scene: Aviation_Dungeon | flagName: aviation_soldiers_random1 | dailyBehavior: CommanderIdle
+NPC RANDOM ADD || flagName: aviation_soldiers_random2 | dailyBehavior: CommanderIdle | id: 9 | instId: 22882 | scene: Aviation_Dungeon
+AREA TRIGGER ONCE CREATE || id: 22887 | missionId: 1200288 | sceneName: Aviation_Dungeon | flagName: aviation_key1 | showOnMap: 0 | mapIcon: 0 | transId: 0
+AREA TRIGGER ONCE CREATE || id: 22888 | missionId: 1200288 | flagName: aviation_key2 | sceneName: Aviation_Dungeon | showOnMap: 0 | mapIcon: 0 | transId: 0
+
+TRIGGER Procedure 0.0 Step 5.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER ONCE CREATE || missionId: 1200288 | id: 22882 | sceneName: Aviation_Dungeon | flagName: aviation_soldiers_trigger | showOnMap: 0 | mapIcon: 0 | transId: 0
+AREA TRIGGER ONCE CREATE || id: 22887 | missionId: 1200288 | sceneName: Aviation_Dungeon | flagName: aviation_key1 | showOnMap: 0 | mapIcon: 0 | transId: 0
+AREA TRIGGER ONCE CREATE || id: 22888 | missionId: 1200288 | flagName: aviation_key2 | sceneName: Aviation_Dungeon | showOnMap: 0 | mapIcon: 0 | transId: 0
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22887
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22888
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1200287 | targetId: 3 | transId: 80017307 | isAdd: 1
+
+TRIGGER Procedure 0.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200287 | targetId: 3 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Open the Door===
+
+{{mission_details
+|desc = You've found all the Access Cards, go open the door.
+|details = Open the Door
+}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22882
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 22881
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 22882
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 11112, 11113, 11114 starts:
+{{dialogue|Justice|Hang back, soldiers ahead. Don't let 'em see you!}}
+{{dialogue|22881|Get the intruders!}}
+{{dialogue|22882|Capture them!}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 22881 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22881
+CONDITIONS
+Always:
+ACTIONS
+NPC LEAVE || npc: 22881
+NPC LEAVE || npc: 22882
+MONSTER ADD TAG || tag: shibing1fix | isAdd: 1
+DELAY MASK SET || maskId: 22881 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Set shibing1 to 0
+Justice stands still in Aviation_Dungeon
+Logan stands still in Aviation_Dungeon
+ACTOR BLIND SET || set: 1
+PLAYER SET POS ROT FLAG || flagName: aviation_soldiers_player0 | sceneName: Aviation_Dungeon
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8011 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 22884) from Justice
+Remove behavior CommanderMoveToFlagAndAction (idName: 22886) from Logan
+SCENEITEM DELETE || itemType: 0 | id: 22881
+AREA TRIGGER ONCE CREATE || id: 22883 | missionId: 1200288 | sceneName: Aviation_Dungeon | showOnMap: 0 | flagName: aviation_lockerroom_trigger | mapIcon: 0 | transId: 0
+NPC RANDOM ADD || flagName: aviation_soldiers_random3 | dailyBehavior: CommanderIdle | id: 9 | instId: 22883 | scene: Aviation_Dungeon
+NPC RANDOM ADD || flagName: aviation_soldiers_random4 | dailyBehavior: CommanderIdle | id: 9 | instId: 22884 | scene: Aviation_Dungeon
+NPC RANDOM ADD || flagName: aviation_soldiers_random5 | dailyBehavior: CommanderIdle | id: 9 | instId: 22885 | scene: Aviation_Dungeon
+MONSTER ADD TAG || isAdd: 1 | tag: shibing2
+ACTOR SET FACTION || id: 3 | npc: 22883 | isAdd: 1
+ACTOR SET FACTION || id: 3 | npc: 22884 | isAdd: 1
+ACTOR SET FACTION || id: 3 | npc: 22885 | isAdd: 1
+ACTOR BLIND SET || set: 0
+CUTSCENE UI STATE EXIT || 
+In a speech bubble:
+{{dialogue|Justice|Hey, not bad, Logan!}}
+
+TRIGGER Procedure 1.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 22881
+CONDITIONS
+Always:
+ACTIONS
+Justice stops standing still
+Logan stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 22884) to Justice
+(param: TargetScene:Aviation_Dungeon|MoveMode:Run|FlagName:aviation_soldiers_justice0|Action:AviationShoot)
+Add behavior CommanderMoveToFlagAndAction (idName: 22886) to Logan
+(param: TargetScene:Aviation_Dungeon|MoveMode:Run|FlagName:aviation_soldiers_logan0|Action:Shoot)
+
+TRIGGER Procedure 1.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8008 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+MONSTER KILL TAG || tag: shibing1fix
+MONSTER ADD TAG || tag: shibing1fix | isAdd: 0
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22883
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+(cId 4) A conversation 11116, 3437_0 starts:
+{{dialogue|Logan|Hold on, there's a few soldiers in there. Let's see what we're up against...}}
+{{dialogue|22883|Phew, only one more engine left on the ship. Hopefully we'll get the second one up soon.}}
+{{dialogue|22884|What do we even need an engine for anyway? There are engines all over the place, right under our feet! Besides, didn't we already find that wicked battle robot? We even painted it our colors...}}
+{{dialogue|22885|Ugh. How many times do I have to explain. These aren't those Small Engines you dig up in your rinky-dink amateur hour ruins, these are {{textcolor|green|Starship Engines!}}}}
+{{dialogue|22884|What's the difference?}}
+{{dialogue|22885|Well, one powers your blender and the other can power a whole air-castle!}}
+{{dialogue|22883|Wow!}}
+{{dialogue|Logan|Starship Engines? Air-castle?}}
+{{dialogue|Justice|Sounds like a bargain bin novel...}}
+{{dialogue|22883|Man, Sandrock really had some personalities. Remember that ranch guy? Man talks so much, reminds me of my ex-wife!}}
+{{dialogue|22884|Right? His rambling went on so long, I nearly fell asleep!}}
+{{dialogue|22885|What about that sheriff? Named himself Justice? Haha! Corniest name I ever heard. Some people just have no self-awareness!}}
+{{dialogue|22883|Right? I saw those bandit posters over at the Civil Corps, too. I wonder what that guy looks like under that mask...}}
+{{dialogue|22885|Oh, I saw those! And what's with the white hair? What is he, mid-twenties? And going white already? Sheesh, talk about bad genes...}}
+{{dialogue|Logan|...Alright. I've heard enough. Fight 'em!}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 4) There is a conversation segment (id 11116) that ends:
+{{dialogue|Logan|Hold on, there's a few soldiers in there. Let's see what we're up against...}}
+CONDITIONS
+Always:
+ACTIONS
+Logan stands still in Aviation_Dungeon
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+NPC LEAVE || npc: 22883
+NPC LEAVE || npc: 22884
+NPC LEAVE || npc: 22885
+ACTOR SET FACTION || isAdd: 0 | npc: 22883 | id: 3
+ACTOR SET FACTION || isAdd: 0 | npc: 22884 | id: 3
+ACTOR SET FACTION || isAdd: 0 | npc: 22885 | id: 3
+Set shibing2 to 0
+Logan stops standing still
+AUTOSAVE TRY || 
+
+TRIGGER Procedure 2.0 Step 3.5 Order 6 Repeat 4
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 0 | tag: shibing2
+CONDITIONS
+Always:
+ACTIONS
+Increment shibing2 by 1
+
+TRIGGER Procedure 2.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 10 | tag: shibing2
+CONDITIONS
+Check if shibing2 is >= 4
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 22882 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+GEAR SET ENABLE || triggerID: 1001 | excutorID: 26 | setEnable: 0
+GEAR SET ENABLE || setEnable: 0 | triggerID: 1001 | excutorID: 27
+
+TRIGGER Procedure 2.0 Step 4.1 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22882
+CONDITIONS
+Always:
+ACTIONS
+MONSTER ADD TAG || isAdd: 0 | tag: shibing2
+Justice stands still in Aviation_Dungeon and looks at Logan
+Logan stands still in Aviation_Dungeon and looks at Justice
+PLAYER SET POS ROT FLAG || flagName: aviation_lockerroom_player | sceneName: Aviation_Dungeon
+DELAY MASK SET || maskId: 22882 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 4.2 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 22882
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 11131, 11132, 11133, 11134, 11135 starts:
+{{dialogue|Justice|Dang Duvos... Justice is not a corny name!}}
+{{dialogue|Logan|Forget it. What did you expect? They ain't comin' here to make friends.}}
+{{dialogue|Justice|Yeah, yeah. So... they're here to take away some relic engine to make some super castle.}}
+{{dialogue|Logan|If they ship 'em back to Duvos, no tellin' what they're gonna do!}}
+{{dialogue|Justice|We've gotta stop 'em! We can't be sure when the Alliance will show up, so we're the only option right now!}}
+
+TRIGGER Procedure 2.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Find the Engine===
+
+{{mission_details
+|desc = Duvos is trying to extract an Olympia spaceship engine. Stop them!
+|details = Find the Engine
+}}
+AREA TRIGGER ONCE CREATE || missionId: 1200288 | id: 22884 | sceneName: Aviation_Dungeon | flagName: aviation_ropes_trigger | showOnMap: 0 | mapIcon: 0 | transId: 0
+CUTSCENE UI STATE EXIT || 
+Justice stops standing still
+Logan stops standing still
+AREA TRIGGER ONCE CREATE || id: 22889 | missionId: 1200288 | sceneName: Aviation_Dungeon | flagName: aviation_keyinfo | showOnMap: 0 | mapIcon: 0 | transId: 0
+GEAR SET ENABLE || triggerID: 1001 | excutorID: 26 | setEnable: 1
+GEAR SET ENABLE || triggerID: 1001 | excutorID: 27 | setEnable: 1
+
+TRIGGER Procedure 2.0 Step 6.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22889
+CONDITIONS
+Always:
+ACTIONS
+===Search for Access Cards===
+
+{{mission_details
+|desc = To open the door, you need to find two Access Cards somewhere nearby.
+|details = Search for Access Cards
+}}
+
+TRIGGER Procedure 2.0 Step 7.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22889
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER ONCE CREATE || id: 22887 | missionId: 1200288 | sceneName: Aviation_Dungeon | flagName: aviation_key1 | showOnMap: 0 | mapIcon: 0 | transId: 0
+AREA TRIGGER ONCE CREATE || id: 22888 | missionId: 1200288 | flagName: aviation_key2 | sceneName: Aviation_Dungeon | showOnMap: 0 | mapIcon: 0 | transId: 0
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22884
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 22882) to Player
+(param: TargetScene:Aviation_Dungeon|MoveMode:Run|FlagName:aviation_ropes_player|Action:LookSky)
+Add behavior CommanderMoveToFlagAndAction (idName: 22882) to Justice
+(param: TargetScene:Aviation_Dungeon|MoveMode:Run|FlagName:aviation_ropes_justice|Action:LookSky)
+Add behavior CommanderMoveToFlagAndAction (idName: 22882) to Logan
+(param: TargetScene:Aviation_Dungeon|MoveMode:Run|FlagName:aviation_ropes_logan|Action:LookSky)
+CUTSCENE UI STATE ENTER || 
+ACTOR BLIND SET || set: 1
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8008 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 11136, 11137 starts:
+{{dialogue|Justice|{{textcolor|green|O-lym-pi-a}}... Huh. Number 06. Wait- have five ships been launched before this one?}}
+{{dialogue|Logan|Dang, look at all these ropes. They're tryin' to lift the engines to the airship... If we {{textcolor|green|follow the ropes down}}, I bet we'll find the engines.}}
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTOR BLIND SET || set: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 22882) from Justice
+Remove behavior CommanderMoveToFlagAndAction (idName: 22882) from Logan
+Remove behavior CommanderMoveToFlagAndAction (idName: 22882) from Player
+CUTSCENE UI STATE EXIT || 
+Run mission Sandrock Strikes Back
+AREA TRIGGER ONCE CREATE || flagName: aviation_end_trigger2 | id: 22886 | missionId: 1200288 | sceneName: Aviation_Dungeon | showOnMap: 0 | mapIcon: 0 | transId: 0
+
+TRIGGER Procedure 3.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | id: 22886 | enter: 0 | npc: 8000
+CONDITIONS
+Always:
+ACTIONS
+AUTOSAVE TRY || 
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22885
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 22883 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+GEAR SET ENABLE || triggerID: 1001 | excutorID: 23 | setEnable: 0
+GEAR SET ENABLE || triggerID: 1001 | excutorID: 35 | setEnable: 0
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22883
+CONDITIONS
+Always:
+ACTIONS
+ACTOR BLIND SET || set: 1
+Logan stands still in Aviation_Dungeon
+PLAYER SET POS ROT FLAG || flagName: aviation_end_player | sceneName: Aviation_Dungeon
+DELAY MASK SET || maskId: 22883 | delayTime: 0 | durationTime: 0 | curveIndex: 0 | changeType: 1
+{{cutscene|id = 1376}}
+A cutscene CG_ITSMATILDA (duration: 0.0) starts playing
+It's Matilda - The mysterious mecha at the bottom of the ruins came to life - it's Matilda! She must be defeated to stop Duvos!
+===Defeat Matilda===
+
+{{mission_details
+|desc = Matilda, the mastermind behind all of this conflict, is here to defeat you. Don't let her win!
+|details = Defeat Matilda
+}}
+
+TRIGGER Procedure 4.0 Step 1.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 8 | name: CG_ITSMATILDA
+CONDITIONS
+Always:
+ACTIONS
+MONSTER ADD TAG || tag: Aviation_Matilda | isAdd: 1
+GEAR TRIGGER TRIGGER || id: 5004 | scene: Aviation_Dungeon
+
+TRIGGER Procedure 4.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 9 | name: CG_ITSMATILDA
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 3451_0 starts:
+{{dialogue|5068001|Logan! ''Player''! How did you... Where did...?}}
+{{dialogue|Logan|Lookin' for Pen? He's a little tied up right now...}}
+{{dialogue|5068001|...}}
+{{dialogue|5068001|Please Logan, let's not fight. Wasn't I there for Sandrock? Didn't I do everything for you?}}
+{{dialogue|Logan|There for Sandrock!? You killed my Pa to keep your dirty secrets!}}
+{{dialogue|5068001|How could you say that? I didn't order it! You already gave Pen his just desserts for that awful incident. I'm just a poor old woman being loyal to her country...}}
+{{dialogue|5068001|Please... I have children back in Duvos. I don't want to be in this situation anymore than you do. I specifically told the army to not harm anyone in Sandrock, didn't I? Just let me go... I don't want to fight you...}}
+{{dialogue|Logan|Cut the crap, Matilda. If you don't want a fight, surrender!}}
+{{dialogue|5068001|I'm so sorry it's come to this...}}
+The conversation ends.
+
+TRIGGER Procedure 4.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Logan stops standing still
+ACTOR BLIND SET || set: 0
+NPC ADD TAG || tag: MatildaBattle
+ACTOR IGNORE SHOW DISTANCE || npc: 5068001 | ignore: 1
+GEAR SET ENABLE || triggerID: 1001 | excutorID: 23 | setEnable: 1
+GEAR SET ENABLE || triggerID: 1001 | excutorID: 35 | setEnable: 1
+GUIDE ADD CONTROL || id: 1103 | forced: 0
+ACTION ACTOR REMOVE FOLLOWER || tActor: 8008 | mActor: 8000
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8011
+ACTION ACTOR ADD FOLLOWER FLAG || flag: HatredHold | state: Attack | targetId: 8011 | id: 8000
+
+TRIGGER Procedure 4.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 7) There is a conversation segment (id 11262) that ends:
+{{dialogue|Logan|Cut the crap, Matilda. If you don't want a fight, surrender!}}
+CONDITIONS
+Always:
+ACTIONS
+PLAYER INPUT LOCK || set: 1
+
+TRIGGER Procedure 4.0 Step 7.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 228812
+CONDITIONS
+Always:
+ACTIONS
+PLAYER INPUT LOCK || set: 0
+
+TRIGGER Procedure 5.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER STAGE CHANGE || order: 0 | instanceID: 5068001 | stage: 2
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 22884 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+GEAR SET ENABLE || triggerID: 1001 | excutorID: 23 | setEnable: 0
+GEAR SET ENABLE || triggerID: 1001 | excutorID: 35 | setEnable: 0
+
+TRIGGER Procedure 5.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22884
+CONDITIONS
+Always:
+ACTIONS
+ACTOR BLIND SET || set: 1
+Logan stands still in Aviation_Dungeon
+PLAYER SET POS ROT FLAG || flagName: aviation_end_player | sceneName: Aviation_Dungeon
+DELAY MASK SET || maskId: 22884 | delayTime: 0 | durationTime: 0 | curveIndex: 0 | changeType: 1
+{{cutscene|id = CG_FAll}}
+A cutscene CG_FAll (duration: 0.0) starts playing
+MONSTER ADD IDLE || monsterID: 5068001 | idName: 22881 | sceneName: Aviation_Dungeon | flagName: aviation_end_boss
+MONSTER REMOVE IDLE || monsterID: 5068001 | idName: 22881
+
+TRIGGER Procedure 5.0 Step 1.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 8 | name: CG_FAll
+CONDITIONS
+Always:
+ACTIONS
+GEAR TRIGGER TRIGGER || id: 5008 | scene: Aviation_Dungeon
+
+TRIGGER Procedure 5.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 9 | name: CG_FAll
+CONDITIONS
+Always:
+ACTIONS
+PLAYER INPUT LOCK || set: 0
+(cId 8) A conversation 3452_0 starts:
+{{dialogue|5068001|Logan, did you really think I was working alone this whole time? ''Player'', no, Tiger, why are you still pretending? Come on, fight alongside me!}}
+{{dialogue|Logan|Huh!?}}
+{{dialogue|5068001|Haha, of course you didn't know! Our little obedient Builder. You never found it suspicious? Anything you want, they're there. In all the town meetings... listening to all the plans...}}
+{{dialogue|Logan|Stop jokin' around, it ain't gonna work!}}
+{{dialogue|5068001|How adorable. You fell for our little ruse. You think a lowly Builder is conveniently equipped with such skill?}}
+{{dialogue|5068001|Come, ''Player''! Join me! For the Empire!}}
+
+*''I'd never betray my friends!''
+*''A manipulator to the end, huh?''
+
+{{dialogue|Logan|indent=true|answer=I'd never betray my friends!
+|You've failed, Matilda! Your manipulation won't work!}}
+{{dialogue|Logan|indent=true|answer=A manipulator to the end, huh?
+|You've failed, Matilda!}}
+{{dialogue|5068001|Insolent fools! I'll destroy you!}}
+{{dialogue|Logan|She's rattled, c'mon, let's get 'er!}}
+The conversation ends.
+
+TRIGGER Procedure 5.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Logan stops standing still
+ACTOR BLIND SET || set: 0
+ACTOR IGNORE SHOW DISTANCE || npc: 5064001 | ignore: 1
+ACTOR IGNORE SHOW DISTANCE || npc: 5064002 | ignore: 1
+ACTOR IGNORE SHOW DISTANCE || npc: 5065001 | ignore: 1
+ACTOR IGNORE SHOW DISTANCE || npc: 5065002 | ignore: 1
+MONSTER ADD TAG || tag: Aviation_Reinforcements | isAdd: 1
+GEAR SET ENABLE || triggerID: 1001 | excutorID: 23 | setEnable: 1
+GEAR SET ENABLE || triggerID: 1001 | excutorID: 35 | setEnable: 1
+
+TRIGGER Procedure 6.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 0 | tag: Aviation_Matilda
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 22885 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+NPC REMOVE TAG || tag: MatildaBattle
+ADD MONSTER KILL ILLUSTRATION || monsterID: 5068
+ACTOR IGNORE SHOW DISTANCE || npc: 5068001 | ignore: 0
+ACTOR IGNORE SHOW DISTANCE || npc: 5064001 | ignore: 0
+ACTOR IGNORE SHOW DISTANCE || npc: 5064002 | ignore: 0
+ACTOR IGNORE SHOW DISTANCE || npc: 5065001 | ignore: 0
+ACTOR IGNORE SHOW DISTANCE || npc: 5065002 | ignore: 0
+
+TRIGGER Procedure 6.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22885
+CONDITIONS
+Always:
+ACTIONS
+PLAYER INPUT LOCK || set: 1
+MONSTER ADD TAG || isAdd: 0 | tag: Aviation_Matilda
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8011
+DELAY MASK SET || maskId: 22885 | delayTime: 0 | durationTime: 0 | changeType: 0 | curveIndex: 0
+{{cutscene|id = 1378}}
+A cutscene CG_BADUP (duration: 0.0) starts playing
+Over the Moon - Matilda got desperate and tried to launch a super-offensive, but seemed to press the wrong button and shot herself into space!
+NPC LEAVE || npc: 8018
+NPC SET CAN INTERACT || canInteract: 1 | npc: 8008
+NPC SET CAN INTERACT || npc: 8011 | canInteract: 1
+Logan stands still in LoganCave_Dungeon
+ACTION ACTOR REMOVE FOLLOWER || tActor: 8008 | mActor: 8000
+
+TRIGGER Procedure 6.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_BADUP | state: 8
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: basket_player1
+
+TRIGGER Procedure 6.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Aviation_Dungeon to the Main:
+CONDITIONS
+Always:
+ACTIONS
+ACTION CUTSCENE START AUDIO TYPE || id: CG_FALSEEND | duration: 0 | audioType: NoTransitionOff
+
+TRIGGER Procedure 6.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22885
+CONDITIONS
+Always:
+ACTIONS
+ADD NPC RELATION MODIFIER || monsterID: 22881 | npcID1: 8020 | npcID2: 8019 | modifierType: Relation_Mission | relation: Normal | instID: 22881
+ADD NPC RELATION MODIFIER || monsterID: 22882 | npcID2: 8021 | npcID1: 8020 | modifierType: Relation_Mission | relation: Normal | instID: 22882
+ADD NPC RELATION MODIFIER || monsterID: 22883 | npcID2: 8074 | npcID1: 8020 | modifierType: Relation_Mission | relation: Normal | instID: 22883
+ADD NPC RELATION MODIFIER || monsterID: 22884 | npcID2: 8018 | npcID1: 8020 | modifierType: Relation_Mission | relation: Normal | instID: 22884
+ADD NPC RELATION MODIFIER || monsterID: 22885 | npcID2: 8020 | npcID1: 8019 | modifierType: Relation_Mission | relation: Normal | instID: 22885
+ADD NPC RELATION MODIFIER || monsterID: 22886 | npcID2: 8020 | npcID1: 8021 | modifierType: Relation_Mission | relation: Normal | instID: 22886
+ADD NPC RELATION MODIFIER || monsterID: 22887 | npcID2: 8020 | npcID1: 8074 | modifierType: Relation_Mission | relation: Normal | instID: 22887
+ADD NPC RELATION MODIFIER || monsterID: 22888 | npcID2: 8020 | npcID1: 8018 | modifierType: Relation_Mission | relation: Normal | instID: 22888
+ADD LEAVE NPC || npc: 8020
+
+TRIGGER Procedure 7.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_FALSEEND | state: 8
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Conference_Storyboard | flagName: conference_player
+
+TRIGGER Procedure 7.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Conference_Storyboard:
+CONDITIONS
+Always:
+ACTIONS
+ACTION CUTSCENE START AUDIO TYPE || id: CG_MEETING | duration: 0 | audioType: NoTransitionOff
+
+TRIGGER Procedure 7.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_MEETING | state: 8
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Univese_Storyboard | flagName: univese_player
+
+TRIGGER Procedure 7.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Conference_Storyboard to the Univese_Storyboard:
+CONDITIONS
+Always:
+ACTIONS
+ACTION CUTSCENE START AUDIO TYPE || id: CG_DRIFTING | duration: 0 | audioType: NoTransitionOff
+
+TRIGGER Procedure 7.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_DRIFTING | state: 8
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+
+TRIGGER Procedure 8.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Univese_Storyboard to the Main:
+CONDITIONS
+Always:
+ACTIONS
+PLAYER FORCE SLEEP || 
+DELAY MASK SET || maskId: 22886 | delayTime: 0 | durationTime: 0 | changeType: 0 | curveIndex: 0
+SCENEITEM DELETE || itemType: 0 | id: 22839
+SCENEITEM DELETE || id: 228310 | itemType: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 22882 | path: Mission_Group_Beibu_3 | sceneName: Main | flagName: bridge_kaimu | extraParams: 0
+PLAYER INPUT LOCK || set: 0
+
+TRIGGER Procedure 8.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+NPC RESET LEVEL || npc: 8011
+NPC RESET LEVEL || npc: 8008
+ACTION PHOTO UNLOCK CUTSCENE || cutscene: CG_DRIFTING
+ACTION PHOTO UNLOCK CUTSCENE || cutscene: CG_MEETING
+ACTION PHOTO UNLOCK CUTSCENE || cutscene: CG_RETURN
+ACTION PHOTO UNLOCK CUTSCENE || cutscene: CG_ARRIVED
+SCENEITEM DELETE || id: 22831 | itemType: 0
+Justice stands still in Main
+Justice stops standing still
+Justice stops standing still
+Newspaper adds Article content 1088.
+Title: Mettlesome Militia Make Mincemeat of Meddlesome Marauders
+In one of the greatest upsets in modern history, Sandrock has emerged victorious in the battle against Duvos.
+
+In the end, the water crisis was all just a cover-up for the real conspiracy: for years, Duvos had been planning to steal valuable relics from the Northern Plateau Ruins once thought to be inaccessible due to hazardous substances.
+
+This turned out to be a lie as well; former members of the Church of the Light turned criminal, Matilda and Pen, began spreading this rumor years ago after Howlett discovered the ruins on one of his once famous monster hunting expeditions. 
+
+It is with a heavy heart we discover the true nature of Howlett's untimely passing. Authorities have told us that as Howlett was returning home to report of his findings, he was intercepted by one of the Duvos operatives, who rendered him unconscious. He was then administered with an infectious virus used to sell the story that the Northern Ruins were to be avoided.
+
+Howlett was a brave man who loved this town, squandered as a political tool by Duvos to further their military power. Let us not forget him, what he stood for, or the sacrifice he unwillingly made. And let this also be a reminder as to the sinister actions of our enemies and what they are capable of.
+
+War is hell. Make no mistake. But some solace can be taken in the fact that from such misery can emerge heroes who delivered us from darkness. One such hero is ''Player''. Leading the charge over the canyon to the Northern Ruins, ''Player'' was accompanied by Sheriff Justice, Deputy-in-training Unsuur, and Deputy Captain Cat who fought their way to the center of the Duvos operation, stopping them dead in their tracks and saving the relics to be kept in the Free Cities, where they belong. 
+
+The heroism of Atara Central Intelligence cannot go unthanked either. One of their agents had been investigating the Duvos plot all the way up 'til it came to a head with the recent conflict. It is only because of ACI intervention that we were able to prepare for the battle, and ultimately, their contributions were essential in our victory. 
+
+Sandrock itself remains relatively unscathed, as we pick ourselves back up and prepare for a new era. With our enemies defeated and confidence at an all time high, I believe that our worst days are behind us, and soon Sandrock will be entering a golden age.
+DELAY MASK SET || maskId: 22886 | delayTime: 0 | durationTime: 0 | curveIndex: 0 | changeType: 1
+CUTSCENE UI STATE EXIT || 
+Owen gains 10 favor
+Grace gains 10 favor
+Cooper gains 10 favor
+Mabel gains 10 favor
+Elsie gains 10 favor
+Trudy gains 10 favor
+Qi gains 10 favor
+Justice gains 10 favor
+Heidi gains 10 favor
+Hugo gains 10 favor
+Logan gains 10 favor
+Haru gains 10 favor
+Andy gains 10 favor
+Arvio gains 10 favor
+Fang gains 10 favor
+Mi-an gains 10 favor
+Catori gains 10 favor
+Unsuur gains 10 favor
+Venti gains 10 favor
+Rocky gains 10 favor
+Krystal gains 10 favor
+Zeke gains 10 favor
+Mort gains 10 favor
+Jasmine gains 10 favor
+Vivi gains 10 favor
+X gains 10 favor
+Captain gains 10 favor
+Ernest gains 10 favor
+Rian gains 10 favor
+Dan-bi gains 10 favor
+SUBMIT MISSION 1200287
+
+TRIGGER Procedure 8.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player wakes up:
+CONDITIONS
+Always:
+ACTIONS
+CENTRAL ADD DUNGENON || style: 0 | textIds: 6133
+CENTRAL ADD DUNGENON || style: 1 | textIds: 70048
+Set global blackboard key notrain with info 1.
+ACTION MAP SHOW BUILDING TEXT || id: 46
+ACTION MAP SHOW BUILDING TEXT || id: 48
+END MISSION 1200288

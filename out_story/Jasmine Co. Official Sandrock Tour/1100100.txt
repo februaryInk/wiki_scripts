@@ -1,0 +1,440 @@
+Reading Mission 1100100: Jasmine Co. Official Sandrock Tour
+
+<onlyinclude>{{Infobox mission
+|name = Jasmine Co. Official Sandrock Tour
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Jasmine Co. Official Sandrock Tour:
+
+TRIGGER Procedure 0.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+START MISSION 1100099
+
+TRIGGER Procedure 0.0 Step 6.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1100099
+CONDITIONS
+Always:
+ACTIONS
+Run mission Jasmine Co. Official Sandrock Tour
+END MISSION 1100099
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100100
+CONDITIONS
+Always:
+ACTIONS
+===Go to the Yakmel Ranch===
+
+{{mission_details
+|desc = The first stop is the Yakmel Ranch, go with Jasmine.
+|details = Go to the Yakmel Ranch
+}}
+GLOBAL BLACK BOARD REMOVE || key: yiriyou2
+Add behavior CommanderMoveToFlagAndAction (idName: 1100401) to Jasmine
+(param: TargetScene:Main|MoveMode:RunFast|FlagName:Guidance_Group1_1_8040_Trans|LookAtActor:8000)
+AREA TRIGGER CREATE || id: 11001 | sceneName: Main | flagName: Guidance_Group1_TriggerBox | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80000761 | missionId: 1100099
+Set PlayerIsTrigger to 0
+Set ShotsIndex to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 11004
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: Guidance_Group4_Player_Trans
+DELAY MASK SET || maskId: 11004 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 11001
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 1100401) from Jasmine
+Add behavior CommanderMoveToFlagAndAction (idName: 1100402) to Jasmine
+(param: TargetScene:Main|MoveMode:Run|FlagName:Guidance_Group1_3_8040_Rot|LookAtActor:8000)
+Add behavior CommanderMoveToFlagAndAction (idName: 1100001) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:Guidance_Group1_3_Player_Rot)
+AREA TRIGGER DELETE || id: 11001
+Set 1100Move1 to 0
+
+TRIGGER Procedure 0.0 Step 2.1 Order 5 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8040 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Increment 1100Move1 by 1
+
+TRIGGER Procedure 0.0 Step 2.1 Order 6 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8040 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Increment 1100Move2 by 1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8040 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Check if 1100Move1 is >= 2
+ACTIONS
+(cId 10) A conversation 543 starts:
+{{dialogue|Jasmine|Passengers please look ahead and notice Mr. Cooper and Mrs. Mabel and Elsie's house. They have a really big ranch, that means they get milk for everyone. Maybe some other stuff, too.}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 11) A conversation 1082, 544, 545 starts:
+{{dialogue|Jasmine|Oh, you can see the Yakmel over there! I like to say 'hi' to them everyday, sometimes they even say 'hi' back! But it sounds like 'moooooo.'}}
+{{dialogue|Jasmine|I think they sell stuff that you could use to {{textcolor|green|take care of animals}} here. That might be useful for you, huh?}}
+{{dialogue|Jasmine|On to the next stop! Please keep your hands and feet inside the imaginary vehicle!}}
+
+TRIGGER Procedure 0.0 Step 10.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+===Go to Martle's Oasis===
+
+{{mission_details
+|desc = The next stop is Martle's Oasis, go with Jasmine.
+|details = Go to Martle's Oasis
+}}
+AREA TRIGGER CREATE CUSTOM || id: 11002 | asset: LakePollution | sceneName: Main | flagName: trigger_lake | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80000761 | missionId: 1100099
+Set PlayerIsTrigger to 0
+Set ShotsIndex to 1
+Remove behavior CommanderMoveToFlagAndAction (idName: 1100402) from Jasmine
+Add behavior CommanderMoveToFlagAndAction (idName: 1100403) to Jasmine
+(param: TargetScene:Main|MoveMode:RunFast|FlagName:Guidance_Group2_1_8040_Trans|LookAtActor:8000)
+Remove behavior CommanderMoveToFlagAndAction (idName: 1100001) from Player
+ACTION AREA TRIGGER SET RADIUS || id: 11002 | radius: 10
+
+TRIGGER Procedure 1.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 11002
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 1100403) from Jasmine
+Add behavior CommanderMoveToFlagAndAction (idName: 1100404) to Jasmine
+(param: TargetScene:Main|MoveMode:Run|FlagName:Guidance_Group2_2_8040_Trans|LookAtActor:8000)
+Add behavior CommanderMoveToFlagAndAction (idName: 1100002) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:Guidance_Group2_2_Player_Trans)
+AREA TRIGGER DELETE || id: 11002
+CUTSCENE UI STATE ENTER || 
+Set 1100Move2 to 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8040 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+ON ACTOR BEHAVIOUR EVENT || order: 10 | eventName: MoveToFlagOver | behaviourName: CommanderMoveToFlagAndAction | npc: 8000
+CONDITIONS
+Check if 1100Move2 is >= 2
+ACTIONS
+(cId 20) A conversation 546 starts:
+{{dialogue|Jasmine|Ta-daaa! This is {{textcolor|green|Martle's Oasis}}! Ms. Martle was the first mayor of Sandrock and she found this oasis a long time ago. We all drink this water so don't step in it!}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 20) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 21) A conversation 547 starts:
+{{dialogue|Jasmine|In the middle, you can of course see a statue of {{textcolor|green|Mr. Peach}}. One day I hope I can invent something really cool like Peach did.}}
+Remove behavior CommanderMoveToFlagAndAction (idName: 1100404) from Jasmine
+Jasmine stands still in Main and looks at Player
+
+TRIGGER Procedure 1.0 Step 8.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 21) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 22) A conversation 1083, 153_0, 548 starts:
+{{dialogue|Jasmine|The big {{textcolor|green|water tower}} over there is where we keep extra water. Mr. Burgess takes care of it, and you can get some from him if you give him some money.}}
+{{dialogue|Jasmine|Oh, hey, that reminds me! Do you know what the official town slogan is? Minister Matilda came up with it, and now everybody says it all the time.}}
+
+*''Conserve water!''
+*''Down with {{textcolor|red|Logan}}!''
+*''Defeat the desert!''
+
+{{dialogue|Jasmine|indent=true|answer=Conserve water!
+|Wow! Yeah, that's right, you got it! You must have done your homework! I'd give you a sticker but... I don't have any...}}
+{{dialogue|Jasmine|indent=true|{{textcolor|green|Conserve water}}! That's our slogan! If we run out, um, I guess we have to go live somewhere else... So we should say our slogan a lot to help people remember.}}
+{{dialogue|Jasmine|indent=true|answer=Down with {{textcolor|red|Logan}}!
+|Woah! That's cool! Oh, but, it's not our slogan... You're not scared to say that? What if Logan was hiding and heard us!?}}
+{{dialogue|Jasmine|indent=true|answer=Defeat the desert!
+|Oh, that's really good! But... it's not our slogan. Maybe it should be, though! My Ma is working really hard to stop the sand from spreading into our town...}}
+{{dialogue|Jasmine|This concludes the Martle's Oasis part of our tour! For our next stop, we will be visiting... fabulous {{textcolor|green|City Hall}}!}}
+
+TRIGGER Procedure 1.0 Step 12.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 22) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+CAMERA PATH STOP DEFAULT || id: 16110023
+CAMERA PATH STOP DEFAULT || id: 16110024
+Remove behavior CommanderMoveToFlagAndAction (idName: 1100002) from Player
+Add behavior CommanderMoveToFlagAndAction (idName: 1100405) to Jasmine
+(param: TargetScene:Main|MoveMode:RunFast|FlagName:Guidance_Group3_1_8040_Trans|LookAtActor:8000)
+===Go to City Hall===
+
+{{mission_details
+|desc = The next stop is the City Hall, go with Jasmine.
+|details = Go to City Hall
+}}
+AREA TRIGGER CREATE || id: 11003 | sceneName: Main | flagName: Guidance_Group3_TriggerBox | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80000761 | missionId: 1100099
+Set PlayerIsTrigger to 0
+Set ShotsIndex to 2
+Jasmine stops standing still
+
+TRIGGER Procedure 2.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 11003
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 1100405) from Jasmine
+Add behavior CommanderMoveToFlagAndAction (idName: 1100406) to Jasmine
+(param: TargetScene:Main|MoveMode:Run|FlagName:Guidance_Group3_2_8040_Trans|LookAtActor:8000)
+Add behavior CommanderMoveToFlagAndAction (idName: 1100003) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:Guidance_Group3_2_player_Trans)
+AREA TRIGGER DELETE || id: 11003
+
+TRIGGER Procedure 2.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8040 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 30) A conversation 549, 550 starts:
+{{dialogue|Jasmine|The first thing you will notice about City Hall is that it's very big! Grown-ups often go into this building and talk a lot.}}
+{{dialogue|Jasmine|My Ma works here when she isn't going out into the desert... Aunt Heidi also works {{textcolor|green|next door}}. She builds bridges and {{textcolor|green|upgrades houses}} and stuff. Say, isn't that the same job as you...? What's the difference!?}}
+
+TRIGGER Procedure 2.0 Step 5.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 30) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 32) A conversation 1084, 1085, 551 starts:
+{{dialogue|Jasmine|Oh, by the way: from the station to here is the {{textcolor|green|Main Street}} of Sandrock...}}
+{{dialogue|Jasmine|Arvio's store, Grandma Vivi's clothes shop, Mr. Owen's saloon, ummm... Mr. Pablo's Parlor! Yeah, they're all on this street so you can definitely go shopping here when you have time.}}
+{{dialogue|Jasmine|Moving right along...!}}
+
+TRIGGER Procedure 2.0 Step 9.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 32) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 1100406) from Jasmine
+Add behavior CommanderMoveToFlagAndAction (idName: 1100407) to Jasmine
+(param: TargetScene:Main|MoveMode:RunFast|FlagName:Guidance_Group4_0_8040_Trans|LookAtActor:8000)
+Remove behavior CommanderMoveToFlagAndAction (idName: 1100003) from Player
+AREA TRIGGER CREATE || id: 11004 | sceneName: Main | flagName: Guidance_Group4_TriggerBox | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80000761 | missionId: 1100099
+===Go to the Church Temple===
+
+{{mission_details
+|desc = The next stop is the Church of the Light Temple, go with Jasmine.
+|details = Go to the Church Temple
+}}
+Set PlayerIsTrigger to 0
+Set ShotsIndex to 3
+
+TRIGGER Procedure 3.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 11004
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 1100407) from Jasmine
+Add behavior CommanderMoveToFlagAndAction (idName: 1100408) to Jasmine
+(param: TargetScene:Main|MoveMode:Run|FlagName:Guidance_Group4_8040_Trans|LookAtActor:8000)
+AREA TRIGGER DELETE || id: 11004
+STOPWATCH REAL TIME SET || id: 11009 | sec: 2.5
+DELAY MASK SET || maskId: 11004 | delayTime: 1 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 1.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 11004
+CONDITIONS
+Always:
+ACTIONS
+(cId 40) A conversation 552, 553 starts:
+{{dialogue|Jasmine|For the next stop on our tour, please bring your attention to right over there, where you'll see the beautiful {{textcolor|green|Church of the Light temple}}!}}
+{{dialogue|Jasmine|Most of us come here {{textcolor|green|every Sunday}} to sing and listen to Minister Matilda tell us not to do bad stuff. My favorite songs are ones about Peach. You should come next time!}}
+
+TRIGGER Procedure 3.0 Step 6.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 40) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 42) A conversation 1086, 1087 starts:
+{{dialogue|Jasmine|And this is the last stop on the tour! If you follow the path on the right you'll find the {{textcolor|green|Research Center}} and the {{textcolor|green|Golden Goose}}.}}
+{{dialogue|Jasmine|Um, I think that's it. This place is pretty big, you should look around when you have down time.}}
+
+TRIGGER Procedure 3.0 Step 9.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8040 | cId: 42 | missionId: 1100100
+CONDITIONS
+Always:
+ACTIONS
+NPC SET CAN INTERACT || npc: 8040 | canInteract: 1
+(cId 50) A conversation 126_0 starts:
+{{dialogue|Jasmine|This concludes the very special Jasmine Co. tour... that's enough walking for today. So! What do you think of your new home?}}
+
+*''Very nice!''
+*''So so.''
+*''This place is awful.''
+
+{{dialogue|Jasmine|indent=true|answer=Very nice!
+|Yeah! I think so, too! A lot of people don't like this place so much... but you do! So I think that means we can be good friends.}}
+{{dialogue|Jasmine|indent=true|answer=So so.
+|Oh... yeah, I guess Sandrock is kind of different from a lot of places... But I think after you get used to it, you're really gonna love it!}}
+{{dialogue|Jasmine|indent=true|answer=This place is awful.
+|Huh? Sorry, I forgot to listen to your answer. Aunt Heidi says I might have a problem with my attention span. Do you think birds get married? What are we talking about again?}}
+{{dialogue|Jasmine|Anyway, I'm sure you have lots of things to build; as for me, I need to go to Aunt Catori's game center! For... business! Come join me if you get time!}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 10.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 50) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1100099
+Remove behavior CommanderMoveToFlagAndAction (idName: 1100004) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 1100408) from Jasmine
+Add behavior CommanderMoveToFlagJasmine (idName: 1100409) to Jasmine
+(param: TargetScene:GameCenter|MoveMode:Run|FlagName:1600069_G2_Player_1)
+
+TRIGGER Procedure 3.0 Step 17.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagJasmine (idName: 1100409) from Jasmine
+AREA TRIGGER DELETE || id: 11005
+END MISSION 1100100
+
+TRIGGER Procedure 4.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1100100
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 11001
+AREA TRIGGER DELETE || id: 11002
+AREA TRIGGER DELETE || id: 11003
+AREA TRIGGER DELETE || id: 11004
+AREA TRIGGER DELETE || id: 11005
+Remove behavior CommanderMoveToFlagAndAction (idName: 1100401) from Jasmine
+Remove behavior CommanderMoveToFlagAndAction (idName: 1100403) from Jasmine
+Remove behavior CommanderMoveToFlagAndAction (idName: 1100405) from Jasmine
+Remove behavior CommanderMoveToFlagAndAction (idName: 1100407) from Jasmine
+Remove behavior CommanderMoveToFlagJasmine (idName: 1100409) from Jasmine
+NPC SET CAN INTERACT || npc: 8040 | canInteract: 1
+
+TRIGGER Procedure 4.0 Step 1.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 11001
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 11002
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 11003
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 11004
+CONDITIONS
+Always:
+ACTIONS
+Set PlayerIsTrigger to 1
+
+TRIGGER Procedure 4.0 Step 2.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8040 | enter: 0 | id: 11001
+ON AREA TRIGGER INTERACT || order: 0 | enter: 0 | npc: 8040 | id: 11002
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8040 | enter: 0 | id: 11003
+ON AREA TRIGGER INTERACT || order: 0 | enter: 0 | npc: 8040 | id: 11004
+CONDITIONS
+Check if PlayerIsTrigger is == 0
+ACTIONS
+In a speech bubble:
+{{dialogue|Jasmine|Over here!}}
+
+TRIGGER Procedure 4.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1100100
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 11005
+Remove behavior CommanderMoveToFlagJasmine (idName: 11001) from Jasmine
+Remove behavior CommanderMoveToFlagJasmine (idName: 1100409) from Jasmine

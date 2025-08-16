@@ -1,0 +1,352 @@
+Reading Mission 1800271: Watching Paint Dry
+
+<onlyinclude>{{Infobox mission
+|name = Watching Paint Dry
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Watching Paint Dry:
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if 8270A is == 1
+ACTIONS
+START MISSION 1800270
+Add 1 Paint of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800270
+CONDITIONS
+Always:
+ACTIONS
+Run mission Watching Paint Dry
+END MISSION 1800270
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800271
+CONDITIONS
+Always:
+ACTIONS
+===Make the Paint===
+
+{{mission_details
+|desc = Help Unsuur prepare the paint for his walls.
+|details = Make the Paint
+*{{i2|Paint|0/3}}
+}}
+
+TRIGGER Procedure 0.0 Step 0.5 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Unsuur
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1800270 | targetId: 1 | canSubmit: 0
+Watching Paint Dry is in state 2 with flag 1
+ACTIONS
+(cId 1) A conversation 9473 starts:
+{{dialogue|Unsuur|Hey, how's the paint going? Wait, don't tell me; I hate spoilers. See ya.}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | canSubmit: 1 | missionId: 1800270 | targetId: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Unsuur===
+
+{{mission_details
+|desc = The paint is ready. Take them to Unsuur.
+|details = Talk to Unsuur
+}}
+AREA TRIGGER CREATE || missionId: 1800270 | id: 82711 | sceneName: Main | flagName: Trigger_UnsuurHome | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80010640
+
+TRIGGER Procedure 0.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the UnsuurHome:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_unsuurhome
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 82711
+UNIQUE ACTION RUN || idStr: enter_unsuurhome
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the UnsuurHome:
+CONDITIONS
+Always:
+ACTIONS
+Unsuur stands still in UnsuurHome
+PLAYER SET POS ROT FLAG || sceneName: UnsuurHome | flagName: S8271_0_1
+SCENEITEM CREATE FLAG || itemType: 0 | id: 82713 | path: S8271_audio | sceneName: UnsuurHome | flagName: S8271_audio | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the UnsuurHome:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8271262) to Unsuur
+(param: TargetScene:UnsuurHome|MoveMode:Walk|FlagName:S8271_26_1|Action:LookAround|LookAtActor:8000)
+Add behavior CommanderMoveToFlagAndAction (idName: 8271001) to Player
+(param: TargetScene:UnsuurHome|MoveMode:Walk|FlagName:S8271_0_1|LookAtActor:8026|Action:Punch_Story)
+DELAY MASK SET || maskId: 82714 | delayTime: 2.5 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 4.1 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82714 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 82714 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 8271262) from Unsuur
+Remove behavior CommanderMoveToFlagAndAction (idName: 8271001) from Player
+SCENEITEM CREATE FLAG || flagName: S8271_scene | path: S8271_scene | id: 82711 | itemType: 0 | extraParams: -1 | sceneName: UnsuurHome
+
+TRIGGER Procedure 0.0 Step 4.2 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82714 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8271262) to Unsuur
+(param: TargetScene:UnsuurHome|MoveMode:Walk|FlagName:S8271_26_2|Action:LookAround|LookAtActor:8000)
+Add behavior CommanderMoveToFlagAndAction (idName: 8271001) to Player
+(param: TargetScene:UnsuurHome|MoveMode:Walk|FlagName:S8271_0_2|Action:LookSky)
+Remove 3 Paint of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8026 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 2654_0 starts:
+{{dialogue|Unsuur|Whew. Nice work. The hardest part is behind us.}}
+{{dialogue|Unsuur|First, some music to set the mood...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 2655_0 starts:
+{{dialogue|Unsuur|Now it's time to sit back and enjoy the show.}}
+
+*''Show? What show?''
+*''You mean... watching paint dry?''
+
+{{dialogue|Unsuur|Yep. You've heard the stories. But did you ever think you'd really be living it? Watching paint dry.}}
+The conversation ends.
+SCENEITEM CREATE FLAG || itemType: 0 | id: 82712 | path: S8271_audio_music | sceneName: UnsuurHome | flagName: S8271_audio | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 7.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Unsuur stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8271262) from Unsuur
+Remove behavior CommanderMoveToFlagAndAction (idName: 8271001) from Player
+AREA TRIGGER CREATE || missionId: 1800271 | id: 82712 | sceneName: UnsuurHome | flagName: Trigger2_S8271 | showOnMap: 0 | mapIcon: MissionAreaBranch | transId: 0
+NPC SET CAN INTERACT || npc: 8026 | canInteract: 0
+Add behavior CommanderBubbleTag (idName: 8271269) to Unsuur
+(param: BubbleTag:S8271_Talk|BubbleTime:10|minTime:10|maxTime:10)
+STOPWATCH GAME TIME SET || minute: 30 | id: 82711
+===Wait for the Paint to Dry===
+
+{{mission_details
+|desc = Unsuur wants you to stay with him and watch the paint dry. He says it's thrilling.
+|details = Wait for the Paint to Dry
+}}
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 10.4 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH GAME TIME END || order: 0 | id: 82711
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 82712
+NPC SET CAN INTERACT || canInteract: 1 | npc: 8026
+
+TRIGGER Procedure 0.0 Step 12.0 Order 10 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | enter: 0 | npc: 8000 | id: 82712
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+(cId 4) A conversation 2657_0 starts:
+{{dialogue|Unsuur|Woah, you're going already? The party's just getting started.}}
+
+*''Oh, I'll stay.''
+*''Man, this is boring!''
+*''I have, er, commissions to do...''
+
+{{dialogue|Unsuur|indent=true|answer=Oh, I'll stay.
+|Oh, cool. You scared me for a second, I thought maybe you weren't having a good time...}}
+{{dialogue|Unsuur|indent=true|answer=Man, this is boring!
+|Oh...}}
+{{dialogue|Unsuur|indent=true|I'm sorry. I wanted to do something nice for you. Maybe this isn't for everyone. Well, see ya.}}
+{{dialogue|Unsuur|indent=true|answer=I have, er, commissions to do...
+|Oh... okay.}}
+{{dialogue|Unsuur|indent=true|Yeah, those are important. Well, maybe next time.}}
+
+TRIGGER Procedure 0.0 Step 12.1 Order 11 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId: 4) There is a conversation segment (id 9480) that ends:
+{{dialogue|Unsuur|Oh, cool. You scared me for a second, I thought maybe you weren't having a good time...}}
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+PLAYER SET POS ROT FLAG || sceneName: UnsuurHome | flagName: S8271_0_2
+
+TRIGGER Procedure 0.0 Step 12.2 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 4) There is a conversation segment (id 9482) that ends:
+{{dialogue|Unsuur|I'm sorry. I wanted to do something nice for you. Maybe this isn't for everyone. Well, see ya.}}
+(cId: 4) There is a conversation segment (id 9484) that ends:
+{{dialogue|Unsuur|Yeah, those are important. Well, maybe next time.}}
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 82713 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 82712
+
+TRIGGER Procedure 0.0 Step 12.3 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 82713
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8266_0_5
+DELAY MASK SET || maskId: 82713 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 12.5 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from UnsuurHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderBubbleTag (idName: 8271269) from Unsuur
+NPC SET CAN INTERACT || npc: 8026 | canInteract: 1
+AREA TRIGGER DELETE || id: 82712
+SCENEITEM DELETE || itemType: 0 | id: 82713
+SCENEITEM DELETE || itemType: 0 | id: 82712
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1800270
+STOPWATCH GAME TIME UNSET || id: 82711
+
+TRIGGER Procedure 0.0 Step 20.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH GAME TIME END || order: 0 | id: 82711
+CONDITIONS
+CHECK CURRENT SCENE || flag: 1 | name: UnsuurHome
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+(cId 5) A conversation 2661_0 starts:
+{{dialogue|Unsuur|Looks like the paint is dry. Well, you know what they say. Nothing good can last forever.}}
+{{dialogue||(Your calm meditation with Unsurr watching paint dry has cleared your mind, and given you a stronger sense of purpose. Luck increased by 20 for 24 hours!)}}
+{{dialogue|Unsuur|Did you enjoy yourself? My favorite part was when the paint dried.}}
+{{dialogue|Unsuur|Well, I'm beat. That was more than enough excitement for one day. I'll catch you later, ''Player''.}}
+The conversation ends.
+ACTION NPC REMOVE CLUSTER || cluster: Story1800271_8026
+AREA TRIGGER DELETE || id: 82712
+NPC SET CAN INTERACT || npc: 8026 | canInteract: 1
+Remove behavior CommanderBubbleTag (idName: 8271269) from Unsuur
+
+TRIGGER Procedure 0.0 Step 21.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Add behavior GoSleep_Unsuur (idName: 8271263) to Unsuur
+(param: -1)
+ACTOR BUFF ADD || npc: 8000 | buffId: 405 | instanceId: 8271
+Unsuur stops standing still
+SUBMIT MISSION 1800270
+STOPWATCH GAME TIME SET || minute: 120 | id: 82719
+
+TRIGGER Procedure 0.0 Step 21.1 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH GAME TIME END || order: 0 | id: 82719
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior GoSleep_Unsuur (idName: 8271263) from Unsuur
+
+TRIGGER Procedure 0.0 Step 22.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 82713
+SCENEITEM DELETE || itemType: 0 | id: 82712
+Remove behavior GoSleep_Unsuur (idName: 8271263) from Unsuur
+END MISSION 1800271
+
+TRIGGER Procedure 1.0 Step 6.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+At the beginning of the day:
+CONDITIONS
+Watching Paint Dry is in state 3 with flag 0
+CHECK CURRENT SCENE || name: UnsuurHome | flag: 0
+ACTIONS
+Remove behavior CommanderBubbleTag (idName: 8271269) from Unsuur
+NPC SET CAN INTERACT || npc: 8026 | canInteract: 1
+AREA TRIGGER DELETE || id: 82712
+SCENEITEM DELETE || itemType: 0 | id: 82713
+SCENEITEM DELETE || itemType: 0 | id: 82712
+CUTSCENE UI STATE EXIT || 
+Remove behavior GoSleep_Unsuur (idName: 8271263) from Unsuur
+SUBMIT MISSION 1800270
+END MISSION 1800271

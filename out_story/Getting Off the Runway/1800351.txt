@@ -1,0 +1,130 @@
+Reading Mission 1800351: Getting Off the Runway
+
+<onlyinclude>{{Infobox mission
+|name = Getting Off the Runway
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 875
+|reputation = None
+|gols = None
+|npc1 = Fang
+|rp1 = 15
+|npc2 = X
+|rp2 = 10
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Getting Off the Runway:
+
+TRIGGER Procedure 0.0 Step 12.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if 8350B is == 1
+Check if 8350A is == 1
+ACTIONS
+START MISSION 1800350
+
+TRIGGER Procedure 0.0 Step 14.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800350
+CONDITIONS
+Always:
+ACTIONS
+Run mission Getting Off the Runway
+Run mission Grandma Vivi's Guidance
+END MISSION 1800350
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800351
+CONDITIONS
+Always:
+ACTIONS
+===Construct Catwalk===
+
+{{mission_details
+|desc = You have gotten the diagrams to make a fashion runway, make it at your Assembly Station.
+|details = Construct Catwalk
+*{{i2|Fashion Runway|0/1}}
+}}
+Add 1 Fashion Runway of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | canSubmit: 1 | missionId: 1800350 | targetId: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Pablo===
+
+{{mission_details
+|desc = The stage is ready, take it to Pablo and tell him the good news.
+|details = Talk to Pablo
+*{{i2|Fashion Runway|0/1}}
+*{{i2|Pablo|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Pablo
+CONDITIONS
+CHECK PLAYER ITEM || item: 19810119 | itemGrade: 0 | set: 2 | count: 1
+ACTIONS
+(cId 1) A conversation 6159_0 starts:
+{{dialogue|Pablo|Absolutely beautiful, darling! I can see it now. The walk, the turn, the pout.}}
+
+*''I'm the best.'' (No unique dialogue)
+*''This is your dream, I want to help you make it reality!'' (No unique dialogue)
+
+{{dialogue|Pablo|Oh, Peach, I'm just so excited! Ahem... Excuse me.}}
+{{dialogue|Pablo|I can foresee how it will all play out, and it's delightful. Me, standing onstage introducing the show... no, please, hold your applause... okay, maybe just a little... Then exit stage right, the audience chanting my name... "Pablo, Pablo, Pablo..."}}
+{{dialogue|Pablo|The first fashion show in Sandrock, and the most exciting in the Free Cities. It is within sight...}}
+{{dialogue|Pablo|''Player'', you've been instrumental. The fashion elite will thank you.}}
+The conversation ends.
+Remove 1 Fashion Runway of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1800350
+END MISSION 1800351
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+At the beginning of the day:
+CONDITIONS
+CHECK PLAYER ITEM || item: 89810119 | itemGrade: -1 | set: 3 | count: 0
+ACTIONS
+Add 1 Fashion Runway of Default quality (Do not notify player)
+
+==Rewards==
+{{mission reward
+|npc1 = Fang
+|rp1 = 15
+|npc2 = X
+|rp2 = 10
+|exp = 875
+|reputation = None
+|gols = None
+}}

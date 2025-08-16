@@ -1,0 +1,125 @@
+Reading Mission 1200205: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200135
+
+TRIGGER Procedure 3.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Mystical Investigations is successfully completed
+ACTIONS
+The player receives a letter:
+{{mail|355}}
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END || order: 0 | result: 1 | missionId: 1200194
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1200203
+Run mission #1200204
+Run mission #1200205
+Run mission #1200206
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200205
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER ONCE CREATE || missionId: 1200205 | id: 22051 | sceneName: Main | flagName: kidintown2_trigger1 | showOnMap: 1 | mapIcon: MissionArea | transId: 80008804
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22051
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 22051 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 22051 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Bronco the Kid stands still in Main and looks at Rocky
+Rocky stands still in Main and looks at Bronco the Kid
+PLAYER SET POS ROT FLAG || flagName: kidintown2_player1 | sceneName: Main
+DELAY MASK SET || maskId: 22051 | delayTime: 1 | durationTime: -2 | curveIndex: 0 | changeType: 1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22051
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderBubbleTag (idName: 22061) from Bronco the Kid
+Remove behavior CommanderBubbleTag (idName: 22061) from Rian
+Remove behavior CommanderBubbleTag (idName: 22061) from Dan-bi
+Remove behavior CommanderBubbleTag (idName: 22091) from Bronco the Kid
+Remove behavior CommanderBubbleTag (idName: 22091) from Ernest
+Remove behavior CommanderBubbleTag (idName: 22081) from Bronco the Kid
+Remove behavior CommanderBubbleTag (idName: 22081) from Burgess
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 22051
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 1649_0 starts:
+{{dialogue|Bronco the Kid|Perhaps it's you! You're the spy! You communicate with Logan by smacking certain rocks in a certain order! It's one ding for yes and two dings for no, say it ain't the truth!}}
+{{dialogue|Rocky|I dunno what you're talkin' about, pal... These weird accusations are confusin' me. And when I get confused, I start to get angry!}}
+{{dialogue|Bronco the Kid|Uh huh. And I suppose you're one of those "you wouldn't like me when I'm angry" types, huh?}}
+{{dialogue|Rocky|Yeah, pretty much! Ruuuuaaaaaghhhh!}}
+{{dialogue|Bronco the Kid|I... er... I'll come back at a better time.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Rocky stops standing still
+Bronco the Kid stops standing still
+CUTSCENE UI STATE EXIT || 
+END MISSION 1200205
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1200205
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 22051

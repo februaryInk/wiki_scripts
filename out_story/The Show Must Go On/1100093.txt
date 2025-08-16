@@ -1,0 +1,197 @@
+Reading Mission 1100093: The Show Must Go On
+
+<onlyinclude>{{Infobox mission
+|name = The Show Must Go On
+|image =
+|description = Sandrock was hit pretty hard by the sandstorm, it's up to you and Mi-an to help out!
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 1000
+|reputation = 25
+|gols = 800
+|npc1 = Matilda
+|rp1 = 10
+|npc2 = Heidi
+|rp2 = 10
+|npc3 = Owen
+|rp3 = 20
+|npc4 = Mi-an
+|rp4 = 10
+|rewards = {{i2|Desert Defender Shirt}|1}
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100002
+
+TRIGGER Procedure 0.0 Step 11.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+CHECK DATE || compare: 5 | year: 1 | month: 2 | day: 25
+Picking Up the Slack is successfully completed
+
+GROUP 10:
+CHECK DATE || compare: 2 | year: 1 | month: 2 | day: 28
+Picking Up the Slack is successfully completed
+
+ACTIONS
+Run mission #1100095
+Run mission Takin' it Easy
+
+TRIGGER Procedure 0.0 Step 12.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || exist: 1 | info: 1 | key: pensandstorm
+ACTIONS
+Run mission The Show Must Go On
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100093
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1100093
+Set DAY to 0
+Set partUp to 0
+Set partDown to 0
+Newspaper adds Article content 1008.
+Title: Sudden Sandstorm Strikes Sandrock!
+It comes as no surprise to most of y'all, but here's a little heads up for the new folk around town:
+
+Yes, you're in a sandstorm! No, it's not the end of the world! Yes, there will be more in the future. No, you shouldn't walk around with your mouth open.
+
+On behalf of City Hall: we STRONGLY RECOMMEND that everyone STAY INSIDE during the sandstorms; it's not just the unpleasantries of the weather, but there have been known to be LARGE MONSTERS that roam around, so be warned!
+
+If you must go out, please wear your Sand Gear at all times.
+
+For commissions: you all know the drill by now. Any items needing replacement can be posted on the Commission Board. If things get bogged down at the Commerce Guild, you may ask Builders directly to help out, but Builders are not required to accept these informal requests.
+
+Everyone stay safe, and may the Light always find you.
+
+Minister Matilda
+Set LEAVE to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+CHECK WEATHER STATE || weather: 2 | flag: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+Set LEAVE to 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Check if LEAVE is == 1
+ACTIONS
+GROUP 0:
+CUTSCENE UI STATE ENTER || 
+{{cutscene|id = 1071}}
+A cutscene CG_AFTERSTORM (duration: 0.0) starts playing
+Sandstorm Aftermath - Not long after I arrived in Sandrock, I saw firsthand what a sandstorm can do to a town. Everyone worked hard to repair the damage and prepare for the next one.
+NPC ADD TAG || tag: stagebroken
+SCENEITEM DELETE || itemType: 0 | id: 100324
+SCENEITEM CREATE FLAG || itemType: 0 | id: 110939 | path: Label_WuTaiBroken | sceneName: Main | extraParams: 0 | flagName: wutai
+AREA TRIGGER CREATE || missionId: 1100093 | id: 11093 | sceneName: Main | flagName: 1193_G2_AreaTriggerFlag | showOnMap: 1 | mapIcon: MissionArea | transId: 80000689
+Set global blackboard key AfterSandStorm1 with info 1.
+Owen stands still in Main
+Matilda stands still in Main
+Heidi stands still in Main
+Mi-an stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+
+GROUP 1:
+Owen stops standing still
+Heidi stops standing still
+Matilda stops standing still
+NPC ADD TAG || tag: ChatKeeper
+ACTION NPC GEN CLUSTER || cluster: 1193GroupTalk | behavior: CommanderChat | min: 3 | max: 4 | npcs: 8001,8009,8018 | randomNpcs: 0 | leader: -10
+
+
+TRIGGER Procedure 0.0 Step 3.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_AFTERSTORM | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 875, 213_0 starts:
+{{dialogue|Mi-an|Hiya ''Player'', are you okay?}}
+{{dialogue|Mi-an|The sandstorm last night was terrifying, I didn't sleep a wink! How are you holding up?}}
+
+*''It was nothing.''
+*''I wanted to go back to Highwind.''
+
+{{dialogue|Mi-an|indent=true|answer=It was nothing.
+|Really?! Woah, you must be super brave! Hopefully I'll handle it better next time!}}
+{{dialogue|Mi-an|indent=true|answer=I wanted to go back to Highwind.
+|Yeah, that thought crossed my mind as well. We never had any truly awful weather in Tallsky. But we're here now, so we'd better get used to it!}}
+{{dialogue|Mi-an|Anyway, I was walking around town earlier looking at the damage and ran into Matilda. She wants us to go check out that {{textcolor|green|stage outside of the Blue Moon}} right now, so I came to get you.}}
+{{dialogue|Mi-an|Come on, she's waiting.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Mi-an stops standing still
+START MISSION 1100093
+
+TRIGGER Procedure 0.0 Step 5.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1100093
+CONDITIONS
+Always:
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: AfterSandStorm1
+Run mission The Show Must Go On
+END MISSION 1100093
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 2:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Owen stops standing still
+Heidi stops standing still
+Matilda stops standing still
+
+==Rewards==
+{{mission reward
+|npc1 = Matilda
+|rp1 = 10
+|npc2 = Heidi
+|rp2 = 10
+|npc3 = Owen
+|rp3 = 20
+|npc4 = Mi-an
+|rp4 = 10
+|exp = 1000
+|reputation = 25
+|gols = 800
+|rewards = {{i2|Desert Defender Shirt}|1}
+}}

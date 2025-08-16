@@ -1,0 +1,515 @@
+Reading Mission 1700389: "Him"
+
+<onlyinclude>{{Infobox mission
+|name = "Him"
+|image =
+|description = A mysterious figure has appeared who seeks to reopen the scars in Fang's heart. What will the young doctor do?
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 2750
+|reputation = 25
+|gols = 1500
+|npc1 = Fang
+|rp1 = 50
+}}</onlyinclude>
+
+==Overview==
+Run conditions from "Him":
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 173911) to Fang
+(param: TargetScene:Main|FlagName:church_peng|MoveMode:Walk)
+Add behavior CommanderMoveToFlag (idName: 173911) to X
+(param: TargetScene:Main|FlagName:church_peng|MoveMode:Walk)
+Fang stops standing still
+X stops standing still
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 173911) from X
+Remove behavior CommanderMoveToFlag (idName: 173911) from Fang
+NPC LEAVE || npc: 8016
+NPC LEAVE || npc: 8042
+Run mission "Him"
+END MISSION 1700391
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700389
+CONDITIONS
+Always:
+ACTIONS
+Set active to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 20796:
+{{dialogue|Player|(What should I say?)}}
+
+*''No problem.'' (No unique dialogue)
+*''I've got a lot on my plate...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 20797 starts:
+{{dialogue|173891|It's fine. They're cooperating. Good, Builder. Please come with me.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: FangQ9Saloon_Player
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 173891) to 173891
+(param: FlagName:FangQ9Saloon_Guard2|TargetScene:Saloon)
+STOPWATCH REAL TIME SET || sec: 2.5 | id: 173891
+173891 stops standing still
+
+TRIGGER Procedure 0.0 Step 0.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || sec: 2.5 | id: 173891
+Add behavior CommanderPlayerMoveSit (idName: 173891) to Player
+(param: SeatDramaName:2ndFloorRoom03Seat01)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 173891) from 173891
+Add behavior CommanderMoveToFlagAndAction (idName: 173891) to 173891
+(param: FlagName:FangQ9Saloon_Guard|TargetScene:Saloon)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 173891) to 173891
+(param: FlagName:FangQ9Saloon_Guard2|TargetScene:Saloon)
+STOPWATCH REAL TIME SET || sec: 2 | id: 173892
+
+TRIGGER Procedure 0.0 Step 0.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 173892 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+Remove behavior CommanderPlayerMoveSit (idName: 173891) from Player
+
+TRIGGER Procedure 0.0 Step 0.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 20799) that ends:
+{{dialogue|173891|Here's the Builder you asked for.}}
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 1738911 | sec: 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 20796:
+{{dialogue|Player|(What should I say?)}}
+
+*''No problem.'' (No unique dialogue)
+*''I've got a lot on my plate...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 20798 starts:
+{{dialogue|173891|I think you misunderstand. We're not asking...}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 20799, 20800 starts:
+{{dialogue|173891|Here's the Builder you asked for.}}
+{{dialogue|Talon|Good. Leave us.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 173891
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 20801 starts:
+{{dialogue|Talon|Sit.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerMoveSit | eventName: SitDownFinished
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 20802, 20803, 20804, 6662_0, 20809, 20810, 20811, 6665_0, 20817, 20818, 20819, 20820, 20821, 20822, 6669_0, 20826, 20827, 6672_0, 20833, 21086, 20834, 20835, 20836, 21087, 21089, 21090, 20837, 20838, 6675_0, 6678_0, 20843, 20844, 20845, 20846 starts:
+{{dialogue|Talon|...So this is who he chose... interesting.}}
+{{dialogue|Talon|First, let me introduce myself. My name is Talon, hailing from Seesai. You may have heard of me. You are the Builder, ''Player'', is that correct?}}
+{{dialogue|Talon|Good. Then let me make a long story short. Tomorrow, I will be returning home, with my son...}}
+{{dialogue|Player|(What should I say?)}}
+
+*''Talon? Nope, never heard of you.''
+*''Who is your son?''
+
+{{dialogue|Talon|indent=true|answer=Talon? Nope, never heard of you.
+|You haven't heard of me? Fang, he didn't mention me at all?}}
+{{dialogue|Talon|indent=true|I am his father.}}
+{{dialogue|Talon|indent=true|answer=Who is your son?
+|Your husband, Fang.}}
+{{dialogue|Talon|There is no commission. Forgive my deception. I wanted to tell you face to face when introducing myself as Fang's father. I was afraid you would not allow me to speak my piece.}}
+{{dialogue|Talon|Long have I searched... and now, I've finally found him.}}
+{{dialogue|Talon|Something that should've happened long ago... There have been some tribulations along the way. But no matter. The reason I called you here: I believe you have the right to know that he is leaving. Without you.}}
+{{dialogue|Player|(What should I say?)}}
+
+*''What!? What should I do, then?''
+*''He won't go with you!''
+
+{{dialogue|Talon|indent=true|answer=He won't go with you!
+|Oh, I think he will. I always get what I want. One way or another.}}
+{{dialogue|Talon|If you would like to come to Seesai, I would not object-}}
+{{dialogue|Player|(What should I say?)}}
+
+*''No way!''
+*''Take me with you!''
+
+{{dialogue|Talon|—But you would no longer be his spouse. You will have nothing to do with him in the future.}}
+The conversation ends.
+{{dialogue|Talon|Fang's hand in marriage is far too valuable to be wasted on someone of your... strata.}}
+{{dialogue|Talon|My son will have a bright future. He will not be a reclusive shrink in some lowly desert town. I will make up for the years he has been away. Give him the life he never had.}}
+{{dialogue|Talon|I digress... These are family matters. None of your concern. Let's get back to the issue at hand. You!}}
+{{dialogue|Talon|I'm not made of stone, ''Player''. I'll make you one offer and one offer only: if you are willing to leave him and be quiet about it, I will compensate you handsomely.}}
+{{dialogue|Talon|Yes, with you quietly out of the picture, I will have no trouble bringing my boy home. He'll be heartbroken that you 've left so abruptly but... he'll get over it.}}
+{{dialogue|Talon|So what about something to the tune of... 2,000,000 Gols. Would that suffice?}}
+{{dialogue|Player|(What should I say?)}}
+
+*''You think money can solve everything!?''
+*''That is a lot...''
+*''No. I don't need your money.''
+
+{{dialogue|Talon|indent=true|answer=You think money can solve everything!?
+|Mm. Money can solve most of life's problems. If Fang wants to continue practicing medicine as a hobby, then I will open a hospital for him in Seesai. Is this something you could provide?}}
+{{dialogue|Talon|indent=true|answer=That is a lot...
+|Haha... enticed already, are we? This is going to be easier than I thought...}}
+{{dialogue|Talon|indent=true|answer=No. I don't need your money.
+|Mm. Money can solve most of life's problems. If Fang wants to continue practicing medicine as a hobby, then I will open a hospital for him in Seesai. Is this something you could provide?}}
+{{dialogue|Talon|Indeed. Speaking with you it is abundantly clear to me, now more than ever, Fang belongs in Seesai. His home.}}
+{{dialogue|Talon|I regret only the timing... his stepmother has passed away, and his brother has suffered... an ill fate. If not for this, we could be whole again...}}
+{{dialogue|Player|(What should I say?)}}
+
+*''Whole again? What about Fang's mother?''
+*''His stepmother was a terrible person!''
+
+{{dialogue|Talon|indent=true|answer=Whole again? What about Fang's mother?
+|Sarnai... Sarnai...}}
+{{dialogue|Talon|indent=true|That is in the past. Only the weak dwell on that which they cannot change.}}
+{{dialogue|Talon|indent=true|answer=His stepmother was a terrible person!
+|What...!?}}
+{{dialogue|Talon|You seem to hold some sort of grudge. Sigh... but how could I have thought you could possibly understand what is best for him? You are but a simple Builder, stuck in this decrepit, backwards town.}}
+{{dialogue|Talon|...}}
+{{dialogue|Talon|There is one last thing I require of you. Having been absent all these years... Hmph... perhaps in some ways... you know who he is now better than I.}}
+{{dialogue|Talon|So, tell me. What reasons has he given for his behavior? Why does he insist on running from me, running from his destiny?}}
+{{dialogue|Player|(What should I do?)}}
+
+*''(Calmly tell the truth)'' (No unique dialogue)
+*''(Scold him)'' (No unique dialogue)
+
+{{dialogue|Player|...}}
+{{dialogue|Player|...}}
+{{dialogue|Player|...}}
+{{dialogue|Talon|Abuse? What are you saying? Covered in scars!? Impossible. How could they do this to him without my knowledge!?}}
+{{dialogue|Talon|That... no, I didn't know...! That can't be true...}}
+{{dialogue|Player|(What should I say?)}}
+
+*''You ruined two families!''
+*''(Remain silent)''
+
+{{dialogue|Talon|indent=true|answer=You ruined two families!
+|Sarnai... it was love at first sight. I've never loved someone as I did her... How could I have not seen...}}
+{{dialogue|Talon|indent=true|answer=(Remain silent)
+|...}}
+{{dialogue|Player|(What should I say?)}}
+
+*''You don't love anyone, you only love yourself!''
+*''(Remain silent)''
+
+{{dialogue|Talon|indent=true|answer=You don't love anyone, you only love yourself!
+|I wasn't there... Work kept me away...}}
+{{dialogue|Talon|indent=true|answer=(Remain silent)
+|...}}
+{{dialogue|Player|(What should I say?)}}
+
+*''Go back to Seesai, and leave Fang alone.'' (No unique dialogue)
+*''(Remain silent)'' (No unique dialogue)
+
+{{dialogue|Talon|Your story... is hard to believe. I can't...}}
+{{dialogue|173891|Mr Talon, sir. What's going on? Do you need assistance?}}
+{{dialogue|Talon|Ahem, come in. I need to ask something of you.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 173891 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 20847, 20848, 20849, 20850, 20851 starts:
+{{dialogue|Talon|My late wife and Fang. Did she harm him? Did she hide anything from me?}}
+{{dialogue|173891|I... I... I don't know...}}
+{{dialogue|Talon|I will ask you only one more time. Choose your next words very carefully. Did. She. Harm him?}}
+{{dialogue|173891|Ah... Mr. Talon, sir. We - we never tried to hide anything, but... Mrs. Talon... she gave orders. We dared not question her... She threatened us with-}}
+{{dialogue|Talon|Enough! Leave us.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 173892
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 20852, 20853, 20854, 20856, 20857, 20858 starts:
+{{dialogue|Talon|Fang... so this is why you ran away...}}
+{{dialogue|Talon|I've been deceiving myself. It's all true. And surely she obstructed my men from finding him... I should have realized sooner.}}
+{{dialogue|Talon|Even on her deathbed... she still acted innocent... How... horrid...}}
+{{dialogue|Talon|''Player'', thank you for telling me these things. I apologize for my demeanor before. It was unbecoming of me. Things have been... stressful as of late.}}
+{{dialogue|Talon|But know this... it is imperative that I take Fang home. I concede that he has found a person who really cares about him, so let's do this: sell your workshop and join us, in Seesai. We'll... find a way to make you a noble.}}
+{{dialogue|Player|(What should I say?)}}
+
+*''We're not leaving Sandrock.'' (No unique dialogue)
+*''Stop controlling his life.'' (No unique dialogue)
+*''This is so sudden...'' (No unique dialogue)
+
+
+TRIGGER Procedure 0.0 Step 0.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173892 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 173891) from 173891
+173891 stands still in Saloon
+Set global blackboard key FangQ9Door with info 1.
+Remove behavior CommanderSit (idName: 173891) from Talon
+DELAY MASK SET || maskId: 173892 | delayTime: 3 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173892 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 20866 starts:
+{{dialogue|Player|(Fang... I need to meet him at the train platform tomorrow. Maybe I can warn him...)}}
+CUTSCENE UI STATE EXIT || 
+DELIVER MISSION 1700389
+START MISSION 1700389
+Run mission "Him"
+===Wait for Tomorrow===
+
+{{mission_details
+|desc = Fang's biological father has found him here in Sandrock and seeks to take him back to Seesai. Head to the Train Station immediately tomorrow morning to tell him the news as soon as possible.
+|details = Wait for Tomorrow
+}}
+END MISSION 1700389
+
+TRIGGER Procedure 0.0 Step 0.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173892 | eventType: 4
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: FangQ9Saloon_Player2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 34 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_saloon
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_saloon
+
+TRIGGER Procedure 0.0 Step 0.0 Order 35 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: FangQ9Saloon_Player
+Talon stands still in Saloon
+173891 stands still in Saloon
+Add behavior CommanderSit (idName: 173891) to Talon
+(param: SeatDramaName:2ndFloorRoom03Seat00|TargetScene:Saloon)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 36 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 20858:
+{{dialogue|Player|(What should I say?)}}
+
+*''We're not leaving Sandrock.'' (No unique dialogue)
+*''Stop controlling his life.'' (No unique dialogue)
+*''This is so sudden...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 20859, 20861, 20862, 20863, 20864, 20865 starts:
+{{dialogue|Talon|What good could you possibly see in this town!?}}
+{{dialogue|Talon|You must cease your protest against me, ''Player''. You are starting to test my patience. Fang's place is at my side, and you ought to be grateful I'd even consider you worthy of our family name!}}
+{{dialogue|Talon|You live in a desolate waste like this, and talk of building a life here? This is not fulfillment, this is complacency! Admit it! Admit that I'm doing what's best for Fang.}}
+{{dialogue|Talon|Tomorrow, Fang will be returning from the goose chase I have sent him on. Yes, yes... there is no "sick little girl." I apologize once again for my deception; I had to ensure we could have some alone time.}}
+{{dialogue|Talon|Let it not be said I am without mercy. You have twenty-four hours. Pack your things, enjoy a last meal, say goodbye to the yokels. Then I will take Fang. With or without you.}}
+{{dialogue|Talon|''Player'', that is all. You may leave.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 37 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 20858:
+{{dialogue|Player|(What should I say?)}}
+
+*''We're not leaving Sandrock.'' (No unique dialogue)
+*''Stop controlling his life.'' (No unique dialogue)
+*''This is so sudden...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 20860, 20861, 20862, 20863, 20864, 20865 starts:
+{{dialogue|Talon|Control? How can I rest assured knowing he's living in a town like this!? There's nothing for him here!}}
+{{dialogue|Talon|You must cease your protest against me, ''Player''. You are starting to test my patience. Fang's place is at my side, and you ought to be grateful I'd even consider you worthy of our family name!}}
+{{dialogue|Talon|You live in a desolate waste like this, and talk of building a life here? This is not fulfillment, this is complacency! Admit it! Admit that I'm doing what's best for Fang.}}
+{{dialogue|Talon|Tomorrow, Fang will be returning from the goose chase I have sent him on. Yes, yes... there is no "sick little girl." I apologize once again for my deception; I had to ensure we could have some alone time.}}
+{{dialogue|Talon|Let it not be said I am without mercy. You have twenty-four hours. Pack your things, enjoy a last meal, say goodbye to the yokels. Then I will take Fang. With or without you.}}
+{{dialogue|Talon|''Player'', that is all. You may leave.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 38 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the third option in conversation segment 20858:
+{{dialogue|Player|(What should I say?)}}
+
+*''We're not leaving Sandrock.'' (No unique dialogue)
+*''Stop controlling his life.'' (No unique dialogue)
+*''This is so sudden...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 20861, 20862, 20863, 20864, 20865 starts:
+{{dialogue|Talon|You must cease your protest against me, ''Player''. You are starting to test my patience. Fang's place is at my side, and you ought to be grateful I'd even consider you worthy of our family name!}}
+{{dialogue|Talon|You live in a desolate waste like this, and talk of building a life here? This is not fulfillment, this is complacency! Admit it! Admit that I'm doing what's best for Fang.}}
+{{dialogue|Talon|Tomorrow, Fang will be returning from the goose chase I have sent him on. Yes, yes... there is no "sick little girl." I apologize once again for my deception; I had to ensure we could have some alone time.}}
+{{dialogue|Talon|Let it not be said I am without mercy. You have twenty-four hours. Pack your things, enjoy a last meal, say goodbye to the yokels. Then I will take Fang. With or without you.}}
+{{dialogue|Talon|''Player'', that is all. You may leave.}}
+
+TRIGGER Procedure 0.0 Step 0.1 Order 39 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+AFTER DESERIALIZE || order: 0
+When the player wakes up:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: SummitBegin | info: 1 | exist: 0
+ACTIONS
+Set active to 1
+Set global blackboard key leavehome with info 1.
+
+TRIGGER Procedure 0.0 Step 0.2 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+Check if active is == 1
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+
+TRIGGER Procedure 0.0 Step 0.3 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM ADD || id: 17 | scene: Main | instId: 173891 | flagName: npc_beforehome | dailyBehavior: CommanderIdle
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 0.4 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 20795, 20796 starts:
+{{dialogue|173891|Ah, you're a Builder, right? May I have a moment of your time? My boss has a commission he wishes completed promptly. If I may be frank, it is in your best interest to comply...}}
+{{dialogue|Player|(What should I say?)}}
+
+*''No problem.'' (No unique dialogue)
+*''I've got a lot on my plate...'' (No unique dialogue)
+
+
+==Rewards==
+{{mission reward
+|npc1 = Fang
+|rp1 = 50
+|exp = 2750
+|reputation = 25
+|gols = 1500
+}}

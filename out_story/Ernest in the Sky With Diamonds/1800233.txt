@@ -1,0 +1,524 @@
+Reading Mission 1800233: Ernest in the Sky With Diamonds
+
+<onlyinclude>{{Infobox mission
+|name = Ernest in the Sky With Diamonds
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Ernest in the Sky With Diamonds:
+
+TRIGGER Procedure 0.0 Step 10.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 8232000) from Player
+Remove behavior CommanderNPCActionLoop (idName: 8232500) from Banjo
+Remove behavior CommanderPlayerAction (idName: 8232003) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8232001) from Player
+CUTSCENE UI STATE EXIT || 
+START MISSION 1800232
+
+TRIGGER Procedure 0.0 Step 12.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800232
+CONDITIONS
+Always:
+ACTIONS
+Run mission Ernest in the Sky With Diamonds
+END MISSION 1800232
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800233
+CONDITIONS
+Always:
+ACTIONS
+===Prepare the Dried Sandacuda===
+
+{{mission_details
+|desc = If you want to get that ball, you'll need to get it out of Banjo's grasp. Try and prepare some Dried Sandacuda to distract him.
+|details = Prepare the Dried Sandacuda
+*{{i2|Dried Sandacuda|0/2}}
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1800232 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Find Banjo===
+
+{{mission_details
+|desc = The food is ready. Go and find Banjo and exchange it for the paper ball.
+|details = Find Banjo
+*{{i2|Dried Sandacuda|0/2}}
+*{{i2|Banjo|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Banjo
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1800232 | targetId: 2 | canSubmit: 1
+ACTIONS
+(cId 1) A conversation 6446 starts:
+{{dialogue|Banjo|Mrow...}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+CHECK CURRENT SCENE || flag: 1 | name: Main
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 82331 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 3.1 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+CHECK CURRENT SCENE || flag: 0 | name: Main
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 82331 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82331 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: S8233_Player_1 | sceneName: Main
+Ernest stands still in Main and looks at Player
+Banjo stands still in Main
+DELAY MASK SET || maskId: 82331 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 82332 | path: S8233_Fish | sceneName: Main | flagName: S8233_Fish_1 | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 5.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82331 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: S8233_Player_1 | sceneName: Main
+Ernest stands still in Main and looks at Player
+Banjo stands still in Main
+DELAY MASK SET || maskId: 82331 | delayTime: 3 | durationTime: -2 | changeType: 1 | curveIndex: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 82332 | path: S8233_Fish | sceneName: Main | flagName: S8233_Fish_1 | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 6.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 6481) that ends:
+{{dialogue|Ernest|Well, today has been enlightening. Thank you so much for your inspiration, ''Player''. And also, for keeping me company. But, I really have to run. These articles don't write themselves you know!}}
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8233004) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8233502) from Banjo
+Remove behavior CommanderMoveToFlagAndAction (idName: 8233003) from Player
+SCENEITEM DELETE || itemType: 0 | id: 82332
+Ernest stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8233692) from Ernest
+Remove behavior CommanderMoveToFlagAndAction (idName: 8233693) from Ernest
+Remove behavior CommanderMoveToFlagAndAction (idName: 8233695) from Ernest
+Remove behavior CommanderNPCAction (idName: 8233696) from Ernest
+Remove behavior CommanderMoveToFlagAndAction (idName: 8233005) from Player
+SUBMIT MISSION 1800232
+CUTSCENE UI STATE EXIT || 
+END MISSION 1800233
+
+TRIGGER Procedure 0.0 Step 6.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82331 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8233502) to Banjo
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8233_Banjo_2|Action:EatFish_Story)
+Add behavior CommanderMoveToFlagAndAction (idName: 8233002) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8233_Player_1|LookAtActor:8050)
+Remove 2 Dried Sandacuda of Default quality (Notify player)
+STOPWATCH REAL TIME SET || id: 82331 | sec: 3
+AREA TRIGGER DELETE || id: 82322
+
+TRIGGER Procedure 0.0 Step 6.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8233502) to Banjo
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8233_Banjo_2|Action:EatFish_Story)
+Add behavior CommanderMoveToFlagAndAction (idName: 8233002) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8233_Player_1|LookAtActor:8050)
+Remove 2 Dried Sandacuda of Default quality (Notify player)
+STOPWATCH REAL TIME SET || id: 82331 | sec: 3
+AREA TRIGGER DELETE || id: 82322
+
+TRIGGER Procedure 0.0 Step 6.1 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 82331
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8233002) from Player
+Add behavior CommanderMoveToFlagAndAction (idName: 8233003) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8233_Player_2|Action:PickUp_Story)
+
+TRIGGER Procedure 0.0 Step 6.2 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8233692) to Ernest
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8233_Ounei_2)
+SCENEITEM DELETE || itemType: 0 | id: 823201
+SCENEITEM DELETE || itemType: 0 | id: 82332
+Banjo stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8233502) from Banjo
+Remove behavior CommanderNPCAction (idName: 8232503) from Banjo
+Banjo stops standing still
+Remove behavior CommanderNPCAction (idName: 8232509) from Banjo
+Banjo stops standing still
+
+TRIGGER Procedure 0.0 Step 7.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8233003) from Player
+Add behavior CommanderMoveToFlagAndAction (idName: 8233004) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8233_Player_3|LookAtActor:8069)
+SCENEITEM DELETE || itemType: 0 | id: 82331
+
+TRIGGER Procedure 0.0 Step 8.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8069 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 1898_0 starts:
+{{dialogue|Ernest|''Player'', that ball of paper... can I... have a look? I think it might be mine.}}
+{{dialogue|Ernest|Haha... no, I didn't mean to litter, I'm sorry. I... "dropped" it out of my window in a fit of frustration earlier.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 8.1 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8233005) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8233_Player_3|Action:Give_S8223)
+
+TRIGGER Procedure 0.0 Step 8.2 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8233692) from Ernest
+Add behavior CommanderMoveToFlagAndAction (idName: 8233693) to Ernest
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8233_Ounei_2|Action:GetItem)
+
+TRIGGER Procedure 0.0 Step 8.3 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8069 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 1899_0 starts:
+{{dialogue|Ernest|Thank you. It suddenly occurred to me that I'd written a particularly beautiful sentence on this piece. Haha, I'm sure it seems strange, to rifle through trash finding a single sentence.}}
+{{dialogue|Ernest|But to a writer, inspiration comes at but a moment's notice. But I couldn't remember what it was I wrote...}}
+{{dialogue|Ernest|Let me see..."Shall I compare thee to a summer's day? Thou art more lovely and more temperate..."}}
+{{dialogue|Ernest|No... that's awful... no one would remember that. What was I thinking?}}
+{{dialogue|Ernest|The stars glisten with the light of a thousand lives, a diamond, an oath, a promise...}}
+{{dialogue|Ernest|This sentence... what do you think?}}
+
+*''You write really well.''
+*''I don't get it.''
+*{{flirt}}''It's really romantic.''
+
+{{dialogue|Ernest|indent=true|answer=I don't get it.
+|reward={{NPC2|Ernest|rp=-1}}|You... you don't like it? Ah, sometimes I kind of get wrapped up in writing a metaphor, perhaps its readability suffers...}}
+{{dialogue|Ernest|indent=true|I'm just trying to say... that stars are like diamonds, and that diamonds represent true love, I guess... it's uh, haha... just a metaphor.}}
+{{dialogue|Ernest|indent=true|Since coming to Sandrock I've... sigh, almost spent all of my savings. As a writer, I don't have much of an income before each release.}}
+{{dialogue|Ernest|indent=true|So in order to stay here and write my books, I need an income to supplement my daily expenses. And I... I can't just ask my family for more money.}}
+{{dialogue|Ernest|indent=true|So, my wonderous, amazing, kind Builder... I have a request. For the sake of helping those in dire straits, eating nothing but the "specials" at the Blue Moon... could I ask you for a discount next time I need your services?}}
+
+:*''Of course.''
+:*''I can't... The Guild won't allow it!''
+:*{{flirt}}''Of course, but you'll owe me one!''
+
+{{dialogue|Ernest|indent=double|answer=Of course.
+|reward={{NPC2|Ernest|rp=1}}|Haha, you're too kind. But no, I was joking with you don't worry. I'm not quite at that level yet, thankfully. I'll pay you whatever you need.}}
+{{dialogue|Ernest|indent=double|Well, today has been enlightening. Thank you so much for your inspiration, ''Player''. And also, for keeping me company. But, I really have to run. These articles don't write themselves you know!}}
+{{dialogue|Ernest|indent=double|answer=I can't... The Guild won't allow it!
+|Haha, looks like you're a bit of a stickler for the rules, huh? Don't worry, I was joking with you. I'm not quite at that level yet, thankfully. I'll pay you whatever you need.}}
+{{dialogue|Ernest|indent=double|Well, today has been enlightening. Thank you so much for your inspiration, ''Player''. And also, for keeping me company. But, I really have to run. These articles don't write themselves you know!}}
+{{dialogue|Ernest|indent=double|answer=Of course, but you'll owe me one!
+|Haha, industrious, aren't you?}}
+{{dialogue|Ernest|indent=double|Well, I was joking with you, but since you mention it...}}
+{{dialogue|Ernest|indent=double|How about this. I don't need a discount, but I'll still repay the debt. Hmm...}}
+{{dialogue|Ernest|indent=true|answer=It's really romantic.
+|reward={{NPC2|Ernest|rp=3}}|You understand! Diamonds and stars. Had they eyes, they would have witnessed the greatest of romance. Isn't it a lovely thought?}}
+
+:*''Yeah it's nice.'' (No unique dialogue)
+:*{{flirt}}''I want to get to know your ideas even better.''
+:*{{flirt}}''I wish I was the one you write poems about.''
+
+{{dialogue|Ernest|indent=double|answer=I want to get to know your ideas even better.
+|reward={{NPC2|Ernest|rp=3}}|I feel like you already understand me. I'd like that too. If I was writing for you...}}
+{{dialogue|Ernest|indent=double|answer=I wish I was the one you write poems about.
+|reward={{NPC2|Ernest|rp=3}}|For you...}}
+{{dialogue|Ernest|Heh, you're too kind. When I was a child, I thought stars were like diamonds. I wrote as such, and even the teacher thought my similes were beautiful. My classmates... they didn't understand. They didn't like it at all.}}
+
+*''Maybe they just hadn't seen diamonds.''
+*''They just don't understand art.''
+
+{{dialogue|Ernest|indent=true|answer=Maybe they just hadn't seen diamonds.
+|Hm, perhaps. We were young at the time, after all.}}
+{{dialogue|Ernest|indent=true|answer=They just don't understand art.
+|No... I don't think that's the problem. Everyone is an artist, they just need to find their voice. I think perhaps they just hadn't seen diamonds.}}
+{{dialogue|Ernest|But I've always been in a special situation. My mother is an actor in musical theatre. Due to this, she was always adorned in fine gems and jewelry... so I had seen many of them from a young age.}}
+{{dialogue|Ernest|Since coming to Sandrock I've... sigh, almost spent all of my savings. As a writer, I don't have much of an income before each release.}}
+{{dialogue|Ernest|So in order to stay here and write my books, I need an income to supplement my daily expenses. And I... I can't just ask my family for more money.}}
+{{dialogue|Ernest|So, my wonderous, amazing, kind Builder... I have a request. For the sake of helping those in dire straits, eating nothing but the "specials" at the Blue Moon... could I ask you for a discount next time I need your services?}}
+
+*''Of course.''
+*''I can't... The Guild won't allow it!''
+*{{flirt}}''Of course, but you'll owe me one!''
+
+{{dialogue|Ernest|indent=true|answer=Of course.
+|reward={{NPC2|Ernest|rp=1}}|Haha, you're too kind. But no, I was joking with you don't worry. I'm not quite at that level yet, thankfully. I'll pay you whatever you need.}}
+{{dialogue|Ernest|indent=true|Well, today has been enlightening. Thank you so much for your inspiration, ''Player''. And also, for keeping me company. But, I really have to run. These articles don't write themselves you know!}}
+{{dialogue|Ernest|indent=true|answer=I can't... The Guild won't allow it!
+|Haha, looks like you're a bit of a stickler for the rules, huh? Don't worry, I was joking with you. I'm not quite at that level yet, thankfully. I'll pay you whatever you need.}}
+{{dialogue|Ernest|indent=true|Well, today has been enlightening. Thank you so much for your inspiration, ''Player''. And also, for keeping me company. But, I really have to run. These articles don't write themselves you know!}}
+{{dialogue|Ernest|indent=true|answer=Of course, but you'll owe me one!
+|Haha, industrious, aren't you?}}
+{{dialogue|Ernest|indent=true|Well, I was joking with you, but since you mention it...}}
+{{dialogue|Ernest|indent=true|How about this. I don't need a discount, but I'll still repay the debt. Hmm...}}
+
+TRIGGER Procedure 0.0 Step 9.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 3) There is a conversation segment (id 6462) that ends:
+{{dialogue|Ernest|I feel like you already understand me. I'd like that too. If I was writing for you...}}
+(cId: 3) There is a conversation segment (id 6463) that ends:
+{{dialogue|Ernest|For you...}}
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8233005) from Player
+Add behavior CommanderMoveToFlagAndAction (idName: 8233695) to Ernest
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8233_Ounei_3|LookAtActor:8000)
+
+TRIGGER Procedure 0.0 Step 9.1 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8069 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 1907_0 starts:
+{{dialogue|Ernest|A poem, I think would be fitting.}}
+{{dialogue|Ernest|A poem can express feelings far better than prose, for those with whom you are closer.}}
+{{dialogue|Ernest|Anyway, let me think. I really need some context for this sentence...}}
+
+*''Is this for your new book?''
+*''Doesn't sound like the Atara Times.''
+
+{{dialogue|Ernest|indent=true|answer=Is this for your new book?
+|No, unfortunately not. This is for a new job, I'm writing a column for the Tumbleweed Standard.}}
+{{dialogue|Ernest|indent=true|answer=Doesn't sound like the Atara Times.
+|Actually, I have a new column in the Tumbleweed Standard. Working for the local news, I'm unexpectedly excited.}}
+{{dialogue|Ernest|Since coming to Sandrock I've... sigh, almost spent all of my savings. As a writer, I don't have much of an income before each release.}}
+{{dialogue|Ernest|So in order to stay here and write my books, I need an income to supplement my daily expenses. And I... I can't just ask my family for more money.}}
+{{dialogue|Ernest|So, my wonderous, amazing, kind Builder... I have a request. For the sake of helping those in dire straits, eating nothing but the "specials" at the Blue Moon... could I ask you for a discount next time I need your services?}}
+
+*''Of course.''
+*''I can't... The Guild won't allow it!''
+*{{flirt}}''Of course, but you'll owe me one!''
+
+{{dialogue|Ernest|indent=true|answer=Of course.
+|reward={{NPC2|Ernest|rp=1}}|Haha, you're too kind. But no, I was joking with you don't worry. I'm not quite at that level yet, thankfully. I'll pay you whatever you need.}}
+{{dialogue|Ernest|indent=true|Well, today has been enlightening. Thank you so much for your inspiration, ''Player''. And also, for keeping me company. But, I really have to run. These articles don't write themselves you know!}}
+{{dialogue|Ernest|indent=true|answer=I can't... The Guild won't allow it!
+|Haha, looks like you're a bit of a stickler for the rules, huh? Don't worry, I was joking with you. I'm not quite at that level yet, thankfully. I'll pay you whatever you need.}}
+{{dialogue|Ernest|indent=true|Well, today has been enlightening. Thank you so much for your inspiration, ''Player''. And also, for keeping me company. But, I really have to run. These articles don't write themselves you know!}}
+{{dialogue|Ernest|indent=true|answer=Of course, but you'll owe me one!
+|Haha, industrious, aren't you?}}
+{{dialogue|Ernest|indent=true|Well, I was joking with you, but since you mention it...}}
+{{dialogue|Ernest|indent=true|How about this. I don't need a discount, but I'll still repay the debt. Hmm...}}
+
+TRIGGER Procedure 0.0 Step 10.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 6476) that ends:
+{{dialogue|Ernest|How about this. I don't need a discount, but I'll still repay the debt. Hmm...}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 8233696) to Ernest
+(param: CMDAction:Thinking_Story)
+
+TRIGGER Procedure 0.0 Step 11.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 82334
+CONDITIONS
+Always:
+ACTIONS
+(cId 8) A conversation 1914_0 starts:
+{{dialogue|Ernest|How about a poem?}}
+{{dialogue|Ernest|A poem, it will belong to you. You'll own it, totally non-fungible. Even if my sister sings it... well, she'll have to pay you royalties!}}
+{{dialogue|Ernest|How about that, does it sound like a good idea?}}
+{{dialogue|Ernest|Oh ho! Is that a blush I see on your cheeks? You're cute, you know that?}}
+{{dialogue|Ernest|Well, today has been enlightening. Thank you so much for your inspiration, ''Player''. And also, for keeping me company. But, I really have to run. These articles don't write themselves you know!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 12.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the first option in conversation segment 6461:
+{{dialogue|Ernest|You understand! Diamonds and stars. Had they eyes, they would have witnessed the greatest of romance. Isn't it a lovely thought?}}
+
+*''Yeah it's nice.'' (No unique dialogue)
+*{{flirt}}''I want to get to know your ideas even better.'' (No unique dialogue)
+*{{flirt}}''I wish I was the one you write poems about.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 1908_0 starts:
+{{dialogue|Ernest|Anyway, let me think. I really need some context for this sentence...}}
+
+*''Is this for your new book?''
+*''Doesn't sound like the Atara Times.''
+
+{{dialogue|Ernest|indent=true|answer=Is this for your new book?
+|No, unfortunately not. This is for a new job, I'm writing a column for the Tumbleweed Standard.}}
+{{dialogue|Ernest|indent=true|answer=Doesn't sound like the Atara Times.
+|Actually, I have a new column in the Tumbleweed Standard. Working for the local news, I'm unexpectedly excited.}}
+{{dialogue|Ernest|Since coming to Sandrock I've... sigh, almost spent all of my savings. As a writer, I don't have much of an income before each release.}}
+{{dialogue|Ernest|So in order to stay here and write my books, I need an income to supplement my daily expenses. And I... I can't just ask my family for more money.}}
+{{dialogue|Ernest|So, my wonderous, amazing, kind Builder... I have a request. For the sake of helping those in dire straits, eating nothing but the "specials" at the Blue Moon... could I ask you for a discount next time I need your services?}}
+
+*''Of course.''
+*''I can't... The Guild won't allow it!''
+*{{flirt}}''Of course, but you'll owe me one!''
+
+{{dialogue|Ernest|indent=true|answer=Of course.
+|reward={{NPC2|Ernest|rp=1}}|Haha, you're too kind. But no, I was joking with you don't worry. I'm not quite at that level yet, thankfully. I'll pay you whatever you need.}}
+{{dialogue|Ernest|indent=true|Well, today has been enlightening. Thank you so much for your inspiration, ''Player''. And also, for keeping me company. But, I really have to run. These articles don't write themselves you know!}}
+{{dialogue|Ernest|indent=true|answer=I can't... The Guild won't allow it!
+|Haha, looks like you're a bit of a stickler for the rules, huh? Don't worry, I was joking with you. I'm not quite at that level yet, thankfully. I'll pay you whatever you need.}}
+{{dialogue|Ernest|indent=true|Well, today has been enlightening. Thank you so much for your inspiration, ''Player''. And also, for keeping me company. But, I really have to run. These articles don't write themselves you know!}}
+{{dialogue|Ernest|indent=true|answer=Of course, but you'll owe me one!
+|Haha, industrious, aren't you?}}
+{{dialogue|Ernest|indent=true|Well, I was joking with you, but since you mention it...}}
+{{dialogue|Ernest|indent=true|How about this. I don't need a discount, but I'll still repay the debt. Hmm...}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the second option in conversation segment 6454:
+{{dialogue|Ernest|This sentence... what do you think?}}
+
+*''You write really well.'' (No unique dialogue)
+*''I don't get it.'' (No unique dialogue)
+*{{flirt}}''It's really romantic.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Ernest gains -1 favor
+
+TRIGGER Procedure 1.0 Step 10.0 Order 0 Repeat 2
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the first option in conversation segment 6454:
+{{dialogue|Ernest|This sentence... what do you think?}}
+
+*''You write really well.'' (No unique dialogue)
+*''I don't get it.'' (No unique dialogue)
+*{{flirt}}''It's really romantic.'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 6471:
+{{dialogue|Ernest|So, my wonderous, amazing, kind Builder... I have a request. For the sake of helping those in dire straits, eating nothing but the "specials" at the Blue Moon... could I ask you for a discount next time I need your services?}}
+
+*''Of course.'' (No unique dialogue)
+*''I can't... The Guild won't allow it!'' (No unique dialogue)
+*{{flirt}}''Of course, but you'll owe me one!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Ernest gains 1 favor
+
+TRIGGER Procedure 1.0 Step 10.0 Order 2 Repeat 2
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the third option in conversation segment 6454:
+{{dialogue|Ernest|This sentence... what do you think?}}
+
+*''You write really well.'' (No unique dialogue)
+*''I don't get it.'' (No unique dialogue)
+*{{flirt}}''It's really romantic.'' (No unique dialogue)
+
+(cId 3) The player picks the second option in conversation segment 6461:
+{{dialogue|Ernest|You understand! Diamonds and stars. Had they eyes, they would have witnessed the greatest of romance. Isn't it a lovely thought?}}
+
+*''Yeah it's nice.'' (No unique dialogue)
+*{{flirt}}''I want to get to know your ideas even better.'' (No unique dialogue)
+*{{flirt}}''I wish I was the one you write poems about.'' (No unique dialogue)
+
+(cId 3) The player picks the third option in conversation segment 6461:
+{{dialogue|Ernest|You understand! Diamonds and stars. Had they eyes, they would have witnessed the greatest of romance. Isn't it a lovely thought?}}
+
+*''Yeah it's nice.'' (No unique dialogue)
+*{{flirt}}''I want to get to know your ideas even better.'' (No unique dialogue)
+*{{flirt}}''I wish I was the one you write poems about.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Ernest gains 3 favor

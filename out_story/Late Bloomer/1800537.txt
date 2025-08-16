@@ -1,0 +1,441 @@
+Reading Mission 1800537: Late Bloomer
+
+<onlyinclude>{{Infobox mission
+|name = Late Bloomer
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200030
+
+TRIGGER Procedure 1.0 Step 3.0 Order 4 Repeat 6
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Late Bloomer is successfully completed
+ACTIONS
+Set 1800537 to 1
+
+TRIGGER Procedure 1.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission Late Bloomer
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800537
+CONDITIONS
+Always:
+ACTIONS
+Set 8537A to 0
+The player receives a letter:
+{{mail|838}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Mi-an stands still in Main and looks at Player
+
+TRIGGER Procedure 0.0 Step 2.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Mi-an
+CONDITIONS
+Check if 8537A is == 0
+ACTIONS
+(cId 1) A conversation 23647 starts:
+{{dialogue|Mi-an|Hello, dear! Did you see Trudy's letter? Yimi Park is open! Shall we go take a look?}}
+
+*''Sure, let's go!'' (No unique dialogue)
+*''Let me take care of a few things first...'' (No unique dialogue)
+
+Mi-an stops standing still
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Check if 8537A is == 1
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 85371 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Mi-an stops standing still
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 23647:
+{{dialogue|Mi-an|Hello, dear! Did you see Trudy's letter? Yimi Park is open! Shall we go take a look?}}
+
+*''Sure, let's go!'' (No unique dialogue)
+*''Let me take care of a few things first...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8537A to 1
+
+TRIGGER Procedure 0.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85371 | eventType: 2
+CONDITIONS
+CHECK CURRENT SCENE || name: Main | flag: 0
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8537_0_1
+
+TRIGGER Procedure 0.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85371 | eventType: 2
+CONDITIONS
+CHECK CURRENT SCENE || name: Main | flag: 1
+ACTIONS
+Mi-an stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8537_0_1
+DELAY MASK SET || maskId: 85371 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+NPC RANDOM ADD || dailyBehavior: RandomNPC | flagName: S8537_R1_1 | id: 1 | instId: 85361 | scene: Main
+NPC RANDOM ADD || flagName: S8537_R2_1 | scene: Main | dailyBehavior: RandomNPC | id: 14 | instId: 85362
+ACTION NPC RENAME || nameTransId: 80033738 | npc: 85361
+ACTION NPC RENAME || nameTransId: 80033737 | npc: 85362
+SCENEITEM CREATE FLAG || itemType: 0 | id: 85371 | path: S8537_Item1 | flagName: S8537_Item1 | sceneName: Main | extraParams: 0
+SCENEITEM DELETE || itemType: 0 | id: 85351
+SCENEITEM DELETE || itemType: 12 | id: 85361
+ACTOR BLIND SET || set: 1
+
+TRIGGER Procedure 0.0 Step 7.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Mi-an stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8537_0_1
+DELAY MASK SET || maskId: 85371 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+NPC RANDOM ADD || dailyBehavior: RandomNPC | flagName: S8537_R1_1 | id: 1 | instId: 85361 | scene: Main
+NPC RANDOM ADD || flagName: S8537_R2_1 | scene: Main | dailyBehavior: RandomNPC | id: 14 | instId: 85362
+ACTION NPC RENAME || nameTransId: 80033738 | npc: 85361
+ACTION NPC RENAME || nameTransId: 80033737 | npc: 85362
+SCENEITEM CREATE FLAG || itemType: 0 | id: 85371 | path: S8537_Item1 | flagName: S8537_Item1 | sceneName: Main | extraParams: 0
+SCENEITEM DELETE || itemType: 0 | id: 85351
+SCENEITEM DELETE || itemType: 12 | id: 85361
+ACTOR BLIND SET || set: 1
+
+TRIGGER Procedure 0.0 Step 9.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85371 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 853711) to Linhua
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8537_R1_2|LookAtActor:8017|Delay:0.0)
+Add behavior CommanderMoveToFlagAndAction (idName: 853721) to Polly-anne
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8537_R2_2|LookAtActor:8017|Delay:0.0)
+
+TRIGGER Procedure 0.0 Step 10.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 85362 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 222) A conversation 23648 starts:
+{{dialogue|Polly-anne|Ah, it's you two. The ones who made all this possible, isn't that right?}}
+Set 8537B to 0
+
+TRIGGER Procedure 1.0 Step 10.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 222) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 85370) to Player
+(param: CMDAction:Nod_Story)
+Mi-an stands still in Main and looks at Player
+
+TRIGGER Procedure 0.0 Step 11.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Check relationship with Mi-an is Married
+ACTIONS
+Add 10 Wedding Candy of Default quality (Notify player)
+(cId 3) A conversation 8416_0 starts:
+{{dialogue|Mi-an|Thank you! It's been nice running into... kindred spirits!}}
+{{dialogue|Polly-anne|Well, let's get that photo. Shall we, darling?}}
+{{dialogue|Linhua|Mm.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 13.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85372 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 12.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Check relationship with Mi-an is 6 Mate Unhappy
+ACTIONS
+Add 10 Wedding Candy of Default quality (Notify player)
+(cId 3) A conversation 8417_0 starts:
+{{dialogue|Mi-an|Oh, we're not married...}}
+
+*''...Yet!''
+*''We're still thinking about it.''
+*''Yyyyyeah...''
+
+{{dialogue|Polly-anne|indent=true|answer=...Yet!
+|Goodness! I only regret that we might not be here to see you pop the question!}}
+{{dialogue|Polly-anne|indent=true|I wish happiness to the lot of us then, to two happy marriages!}}
+{{dialogue|Mi-an|indent=true|Haha... th-thanks...!}}
+{{dialogue|Polly-anne|indent=true|answer=We're still thinking about it.
+|Oh, yes, of course. You can't just go rushing into things. Should I really have accepted your proposal so willy-nilly...? I was so caught up in the moment...!}}
+{{dialogue|Linhua|indent=true|Polly-poo...}}
+{{dialogue|Polly-anne|indent=true|Ahaha... Kidding!}}
+{{dialogue|Polly-anne|indent=true|That's us, already making jokes like we hate each other, and it's only been three days!}}
+{{dialogue|Mi-an|indent=true|Haha, you're so sweet together...!}}
+{{dialogue|Polly-anne|indent=true|answer=Yyyyyeah...
+|Ahah... seems we've touched a sore spot, darling dearest!}}
+{{dialogue|Linhua|indent=true|Awkward.}}
+{{dialogue|Mi-an|indent=true|I-it's fine. We just... haven't really talked about it yet.}}
+{{dialogue|Linhua|indent=true|When the time is right, you'll know what to do.}}
+{{dialogue|Mi-an|indent=true|Th-thanks... eerily silent guy...}}
+{{dialogue|Linhua|indent=true|...}}
+{{dialogue|Polly-anne|Well, let's get that photo. Shall we, darling?}}
+{{dialogue|Linhua|Mm.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 12.1 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the first option in conversation segment 23690:
+{{dialogue|Mi-an|Oh, we're not married...}}
+
+*''...Yet!'' (No unique dialogue)
+*''We're still thinking about it.'' (No unique dialogue)
+*''Yyyyyeah...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8537B to 1
+
+TRIGGER Procedure 0.0 Step 14.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85372 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8537_0_2
+ACTION CAPTURE ENTER STORY MODE || npc: 8017 | photoId: 78 | poseIds: 3149,3150,3151
+DELAY MASK SET || maskId: 85265 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Linhua stands still in Main
+Polly-anne stands still in Main
+
+TRIGGER Procedure 0.0 Step 15.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAPTURE MODE EXIT || order: 0 | isStory: 1
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || flagName: S8537_0_3 | sceneName: Main
+Mi-an stands still in Main and looks at Polly-anne
+(cId 4) A conversation 23706, 23707, 23708 starts:
+{{dialogue|Polly-anne|Perfect! You two look amazing! Well, now, we've already taken up too much of your time. We'll let you get back to it.}}
+{{dialogue|Mi-an|Thanks! Bye!}}
+{{dialogue|Linhua|May we meet again!}}
+
+TRIGGER Procedure 0.0 Step 16.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Mi-an stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 853711) from Linhua
+Remove behavior CommanderMoveToFlagAndAction (idName: 853721) from Polly-anne
+Linhua stops standing still
+Polly-anne stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 8537173) to Mi-an
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8537_17_5|LookAtActor:8000|Delay:0.0)
+Add behavior CommanderMoveToFlagAndAction (idName: 8537003) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8537_0_5|LookAtActor:8017|Delay:0.0)
+Mi-an stops standing still
+Add behavior CommanderMoveToFlag (idName: 853713) to Linhua
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8537_R1_1)
+Add behavior CommanderMoveToFlag (idName: 853723) to Polly-anne
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8537_R2_1)
+
+TRIGGER Procedure 0.0 Step 18.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8017 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Check if 8537B is == 0
+ACTIONS
+(cId 5) A conversation 23711, 23712 starts:
+{{dialogue|Mi-an|I'm glad what we did really resonated with those people. The Yimi Flower is more than just a flower, I guess you could say!}}
+{{dialogue|Mi-an|I'll never forget this day, ''Player''... this whole journey! It's been wonderful; and the fact that we could share it together... that makes it perfect. Now... let's... enjoy our garden!}}
+
+TRIGGER Procedure 0.0 Step 20.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTOR BLIND SET || set: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 8537173) from Mi-an
+Remove behavior CommanderMoveToFlagAndAction (idName: 8537003) from Player
+Mi-an stops standing still
+CUTSCENE UI STATE EXIT || 
+CAMERA PATH STOP ALL || 
+Remove behavior CommanderMoveToFlag (idName: 853713) from Linhua
+Remove behavior CommanderMoveToFlag (idName: 853723) from Polly-anne
+NPC ADD TAG || tag: 8537VisitPark
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 19.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8017 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Check if 8537B is == 1
+ACTIONS
+(cId 5) A conversation 23709, 23710 starts:
+{{dialogue|Mi-an|Hey, um... Were you serious about... what you just said?}}
+{{dialogue|Mi-an|Ah, you know what, nevermind! I don't mean to pry. I just want you to know... that... I'm really happy with you!}}
+
+TRIGGER Procedure 0.0 Step 23.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM REMOVE || id: 85361
+NPC RANDOM REMOVE || id: 85362
+END MISSION 1800537
+
+TRIGGER Procedure 1.0 Step 11.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 8406_0 starts:
+{{dialogue|Polly-anne|What an honor! We're here reporting; we run the "Sow What!?" horticulture column for the Windy Times. When we heard you had a Yimi garden, we had to just take the next train over!}}
+{{dialogue|Linhua|Greetings.}}
+{{dialogue|Polly-anne|Would you mind if we got an interview?}}
+{{dialogue|Mi-an|Ah...! How about that, ''Player''? The Windy Times!}}
+
+*''Sure, we'll take your questions!''
+*''Just don't make them too complicated...''
+*''We make the Tumbleweed all the time. So what?''
+
+{{dialogue|Polly-anne|indent=true|answer=Sure, we'll take your questions!
+|Much appreciated!}}
+{{dialogue|Polly-anne|indent=true|answer=Just don't make them too complicated...
+|Haha, don't worry. We're more interested in your personal story, and we won't print anything that undermines what you've done here!}}
+{{dialogue|Polly-anne|indent=true|answer=We make the Tumbleweed all the time. So what?
+|Yes, yes! "Sow What!?" You've heard of us then! Oh. You meant... Er...}}
+{{dialogue|Linhua|indent=true|If you're too busy, we understand.}}
+{{dialogue|Mi-an|indent=true|Ah...! No, no... It's fine! Haha... we'd be happy to answer a few questions, isn't that right, ''Player''?}}
+{{dialogue|Mi-an|indent=true|C'mon, ''Player'', your Ma loves to see you in the local paper...!}}
+{{dialogue|Polly-anne|indent=true|We'll be quick, I promise!}}
+{{dialogue|Polly-anne|If you don't mind, I'd like to start with the basics: how did you overcome all the difficulties of caring for the Yimi flower? Its heavy drooping bud, its thirst, its persnickety temperment in soil...?}}
+
+*''We're Builders! We made a little house for it.''
+*''We took turns holding up the bud!''
+*''Go on, tell them, Mi-an.''
+
+{{dialogue|Polly-anne|indent=true|answer=We're Builders! We made a little house for it.
+|Of course! What a lovely detail. So you quit your day jobs and now do horticulture full time?}}
+{{dialogue|Mi-an|indent=true|Er, not exactly. This is just a hobby for us.}}
+{{dialogue|Polly-anne|indent=true|answer=We took turns holding up the bud!
+|Ahaha...!}}
+{{dialogue|Polly-anne|indent=true|Why, that's a good one! Say, you'd get along with my husband here, he's a real jokester, too! Isn't that right, honey?}}
+{{dialogue|Linhua|indent=true|Ahem...}}
+{{dialogue|Polly-anne|indent=true|Ahem indeed... Anyway! No doubt you used your Building skills to make an enclosure for the flower?}}
+{{dialogue|Mi-an|indent=true|That's right!}}
+{{dialogue|Mi-an|indent=true|answer=Go on, tell them, Mi-an.
+|Oh. Um. Well, we're Builders! So... we just made a nice little enclosure for the flower to make sure it didn't droop! Among other things.}}
+{{dialogue|Polly-anne|indent=true|Fascinating!}}
+{{dialogue|Mi-an|I saw one of these flowers on a walk one day, and it really struck me as something special. So I got with my better half here, spoke with the local expert and... the results speak for themselves!}}
+{{dialogue|Polly-anne|So part of it was all happenstance, though if anyone else had found the flower, they'd have thought nothing of it... Hm...!}}
+{{dialogue|Polly-anne|Dearest: would you be a dear and take a photo of the lovely couple here?}}
+{{dialogue|Mi-an|Hold on: you're a couple, too?}}
+{{dialogue|Polly-anne|Indeed we are! It was forbidden love; my darling photographer and I leading double lives within the office... But I never had to worry about you saying anything, now did I, dear?}}
+{{dialogue|Linhua|...}}
+{{dialogue|Polly-anne|I suppose we're alike in many regards aren't we, you little Commerce Guild turtledoves...!}}
+{{dialogue|Mi-an|Hm... Maybe so...}}
+
+*''...''
+*''Maybe so.''
+*''I'm not like him, I talk all the time!''
+
+{{dialogue|Linhua|indent=true|answer=...
+|...}}
+{{dialogue|Polly-anne|indent=true|Mwahaha...! Keep an eye on your better half, Ms. Mi-an, or else someone like me might try to snatch them up! Love that strong silent type...}}
+{{dialogue|Mi-an|indent=true|Er... yeah...}}
+{{dialogue|Polly-anne|indent=true|answer=Maybe so.
+|You really are two-of-a-kind!}}
+{{dialogue|Polly-anne|indent=true|answer=I'm not like him, I talk all the time!
+|My apologies, ''Player''. I did not mean to offend!}}
+{{dialogue|Linhua|indent=true|...}}
+{{dialogue|Polly-anne|In any case, we share a passion for nature, and as such, I think it's no coincidence we've all found the sweetness of true love...}}
+{{dialogue|Polly-anne|Which reminds me!}}
+{{dialogue|Polly-anne|Darling dearest, won't you share with them some of our sweets from the wedding?}}
+{{dialogue|Mi-an|Oh! You're newlyweds! Congratulations!}}
+{{dialogue|Polly-anne|Yes! Hardly had time to change out of my wedding dress! When we heard we rushed right over! Billed it as a business trip...}}
+{{dialogue|Polly-anne|I suppose you could say this is our honeymoon! And the Yimi flower certainly doesn't disappoint...!}}
+{{dialogue|Linhua|May this small gesture bring you... even more luck in your own marriage.}}
+The conversation ends.
+Remove behavior CommanderPlayerAction (idName: 85370) from Player
+Mi-an stops standing still

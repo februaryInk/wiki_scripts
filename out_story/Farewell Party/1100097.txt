@@ -1,0 +1,393 @@
+Reading Mission 1100097: Farewell Party
+
+<onlyinclude>{{Infobox mission
+|name = Farewell Party
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Farewell Party:
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100096
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1100096
+START MISSION 1100096
+ACTION MISSION TRACE 1100096
+
+TRIGGER Procedure 0.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1100096
+CONDITIONS
+Always:
+ACTIONS
+Run mission Farewell Party
+END MISSION 1100096
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100097
+CONDITIONS
+Always:
+ACTIONS
+===Attend the Party on Time===
+
+{{mission_details
+|desc = Go to the stage to participate in Mason's farewell party.
+|details = Attend the Party on Time
+}}
+Set PARTY to 0
+Set IsPartyActive to 0
+Set IsGroup1TalkActive to 0
+Set IsGroup2TalkActive to 0
+Set RandomIndexFlipFlop to 0
+Set BehaviourRemoveFlagA to 0
+Set BehaviourRemoveFlagB to 0
+Set TriggerIndex to 0
+
+TRIGGER Procedure 0.0 Step 0.5 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DAY START FOR WEATHER || order: 0 | weather: 2
+CONDITIONS
+Always:
+ACTIONS
+WEATHER SET STATE || WeatherState: 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if PARTY is == 0
+ACTIONS
+NPC ADD TAG || tag: nosermons
+Set PARTY to 1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+
+TRIGGER Procedure 0.0 Step 4.1 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK TIME || compare: 6 | hour: 23 | minute: 0
+Check if PARTY is == 1
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 10971
+Set PARTY to 2
+ACTION CUTSCENE START AUDIO TYPE || id: CG_MASONPARTY | duration: 0 | audioType: NoTransitionOff
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: 1196_Player_1
+Mabel stands still in Main and looks at Elsie
+Elsie stands still in Main and looks at Mabel
+Mi-an stands still in Main and looks at Mabel
+Owen stands still in Main and looks at Justice
+Mort stands still in Main and looks at Owen
+Justice stands still in Main and looks at Mort
+Heidi stands still in Main
+Yan stands still in Main
+Jasmine stands still in Main
+Jensen stands still in Main
+Matilda stands still in Main
+Unsuur stands still in Main and looks at Cooper
+Qi stands still in Main and looks at Hugo
+Burgess stands still in Main and looks at Cooper
+Hugo stands still in Main
+Cooper stands still in Main
+Pen stands still in Main and looks at Hugo
+Arvio stands still in Main and looks at Cooper
+Amirah stands still in Main and looks at Hugo
+Vivi stands still in Main and looks at Cooper
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_MASONPARTY | state: 9
+CONDITIONS
+Always:
+ACTIONS
+Set IsPartyActive to 1
+CUTSCENE UI STATE EXIT || 
+NPC ADD TAG || tag: saloonparty
+SUBMIT MISSION 1100096
+Pen stops standing still
+Vivi stops standing still
+Mabel stops standing still
+Elsie stops standing still
+Cooper stops standing still
+Hugo stops standing still
+STOPWATCH REAL TIME SET || id: 119791 | sec: 3
+AREA TRIGGER ONCE CREATE || flagName: 1196_Group1Talk_Trigger | id: 11974 | missionId: 1100097 | sceneName: Main | showOnMap: 1 | mapIcon: MissionArea | transId: 80000730
+AREA TRIGGER ONCE CREATE || flagName: 1196_Group2Talk_Trigger | missionId: 1100097 | id: 11975 | sceneName: Main | showOnMap: 1 | mapIcon: MissionArea | transId: 80000730
+ACTION AREA TRIGGER SET RADIUS || id: 11974 | radius: 12
+ACTION AREA TRIGGER SET RADIUS || id: 11975 | radius: 12
+Matilda stops standing still
+Yan stops standing still
+Heidi stops standing still
+Jasmine stops standing still
+Jensen stops standing still
+Qi stops standing still
+Unsuur stops standing still
+Arvio stops standing still
+Burgess stops standing still
+Amirah stops standing still
+STOPWATCH GAME TIME SET || id: 20971 | minute: 300
+ACTION NPC GEN CLUSTER || cluster: CoogoBandFastivalRoot | behavior: CoogoBandFastivalRoot | min: 2 | max: 3 | npcs: 8003,8010 | randomNpcs: 0 | leader: -10
+SCENEITEM CREATE FLAG || itemType: 0 | id: 20971 | path: Mission_Midikeyboard | sceneName: Main | flagName: coogoband_midikeyboard_2 | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 20972 | path: Mission_Microphone | sceneName: Main | flagName: coogoband_microphone_2 | extraParams: 0
+
+TRIGGER Procedure 1.0 Step 2.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 11974
+CONDITIONS
+Always:
+ACTIONS
+Mabel stops standing still
+Elsie stops standing still
+Mi-an stops standing still
+AREA TRIGGER DELETE || id: 11974
+Mabel stands still in Main
+Elsie stands still in Main
+Mi-an stands still in Main
+CUTSCENE UI STATE ENTER || 
+(cId 0) A conversation 762, 763, 764, 765, 766, 767 starts:
+{{dialogue|Mabel|My stars, seein' your father up there pickin' and astrummin' like a mad fool, well, it brings me back...}}
+{{dialogue|Elsie|It ain't fair, Ma! You and Pa get to pursue y'all's leisures and do whatever y'all want! When's it my turn?}}
+{{dialogue|Mabel|Now, Elsie, dear, you've still got some growin' up to do! I reckon once you show a bit of maturity like your friend Mi-an here, mayhaps we could do to ease off the reins a bit...}}
+{{dialogue|Mi-an|Oh, I, er-}}
+{{dialogue|Elsie|Ma! Mi-an ain't no more mature than me! That whoopee-cushion we put in Pa's strummin' chair the other day was her idea!}}
+{{dialogue|Mi-an|Wha-what? That's because I lost that bet to you!}}
+
+TRIGGER Procedure 1.0 Step 2.1 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Set IsGroup1TalkActive to 0
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 3.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 11975
+CONDITIONS
+Always:
+ACTIONS
+Mort stops standing still
+Justice stops standing still
+Owen stops standing still
+CUTSCENE UI STATE ENTER || 
+(cId 1) A conversation 768, 769, 770, 771 starts:
+{{dialogue|Owen|Somehow this doesn't feel like a party. Come on y'all, the music's great, let's have some fun! We can worry about the town's prospects later.}}
+{{dialogue|Mort|Why, yes, Owen. There's no need to worry about our prospects, as we have no prospects to worry about...}}
+{{dialogue|Justice|Hey gramps! You're killin' the vibe, man! What's with all the doom and gloom? Sandrock is on the up and up, ya hear? Soon everything's going to be smooth sailin'! I truly believe it!}}
+{{dialogue|Owen|Justice is right, we have a lot to look forward to! Two new Builders, Trudy's close to a breakthrough... Everything will be alright for Sandrock.}}
+AREA TRIGGER DELETE || id: 11975
+Mort stands still in Main
+Justice stands still in Main
+Owen stands still in Main
+
+TRIGGER Procedure 1.0 Step 3.1 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Set IsGroup2TalkActive to 0
+
+TRIGGER Procedure 2.0 Step 3.1 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Set BehaviourRemoveFlagB to 0
+Owen stops standing still
+Justice stops standing still
+Mort stops standing still
+
+TRIGGER Procedure 1.0 Step 7.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Heidi
+CONDITIONS
+Check if IsPartyActive is == 1
+ACTIONS
+(cId 10) A conversation 757 starts:
+{{dialogue|Heidi|And another one's leaving. At this rate, we're gonna be out of people pretty soon. Not sure what gave you the motivation to come all the way out here, but our town's not in a good situation right now.}}
+
+TRIGGER Procedure 1.0 Step 8.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Yan
+CONDITIONS
+Check if IsPartyActive is == 1
+ACTIONS
+(cId 11) A conversation 758 starts:
+{{dialogue|Yan|Look at that stage! Yet another fine example of Sandrock Commerce Guild craftsmanship! My management skills have been tip-top lately! How do I do it? How do I do it?}}
+
+TRIGGER Procedure 1.0 Step 9.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Jasmine
+CONDITIONS
+Check if IsPartyActive is == 1
+ACTIONS
+(cId 12) A conversation 759 starts:
+{{dialogue|Jasmine|This is great! Good food and good music! But I wish my Ma coulda made it back for this...}}
+
+TRIGGER Procedure 1.0 Step 10.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Matilda
+CONDITIONS
+Check if IsPartyActive is == 1
+ACTIONS
+(cId 13) A conversation 760, 1097 starts:
+{{dialogue|Matilda|Hey there, ''Player''! Please excuse the disheartened feelings going around this morning. It's true that we're seeing more people leaving than comin', but I still hold out hope we'll see the Sandrock of yesteryear once again.}}
+{{dialogue|Matilda|My hopes are placed on people like you and Mi-an. The young folks. My generation did what we could, but we only got so far...}}
+
+TRIGGER Procedure 1.0 Step 11.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Jensen
+CONDITIONS
+Check if IsPartyActive is == 1
+ACTIONS
+(cId 14) A conversation 761 starts:
+{{dialogue|Jensen|I have seen so many Sandrock residents get on that train and never come back in the last couple of years. So it was so nice to see you and Ms. Mi-an get off the train and stay... I'm going to miss Mason. He did his best for our town.}}
+
+TRIGGER Procedure 2.0 Step 1.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 22:00 (order: 0):
+CONDITIONS
+Check if PARTY is == 2
+ACTIONS
+Heidi stops standing still
+Matilda stops standing still
+Jensen stops standing still
+Jasmine stops standing still
+Yan stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 11972) from Owen
+Remove behavior CommanderMoveToFlagAndAction (idName: 11972) from Mabel
+Remove behavior CommanderMoveToFlagAndAction (idName: 11972) from Elsie
+Remove behavior CommanderMoveToFlagAndAction (idName: 11972) from Justice
+Remove behavior CommanderMoveToFlagAndAction (idName: 11972) from Mi-an
+Remove behavior CommanderMoveToFlagAndAction (idName: 11972) from Mort
+AREA TRIGGER DELETE || id: 11971
+AREA TRIGGER DELETE || id: 11974
+AREA TRIGGER DELETE || id: 11975
+AREA TRIGGER DELETE || id: 11972
+AREA TRIGGER DELETE || id: 11973
+Mabel stops standing still
+Elsie stops standing still
+Mi-an stops standing still
+Owen stops standing still
+Justice stops standing still
+Mort stops standing still
+ACTION NPC REMOVE CLUSTER || cluster: CoogoBandFastivalRoot
+SCENEITEM DELETE || itemType: 0 | id: 20971
+SCENEITEM DELETE || itemType: 0 | id: 20972
+
+TRIGGER Procedure 2.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 23:00 (order: 0):
+CONDITIONS
+Check if PARTY is == 1
+ACTIONS
+NPC REMOVE TAG || tag: nosermons
+AREA TRIGGER DELETE || id: 10971
+NPC REMOVE TAG || tag: 1197GroupTag1
+NPC REMOVE TAG || tag: 1197GroupTag2
+FAIL MISSION || missionId: 1100096
+
+TRIGGER Procedure 2.0 Step 2.1 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Set BehaviourRemoveFlagA to 0
+Mabel stops standing still
+Elsie stops standing still
+Mi-an stops standing still
+
+TRIGGER Procedure 2.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 23:00 (order: 0):
+CONDITIONS
+Check if PARTY is == 2
+ACTIONS
+NPC REMOVE TAG || tag: nosermons
+END MISSION 1100097
+
+TRIGGER Procedure 2.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1100097
+MISSION END BEFORE 1100097
+CONDITIONS
+Always:
+ACTIONS
+NPC REMOVE TAG || tag: saloonparty
+
+TRIGGER Procedure 2.0 Step 4.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH GAME TIME END || order: 0 | id: 20971
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 11974
+AREA TRIGGER DELETE || id: 11975
+Mabel stops standing still
+Elsie stops standing still
+Mi-an stops standing still
+Mort stops standing still
+Justice stops standing still
+Owen stops standing still
+
+TRIGGER Procedure 2.0 Step 10.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DAY START FOR WEATHER || order: 0 | weather: 0
+CONDITIONS
+Check if PARTY is == 1
+ACTIONS
+WEATHER SET STATE || WeatherState: 0

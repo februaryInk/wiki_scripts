@@ -1,0 +1,676 @@
+Reading Mission 1400370: The Six Star Commission
+
+<onlyinclude>{{Infobox mission
+|name = The Six Star Commission
+|image =
+|description = Now that Sandrock has proven itself, the Alliance wants the Sandrock Commerce Guild to build the Alliance's next airship. This is a legendary six-star commission!
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 5700
+|reputation = 80
+|gols = 18000
+|npc1 = -1
+|rp1 = 10
+|rewards = {{i2|Primitive Yakmel Fury Hat}|1}{{i2|Primitive Yakmel furry top}|1}
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200310
+
+TRIGGER Procedure 12.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1800369 is result 1 flag 1
+Check if mission Grace's Return is result 1 flag 1
+ACTIONS
+Run mission #1400369
+
+TRIGGER Procedure 12.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 36913 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Six Star Commission
+MONSTER ADD TAG || tag: FarmedYakmel | isAdd: 0
+MONSTER ADD TAG || isAdd: 1 | tag: FarmedYakmel_Airship
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1400370
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1400370
+START MISSION 1400370
+Set cnt1 to -1
+===Recycle Engine===
+
+{{mission_details
+|desc = Qi said that there are some small engines inside the Starship Ruins, but he wasn't able to recover them. Since these relics are needed for the Airship, you will need to go deep, to the 11th layer of the ruins to be sure.
+|details = Recycle Engine
+*{{i2|Spaceship Engine|0/3}}
+*{{i2|Qi|0/1}}
+}}
+Set itemget to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat -1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the VoxelDungeon4:
+CONDITIONS
+Check if itemget is < 3
+ACTIONS
+REMOVE RESOURCE BY PROTOID || scene: VoxelDungeon4 | protoID: 357
+REMOVE RESOURCE BY PROTOID || scene: VoxelDungeon4 | protoID: 357
+REMOVE RESOURCE BY PROTOID || scene: VoxelDungeon4 | protoID: 357
+ADD RESOURCE IN SCNENEAREA || scene: VoxelDungeon4 | sceneAreaName: Resource_Engine | resourcePointID: 357
+ADD RESOURCE IN SCNENEAREA || scene: VoxelDungeon4 | sceneAreaName: Resource_Engine_1 | resourcePointID: 357
+ADD RESOURCE IN SCNENEAREA || scene: VoxelDungeon4 | sceneAreaName: Resource_Engine_2 | resourcePointID: 357
+
+TRIGGER Procedure 0.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from VoxelDungeon4 to the -1:
+CONDITIONS
+CHECK PLAYER ITEM || item: 19810099 | itemGrade: -1 | set: 2 | count: 3
+ACTIONS
+Set itemget to 3
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1400370 | targetId: 437011 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Qi===
+
+{{mission_details
+|desc = You've recycled enough engines, tell Qi the good news.
+|details = Talk to Qi
+*{{i2|Spaceship Engine|0/3}}
+*{{i2|Qi|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+CHECK PLAYER ITEM || item: 19810099 | itemGrade: -1 | set: 2 | count: 3
+ACTIONS
+(cId 437021) A conversation 4994_0 starts:
+{{dialogue|Qi|Splendid, ''Player''. Mint and I will start our analysis right away.}}
+{{dialogue|Qi|Oh. By the way.}}
+{{dialogue|Qi|It seems everyone in town has taken great interest in this project. It is one of the largest things ever built by mankind in our current era, so... I kind of, as they say, "get it."}}
+{{dialogue|Qi|Many members of our community insist they want to help, therefore, I have told them that there's no harm in procuring materials for a large project. I cannot, however, speak to the value of said materials...}}
+{{dialogue|Qi|Nevertheless, it may be worthwhile to speak with people around town...}}
+{{dialogue|Qi|Good luck. I'll try to get these engines and the diagram for the airship to you as soon as possible!}}
+The conversation ends.
+BAG MODIFY BY TARGET || missionId: 1400370 | targetId: 437011
+Remove 999 Spaceship Engine of Default quality (Do not notify player)
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 437021) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Wait for Diagrams===
+
+{{mission_details
+|desc = Qi needs some time to analyze the engines and make some diagrams. Wait until he's done.
+|details = Wait for Diagrams
+}}
+Set cnt1 to 0
+
+TRIGGER Procedure 0.0 Step 22.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437003 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Trudy stops standing still
+Qi stops standing still
+Grace stops standing still
+Wei stops standing still
+Heidi stops standing still
+Mi-an stops standing still
+Zeke stops standing still
+Nia stops standing still
+CUTSCENE UI STATE EXIT || 
+Trudy stops standing still
+Qi stops standing still
+Grace stops standing still
+Wei stops standing still
+Heidi stops standing still
+Mi-an stops standing still
+Zeke stops standing still
+Nia stops standing still
+SUBMIT MISSION 1400370
+END MISSION 1400370
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if cnt1 is >= 2
+ACTIONS
+The player receives a letter:
+{{mail|640}}
+SCENEITEM CREATE FLAG || itemType: 0 | id: 437056 | path: Mission_1400370_platform | sceneName: Main | flagName: S4370_ShipPlatform | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 437057 | path: Mission_1400370_DuoXiangPenWuQi | sceneName: Main | flagName: S4370_DuoXiangPenWuQi | extraParams: 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 640
+CONDITIONS
+Always:
+ACTIONS
+===Construct Airship===
+
+{{mission_details
+|desc = Now that you have the diagrams, construct the Forward Engines, Aft Engines, and Airship Body on the Assembly Station.
+|details = Construct Airship
+*{{i2|Airship Body|0/1}}
+*{{i2|Airship Front Engine|0/2}}
+*{{i2|Airship Aft Engine|0/2}}
+}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1400370 | targetId: 437014 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Install Airship Parts===
+
+{{mission_details
+|desc = Now that the Airship parts have all been completed, install them on the construction platform at the Yakmel Ranch.
+|details = Install Airship Parts
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 437051 | path: S4370_Item_Mark | extraParams: S4370_Item_Ship|CreatorItem|19810072_1|1331|Fix|1.4 | sceneName: Main | flagName: S4370_Ship
+SCENEITEM CREATE FLAG || itemType: 0 | id: 4370512 | path: S4370_Item_Ship_shadow | sceneName: Main | flagName: S4370_Ship | extraParams: 0
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 437051 | missionId: 1400370 | iconType: 3
+
+TRIGGER Procedure 1.0 Step 2.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 437051
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 11 | id: 437052 | path: S4370_Item_Mark | sceneName: Main | flagName: S4370_ShipEngine1L | extraParams: S4370_Item_ShipEngine1L|CreatorItem|19810002_1|1331|Fix|1.4
+SCENEITEM CREATE FLAG || id: 437053 | itemType: 11 | path: S4370_Item_Mark | sceneName: Main | flagName: S4370_ShipEngine1R | extraParams: S4370_Item_ShipEngine1R|CreatorItem|19810002_1|1331|Fix|1.4
+SCENEITEM CREATE FLAG || id: 437054 | itemType: 11 | path: S4370_Item_Mark | sceneName: Main | flagName: S4370_ShipEngine2L | extraParams: S4370_Item_ShipEngine2L|CreatorItem|19810003_1|1331|Fix|1.4
+SCENEITEM CREATE FLAG || id: 437055 | itemType: 11 | path: S4370_Item_Mark | sceneName: Main | flagName: S4370_ShipEngine2R | extraParams: S4370_Item_ShipEngine2R|CreatorItem|19810003_1|1331|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 437052 | missionId: 1400370 | iconType: 3
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 437053 | missionId: 1400370 | iconType: 3
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 437054 | missionId: 1400370 | iconType: 5
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 437055 | missionId: 1400370 | iconType: 3
+SCENEITEM CREATE FLAG || itemType: 0 | id: 4370522 | path: S4370_Item_ShipEngine1L_shadow | sceneName: Main | flagName: S4370_ShipEngine1L | extraParams: 0
+SCENEITEM CREATE FLAG || id: 4370532 | itemType: 0 | path: S4370_Item_ShipEngine1R_shadow | sceneName: Main | flagName: S4370_ShipEngine1R | extraParams: 0
+SCENEITEM CREATE FLAG || id: 4370542 | itemType: 0 | path: S4370_Item_ShipEngine2L_shadow | sceneName: Main | flagName: S4370_ShipEngine2L | extraParams: 0
+SCENEITEM CREATE FLAG || id: 4370552 | itemType: 0 | path: S4370_Item_ShipEngine2R_shadow | sceneName: Main | flagName: S4370_ShipEngine2R | extraParams: 0
+
+TRIGGER Procedure 1.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 437051
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE EX || missionId: 1400370 | targetId: 437015 | transId: 91004252 | num: 1
+SCENEITEM DELETE || itemType: 0 | id: 4370512
+
+TRIGGER Procedure 1.0 Step 3.1 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 437052
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE EX || missionId: 1400370 | targetId: 437015 | transId: 91004274 | num: 1
+SCENEITEM DELETE || itemType: 0 | id: 4370522
+
+TRIGGER Procedure 1.0 Step 3.1 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 437053
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE EX || missionId: 1400370 | targetId: 437015 | transId: 91004274 | num: 1
+SCENEITEM DELETE || itemType: 0 | id: 4370532
+
+TRIGGER Procedure 1.0 Step 3.2 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 437054
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE EX || missionId: 1400370 | targetId: 437015 | transId: 91004276 | num: 1
+SCENEITEM DELETE || itemType: 0 | id: 4370542
+
+TRIGGER Procedure 1.0 Step 3.2 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 437055
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE EX || missionId: 1400370 | targetId: 437015 | transId: 91004276 | num: 1
+SCENEITEM DELETE || itemType: 0 | id: 4370552
+
+TRIGGER Procedure 1.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1400370 | targetId: 437015 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 437002 | delayTime: 0 | durationTime: 2 | changeType: 2 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 437002
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S4370_8000
+Trudy stands still in Main
+Qi stands still in Main
+Grace stands still in Main
+Wei stands still in Main
+Heidi stands still in Main
+Mi-an stands still in Main
+Zeke stands still in Main
+Nia stands still in Main
+
+TRIGGER Procedure 2.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437002 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 4370201) A conversation 4954_0, 4955_0, 4956_0, 4957_0, 4958_0, 4959_0, 4960_0, 4961_0 starts:
+{{dialogue|Qi|Absolutely masterful. ''Player''... you've outdone yourself.}}
+{{dialogue|Mi-an|Wow! That... that's an airship alright!}}
+{{dialogue|Nia|Can't wait to see it in action!}}
+{{dialogue|Wei|Brings a tear to my eye...}}
+{{dialogue|Heidi|Did we really make that? Somebody pinch me...}}
+{{dialogue|Zeke|Yeah, just let me pinch myself first.}}
+{{dialogue|Grace|I should steal enemy blueprints more often.}}
+The conversation ends.
+{{dialogue|Trudy|A green Sandrock with this level of development...}}
+The conversation ends.
+{{dialogue|Heidi|Everyone's going to go nuts at the summit! They'll hardly recognize the place...}}
+The conversation ends.
+{{dialogue|Trudy|Well, I know a few folks who'd recognize it...}}
+The conversation ends.
+{{dialogue|Heidi|Hm..?}}
+{{dialogue|Trudy|Theo... Martle...}}
+{{dialogue|Heidi|Yeah...}}
+{{dialogue|Trudy|Well... it needs a name.}}
+The conversation ends.
+{{dialogue|Mi-an|Oh, true! We were so busy making it happen, I hadn't even thought about that.}}
+The conversation ends.
+{{dialogue|Nia|Just calling the airship "airship..." We're kind of like those kinds of people who never name their mounts and just call their horse "Horse..."}}
+{{dialogue|Wei|I don't know anyone like that!}}
+The conversation ends.
+{{dialogue|Nia|I'm not saying it's a lot of people... "Here, Horse! C'mere, Horsey!" ...Not ringing any bells at all...?}}
+{{dialogue|Trudy|Floor's open to suggestions, folks...}}
+{{dialogue|Qi|Ultimo Neo-prime Echo Yonekins Epoch X... percent sign.}}
+{{dialogue|Trudy|You were ready for that one. Okay. Er... any... other suggestions...?}}
+
+*''S.S. Martle.'' (No unique dialogue)
+*''S.S. Trudy.'' (No unique dialogue)
+*''S.S. Sandrock.'' (No unique dialogue)
+*''S.S. Shippy McShipface.'' (No unique dialogue)
+*''Ultimo Neo-prime Echo Yonekins Epoch X %.'' (No unique dialogue)
+*''Name it after me!'' (No unique dialogue)
+*''[Custom name]'' (No unique dialogue)
+
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4370201) The player picks the first option in conversation segment 15891:
+{{dialogue|Trudy|You were ready for that one. Okay. Er... any... other suggestions...?}}
+
+*''S.S. Martle.'' (No unique dialogue)
+*''S.S. Trudy.'' (No unique dialogue)
+*''S.S. Sandrock.'' (No unique dialogue)
+*''S.S. Shippy McShipface.'' (No unique dialogue)
+*''Ultimo Neo-prime Echo Yonekins Epoch X %.'' (No unique dialogue)
+*''Name it after me!'' (No unique dialogue)
+*''[Custom name]'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 4370213) A conversation 4962_0 starts:
+{{dialogue|Trudy|Yes... That would be appropriate. In a way, we could let Martle fly over and see all we've done...}}
+{{dialogue|Zeke|I'd like that.}}
+{{dialogue|Nia|I like it, too!}}
+{{dialogue|Mi-an|Sounds good to me!}}
+{{dialogue|Heidi|Ditto.}}
+{{dialogue|Wei|Indubitably!}}
+{{dialogue|Qi|I mean... Yeah, okay.}}
+{{dialogue|Trudy|Good! That's settled, then.}}
+The conversation ends.
+ACTION AIRSHIP RENAME || nameId: 80023091
+
+TRIGGER Procedure 3.0 Step 10.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4370213) After the conversation ends:
+(cId 4370214) After the conversation ends:
+(cId 4370221) After the conversation ends:
+(cId 4370224) After the conversation ends:
+(cId 4370231) After the conversation ends:
+(cId 4370236) After the conversation ends:
+(cId 4370244) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 4370253) A conversation 5074_0 starts:
+{{dialogue|Qi|Someone needs to test it, by the way. As confident as I am in our design, it would simply be bad practice to allow our Free Alliance representatives to take an especially maidenly maiden voyage...}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 11.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4370253) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 4370254) A conversation 5075_0 starts:
+{{dialogue|Trudy|I will take it up with Justice.}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 12.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4370254) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 4370254) A conversation 5076_0 starts:
+{{dialogue|Trudy|We'll take it out at night, so when everyone sees it at the summit celebration, it'll be for the first time.}}
+{{dialogue|Qi|Very well. Let us all retire. If you are not awakened by explosions tonight, assume that our airship has been a success.}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 20.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4370254) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 437003 | delayTime: 0 | durationTime: 1 | changeType: 2 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 21.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437003 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Trudy stands still in Main
+Qi stands still in Main
+Grace stands still in Main
+Wei stands still in Main
+Heidi stands still in Main
+Mi-an stands still in Main
+Zeke stands still in Main
+Nia stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S4370_8000End
+SCENEITEM CREATE FLAG || itemType: 0 | id: 437058 | path: Mission_1400370_DuoXiangPenWuQi | sceneName: Main | flagName: S4370_DuoXiangPenWuQi_installed | extraParams: 0
+SCENEITEM DELETE || itemType: 0 | id: 437057
+
+TRIGGER Procedure 4.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4370201) The player picks the second option in conversation segment 15891:
+{{dialogue|Trudy|You were ready for that one. Okay. Er... any... other suggestions...?}}
+
+*''S.S. Martle.'' (No unique dialogue)
+*''S.S. Trudy.'' (No unique dialogue)
+*''S.S. Sandrock.'' (No unique dialogue)
+*''S.S. Shippy McShipface.'' (No unique dialogue)
+*''Ultimo Neo-prime Echo Yonekins Epoch X %.'' (No unique dialogue)
+*''Name it after me!'' (No unique dialogue)
+*''[Custom name]'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 4370214) A conversation 4963_0, 4964_0, 4965_0 starts:
+{{dialogue|Trudy|Ah...!?}}
+The conversation ends.
+{{dialogue|Heidi|Yeah! Why not?}}
+{{dialogue|Grace|Award for most improved mayor goes tooo...!}}
+{{dialogue|Mi-an|Trudy! Sandrock wouldn't be green without you pushing us all forward! And besides, you got passed up for that Atara Times photo, I mean... I feel like we ought to make it up to you!}}
+{{dialogue|Wei|Heard about that. Awful stuff, especially considering what you learned later...}}
+{{dialogue|Zeke|I voted for you then. I vote for you now.}}
+{{dialogue|Qi|I mean... yeah, okay.}}
+The conversation ends.
+{{dialogue|Trudy|Goodness, you all... It... it would be an honor. Thank you.}}
+The conversation ends.
+ACTION AIRSHIP RENAME || nameId: 80023092
+
+TRIGGER Procedure 5.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4370201) The player picks the third option in conversation segment 15891:
+{{dialogue|Trudy|You were ready for that one. Okay. Er... any... other suggestions...?}}
+
+*''S.S. Martle.'' (No unique dialogue)
+*''S.S. Trudy.'' (No unique dialogue)
+*''S.S. Sandrock.'' (No unique dialogue)
+*''S.S. Shippy McShipface.'' (No unique dialogue)
+*''Ultimo Neo-prime Echo Yonekins Epoch X %.'' (No unique dialogue)
+*''Name it after me!'' (No unique dialogue)
+*''[Custom name]'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 4370221) A conversation 4966_0, 4967_0, 4968_0 starts:
+{{dialogue|Qi|Bit on the nose if you ask me.}}
+The conversation ends.
+{{dialogue|Grace|Eh, might be the kind of thing that we shouldn't overthink.}}
+{{dialogue|Qi|Over... think...?}}
+{{dialogue|Wei|I take my coffee black, and my naming conventions completely devoid of symbolism. Bully to you, ''Player''! You have my vote.}}
+{{dialogue|Heidi|Could be good for our brand recognition! If we have it flying over to other cities...}}
+{{dialogue|Mi-an|Then there'll be no mistaking that this is the ship that Sandrock built!}}
+{{dialogue|Nia|I can get behind that!}}
+{{dialogue|Zeke|Nice to be recognized, I guess.}}
+The conversation ends.
+{{dialogue|Trudy|Alright, then! S.S. Sandrock it is!}}
+The conversation ends.
+ACTION AIRSHIP RENAME || nameId: 80023093
+
+TRIGGER Procedure 6.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4370201) The player picks the fourth option in conversation segment 15891:
+{{dialogue|Trudy|You were ready for that one. Okay. Er... any... other suggestions...?}}
+
+*''S.S. Martle.'' (No unique dialogue)
+*''S.S. Trudy.'' (No unique dialogue)
+*''S.S. Sandrock.'' (No unique dialogue)
+*''S.S. Shippy McShipface.'' (No unique dialogue)
+*''Ultimo Neo-prime Echo Yonekins Epoch X %.'' (No unique dialogue)
+*''Name it after me!'' (No unique dialogue)
+*''[Custom name]'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 4370224) A conversation 4969_0, 4970_0, 4971_0 starts:
+{{dialogue|Trudy|Er...}}
+The conversation ends.
+{{dialogue|Nia|Heh heh... hahaha!}}
+{{dialogue|Nia|I like it!}}
+{{dialogue|Qi|I hate it.}}
+{{dialogue|Grace|I'm... in the middle.}}
+{{dialogue|Zeke|I feel like... we should go with something more serious.}}
+{{dialogue|Mi-an|I agree. It might be pretty funny to call our airship... "Shippy McShipface" but... what kind of message does that send to the rest of the Free Cities?}}
+The conversation ends.
+{{dialogue|Nia|That we're awesome?}}
+{{dialogue|Grace|Have to admit, it's memorable.}}
+{{dialogue|Trudy|Let's... put a pin in that one for now. I'll get a few more suggestions before making a final decision.}}
+The conversation ends.
+ACTION AIRSHIP RENAME || nameId: 80023094
+
+TRIGGER Procedure 7.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4370201) The player picks the fifth option in conversation segment 15891:
+{{dialogue|Trudy|You were ready for that one. Okay. Er... any... other suggestions...?}}
+
+*''S.S. Martle.'' (No unique dialogue)
+*''S.S. Trudy.'' (No unique dialogue)
+*''S.S. Sandrock.'' (No unique dialogue)
+*''S.S. Shippy McShipface.'' (No unique dialogue)
+*''Ultimo Neo-prime Echo Yonekins Epoch X %.'' (No unique dialogue)
+*''Name it after me!'' (No unique dialogue)
+*''[Custom name]'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 4370231) A conversation 4972_0, 4973_0, 4974_0, 4975_0, 4976_0 starts:
+{{dialogue|Qi|Excellent choice, ''Player''.}}
+{{dialogue|Mi-an|...}}
+The conversation ends.
+{{dialogue|Nia|I hate it! It's terrible! Sounds like a bunch of made-up... nerd... gobbledygook! I don't want the ship that we all worked so hard on to be named after some... Old World computer game!}}
+{{dialogue|Qi|Alright, that's fair. Still two to one so far. Also: not a computer game.}}
+{{dialogue|Grace|I was going to say essentially the same thing as Nia.}}
+The conversation ends.
+{{dialogue|Qi|Two to two...}}
+The conversation ends.
+{{dialogue|Zeke|What does it... mean?}}
+{{dialogue|Qi|It's a reference to something very obscure... something you never would have heard of... I've offered up the suggestion purely because of its aesthetically pleasing timbre.}}
+{{dialogue|Heidi|Isn't... Hypothetically... if it were a reference to Gungams... Isn't... isn't Echo Yonekins... the bad guy?}}
+{{dialogue|Qi|Y-... N-... Maybe. How did you-}}
+The conversation ends.
+{{dialogue|Trudy|Let's... put a pin in that one for now. I'll get a few more suggestions before making a final decision.}}
+The conversation ends.
+ACTION AIRSHIP RENAME || nameId: 80023095
+
+TRIGGER Procedure 8.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4370201) The player picks the sixth option in conversation segment 15891:
+{{dialogue|Trudy|You were ready for that one. Okay. Er... any... other suggestions...?}}
+
+*''S.S. Martle.'' (No unique dialogue)
+*''S.S. Trudy.'' (No unique dialogue)
+*''S.S. Sandrock.'' (No unique dialogue)
+*''S.S. Shippy McShipface.'' (No unique dialogue)
+*''Ultimo Neo-prime Echo Yonekins Epoch X %.'' (No unique dialogue)
+*''Name it after me!'' (No unique dialogue)
+*''[Custom name]'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 4370236) A conversation 4977_0, 4978_0, 4979_0, 4980_0 starts:
+{{dialogue|Qi|Bit bold, don't you think?}}
+The conversation ends.
+{{dialogue|Nia|Maybe a bit...}}
+{{dialogue|Mi-an|Yeah, but... think about it guys...!}}
+{{dialogue|Mi-an|''Player'', you built this airship. You built half the stuff in this town! You were a hero in the fight against Duvos... you were a hero practically every time anything went wrong!}}
+The conversation ends.
+{{dialogue|Nia|Oh yeah...! I'd kind of been thinking the whole "hero" thing was recent but... I guess you've been at this for a while now, huh?}}
+{{dialogue|Zeke|Yeah, you've been a part of... everything.}}
+{{dialogue|Qi|Statistically improbable, but nevertheless, entirely true...}}
+{{dialogue|Wei|''Player''... You literally are... always there when we need you!}}
+{{dialogue|Grace|I'll say.}}
+The conversation ends.
+{{dialogue|Trudy|That sounds like as good a reason as any. That's what we'll call it, then! S.S. ''Player''.}}
+The conversation ends.
+ACTION AIRSHIP RENAME || nameId: 80027581
+
+TRIGGER Procedure 9.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4370201) The player picks the seventh option in conversation segment 15891:
+{{dialogue|Trudy|You were ready for that one. Okay. Er... any... other suggestions...?}}
+
+*''S.S. Martle.'' (No unique dialogue)
+*''S.S. Trudy.'' (No unique dialogue)
+*''S.S. Sandrock.'' (No unique dialogue)
+*''S.S. Shippy McShipface.'' (No unique dialogue)
+*''Ultimo Neo-prime Echo Yonekins Epoch X %.'' (No unique dialogue)
+*''Name it after me!'' (No unique dialogue)
+*''[Custom name]'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+ACTION AIRSHIP RENAMEUI || 
+
+TRIGGER Procedure 9.0 Step 1.5 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AIRSHIP RENAME END || order: 0
+CONDITIONS
+Always:
+ACTIONS
+(cId 4370244) A conversation 4981_0, 4982_0, 5071_0, 5072_0, 5073_0 starts:
+{{dialogue|Zeke|I like it.}}
+The conversation ends.
+{{dialogue|Nia|I like it, too!}}
+The conversation ends.
+{{dialogue|Mi-an|Sounds good to me!}}
+{{dialogue|Heidi|Ditto.}}
+The conversation ends.
+{{dialogue|Wei|Indubitably!}}
+{{dialogue|Qi|I mean... Yeah, okay.}}
+The conversation ends.
+{{dialogue|Trudy|Good! That's settled, then.}}
+The conversation ends.
+
+TRIGGER Procedure 10.0 Step 0.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if cnt1 is >= 0
+Check if cnt1 is > (maybe?) 3
+ACTIONS
+Increment cnt1 by 1
+
+==Rewards==
+{{mission reward
+|npc1 = -1
+|rp1 = 10
+|exp = 5700
+|reputation = 80
+|gols = 18000
+|rewards = {{i2|Primitive Yakmel Fury Hat}|1}{{i2|Primitive Yakmel furry top}|1}
+}}

@@ -1,0 +1,466 @@
+Reading Mission 1300033: Builder Cruise
+
+<onlyinclude>{{Infobox mission
+|name = Builder Cruise
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Builder Cruise:
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the first option in conversation segment 988:
+{{dialogue|Mi-an|Anyway, we could prepare some materials, then roll through town and fix everything we see! Seek and repair! What do you say?}}
+
+*''Sounds good, I'm in!'' (No unique dialogue)
+*''Sorry, I have other things to do.'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 990:
+{{dialogue|Mi-an|Changed your mind about the Builder cruise?}}
+
+*''Sounds good, I'm in!'' (No unique dialogue)
+*''Sorry, I have other things to do.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set part to 1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1300032
+CONDITIONS
+Always:
+ACTIONS
+Run mission Builder Cruise
+END MISSION 1300032
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1300033
+CONDITIONS
+Always:
+ACTIONS
+===Prepare Materials===
+
+{{mission_details
+|desc = Mi-an gave a list of things she thought you might need for her Builder Cruise idea; get your materials ready!
+|details = Prepare Materials
+*{{i2|Wooden Boards|0/10}}
+*{{i2|Bench|0/1}}
+}}
+Set part to 0
+Set step to 0
+Set DAY to 0
+
+TRIGGER Procedure 0.0 Step 2.5 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1300032 | targetId: 0 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Mi-an===
+
+{{mission_details
+|desc = You're ready for the Builder Cruise, go tell Mi-an the good news!
+|details = Talk to Mi-an
+*{{i2|Wooden Boards|0/10}}
+*{{i2|Mi-an|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Mi-an
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1300032 | targetId: 1 | canSubmit: 1
+ACTIONS
+(cId 2) A conversation 993 starts:
+{{dialogue|Mi-an|Good job! I've got mine as well! Let's just take a good rest today and start our special Builder crew job tomorrow. Don't worry, I'll come find you in the morning!}}
+Set part to 1
+===Wait for Mi-an===
+
+{{mission_details
+|desc = Get a good night's sleep and get ready for tomorrow's Builder Cruise with Mi-an.
+|details = Wait for Mi-an
+}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if part is == 1
+ACTIONS
+Set part to 2
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+Check if part is == 2
+Farewell Party is in state 2 with flag 0
+Where's Mi-an is in state 1 with flag 0
+The Childhood Friend is in state 1 with flag 0
+Goodbye, Nia is in state 1 with flag 0
+The Kidnapping is in state 1 with flag 0
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: triallogan | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+Set part to 3
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Check if part is == 3
+ACTIONS
+Mi-an stands still in Main
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+
+TRIGGER Procedure 1.0 Step 2.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 994, 995 starts:
+{{dialogue|Mi-an|Howdy, partner! That's Sandrockanese for 'hello...' Hope you got plenty of rest! I've prepared the route for our Builder cruise.}}
+{{dialogue|Mi-an|First stop: {{textcolor|green|the train station}}! You might have noticed that the floorboards on the platform there are all full of potholes... Well... that ends today! Let's go!}}
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 11 | id: 20331 | path: Lable_Fixstation | sceneName: Main | flagName: station_floor | extraParams: Mission_stationfloor0|CreatorItem|19010001_5|1371|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 20331 | missionId: 1300032 | iconType: 2
+Mi-an stops standing still
+===Go to Train Station===
+
+{{mission_details
+|desc = Mi-an saw a big hole in the platform at the Train Station. Go and fix it up!
+|details = Go to Train Station
+}}
+Add behavior CommanderMoveToFlagAndAction (idName: 13033) to Mi-an
+(param: TargetScene:Main|MoveMode:Run|FlagName:station_mian)
+AREA TRIGGER CREATE || missionId: 1300033 | id: 20331 | sceneName: Main | flagName: station_trigger | showOnMap: 0 | mapIcon: MissionAreaBranch | transId: 80001449
+Set part to 4
+CUTSCENE UI STATE EXIT || 
+Set DAY to 10
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 20331
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Set part to 10
+AREA TRIGGER DELETE || id: 20331
+DELAY MASK SET || maskId: 13033 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 13033 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 13033) from Mi-an
+Mi-an stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: station_player
+DELAY MASK SET || maskId: 13033 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 13033
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 996 starts:
+{{dialogue|Mi-an|Here we are! Let's fix these holes!}}
+
+TRIGGER Procedure 3.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Set part to 11
+CUTSCENE UI STATE EXIT || 
+Add behavior CommanderNPCAction (idName: 130331) to Mi-an
+(param: CMDAction:Fix)
+
+TRIGGER Procedure 3.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8017 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Check if part is == 11
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 130331) from Mi-an
+SCENEITEM DELETE || itemType: 0 | id: 20322
+SCENEITEM CREATE FLAG || path: Mission_stationfloor2 | itemType: 0 | id: 203230816 | sceneName: Main | flagName: station_floor | extraParams: 0
+
+TRIGGER Procedure 5.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 20331
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 997 starts:
+{{dialogue|Mi-an|That'll do it! On to the next target: {{textcolor|green|the fence surrounding Martle's Oasis}}! Builder cruise, roll out!}}
+SCENEITEM DELETE || id: 20321 | itemType: 0
+
+TRIGGER Procedure 5.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 11 | id: 20332 | path: Label_branch | sceneName: Main | flagName: hu_fix1 | extraParams: Mission_FIxzhalanplayer|CreatorItem|19010001_5|1371|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 20332 | missionId: 1300032 | iconType: 2
+Set part to 4
+CUTSCENE UI STATE EXIT || 
+Mi-an stops standing still
+===Go to Martle's Oasis===
+
+{{mission_details
+|desc = Mi-an thinks the fence around the oasis could use some work. Fix it up!
+|details = Go to Martle's Oasis
+}}
+Add behavior CommanderMoveToFlagAndAction (idName: 130332) to Mi-an
+(param: TargetScene:Main|MoveMode:Run|FlagName:hu_fixmian)
+AREA TRIGGER CREATE || missionId: 1300033 | id: 20332 | flagName: hu_trigger | showOnMap: 0 | mapIcon: MissionAreaBranch | transId: 80001450 | sceneName: Main
+Set step to 1
+
+TRIGGER Procedure 5.0 Step 1.4 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 20332
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Set part to 10
+AREA TRIGGER DELETE || id: 20332
+DELAY MASK SET || maskId: 10331 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 5.0 Step 1.5 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 10331 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 130332) from Mi-an
+Mi-an stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: hu_fixplayer
+DELAY MASK SET || maskId: 10331 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 5.0 Step 2.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 10331
+CONDITIONS
+Always:
+ACTIONS
+(cId 15) A conversation 998 starts:
+{{dialogue|Mi-an|Alright! Here we are! Now, is it just me, or is this fence just a little... lacking in the looking department, no of-fence! Heh heh... get it? Ahem. Let's fix up the wonky lookin' parts and then move on.}}
+
+TRIGGER Procedure 6.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 15) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Set part to 11
+CUTSCENE UI STATE EXIT || 
+Add behavior CommanderNPCAction (idName: 1300331) to Mi-an
+(param: CMDAction:Fix)
+
+TRIGGER Procedure 6.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8017 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Check if part is == 11
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 1300331) from Mi-an
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1300335 | path: Mission_FIxzhalan | sceneName: Main | flagName: hu_fix2 | extraParams: 0
+
+TRIGGER Procedure 7.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 20332
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 999, 1001 starts:
+{{dialogue|Mi-an|We make a pretty good team, huh, ''Player''? We got that done in a flash! Alright, onto our next mission: {{textcolor|green|bench installation in town square}}!}}
+{{dialogue|Mi-an|You see, one day, I noticed Vivi walking all over town, looking kind of drained, when suddenly it hit me: there's nowhere to sit down anywhere in the center of town! Thus: benches.}}
+
+TRIGGER Procedure 7.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 11 | id: 20333 | path: Label_branch | sceneName: Main | flagName: square_Fix1 | extraParams: Mission_FIxchair|CreatorItem|19112027_1|1547|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 20333 | missionId: 1300032 | iconType: 2
+Set part to 4
+CUTSCENE UI STATE EXIT || 
+Mi-an stops standing still
+Set step to 2
+AREA TRIGGER CREATE || missionId: 1300033 | id: 20333 | flagName: square_trigger | showOnMap: 0 | mapIcon: MissionAreaBranch | transId: 80001451 | sceneName: Main
+===Go to Town Square===
+
+{{mission_details
+|desc = Mi-an thinks there aren't enough places to sit in Town Square, go with her to install a few benches.
+|details = Go to Town Square
+}}
+Add behavior CommanderMoveToFlagAndAction (idName: 130333) to Mi-an
+(param: TargetScene:Main|MoveMode:Run|FlagName:square_mian)
+
+TRIGGER Procedure 8.0 Step 1.4 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 20333
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Set part to 10
+AREA TRIGGER DELETE || id: 13034
+DELAY MASK SET || maskId: 10332 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 8.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 10332
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 1002 starts:
+{{dialogue|Mi-an|This looks like a good spot... say! Let's see who can build up a bench faster! Ready? Go!}}
+
+TRIGGER Procedure 9.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Set part to 11
+CUTSCENE UI STATE EXIT || 
+Add behavior CommanderNPCAction (idName: 130331) to Mi-an
+(param: CMDAction:Fix)
+
+TRIGGER Procedure 9.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8017 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 130331) from Mi-an
+SCENEITEM CREATE FLAG || itemType: 0 | id: 130033415 | path: Mission_FIxchairmian | sceneName: Main | flagName: square_Fix2 | extraParams: 0
+
+TRIGGER Procedure 9.0 Step 1.5 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 10332 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 130333) from Mi-an
+Mi-an stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: square_player
+DELAY MASK SET || maskId: 10332 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 10.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 20333
+CONDITIONS
+Always:
+ACTIONS
+(cId 10) A conversation 1003, 1004, 1005, 1006 starts:
+{{dialogue|Mi-an|Whew! Nice! But the real winners are the tired, the weary, the huddled masses: yearning to sit freely... Now they have these super cool benches to rest on!}}
+{{dialogue|Mi-an|You know, I was actually also thinking we should add some shrubbery, maybe some flowers, but this soil is just so... barren...}}
+{{dialogue|Mi-an|Er, but that's neither here nor there! We did good today, ''Player''! Here, a little something as a token of my appreciation.}}
+{{dialogue|Mi-an|You didn't have to join me on this thing, but I'm glad you did! Let's do it again sometime!}}
+
+TRIGGER Procedure 10.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 13033) from Mi-an
+Remove behavior CommanderMoveToFlagAndAction (idName: 130332) from Mi-an
+Remove behavior CommanderMoveToFlagAndAction (idName: 130333) from Mi-an
+Set part to 4
+CUTSCENE UI STATE EXIT || 
+Mi-an stops standing still
+SUBMIT MISSION 1300032
+END MISSION 1300033
+
+TRIGGER Procedure 11.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if DAY is == 10
+ACTIONS
+Mi-an stops standing still
+Mi-an stops standing still
+Mi-an stops standing still
+AREA TRIGGER DELETE || id: 20331
+AREA TRIGGER DELETE || id: 20332
+AREA TRIGGER DELETE || id: 20333
+Remove behavior CommanderMoveToFlagAndAction (idName: 13033) from Mi-an
+Remove behavior CommanderMoveToFlagAndAction (idName: 130332) from Mi-an
+Remove behavior CommanderMoveToFlagAndAction (idName: 130333) from Mi-an
+SCENEITEM DELETE || itemType: 0 | id: 20334
+SCENEITEM DELETE || itemType: 12 | id: 20332
+SCENEITEM DELETE || itemType: 11 | id: 20331
+SCENEITEM DELETE || itemType: 11 | id: 20332
+SCENEITEM DELETE || itemType: 11 | id: 20333
+Set part to 100
+FAIL MISSION || missionId: 1300032

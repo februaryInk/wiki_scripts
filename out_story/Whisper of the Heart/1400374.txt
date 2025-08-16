@@ -1,0 +1,489 @@
+Reading Mission 1400374: Whisper of the Heart
+
+<onlyinclude>{{Infobox mission
+|name = Whisper of the Heart
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Whisper of the Heart:
+
+TRIGGER Procedure 1.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 437329) The player picks the first option in conversation segment 17689:
+{{dialogue|Heidi|Alright, alright! I've got a vision now! One quick lap around town to get the juices flowing and I'll get cracking. Thanks, ''Player''! Talkin' it out with you... really helped!}}
+
+*''Why don't I tag along?'' (No unique dialogue)
+*''I'd go with, but I'm kinda busy...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+===Find Inspiration===
+
+{{mission_details
+|desc = It turns out that Heidi is worried about her style going against the judges in the competition. Start your walk at the entrance of town to see if you can find some inspiration.
+|details = Find Inspiration
+*{{i2|Heidi|0/1}}
+}}
+Set accept to 1
+
+TRIGGER Procedure 1.0 Step 7.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 437330) The player picks the first option in conversation segment 17692:
+{{dialogue|Heidi|Hey ''Player'', wanna join me for a stroll before I get started on my design?}}
+
+*''Why don't I tag along?'' (No unique dialogue)
+*''I'd go with, but I'm kinda busy...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+===Find Inspiration===
+
+{{mission_details
+|desc = It turns out that Heidi is worried about her style going against the judges in the competition. Start your walk at the entrance of town to see if you can find some inspiration.
+|details = Find Inspiration
+*{{i2|Heidi|0/1}}
+}}
+Run mission Whisper of the Heart
+END MISSION 1400373
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1400374
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1400373 | id: 437401 | sceneName: Main | flagName: S4373_TriggerC | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80027810
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8009 | state: Defense
+Set heidiLeave to 0
+Set searching to 0
+Set goforBihua to 0
+Set runBubble to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 17715:
+{{dialogue|Heidi|Check it out! It's a school! This external part here is kinda like the mural; "hugging" the interior. The sand'll roll right off the roof; a place like this'll be nice and sturdy for generations to come!}}
+
+*''Looks perfect!'' (No unique dialogue)
+*''Seems like it'll get the job done.'' (No unique dialogue)
+*''I think your Ma'd love it.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Heidi gains 2 favor
+
+TRIGGER Procedure 0.0 Step 0.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the third option in conversation segment 17715:
+{{dialogue|Heidi|Check it out! It's a school! This external part here is kinda like the mural; "hugging" the interior. The sand'll roll right off the roof; a place like this'll be nice and sturdy for generations to come!}}
+
+*''Looks perfect!'' (No unique dialogue)
+*''Seems like it'll get the job done.'' (No unique dialogue)
+*''I think your Ma'd love it.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Heidi gains 5 favor
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 437401
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 437401 | delayTime: 0 | durationTime: 1 | changeType: 2 | curveIndex: 0
+AREA TRIGGER DELETE || id: 437401
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8009
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437401 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Heidi stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S4373_8000C1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437401 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 437321) A conversation 5360_0 starts:
+{{dialogue|Heidi|Sigh... Well, this is where it all started, I reckon. I used to sit around here and draw these buildings again and again and again... I'd give 'em upgrades, of course! I'd always draw a giant fan on the Blue Moon to blow sandstorms away...}}
+{{dialogue|Heidi|Course, I had to stop once it got dark! That is if my Ma hadn't come lookin' for me already... She'd help me finish my drawing if I hadn't, and then we'd go home...}}
+{{dialogue|Heidi|Can't help but be a bit nostalgic for those times. Happy family. Not a care in the world...}}
+{{dialogue|Heidi|Hey! That reminds me! Me and my Ma used to draw little murals on the sides of mountains, there's one not that far from town. I haven't been down that way in a Panbat's age; c'mon let's go find it, I wanna show ya!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 3.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 437321) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+STOPWATCH REAL TIME SET || id: 437403 | sec: 3
+AREA TRIGGER CREATE || missionId: 1400374 | id: 437402 | sceneName: Main | flagName: S4373_TriggerD | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80027810
+Add behavior CommanderMoveToFlagAndAction (idName: 437452) to Heidi
+(param: TargetScene:Main|MoveMode:Run|FlagName:S4373_8009D1)
+Heidi stops standing still
+Set goforBihua to 1
+===Find the Mural===
+
+{{mission_details
+|desc = Heidi remembers that she and her Ma painted murals at the base of the Grand Mesa when she was a child.
+|details = Find the Mural
+*{{i2|Heidi|0/1}}
+}}
+Set runBubble to 1
+
+TRIGGER Procedure 0.0 Step 6.0 Order 9 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 437412
+ON STOPWATCH REAL TIME END || order: 0 | id: 437403
+CONDITIONS
+Check if runBubble is == 1
+ACTIONS
+ACTOR SHOW BUBBLE RANDOM || npc: 8009 | transIds: 80027404,80027405,80027406 | duration: 5
+STOPWATCH REAL TIME UNSET || id: 437412
+STOPWATCH REAL TIME SET || id: 437412 | sec: 10
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 437402
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 437404 | delayTime: 0 | durationTime: 1 | changeType: 2 | curveIndex: 0
+AREA TRIGGER DELETE || id: 437402
+Set runBubble to 0
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437404 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Heidi stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S4373_8000D1
+Remove behavior CommanderMoveToFlagAndAction (idName: 437452) from Heidi
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437404 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 437422) A conversation 5361_0 starts:
+{{dialogue|Heidi|Wasn't it... right here? Ah, shoot, I know it's close. Let's spread out!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 437422) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1400374 | id: 437405 | sceneName: Main | flagName: S4373_TriggerDLeave | showOnMap: 0 | mapIcon: MissionAreaBranch | transId: 1
+Set searching to 1
+SCENEITEM DELETE || itemType: 0 | id: 437499
+PICK UP RESOURCE REFRESH || id: 4374101
+===Clean up the Wall===
+
+{{mission_details
+|desc = You're at the location where she and her Ma painted the mural, but it's nowhere to be found. Clean up the wall to see if the mural is there.
+|details = Clean up the Wall
+*{{i2|Heidi|0/1}}
+}}
+CUTSCENE UI STATE EXIT || 
+SCENEITEM CREATE FLAG || itemType: 0 | id: 437413 | path: Mission_NewArrow | sceneName: Main | flagName: S4373_arrowHint | extraParams: 0
+AREA TRIGGER CREATE || missionId: 1400374 | id: 437414 | sceneName: Main | flagName: S4373_arrowHint | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 1.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH GAME TIME END || order: 0 | id: 437406
+CONDITIONS
+Always:
+ACTIONS
+Set heidiLeave to 1
+Heidi stops standing still
+AREA TRIGGER DELETE || id: 437405
+
+TRIGGER Procedure 1.0 Step 6.0 Order 5 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 1 | id: 437405
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH GAME TIME UNSET || id: 437406
+STOPWATCH GAME TIME SET || id: 437406 | minute: 30
+
+TRIGGER Procedure 1.0 Step 7.0 Order 6 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Heidi
+CONDITIONS
+Check if searching is == 1
+Check if heidiLeave is == 0
+ACTIONS
+(cId 437423) A conversation 5362_0 starts:
+{{dialogue|Heidi|Maybe it's covered by weeds or rubble? Can you help with that?}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 10.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1400374
+CONDITIONS
+Always:
+ACTIONS
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8009
+Remove behavior CommanderMoveToFlagAndAction (idName: 437452) from Heidi
+Heidi stops standing still
+The player receives a letter:
+{{mail|680}}
+SCENEITEM DELETE || itemType: 19 | id: 437311
+AREA TRIGGER DELETE || id: 437402
+AREA TRIGGER DELETE || id: 437405
+SCENEITEM DELETE || itemType: 0 | id: 437499
+SCENEITEM DELETE || itemType: 0 | id: 437413
+AREA TRIGGER DELETE || id: 437414
+AREA TRIGGER DELETE || id: 437401
+PICK UP RESOURCE DELETE || id: 4374101
+
+TRIGGER Procedure 1.0 Step 10.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8009
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 19 | id: 437311
+CONDITIONS
+Always:
+ACTIONS
+(cId 437421) A conversation 17832 starts:
+{{dialogue|Player|...}}
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON RESOURCE PICK UP || order: 0 | npc: 8000 | id: 4374101
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 437407 | delayTime: 0 | durationTime: 1 | changeType: 2 | curveIndex: 0
+AREA TRIGGER DELETE || id: 437405
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437407 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Heidi stands still in Main
+Heidi stops standing still
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S4373_8000D2
+SCENEITEM DELETE || itemType: 0 | id: 437413
+AREA TRIGGER DELETE || id: 437414
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437407 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 437424) A conversation 5363_0 starts:
+{{dialogue|Heidi|Ah hah! There it is! Thanks, ''Player''!}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 4.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 437424) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 437425) A conversation 5364_0 starts:
+{{dialogue|Heidi|Hm. First thought: I'm lucky to have had a supportive family to stop me from giving up on my drawings...}}
+{{dialogue|Heidi|Well. I did a passable job of drawing my Ma. That's her alright! Her and my Pa were sweethearts even when they're in school, did I ever tell you about them? Ah, yeah, they were like straight out of an old romance novel...}}
+{{dialogue|Heidi|It was actually my Ma that made the first move... but my Pa didn't want to mess up what they had, so he said no... and then almost immediately regretted it and went chasing after her! So they started on equal footing. Kinda nice.}}
+
+*''Your Ma sounds like a go-getter.''
+*{{flirt}}''That's how it starts sometimes, as "just friends..."''
+*''Cool story and all but... the competition?''
+
+{{dialogue|Heidi|indent=true|answer=Your Ma sounds like a go-getter.
+|Yeah, she was. Best anyone could ever ask for. I guess it wasn't too long after I drew this that she...}}
+
+:*''Sorry, didn't mean to bring up bad memories...''
+:*''She'd be proud of you.''
+
+{{dialogue|Heidi|indent=double|answer=Sorry, didn't mean to bring up bad memories...
+|No! No... not unpleasant memories at all... I mean... you know, it happened so long ago. The hurt is gone and... it actually feels good to be reminded of things we used to do together.}}
+{{dialogue|Heidi|indent=double|answer=She'd be proud of you.
+|Yeah... That's... That's why I do a lot of what I do, y'know?}}
+{{dialogue|Heidi|indent=true|answer=That's how it starts sometimes, as "just friends..."
+|reward={{NPC2|Heidi|rp=2}}|Well, of course... You want to be sure you can rely on someone... be sure you really like someone before... you know...}}
+
+:*''Good thing there's nothing romantic between us at all!''
+:*{{flirt}}''You mean, become more than friends?''
+
+{{dialogue|Heidi|indent=double|answer=Good thing there's nothing romantic between us at all!
+|Ahah... yeah... totally... Best friends forever, am I right? How did we even get on this topic anyway...? Back to the competition!}}
+{{dialogue|Heidi|indent=double|answer=You mean, become more than friends?
+|reward={{NPC2|Heidi|rp=3}}|Ah, I mean... well, it's happened before is all I'm saying...! Er, say, what were we talking about just now? Was it the competition? I think it was the competition...}}
+{{dialogue|Heidi|indent=true|answer=Cool story and all but... the competition?
+|Right, right. Gotta keep my eye on the prize...}}
+{{dialogue|Heidi|Hey... You know what? It's because my parents encouraged me that I'm even in this competition in the first place. Why was I ever even deliberating over this?}}
+{{dialogue|Heidi|Here, ''Player'', let me show you some of what I've been kickin' around... In fact, I think I've got a little something extra now that'll really top it off...!}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 437425) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 4506}}
+A cutscene CG_HEIDIFEEL (duration: -2.0) starts playing
+Back to Basics - Seeing a mural from her childhood inspired Heidi to make a new design; in a few nimble strokes, she had the idea that would later become her final design.
+
+TRIGGER Procedure 2.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_HEIDIFEEL | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 437426) A conversation 5373_0 starts:
+{{dialogue|Heidi|Check it out! It's a school! This external part here is kinda like the mural; "hugging" the interior. The sand'll roll right off the roof; a place like this'll be nice and sturdy for generations to come!}}
+
+*''Looks perfect!''
+*''Seems like it'll get the job done.''
+*''I think your Ma'd love it.''
+
+{{dialogue|Heidi|indent=true|answer=Looks perfect!
+|reward={{NPC2|Heidi|rp=2}}|Ah, well I dunno about perfect, but it is pretty good!}}
+{{dialogue|Heidi|indent=true|answer=Seems like it'll get the job done.
+|Right. Well, it's just a rough sketch anyhow. Next draft'll look a lot better!}}
+{{dialogue|Heidi|indent=true|answer=I think your Ma'd love it.
+|reward={{NPC2|Heidi|rp=5}}|She would!}}
+
+TRIGGER Procedure 2.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 437426) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 437427) A conversation 5377_0 starts:
+{{dialogue|Heidi|You know, for a second there, it felt like she was here again... She always knew what to say when I was getting discouraged. And, hey, I think you deserve some credit, too. If you hadn't stepped in, I'd still be back littering at the oasis!}}
+{{dialogue|Heidi|Er. Joking. I never litter. And no one should. Anyway, thanks, ''Player''! You're the best! I'd better get back to my office to finish this off while I'm still in the zone!}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 8.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 437427) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 437411 | delayTime: 0 | durationTime: 1 | changeType: 2 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 9.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437411 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Heidi stops standing still
+CAMERA PATH STOP DEFAULT || id: 437479
+
+TRIGGER Procedure 2.0 Step 10.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437411 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+SCENEITEM DELETE || itemType: 19 | id: 437311
+SUBMIT MISSION 1400373
+END MISSION 1400374
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 17705:
+{{dialogue|Heidi|It was actually my Ma that made the first move... but my Pa didn't want to mess up what they had, so he said no... and then almost immediately regretted it and went chasing after her! So they started on equal footing. Kinda nice.}}
+
+*''Your Ma sounds like a go-getter.'' (No unique dialogue)
+*{{flirt}}''That's how it starts sometimes, as "just friends..."'' (No unique dialogue)
+*''Cool story and all but... the competition?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Heidi gains 2 favor
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 17709:
+{{dialogue|Heidi|Well, of course... You want to be sure you can rely on someone... be sure you really like someone before... you know...}}
+
+*''Good thing there's nothing romantic between us at all!'' (No unique dialogue)
+*{{flirt}}''You mean, become more than friends?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Heidi gains 3 favor

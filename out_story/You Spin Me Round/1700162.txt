@@ -1,0 +1,247 @@
+Reading Mission 1700162: You Spin Me Round
+
+<onlyinclude>{{Infobox mission
+|name = You Spin Me Round
+|image =
+|description = Cooper and Mi-an are discussing the broken windmill. They seem to have a difference of opinion.
+|type = Side
+|time =
+|location =
+|characters = [[Mi-an]]
+|condition =
+|details =
+|exp = 500
+|reputation = 15
+|gols = 200
+|npc1 = Mi-an
+|rp1 = 10
+|npc2 = Cooper
+|rp2 = 20
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100068
+
+TRIGGER Procedure 2.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100068
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1700159
+
+TRIGGER Procedure 2.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1100105 is result 1 flag 1
+ACTIONS
+Run mission You Spin Me Round
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700162
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER ONCE CREATE || missionId: 1700162 | sceneName: Main | id: 171621 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80006522 | flagName: YSMR_trigger
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 171621
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || curveIndex: 0 | changeType: 0 | durationTime: 2 | delayTime: 0 | maskId: 171621
+DELIVER MISSION 1700162
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 171621
+CONDITIONS
+Always:
+ACTIONS
+Mi-an stands still in Main
+Cooper stands still in Main
+DELAY MASK SET || curveIndex: 0 | changeType: 1 | durationTime: 1 | delayTime: 0 | maskId: 171621
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: YSMR_player1
+SCENEITEM CREATE FLAG || itemType: 11 | id: 171631 | path: Mission_windmill | sceneName: Main | flagName: Fengche_13029 | extraParams: Mission_windmill2|CreatorItem|19800019_4,19112014_2,19111001_6|1371|Fix|1.4
+SCENEITEM DELETE || itemType: 0 | id: 13029
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 171621
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 1138_0 starts:
+{{dialogue|Cooper|You know what they say: "If it ain't broke, don't fix it!"}}
+{{dialogue|Mi-an|But... it is broken!}}
+{{dialogue|Cooper|Well, then... fix it! Ehehehhe! Got 'eem!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Cooper stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 171628003) to Cooper
+(param: TargetScene:Main|FlagName:bull_cooper)
+Add behavior CommanderMoveToFlagAndAction (idName: 171621) to Player
+(param: TargetScene:Main|FlagName:YSMR_cooper1)
+(cId 2) A conversation 3998 starts:
+{{dialogue|Mi-an|That... That's not an official commission...!}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 1139_0 starts:
+{{dialogue|Mi-an|Gah...! Dang it, ''Player''! I just can't look at this eyesore any longer! How can it be that nobody's commissioned us to fix this thing yet, I mean... just look at it!}}
+{{dialogue|Mi-an|Tower's all bent out of shape, blades are beat up, and... I know this doesn't really matter that much, but... it's kind of leaning to one side. I can't take it anymore!}}
+{{dialogue|Mi-an|C'mon, let's fix this thing up! It'll take us like ten minutes!}}
+
+*''You're right, let's fix it.''
+*''Looks fine to me.''
+
+{{dialogue|Mi-an|indent=true|answer=You're right, let's fix it.
+|reward={{NPC2|Mi-an|rp=3}}|Whew! Glad you're on board! Thought I was losin' it there for a sec.}}
+{{dialogue|Mi-an|indent=true|Cool! Let's just give it a quick inspection and get to work!}}
+{{dialogue|Mi-an|indent=true|answer=Looks fine to me.
+|A- are you kiddin' me!? And it's right in front of your workshop, too... How do you live like this?}}
+{{dialogue|Mi-an|indent=true|Alright, fine! I'll handle this myself. And don't say Mi-an never did nothin' for the people...}}
+Remove behavior CommanderMoveToFlagAndAction (idName: 171628003) from Cooper
+
+TRIGGER Procedure 1.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 2) There is a conversation segment (id 4005) that ends:
+{{dialogue|Mi-an|Cool! Let's just give it a quick inspection and get to work!}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 171621) to Mi-an
+(param: TargetScene:Main|FlagName:YSMR_mian3|Action:LookAround|MoveMode:Run)
+
+TRIGGER Procedure 1.0 Step 5.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 2) There is a conversation segment (id 3999) that ends:
+{{dialogue|Mi-an|Gah...! Dang it, ''Player''! I just can't look at this eyesore any longer! How can it be that nobody's commissioned us to fix this thing yet, I mean... just look at it!}}
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 171621) from Player
+
+TRIGGER Procedure 1.0 Step 2.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8017 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 4006, 4007 starts:
+{{dialogue|Mi-an|Hm... perhaps I spoke a little too soon, definitely gonna have to head back to the workshop for this one.}}
+{{dialogue|Mi-an|Well, let's just make it a little ongoing project between us Builders. It's done when it's done! Catch ya later!}}
+Remove behavior CommanderMoveToFlagAndAction (idName: 171621) from Mi-an
+Remove behavior CommanderMoveToFlag (idName: 171621) from Mi-an
+
+TRIGGER Procedure 1.0 Step 4.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8017 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 171621) to Mi-an
+(param: TargetScene:Main|FlagName:YSMR_mian1|MoveMode:Run)
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 4010) that ends:
+{{dialogue|Mi-an|I'm headed back to my workshop to grab some materials, I'll start working on it when I can. Why don't you take a look and see if there's anything you can do?}}
+(cId: -1) There is a conversation segment (id 4007) that ends:
+{{dialogue|Mi-an|Well, let's just make it a little ongoing project between us Builders. It's done when it's done! Catch ya later!}}
+CONDITIONS
+Always:
+ACTIONS
+Mi-an stops standing still
+START MISSION 1700162
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700162
+CONDITIONS
+Always:
+ACTIONS
+Run mission You Spin Me Round
+END MISSION 1700162
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 4003) that ends:
+{{dialogue|Mi-an|Alright, fine! I'll handle this myself. And don't say Mi-an never did nothin' for the people...}}
+CONDITIONS
+Always:
+ACTIONS
+Mi-an stops standing still
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 3.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 4001:
+{{dialogue|Mi-an|C'mon, let's fix this thing up! It'll take us like ten minutes!}}
+
+*''You're right, let's fix it.'' (No unique dialogue)
+*''Looks fine to me.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Mi-an gains 3 favor
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Mi-an|Change your mind? Want to fix up that Windmill?}}
+
+*''You're right, let's fix it.''
+*''Looks fine to me.''
+
+{{dialogue|Mi-an|indent=true|answer=You're right, let's fix it.
+|Woohoo! I knew you'd see the Light!}}
+{{dialogue|Mi-an|indent=true|I'm headed back to my workshop to grab some materials, I'll start working on it when I can. Why don't you take a look and see if there's anything you can do?}}
+{{dialogue|Mi-an|indent=true|answer=Looks fine to me.
+|A- are you kiddin' me!? And it's right in front of your workshop, too... How do you live like this?}}
+{{dialogue|Mi-an|indent=true|Alright, fine! I'll handle this myself. And don't say Mi-an never did nothin' for the people...}}
+
+==Rewards==
+{{mission reward
+|npc1 = Mi-an
+|rp1 = 10
+|npc2 = Cooper
+|rp2 = 20
+|exp = 500
+|reputation = 15
+|gols = 200
+}}

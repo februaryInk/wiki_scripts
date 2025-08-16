@@ -1,0 +1,196 @@
+Reading Mission 1500005: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100002
+
+TRIGGER Procedure 0.0 Step 15.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100002
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1300028
+
+TRIGGER Procedure 0.0 Step 16.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON TIME YMD START || order: 0 | year: -1 | month: -1 | day: 1
+CONDITIONS
+Becoming Official is successfully completed
+ACTIONS
+Run mission #1500005
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1500005
+CONDITIONS
+Always:
+ACTIONS
+Set LEAVE to 0
+Set okcheck to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+CHECK WEATHER STATE || weather: 2 | flag: 0
+Where's Mi-an is in state 1 with flag 0
+The Childhood Friend is in state 1 with flag 0
+Goodbye, Nia is in state 1 with flag 0
+The Kidnapping is in state 1 with flag 0
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: inprison | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: triallogan | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+Set LEAVE to 1
+Yan stands still in Main
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Check if LEAVE is == 1
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 1217 starts:
+{{dialogue|Yan|Heeeeey, there's my favorite Builder. Got a minute to chat about your Workshop Rating? Need to... relay a couple of things your way...}}
+
+*''Sure.'' (No unique dialogue)
+*''Actually, I'm kind of busy today.'' (No unique dialogue)
+
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the second option in conversation segment 1217:
+{{dialogue|Yan|Heeeeey, there's my favorite Builder. Got a minute to chat about your Workshop Rating? Need to... relay a couple of things your way...}}
+
+*''Sure.'' (No unique dialogue)
+*''Actually, I'm kind of busy today.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 1220 starts:
+{{dialogue|Yan|Yeah, well, don't worry so much, I'll be quick-}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Yan gains 10 favor
+CUTSCENE UI STATE EXIT || 
+Yan stops standing still
+END MISSION 1500005
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Yan gains 10 favor
+CUTSCENE UI STATE EXIT || 
+Set okcheck to 1
+Yan stops standing still
+
+TRIGGER Procedure 1.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if okcheck is == 1
+ACTIONS
+The player receives a letter:
+{{mail|45}}
+END MISSION 1500005
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8043 | cId: 1 | missionId: 1500005
+ON CONVERSATION END BEFORE || order: 0 | npc: 8043 | cId: 2 | missionId: 1500005
+CONDITIONS
+CHECK PLAYER WORKSHOP RANKING || set: 6 | value: 3
+ACTIONS
+(cId 3) A conversation 253_0 starts:
+{{dialogue|Yan|Oh! Silly me! Would you look at that, I was holding the wrong form! It looks like you're actually running a tight ship here at, uh, whatever it is your workshop was called. Your Workshop Rating is ranked [GuildRanking|Player] this month! Well done, Builder!}}
+{{dialogue|Yan|Now I have to go get after Mi-an... With me and you in the top position, that makes her the lowest rated Builder in Sandrock, can you believe that? If you get time, why don't you speak with her; try to be a positive role-model.}}
+{{dialogue|Yan|Well, good chat, Builder. Keep up the good work, and who knows, you might even get promoted! To uh... Senior Builder! Or somethin'... I'll think of a title if I need to. So long!}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8043 | cId: 1 | missionId: 1500005
+ON CONVERSATION END BEFORE || order: 0 | npc: 8043 | cId: 2 | missionId: 1500005
+CONDITIONS
+CHECK PLAYER WORKSHOP RANKING || set: 1 | value: 2
+CHECK PLAYER WORKSHOP RANKING || set: 6 | value: 5
+ACTIONS
+(cId 4) A conversation 254_0 starts:
+{{dialogue|Yan|Alright, so here's how we're going to do your evaluation: with something I like to call the 'compliment sandwich.' That's where I'll say something nice, then give you a bit of constructive criticism, then finish off with something that you've been doing well.}}
+{{dialogue|Yan|Compliment... compliment... Let's see, uh, well... You're not... the worst Builder I've ever seen!}}
+{{dialogue|Yan|Alright, phew, now that that's out of the way...}}
+{{dialogue|Yan|Your Workshop Rating is ranked [GuildRanking|Player] this month, ''Player''. Unremarkable in every way other than, I suppose, how incredibly average it is!}}
+{{dialogue|Yan|Here in Sandrock, we don't get by by doing the bare minimum, no, that's how I- er, I mean, we ended up in such a rut in the first place!}}
+{{dialogue|Yan|We need to see more from you: pick up an extra commission here and there, go visit townfolk personally and ask if they need anything, upgrade your machines and equipment so you can take on bigger commissons...}}
+{{dialogue|Yan|I mean, just look at Mi-an! She's doing great, and well on her way to being your boss if you don't shape up! Lucky for you she's the friendly-type... go see if you can learn something from her, why don't ya?}}
+{{dialogue|Yan|Well that about does it. Oh, eh... you'll get your second compliment in the mail. Goodbye, ''Player''.}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8043 | cId: 1 | missionId: 1500005
+ON CONVERSATION END BEFORE || order: 0 | npc: 8043 | cId: 2 | missionId: 1500005
+CONDITIONS
+CHECK PLAYER WORKSHOP RANKING || set: 3 | value: 5
+ACTIONS
+(cId 5) A conversation 255_0 starts:
+{{dialogue|Yan|Looks like you've got your workshop here in, uh, decent shape, I suppose. But, eh, what exactly would you say it is that... you do here?}}
+{{dialogue|Yan|Uh-huh. Well...}}
+{{dialogue|Yan|There's no way to sugar-coat it, ''Player''. Your Workshop Rating is ranked [GuildRanking|Player] this month, that's bad. Honestly, if it weren't so hard to get Builders out here, I'd probably be looking for your replacement.}}
+{{dialogue|Yan|We need to see more from you: pick up an extra commission here and there, go visit townfolk personally and ask if they need anything, upgrade your machines and equipment so you can take on bigger commissons...}}
+{{dialogue|Yan|I mean, just look at Mi-an! She's doing great, and well on her way to being your boss if you don't shape up! Lucky for you she's the friendly-type... go see if you can learn something from her, why don't ya?}}
+{{dialogue|Yan|Oh, don't look so sad, Builder. Just because I have no respect for your abilities doesn't mean we can't still be friends!}}
+{{dialogue|Yan|So long! And do try to get better at your job.}}
+The conversation ends.

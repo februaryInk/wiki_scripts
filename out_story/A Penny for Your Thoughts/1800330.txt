@@ -1,0 +1,388 @@
+Reading Mission 1800330: A Penny for Your Thoughts
+
+<onlyinclude>{{Infobox mission
+|name = A Penny for Your Thoughts
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from A Penny for Your Thoughts:
+
+TRIGGER Procedure 0.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8330553) from Penny
+Add behavior CommanderRandomBubbleTag (idName: 8330554) to Penny
+(param: BubbleTag:S833055_1|BubbleTime:4|minTime:6|maxTime:8|isRandom:TRUE|Follower:8000)
+START MISSION 1800395
+
+TRIGGER Procedure 0.0 Step 14.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800395
+CONDITIONS
+Always:
+ACTIONS
+ACTION SOCIAL REMOVE CHILD FLAG || flag: StoryBlock
+Run mission A Penny for Your Thoughts
+END MISSION 1800395
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800330
+CONDITIONS
+Always:
+ACTIONS
+===Take Penny to the Saloon===
+
+{{mission_details
+|desc = Penny's having trouble navigating in the sandstorm. Help her make it to the saloon where she can rest.
+|details = Take Penny to the Saloon
+}}
+DELAY MASK SET || maskId: 83301 | delayTime: 2 | durationTime: -2 | changeType: 0 | curveIndex: 0
+Add behavior CommanderMoveToFlag (idName: 8330001) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:default|Delay:0.0)
+
+TRIGGER Procedure 0.0 Step 0.3 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 83301
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: S8330_0_2
+Remove behavior CommanderMoveToFlag (idName: 8330001) from Player
+DELAY MASK SET || maskId: 83301 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+CUTSCENE UI STATE EXIT || 
+SCENEITEM DELETE || id: 535201 | itemType: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 535202 | path: Story_music_Traincome | sceneName: Main | flagName: YanLeave_Yan | extraParams: -1
+TRAIN SET DISABLE || isDisable: 0
+TRAIN SET VISIBLE || set: 1
+
+TRIGGER Procedure 0.0 Step 8.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8055 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 10 | eventName: MoveToFlagOver | behaviourName: CommanderMoveToFlag | npc: 8000
+CONDITIONS
+Check if 8330Move9 is >= 2
+ACTIONS
+Run mission A New Guitar
+
+TRIGGER Procedure 0.0 Step 10.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_saloon
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_saloon
+AREA TRIGGER DELETE || id: 83301
+
+TRIGGER Procedure 0.0 Step 11.2 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: S8330_0_2
+Penny stands still in Saloon and looks at Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 83302 | path: S8330_Item1 | sceneName: Saloon | flagName: S8330_Item1 | extraParams: 0
+Remove behavior CommanderRandomBubbleTag (idName: 8330554) from Penny
+DELAY MASK SET || maskId: 83301 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+SCENEITEM DELETE || id: 535202 | itemType: 0
+
+TRIGGER Procedure 0.0 Step 12.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 13501 starts:
+{{dialogue|Penny|Thanks so much! If it weren't for you, I would have found myself at the bottom of some canyon!}}
+
+TRIGGER Procedure 0.0 Step 13.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8330556) to Penny
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:S8330_55_4)
+
+TRIGGER Procedure 0.0 Step 14.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8055 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 13502 starts:
+{{dialogue|Penny|My guitar... it's completely broken. What am I going to do...}}
+
+TRIGGER Procedure 0.0 Step 15.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Cooper stands still in Saloon
+Hugo stands still in Saloon
+Add behavior CommanderMoveToFlagAndAction (idName: 8330031) to Cooper
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:S8330_3_2)
+Add behavior CommanderMoveToFlagAndAction (idName: 8330101) to Hugo
+(param: TargetScene:Saloon|MoveMode:Run|FlagName:S8330_10_2)
+Set 8330Move1 to 0
+Add behavior CommanderMoveToFlagAndAction (idName: 8330002) to Player
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:S8330_0_3|Delay:4.0)
+Add behavior CommanderMoveToFlagAndAction (idName: 83305561) to Penny
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:S8330_55_5|Delay:4.0)
+
+TRIGGER Procedure 0.0 Step 16.0 Order 6 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8003 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: MoveToFlagOver | behaviourName: CommanderMoveToFlagAndAction | npc: 8010
+CONDITIONS
+Always:
+ACTIONS
+Increment 8330Move1 by 1
+
+TRIGGER Procedure 0.0 Step 16.1 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8003 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 10 | eventName: MoveToFlagOver | behaviourName: CommanderMoveToFlagAndAction | npc: 8010
+CONDITIONS
+Check if 8330Move1 is >= 2
+ACTIONS
+(cId 6) A conversation 3976_0 starts:
+{{dialogue|Cooper|Howdy little missy, if ya come to Sandrock, gotta be prepared for the sandstorms! But I can't help but notice from here, ya got one of 'em weak light wood guitars.}}
+{{dialogue|Cooper|Bringing that kinda guitar here, it ain't gonna last ya longer than a few days, at most! When I started playin', bought myself a similar guitar from Walnut Groove, real fancy like. Broke in three days.}}
+{{dialogue|Cooper|My lil Elsie wasn't born back then, so I had a little change to spare. Went over to show 'em how to play real music a few times, I tell ya, their guitars sure look fancy, but they'll set ya back...}}
+
+*''(Interrupt Cooper)''
+*''(Let Cooper speak)''
+
+{{dialogue|Cooper|indent=true|answer=(Interrupt Cooper)
+|What? You got some secret esoteric knowledge of music you ain't told us before?}}
+{{dialogue|Hugo|indent=true|Nah, ''Player'' jus' wants to spare this young woman one of your rants!}}
+{{dialogue|Penny|indent=true|Haha, I don't mind! I like hearing people's stories, I always get such amazing inspiration from these tales. So you're musicians too? If my guitar isn't broken I'd love to play together...}}
+{{dialogue|Cooper|indent=true|answer=(Let Cooper speak)
+|I think it's about thirteen guitars I've had now... fourteen? Hmmm... There was Nancy, Petunia, Doris, Boris...}}
+{{dialogue|Hugo|indent=true|Ahem... Excuse my friend here, he can play a mean riff, but he's been known to ramble... a lot...}}
+{{dialogue|Penny|indent=true|Are you guys... a band? I'm a musician, too!}}
+{{dialogue|Penny|indent=true|Ahhh if my guitar isn't broken I'd love to play together...}}
+{{dialogue|Hugo|Seems like you're real passionate about your music. Cooper's got a point though. A verbose point, but still...}}
+{{dialogue|Hugo|Sandrock's a real arid place. If you're gonna have these kinda thin wood guitars, they aren't gonna last a long time. They'll deform, and crack. When you build your next one, it's probably good to keep that in mind.}}
+{{dialogue|Cooper|Y'know, it's good to meet someone who's got an ear fer music. Ain't a lotta folks 'round here that really know their stuff. Me an' Hugo got a little somethin' cookin', wanna hear it?}}
+{{dialogue|Penny|Wow, really? Sure, I'd love to!}}
+The conversation ends.
+Cooper stops standing still
+Hugo stops standing still
+
+TRIGGER Procedure 0.0 Step 17.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Set 8330Move2 to 0
+Cooper stands still in Saloon and looks at Penny
+Remove behavior CommanderMoveToFlagAndAction (idName: 8330031) from Cooper
+Hugo stands still in Saloon and looks at Penny
+Add behavior CommanderNPCAction (idName: 8330032) to Cooper
+(param: CMDAction:PlayGuitar_Story)
+SOUND PLAY 2D || idStr: MU_KuGuo_play
+
+TRIGGER Procedure 0.0 Step 19.1 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8003 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 3979_0 starts:
+{{dialogue|Cooper|Well, whaddya think?}}
+{{dialogue|Penny|It's really... unique. I didn't expect those chord progressions...}}
+{{dialogue|Cooper|Unique? I know what that means, means you don't like it!}}
+{{dialogue|Hugo|Aw, c'mon Coop, she ain't from around here. She's not used to our music. She never said she doesn't like it, don't be so sensitive.}}
+{{dialogue|Cooper|I was taught a man's gotta speak his mind! That goes fer you young missy as well! And Hugo, If ya think ya know what she's thinkin', why don't you go play her a tune on yer piano!}}
+{{dialogue|Hugo|Ugh, not this again...}}
+{{dialogue|Penny|I'm sorry, I didn't mean it like that! Hey, let me play you something I've been working on... Can I use your...}}
+The conversation ends.
+SOUND PLAY 2D || idStr: MU_KuGuo_stop
+
+TRIGGER Procedure 0.0 Step 19.2 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 8330033) to Cooper
+(param: CMDAction:GiveGuitar|LookAtActor:8055)
+Remove behavior CommanderMoveToFlagAndAction (idName: 83305561) from Penny
+Penny stands still in Saloon and looks at Cooper
+Add behavior CommanderMoveToFlagAndAction (idName: 8330558) to Penny
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:S8330_55_5|Action:GiftGuitar|LookAtActor:8003|Delay:1.0)
+
+TRIGGER Procedure 0.0 Step 20.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8055 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 8330557) to Penny
+(param: CMDAction:Guitar)
+Remove behavior CommanderMoveToFlagAndAction (idName: 8330558) from Penny
+Remove behavior CommanderNPCAction (idName: 8330033) from Cooper
+SOUND PLAY 2D || idStr: Play_penny_guitar
+
+TRIGGER Procedure 0.0 Step 22.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8055 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 8) A conversation 3980_0 starts:
+{{dialogue|Cooper|Huh? Why's it so soft? Where's yer passion, girl?}}
+{{dialogue|Hugo|I think it's nice. Sounds like the stuff the kids are listening to these days.}}
+{{dialogue|Cooper|Puh, kids ain't got a clue what real music is, I tell ya. They're jus' listenin' to that boom boom junk. Half those kids can't even read music!}}
+{{dialogue|Hugo|You can't even read at all, Coop.}}
+
+*''I'm the Coogo band's biggest fan.''
+*''I thought Penny's tune was nice.''
+*''How about... a musical showdown?''
+
+{{dialogue|Cooper|indent=true|answer=I'm the Coogo band's biggest fan.
+|Hehe, looks like ''Player'''s got some taste.}}
+{{dialogue|Penny|indent=true|You... really think my song was bad?}}
+{{dialogue|Hugo|indent=true|Awww, c'mon Coop, you're being real harsh to her. She just wants to play music, we should be supporting her. How about we have a little friendly competition?}}
+{{dialogue|Penny|indent=true|answer=I thought Penny's tune was nice.
+|Thanks, ''Player''!}}
+{{dialogue|Penny|indent=true|When I get a new guitar, I'm gonna play you all the best songs in the world!}}
+{{dialogue|Cooper|indent=true|''Player'''s jes bein' nice! Lots of young people go for hyperbole these days. I'd like to see ya try! Best song in the world... puh! It ain't you proclaimin' it, it's gotta come from other people's mouths!}}
+{{dialogue|Penny|indent=true|Uh, right...}}
+{{dialogue|Hugo|indent=true|Awww, c'mon Coop, you're being real harsh to her. She just wants to play music, we should be supporting her. How about we have a little friendly competition?}}
+{{dialogue|Hugo|indent=true|answer=How about... a musical showdown?
+|You're talkin' about... a music contest?}}
+{{dialogue|Cooper|indent=true|''Player'''s got a point! Back in my day if someone was disrespectin' a musician, we'd have a showdown on the spot!}}
+{{dialogue|Penny|It's on! It's the only way to settle this!}}
+{{dialogue|Hugo|How about this then, let's take some time to prepare a song, then get everyone in town to be the judges.}}
+{{dialogue|Penny|Umm... Mister... I've actually only been composing music for a little while, and I don't have any songs of my own... Can I adapt a tune I really like?}}
+{{dialogue|Cooper|Course you can missy! Heck, use all of 'em famous songs an' mash 'em together if ya like. Don't bother me none.}}
+{{dialogue|Hugo|By the way, young lady, what's your name?}}
+{{dialogue|Penny|Ah! Of course, where are my manners!? I'm Penny, from Barnarock!}}
+{{dialogue|Hugo|I'm Hugo, an' this rambling old fogey is Cooper. We're a band, "Coogo!"}}
+{{dialogue|Penny|It's lovely to meet you! And I'm really excited to get this competition underway! But... my guitar...}}
+{{dialogue|Cooper|You got lucky, missy. Standin' next to you there is one heck of a Builder. I tell ya, since ''Player'' came to town, things have changed around here-}}
+{{dialogue|Hugo|-Anyway, I'm sure you're gonna be able to get a new guitar made in no time with ''Player'''s help.}}
+{{dialogue|Hugo|Right, c'mon, Coop. We better get to work. Coogo's reputation's on the line!}}
+The conversation ends.
+Set global blackboard key 466Talk with info 1.
+
+TRIGGER Procedure 0.0 Step 25.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8330559) to Penny
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:S8330_55_6|LookAtActor:8000|Delay:1.5)
+Add behavior CommanderMoveToFlag (idName: 8330009) to Player
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:S8330_0_2|LookAtActor:8055|Delay:1.0)
+Set 8330Move9 to 0
+
+TRIGGER Procedure 0.0 Step 25.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Cooper stops standing still
+Hugo stops standing still
+Penny stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8330031) from Cooper
+Remove behavior CommanderMoveToFlagAndAction (idName: 8330101) from Hugo
+Remove behavior CommanderMoveToFlagAndAction (idName: 83305561) from Penny
+Remove behavior CommanderNPCAction (idName: 8330032) from Cooper
+Remove behavior CommanderNPCAction (idName: 8330102) from Hugo
+Remove behavior CommanderNPCAction (idName: 8330557) from Penny
+Penny stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8330002) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8330556) from Penny
+Penny stops standing still
+
+TRIGGER Procedure 0.0 Step 25.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Cooper stops standing still
+Hugo stops standing still
+Penny stops standing still
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 8330031) from Cooper
+Remove behavior CommanderMoveToFlagAndAction (idName: 8330101) from Hugo
+Remove behavior CommanderMoveToFlagAndAction (idName: 83305561) from Penny
+Remove behavior CommanderNPCAction (idName: 8330032) from Cooper
+Remove behavior CommanderNPCAction (idName: 8330102) from Hugo
+Remove behavior CommanderNPCAction (idName: 8330557) from Penny
+Penny stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8330002) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8330556) from Penny
+Penny stops standing still
+SCENEITEM DELETE || itemType: 0 | id: 83302
+Remove behavior CommanderMoveToFlagAndAction (idName: 8330559) from Penny
+Remove behavior CommanderMoveToFlag (idName: 8330009) from Player
+SUBMIT MISSION 1800395
+END MISSION 1800330
+
+TRIGGER Procedure 0.0 Step 25.2 Order 18 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8055 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: MoveToFlagOver | behaviourName: CommanderMoveToFlag | npc: 8000
+CONDITIONS
+Always:
+ACTIONS
+Increment 8330Move9 by 1
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+CLOSE MISSION || missionId: 1700377

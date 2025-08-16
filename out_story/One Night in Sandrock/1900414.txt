@@ -1,0 +1,98 @@
+Reading Mission 1900414: One Night in Sandrock
+
+<onlyinclude>{{Infobox mission
+|name = One Night in Sandrock
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from One Night in Sandrock:
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8107 | state: Defense
+===Take Ginger to the Blue Moon===
+
+{{mission_details
+|desc = Ginger's heard that music is played at the Blue Moon and she wants to hear for herself. Take her to the Blue Moon saloon.
+|details = Take Ginger to the Blue Moon
+}}
+AREA TRIGGER CREATE || missionId: 1900411 | id: 941105 | sceneName: Main | flagName: T9386 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80031218
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 941101
+CONDITIONS
+Always:
+ACTIONS
+Run mission One Night in Sandrock
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1900414
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 94117 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 94117 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Ginger stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: P9411_B0
+DELAY MASK SET || maskId: 94117 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 94117 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 6488_0 starts:
+{{dialogue|Ginger|If we go back... then Gust will wake up and we won't be able to go for a walk...}}
+{{dialogue|Player|(Should we call it a night?)}}
+
+*''You should go back and rest. (Exit)''
+*''Let's go! (Continue)''
+
+{{dialogue|Ginger|indent=true|answer=You should go back and rest. (Exit)
+|Okay... I was looking forward to our adventure, but maybe you're right...}}
+{{dialogue|Ginger|indent=true|answer=Let's go! (Continue)
+|Yay! Let's go!}}
+
+TRIGGER Procedure 2.0 Step 5.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Ginger stops standing still
+CUTSCENE UI STATE EXIT || 
+END MISSION 1900414

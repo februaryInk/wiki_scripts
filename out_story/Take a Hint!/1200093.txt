@@ -1,0 +1,517 @@
+Reading Mission 1200093: Take a Hint!
+
+<onlyinclude>{{Infobox mission
+|name = Take a Hint!
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Take a Hint!:
+
+TRIGGER Procedure 2.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 21) The player picks the first option in conversation segment 2142:
+{{dialogue|Owen|Alright, so here's where you come in: as a Builder, you can just convince her that the repairs aren't that expensive. Then she won't feel so bad, and maybe she'll just forget about the whole thing. It's foolproof!}}
+
+*''OK, let's go!'' (No unique dialogue)
+*''Too much on my plate at the moment.'' (No unique dialogue)
+*''This is dishonest...'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 2150:
+{{dialogue|Owen|Hey, did you find time to come talk to Grace with me?}}
+
+*''OK, let's go!'' (No unique dialogue)
+*''Too much on my plate at the moment.'' (No unique dialogue)
+*''This is dishonest...'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 2147:
+{{dialogue|Owen|So, whaddya say?}}
+
+*''OK, let's go!'' (No unique dialogue)
+*''Too much on my plate at the moment.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 0
+
+TRIGGER Procedure 2.0 Step 3.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200092
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 20922) from Yan
+Remove behavior CommanderMoveToFlagAndAction (idName: 20923) from Owen
+Set IsShashaReleased to 1
+Run mission Take a Hint!
+END MISSION 1200092
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200093
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Grace with Owen===
+
+{{mission_details
+|desc = Go find Grace to help them settle this disagreement!
+|details = Talk to Grace with Owen
+}}
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8001 | state: Defense
+AREA TRIGGER CREATE || missionId: 1200093 | id: 20931 | sceneName: Saloon | flagName: hint_saloon_trigger | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80003598
+Set SCORE to 0
+Set TRUTH to 0
+Set IsShot2Cut to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 20931
+CONDITIONS
+Check if Owen is in town
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 20931
+DELAY MASK SET || maskId: 20931 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 20931
+CONDITIONS
+Always:
+ACTIONS
+Grace stops standing still
+Grace stands still in Saloon
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8001
+Owen stands still in Saloon
+PLAYER SET POS ROT FLAG || flagName: hint_saloon_player2 | sceneName: Saloon
+DELAY MASK SET || maskId: 20931 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+{{cutscene|id = 5501}}
+A cutscene CG_GRACECOOK (duration: 0.0) starts playing
+Where There's Smoke... - Something about the way Grace operates in the kitchen has been causing a lot of problems for the Blue Moon. While helping Owen, we managed to walk in just in time to see some of her faulty techniques in action...
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1200092
+MISSION END BEFORE 1200093
+MISSION END || order: 0 | result: 1 | missionId: 1200292
+CONDITIONS
+Always:
+ACTIONS
+Grace stops standing still
+AREA TRIGGER DELETE || id: 20931
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8001
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_GRACECOOK | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 480_0 starts:
+{{dialogue|Owen|Seems someone hasn't quite learned their lesson, but that's neither here nor there: look who I've brought! Your friendly neighborhood Builder here to help us come to a conclusion on that whole explosion incident...}}
+{{dialogue|Grace|Oh, hey ''Player''!}}
+{{dialogue|Grace|And you're still on about that, Owen? That was a terrible mess and I'm completely to blame. I will be footing the bill in full for the kitchen restoration, regardless of what you may have told the Builder here.}}
+{{dialogue|Owen|Hey, c'mon, Grace, it's no biggie! And even if it was, The Blue Moon has plenty set aside for rainy days! Or explosive days, for that matter...}}
+{{dialogue|Owen|Anyway, everything is taken care of now, and it hardly cost me a dime! Don't believe me? Just ask for a second opinion here!}}
+{{dialogue|-3|(Owen is winking at me.)}}
+{{dialogue|Grace|...}}
+{{dialogue|Grace|Alright. I'll bite. ''Player'', you plan to tell me the truth now, don't you?}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 20931) to Player
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:hint_saloon_player2|Action:Nod_Story)
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 481_0 starts:
+{{dialogue|Grace|Let's begin: what is your name?}}
+{{dialogue|Owen|Huh? Where're you going with this one...?}}
+{{dialogue|Grace|I have my reasons. Your name, please?}}
+
+*''''Player''.''
+*''I don't know...''
+
+{{dialogue|Grace|indent=true|answer=''Player''.
+|OK. Next question.}}
+{{dialogue|Owen|indent=true|answer=I don't know...
+|This is surreal, Grace. You just said ''Player'' when you... How could-}}
+{{dialogue|Grace|Next, where are you from originally?}}
+
+*''Highwind.''
+*''I don't know...''
+
+{{dialogue|Grace|indent=true|answer=Highwind.
+|Highwind. Nice weather this time of year, yes? Very windy I've heard.}}
+{{dialogue|Owen|indent=true|answer=I don't know...
+|Highwind, of course! Grace, ''Player''... just didn't know how to respond to such a weird question, right?}}
+{{dialogue|Grace|That'll do. Now I know what you look like when you're deciding whether or not to answer truthfully! Next I'll be asking what I really want to know...}}
+{{dialogue|Grace|And don't even think about "bending the truth" to help Owen change my mind, got it? I can read you like a book.}}
+{{dialogue|Grace|Now! Builder! Tell me! How much did it cost to renovate the Blue Moon kitchen!?}}
+{{dialogue|Owen|Ahem! You know, more than a few glasses of milk, but less than a herd of Yakmel- Grace, it's fine! I wish you'd just forget about all this...}}
+
+*''It was really expensive.''
+*''It was cheap.''
+*''It was 10 gols.''
+
+{{dialogue|Owen|indent=true|answer=It was really expensive.
+|...}}
+{{dialogue|Grace|indent=true|Good, as I suspected. Next question...}}
+{{dialogue|Owen|indent=true|answer=It was cheap.
+|Yep! Just like I said!}}
+{{dialogue|Grace|indent=true|Hm... I see. Next.}}
+{{dialogue|Grace|indent=true|answer=It was 10 gols.
+|...}}
+{{dialogue|Grace|indent=true|Oh, you're serious?}}
+{{dialogue|Owen|indent=true|Hah, haha... I mean, after the discounts... and... you know the Commerce Guild owe me some favors, and... sure, it sounds crazy...}}
+{{dialogue|Grace|indent=true|If you two are going to lie, at least try to make it good. Let's continue, shall we?}}
+{{dialogue|Grace|The events in question occured two days prior, and on the second day, when I came to work, the kitchen was already as good as new.}}
+{{dialogue|Grace|Something here doesn't add up, don't tell me you Builders are now dabbling in magic? Explain.}}
+{{dialogue|Owen|What's your angle, Grace? The two new Builders in town are both riled up and full of vinegar; you're just used to ol' Mason and his whiney ways. Nothing unusual here, right ''Player''?}}
+
+*''Yep, normal. I could do it, too!''
+*''Mi-an only spent one night on this? That's amazing!''
+*''There's no way I could be that fast...''
+
+{{dialogue|Owen|indent=true|answer=Mi-an only spent one night on this? That's amazing!
+|Don't sell yourself short, ''Player''...}}
+{{dialogue|Owen|indent=true|answer=There's no way I could be that fast...
+|Don't sell yourself short, ''Player''...}}
+{{dialogue|Grace|Hmm... I see. Next question.}}
+{{dialogue|Grace|Regardless, Owen must've had to pay Mi-an for working overnight. ''Player'', tell me how much that would've been.}}
+{{dialogue|Owen|Ah, well, be that as it may, kind lady that she is, Mi-an gave me a discount! The difference in the bill was so small, I almost forgot about it!}}
+
+*''I dunno, maybe it was... free?''
+*''Yeah, just a little more than usual.''
+*''We charge out the wazoo!''
+
+{{dialogue|Grace|indent=true|answer=I dunno, maybe it was... free?
+|Owen says he was charged slightly more, and you're saying there was no overnight expedient charge...?}}
+{{dialogue|Owen|indent=true|Ahah, silly me! I guess there was no overnight fee, I must've just imagined that part!}}
+{{dialogue|Grace|indent=true|Uh huh...}}
+{{dialogue|Grace|indent=true|answer=We charge out the wazoo!
+|As I suspected. Owen, you really shouldn't be trying to hide the truth from me, you know...}}
+{{dialogue|Owen|indent=true|Ah, er, well, to me, it was such a negligable amount that I just forgot about it, that's it.}}
+{{dialogue|Grace|indent=true|Hm...}}
+{{dialogue|Grace|OK. Next question.}}
+{{dialogue|Owen|Grace, Grace, Grace, enough with the third degree... there's really nothing more to be said-}}
+{{dialogue|Grace|Boss, you sure have a lot to say for someone who says there's nothing to say; why do you always butt in whenever I ask ''Player'' a question, huh? It's starting to seem like you two are in cahoots.}}
+{{dialogue|Owen|Haha! Cahoots? I mean, what even is a "cahoot," really? I think this whole ordeal has you on edge, but, alright, have it your way! I'll zip it! Continue with the interrogation, please!}}
+{{dialogue|Grace|If something like this happened in the Commerce Guild, would your boss, Yan, handle it like Owen? Which is to say, would he insist on paying the damages out of his own pocket?}}
+
+*''No flippin' way.''
+*''I don't really know...''
+*''Of course, Yan is a boss with a big heart!''
+
+{{dialogue|Owen|indent=true|answer=No flippin' way.
+|Er, well, you never know! Remember when you first got to Sandrock and Yan was there waiting with open arms? Why, he must've walked over 12 steps from his desk to-}}
+{{dialogue|Grace|indent=true|What happened to "zip it?"}}
+{{dialogue|Owen|indent=true|Ah, I did say that. Those are words, said by me...}}
+{{dialogue|Grace|indent=true|answer=I don't really know...
+|Yeah, but the thing is, ''Player''. I think you do.}}
+{{dialogue|Grace|indent=true|answer=Of course, Yan is a boss with a big heart!
+|I- Oh, no. I'm not detecting any sense of dishonesty or even irony with that answer. Note to self: this Builder has been completely brainwashed, maybe try to do something about that later...}}
+Remove behavior CommanderMoveToFlagAndAction (idName: 20931) from Player
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8002 | cId: 1 | missionId: 1200093
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 1 | missionId: 1200093
+CONDITIONS
+Check if SCORE is >= 3
+ACTIONS
+(cId 2) A conversation 501_0 starts:
+{{dialogue|Grace|Hm... Bet you two think you're pretty slick, huh? Owen, it couldn't be more obvious; you did put ''Player'' up to this little charade! However...}}
+{{dialogue|Owen|Alright! That's the ticket! Whew, now we can finally move on from this!}}
+{{dialogue|Grace|Owen, I must say, your dedication to your employees makes you not just the owner here, but an inspiring leader as well. I'm proud to call you my friend.}}
+{{dialogue|Owen|Aw, shucks, well, I think we wouldn't be seeing eye-to-eye if not for ''Player'' here. You might even say we have an "unspoken bond..." Here, ''Player'', take this for your troubles! Call it a consultation fee!}}
+{{dialogue|Grace|Yes, thank you, ''Player'' for helping us resolve this. I'm in your debt.}}
+{{dialogue|Owen|No, no! No debts! That's the whole point of all this!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 20934) to Player
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:hint_saloon_player2|LookAtActor:8001)
+Add behavior CommanderNPCAction (idName: 20933) to Grace
+(param: CMDAction:HandsWaveNSmile_Story)
+Add behavior CommanderNPCAction (idName: 20933) to Owen
+(param: CMDAction:HandsWaveNSmile_Story)
+
+TRIGGER Procedure 1.0 Step 4.1 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8001 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 20934) from Player
+Add behavior CommanderMoveToFlagAndAction (idName: 20933) to Player
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:hint_saloon_player2|Action:HandsWaveNSmile_Story|LookAtActor:8002)
+Remove behavior CommanderNPCAction (idName: 20933) from Grace
+Add behavior CommanderIdle (idName: 20934) to Grace
+(param: LookAtActor:8000)
+Remove behavior CommanderNPCAction (idName: 20933) from Owen
+Add behavior CommanderIdle (idName: 20935) to Owen
+(param: LookAtActor:8000)
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 2218 starts:
+{{dialogue|Owen|Alright, let's get back to it! Catch you, ''Player''!}}
+Remove behavior CommanderMoveToFlagAndAction (idName: 20933) from Player
+Remove behavior CommanderIdle (idName: 20934) from Grace
+Remove behavior CommanderIdle (idName: 20935) from Owen
+Set IsShot2Cut to 1
+
+TRIGGER Procedure 1.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Owen stops standing still
+Grace stops standing still
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1200092
+Set IsShot2Cut to 1
+END MISSION 1200093
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 4
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the second option in conversation segment 2170:
+{{dialogue|Owen|Ahem! You know, more than a few glasses of milk, but less than a herd of Yakmel- Grace, it's fine! I wish you'd just forget about all this...}}
+
+*''It was really expensive.'' (No unique dialogue)
+*''It was cheap.'' (No unique dialogue)
+*''It was 10 gols.'' (No unique dialogue)
+
+(cId 1) The player picks the first option in conversation segment 2179:
+{{dialogue|Owen|What's your angle, Grace? The two new Builders in town are both riled up and full of vinegar; you're just used to ol' Mason and his whiney ways. Nothing unusual here, right ''Player''?}}
+
+*''Yep, normal. I could do it, too!'' (No unique dialogue)
+*''Mi-an only spent one night on this? That's amazing!'' (No unique dialogue)
+*''There's no way I could be that fast...'' (No unique dialogue)
+
+(cId 1) The player picks the second option in conversation segment 2183:
+{{dialogue|Owen|Ah, well, be that as it may, kind lady that she is, Mi-an gave me a discount! The difference in the bill was so small, I almost forgot about it!}}
+
+*''I dunno, maybe it was... free?'' (No unique dialogue)
+*''Yeah, just a little more than usual.'' (No unique dialogue)
+*''We charge out the wazoo!'' (No unique dialogue)
+
+(cId 1) The player picks the first option in conversation segment 2194:
+{{dialogue|Grace|If something like this happened in the Commerce Guild, would your boss, Yan, handle it like Owen? Which is to say, would he insist on paying the damages out of his own pocket?}}
+
+*''No flippin' way.'' (No unique dialogue)
+*''I don't really know...'' (No unique dialogue)
+*''Of course, Yan is a boss with a big heart!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Increment SCORE by 1
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 3
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 2170:
+{{dialogue|Owen|Ahem! You know, more than a few glasses of milk, but less than a herd of Yakmel- Grace, it's fine! I wish you'd just forget about all this...}}
+
+*''It was really expensive.'' (No unique dialogue)
+*''It was cheap.'' (No unique dialogue)
+*''It was 10 gols.'' (No unique dialogue)
+
+(cId 1) The player picks the third option in conversation segment 2183:
+{{dialogue|Owen|Ah, well, be that as it may, kind lady that she is, Mi-an gave me a discount! The difference in the bill was so small, I almost forgot about it!}}
+
+*''I dunno, maybe it was... free?'' (No unique dialogue)
+*''Yeah, just a little more than usual.'' (No unique dialogue)
+*''We charge out the wazoo!'' (No unique dialogue)
+
+(cId 1) The player picks the first option in conversation segment 2194:
+{{dialogue|Grace|If something like this happened in the Commerce Guild, would your boss, Yan, handle it like Owen? Which is to say, would he insist on paying the damages out of his own pocket?}}
+
+*''No flippin' way.'' (No unique dialogue)
+*''I don't really know...'' (No unique dialogue)
+*''Of course, Yan is a boss with a big heart!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Increment TRUTH by 1
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8002 | cId: 1 | missionId: 1200093
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 1 | missionId: 1200093
+CONDITIONS
+Check if TRUTH is == 3
+ACTIONS
+(cId 4) A conversation 502_0 starts:
+{{dialogue|Grace|Thank you, ''Player'', for telling the truth.}}
+{{dialogue|Owen|Ahhh, shucks. Hey, that's alright, ''Player'', maybe you did the right thing... looks like we're busted, though!}}
+{{dialogue|Grace|You really don't want to let this thing go, do you?}}
+{{dialogue|Owen|Er... no?}}
+{{dialogue|Grace|How about this then: since our mutual friend ''Player'' is such a beacon of truth, let's let them decide!}}
+{{dialogue|Owen|Hm. I suppose I can't argue with that. Okay, make the call, ''Player''. Who pays for the kitchen? We'll do whatever you say!}}
+
+*''Owen pays.''
+*''Grace pays.''
+*''Whatever I say, huh?''
+
+{{dialogue|Grace|indent=true|answer=Owen pays.
+|reward={{NPC2|Owen|rp=10}}|reward={{NPC2|Grace|rp=10}}|Two against one. Seems I have no choice. Alright, Owen, you win. I won't insist on paying for the kitchen damages anymore.}}
+{{dialogue|Owen|indent=true|Alright! That's the ticket! Whew, now we can finally move on from this!}}
+{{dialogue|Grace|indent=true|Owen, I must say, your dedication to your employees makes you not just the owner of this place, but an inspiring leader as well. I'm proud to call you my friend.}}
+{{dialogue|Owen|indent=true|Haha! Aw, shucks! Well, I don't know if we'd have arrived at this conclusion without our candid compatriot, ''Player'' here. Look at you playing both sides like that... what a diplomat you are!}}
+{{dialogue|Owen|indent=true|Here, a little something for your troubles, call it a consultation fee!}}
+{{dialogue|Owen|indent=true|answer=Grace pays.
+|reward={{NPC2|Grace|rp=10}}|Alright, let's get back to it! Catch you, ''Player''!}}
+{{dialogue|Grace|indent=true|Hah! So that's that!}}
+{{dialogue|Owen|indent=true|Whew, you two are too much...}}
+{{dialogue|Owen|indent=true|Well, a deal's a deal. I suppose I could just take 100 Gols per month out of your salary and then-}}
+{{dialogue|Grace|indent=true|Five hundred! Let's just get it over with!}}
+{{dialogue|Owen|indent=true|Ah, c'mon! You'll be just barely scrapin' by for months!}}
+{{dialogue|Grace|indent=true|That's nothing to me!}}
+{{dialogue|Owen|indent=true|C'mon, I already agreed to let you pay, you gotta work with me a little! Stick with one-hundred a month, alright?}}
+{{dialogue|Grace|indent=true|Alright, alright! Thank you, Owen!}}
+{{dialogue|Owen|indent=true|Well, thanks for coming, ''Player'', and at least helping us get this mess sorted out; sorry to take up so much of your time! Stop by again soon for a drink, won't ya?}}
+{{dialogue|Grace|Don't be weird...}}
+{{dialogue|Owen|Hm. I suppose I can't argue with that. Okay, make the call, ''Player''. Who pays for the kitchen? We'll do whatever you say!}}
+
+*''Owen pays.''
+*''Grace pays.''
+
+{{dialogue|Grace|indent=true|answer=Owen pays.
+|Two against one. Seems I have no choice. Alright, Owen, you win. I won't insist on paying for the kitchen damages anymore.}}
+{{dialogue|Owen|indent=true|Alright! That's the ticket! Whew, now we can finally move on from this!}}
+{{dialogue|Grace|indent=true|Owen, I must say, your dedication to your employees makes you not just the owner of this place, but an inspiring leader as well. I'm proud to call you my friend.}}
+{{dialogue|Owen|indent=true|Haha! Aw, shucks! Well, I don't know if we'd have arrived at this conclusion without our candid compatriot, ''Player'' here. Look at you playing both sides like that... what a diplomat you are!}}
+{{dialogue|Owen|indent=true|Here, a little something for your troubles, call it a consultation fee!}}
+{{dialogue|Owen|indent=true|answer=Grace pays.
+|Alright, let's get back to it! Catch you, ''Player''!}}
+{{dialogue|Grace|indent=true|Hah! So that's that!}}
+{{dialogue|Owen|indent=true|Whew, you two are too much...}}
+{{dialogue|Owen|indent=true|Well, a deal's a deal. I suppose I could just take 100 Gols per month out of your salary and then-}}
+{{dialogue|Grace|indent=true|Five hundred! Let's just get it over with!}}
+{{dialogue|Owen|indent=true|Ah, c'mon! You'll be just barely scrapin' by for months!}}
+{{dialogue|Grace|indent=true|That's nothing to me!}}
+{{dialogue|Owen|indent=true|C'mon, I already agreed to let you pay, you gotta work with me a little! Stick with one-hundred a month, alright?}}
+{{dialogue|Grace|indent=true|Alright, alright! Thank you, Owen!}}
+{{dialogue|Owen|indent=true|Well, thanks for coming, ''Player'', and at least helping us get this mess sorted out; sorry to take up so much of your time! Stop by again soon for a drink, won't ya?}}
+Grace gains 10 favor
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) The player picks the first option in conversation segment 2211:
+{{dialogue|Owen|Hm. I suppose I can't argue with that. Okay, make the call, ''Player''. Who pays for the kitchen? We'll do whatever you say!}}
+
+*''Owen pays.'' (No unique dialogue)
+*''Grace pays.'' (No unique dialogue)
+*''Whatever I say, huh?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Owen gains 10 favor
+Grace gains 10 favor
+
+TRIGGER Procedure 2.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) The player picks the second option in conversation segment 2211:
+{{dialogue|Owen|Hm. I suppose I can't argue with that. Okay, make the call, ''Player''. Who pays for the kitchen? We'll do whatever you say!}}
+
+*''Owen pays.'' (No unique dialogue)
+*''Grace pays.'' (No unique dialogue)
+*''Whatever I say, huh?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Grace gains 10 favor
+
+TRIGGER Procedure 3.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8002 | cId: 1 | missionId: 1200093
+ON CONVERSATION END BEFORE || order: 0 | npc: 8001 | cId: 1 | missionId: 1200093
+CONDITIONS
+Check if TRUTH is <= (maybe?) 3
+Check if SCORE is < 3
+ACTIONS
+(cId 5) A conversation 506_0 starts:
+{{dialogue|Grace|You know, at first, I was kind of entertained by this little charade of yours, but... I mean, you could've at least put a little effort into your story. I'm afraid I can't oblige such a pithy performance.}}
+{{dialogue|Grace|I'm sticking to my guns: the kitchen damage falls on me and that's that!}}
+{{dialogue|Owen|Alright, alright... Looks like I won't be able to change your mind.  I suppose I could just take 100 Gols per month out of your salary and then-}}
+{{dialogue|Grace|Five hundred! Let's just get it over with!}}
+{{dialogue|Owen|Ah, c'mon! You'll be just barely scrapin' by for months!}}
+{{dialogue|Grace|That's nothing to me!}}
+{{dialogue|Owen|C'mon, I already agreed to let you pay, you gotta work with me a little! Stick with one-hundred a month, alright?}}
+{{dialogue|Grace|Alright, alright! Thank you, Owen!}}
+{{dialogue|Owen|Well, thanks for coming, ''Player'', and at least helping us get this mess sorted out; sorry to take up so much of your time! Stop by again soon for a drink, won't ya?}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Owen stops standing still
+Grace stops standing still
+CUTSCENE UI STATE EXIT || 
+FAIL MISSION || missionId: 1200092
+Set IsShot2Cut to 1
+END MISSION 1200093

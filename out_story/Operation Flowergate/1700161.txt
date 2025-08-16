@@ -1,0 +1,231 @@
+Reading Mission 1700161: Operation: Flowergate
+
+<onlyinclude>{{Infobox mission
+|name = Operation: Flowergate
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Operation: Flowergate:
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 3984) that ends:
+{{dialogue|Zeke|Yeah, thanks.}}
+(cId: -1) There is a conversation segment (id 3994) that ends:
+{{dialogue|Zeke|Here're those seeds I promised you, ''Player''. Plus some more to help with the project. Once you've grown the plants, place 'em in the spots Burgess wants 'em. I have a feeling... he'll let you know.}}
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1700160
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700160
+CONDITIONS
+Always:
+ACTIONS
+Run mission Operation: Flowergate
+END MISSION 1700160
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700161
+CONDITIONS
+Always:
+ACTIONS
+===Plant and Harvest Plants===
+
+{{mission_details
+|desc = You've promised Burgess you'll help in Operation: Flowergate. You need to plant Sandrice, Mountain Rose, and Rhino Horn Cactus. Zeke has given you the seeds already.
+|details = Plant and Harvest Plants
+*{{i2|Mountain Rose|0/7}}
+*{{i2|Rhino Horn Cactus|0/6}}
+*{{i2|Sandrice|0/1}}
+}}
+Add 2 Sandrice Seed of Default quality (Notify player)
+Add 5 Mountain Rose Seeds of Default quality (Notify player)
+Add 3 Rhino Horn Seeds of Default quality (Notify player)
+Set Counter to 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 171610 | sceneName: Main | path: Mission_FlowerGate11 | flagName: default | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|284}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | canSubmit: 1 | missionId: 1700160 | targetId: 1
+CONDITIONS
+Check if Counter is == 0
+ACTIONS
+===Wait for Burgess===
+
+{{mission_details
+|desc = Zeke said Burgess would tell you where to put the plants. Wait for Burgess to give you more information.
+|details = Wait for Burgess
+}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1700160 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Check if Counter is == 1
+ACTIONS
+===Redecorate Sandrock===
+
+{{mission_details
+|desc = Follow Burgess' instructions and put the plants near the Stage, the Temple, and near Martle's Square.
+|details = Redecorate Sandrock
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 171614 | path: Mission_FlowerGate4 | sceneName: Main | extraParams: Mission_FlowerGate1|CreatorItem|16200028_1,16200029
+_2|1331|GetGift|1.4 | flagName: FG_Church_L
+SCENEITEM CREATE FLAG || itemType: 11 | id: 171615 | path: Mission_FlowerGate5 | sceneName: Main | extraParams: Mission_FlowerGate2|CreatorItem|16200028_1,16200029
+_2|1331|GetGift|1.4 | flagName: FG_Church_R
+SCENEITEM CREATE FLAG || itemType: 11 | id: 171616 | path: Mission_FlowerGate6 | sceneName: Main | extraParams: Mission_FlowerGate3|CreatorItem|16200028_2,16200029
+_1|1331|GetGift|1.4 | flagName: FG_Square_L
+SCENEITEM CREATE FLAG || itemType: 11 | id: 171617 | path: Mission_FlowerGate7 | sceneName: Main | flagName: FG_Square_R | extraParams: Mission_FlowerGate8|CreatorItem|16200028_2,16200029
+_1|1331|GetGift|1.4
+SCENEITEM CREATE FLAG || itemType: 11 | id: 171618 | extraParams: Mission_FlowerGate10|CreatorItem|19310001_1,16200029
+_1|1331|GetGift|1.4 | path: Mission_FlowerGate9 | sceneName: Main | flagName: FG_Station
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 171614 | missionId: 1700160 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 171615 | missionId: 1700160 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 171616 | missionId: 1700160 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 171617 | missionId: 1700160 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 171618 | missionId: 1700160 | iconType: 2
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 284
+CONDITIONS
+Always:
+ACTIONS
+Set Counter to 1
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 284
+CONDITIONS
+CHECK TARGET CAN SUBMIT || canSubmit: 1 | missionId: 1700160 | targetId: 1
+ACTIONS
+===Redecorate Sandrock===
+
+{{mission_details
+|desc = Follow Burgess' instructions and put the plants near the Stage, the Temple, and near Martle's Square.
+|details = Redecorate Sandrock
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 171614 | path: Mission_FlowerGate4 | sceneName: Main | extraParams: Mission_FlowerGate1|CreatorItem|16200028_1,16200029
+_2|1331|GetGift|1.4 | flagName: FG_Church_L
+SCENEITEM CREATE FLAG || itemType: 11 | id: 171615 | path: Mission_FlowerGate5 | sceneName: Main | extraParams: Mission_FlowerGate2|CreatorItem|16200028_1,16200029
+_2|1331|GetGift|1.4 | flagName: FG_Church_R
+SCENEITEM CREATE FLAG || itemType: 11 | id: 171616 | path: Mission_FlowerGate6 | sceneName: Main | extraParams: Mission_FlowerGate3|CreatorItem|16200028_2,16200029
+_1|1331|GetGift|1.4 | flagName: FG_Square_L
+SCENEITEM CREATE FLAG || itemType: 11 | id: 171617 | path: Mission_FlowerGate7 | sceneName: Main | flagName: FG_Square_R | extraParams: Mission_FlowerGate8|CreatorItem|16200028_2,16200029
+_1|1331|GetGift|1.4
+SCENEITEM CREATE FLAG || itemType: 11 | id: 171618 | extraParams: Mission_FlowerGate10|CreatorItem|19310001_1,16200029
+_1|1331|GetGift|1.4 | path: Mission_FlowerGate9 | sceneName: Main | flagName: FG_Station
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 171614 | missionId: 1700160 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 171615 | missionId: 1700160 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 171616 | missionId: 1700160 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 171617 | missionId: 1700160 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 171618 | missionId: 1700160 | iconType: 2
+
+TRIGGER Procedure 1.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200365
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 11 | id: 171614
+SCENEITEM DELETE || itemType: 11 | id: 171615
+SCENEITEM DELETE || itemType: 11 | id: 171616
+SCENEITEM DELETE || itemType: 11 | id: 171617
+SCENEITEM DELETE || id: 171618 | itemType: 11
+SCENEITEM CREATE FLAG || itemType: 12 | id: 171614 | path: Mission_FlowerGate1 | sceneName: Main | extraParams: -1 | flagName: FG_Church_L
+SCENEITEM CREATE FLAG || itemType: 12 | id: 171615 | path: Mission_FlowerGate2 | sceneName: Main | extraParams: -1 | flagName: FG_Church_R
+SCENEITEM CREATE FLAG || itemType: 12 | id: 171616 | path: Mission_FlowerGate3 | sceneName: Main | extraParams: -1 | flagName: FG_Square_L
+SCENEITEM CREATE FLAG || itemType: 12 | id: 171617 | path: Mission_FlowerGate8 | sceneName: Main | flagName: FG_Square_R | extraParams: -1
+SCENEITEM CREATE FLAG || itemType: 12 | id: 171618 | extraParams: -1 | path: Mission_FlowerGate10 | sceneName: Main | flagName: FG_Station
+FAIL MISSION || missionId: 1700160
+END MISSION 1700161
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 171614
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 171615
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 171616
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 171617
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 171618
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1700160 | targetId: 3 | transId: 80006476 | isAdd: 1
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 10 | actorId: 8000 | itemType: 12 | id: 171614
+ON SCENEITEM CREATE || order: 10 | actorId: 8000 | itemType: 12 | id: 171615
+ON SCENEITEM CREATE || order: 10 | actorId: 8000 | itemType: 12 | id: 171616
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 171617
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 171618
+CONDITIONS
+CHECK TARGET CAN SUBMIT || canSubmit: 1 | missionId: 1700160 | targetId: 3
+ACTIONS
+===Talk to Zeke===
+
+{{mission_details
+|desc = Operation: Flowergate has been completed. Return to Zeke as soon as possible.
+|details = Talk to Zeke
+}}
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Zeke
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 1134_0 starts:
+{{dialogue|Zeke|Hey, look at you. The plant-meister, plantin' it up.}}
+{{dialogue|Zeke|Sorry. Dan-bi said I needed to be livelier if I wanted people to be more interested in my work, but... that didn't feel right at all...}}
+{{dialogue|Zeke|Well. The sentiment stands. I do appreciate what you've done. Thanks.}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 3) There is a conversation segment (id 3987) that ends:
+{{dialogue|Zeke|Well. The sentiment stands. I do appreciate what you've done. Thanks.}}
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1700160
+END MISSION 1700161

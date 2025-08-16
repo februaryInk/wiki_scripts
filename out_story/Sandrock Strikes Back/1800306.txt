@@ -1,0 +1,408 @@
+Reading Mission 1800306: Sandrock Strikes Back
+
+<onlyinclude>{{Infobox mission
+|name = Sandrock Strikes Back
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200310
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200310
+CONDITIONS
+Always:
+ACTIONS
+Run mission Sandrock Strikes Back
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+Check if mission 1200297 is result 1 flag 1
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+
+TRIGGER Procedure 0.0 Step 0.2 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|590}}
+Trudy stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+(cId 1) A conversation 3572_0 starts:
+{{dialogue|Trudy|''Player''! I just come by to thank you in person.}}
+{{dialogue|Trudy|We... never would've stood a chance against Duvos without you. Tracking down Logan, discovering the secrets under the Temple, piecing it all together, then finally, preparing and defending us against invasion.}}
+{{dialogue|Trudy|reward={{i2|Starry Night Mirror|1}}|reward={{i2|Candy Paint Cushion Chair|1}}|reward={{i2|Masterpiece: Crown|1}}|reward={{i2|Yakboy Mirror|1}}|reward={{i2|Fresh Coffee Table|1}}|Any one of those things would've made you a hero, but you continued to go above and beyond the call of duty as both a Builder and a member of the Civil Corps. Above all, you've been a good friend to everyone around you.}}
+{{dialogue|Trudy|Here. The city put together a little something for you. I know you didn't do what you did for any kind of reward but... I'd feel better if you got something from us for all you've been through.}}
+{{dialogue|Trudy|Oh, right. I also wanted to ask you to join our emergency Fireside meeting; it's about how to handle the fallout from... well, everything. It's starting now, don't worry, it won't take long...!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 11767) that ends:
+{{dialogue|Trudy|Any one of those things would've made you a hero, but you continued to go above and beyond the call of duty as both a Builder and a member of the Civil Corps. Above all, you've been a good friend to everyone around you.}}
+CONDITIONS
+Always:
+ACTIONS
+ACTION SHOW CUSTOM IMAGE TIPS || preset: Mission | content: 7407
+Add 1 Masterpiece: Crown of Default quality (Notify player)
+Add 1 Yakboy Mirror of Default quality (Notify player)
+Add 1 Starry Night Mirror of Default quality (Notify player)
+Add 1 Candy Paint Cushion Chair of Default quality (Notify player)
+Add 1 Fresh Coffee Table of Default quality (Notify player)
+MONEY PLAYER ADD || money: 2000
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 83061 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83061 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Trudy stops standing still
+AREA TRIGGER CREATE || missionId: 1800306 | id: 83061 | sceneName: Main | flagName: trigger_guildhall | showOnMap: 1 | mapIcon: MissionArea | transId: 0
+PLAYER SET POS ROT FLAG || sceneName: Guildhall | flagName: S8306_0_2
+DELAY MASK SET || maskId: 83061 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_guildhall
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_guildhall
+AREA TRIGGER DELETE || id: 83061
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 5.2 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Guildhall | flagName: S8306_0_2
+Grace stands still in Guildhall
+Trudy stands still in Guildhall
+Justice stands still in Guildhall
+Logan stands still in Guildhall
+Avery stands still in Guildhall
+NPC RANDOM ADD || id: 7 | instId: 83061 | scene: Guildhall | flagName: S8306_RNPC_1 | dailyBehavior: RandomNPC
+NPC RANDOM ADD || flagName: S8306_RNPC_2 | id: 7 | instId: 83062 | scene: Guildhall | dailyBehavior: RandomNPC
+NPC RANDOM ADD || flagName: S8306_RNPC_3 | id: 7 | instId: 83063 | scene: Guildhall | dailyBehavior: RandomNPC
+83061 stands still in Guildhall and looks at Avery
+83062 stands still in Guildhall and looks at Avery
+83063 stands still in Guildhall and looks at Avery
+
+TRIGGER Procedure 0.0 Step 8.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 830620
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 3573_0 starts:
+{{dialogue|Trudy|Hello, everyone. Seems we're all here. Let's begin.}}
+{{dialogue|Trudy|First I'd like to introduce the Commander of the Alliance Forces that came to our aid, Avery. As soon as Haru arrived in Atara, he mobilized a defense force in no time flat.}}
+{{dialogue|Avery|Greetings. Yes, as soon as we heard the news, we set off without delay. The leader of the Alliance Guard personally chose me to handle this mission. We hardly dreamed they would be so bold as to attack us so deep in Alliance territory.}}
+{{dialogue|Avery|Our air wing chased the enemy air destroyer all the way to the Duvos border. We can confirm that it went down a little afterwards from taking heavy fire. We've also done several sweeps of the northern ruins, arresting all of the left over Duvos troops.}}
+{{dialogue|Avery|I can confidently state that Sandrock is now completely safe.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 9.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 8306022) to Grace
+(param: CMDAction:Cheer|LookAtActor:8096)
+Add behavior CommanderNPCAction (idName: 8306062) to Trudy
+(param: CMDAction:Applause|LookAtActor:8096)
+Add behavior CommanderNPCAction (idName: 8306082) to Justice
+(param: CMDAction:Cheer|LookAtActor:8096)
+Add behavior CommanderNPCAction (idName: 8306112) to Logan
+(param: CMDAction:Applause|LookAtActor:8096)
+Add behavior CommanderPlayerAction (idName: 8306001) to Player
+(param: CMDAction:Cheer|LookAtActor:8096)
+STOPWATCH REAL TIME SET || id: 83061 | sec: 2
+
+TRIGGER Procedure 0.0 Step 10.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 83061
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 3574_0, 3575_3_1 starts:
+{{dialogue|Avery|This attack was a blatant breach of our cease fire. Rest assured, Duvos will answer for what they've done here.}}
+{{dialogue|Logan|You want to hit 'em back? That'll mean war...}}
+{{dialogue|Avery|The Alliance values peace above all else, and has no intention of provoking war. However, we have never and will never back down from a fight...}}
+{{dialogue|Justice|Good to hear! Say, commander... I don't suppose you could take a few of these criminals off our hands? Our jail only seats six comfortably and... well, we gotta uphold our own standards, else we're no better than they are!}}
+{{dialogue|Avery|We will stay in Sandrock briefly to prosecute any other missions Mayor Trudy has in mind for us. Then we'll leave with all Duvos prisoners, including the war criminal Pen. Everything will be smooth, so long as we're not interrupted.}}
+{{dialogue|Justice|Smooth as Yakmel butter, that's how we do it around here! Let us know if we can help.}}
+{{dialogue|Avery|I said "so long as we're not interrupted..."}}
+{{dialogue|Justice|Stay out of your hair. Gotcha...}}
+{{dialogue|Grace|Commander, has your company received any ACI orders?}}
+{{dialogue|Avery|Official orders have not been received. However, it has become clear to me that you have been in clear violation of a 735; which warrants an evaluation by your superiors.}}
+{{dialogue|Grace|That's funny, I thought I was up for a Medal of Honor...}}
+{{dialogue|Avery|There are no medals awarded for backtalk. Return to Atara at once and take it up with your superiors.}}
+{{dialogue|Grace|...}}
+{{dialogue|Justice|Grace is headed out? Dang, that's right... I forgot she wasn't part of the Sandrock crew for a minute there...}}
+The conversation ends.
+{{dialogue|Player|(What should I say?)}}
+
+*''Pen! You can be extra rough with him...''
+*''What kind of punishment will Pen receive?''
+*''We'll miss you, Grace!''
+*''Won't you stay, Grace?''
+*''What about Miguel and Yan?''
+*''That's all. No questions.''
+
+{{dialogue|Avery|indent=true|answer=Pen! You can be extra rough with him...
+|I see. You must really hate him.}}
+{{dialogue|Avery|indent=true|I understand. But as your commanding Civil Corps officer here said, we must uphold certain standards. He will be dealt with. But in a way that is neither cruel or unusual, even though we all know such scum deserves far worse...}}
+{{dialogue|Avery|indent=true|answer=What kind of punishment will Pen receive?
+|Pen was integral in the subterfuge against Sandrock and a leader in the attempted theft of Alliance relics. Rest assured, he will be held accountable to the full extent of the law. I'll make sure of that personally.}}
+{{dialogue|Avery|indent=true|Pen is not only a senior officer of the Duvos army, he has a criminal record on and off the battlefield. He has taken countless lives and surely would've taken more if not for you all. He'll get what's coming to him.}}
+{{dialogue|Grace|indent=true|answer=We'll miss you, Grace!
+|Hey! Well... don't miss me yet, I haven't received the order. I expect they'll want me around for at least a little longer to oversee things as a rep from the ACI.}}
+{{dialogue|Logan|indent=true|Well, certainly you wouldn't mosey before goin' on one last ride, would you?}}
+{{dialogue|Grace|indent=true|Wouldn't dream of it.}}
+{{dialogue|Grace|indent=true|answer=Won't you stay, Grace?
+|You know, I'd like to. Maybe I even can. First step is headed back to HQ to report on what's happened here...}}
+{{dialogue|Grace|indent=true|From there, well, who knows...?}}
+{{dialogue|Avery|indent=true|answer=What about Miguel and Yan?
+|Those two... As citizens of the Alliance, they fall under local jurisdiction.}}
+{{dialogue|Avery|indent=true|The corrupt commissioner will be held here while he is investigated formally by the Free Cities Commerce Guild, and subsequently, replaced.}}
+{{dialogue|Trudy|indent=true|answer=That's all. No questions.
+|Thank you again, Commander Avery, for your timely arrival. City Hall will be cooperating with you as best as we can also.}}
+{{dialogue|Trudy|indent=true|Next, Commander Avery, I believe you had some commendations you wanted to give out? To award those who went above and beyond the call of duty in uprooting the Duvos conspiracy against Sandrock!}}
+{{dialogue|Trudy|indent=true|The first person we'd like to recognize is... you, ''Player''!}}
+{{dialogue|Trudy|indent=true|Not only did you help mount our defenses against unfathomable odds, you led the charge into enemy territory, all for the good of our people and the citizens of the Alliance!}}
+Remove behavior CommanderNPCAction (idName: 8306022) from Grace
+Remove behavior CommanderNPCAction (idName: 8306062) from Trudy
+Remove behavior CommanderNPCAction (idName: 8306082) from Justice
+Remove behavior CommanderNPCAction (idName: 8306112) from Logan
+
+TRIGGER Procedure 0.0 Step 11.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 8306023) to Grace
+(param: CMDAction:Applause|LookAtActor:8000)
+Add behavior CommanderNPCAction (idName: 8306063) to Trudy
+(param: CMDAction:Applause|LookAtActor:8000)
+Add behavior CommanderNPCAction (idName: 8306083) to Justice
+(param: CMDAction:Applause|LookAtActor:8000)
+Add behavior CommanderNPCAction (idName: 8306113) to Logan
+(param: CMDAction:Applause|LookAtActor:8000)
+Add behavior CommanderPlayerAction (idName: 8306002) to Player
+(param: CMDAction:Nod_Story|LookAtActor:8006)
+STOPWATCH REAL TIME SET || id: 83062 | sec: 3
+
+TRIGGER Procedure 0.0 Step 12.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 83062
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 11804 starts:
+{{dialogue|Trudy|Furthermore, Sheriff Justice kept calm in the face of danger, Logan the monster hunter's fighting skills surely tipped the scales in our favor, and Grace of the ACI's espionage and cunning were invaluable in our victory against Duvos as well. Let's give them all a big round of applause!}}
+Remove behavior CommanderNPCAction (idName: 8306023) from Grace
+Remove behavior CommanderNPCAction (idName: 8306063) from Trudy
+Remove behavior CommanderNPCAction (idName: 8306083) from Justice
+Remove behavior CommanderNPCAction (idName: 8306113) from Logan
+
+TRIGGER Procedure 0.0 Step 13.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 8306024) to Grace
+(param: CMDAction:Applause)
+Add behavior CommanderNPCAction (idName: 8306064) to Trudy
+(param: CMDAction:Applause)
+Add behavior CommanderNPCAction (idName: 8306084) to Justice
+(param: CMDAction:Applause)
+Add behavior CommanderNPCAction (idName: 8306114) to Logan
+(param: CMDAction:Applause)
+Add behavior CommanderPlayerAction (idName: 8306003) to Player
+(param: CMDAction:Applause)
+STOPWATCH REAL TIME SET || id: 83063 | sec: 3
+
+TRIGGER Procedure 0.0 Step 14.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 83063
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 11805 starts:
+{{dialogue|Trudy|Commander, please present everyone with their awards!}}
+
+TRIGGER Procedure 0.0 Step 15.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 1383}}
+A cutscene CG_CEREMONY (duration: 0.0) starts playing
+Medal of Honor - Commander Avery presented me and others who fought in the Battle of Sandrock with medals.
+
+TRIGGER Procedure 0.0 Step 15.5 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_CEREMONY | state: 7
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Guildhall | flagName: S8306_0_1
+Grace stands still in Guildhall and looks at Trudy
+Trudy stands still in Guildhall and looks at Trudy
+Justice stands still in Guildhall and looks at Trudy
+Logan stands still in Guildhall and looks at Trudy
+Avery stands still in Guildhall and looks at Trudy
+83061 stands still in Guildhall and looks at Trudy
+83062 stands still in Guildhall and looks at Trudy
+83063 stands still in Guildhall and looks at Trudy
+Trudy stops standing still
+
+TRIGGER Procedure 0.0 Step 15.8 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_CEREMONY | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 3582_0 starts:
+{{dialogue|Trudy|I think that about wraps it up for today... Thank you all, and a big thank you to the heroes of the Battle of Sandrock! With brave folks like you around, there's no limit to what we can accomplish in this town.}}
+{{dialogue|Trudy|''Player''... I suppose if there's anything you want to say to our prisoners, you'd better say it now. Who knows if we'll be seeing them again any time soon...}}
+{{dialogue|Avery|Shall we then?}}
+{{dialogue|Trudy|Yes. Dismissed!}}
+The conversation ends.
+Add 1 Sandrock Hero Medal of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 18.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderPlayerAction (idName: 8306003) from Player
+Remove behavior CommanderPlayerAction (idName: 8306002) from Player
+Remove behavior CommanderPlayerAction (idName: 8306001) from Player
+CUTSCENE UI STATE EXIT || 
+83061 stops standing still
+83062 stops standing still
+83063 stops standing still
+Avery stops standing still
+Remove behavior CommanderNPCAction (idName: 8306024) from Grace
+Remove behavior CommanderNPCAction (idName: 8306064) from Trudy
+Remove behavior CommanderNPCAction (idName: 8306084) from Justice
+Remove behavior CommanderNPCAction (idName: 8306114) from Logan
+Remove behavior CommanderNPCAction (idName: 8306964) from Avery
+83061 stops standing still
+83062 stops standing still
+83063 stops standing still
+STOPWATCH REAL TIME SET || id: 83061 | sec: 3
+
+TRIGGER Procedure 1.0 Step 15.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Grace stops standing still
+Trudy stops standing still
+Justice stops standing still
+Logan stops standing still
+Avery stops standing still
+
+TRIGGER Procedure 0.0 Step 19.0 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 83061
+CONDITIONS
+Always:
+ACTIONS
+Grace stops standing still
+Trudy stops standing still
+Justice stops standing still
+Logan stops standing still
+
+TRIGGER Procedure 0.0 Step 40.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Guildhall to the Main:
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM REMOVE || id: 83061
+NPC RANDOM REMOVE || id: 83062
+NPC RANDOM REMOVE || id: 83063
+
+TRIGGER Procedure 0.0 Step 40.0 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM REMOVE || id: 83061
+NPC RANDOM REMOVE || id: 83062
+NPC RANDOM REMOVE || id: 83063
+END MISSION 1800306

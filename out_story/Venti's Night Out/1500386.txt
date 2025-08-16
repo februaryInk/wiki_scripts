@@ -1,0 +1,393 @@
+Reading Mission 1500386: Venti's Night Out
+
+<onlyinclude>{{Infobox mission
+|name = Venti's Night Out
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Venti's Night Out:
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the third option in conversation segment 18227:
+{{dialogue|Venti|Do you want to go to our company's scrap yard? I'll take you there, okay? For free!}}
+
+*''Take me over!'' (No unique dialogue)
+*''Another time.'' (No unique dialogue)
+*''You don't need to do this...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+CLOSE MISSION || missionId: 1500385
+END MISSION 1500385
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 18227:
+{{dialogue|Venti|Do you want to go to our company's scrap yard? I'll take you there, okay? For free!}}
+
+*''Take me over!'' (No unique dialogue)
+*''Another time.'' (No unique dialogue)
+*''You don't need to do this...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON REMOVE || missionId: 1500385 | npc: 8038 | missionIcon: 0
+DELIVER MISSION 1500385
+START MISSION 1500385
+===Go to Scrapyard After 23:00PM===
+
+{{mission_details
+|desc = You and Venti agreed to meet at Eufaula Salvage's scrapyard after 23:00PM. Remember to attend!
+|details = Go to Scrapyard After 23:00PM
+}}
+Run mission Venti's Night Out
+END MISSION 1500385
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1500386
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1500385 | id: 538601 | sceneName: Main | flagName: Story_5386_Area | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80027685
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 538601
+CONDITIONS
+CHECK TIME || compare: 2 | hour: 23 | minute: 0
+CHECK TIME || compare: 5 | hour: 23 | minute: 59
+ACTIONS
+DELAY MASK SET || maskId: 538601 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 538601
+ACTOR BUFF ADD || npc: 8000 | buffId: 35 | instanceId: 538601
+
+TRIGGER Procedure 0.0 Step 1.5 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 538601
+CONDITIONS
+CHECK TIME || compare: 2 | hour: 0 | minute: 0
+CHECK TIME || compare: 5 | hour: 3 | minute: 0
+ACTIONS
+DELAY MASK SET || maskId: 538601 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 538601
+ACTOR BUFF ADD || npc: 8000 | buffId: 35 | instanceId: 538601
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 538601 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 538601 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Venti stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: Story_5386_Player
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 538601 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 538601) A conversation 5580_0 starts:
+{{dialogue|Venti|You're here! I've been waiting for you for a while now. There's no one else here; Fei and the others have all gone home. All the salvage inside belongs to us!}}
+
+*''Let's dig in!''
+*''Does this count as overtime for you?''
+
+{{dialogue|Venti|indent=true|answer=Let's dig in!
+|Let's go then!}}
+{{dialogue|Venti|indent=true|answer=Does this count as overtime for you?
+|Hehe, no. The boss won't give me overtime pay for this...}}
+{{dialogue|Venti|indent=true|By the way: all the things I excavate tonight will belong to you, so you'll be able to get more materials and make even better things!}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 538601) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 538602 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 4.5 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 538602 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 538602) A conversation 18240 starts:
+{{dialogue|Venti|Then let's start digging! For some reason, I feel even more motivated than when I'm working my normal job! And while we're digging, we can chat and talk to each other!}}
+
+TRIGGER Procedure 0.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 538602) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Venti stops standing still
+Venti stops standing still
+CUTSCENE UI STATE EXIT || 
+Add behavior CommanderMoveToFlagAndAction (idName: 5386001) to Venti
+(param: TargetScene:Main|MoveMode:Run|FlagName:Story_538603)
+===Salvage Scrap===
+
+{{mission_details
+|desc = You've arrived at Eufaula Salvage's scrapyard. Start salvaging some scrap and have a chat with Venti.
+|details = Salvage Scrap
+}}
+AREA TRIGGER CREATE || missionId: 1500385 | id: 538602 | sceneName: Main | flagName: Story_5386_Area1 | showOnMap: 0 | mapIcon: MissionAreaBranch | transId: 80027685
+PICK UP RESOURCE REFRESH || id: 80381
+Set digall to 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1500386 | path: Mission_WeiDiStory | sceneName: Main | flagName: Story_5386_Item | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 538602 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 538602 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Venti stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: Story_5386_Player1
+
+TRIGGER Procedure 0.0 Step 7.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8038 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 5386001) from Venti
+Add behavior CommanderBubble_5386_Wendi (idName: 5386002) to Venti
+(param: -1)
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON RESOURCE PICK UP || order: 0 | npc: 8000 | id: 80381
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 538603 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+Set digall to 1
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 538603 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 538603 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Remove behavior CommanderBubble_5386_Wendi (idName: 5386002) from Venti
+Venti stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: Story_5386_Player2
+CUTSCENE UI STATE ENTER || 
+SCENEITEM DELETE || itemType: 0 | id: 1500386
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 538603 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 538603) A conversation 18245, 18246, 18247, 18248 starts:
+{{dialogue|Venti|Phew... let me see... we've basically broken down all the scrap that was brought up here during the day! We're amazing!}}
+{{dialogue|Venti|By the way, these are the things I salvaged, take them all!}}
+{{dialogue|Venti|If you want to come again next time, just look for me. I've been digging all night and my clothes are wet, so I need to go back and take a hot bath and change into clean clothes.}}
+{{dialogue|Venti|Well then, until next time! It was really fun to dig up junk together with you today. Bye-bye!}}
+
+TRIGGER Procedure 1.0 Step 2.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 538603) There is a conversation segment (id 18246) that ends:
+{{dialogue|Venti|By the way, these are the things I salvaged, take them all!}}
+CONDITIONS
+Always:
+ACTIONS
+Add 20 Mechanical Scrap of Default quality (Notify player)
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 538603) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 5386001) from Venti
+Venti stops standing still
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1500385
+AREA TRIGGER DELETE || id: 538602
+PICK UP RESOURCE DELETE || id: 80381
+END MISSION 1500386
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 538602
+CONDITIONS
+Check if digall is == 0
+ACTIONS
+(cId 538604) A conversation 5583_0 starts:
+{{dialogue|0|(There's still more scrap I could salvage... Or should I leave?)}}
+
+*''Leave'' (No unique dialogue)
+*''Stay and dig'' (No unique dialogue)
+
+Set goon to 0
+
+TRIGGER Procedure 2.0 Step 2.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 538604) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 538604 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 538604) The player picks the first option in conversation segment 18241:
+{{dialogue|0|(There's still more scrap I could salvage... Or should I leave?)}}
+
+*''Leave'' (No unique dialogue)
+*''Stay and dig'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set goon to 1
+
+TRIGGER Procedure 2.0 Step 1.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 538604) The player picks the second option in conversation segment 18241:
+{{dialogue|0|(There's still more scrap I could salvage... Or should I leave?)}}
+
+*''Leave'' (No unique dialogue)
+*''Stay and dig'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set goon to 0
+
+TRIGGER Procedure 2.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 538604 | eventType: 2
+CONDITIONS
+Check if goon is == 1
+ACTIONS
+DELAY MASK SET || maskId: 538604 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Remove behavior CommanderBubble_5386_Wendi (idName: 5386002) from Venti
+Venti stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: Story_5386_Player2
+CUTSCENE UI STATE ENTER || 
+SCENEITEM DELETE || itemType: 0 | id: 1500386
+
+TRIGGER Procedure 2.0 Step 4.0 Order 7 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 538604 | eventType: 2
+CONDITIONS
+Check if goon is == 0
+ACTIONS
+DELAY MASK SET || maskId: 538604 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: Story_5386_Player1
+
+TRIGGER Procedure 2.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 538604 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 538605) A conversation 18244 starts:
+{{dialogue|Venti|Oh, you're tired of digging? Here are some things I dug up; you can keep them. If you have something you need to do, feel free to head off. See you next time!}}
+
+TRIGGER Procedure 2.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 538605) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add 10 Mechanical Scrap of Default quality (Notify player)
+Venti stops standing still
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1500385
+AREA TRIGGER DELETE || id: 538602
+PICK UP RESOURCE DELETE || id: 80381
+END MISSION 1500386
+
+TRIGGER Procedure 3.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Venti stops standing still
+Venti stops standing still
+Venti stops standing still
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1500385
+AREA TRIGGER DELETE || id: 538601
+AREA TRIGGER DELETE || id: 538602
+PICK UP RESOURCE DELETE || id: 80381
+Remove behavior CommanderMoveToFlagAndAction (idName: 5386001) from Venti
+Remove behavior CommanderBubble_5386_Wendi (idName: 5386002) from Venti
+SCENEITEM DELETE || itemType: 0 | id: 1500386
+END MISSION 1500386
+
+TRIGGER Procedure 3.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Venti stops standing still
+Venti stops standing still
+Venti stops standing still
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1500385
+AREA TRIGGER DELETE || id: 538601
+AREA TRIGGER DELETE || id: 538602
+PICK UP RESOURCE DELETE || id: 80381
+Remove behavior CommanderMoveToFlagAndAction (idName: 5386001) from Venti
+Remove behavior CommanderBubble_5386_Wendi (idName: 5386002) from Venti
+SCENEITEM DELETE || itemType: 0 | id: 1500386
+END MISSION 1500386

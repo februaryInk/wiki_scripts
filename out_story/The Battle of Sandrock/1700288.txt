@@ -1,0 +1,854 @@
+Reading Mission 1700288: The Battle of Sandrock
+
+<onlyinclude>{{Infobox mission
+|name = The Battle of Sandrock
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from The Battle of Sandrock:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from MatildaHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1700287
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8094
+Yan stands still in Main
+Logan stands still in Main
+Ged stands still in Main
+NPC RANDOM REMOVE || id: 22841
+NPC RANDOM REMOVE || id: 22842
+NPC RANDOM REMOVE || id: 22843
+NPC RANDOM REMOVE || id: 22844
+NPC RANDOM REMOVE || id: 22845
+NPC RANDOM REMOVE || id: 22846
+NPC RANDOM REMOVE || id: 22847
+NPC RANDOM REMOVE || id: 22848
+TIME SET ENABLE || bool: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700287
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Battle of Sandrock
+END MISSION 1700287
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700288
+CONDITIONS
+Always:
+ACTIONS
+===Reclaim the Air Cannon===
+
+{{mission_details
+|desc = Yan has repaired the Air Cannon. Take it back from him!
+|details = Reclaim the Air Cannon
+}}
+Set Counter12 to 0
+Set Counter11 to 0
+Set Counter1 to 0
+Set Counter2 to 0
+Set Counter3 to 0
+NPC SET CAN INTERACT || npc: 8011 | canInteract: 0
+NPC SET CAN INTERACT || npc: 8084 | canInteract: 0
+NPC SET CAN INTERACT || npc: 8043 | canInteract: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172881 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+NPC LEAVE || npc: 8043
+ACTOR SET FACTION || isAdd: 1 | npc: 8084 | id: 8
+NPC ADD TAG || tag: ProtectSandRock
+NPC WEAPON LOCK || npc: 8043 | id: 1026 | name: 172881
+MONSTER ADD TAG || isAdd: 1 | tag: LiberateSandRock_1
+Yan stops standing still
+SCENEITEM DELETE || itemType: 12 | id: 22831
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1728820 | path: Mission_AirCannon_Monster | sceneName: Main | extraParams: -1 | flagName: turret_turretempty
+MONSTER ADD TAG || isAdd: 1 | tag: BossYan
+CUTSCENE UI STATE EXIT || 
+ACTOR IGNORE SHOW DISTANCE || ignore: 1 | npc: 5070001
+Add behavior Npc_Idle (idName: 172881) to Logan
+(param: -1)
+Add behavior Npc_Idle (idName: 172881) to Ged
+(param: -1)
+Logan stops standing still
+Ged stops standing still
+DELAY MASK SET || maskId: 172881 | delayTime: 1 | durationTime: 1 | changeType: 1 | curveIndex: -2
+ACTOR BUFF ADD || npc: 8000 | buffId: 11 | instanceId: 72881
+SUBMIT MISSION 1200283
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 0 | tag: BossYan
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 172882 | delayTime: 0 | durationTime: 1 | changeType: 0 | curveIndex: -2
+ACTOR BLIND SET || set: 1
+ACTOR IGNORE SHOW DISTANCE || npc: 5070001 | ignore: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172882 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+MONSTER ADD TAG || isAdd: 0 | tag: LiberateSandRock_1
+Yan stands still in Main
+Logan stands still in Main
+Ged stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: UprisingPhase1_Player2
+ACTOR BLIND SET || set: 0
+SCENEITEM DELETE || itemType: 0 | id: 1728820
+SCENEITEM CREATE FLAG || itemType: 0 | id: 22831 | path: Mission_AirCannon_Main | sceneName: Main | flagName: turret_turretempty | extraParams: -1
+MONSTER ADD TAG || isAdd: 0 | tag: BossYan
+DELAY MASK SET || maskId: 172882 | delayTime: 1 | durationTime: 1 | changeType: 1 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172882 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCActionLoop (idName: 172881) to Yan
+(param: CMDAction:CompletelyDown)
+In a speech bubble:
+{{dialogue|Yan|Oof! I'll... get you... get back to work... ugh...}}
+AREA TRIGGER CREATE || missionId: 1700287 | id: 1728750 | sceneName: Main | flagName: UprisingReset | showOnMap: 0 | mapIcon: MissionArea | transId: -1
+SCENEITEM INTERACT SET || itemType: 9 | id: 26 | canInteract: 0
+SCENEITEM INTERACT SET || itemType: 9 | id: 25 | canInteract: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 172881
+CONDITIONS
+Always:
+ACTIONS
+MONSTER ADD TAG || isAdd: 1 | tag: LiberateSandRock_2_2
+STOPWATCH REAL TIME SET || id: 172882 | sec: 0.5
+===Defeat Duvos Soldiers===
+
+{{mission_details
+|desc = Use the Air Cannon to attack the Duvos Soldiers.
+|details = Defeat Duvos Soldiers
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 172883
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Ged|More soldiers are coming!}}
+STOPWATCH REAL TIME SET || id: 172881 | sec: 1
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 172881
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Logan|''Player''! Man that gun!}}
+CUTSCENE UI STATE EXIT || 
+Logan stops standing still
+Ged stops standing still
+
+TRIGGER Procedure 0.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 172882
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+STOPWATCH REAL TIME SET || id: 172883 | sec: 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the CivilCorp:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_civilcorp
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_civilcorp
+
+TRIGGER Procedure 0.0 Step 0.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the CivilCorp:
+CONDITIONS
+Always:
+ACTIONS
+Justice stands still in CivilCorp
+Logan stands still in CivilCorp
+Ged stands still in CivilCorp
+PLAYER SET POS ROT FLAG || sceneName: CivilCorp | flagName: UprisingPhase2_Player
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the CivilCorp:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 11052, 11053, 11054, 11055, 11056, 11057, 11058, 11059, 11060, 11061, 11062 starts:
+{{dialogue|Cooper|''Player''! Help has arrived at last! They threw me in here, too! Them free-speech-denying fellers said I talked too much! Hurry up and get us outta here!}}
+{{dialogue|Justice|Yes, pleeease! I can't take any more of Cooper!}}
+{{dialogue|Unsuur|I thought Cooper brought a nice change of pace from the monotony of before.}}
+{{dialogue|Justice|Woah, wait a sec. Ged?! And you guys look to be fully armed, that means... time to roll?}}
+{{dialogue|Logan|Time to roll, Justice, we're gonna free Sandrock!}}
+{{dialogue|Ged|That's right, mon ami!}}
+{{dialogue|Cooper|A talkin' moley?! Hand me m'shotgun through the bars!}}
+{{dialogue|Justice|Easy there partner, Ged's on our side!}}
+{{dialogue|Ged|You offensive imbecile! We are here to save you!}}
+{{dialogue|Cooper|Hark! M'world view! Torn to shreds before my very eyes...! Could it be that these weird half-machine mutant burrowers of my rutabaga garden are in fact saviors in our darkest hours!?}}
+{{dialogue|Logan|Save it for later, stand back!}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 172881) to Logan
+(param: CMDAction:Shoot|Delay:0)
+STOPWATCH REAL TIME SET || id: 1728810 | sec: 1.5
+
+TRIGGER Procedure 0.0 Step 0.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 172881) from Justice
+Remove behavior CommanderNPCAction (idName: 172881) from Logan
+Logan stops standing still
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: UprisingPhase3_Start
+===Go to the Old Town Apartments===
+
+{{mission_details
+|desc = Several people are being held in the Old Town Apartments. Go help them!
+|details = Go to the Old Town Apartments
+}}
+CUTSCENE UI STATE EXIT || 
+AREA TRIGGER DELETE || id: 1728803
+AREA TRIGGER CREATE || missionId: 1700288 | id: 1728806 | sceneName: Main | showOnMap: 0 | mapIcon: MissionArea | transId: -1 | flagName: UprisingBlock6
+AREA TRIGGER CREATE || missionId: 1700288 | id: 1728807 | sceneName: Main | flagName: UprisingBlock7 | transId: -1 | showOnMap: 0 | mapIcon: MissionArea
+AREA TRIGGER CREATE || missionId: 1700288 | id: 1728809 | sceneName: Main | flagName: UprisingBlock9 | showOnMap: 0 | mapIcon: MissionArea | transId: -1
+GEAR TRIGGER TRIGGER || id: 1 | scene: CivilCorp
+Ged stops standing still
+GEAR TRIGGER TRIGGER || id: 5005 | scene: Main
+
+TRIGGER Procedure 0.0 Step 0.0 Order 40 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 11096) that ends:
+{{dialogue|Player|There's no time for this! Go and liberate Sandrock!}}
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 17288003 | delayTime: 0 | durationTime: 2 | changeType: 2 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8011 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 172881) to Justice
+(param: TargetScene:CivilCorp|FlagName:UprisingPhase2_Justice2)
+Justice stops standing still
+
+TRIGGER Procedure 0.0 Step 0.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1700288 | id: 1728801 | sceneName: Main | flagName: UprisingBlock1 | showOnMap: 0 | mapIcon: MissionArea | transId: -1
+AREA TRIGGER CREATE || missionId: 1700288 | id: 1728802 | sceneName: Main | flagName: UprisingBlock2 | showOnMap: 0 | mapIcon: MissionArea | transId: -1
+AREA TRIGGER CREATE || missionId: 1700288 | id: 1728803 | sceneName: Main | flagName: UprisingBlock3 | showOnMap: 0 | mapIcon: MissionArea | transId: -1
+AREA TRIGGER CREATE || missionId: 1700288 | id: 1728804 | sceneName: Main | flagName: UprisingBlock4 | showOnMap: 0 | mapIcon: MissionArea | transId: -1
+AREA TRIGGER CREATE || missionId: 1700288 | id: 1728805 | sceneName: Main | flagName: UprisingBlock5 | showOnMap: 0 | mapIcon: MissionArea | transId: -1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 16 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 1728801
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 1728802
+ON AREA TRIGGER INTERACT || order: 0 | id: 1728803 | npc: 8000 | enter: 0
+ON AREA TRIGGER INTERACT || order: 0 | id: 1728804 | npc: 8000 | enter: 0
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 1728805
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 1728809
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+(cId 1) A conversation 11096 starts:
+{{dialogue|Player|There's no time for this! Go and liberate Sandrock!}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Apartment:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_apartment
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_apartment
+
+TRIGGER Procedure 0.0 Step 0.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Apartment:
+CONDITIONS
+Always:
+ACTIONS
+ACTOR BLIND SET || set: 1
+MONSTER ADD TAG || isAdd: 1 | tag: LiberateSandRock_3
+CUTSCENE UI STATE ENTER || 
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1728803 | sceneName: Apartment | flagName: fightvsarmy_apartment_block | extraParams: -1 | path: Mission_BattlefeildArmy
+SCENEITEM INTERACT SET || itemType: 9 | id: 27 | canInteract: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Apartment:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+ACTOR BLIND SET || set: 0
+===Defeat Duvos Soldiers===
+
+{{mission_details
+|desc = Take out the Duvos Soldiers who are trying to stop you.
+|details = Defeat Duvos Soldiers
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 20 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 0 | tag: LiberateSandRock_3
+CONDITIONS
+Always:
+ACTIONS
+Increment Counter2 by 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 10 | tag: LiberateSandRock_3
+CONDITIONS
+Check if Counter2 is == 3
+ACTIONS
+{{cutscene|id = 1368}}
+A cutscene CG_LIBERATE (duration: 2.0) starts playing
+Oldtown Showdown - The Oldtown Lodge was swarming with soldiers! We had a standoff, and Grace swooped in and saved the day!
+
+TRIGGER Procedure 0.0 Step 0.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 9 | name: CG_LIBERATE
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER ONCE CREATE || missionId: 1700287 | id: 1728866 | sceneName: Main | flagName: UprisingSavePoint | showOnMap: 0 | mapIcon: -1 | transId: -1
+===Head towards the Temple===
+
+{{mission_details
+|desc = Go to the Church of the Light to rescue the last few hostages.
+|details = Head towards the Temple
+}}
+AREA TRIGGER CREATE || missionId: 1700287 | id: 172880 | sceneName: Main | showOnMap: 1 | mapIcon: MissionArea | transId: 80016720 | flagName: UprisingPhase4_Trigger
+AREA TRIGGER DELETE || id: 1728807
+AREA TRIGGER CREATE || missionId: 1700288 | id: 1728808 | sceneName: Main | flagName: UprisingBlock8 | showOnMap: 0 | mapIcon: MissionArea | transId: -1
+SCENEITEM DELETE || itemType: 0 | id: 1728803
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8084
+ACTION ACTOR REMOVE FOLLOWER || tActor: 8011 | mActor: 8000
+Run mission The Battle of Sandrock
+
+TRIGGER Procedure 0.0 Step 0.0 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 1728810
+CONDITIONS
+Always:
+ACTIONS
+GEAR TRIGGER TRIGGER || id: 1 | scene: CivilCorp
+
+TRIGGER Procedure 0.0 Step 0.0 Order 24 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 0 | tag: LiberateSandRock_2_1
+CONDITIONS
+Always:
+ACTIONS
+Increment Counter1 by 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 25 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 10 | tag: LiberateSandRock_2_2
+CONDITIONS
+Check if Counter12 is >= 3
+ACTIONS
+MONSTER ADD TAG || tag: LiberateSandRock_2_1 | isAdd: 1
+STOPWATCH REAL TIME SET || id: 172885 | sec: 2
+STOPWATCH REAL TIME SET || id: 172886 | sec: 3.5
+
+TRIGGER Procedure 0.0 Step 0.0 Order 26 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 172885
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 27 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 172886
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Logan|Could use some back up over here...!}}
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 28 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 10 | tag: LiberateSandRock_2_1
+CONDITIONS
+Check if Counter1 is >= 2
+ACTIONS
+MONSTER ADD TAG || isAdd: 1 | tag: LiberateSandRock_2_3
+STOPWATCH REAL TIME SET || id: 172885 | sec: 1.5
+STOPWATCH REAL TIME SET || id: 172886 | sec: 3
+
+TRIGGER Procedure 0.0 Step 0.0 Order 29 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 172885
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 30 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 172886
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Logan|They're comin' down from the Temple, take 'em out!}}
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 31 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 0 | tag: LiberateSandRock_2_3
+CONDITIONS
+Always:
+ACTIONS
+Increment Counter11 by 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 32 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 10 | tag: LiberateSandRock_2_3
+ON MONSTER TAG DEAD || order: 10 | tag: LiberateSandRock_2_1
+ON MONSTER TAG DEAD || order: 10 | tag: LiberateSandRock_2_2
+CONDITIONS
+Check if Counter11 is == 6
+Check if Counter1 is == 6
+Check if Counter12 is == 6
+ACTIONS
+MONSTER ADD TAG || tag: LiberateSandRock_2_1 | isAdd: 0
+MONSTER ADD TAG || isAdd: 0 | tag: LiberateSandRock_2_2
+MONSTER ADD TAG || tag: LiberateSandRock_2_3 | isAdd: 0
+NPC REMOVE TAG || tag: ProtectSandRock
+AREA TRIGGER DELETE || id: 1728750
+(cId -1) A conversation 11050, 11051 starts:
+{{dialogue|Logan|That's the last of 'em!}}
+{{dialogue|Logan|Come on, let's go free {{textcolor|green|the Civil Corps}} first!}}
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8011 | state: Attack
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8084 | state: Attack
+Remove behavior Npc_Idle (idName: 172881) from Logan
+Remove behavior Npc_Idle (idName: 172881) from Ged
+
+TRIGGER Procedure 0.0 Step 0.0 Order 33 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Go to the Civil Corps===
+
+{{mission_details
+|desc = Several people are being held in the Civil Corps. Go help them!
+|details = Go to the Civil Corps
+}}
+SCENEITEM INTERACT SET || itemType: 9 | id: 26 | canInteract: 1
+SCENEITEM INTERACT SET || itemType: 9 | id: 25 | canInteract: 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 34 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 0 | tag: LiberateSandRock_2_2
+CONDITIONS
+Always:
+ACTIONS
+Increment Counter12 by 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 35 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 172880
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 1369}}
+A cutscene CG_SOCIETYBATTLE (duration: 2.0) starts playing
+Commander's Final Battle - The Commander had the audacity to take Trudy hostage! Luckily we all worked together and freed her from his clutches.
+ACTOR BLIND SET || set: 1
+MONSTER ADD TAG || tag: LiberateSandRock_4 | isAdd: 1
+AREA TRIGGER DELETE || id: 1728801
+AREA TRIGGER DELETE || id: 1728802
+AREA TRIGGER DELETE || id: 1728804
+AREA TRIGGER DELETE || id: 1728805
+AREA TRIGGER DELETE || id: 1728806
+AREA TRIGGER DELETE || id: 1728807
+AREA TRIGGER DELETE || id: 1728808
+AREA TRIGGER DELETE || id: 1728809
+AREA TRIGGER DELETE || id: 172880
+
+TRIGGER Procedure 0.0 Step 0.0 Order 36 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_SOCIETYBATTLE | state: 9
+CONDITIONS
+Always:
+ACTIONS
+ACTOR BLIND SET || set: 0
+===Defeat Duvos Soldiers===
+
+{{mission_details
+|desc = Defeat Commander Lefu and the remaining soldiers. This is it!
+|details = Defeat Duvos Soldiers
+}}
+Logan stops standing still
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1728810 | path: Mission_BattlefieldLefu | sceneName: Main | flagName: LefuFinalField | extraParams: -1
+ACTOR IGNORE SHOW DISTANCE || ignore: 1 | npc: 5066001
+
+TRIGGER Procedure 0.0 Step 0.0 Order 37 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_SOCIETYBATTLE | state: 8
+CONDITIONS
+Always:
+ACTIONS
+NPC SET CAN INTERACT || npc: 8006 | canInteract: 0
+ACTOR SET FACTION || isAdd: 1 | npc: 8006 | id: 8
+Logan stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: UprisingPhase4_Player
+Trudy stands still in Main
+Trudy stops standing still
+Trudy stops standing still
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8006 | state: Attack
+
+TRIGGER Procedure 0.0 Step 0.0 Order 38 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 0 | tag: LiberateSandRock_4
+CONDITIONS
+Always:
+ACTIONS
+Increment Counter3 by 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 39 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 10 | tag: LiberateSandRock_4
+CONDITIONS
+Check if Counter3 is == 4
+ACTIONS
+{{cutscene|id = 1370}}
+A cutscene CG_BEATCOMMANDER (duration: 2.0) starts playing
+Duvos Down - After we defeated the Commander, Stev took the initiative and surrendered. We won!
+Run mission The Battle of Sandrock
+SCENEITEM DELETE || itemType: 0 | id: 1728810
+ACTOR IGNORE SHOW DISTANCE || npc: 5066001 | ignore: 0
+ACTOR BUFF REMOVE || npc: 8000 | instanceId: 72881
+Mysterious Man stops standing still
+
+TRIGGER Procedure 0.0 Step 0.0 Order 41 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 17288003 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: UprisingPhase1_Yan
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 42 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 1728806
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 1728807
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 1728808
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+(cId 2) A conversation 11096 starts:
+{{dialogue|Player|There's no time for this! Go and liberate Sandrock!}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 43 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId: 2) There is a conversation segment (id 11096) that ends:
+{{dialogue|Player|There's no time for this! Go and liberate Sandrock!}}
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 17288004 | delayTime: 0 | durationTime: 2 | changeType: 2 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 44 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 17288004 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: UprisingBlockTel8
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 45 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 10 | tag: LiberateSandRock_40
+
+CONDITIONS
+Always:
+ACTIONS
+Yan stops standing still
+Stev stops standing still
+Commander Lefu stops standing still
+Miguel stops standing still
+Justice stops standing still
+Unsuur stops standing still
+
+TRIGGER Procedure 0.0 Step 0.0 Order 46 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 1 | id: 1728750
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 17288009 | delayTime: 0 | durationTime: 1 | changeType: 2 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 47 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 17288009 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: UprisingCannonStand
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 48 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8008 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 11063, 11064, 11065, 11066, 11067 starts:
+{{dialogue|Ged|Viva la resistance!}}
+{{dialogue|Justice|Love that gusto! Just, I didn't really expect you to be here...!}}
+{{dialogue|Ged|A Mole Person always pays their debts...}}
+{{dialogue|Logan|''Player'', let's get to {{textcolor|green|the Apartments}} next, double time. Justice, clear out the other soldiers in town, let's meet up at {{textcolor|green|the Temple}}!}}
+{{dialogue|Justice|Roger. Unsuur, Cooper, with me. Let's go save our city!}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 58 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 1728866
+CONDITIONS
+Always:
+ACTIONS
+AUTOSAVE TRY || 
+
+TRIGGER Procedure 10.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_BEATCOMMANDER | state: 9
+CONDITIONS
+Always:
+ACTIONS
+Banjo stops standing still
+Nemo stops standing still
+ACTION FESTIVAL REMOVE STOP || requestID: 22841
+Jensen stops standing still
+NPC SET CAN INTERACT || npc: 8023 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8049 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8026 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8008 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8003 | canInteract: 1
+Cooper stops standing still
+SCENEITEM DELETE || itemType: 0 | id: 22838
+SCENEITEM DELETE || itemType: 0 | id: 22837
+SCENEITEM DELETE || itemType: 0 | id: 22836
+SCENEITEM DELETE || itemType: 0 | id: 22835
+SCENEITEM DELETE || itemType: 0 | id: 22834
+SCENEITEM DELETE || itemType: 0 | id: 22833
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8006
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8011
+Unsuur stops standing still
+Justice stops standing still
+Cooper stops standing still
+Captain stops standing still
+Unsuur stops standing still
+Justice stops standing still
+Yan stops standing still
+SET MARRIAGE LOCK STATE || lockType: 1 | isLock: 0 | textID: 0
+Burgess stops standing still
+Ernest stops standing still
+Pablo stops standing still
+Dan-bi stops standing still
+Grace stops standing still
+Qi stops standing still
+Catori stops standing still
+Andy stops standing still
+Owen stops standing still
+Arvio stops standing still
+Amirah stops standing still
+Mi-an stops standing still
+Hugo stops standing still
+Heidi stops standing still
+Vivi stops standing still
+Jasmine stops standing still
+Zeke stops standing still
+Sandy stops standing still
+Mort stops standing still
+Mabel stops standing still
+Elsie stops standing still
+Rocky stops standing still
+Krystal stops standing still
+Pebbles stops standing still
+Peck stops standing still
+Fei stops standing still
+Venti stops standing still
+Fang stops standing still
+X stops standing still
+Trudy stops standing still
+Captain stops standing still
+NPC SET CAN INTERACT || npc: 8021 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8069 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8022 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8074 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8002 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8007 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8024 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8013 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8001 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8014 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8015 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8017 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8010 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8009 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8040 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8033 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8047 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8041 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8004 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8005 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8044 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8057 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8058 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8031 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8032 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8038 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8016 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8042 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8006 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8043 | canInteract: 1
+Remove behavior CommanderNPCActionLoop (idName: 172881) from Yan
+Yan stands still in CivilCorp
+ORDER MISSION REMOVE OPREATION || maskID: 22841
+ORDER MISSION CLOSE BY TYPE || orderType: 7
+TRAIN SET DISABLE || isDisable: 0
+REMOVE NPC STORE LOCK || storeID: -1 | npc: 8015
+REMOVE NPC STORE LOCK || storeID: -1 | npc: 8010
+REMOVE NPC STORE LOCK || storeID: -1 | npc: 8014
+REMOVE NPC STORE LOCK || storeID: -1 | npc: 8021
+REMOVE NPC STORE LOCK || storeID: -1 | npc: 8001
+REMOVE NPC STORE LOCK || storeID: -1 | npc: 8004
+REMOVE NPC STORE LOCK || storeID: -1 | npc: 8039
+REMOVE NPC STORE LOCK || storeID: -1 | npc: 8024
+REMOVE NPC STORE LOCK || storeID: -1 | npc: 8009
+REMOVE NPC STORE LOCK || storeID: -1 | npc: 8016
+REMOVE NPC STORE LOCK || storeID: -1 | npc: 8044
+REMOVE NPC STORE LOCK || storeID: -1 | npc: 8033
+REMOVE NPC STORE LOCK || storeID: -1 | npc: 8008
+ADD NPC STORE LOCK || storeID: -1 | npc: 8094
+NPC SET CAN INTERACT || npc: 8006 | canInteract: 1
+REMOVE RANDOM NPC LOCKER || requestID: 22841
+TIME SET ENABLE || bool: 1
+NPC SET CAN INTERACT || npc: 8011 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8084 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8039 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8043 | canInteract: 1
+Commander Lefu stands still in CivilCorp
+Stev stands still in CivilCorp
+Miguel stands still in CivilCorp
+NPC RANDOM ADD || id: 10 | instId: 172881 | scene: CivilCorp | flagName: UprisingEnd_Soldier | dailyBehavior: CommanderIdle
+NPC REMOVE TAG || tag: PetsInBlueMoon

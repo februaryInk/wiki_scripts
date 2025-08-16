@@ -1,0 +1,277 @@
+Reading Mission 1200182: Salted Fish Blues
+
+<onlyinclude>{{Infobox mission
+|name = Salted Fish Blues
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Salted Fish Blues:
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+Add 2 Sea Salt of Default quality (Notify player)
+START MISSION 1200181
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200181
+CONDITIONS
+Always:
+ACTIONS
+Run mission Salted Fish Blues
+END MISSION 1200181
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200182
+CONDITIONS
+CHECK CREATION CAN CREATE || creationId: 13100009 | canCreate: 0
+ACTIONS
+===Research the Drying Rack===
+
+{{mission_details
+|desc = Making Salted Fish requires a Drying Rack. Go to the Research Center and get the diagram from Qi.
+|details = Research the Drying Rack
+}}
+Set STEP to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ITEM BLUE PRINT UNLOCK || order: 0 | id: 13100009
+CONDITIONS
+Check if STEP is == 0
+ACTIONS
+===Make Salted Fish===
+
+{{mission_details
+|desc = You need to use the drying rack to make Salted Fish.
+|details = Make Salted Fish
+*{{i2|Salted Fish|0/2}}
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200181 | targetId: 2 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Deliver Salted Fish to Mort===
+
+{{mission_details
+|desc = The Salted Fish is ready. Take it to Mort.
+|details = Deliver Salted Fish to Mort
+*{{i2|Salted Fish|0/2}}
+*{{i2|Mort|0/1}}
+}}
+Set STEP to 1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Mort
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1200181 | targetId: 3 | canSubmit: 1
+ACTIONS
+BAG MODIFY BY TARGET || missionId: 1200181 | targetId: 3
+(cId 0) A conversation 1301_0 starts:
+{{dialogue|Mort|Ah, thank you, young one. Did Vivi tell you to give me this? She's too kind to these aging bones.}}
+{{dialogue|Mort|My, my, this is a fine fish. Hm? You got it yourself, you say? Isn't it wonderful, seeing through to the end something you got from your own hand?}}
+{{dialogue|Mort|A Salted Fish is {{textcolor|green|appreciated by any hard working person. It'll give you energy}}, and keep you going throughout the day. Well, I appreciate the care, ''Player''. Would you care to join me for a cup of tea?}}
+
+*''Would I?!''
+*''Maybe next time...''
+
+{{dialogue|Mort|indent=true|answer=Would I?!
+|I'll get the kettle on. Thank you again.}}
+{{dialogue|Mort|indent=true|answer=Maybe next time...
+|Well, perhaps next time! Thank you, ''Player''.}}
+Set tea to 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 0) There is a conversation segment (id 4504) that ends:
+{{dialogue|Mort|I'll get the kettle on. Thank you again.}}
+CONDITIONS
+Always:
+ACTIONS
+Set tea to 1
+
+TRIGGER Procedure 0.0 Step 4.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Check if tea is == 1
+ACTIONS
+DELAY MASK SET || maskId: 21821 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 4.1 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 21821 | eventType: 2
+CONDITIONS
+CHECK CURRENT SCENE || name: Cemetery | flag: 0
+ACTIONS
+Mort stands still in Cemetery
+Mort stops standing still
+Add behavior CommanderSit (idName: 21821) to Mort
+(param: SeatDramaName:CemeterySit00|TargetScene:Cemetery)
+PLAYER SWITCH SCENE || scene: Cemetery
+Add behavior CommanderPlayerSit (idName: 21821) to Player
+(param: SeatDramaName:CemeterySit01)
+
+TRIGGER Procedure 0.0 Step 4.2 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 21821 | eventType: 2
+CONDITIONS
+CHECK CURRENT SCENE || name: Cemetery | flag: 1
+ACTIONS
+Add behavior CommanderSit (idName: 21821) to Mort
+(param: SeatDramaName:CemeterySit00|TargetScene:Cemetery)
+Add behavior CommanderPlayerSit (idName: 21821) to Player
+(param: SeatDramaName:CemeterySit01)
+
+TRIGGER Procedure 0.0 Step 4.3 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: SitDownFinished | behaviourName: CommanderSit | npc: 8041
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 21821 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 4.4 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 21821 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 1678_0 starts:
+{{dialogue|Mort|Hehe, I didn't expect a young'un like you to have such patience to spend time with an old man like me, with one foot in the grave. Sandrock is a town plagued by disaster. When you came, a small glimmer of hope returned to me...}}
+
+*''I'm confident I can help rebuild Sandrock.''
+*''Why did you stay in Sandrock?''
+
+{{dialogue|Mort|indent=true|answer=I'm confident I can help rebuild Sandrock.
+|Well, you young folks are filled with such a bright optimism, you keep moving forward, and never look back. Ha, I remember when I used to have that energy, back in my day...}}
+{{dialogue|Mort|indent=true|Sandrock has been through a lot to get here today, and a lot of people fought tooth and nail for this town. But I am worried that all this work could be for naught...}}
+{{dialogue|Mort|indent=true|answer=Why did you stay in Sandrock?
+|When we arrived in Sandrock, we were so bright-eyed. I truly believed that we could maintain a balance between development and the environment and develop a good life here. But alas, the world doesn't conform to the whims of mortals...}}
+{{dialogue|Mort|indent=true|After the decline of Sandrock, I was torn. Maybe I should have persuaded Martle to leave this place. Maybe now we'd be living together, with a calm life somewhere else in the Free Cities. Was our persistence meaningful?}}
+{{dialogue|Mort|indent=true|But if I leave now, the efforts of the generations now buried will have been sacrificed for naught. This is not the world that Martle and I aimed to see... so I must stay.}}
+{{dialogue|Mort|Anyway, Martle and I have fond feelings about you Builders. When Sandrock was developing, we recruited a host of Builders. They were hardworking and brave, to a person.}}
+{{dialogue|Mort|They built the Shonash Canyon Bridge, built the Moisture Farm, and everything else you see around you now... But it came at a cost. The effect this had on our environment was devastating.}}
+{{dialogue|Mort|I hope you and Mi-an can keep in mind, that the environment is the foundation of sustainable development. But perhaps my words are coming too late...}}
+{{dialogue|Mort|Well, I've talked for too long, ''Player''. I won't hold you from your work any longer. Thank you for taking time to talk to an old man. You've warmed an aging heart.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 4.5 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 21822 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 4.6 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 21822 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderSit (idName: 21821) from Mort
+Remove behavior CommanderPlayerSit (idName: 21821) from Player
+DELAY MASK SET || maskId: 21822 | delayTime: 3 | durationTime: 1 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 4.7 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 21822 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1200181
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 4.8 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Check if tea is <= (maybe?) 1
+ACTIONS
+SUBMIT MISSION 1200181
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|291}}
+END MISSION 1200182
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200182
+CONDITIONS
+CHECK CREATION CAN CREATE || creationId: 13100009 | canCreate: 1
+CHECK PLAYER ITEM || item: 15000146 | itemGrade: -1 | set: 6 | count: 2
+ACTIONS
+===Make Salted Fish===
+
+{{mission_details
+|desc = You need to use the drying rack to make Salted Fish.
+|details = Make Salted Fish
+*{{i2|Salted Fish|0/2}}
+}}
+Set STEP to 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200182
+CONDITIONS
+CHECK CREATION CAN CREATE || creationId: 13100009 | canCreate: 1
+CHECK PLAYER ITEM || item: 15000146 | itemGrade: -1 | set: 2 | count: 2
+ACTIONS
+===Deliver Salted Fish to Mort===
+
+{{mission_details
+|desc = The Salted Fish is ready. Take it to Mort.
+|details = Deliver Salted Fish to Mort
+*{{i2|Salted Fish|0/2}}
+*{{i2|Mort|0/1}}
+}}
+Set STEP to 0

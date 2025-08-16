@@ -1,0 +1,321 @@
+Reading Mission 1800388: Redemption
+
+<onlyinclude>{{Infobox mission
+|name = Redemption
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200364
+
+TRIGGER Procedure 3.0 Step 0.5 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if DAY is >= 3
+ACTIONS
+Run mission #1800380
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Sandrock Strikes Back is successfully completed
+ACTIONS
+Run mission Redemption
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800388
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || id: 83881 | sceneName: Main | flagName: Trigger_CivilCorp | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0 | missionId: 1800388
+
+TRIGGER Procedure 0.0 Step 0.1 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the CivilCorp:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_civilcorp
+ACTIONS
+AREA TRIGGER DELETE || id: 83881
+UNIQUE ACTION RUN || idStr: enter_civilcorp
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the CivilCorp:
+CONDITIONS
+Always:
+ACTIONS
+Burgess stands still in CivilCorp
+Miguel stands still in CivilCorp
+PLAYER SET POS ROT FLAG || sceneName: CivilCorp | flagName: S8388_0_1
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 838811
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 5431_0 starts:
+{{dialogue|Miguel|It's because you're ignorant.}}
+{{dialogue|Burgess|But... I trusted you... everyone did...}}
+{{dialogue|Miguel|This has nothing to do with trust. It's about result. The hand guiding the flock needs to make the tough decisions! I'm sorry it had to be this way...}}
+{{dialogue|Burgess|Sigh, I just want you to know...the Light forgives everyone. Even you.}}
+{{dialogue|Miguel|I did it for the Light! I need not be forgiven, for I know I am right.}}
+{{dialogue|Burgess|...Goodbye, Miguel.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8388212) to Burgess
+(param: TargetScene:CivilCorp|MoveMode:Walk|FlagName:S8388_21_2|Action:Shake_Story|LookAtActor:8000)
+
+TRIGGER Procedure 0.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8021 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 8388213) to Burgess
+(param: TargetScene:Main|MoveMode:Walk|FlagName:default)
+Add behavior CommanderMoveToFlagAndAction (idName: 8388001) to Player
+(param: TargetScene:CivilCorp|MoveMode:Walk|FlagName:S8388_0_2|LookAtActor:8019)
+
+TRIGGER Procedure 0.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+GROUP 0:
+Check relationship with Miguel is Lover
+
+GROUP 1:
+CHECK GLOBAL BLACKBOARD || key: MigelLover | info: 1 | exist: 1
+
+ACTIONS
+(cId 1) A conversation 17888, 17889, 5433_0 starts:
+{{dialogue|Miguel|''Player''.}}
+{{dialogue|Miguel|I do hope you're enjoying your "victory." These benighted gunslingers are dooming the human race once again. I can't foresee another ending to this little parable.}}
+{{dialogue|Player|(What should I say?)}}
+
+*''Why did you do this?''
+*''You're just bitter you lost.''
+*''We saved the town...''
+*''Why would you do this to me? I loved you...''
+
+{{dialogue|Miguel|indent=true|answer=Why did you do this?
+|I thought that was clear. Duvos provide the structure and order needed to prevent another calamity caused by human capriciousness. You should be grateful that I tried to bring order to Sandrock.}}
+{{dialogue|Miguel|indent=true|For too long Sandrock has been an unchecked town, full of unabashed attempts at "progress" with whatever dangerous technology and ideologies dug up from underground.}}
+{{dialogue|Miguel|indent=true|answer=You're just bitter you lost.
+|Sigh... It's not about me. I regret that neither you nor Duvos are on the same page as me, but I believe that Light will triumph over darkness.}}
+{{dialogue|Miguel|indent=true|answer=We saved the town...
+|From what? You have "saved" this town from an actual future. And even though they betrayed me, do you really think Duvos won't come again?}}
+{{dialogue|Miguel|indent=true|answer=Why would you do this to me? I loved you...
+|I did love you. Truly. I thought you saw the world in the same way as me. Saw that we're just repeating the same mistakes of our forebears. But you fell for their words. You fell for their hedonistic delusion of "freedom."}}
+{{dialogue|Miguel|indent=true|Sometimes, my dear, we must make a sacrifice for the future of mankind. I'm sorry for what happened, but I will not be so selfish as to prioritize my feelings over what is right.}}
+{{dialogue|Player|indent=true|(What should I say?)}}
+
+:*''Why did you do this?''
+:*''You're just bitter you lost.''
+:*''We saved the town...''
+
+{{dialogue|Miguel|indent=double|answer=Why did you do this?
+|I thought that was clear. Duvos provide the structure and order needed to prevent another calamity caused by human capriciousness. You should be grateful that I tried to bring order to Sandrock.}}
+{{dialogue|Miguel|indent=double|For too long Sandrock has been an unchecked town, full of unabashed attempts at "progress" with whatever dangerous technology and ideologies dug up from underground.}}
+{{dialogue|Miguel|indent=double|answer=You're just bitter you lost.
+|Sigh... It's not about me. I regret that neither you nor Duvos are on the same page as me, but I believe that Light will triumph over darkness.}}
+{{dialogue|Miguel|indent=double|answer=We saved the town...
+|From what? You have "saved" this town from an actual future. And even though they betrayed me, do you really think Duvos won't come again?}}
+{{dialogue|Miguel|You people are short-sighted. Your efforts will be in vain when the shrouds of darkness caused by the human need for ever more fall upon the world once more.}}
+{{dialogue|Miguel|I was not just trying to save your lives, but the lives of all children for generations to come.}}
+
+*''You're lying.''
+*''How were you saving us? You worked for Duvos!''
+*''(Listen)''
+
+{{dialogue|Miguel|indent=true|answer=You're lying.
+|What purpose would lying hold? What could I possibly be lying about? I am here, sitting in a cage. I'm being very sincere.}}
+{{dialogue|Miguel|indent=true|answer=How were you saving us? You worked for Duvos!
+|Sigh. The Duvos Emperor saw things the same way I did. Or at least I had believed. I... never wanted to hurt anyone, I wanted to save everyone.}}
+{{dialogue|Miguel|Ultimate freedom... hedonism, was what the people during the Age of Corruption practiced. In the name of "freedom" they built weapons and technology that we can't even imagine!}}
+{{dialogue|Miguel|They were so busy asking if they could, they never stopped to think if they should! In the end, in the name of "freedom" they fought a war that wrought destruction on our world.}}
+{{dialogue|Miguel|They did not care for the consequences of their actions. They did not care that they were damning future generations.}}
+{{dialogue|Miguel|The people of the Free Cities are repeating these sins. With utter disregard they flaunt relics of the past and spit in the face of our collective future.}}
+
+*''Duvos use relics too!''
+*''But it's only in defense.''
+*''Just listen.''
+
+{{dialogue|Miguel|indent=true|answer=Duvos use relics too!
+|The Duvos government strictly controls who can salvage their relics. They took painstaking steps to ensure that any newfound technology is always under government control. It's not ideal... but it's still better than what we have here.}}
+{{dialogue|Miguel|indent=true|At least... I still hope that's the case.}}
+{{dialogue|Miguel|indent=true|answer=But it's only in defense.
+|Ah, the classic retort, of course. I am sure the populace of the Age of Corruption would have said the same thing. We are simply using our technology of mass destruction in defense against our enemies.}}
+{{dialogue|Miguel|I tried to warn the people of this town that their actions were leading them to another calamity. My sermons fell upon deaf ears... I tried to evacuate all the people through my plot, but that plan failed.}}
+{{dialogue|Miguel|So I shall pay for my righteousness. I understand in their view, I did harm to Sandrock. I shall face whatever this town wishes, for I will not abandon my beliefs.}}
+
+*''Matilda and Pen abandoned you.''
+*''Duvos doesn't care about you.''
+*''Maybe you're right.''
+
+{{dialogue|Miguel|indent=true|answer=Matilda and Pen abandoned you.
+|...}}
+{{dialogue|Miguel|indent=true|I am tired now, Builder. I would like you to leave.}}
+{{dialogue|Miguel|indent=true|answer=Duvos doesn't care about you.
+|...}}
+{{dialogue|Miguel|indent=true|I am tired now, Builder. I would like you to leave.}}
+{{dialogue|Miguel|indent=true|answer=Maybe you're right.
+|I hope you see the Light.}}
+{{dialogue|Miguel|indent=true|Now, if you wouldn't mind, I would appreciate some time alone.}}
+
+TRIGGER Procedure 0.0 Step 11.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Burgess stops standing still
+Miguel stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8388212) from Burgess
+Remove behavior CommanderMoveToFlag (idName: 8388213) from Burgess
+Remove behavior CommanderMoveToFlagAndAction (idName: 8388001) from Player
+END MISSION 1800388
+
+TRIGGER Procedure 0.0 Step 6.2 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Check relationship with Miguel is 6 Lover
+CHECK GLOBAL BLACKBOARD || key: MigelLover | info: 1 | exist: 0
+ACTIONS
+(cId 1) A conversation 17888, 17889, 5432_0 starts:
+{{dialogue|Miguel|''Player''.}}
+{{dialogue|Miguel|I do hope you're enjoying your "victory." These benighted gunslingers are dooming the human race once again. I can't foresee another ending to this little parable.}}
+{{dialogue|Player|(What should I say?)}}
+
+*''Why did you do this?''
+*''You're just bitter you lost.''
+*''We saved the town...''
+
+{{dialogue|Miguel|indent=true|answer=Why did you do this?
+|I thought that was clear. Duvos provide the structure and order needed to prevent another calamity caused by human capriciousness. You should be grateful that I tried to bring order to Sandrock.}}
+{{dialogue|Miguel|indent=true|For too long Sandrock has been an unchecked town, full of unabashed attempts at "progress" with whatever dangerous technology and ideologies dug up from underground.}}
+{{dialogue|Miguel|indent=true|answer=You're just bitter you lost.
+|Sigh... It's not about me. I regret that neither you nor Duvos are on the same page as me, but I believe that Light will triumph over darkness.}}
+{{dialogue|Miguel|indent=true|answer=We saved the town...
+|From what? You have "saved" this town from an actual future. And even though they betrayed me, do you really think Duvos won't come again?}}
+{{dialogue|Miguel|You people are short-sighted. Your efforts will be in vain when the shrouds of darkness caused by the human need for ever more fall upon the world once more.}}
+{{dialogue|Miguel|I was not just trying to save your lives, but the lives of all children for generations to come.}}
+
+*''You're lying.''
+*''How were you saving us? You worked for Duvos!''
+*''(Listen)''
+
+{{dialogue|Miguel|indent=true|answer=You're lying.
+|What purpose would lying hold? What could I possibly be lying about? I am here, sitting in a cage. I'm being very sincere.}}
+{{dialogue|Miguel|indent=true|answer=How were you saving us? You worked for Duvos!
+|Sigh. The Duvos Emperor saw things the same way I did. Or at least I had believed. I... never wanted to hurt anyone, I wanted to save everyone.}}
+{{dialogue|Miguel|Ultimate freedom... hedonism, was what the people during the Age of Corruption practiced. In the name of "freedom" they built weapons and technology that we can't even imagine!}}
+{{dialogue|Miguel|They were so busy asking if they could, they never stopped to think if they should! In the end, in the name of "freedom" they fought a war that wrought destruction on our world.}}
+{{dialogue|Miguel|They did not care for the consequences of their actions. They did not care that they were damning future generations.}}
+{{dialogue|Miguel|The people of the Free Cities are repeating these sins. With utter disregard they flaunt relics of the past and spit in the face of our collective future.}}
+
+*''Duvos use relics too!''
+*''But it's only in defense.''
+*''Just listen.''
+
+{{dialogue|Miguel|indent=true|answer=Duvos use relics too!
+|The Duvos government strictly controls who can salvage their relics. They took painstaking steps to ensure that any newfound technology is always under government control. It's not ideal... but it's still better than what we have here.}}
+{{dialogue|Miguel|indent=true|At least... I still hope that's the case.}}
+{{dialogue|Miguel|indent=true|answer=But it's only in defense.
+|Ah, the classic retort, of course. I am sure the populace of the Age of Corruption would have said the same thing. We are simply using our technology of mass destruction in defense against our enemies.}}
+{{dialogue|Miguel|I tried to warn the people of this town that their actions were leading them to another calamity. My sermons fell upon deaf ears... I tried to evacuate all the people through my plot, but that plan failed.}}
+{{dialogue|Miguel|So I shall pay for my righteousness. I understand in their view, I did harm to Sandrock. I shall face whatever this town wishes, for I will not abandon my beliefs.}}
+
+*''Matilda and Pen abandoned you.''
+*''Duvos doesn't care about you.''
+*''Maybe you're right.''
+
+{{dialogue|Miguel|indent=true|answer=Matilda and Pen abandoned you.
+|...}}
+{{dialogue|Miguel|indent=true|I am tired now, Builder. I would like you to leave.}}
+{{dialogue|Miguel|indent=true|answer=Duvos doesn't care about you.
+|...}}
+{{dialogue|Miguel|indent=true|I am tired now, Builder. I would like you to leave.}}
+{{dialogue|Miguel|indent=true|answer=Maybe you're right.
+|I hope you see the Light.}}
+{{dialogue|Miguel|indent=true|Now, if you wouldn't mind, I would appreciate some time alone.}}
+
+TRIGGER Procedure 0.0 Step 7.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 17910:
+{{dialogue|Miguel|So I shall pay for my righteousness. I understand in their view, I did harm to Sandrock. I shall face whatever this town wishes, for I will not abandon my beliefs.}}
+
+*''Matilda and Pen abandoned you.'' (No unique dialogue)
+*''Duvos doesn't care about you.'' (No unique dialogue)
+*''Maybe you're right.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key Migel1 with info 1.
+
+TRIGGER Procedure 0.0 Step 8.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the second option in conversation segment 17910:
+{{dialogue|Miguel|So I shall pay for my righteousness. I understand in their view, I did harm to Sandrock. I shall face whatever this town wishes, for I will not abandon my beliefs.}}
+
+*''Matilda and Pen abandoned you.'' (No unique dialogue)
+*''Duvos doesn't care about you.'' (No unique dialogue)
+*''Maybe you're right.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key Migel1 with info 2.
+
+TRIGGER Procedure 0.0 Step 9.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the third option in conversation segment 17910:
+{{dialogue|Miguel|So I shall pay for my righteousness. I understand in their view, I did harm to Sandrock. I shall face whatever this town wishes, for I will not abandon my beliefs.}}
+
+*''Matilda and Pen abandoned you.'' (No unique dialogue)
+*''Duvos doesn't care about you.'' (No unique dialogue)
+*''Maybe you're right.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key Migel1 with info 3.

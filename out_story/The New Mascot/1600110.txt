@@ -1,0 +1,764 @@
+Reading Mission 1600110: The New Mascot
+
+<onlyinclude>{{Infobox mission
+|name = The New Mascot
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from The New Mascot:
+
+TRIGGER Procedure 1.0 Step 0.1 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if IsAccept is == 1
+ACTIONS
+NPC ICON REMOVE || missionId: 1600109 | npc: 8014 | missionIcon: 0
+CUTSCENE UI STATE EXIT || 
+START MISSION 1600109
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1600109
+CONDITIONS
+Always:
+ACTIONS
+Run mission The New Mascot
+END MISSION 1600109
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1600110
+CONDITIONS
+Always:
+ACTIONS
+===Wait for diagram===
+
+{{mission_details
+|desc = Wait for Arvio to get you the diagram you need to make his advertisement Billboard.
+|details = Wait for diagram
+}}
+Set IsTalkActive to 0
+Set ActuallyPay to 0
+Set ToldToPay to 0
+Set IsOnSale to 0
+Set DaysCounter to 0
+Set TriggerSequence to 0
+Set IsTouristsAvailable to 0
+Set IsAddFavor to 0
+Set IsSubmitMission to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|207}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 207
+CONDITIONS
+Always:
+ACTIONS
+===Speak with Pablo===
+
+{{mission_details
+|desc = Arvio asked you in his letter to speak with Pablo, and be prepared to pay a fee for him. Arvio promised to pay you back later.
+|details = Speak with Pablo
+*{{i2|Pablo|0/1}}
+}}
+Set IsTalkActive to 1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Pablo
+CONDITIONS
+Check if IsTalkActive is == 1
+CHECK PLAYER MONEY || set: 2 | count: 500
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+(cId 10) A conversation 669_0 starts:
+{{dialogue|Pablo|Ah, you must be here to pick up the completed version of Arvio's... very modest and not at all narcissistic design for a billboard! My fee is 500 Gols.}}
+
+*''I'll cover it in full!''
+*''Could we get a "friend" discount?''
+*''Make it free. We'll get you exposure.''
+
+{{dialogue|Pablo|indent=true|answer=I'll cover it in full!
+|Huh? Just like that? No haggling? No offers of 'exposure?'}}
+{{dialogue|Pablo|indent=true|reward={{NPC2|Arvio|rp=10}}|reward={{i2|Arvio's Billboard|1}}|Ooh, that Arvio has really done a number on you, hasn't he? You just be careful; you know, he's not exactly known for paying his debts in a timely manner... But, that's not really my problem now, is it?}}
+{{dialogue|Pablo|indent=true|Thank you! And make sure you color inside the lines.}}
+{{dialogue|Pablo|indent=true|answer=Could we get a "friend" discount?
+|Hm...! When you put it like that, I find it hard to refuse. Did Arvio put you up to this? Or are you two really so much alike?}}
+{{dialogue|Pablo|indent=true|Fine, fine... In any case, I'm a sucker for a pretty face, and yours... clears that bar by a fair margin. 250, for a "friend." And if I'm being honest, also because I do so deplore denying the world my art...}}
+{{dialogue|Pablo|indent=true|reward={{NPC2|Arvio|rp=5}}|reward={{i2|Arvio's Billboard|1}}|Thank you! And make sure you color inside the lines.}}
+{{dialogue|Pablo|indent=true|answer=Make it free. We'll get you exposure.
+|Ah, hah! That old song and dance. Listen, Arvio and I had a deal. And though I am kind enough to shower my voguish aura across this otherwise dismal town free of charge, I'm far less philanthropic with my work...}}
+{{dialogue|Pablo|indent=true|You can tell that fast-talking salesman, too: there's nothing he or anyone else can say to change my mind. You can't put a price on genius, but for now, 500 Gols will have to do.}}
+
+:*''Pay 500 Gols.'' (No unique dialogue)
+:*''I'll... get back to you.'' (No unique dialogue)
+
+
+TRIGGER Procedure 0.0 Step 4.0 Order 7 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+(cId 11) After the conversation ends:
+(cId 12) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 10) There is a conversation segment (id 2665) that ends:
+{{dialogue|Pablo|Ooh, that Arvio has really done a number on you, hasn't he? You just be careful; you know, he's not exactly known for paying his debts in a timely manner... But, that's not really my problem now, is it?}}
+CONDITIONS
+Always:
+ACTIONS
+MONEY PLAYER ADD || money: -500
+Add 1 Arvio's Billboard of Unknown quality (Notify player)
+Set IsTalkActive to 0
+Set ActuallyPay to 500
+Arvio gains 10 favor
+===Make the Billboard===
+
+{{mission_details
+|desc = Make Arvio's Billboard at your Worktable.
+|details = Make the Billboard
+*{{i2|Arvio's Billboard|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 3.1 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Pablo
+CONDITIONS
+Check if IsTalkActive is == 1
+CHECK PLAYER MONEY || set: 6 | count: 250
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+(cId 11) A conversation 673_0 starts:
+{{dialogue|Pablo|Ah, you must be here to pick up the completed version of Arvio's... very modest and not at all narcissistic design for a billboard! My fee is 500 Gols.}}
+
+*''I'll cover it in full!''
+*''Could we get a "friend" discount?''
+*''Make it free. We'll get you exposure.''
+
+{{dialogue|Pablo|indent=true|answer=I'll cover it in full!
+|Darling, even as the wanderer I am, there's still one city I'll never travel to: and that's "generosity." Come back when you can afford me.}}
+{{dialogue|Pablo|indent=true|answer=Could we get a "friend" discount?
+|Hm...! When you put it like that, I find it hard to refuse. Did Arvio put you up to this? Or are you two really so much alike?}}
+{{dialogue|Pablo|indent=true|Fine, fine... In any case, I'm a sucker for a pretty face, and yours... clears that bar by a fair margin. 250, for a "friend." And if I'm being honest, also because I do so deplore denying the world my art...}}
+{{dialogue|Pablo|indent=true|Darling, even as the wanderer I am, there's still one city I'll never travel to: and that's "generosity." Come back when you can afford me.}}
+{{dialogue|Pablo|Ah, hah! That old song and dance. Listen, Arvio and I had a deal. And though I am kind enough to shower my voguish aura across this otherwise dismal town free of charge, I'm far less philanthropic with my work...}}
+{{dialogue|Pablo|You can tell that fast-talking salesman, too: there's nothing he or anyone else can say to change my mind. You can't put a price on genius, but for now, 500 Gols will have to do.}}
+
+*''Pay 500 Gols.''
+*''I'll... get back to you.'' (No unique dialogue)
+
+{{dialogue|Pablo|indent=true|answer=Pay 500 Gols.
+|reward={{NPC2|Arvio|rp=10}}|reward={{i2|Arvio's Billboard|1}}|Darling, even as the wanderer I am, there's still one city I'll never travel to: and that's "generosity." Come back when you can afford me.}}
+
+TRIGGER Procedure 0.0 Step 3.2 Order 5 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Pablo
+CONDITIONS
+Check if IsTalkActive is == 1
+CHECK PLAYER MONEY || set: 6 | count: 500
+CHECK PLAYER MONEY || set: 2 | count: 250
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+(cId 12) A conversation 693_0 starts:
+{{dialogue|Pablo|Ah, you must be here to pick up the completed version of Arvio's... very modest and not at all narcissistic design for a billboard! My fee is 500 Gols.}}
+
+*''I'll cover it in full!''
+*''Could we get a "friend" discount?''
+*''Make it free. We'll get you exposure.''
+
+{{dialogue|Pablo|indent=true|answer=I'll cover it in full!
+|Darling, even as the wanderer I am, there's still one city I'll never travel to: and that's "generosity." Come back when you can afford me.}}
+{{dialogue|Pablo|indent=true|answer=Could we get a "friend" discount?
+|Hm...! When you put it like that, I find it hard to refuse. Did Arvio put you up to this? Or are you two really so much alike?}}
+{{dialogue|Pablo|indent=true|Fine, fine... In any case, I'm a sucker for a pretty face, and yours... clears that bar by a fair margin. 250, for a "friend." And if I'm being honest, also because I do so deplore denying the world my art...}}
+{{dialogue|Pablo|indent=true|reward={{NPC2|Arvio|rp=5}}|reward={{i2|Arvio's Billboard|1}}|Thank you! And make sure you color inside the lines.}}
+{{dialogue|Pablo|indent=true|answer=Make it free. We'll get you exposure.
+|Ah, hah! That old song and dance. Listen, Arvio and I had a deal. And though I am kind enough to shower my voguish aura across this otherwise dismal town free of charge, I'm far less philanthropic with my work...}}
+{{dialogue|Pablo|indent=true|You can tell that fast-talking salesman, too: there's nothing he or anyone else can say to change my mind. You can't put a price on genius, but for now, 500 Gols will have to do.}}
+
+:*''Pay 500 Gols.'' (No unique dialogue)
+:*''I'll... get back to you.'' (No unique dialogue)
+
+
+TRIGGER Procedure 0.0 Step 4.1 Order 10 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 2672:
+{{dialogue|Pablo|You can tell that fast-talking salesman, too: there's nothing he or anyone else can say to change my mind. You can't put a price on genius, but for now, 500 Gols will have to do.}}
+
+*''Pay 500 Gols.'' (No unique dialogue)
+*''I'll... get back to you.'' (No unique dialogue)
+
+CONDITIONS
+CHECK PLAYER MONEY || set: 6 | count: 500
+ACTIONS
+(cId 12) A conversation 2667 starts:
+{{dialogue|Pablo|Darling, even as the wanderer I am, there's still one city I'll never travel to: and that's "generosity." Come back when you can afford me.}}
+
+TRIGGER Procedure 0.0 Step 4.2 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Arvio
+CONDITIONS
+Check if IsTalkActive is == 1
+ACTIONS
+(cId 13) A conversation 2673 starts:
+{{dialogue|Pablo|Haven't gotten the design yet? No worries at all, thanks for handling this for me, I'm truly indebted to you! Oh, yes, yes I meant that literally as well!}}
+
+TRIGGER Procedure 0.0 Step 5.1 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 2672:
+{{dialogue|Pablo|You can tell that fast-talking salesman, too: there's nothing he or anyone else can say to change my mind. You can't put a price on genius, but for now, 500 Gols will have to do.}}
+
+*''Pay 500 Gols.'' (No unique dialogue)
+*''I'll... get back to you.'' (No unique dialogue)
+
+CONDITIONS
+CHECK PLAYER MONEY || set: 2 | count: 500
+ACTIONS
+MONEY PLAYER ADD || money: -500
+Add 1 Arvio's Billboard of Unknown quality (Notify player)
+Set IsTalkActive to 0
+Set ActuallyPay to 500
+Arvio gains 10 favor
+===Make the Billboard===
+
+{{mission_details
+|desc = Make Arvio's Billboard at your Worktable.
+|details = Make the Billboard
+*{{i2|Arvio's Billboard|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 6.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 2670) that ends:
+{{dialogue|Pablo|Thank you! And make sure you color inside the lines.}}
+CONDITIONS
+Always:
+ACTIONS
+MONEY PLAYER ADD || money: -250
+Add 1 Arvio's Billboard of Unknown quality (Notify player)
+Set IsTalkActive to 0
+Set ActuallyPay to 250
+Arvio gains 5 favor
+===Make the Billboard===
+
+{{mission_details
+|desc = Make Arvio's Billboard at your Worktable.
+|details = Make the Billboard
+*{{i2|Arvio's Billboard|0/1}}
+}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1600109 | targetId: 3 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Install the Billboard===
+
+{{mission_details
+|desc = Take the finished Billboard to the train station and install it.
+|details = Install the Billboard
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 161101 | path: Lable_Mission16110_Billboard | sceneName: Main | flagName: 16110_Billboard | extraParams: Mission16110_Billboard|CreatorItem|18000052_1|1547|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 161101 | missionId: 1600109 | iconType: 2
+AREA TRIGGER CREATE || missionId: 1600110 | id: 161101 | sceneName: Main | flagName: 16110_Billboard | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 161101
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 1611099 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 161101
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 1.0 Step 1.1 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 1611099 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Arvio stands still in Main and looks at Player
+Miguel stands still in Main and looks at Arvio
+DELAY MASK SET || maskId: 1611099 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+SCENEITEM DELETE || itemType: 12 | id: 161101
+ACTION CUTSCENE START AUDIO TYPE || id: CG_BILLBOARD | duration: 0 | audioType: NoTransitionOff
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: 16110_Player_1
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_BILLBOARD | state: 8
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 161101 | path: Mission16110_Billboard_1 | sceneName: Main | flagName: 16110_Billboard | extraParams: 0
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_BILLBOARD | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 20) A conversation 677_0 starts:
+{{dialogue|Arvio|''Player'', you're all set! Amazing! My design, your handiwork, and Pablo's finishing touches. It's absolutely perfect!}}
+{{dialogue|Arvio|People are going to start calling my shop "By the Stares!" You know... with all the attention I'll be getting!}}
+{{dialogue|Arvio|Like, everybody will be looking! Or "staring...?"}}
+{{dialogue|Arvio|reward={{NPC2|Arvio|rp=5}}|Ah, by the way! How much was Pablo's fee?}}
+
+*''500 Gols.''
+*''250 Gols.''
+*''Don't worry about it.''
+
+{{dialogue|Arvio|indent=true|answer=500 Gols.
+|Ah, shoot! I forgot to tell you: always haggle with Pablo! He expects it, it's part of the game... Ah, darn. Well, that's alright. Next time you're in that kind of situation, just think, "What would Arvio do?"}}
+{{dialogue|Arvio|indent=true|Thank you anyways, I'll pay you back as soon as I can.}}
+{{dialogue|Arvio|indent=true|answer=250 Gols.
+|Well done, ''Player''! I'd meant to remind you to haggle with him, I guess it slipped my mind... But it seems that's neither here nor there: 250, that's a great price! I'll pay you back right away!}}
+{{dialogue|Arvio|indent=true|answer=Don't worry about it.
+|Whaaaat! Ah, ''Player'', you think you're pretty slick, huh? I'll find out one way or another, and you'll be paid back in full: mark my words!}}
+
+TRIGGER Procedure 1.0 Step 6.1 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 20) There is a conversation segment (id 2677) that ends:
+{{dialogue|Arvio|Ah, by the way! How much was Pablo's fee?}}
+
+*''500 Gols.'' (No unique dialogue)
+*''250 Gols.'' (No unique dialogue)
+*''Don't worry about it.'' (No unique dialogue)
+
+CONDITIONS
+Check if ToldToPay is == 0
+ACTIONS
+Arvio gains 5 favor
+
+TRIGGER Procedure 1.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 20) There is a conversation segment (id 2677) that ends:
+{{dialogue|Arvio|Ah, by the way! How much was Pablo's fee?}}
+
+*''500 Gols.'' (No unique dialogue)
+*''250 Gols.'' (No unique dialogue)
+*''Don't worry about it.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Miguel stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 161102) to Miguel
+(param: TargetScene:Main|MoveMode:Walk|FlagName:16110_8019_2|LookAtActor:8014)
+
+TRIGGER Procedure 1.0 Step 8.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8019 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+(cId 20) After the conversation ends:
+CONDITIONS
+Check if TriggerSequence is >= 1
+ACTIONS
+(cId 21) A conversation 2682 starts:
+{{dialogue|Miguel|The shop owner and the workshop owner; what are you two doing here? Not thinking of traveling somewhere are you? With so much work to be done?}}
+
+TRIGGER Procedure 1.0 Step 8.1 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8019 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+(cId 20) After the conversation ends:
+CONDITIONS
+Check if TriggerSequence is == 0
+ACTIONS
+Increment TriggerSequence by 1
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 20) The player picks the first option in conversation segment 2677:
+{{dialogue|Arvio|Ah, by the way! How much was Pablo's fee?}}
+
+*''500 Gols.'' (No unique dialogue)
+*''250 Gols.'' (No unique dialogue)
+*''Don't worry about it.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set ToldToPay to 500
+
+TRIGGER Procedure 1.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 20) The player picks the second option in conversation segment 2677:
+{{dialogue|Arvio|Ah, by the way! How much was Pablo's fee?}}
+
+*''500 Gols.'' (No unique dialogue)
+*''250 Gols.'' (No unique dialogue)
+*''Don't worry about it.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set ToldToPay to 250
+
+TRIGGER Procedure 1.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 20) The player picks the third option in conversation segment 2677:
+{{dialogue|Arvio|Ah, by the way! How much was Pablo's fee?}}
+
+*''500 Gols.'' (No unique dialogue)
+*''250 Gols.'' (No unique dialogue)
+*''Don't worry about it.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set ToldToPay to 0
+
+TRIGGER Procedure 1.0 Step 8.2 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 21) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Arvio stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 1611011) to Arvio
+(param: TargetScene:Main|MoveMode:Run|FlagName:16110_8014_3|LookAtActor:8019)
+
+TRIGGER Procedure 1.0 Step 8.3 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8014 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 211) A conversation 2683, 2684 starts:
+{{dialogue|Arvio|Pastor, hello! We were just admiring this fine billboard that our friend, ''Player'' here made!}}
+{{dialogue|Miguel|An advertisement? Let me see.}}
+
+TRIGGER Procedure 1.0 Step 8.4 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 211) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 1611011) to Miguel
+(param: TargetScene:Main|MoveMode:Walk|FlagName:16110_8019_3|Action:LookSky)
+Remove behavior CommanderMoveToFlagAndAction (idName: 161102) from Miguel
+
+TRIGGER Procedure 1.0 Step 8.5 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8019 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 1611011) from Arvio
+Add behavior CommanderMoveToFlagAndAction (idName: 1611012) to Arvio
+(param: TargetScene:Main|MoveMode:Run|FlagName:16110_8014_4|LookAtActor:8019)
+
+TRIGGER Procedure 1.0 Step 8.7 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8019 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 1611011) from Miguel
+Add behavior CommanderIdle (idName: 1611012) to Miguel
+(param: TurnToActor:8014)
+STOPWATCH REAL TIME SET || id: 1611099 | sec: 0.5
+
+TRIGGER Procedure 1.0 Step 8.8 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 1611099
+CONDITIONS
+Always:
+ACTIONS
+(cId 212) A conversation 694_0 starts:
+{{dialogue|Miguel|Yes, very nice... but you are aware that there is an application process for new constructions, are you not? No one is above the law, Arvio.}}
+{{dialogue|Miguel|In case you forgot, any construction on public property must first go through the Commerce Guild with an application fee, following which, the request will be sent to City Hall, where Heidi and myself-}}
+{{dialogue|Arvio|Right, right... application... and the fee, about that...}}
+{{dialogue|Miguel|You would do well not to interrupt me, boy. As I was saying, Heidi works with me, keeping track of zoning for new constructions... But, as it turns out, to my knowledge, there is no zoning conflict here...}}
+{{dialogue|Arvio|Whew! Haha, you know old chap, the way you were talking, you made it sound like-}}
+{{dialogue|Miguel|However!}}
+{{dialogue|Arvio|Hyuh?!}}
+{{dialogue|Miguel|There is still the matter of the application fee that you so "absent-mindedly" circumvented... 500 Gols. Otherwise, I'm afraid the city will have to take down this... very modest creation of yours.}}
+{{dialogue|Arvio|Yes, yes! Of course! I would never dream of trying to wriggle out of paying for such a... valid... and... clearly very necessary service! Let me just speak with my partner privately for a moment.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 212) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 1611012) from Arvio
+Add behavior CommanderMoveToFlagAndAction (idName: 161102) to Arvio
+(param: TargetScene:Main|MoveMode:Run|FlagName:16110_8014_2|LookAtActor:8000)
+
+TRIGGER Procedure 1.0 Step 10.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8014 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 22) A conversation 681_0 starts:
+{{dialogue|Arvio|Er, as you may recall, I'm still a bit short. Also! I don't have 500 Gols on me... But don't worry, I have a plan. Let's convince Miguel to keep the sign up and just give me a few days to come up with the money.}}
+
+*''Okay, I got your back.''
+*''I'm not much of a negotiator...''
+
+{{dialogue|Arvio|indent=true|answer=Okay, I got your back.
+|Nice! Alright, just follow my lead...}}
+{{dialogue|Arvio|indent=true|answer=I'm not much of a negotiator...
+|Hey! Don't worry about it, just follow my lead! It'll be two against one, he won't be able to say no!}}
+
+TRIGGER Procedure 1.0 Step 11.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 22) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 23) A conversation 684_0 starts:
+{{dialogue|Miguel|Hm? What's there to discuss? This isn't exactly what I'd call a complicated issue...}}
+{{dialogue|Arvio|Pastor! The thing is... for a little shop like mine, 500 Gols is quite a hit! I don't even make that from a full day's work!}}
+{{dialogue|Arvio|Can we leave the sign up and I can pay the fee after a couple of days? I mean, it's not like I'm going anywhere: you can see my shop from your Church, can't you?}}
+{{dialogue|Arvio|And, I mean, who knows? Maybe some tourists will see the sign and decide to hop off the train! This sign could pay for itself in a matter of days!}}
+
+*''By the Stairs doesn't make much money.''
+*''I can be Arvio's guarantor!''
+*''Face it, Sandrock needs advertising!''
+
+{{dialogue|Miguel|indent=true|answer=By the Stairs doesn't make much money.
+|Yes, quite the sob story...}}
+{{dialogue|Miguel|indent=true|answer=I can be Arvio's guarantor!
+|reward={{NPC2|Arvio|rp=5}}|Hm, I must admit: to see you young people so united, it does fill one with hope.}}
+{{dialogue|Miguel|indent=true|answer=Face it, Sandrock needs advertising!
+|Perhaps there is some merit to your words... We do benefit by having visitors of the non-bandit variety...}}
+{{dialogue|Miguel|Fine. I suppose these laws were originally written with the intention to improve commerce in Sandrock, not hinder it... You have three days. I will inform City Hall.}}
+{{dialogue|Arvio|Wonderful! Thank you, Pastor! You're so forgiving, just like your religion tells you to be! I do so admire those who practice what they preach!}}
+{{dialogue|Miguel|Hm. Yes. Quite.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 11.1 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 23) The player picks the second option in conversation segment 2699:
+{{dialogue|Arvio|And, I mean, who knows? Maybe some tourists will see the sign and decide to hop off the train! This sign could pay for itself in a matter of days!}}
+
+*''By the Stairs doesn't make much money.'' (No unique dialogue)
+*''I can be Arvio's guarantor!'' (No unique dialogue)
+*''Face it, Sandrock needs advertising!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Arvio gains 5 favor
+
+TRIGGER Procedure 1.0 Step 12.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 23) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 24) A conversation 689_0 starts:
+{{dialogue|Arvio|Ah hah! That went well, I'd say! Thank you for support! Within a few days I'll have that silly fee paid for, oh, and I'll pay you back as well!}}
+{{dialogue|Arvio|Whew! Finally! I love it when a plan comes together. Some of what I said is true, by the way! I do think this billboard will pay for itself in no time flat!}}
+{{dialogue|Arvio|Alright, I'm going to speak with Jensen about when there's the most traffic so I can prepare for the crowds! Thanks again, ''Player''!}}
+The conversation ends.
+Remove behavior CommanderIdle (idName: 1611012) from Miguel
+Remove behavior CommanderMoveToFlagAndAction (idName: 161102) from Player
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 24) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 161102) from Arvio
+SUBMIT MISSION 1600109
+Remove behavior CommanderIdle (idName: 161103) from Player
+Set IsSubmitMission to 1
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if ToldToPay is == 500
+ACTIONS
+The player receives a letter:
+{{mail|208}}
+MODIFIER ADD || typeParam: StoreDiscount_3_-0.5_C | id: 16110
+Set IsOnSale to 1
+
+TRIGGER Procedure 2.0 Step 1.1 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if ToldToPay is == 0
+Check if ActuallyPay is == 500
+ACTIONS
+The player receives a letter:
+{{mail|208}}
+MODIFIER ADD || typeParam: StoreDiscount_3_-0.5_C | id: 16110
+Set IsOnSale to 1
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if ToldToPay is == 250
+ACTIONS
+The player receives a letter:
+{{mail|209}}
+MODIFIER ADD || typeParam: StoreDiscount_3_-0.5_C | id: 16110
+Set IsOnSale to 1
+
+TRIGGER Procedure 2.0 Step 3.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if ToldToPay is == 0
+Check if ActuallyPay is == 250
+ACTIONS
+The player receives a letter:
+{{mail|209}}
+MODIFIER ADD || typeParam: StoreDiscount_3_-0.5_C | id: 16110
+Set IsOnSale to 1
+
+TRIGGER Procedure 2.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if ToldToPay is == 500
+COMPARE VAR || name1: ToldToPay | compare: 1 | name2: ActuallyPay
+ACTIONS
+The player receives a letter:
+{{mail|210}}
+MODIFIER REMOVE || id: 16110
+Set IsOnSale to 0
+
+TRIGGER Procedure 2.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Arvio
+CONDITIONS
+Always:
+ACTIONS
+(cId 30) A conversation 2715 starts:
+{{dialogue|Arvio|Ah, ''Player''. It's you. Well, I won't turn you away, but keep in mind I'm well aware of what you did. Oh, and that discount I promised? You can forget about it...}}
+END MISSION 1600110
+
+TRIGGER Procedure 2.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if ToldToPay is == 250
+COMPARE VAR || name1: ToldToPay | compare: 6 | name2: ActuallyPay
+ACTIONS
+The player receives a letter:
+{{mail|211}}
+
+TRIGGER Procedure 2.0 Step 7.0 Order 6 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if IsSubmitMission is == 1
+ACTIONS
+Increment DaysCounter by 1
+
+TRIGGER Procedure 2.0 Step 8.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if IsOnSale is == 1
+Check if DaysCounter is >= 4
+ACTIONS
+MODIFIER REMOVE || id: 16110
+END MISSION 1600110
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1600110
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || id: 161101 | itemType: 11
+SCENEITEM CREATE FLAG || itemType: 12 | id: 161101 | path: Mission16110_Billboard | sceneName: Main | flagName: 16110_Billboard | extraParams: -1
+MODIFIER REMOVE || id: 16110
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1200217 is result 1 flag 1
+ACTIONS
+SCENEITEM DELETE || id: 161101 | itemType: 11
+FAIL MISSION || missionId: 1600109

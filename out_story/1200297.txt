@@ -1,0 +1,93 @@
+Reading Mission 1200297: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200135
+
+TRIGGER Procedure 9.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+When the player wakes up:
+CONDITIONS
+Sandrock Strikes Back is successfully completed
+ACTIONS
+Run mission #1200310
+GLOBAL BLACK BOARD REMOVE || key: nomission
+NPC REMOVE TAG || tag: NOPLAY
+
+TRIGGER Procedure 9.0 Step 8.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+This is Not a Drill is successfully completed
+ACTIONS
+Run mission #1200297
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.1 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+Where's Mi-an is in state 1 with flag 0
+The Childhood Friend is in state 1 with flag 0
+Goodbye, Nia is in state 1 with flag 0
+The Kidnapping is in state 1 with flag 0
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: triallogan | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Heidi stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 11679, 11680, 11681, 11682, 11683 starts:
+{{dialogue|Heidi|Howdy, ''Player''! I wanted to thank you for all your hard work with this Portia road project. I know it's a heck of a project, and it's eatin' up a whole bunch of your time.}}
+{{dialogue|Heidi|So I thought I'd get some of the other Builders to give a helpin' hand this time. We're finally ready to start reinforcin' what we've drilled out!}}
+{{dialogue|Heidi|We're gonna need some regular shipments of {{textcolor|green|Steel Frames}}. Once we've got that first round of frames up, we can get back to digging. I'm gonna put them up on the commission board, so get there bright and early for some extra dough.}}
+{{dialogue|Heidi|I don't even know how many we're gonna need, so just bring us some materials and we'll make them ourselves.}}
+{{dialogue|Heidi|Alright, well, I'll leave you to it. Thanks again for all your work, ''Player''.}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Heidi stops standing still
+CUTSCENE UI STATE EXIT || 
+END MISSION 1200297

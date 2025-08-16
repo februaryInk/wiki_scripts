@@ -1,0 +1,549 @@
+Reading Mission 1200306: Look to the Skies
+
+<onlyinclude>{{Infobox mission
+|name = Look to the Skies
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Look to the Skies:
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Qi stops standing still
+CUTSCENE UI STATE EXIT || 
+START MISSION 1200305
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200305
+CONDITIONS
+Always:
+ACTIONS
+Run mission Look to the Skies
+END MISSION 1200305
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200306
+CONDITIONS
+Always:
+ACTIONS
+===Wait Until Tomorrow===
+
+{{mission_details
+|desc = Wait until 21:00PM tomorrow, when Scavenger satellite will be visable.
+|details = Wait Until Tomorrow
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+===Meet with Qi at 21:00PM===
+
+{{mission_details
+|desc = You have agreed to meet Qi tonight, 21:00PM at the Research Center to look for a satellite through his newly improved telescope.
+|details = Meet with Qi at 21:00PM
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 21:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1200305 | id: 23061 | sceneName: Main | flagName: telescope_trigger | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1200306
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 23061
+The player receives a letter:
+{{mail|582}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | enter: 0 | npc: 8000 | id: 23061
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 23061 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 23061
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23061 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: telescope_player1
+Qi stands still in Main
+DELAY MASK SET || maskId: 23061 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23061 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 3600_0 starts:
+{{dialogue|Qi|You're here. Good timing, the satellite will pass overhead shortly. I have configured the telescope. I have also attached an SLR to allow direct imaging. We can take photos for further analysis.}}
+{{dialogue|Qi|We still have some time before the satellite arrives. Let's test out the telescope first.}}
+
+*''(Test the telescope)'' (No unique dialogue)
+*''(Skip the test)''
+
+{{dialogue|Qi|indent=true|answer=(Skip the test)
+|That's enough for now. The "Scavenger" should be here any moment!}}
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the first option in conversation segment 11991:
+{{dialogue|Qi|We still have some time before the satellite arrives. Let's test out the telescope first.}}
+
+*''(Test the telescope)'' (No unique dialogue)
+*''(Skip the test)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Qi gains 2 favor
+ACTION STARGAZE ENTER || issingle: 0 | npcId: 8007
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 11992:
+{{dialogue|Qi|The image quality is vastly superior, no? The clarity allows for much more precise imaging for the stars.}}
+
+*''Can you tell me about the stars?'' (No unique dialogue)
+*''(Stay silent)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Qi gains 5 favor
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 12001) that ends:
+{{dialogue|Qi|That's enough for now. The "Scavenger" should be here any moment!}}
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 6521}}
+A cutscene CG_STATELLITE (duration: -2.0) starts playing
+Scavenger Satellite - Together, Qi and I were able to catch a glimpse of the satellite he was so excited to see.
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STARGAZE END || order: 0
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 3602_0 starts:
+{{dialogue|Qi|The image quality is vastly superior, no? The clarity allows for much more precise imaging for the stars.}}
+
+*''Can you tell me about the stars?''
+*''(Stay silent)''
+
+{{dialogue|Qi|indent=true|answer=(Stay silent)
+|That's enough for now. The "Scavenger" should be here any moment!}}
+{{dialogue|Qi|You know, interestingly, when people believe they are wishing upon shooting stars, they are actually wishing upon rocks falling and burning up in the atmosphere. Stars do not "shoot." It is a common misconception.}}
+{{dialogue|Qi|What else do you wish to know? Perhaps an overview of the constellations? I will not peddle "astrology," but I know a thing or two about astronomy.}}
+
+*''Swan''
+*''Scale''
+*''Bear''
+*''That's all.''
+
+{{dialogue|Qi|indent=true|answer=Swan
+|According to numerous studies, the Swan was originally a constellation that was used to guide sailors across vast distances. They could follow the movement across the skies to orient themselves.}}
+{{dialogue|Qi|indent=true|answer=Scale
+|Ah, interestingly the scientific name for this constellation is Scalessium Major, which is a rare instance of the scientific name and layman's name aligning.}}
+{{dialogue|Qi|indent=true|answer=Bear
+|This was the first constellation I learned of. I was four at the time. This was a rare instance of scientific knowledge being shared form my parents, rather than my grandfather.}}
+{{dialogue|Qi|indent=true|Much like the Swan, it would help them as they were out fishing, providing a point of reference.}}
+{{dialogue|Qi|indent=true|answer=That's all.
+|Interestingly, although we group these stars together in named "constellations," they are in fact separated by tens of lightyears.}}
+{{dialogue|Qi|indent=true|That's enough for now. The "Scavenger" should be here any moment!}}
+{{dialogue|Qi|What else do you want to know about?}}
+
+*''Swan''
+*''Scale''
+*''Bear''
+*''That's all.''
+
+{{dialogue|Qi|indent=true|answer=Swan
+|According to numerous studies, the Swan was originally a constellation that was used to guide sailors across vast distances. They could follow the movement across the skies to orient themselves.}}
+{{dialogue|Qi|indent=true|answer=Scale
+|Ah, interestingly the scientific name for this constellation is Scalessium Major, which is a rare instance of the scientific name and layman's name aligning.}}
+{{dialogue|Qi|indent=true|answer=Bear
+|This was the first constellation I learned of. I was four at the time. This was a rare instance of scientific knowledge being shared form my parents, rather than my grandfather.}}
+{{dialogue|Qi|indent=true|Much like the Swan, it would help them as they were out fishing, providing a point of reference.}}
+{{dialogue|Qi|indent=true|answer=That's all.
+|Interestingly, although we group these stars together in named "constellations," they are in fact separated by tens of lightyears.}}
+{{dialogue|Qi|indent=true|That's enough for now. The "Scavenger" should be here any moment!}}
+{{dialogue|Qi|What else do you want to know about?}}
+
+*''Swan''
+*''Scale''
+*''Bear''
+*''That's all.''
+
+{{dialogue|Qi|indent=true|answer=Swan
+|According to numerous studies, the Swan was originally a constellation that was used to guide sailors across vast distances. They could follow the movement across the skies to orient themselves.}}
+{{dialogue|Qi|indent=true|answer=Scale
+|Ah, interestingly the scientific name for this constellation is Scalessium Major, which is a rare instance of the scientific name and layman's name aligning.}}
+{{dialogue|Qi|indent=true|answer=Bear
+|This was the first constellation I learned of. I was four at the time. This was a rare instance of scientific knowledge being shared form my parents, rather than my grandfather.}}
+{{dialogue|Qi|indent=true|Much like the Swan, it would help them as they were out fishing, providing a point of reference.}}
+{{dialogue|Qi|indent=true|answer=That's all.
+|Interestingly, although we group these stars together in named "constellations," they are in fact separated by tens of lightyears.}}
+{{dialogue|Qi|indent=true|That's enough for now. The "Scavenger" should be here any moment!}}
+{{dialogue|Qi|What else do you want to know about?}}
+
+*''Swan''
+*''Scale''
+*''Bear''
+*''That's all.''
+
+{{dialogue|Qi|indent=true|answer=Swan
+|According to numerous studies, the Swan was originally a constellation that was used to guide sailors across vast distances. They could follow the movement across the skies to orient themselves.}}
+{{dialogue|Qi|indent=true|What else do you want to know about?}}
+
+:*''Scale''
+:*''Bear''
+:*''That's all.''
+
+{{dialogue|Qi|indent=double|answer=Scale
+|Ah, interestingly the scientific name for this constellation is Scalessium Major, which is a rare instance of the scientific name and layman's name aligning.}}
+{{dialogue|Qi|indent=double|What else do you want to know about?}}
+
+::*''Bear''
+::*''That's all.''
+
+{{dialogue|Qi|indent=3|answer=Bear
+|This was the first constellation I learned of. I was four at the time. This was a rare instance of scientific knowledge being shared form my parents, rather than my grandfather.}}
+{{dialogue|Qi|indent=3|Much like the Swan, it would help them as they were out fishing, providing a point of reference.}}
+{{dialogue|Qi|indent=3|What else do you want to know about?}}
+
+:::*''That's all.''
+
+{{dialogue|Qi|indent=4|answer=That's all.
+|Interestingly, although we group these stars together in named "constellations," they are in fact separated by tens of lightyears.}}
+{{dialogue|Qi|indent=4|That's enough for now. The "Scavenger" should be here any moment!}}
+{{dialogue|Qi|indent=3|answer=That's all.
+|Interestingly, although we group these stars together in named "constellations," they are in fact separated by tens of lightyears.}}
+{{dialogue|Qi|indent=3|That's enough for now. The "Scavenger" should be here any moment!}}
+{{dialogue|Qi|indent=double|answer=Bear
+|This was the first constellation I learned of. I was four at the time. This was a rare instance of scientific knowledge being shared form my parents, rather than my grandfather.}}
+{{dialogue|Qi|indent=double|Much like the Swan, it would help them as they were out fishing, providing a point of reference.}}
+{{dialogue|Qi|indent=double|What else do you want to know about?}}
+
+::*''Scale''
+::*''That's all.''
+
+{{dialogue|Qi|indent=3|answer=Scale
+|Ah, interestingly the scientific name for this constellation is Scalessium Major, which is a rare instance of the scientific name and layman's name aligning.}}
+{{dialogue|Qi|indent=3|What else do you want to know about?}}
+
+:::*''That's all.''
+
+{{dialogue|Qi|indent=4|answer=That's all.
+|Interestingly, although we group these stars together in named "constellations," they are in fact separated by tens of lightyears.}}
+{{dialogue|Qi|indent=4|That's enough for now. The "Scavenger" should be here any moment!}}
+{{dialogue|Qi|indent=3|answer=That's all.
+|Interestingly, although we group these stars together in named "constellations," they are in fact separated by tens of lightyears.}}
+{{dialogue|Qi|indent=3|That's enough for now. The "Scavenger" should be here any moment!}}
+{{dialogue|Qi|indent=double|answer=That's all.
+|Interestingly, although we group these stars together in named "constellations," they are in fact separated by tens of lightyears.}}
+{{dialogue|Qi|indent=double|That's enough for now. The "Scavenger" should be here any moment!}}
+{{dialogue|Qi|indent=true|answer=Scale
+|Ah, interestingly the scientific name for this constellation is Scalessium Major, which is a rare instance of the scientific name and layman's name aligning.}}
+{{dialogue|Qi|indent=true|What else do you want to know about?}}
+
+:*''Swan''
+:*''Bear''
+:*''That's all.''
+
+{{dialogue|Qi|indent=double|answer=Swan
+|According to numerous studies, the Swan was originally a constellation that was used to guide sailors across vast distances. They could follow the movement across the skies to orient themselves.}}
+{{dialogue|Qi|indent=double|What else do you want to know about?}}
+
+::*''Bear''
+::*''That's all.''
+
+{{dialogue|Qi|indent=3|answer=Bear
+|This was the first constellation I learned of. I was four at the time. This was a rare instance of scientific knowledge being shared form my parents, rather than my grandfather.}}
+{{dialogue|Qi|indent=3|Much like the Swan, it would help them as they were out fishing, providing a point of reference.}}
+{{dialogue|Qi|indent=3|What else do you want to know about?}}
+
+:::*''That's all.''
+
+{{dialogue|Qi|indent=4|answer=That's all.
+|Interestingly, although we group these stars together in named "constellations," they are in fact separated by tens of lightyears.}}
+{{dialogue|Qi|indent=4|That's enough for now. The "Scavenger" should be here any moment!}}
+{{dialogue|Qi|indent=3|answer=That's all.
+|Interestingly, although we group these stars together in named "constellations," they are in fact separated by tens of lightyears.}}
+{{dialogue|Qi|indent=3|That's enough for now. The "Scavenger" should be here any moment!}}
+{{dialogue|Qi|indent=double|answer=Bear
+|This was the first constellation I learned of. I was four at the time. This was a rare instance of scientific knowledge being shared form my parents, rather than my grandfather.}}
+{{dialogue|Qi|indent=double|Much like the Swan, it would help them as they were out fishing, providing a point of reference.}}
+{{dialogue|Qi|indent=double|What else do you want to know about?}}
+
+::*''Swan''
+::*''That's all.''
+
+{{dialogue|Qi|indent=3|answer=Swan
+|According to numerous studies, the Swan was originally a constellation that was used to guide sailors across vast distances. They could follow the movement across the skies to orient themselves.}}
+{{dialogue|Qi|indent=3|What else do you want to know about?}}
+
+:::*''That's all.''
+
+{{dialogue|Qi|indent=4|answer=That's all.
+|Interestingly, although we group these stars together in named "constellations," they are in fact separated by tens of lightyears.}}
+{{dialogue|Qi|indent=4|That's enough for now. The "Scavenger" should be here any moment!}}
+{{dialogue|Qi|indent=3|answer=That's all.
+|Interestingly, although we group these stars together in named "constellations," they are in fact separated by tens of lightyears.}}
+{{dialogue|Qi|indent=3|That's enough for now. The "Scavenger" should be here any moment!}}
+{{dialogue|Qi|indent=double|answer=That's all.
+|Interestingly, although we group these stars together in named "constellations," they are in fact separated by tens of lightyears.}}
+{{dialogue|Qi|indent=double|That's enough for now. The "Scavenger" should be here any moment!}}
+{{dialogue|Qi|indent=true|answer=Bear
+|This was the first constellation I learned of. I was four at the time. This was a rare instance of scientific knowledge being shared form my parents, rather than my grandfather.}}
+{{dialogue|Qi|indent=true|Much like the Swan, it would help them as they were out fishing, providing a point of reference.}}
+{{dialogue|Qi|indent=true|What else do you want to know about?}}
+
+:*''Swan''
+:*''Scale''
+:*''That's all.''
+
+{{dialogue|Qi|indent=double|answer=Swan
+|According to numerous studies, the Swan was originally a constellation that was used to guide sailors across vast distances. They could follow the movement across the skies to orient themselves.}}
+{{dialogue|Qi|indent=double|What else do you want to know about?}}
+
+::*''Scale''
+::*''That's all.''
+
+{{dialogue|Qi|indent=3|answer=Scale
+|Ah, interestingly the scientific name for this constellation is Scalessium Major, which is a rare instance of the scientific name and layman's name aligning.}}
+{{dialogue|Qi|indent=3|What else do you want to know about?}}
+
+:::*''That's all.''
+
+{{dialogue|Qi|indent=4|answer=That's all.
+|Interestingly, although we group these stars together in named "constellations," they are in fact separated by tens of lightyears.}}
+{{dialogue|Qi|indent=4|That's enough for now. The "Scavenger" should be here any moment!}}
+{{dialogue|Qi|indent=3|answer=That's all.
+|Interestingly, although we group these stars together in named "constellations," they are in fact separated by tens of lightyears.}}
+{{dialogue|Qi|indent=3|That's enough for now. The "Scavenger" should be here any moment!}}
+{{dialogue|Qi|indent=double|answer=Scale
+|Ah, interestingly the scientific name for this constellation is Scalessium Major, which is a rare instance of the scientific name and layman's name aligning.}}
+{{dialogue|Qi|indent=double|What else do you want to know about?}}
+
+::*''Swan''
+::*''That's all.''
+
+{{dialogue|Qi|indent=3|answer=Swan
+|According to numerous studies, the Swan was originally a constellation that was used to guide sailors across vast distances. They could follow the movement across the skies to orient themselves.}}
+{{dialogue|Qi|indent=3|What else do you want to know about?}}
+
+:::*''That's all.''
+
+{{dialogue|Qi|indent=4|answer=That's all.
+|Interestingly, although we group these stars together in named "constellations," they are in fact separated by tens of lightyears.}}
+{{dialogue|Qi|indent=4|That's enough for now. The "Scavenger" should be here any moment!}}
+{{dialogue|Qi|indent=3|answer=That's all.
+|Interestingly, although we group these stars together in named "constellations," they are in fact separated by tens of lightyears.}}
+{{dialogue|Qi|indent=3|That's enough for now. The "Scavenger" should be here any moment!}}
+{{dialogue|Qi|indent=double|answer=That's all.
+|Interestingly, although we group these stars together in named "constellations," they are in fact separated by tens of lightyears.}}
+{{dialogue|Qi|indent=double|That's enough for now. The "Scavenger" should be here any moment!}}
+{{dialogue|Qi|indent=true|answer=That's all.
+|Interestingly, although we group these stars together in named "constellations," they are in fact separated by tens of lightyears.}}
+{{dialogue|Qi|indent=true|That's enough for now. The "Scavenger" should be here any moment!}}
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_STATELLITE | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 3609_0 starts:
+{{dialogue|Qi|Perfect! It's a lot clearer than I thought. Take a look here. This has to be the satellite's antenna! It's completely intact! It might even be transmitting, which would make it one of the few working satellites remaining.}}
+{{dialogue|Qi|If only we had a working receiver to downlink the "Scavenger's" signal... think of what we could learn!}}
+{{dialogue|Qi|Ah, but I shouldn't be too greedy. We just installed an Equatorial Mount and now a camera too. It's already a huge step forward.}}
+{{dialogue|Qi|Since we're on the subject though, let me tell you about a paper I read a few days ago. "The Sampling of Digital Control Technologies of the Old World." What a read!}}
+
+*''Oh, Digital Control Technologies...!''
+*''Why don't we call it a night?''
+
+{{dialogue|Qi|indent=true|answer=Why don't we call it a night?
+|Huh? Yeah, I suppose it's impossible to get into all the juicy details of the paper in one night. I'll read it over a few more times and give you a better report.}}
+{{dialogue|Qi|indent=true|Good night then, I suppose.}}
+{{dialogue|Qi|Yes. The antenna on the satellite is one such digital controller. I might have mentioned it a bit last time. Here are the details though.}}
+{{dialogue|Qi|See, people of the Old World had hundreds of thousands of satellites up there in the sky. Most of them were destroyed on the Day of Calamity, but a few should have survived.}}
+{{dialogue|Qi|Now, we've lost most of the communications technology of that period. I mean, we're using wireless telegraphs while they used quantum entanglement, which I don't even have a clue what it means, it just sounds so advanced!}}
+{{dialogue|Qi|My hobby of observing satellites and space stations is my way of trying to connect the dots. If we're able to communicate with these machines, we might be able to recover much of the lost technology.}}
+
+*''Didn't get any of that.''
+*''Oh. Of course.''
+
+{{dialogue|Qi|indent=true|answer=Didn't get any of that.
+|My apologies. It can be a rather complicated subject to some. I sometimes forget that. After chasing away my last assistant, I took it upon myself to improve my "bedside manner," so to speak. I will attempt to put this into practice.}}
+{{dialogue|Qi|indent=true|Imagine for a moment, if you will, our world filled with instantaneous communication of unlimited bandwidth.}}
+{{dialogue|Qi|indent=true|In that circumstance, I don't even need to be here, I can be on some distant island talking to you through a communications device and controlling the telescope remotely as well.}}
+{{dialogue|Qi|indent=true|Now, if I can do that with the Atara and the Vega 5 observatories as well, don't you see how much the efficiency can be improved?}}
+{{dialogue|Qi|indent=true|Any questions?}}
+
+:*''Can you dumb it down a little more?''
+:*''Wow. Think I got it.''
+
+{{dialogue|Qi|indent=double|answer=Can you dumb it down a little more?
+|...Can I? Listen, you-}}
+{{dialogue|Qi|indent=double|...Patience, Director... you can do this...}}
+{{dialogue|Qi|indent=double|Okay.}}
+{{dialogue|Qi|indent=double|The Old World had great communications technology, I want it!}}
+
+::*''Talk to me like I'm a baby.''
+::*''Ah, okay. I see.''
+
+{{dialogue|Qi|indent=3|answer=Talk to me like I'm a baby.
+|A baby?!}}
+{{dialogue|Qi|indent=3|Right. Okay. Well, this is not the first time this has happened... I don't even know why I'm trying to explain this to you, this is asinine.}}
+{{dialogue|Qi|indent=3|reward={{NPC2|Qi|rp=2}}|Okay, you know what, I don't think this is going to work. I must say, Builder, I genuinely admire your tenacity in struggling with this subject, but... I'm afraid... now might not be the... time... to discuss this...}}
+{{dialogue|Qi|You finally understand now. Teaching is a lot of work.}}
+
+*{{flirt}}''I learned about it long ago, but I just like listening to you.''
+*''You are a good teacher.''
+*''That's enough, Qi...''
+
+{{dialogue|Qi|indent=true|answer=I learned about it long ago, but I just like listening to you.
+|reward={{NPC2|Qi|rp=2}}|What do you mean? You mean, you already know about it, and you still wanted me to talk about it? Ah. I see. Learning through repetition. Well, at least you have an eager mind.}}
+{{dialogue|Qi|indent=true|answer=You are a good teacher.
+|reward={{NPC2|Qi|rp=2}}|Thanks. You're welcome to talk to me about anything you're unsure about or interested in. I'll do my best to explain thoroughly.}}
+{{dialogue|Qi|indent=true|answer=That's enough, Qi...
+|...}}
+{{dialogue|Qi|indent=true|Alright then.}}
+{{dialogue|Qi|You know, I used to deflect from social situations, but it seems in fact that stimulating scientific conversation can be had. Interesting.}}
+{{dialogue|Qi|It's getting quite late. Let's call it a night. I need to rest too.}}
+The conversation ends.
+Set CHOICE1 to 0
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the second option in conversation segment 12005:
+{{dialogue|Qi|Since we're on the subject though, let me tell you about a paper I read a few days ago. "The Sampling of Digital Control Technologies of the Old World." What a read!}}
+
+*''Oh, Digital Control Technologies...!'' (No unique dialogue)
+*''Why don't we call it a night?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE1 to 1
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 12029) that ends:
+{{dialogue|Qi|It's getting quite late. Let's call it a night. I need to rest too.}}
+(cId: -1) There is a conversation segment (id 12007) that ends:
+{{dialogue|Qi|Good night then, I suppose.}}
+CONDITIONS
+Always:
+ACTIONS
+Qi stops standing still
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1200305
+END MISSION 1200306
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 2
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the second option in conversation segment 12016:
+{{dialogue|Qi|Any questions?}}
+
+*''Can you dumb it down a little more?'' (No unique dialogue)
+*''Wow. Think I got it.'' (No unique dialogue)
+
+(cId 2) The player picks the second option in conversation segment 12020:
+{{dialogue|Qi|The Old World had great communications technology, I want it!}}
+
+*''Talk to me like I'm a baby.'' (No unique dialogue)
+*''Ah, okay. I see.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Qi gains 2 favor
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 12024:
+{{dialogue|Qi|You finally understand now. Teaching is a lot of work.}}
+
+*{{flirt}}''I learned about it long ago, but I just like listening to you.'' (No unique dialogue)
+*''You are a good teacher.'' (No unique dialogue)
+*''That's enough, Qi...'' (No unique dialogue)
+
+(cId -1) The player picks the second option in conversation segment 12024:
+{{dialogue|Qi|You finally understand now. Teaching is a lot of work.}}
+
+*{{flirt}}''I learned about it long ago, but I just like listening to you.'' (No unique dialogue)
+*''You are a good teacher.'' (No unique dialogue)
+*''That's enough, Qi...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Qi gains 2 favor
+
+TRIGGER Procedure 4.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 12023) that ends:
+{{dialogue|Qi|Okay, you know what, I don't think this is going to work. I must say, Builder, I genuinely admire your tenacity in struggling with this subject, but... I'm afraid... now might not be the... time... to discuss this...}}
+CONDITIONS
+Always:
+ACTIONS
+Qi gains 2 favor

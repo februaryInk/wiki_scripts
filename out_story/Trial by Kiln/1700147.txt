@@ -1,0 +1,378 @@
+Reading Mission 1700147: Trial by Kiln
+
+<onlyinclude>{{Infobox mission
+|name = Trial by Kiln
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Trial by Kiln:
+
+TRIGGER Procedure 1.0 Step 9.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 3570) that ends:
+{{dialogue|Arvio|Ami...}}
+CONDITIONS
+Always:
+ACTIONS
+
+TRIGGER Procedure 2.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700146
+CONDITIONS
+Always:
+ACTIONS
+Run mission Trial by Kiln
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700147
+CONDITIONS
+Always:
+ACTIONS
+===Wait for Diagram===
+
+{{mission_details
+|desc = Amirah is finishing the Diagram for the Electric Kiln. Wait for her to finish.
+|details = Wait for Diagram
+}}
+Set TALK to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE FLAG || flag: DATE:TBK | compare: 3 | days: 7
+CHECK GLOBAL BLACKBOARD || key: TBKLENT | info: 1 | exist: 1
+ACTIONS
+The player receives a letter:
+{{mail|255}}
+Set TALK to 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE FLAG || flag: DATE:TBK | compare: 3 | days: 7
+CHECK GLOBAL BLACKBOARD || key: TBKLENT | info: 1 | exist: 0
+ACTIONS
+The player receives a letter:
+{{mail|257}}
+Set TALK to 1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 255
+ON MAIL READ || order: 0 | id: 257
+CONDITIONS
+Always:
+ACTIONS
+===Assemble Electric Kiln===
+
+{{mission_details
+|desc = The siblings finally got the Diagram. Help them construct the Electric Kiln on the Assembly Station.
+|details = Assemble Electric Kiln
+*{{i2|Electric Kiln|0/1}}
+}}
+END MISSION 1700146
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1700146 | targetId: 2 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Install Electric Kiln===
+
+{{mission_details
+|desc = The Electric Kiln is finished. Go to the Ceramic Gate and install it.
+|details = Install Electric Kiln
+*{{i2|Electric Kiln|0/1}}
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 171471 | sceneName: Main | extraParams: Mission_Kilncreated|CreatorItem|14000005_1|1547|Fix|1.4 | flagName: TBK_newkiln | path: Mission_Kiln
+SCENEITEM ADD ICON STACK || itemType: 11 | id: 171471 | missionId: 1700146 | iconType: 2 | add: 1
+SCENEITEM DELETE || itemType: 0 | id: 1714600
+SCENEITEM DELETE || itemType: 0 | id: 2059108
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 4
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 3616:
+{{dialogue|Amirah|That is, if you wanted to stay for a while, you certainly could...}}
+
+*''Sure, let's fire up the new kiln.'' (No unique dialogue)
+*{{flirt}}''I'd love to.'' (No unique dialogue)
+*''Kinda busy, sorry.'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 3623:
+{{dialogue|Amirah|What if that masked man is right? What if I can't make the ceramics like he's encountered on his travels?}}
+
+*''You can do it.'' (No unique dialogue)
+*''He's a chump.'' (No unique dialogue)
+*''You were confident before...?'' (No unique dialogue)
+
+(cId -1) The player picks the second option in conversation segment 3623:
+{{dialogue|Amirah|What if that masked man is right? What if I can't make the ceramics like he's encountered on his travels?}}
+
+*''You can do it.'' (No unique dialogue)
+*''He's a chump.'' (No unique dialogue)
+*''You were confident before...?'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 3629:
+{{dialogue|Amirah|It is very difficult, though, defending one's art in the face of such a connoisseur...}}
+
+*''You were awesome!'' (No unique dialogue)
+*''You were faking?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Amirah gains 1 favor
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 171471
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 171471 | delayTime: 0 | durationTime: 1.5 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 171471 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 171461 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: 0
+Amirah stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: TBK_player2
+SCENEITEM CREATE FLAG || itemType: 0 | id: 205910901 | path: Interact_Kiln2 | sceneName: Main | flagName: Interact_kiln | extraParams: 0
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 171471 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 975_0 starts:
+{{dialogue|Amirah|Amazing! This is it! Fantastic work, ''Player''. I knew you could do it.}}
+{{dialogue|Amirah|It seems your job is done...}}
+{{dialogue|Amirah|But... you don't have to be so quick out the door...}}
+{{dialogue|Amirah|That is, if you wanted to stay for a while, you certainly could...}}
+
+*''Sure, let's fire up the new kiln.''
+*{{flirt}}''I'd love to.''
+*''Kinda busy, sorry.''
+
+{{dialogue|Amirah|indent=true|answer=Sure, let's fire up the new kiln.
+|reward={{NPC2|Amirah|rp=1}}|Ah... right, of course. You'd like to see the effort you put into this thing in action, no? Indeed, let us "fire it up."}}
+{{dialogue|Amirah|indent=true|answer=I'd love to.
+|Haha... really? I'm afraid I'm not usually much for entertaining guests. I suppose I'll have to try my best for you.}}
+{{dialogue|Amirah|indent=true|Why don't we try out this new kiln you've built? I'm sure I could use a bit of... assistance.}}
+{{dialogue|Amirah|indent=true|answer=Kinda busy, sorry.
+|Ah... of course. How silly of me. Once again, I have misunderstood your indispensable role as a Builder. My apologies.}}
+{{dialogue|Amirah|indent=true|Seeya.}}
+{{dialogue|Amirah|If I'm being absolutely honest, I'm a bit afraid to turn it on...}}
+{{dialogue|Amirah|What if that masked man is right? What if I can't make the ceramics like he's encountered on his travels?}}
+
+*''You can do it.''
+*''He's a chump.''
+*''You were confident before...?''
+
+{{dialogue|Amirah|indent=true|answer=You can do it.
+|reward={{NPC2|Amirah|rp=1}}|Hm, I hope you are right. Though, I'll admit, the whole encounter left me rather uncomfortable...}}
+{{dialogue|Amirah|indent=true|answer=He's a chump.
+|reward={{NPC2|Amirah|rp=1}}|Haha! Kind of you to say so, but I know that's quite untrue...}}
+{{dialogue|Amirah|indent=true|The masked salesman is well-known and well-respected throughout the Free Cities. Perhaps one might say he's earned the right to his arrogance.}}
+{{dialogue|Amirah|indent=true|answer=You were confident before...?
+|Haha... well, I have to put on a mask of my own, sometimes...}}
+{{dialogue|Amirah|I wanted to set a good example for Arvio; I wanted to show him that we shouldn't let ourselves be put down by haughty businessmen. He... has a history of letting himself be pushed around, you know.}}
+{{dialogue|Amirah|It is very difficult, though, defending one's art in the face of such a connoisseur...}}
+
+*''You were awesome!''
+*''You were faking?''
+
+{{dialogue|Amirah|indent=true|answer=You were awesome!
+|reward={{NPC2|Amirah|rp=1}}|Haha, do you think so? I was actually quite terrified...}}
+{{dialogue|Amirah|indent=true|answer=You were faking?
+|It's as my brother says sometimes: "If you fake it, you will make it?" Something along those lines.}}
+
+TRIGGER Procedure 1.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 3632) that ends:
+{{dialogue|Amirah|Haha, do you think so? I was actually quite terrified...}}
+(cId: 1) There is a conversation segment (id 3630) that ends:
+{{dialogue|Amirah|It's as my brother says sometimes: "If you fake it, you will make it?" Something along those lines.}}
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: AmirahShout | info: 1 | exist: 0
+ACTIONS
+(cId 2) A conversation 987_0 starts:
+{{dialogue|Amirah|In any case, I need to stop feeling sorry for myself. Both you and Arvio believed in me enough to get us this far, so I simply try my best. There is no more room for doubts.}}
+{{dialogue|Amirah|Let's begin!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 3632) that ends:
+{{dialogue|Amirah|Haha, do you think so? I was actually quite terrified...}}
+(cId: 1) There is a conversation segment (id 3630) that ends:
+{{dialogue|Amirah|It's as my brother says sometimes: "If you fake it, you will make it?" Something along those lines.}}
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: AmirahShout | info: 1 | exist: 1
+ACTIONS
+(cId 2) A conversation 986_0 starts:
+{{dialogue|Amirah|In fact, in the moment, I think it was your advice that came to mind... That Mysterious Man was being a... "creep," as you say. A bit cowardly to say such things to my face from behind a mask, isn't it?}}
+{{dialogue|Amirah|In any case, I need to stop feeling sorry for myself. Both you and Arvio believed in me enough to get us this far, so I simply try my best. There is no more room for doubts.}}
+{{dialogue|Amirah|Let's begin!}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 3618) that ends:
+{{dialogue|Amirah|Seeya.}}
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1700146
+Amirah stops standing still
+Amirah stops standing still
+CUTSCENE UI STATE EXIT || 
+Set TALK to 0
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 3521}}
+A cutscene CG_COLOR (duration: 2.0) starts playing
+The Electric Kiln - I helped Amirah make an electric kiln. She very patiently taught me how to color pottery! Painting the pottery was surprisingly relaxing.
+
+TRIGGER Procedure 1.0 Step 5.5 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_COLOR | state: 7
+CONDITIONS
+Always:
+ACTIONS
+Amirah stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: TBK_player4
+
+TRIGGER Procedure 1.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_COLOR | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 988_0 starts:
+{{dialogue|Amirah|Hm. From a distance, I can't tell who worked on which. You've got quite a knack for these kinds of things. Once the glaze is finished, I'll send one of them to you.}}
+{{dialogue|Amirah|Thanks for spending time with me, ''Player''. It was nice chatting and working on this project together. Perhaps it could be said that... we make a good team?}}
+{{dialogue|Amirah|I'll see you soon. Goodbye for now.}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Trial by Kiln is successfully completed
+ACTIONS
+ACTION DATE REMOVE FLAG || flag: DATE:TBK
+The player receives a letter:
+{{mail|256}}
+Run mission Trial by Kiln
+END MISSION 1700147
+
+TRIGGER Procedure 2.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1700147
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|254}}
+ACTION DATE REMOVE FLAG || flag: DATE:TBK
+SCENEITEM CREATE FLAG || itemType: 12 | id: 171471 | path: Mission_Kilncreated | sceneName: Main | flagName: TBK_newkiln | extraParams: -1
+SCENEITEM DELETE || itemType: 0 | id: 2059108
+SCENEITEM DELETE || itemType: 0 | id: 1714600
+SCENEITEM CREATE FLAG || itemType: 0 | id: 205910901 | path: Interact_Kiln2 | sceneName: Main | flagName: Interact_kiln | extraParams: 0
+
+TRIGGER Procedure 2.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE FLAG || flag: DATE:TBK | compare: 3 | days: 3
+ACTIONS
+NPC LEAVE || npc: 8061
+
+TRIGGER Procedure 2.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1700147
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: TBKLENT | info: 1 | exist: 1
+ACTIONS
+Run mission Trial by Kiln
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Owen
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: TBKLENT | info: 1 | exist: 0
+Check if TALK is == 1
+ACTIONS
+(cId 8001) A conversation 3612 starts:
+{{dialogue|Owen|Hey, did you get Amirah's letter about the Electric Kiln? Huh? Oh, yeah, I lent her the cash for the diagram, haha! I'm just glad I got the chance to show her she can count on me.}}
+
+TRIGGER Procedure 3.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Arvio
+CONDITIONS
+Check if TALK is == 1
+ACTIONS
+(cId 8014) A conversation 3611 starts:
+{{dialogue|Arvio|I can't wait to see how this new Electric Kiln works, I'm sure Ami'll be raking it in soon!}}
+
+TRIGGER Procedure 3.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Amirah
+CONDITIONS
+Check if TALK is == 1
+ACTIONS
+(cId 8015) A conversation 3697 starts:
+{{dialogue|Amirah|Hello, ''Player''. Did you get my letter? I know as well as anyone that you shouldn't rush art, but... I would like to use my new kiln as soon as possible. I've had a lot of time to think about what to make first...}}

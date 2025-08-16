@@ -1,0 +1,549 @@
+Reading Mission 1900263: The Cable Guy
+
+<onlyinclude>{{Infobox mission
+|name = The Cable Guy
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from The Cable Guy:
+
+TRIGGER Procedure 2.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Arvio stops standing still
+Burgess stops standing still
+Remove behavior CommanderNPCAction (idName: 192628) from Burgess
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 2.0 Step 10.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1900262
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Cable Guy
+END MISSION 1900262
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1900263
+CONDITIONS
+Always:
+ACTIONS
+===Collect Materials===
+
+{{mission_details
+|desc = The cable is the focus of this mission; it needs to be super sturdy.
+|details = Collect Materials
+*{{i2|Iron Wire|0/3}}
+*{{i2|Copper Wire|0/10}}
+*{{i2|Steel Bar|0/3}}
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1900262 | targetId: 0 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Reinforce the cable===
+
+{{mission_details
+|desc = Your materials are ready, go and reinforce the cable.
+|details = Reinforce the cable
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 92631 | path: Ls9263_3 | sceneName: Main | flagName: LanSheng02 | extraParams: Ls9263_2|CreatorItem|19800007_3,19800026_10,19112016_3|1371|Fix|1.5
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 92631 | missionId: 1900262 | iconType: 2
+AREA TRIGGER CREATE || missionId: 1900263 | id: 92639 | sceneName: Main | flagName: Trigger_S92639 | showOnMap: 0 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 0.0 Step 1.2 Order 15 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 10 | npc: 8000 | enter: 0 | id: 92639
+CONDITIONS
+CHECK WEATHER STATE || weather: 0 | flag: 0
+ACTIONS
+DELAY MASK SET || maskId: 92639 | delayTime: 0 | durationTime: 1 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 1.2 Order 19 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 92639
+CONDITIONS
+Check if Rian has left town
+ACTIONS
+DELAY MASK SET || maskId: 926391 | delayTime: 0 | durationTime: 1 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 1.3 Order 16 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 92639 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S9263_0_9
+DELAY MASK SET || maskId: 92639 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 1.3 Order 20 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 926391 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S9263_0_9
+DELAY MASK SET || maskId: 926391 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 1.4 Order 17 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 92639 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 99) A conversation 11672 starts:
+{{dialogue|0|Just to be safe, let's wait for the weather to clear before we continue construction.}}
+
+TRIGGER Procedure 0.0 Step 1.5 Order 18 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 99) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 21.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 99) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 926304 | delayTime: 6 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 1.4 Order 21 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 926391 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 98) A conversation 11875 starts:
+{{dialogue|0|This mission can't take place yet, as someone important (Rian) is out of town!}}
+
+TRIGGER Procedure 0.0 Step 1.5 Order 22 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 98) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 92631
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key NoCutSceneObstacle with info 1.
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 926302 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+SCENEITEM DELETE || itemType: 0 | id: 9263101
+SCENEITEM CREATE FLAG || itemType: 0 | id: 92630 | path: Ls9263_1 | sceneName: Main | flagName: LanSheng01 | extraParams: 0
+AREA TRIGGER DELETE || id: 92639
+
+TRIGGER Procedure 0.0 Step 4.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH STOP END || order: 0 | id: 902632
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 8750, 8751, 8752 starts:
+{{dialogue|Rian|Arv? He's not here yet, huh?}}
+{{dialogue|Dan-bi|Oh, Ri-ri, why are you here? Where's Burgess? He said there was a water emergency!}}
+{{dialogue|Rian|Dan-dan! I uh... dunno, Arvio told me to meet him here. He was super vague about why though...}}
+
+TRIGGER Procedure 0.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 192638) to Dan-bi
+(param: TargetScene:Main|MoveMode:Walk|FlagName:Pdb9263_1)
+
+TRIGGER Procedure 0.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 1902635
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 8753 starts:
+{{dialogue|Dan-bi|Huh? There's a note here on the door... "Press me."}}
+
+TRIGGER Procedure 0.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 192638) from Dan-bi
+Add behavior CommanderMoveToFlagAndAction (idName: 1926311) to Dan-bi
+(param: TargetScene:Main|MoveMode:Walk|FlagName:Pdb9263_2|LookAtActor:8073)
+Add behavior CommanderMoveToFlagAndAction (idName: 1926312) to Rian
+(param: TargetScene:Main|MoveMode:Run|FlagName:Ra9263_1|LookAtActor:8074)
+
+TRIGGER Procedure 0.0 Step 9.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 1902636
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 192638) from Dan-bi
+Remove behavior CommanderMoveToFlagAndAction (idName: 1926311) from Dan-bi
+Remove behavior CommanderMoveToFlagAndAction (idName: 1926312) from Rian
+SCENEITEM CREATE FLAG || itemType: 0 | id: 926311 | path: S9263_Suodao | sceneName: Main | flagName: S9263_Suodao | extraParams: -1
+Add behavior CommanderMoveToFlagAndAction (idName: 9263732) to Rian
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S9263_73_2)
+Add behavior CommanderMoveToFlagAndAction (idName: 9263742) to Dan-bi
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S9263_74_2|LookAtActor:8073)
+
+TRIGGER Procedure 0.0 Step 11.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver | npc: 8074
+CONDITIONS
+Always:
+ACTIONS
+(cId 92631) A conversation 10446, 10447 starts:
+{{dialogue|Dan-bi|Those guys... they're so sweet.}}
+{{dialogue|Rian|So... shall we?}}
+
+TRIGGER Procedure 0.0 Step 15.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 92631) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 92631 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 16.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 92631 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 92631 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 92632 | path: S9263_Suodao2 | sceneName: Main | flagName: S9263_Suodao2 | extraParams: -1
+SCENEITEM DELETE || itemType: 0 | id: 926311
+Rian stands still in Main
+Dan-bi stands still in Main
+ACTOR IGNORE SHOW DISTANCE || npc: 8073 | ignore: 1
+ACTOR IGNORE SHOW DISTANCE || npc: 8074 | ignore: 1
+
+TRIGGER Procedure 0.0 Step 17.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 92633
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 9263742) from Dan-bi
+Remove behavior CommanderMoveToFlagAndAction (idName: 9263732) from Rian
+(cId 99) A conversation 10712, 10713, 10714, 10715 starts:
+{{dialogue|Dan-bi|Look at the view!}}
+{{dialogue|Rian|Happy anniversary, Dan-dan.}}
+{{dialogue|Dan-bi|Happy anniversary, Ri-ri.}}
+{{dialogue|Dan-bi|We should come here often!}}
+Dan-bi stops standing still
+Rian stops standing still
+
+TRIGGER Procedure 0.0 Step 17.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 92631
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 92630 | sec: 4
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 926302 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: P9263_2 | sceneName: Main
+Arvio stands still in Main and looks at Player
+Burgess stands still in Main and looks at Player
+Add behavior CommanderMoveToFlagAndAction (idName: 192633) to Arvio
+(param: TargetScene:Main|MoveMode:Run|FlagName:Ao9263_1)
+Add behavior CommanderMoveToFlagAndAction (idName: 192634) to Burgess
+(param: TargetScene:Main|MoveMode:Walk|FlagName:Bj9263_1)
+Add behavior CommanderPlayerAction (idName: 192635) to Player
+(param: CMDAction:LookSky)
+STOPWATCH REAL TIME SET || id: 292633 | sec: 1
+Remove behavior CommanderPlayerAction (idName: 192632) from Player
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 292633
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 926302 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 926303 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 926303 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Arvio stops standing still
+Burgess stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 192637) from Arvio
+Remove behavior CommanderNPCAction (idName: 192636) from Arvio
+Remove behavior CommanderMoveToFlagAndAction (idName: 192634) from Burgess
+Remove behavior CommanderMoveToFlagAndAction (idName: 192633) from Arvio
+Remove behavior CommanderNPCAction (idName: 192639) from Burgess
+Remove behavior CommanderMoveToFlagAndAction (idName: 1926310) from Player
+Rian stands still in Main and looks at Dan-bi
+Dan-bi stands still in Main and looks at Rian
+Arvio stands still in Main
+Burgess stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: P9263_3
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9263401 | path: Ls9263_wedding01 | sceneName: Main | flagName: men9263 | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9263402 | path: Ls9263_wedding02 | flagName: paizi9263_2 | sceneName: Main | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9263403 | path: Ls9263_wedding03 | flagName: xiangzi9263 | sceneName: Main | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9263404 | path: Ls9263_wedding04 | flagName: paizi9263 | sceneName: Main | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9263405 | path: Ls9263_wedding05 | flagName: men9263_2 | sceneName: Main | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9263406 | path: Ls9263_wedding06 | flagName: hualan9263 | sceneName: Main | extraParams: 0
+SCENEITEM CREATE FLAG || id: 9263407 | itemType: 0 | path: Ls9263_wedding07 | flagName: guidaohua9263_1 | sceneName: Main | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9263408 | path: Ls9263_wedding08 | flagName: daizi9263_2 | extraParams: 0 | sceneName: Main
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9263409 | path: Ls9263_wedding07 | sceneName: Main | flagName: daizi9263 | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9263410 | flagName: hualan9263_2 | path: Ls9263_wedding06 | sceneName: Main | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 9263411 | flagName: hualan9263_3 | path: Ls9263_wedding06 | sceneName: Main | extraParams: 0
+Remove behavior CommanderPlayerAction (idName: 192635) from Player
+DELAY MASK SET || maskId: 926303 | delayTime: 1.5 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 926303 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 9263731) to Rian
+(param: CMDAction:LookAround)
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8014 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 192636) to Arvio
+(param: CMDAction:LookSky)
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8014 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 192637) to Arvio
+(param: TargetScene:Main|MoveMode:Walk|FlagName:Ao9263_2)
+Add behavior CommanderMoveToFlagAndAction (idName: 1926310) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:P9263_4)
+
+TRIGGER Procedure 2.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8014 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 2536_0 starts:
+{{dialogue|Arvio|Great work ''Player''! This looks much sturdier than before!}}
+{{dialogue|Arvio|Come now Burgess, we gotta place the finishing touches before the couple shows up.}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 4.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8021 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 192639) to Burgess
+(param: CMDAction:Cheer_Story)
+
+TRIGGER Procedure 2.0 Step 6.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 926304 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 926304 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+ACTOR IGNORE SHOW DISTANCE || ignore: 0 | npc: 8073
+ACTOR IGNORE SHOW DISTANCE || ignore: 0 | npc: 8074
+
+TRIGGER Procedure 2.0 Step 7.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 926304 | eventType: 5
+CONDITIONS
+CHECK WEATHER STATE || weather: 0 | flag: 1
+ACTIONS
+(cId 3) A conversation 2538_0 starts:
+{{dialogue|Burgess|And that, ladies and gentlemen, is a job well done...}}
+{{dialogue|Arvio|There's nothing greater... than a couple in love. As my Pa always says "just two people in love, it can move the sky."}}
+{{dialogue|Burgess|Thank you, ''Player''. We all did a wonderful thing here today. And hey, maybe you can take that special someone here soon, too!}}
+{{dialogue|Arvio|Well, I guess I'd better be getting back. X isn't going to be happy watching the shop for too long.}}
+{{dialogue|Burgess|And I need to file a complaint against myself for misreporting a water emergency as well as abusing my position! All in the name of love.}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 9.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+GLOBAL BLACK BOARD REMOVE || key: NoCutSceneObstacle
+Remove behavior CommanderMoveToFlagAndAction (idName: 192638) from Dan-bi
+Burgess stops standing still
+Arvio stops standing still
+Dan-bi stops standing still
+Rian stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 1926311) from Dan-bi
+Remove behavior CommanderMoveToFlagAndAction (idName: 1926312) from Rian
+SUBMIT MISSION 1900262
+ACTION SHOW CUSTOM IMAGE TIPS || preset: LevelUp | content: 80013609
+NPC ICON ADD || missionId: 1900263 | npc: 8073 | missionIcon: 6
+NPC ICON ADD || missionIcon: 6 | npc: 8074 | missionId: 1900263
+Remove behavior CommanderMoveToFlagAndAction (idName: 9263742) from Dan-bi
+Remove behavior CommanderMoveToFlagAndAction (idName: 9263732) from Rian
+Rian stops standing still
+Dan-bi stops standing still
+SCENEITEM CREATE FLAG || extraParams: -1 | itemType: 0 | id: 92639 | path: S9263_Suodaofinal | sceneName: Main | flagName: default
+SCENEITEM DELETE || itemType: 0 | id: 92632
+SCENEITEM DELETE || itemType: 0 | id: 92631
+Remove behavior CommanderNPCAction (idName: 9263731) from Rian
+SCENEITEM DELETE || itemType: 0 | id: 20596
+
+TRIGGER Procedure 2.0 Step 8.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 926304 | eventType: 5
+CONDITIONS
+CHECK WEATHER STATE || weather: 0 | flag: 0
+ACTIONS
+(cId 4) A conversation 2539_0 starts:
+{{dialogue|Burgess|And that, ladies and gentlemen, is a job well done...}}
+{{dialogue|Burgess|Thank you, ''Player''. We all did a wonderful thing here today. And hey, maybe you can take that special someone here soon, too!}}
+{{dialogue|Arvio|Well, I guess I'd better be getting back. X isn't going to be happy watching the shop for too long.}}
+{{dialogue|Burgess|And I need to file a complaint against myself for misreporting a water emergency as well as abusing my position! All in the name of love.}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 10.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 9263401
+SCENEITEM DELETE || itemType: 0 | id: 9263402
+SCENEITEM DELETE || itemType: 0 | id: 9263403
+SCENEITEM DELETE || itemType: 0 | id: 9263404
+SCENEITEM DELETE || itemType: 0 | id: 9263405
+SCENEITEM DELETE || itemType: 0 | id: 9263406
+SCENEITEM DELETE || itemType: 0 | id: 9263407
+SCENEITEM DELETE || itemType: 0 | id: 9263408
+SCENEITEM DELETE || itemType: 0 | id: 9263409
+SCENEITEM DELETE || itemType: 0 | id: 9263410
+SCENEITEM DELETE || itemType: 0 | id: 9263411
+SCENEITEM DELETE || itemType: 0 | id: 92632
+
+TRIGGER Procedure 3.0 Step 5.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Rian
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 8759 starts:
+{{dialogue|Rian|Hey man, heard from Arvio, thank you so much for doing that for us! It really reminded me that I shouldn't take my Dan-dan for granted, I've gotta work at the romantic stuff!}}
+NPC ICON REMOVE || missionId: 1900263 | npc: 8073 | missionIcon: 6
+
+TRIGGER Procedure 3.0 Step 6.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Dan-bi
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 2540_0 starts:
+{{dialogue|Dan-bi|Hey ''Player''! I heard from Burgess that it was you who helped make my anniversary such a memorable one. Thank you so much!}}
+{{dialogue|Dan-bi|I had Ri-ri promise me that he'll tell me to take a break every now and then, so we can go on more dates like that. It was magical!}}
+The conversation ends.
+NPC ICON REMOVE || missionIcon: 6 | npc: 8074 | missionId: 1900263
+
+TRIGGER Procedure 3.0 Step 6.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+END MISSION 1900263

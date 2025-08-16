@@ -1,0 +1,362 @@
+Reading Mission 1700330: The Quest for the Panacea
+
+<onlyinclude>{{Infobox mission
+|name = The Quest for the Panacea
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from The Quest for the Panacea:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173290 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1700329
+
+TRIGGER Procedure 0.0 Step 0.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700329
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Quest for the Panacea
+END MISSION 1700329
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700330
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Qi===
+
+{{mission_details
+|desc = Logan suggested that there might be a solution to the soil problem at one of the Old World underwater labs. To get there, you'll need to break some big rocks. Talk to Director Qi to see if you can make upgrades to the Mobile Suit for this task.
+|details = Talk to Qi
+}}
+Set interact to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 13781, 13782, 13783 starts:
+{{dialogue|Qi|This meeting sounded like fun! Even though I'm not that interested in the botanical sciences, it'd still be delightful to catch up on the newest discoveries once in a while, especially from one of its premier researchers...}}
+{{dialogue|Qi|Anyway, so you need the Mobile Suit? Hmm... unfortunately, it's not in an operational state at the moment. The fools on Heidi's team really did a number to it. My beautiful baby...}}
+{{dialogue|Qi|Not to worry though, I know Sleepyhead gave me a Diagram of a drill before, but where did I put it? No matter, I'll be sure to find it and send it your way.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Wait for Diagram===
+
+{{mission_details
+|desc = The Mobile Suit is not in the best of conditions, but Qi has come up with an alternate solution.
+|details = Wait for Diagram
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Break Boulder===
+
+{{mission_details
+|desc = Use the drill to break the boulder blocking your path.
+|details = Break Boulder
+}}
+CUTSCENE UI STATE EXIT || 
+AREA TRIGGER CREATE || missionId: 1700329 | id: 173304 | sceneName: Main | transId: 80021765 | mapIcon: MissionArea | showOnMap: 1 | flagName: MSGA_Stone
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|614}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 614
+CONDITIONS
+Always:
+ACTIONS
+===Make Mini-Drill===
+
+{{mission_details
+|desc = Make a Mini-Drill on an Advanced Worktable according to Qi's diagram. Upgrade your worktable if you haven't already.
+|details = Make Mini-Drill
+*{{i2|Power Drill|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON BAG CHANGE || order: 0 | item: 11000033 | changeType: 0 | itemGrade: -1
+CONDITIONS
+Always:
+ACTIONS
+===Go to Meeting Point===
+
+{{mission_details
+|desc = You have the Mini-Drill, hurry and go meet everyone at the large boulder.
+|details = Go to Meeting Point
+}}
+AREA TRIGGER ONCE CREATE || missionId: 1700329 | id: 173301 | sceneName: Main | flagName: MSGA_Player1 | showOnMap: 1 | mapIcon: MissionArea | transId: -1
+Set interact to 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 173301
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 173301 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173301 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || id: 218732 | itemType: 0
+Logan stands still in Main
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: MSGA_Player1
+PICK UP RESOURCE REFRESH || id: 1700329
+DELAY MASK SET || maskId: 173301 | delayTime: 0 | durationTime: 2 | changeType: 1 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173301 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 13784, 13785 starts:
+{{dialogue|Logan|Howdy ''Player'', you done with the drill? Nice!}}
+{{dialogue|Logan|Larry's already gone on ahead to turn off the machine. Can you clear the path with the drill? I'll go fetch the assistant.}}
+Logan stops standing still
+
+TRIGGER Procedure 0.0 Step 0.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON RESOURCE PICK UP || order: 0 | npc: 8000 | id: 1700329
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 173302 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 173304
+
+TRIGGER Procedure 0.0 Step 0.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173302 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Logan stands still in Main
+Nia stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: MSGA_Player2
+DELAY MASK SET || maskId: 173302 | delayTime: 0.5 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173302 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 4369_0 starts:
+{{dialogue|Nia|Wow! Did you break all the boulders here? I'm way impressed! You're... so cool!}}
+
+*''A Hey, come on! Cut it out!''
+*''You know it!''
+
+{{dialogue|Logan|Nice! The ruin is just a little up ahead. Ready to roll out?}}
+
+*''I'm ready!''
+*''Wait a minute...''
+*''Nia, aren't you scared?''
+
+{{dialogue|Logan|indent=true|answer=I'm ready!
+|The headaches started a little beyond this point, but if Larry's done his job, it should be smooth sailin'. Here goes nothin'!}}
+{{dialogue|Logan|indent=true|answer=Wait a minute...
+|Okay. We'll wait for ya. Just let me know when you're ready.}}
+{{dialogue|Nia|Hey, I'm not some weakling, you know! I can handle myself!}}
+{{dialogue|Logan|Haha, I don't doubt that!}}
+{{dialogue|Nia|See?}}
+{{dialogue|Logan|Nice! The ruin is just a little up ahead. Ready to roll out?}}
+
+*''I'm ready!''
+*''Wait a minute...''
+
+{{dialogue|Logan|indent=true|answer=I'm ready!
+|The headaches started a little beyond this point, but if Larry's done his job, it should be smooth sailin'. Here goes nothin'!}}
+{{dialogue|Logan|indent=true|answer=Wait a minute...
+|Okay. We'll wait for ya. Just let me know when you're ready.}}
+Set accept to 0
+===Go to the ruins===
+
+{{mission_details
+|desc = When you're ready, go to the ruins and meet Logan.
+|details = Go to the ruins
+}}
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 13794) that ends:
+{{dialogue|Logan|The headaches started a little beyond this point, but if Larry's done his job, it should be smooth sailin'. Here goes nothin'!}}
+CONDITIONS
+Always:
+ACTIONS
+Set accept to 0
+Logan stops standing still
+Nia stops standing still
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8011 | state: Attack
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8059 | state: Attack
+AREA TRIGGER ONCE CREATE || missionId: 1700329 | id: 173302 | sceneName: Main | flagName: MSGA_Enter | showOnMap: 1 | mapIcon: MissionArea | transId: -1
+ACTION AREA TRIGGER SET RADIUS || id: 173302 | radius: 10
+
+TRIGGER Procedure 0.0 Step 0.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 13793) that ends:
+{{dialogue|Logan|Okay. We'll wait for ya. Just let me know when you're ready.}}
+CONDITIONS
+Always:
+ACTIONS
+Set accept to 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 173301) to Player
+(param: TargetScene:Main|FlagName:MSGA_Enter1|MoveMode:Run)
+DELAY MASK SET || maskId: 173303 | delayTime: 3 | durationTime: 1.5 | changeType: 0 | curveIndex: 0
+Add behavior CommanderMoveToFlag (idName: 7330111) to Logan
+(param: TargetScene:Main|FlagName:MSGA_Enter1|MoveMode:Run)
+Add behavior CommanderMoveToFlag (idName: 7330591) to Nia
+(param: TargetScene:Main|FlagName:MSGA_Enter1|MoveMode:Run)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 14 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Logan
+CONDITIONS
+Check if accept is == 1
+ACTIONS
+(cId -1) A conversation 4374_0 starts:
+{{dialogue|Logan|Ready to go?}}
+
+*''I'm ready!''
+*''Wait a minute...''
+
+{{dialogue|Logan|indent=true|answer=I'm ready!
+|The headaches started a little beyond this point, but if Larry's done his job, it should be smooth sailin'. Here goes nothin'!}}
+{{dialogue|Logan|indent=true|answer=Wait a minute...
+|Okay. We'll wait for ya. Just let me know when you're ready.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 173302
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 13795, 13796, 13797, 13798, 13799, 13800 starts:
+{{dialogue|Logan|Looks like Larry pulled it off! Come on!}}
+{{dialogue|Logan|Hmm...}}
+{{dialogue|Logan|Larry was supposed to have met us here...!}}
+{{dialogue|Nia|You don't suppose something happened to him, do you?}}
+{{dialogue|Logan|I have a bad feelin' about this. See if there's a way in...}}
+{{dialogue|Logan|Look, there's a bunch of pipes over there, I reckon that's our ticket inside.}}
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173303 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Run mission Into the Abyss
+Remove behavior CommanderMoveToFlag (idName: 173301) from Player
+Logan stands still in BiologicalLaboratory_Dungeon
+Nia stands still in BiologicalLaboratory_Dungeon
+PLAYER SET POS ROT FLAG || sceneName: BiologicalLaboratory_Dungeon | flagName: Player_start
+DELAY MASK SET || maskId: 173303 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: -2
+Remove behavior CommanderMoveToFlag (idName: 7330111) from Logan
+Remove behavior CommanderMoveToFlag (idName: 7330591) from Nia
+
+TRIGGER Procedure 0.0 Step 0.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Nia
+CONDITIONS
+Check if interact is == 0
+ACTIONS
+(cId -1) A conversation 13780 starts:
+{{dialogue|Nia|I'm really looking forward to this! It'll be our first professional collaboration! Hopefully the first of many to come, right? Hehe.}}
+Set interact to 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+PICK UP RESOURCE REFRESH || id: 1700329
+
+TRIGGER Procedure 0.0 Step 0.0 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+ON DELAY MASK EVENT || order: 0 | maskId: 173303 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+PICK UP RESOURCE DELETE || id: 1700329
+END MISSION 1700330

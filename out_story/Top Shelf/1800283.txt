@@ -1,0 +1,507 @@
+Reading Mission 1800283: Top Shelf
+
+<onlyinclude>{{Infobox mission
+|name = Top Shelf
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Top Shelf:
+
+TRIGGER Procedure 0.0 Step 6.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 10044) that ends:
+{{dialogue|Catori|Great! I think you make it on your Worktable. But, eh, when you're done, can you please install it for me as well? Thanks!}}
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1800282
+
+TRIGGER Procedure 0.0 Step 7.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800282
+CONDITIONS
+Always:
+ACTIONS
+Run mission Top Shelf
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800283
+CONDITIONS
+Always:
+ACTIONS
+===Make a Simple Bookcase===
+
+{{mission_details
+|desc = Make a large shelf for Catori on your Worktable.
+|details = Make a Simple Bookcase
+*{{i2|Simple Bookcase|0/1}}
+}}
+Set 8283GO to 0
+Set 8283Walk to 0
+Set 8283Date to 0
+
+TRIGGER Procedure 0.0 Step 5.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Catori stops standing still
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 6.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Check if 8283GO is == 1
+ACTIONS
+===Wait Until Tomorrow===
+
+{{mission_details
+|desc = Wait until tomorrow to hang out with Catori at the Blue Moon at 18:00
+|details = Wait Until Tomorrow
+}}
+
+TRIGGER Procedure 0.0 Step 7.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+===Be at the Blue Moon at 18:00===
+
+{{mission_details
+|desc = At 18:00 meet Catori at the Blue Moon.
+|details = Be at the Blue Moon at 18:00
+}}
+
+TRIGGER Procedure 0.0 Step 7.1 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 8283Date is == 0
+ACTIONS
+The player receives a letter:
+{{mail|531}}
+SUBMIT MISSION 1800282
+END MISSION 1800283
+
+TRIGGER Procedure 0.0 Step 8.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_saloon
+CHECK TIME || compare: 2 | hour: 18 | minute: 0
+CHECK GLOBAL BLACKBOARD || key: musacomes | exist: 0 | info: 1
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_saloon
+Set 8283Date to 1
+
+TRIGGER Procedure 0.0 Step 9.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+Catori stands still in Saloon and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: S8283_0_2
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 10.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 10062 starts:
+{{dialogue|Catori|Hey, ''Player''. You're here! Let's grab a table. I'm starving.}}
+
+TRIGGER Procedure 0.0 Step 11.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || delayTime: 0 | durationTime: -2 | maskId: 82833 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 12.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82833 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+ACTION MINI GAME SET GOLD COUNT || type: OrderingFood | isSingle: 0 | count: 0
+Add behavior CommanderSit (idName: 8283243) to Catori
+(param: SeatDramaName:SaloonSeat01|TargetScene:Saloon)
+Add behavior CommanderPlayerSit (idName: 8283003) to Player
+(param: SeatDramaName:SaloonSeat02|TargetScene:Saloon)
+Catori stops standing still
+DELAY MASK SET || maskId: 82833 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 13.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 82833
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 10063 starts:
+{{dialogue|Catori|I have a lot I want to talk about, so let's order first. Get whatever you want. My treat.}}
+
+TRIGGER Procedure 0.0 Step 15.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTION ENTER ORDERING FOOD GAME || npc: 8024
+
+TRIGGER Procedure 0.0 Step 13.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Opportunities Abound is successfully completed
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: 8283Done
+
+TRIGGER Procedure 0.0 Step 13.0 Order 23 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+END MISSION 1800283
+
+TRIGGER Procedure 0.0 Step 16.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MINI GAME END || order: 0 | type: OrderingFood
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 3086_0 starts:
+{{dialogue|Catori|Thanks for meeting me tonight. I really needed a night out. I hardly ever take time for myself. Building a business isn't easy. You know exactly what I mean, don't you?}}
+{{dialogue|Catori|I don't suppose you take much time off, either. In fact, nearly every time I've seen you around town, you're running somewhere to do something for someone else. I don't think I've ever seen you walking anywhere.}}
+{{dialogue|Catori|Sandrock is growing, and we're both doing our part to make it happen. I just wish it wasn't going so slowly, you know?}}
+{{dialogue|Catori|You're from Highwind, right? Do you ever think about walking away from all this and going back home?}}
+
+*''I'm making my family proud.''
+*{{flirt}}''I'm just happy to be here with you.''
+
+{{dialogue|Catori|indent=true|answer=I'm making my family proud.
+|That's a good point. My son and my Ma tell me all the time in their letters how proud they are of me.}}
+{{dialogue|Catori|indent=true|answer=I'm just happy to be here with you.
+|There you go, being all sweet again.}}
+{{dialogue|Catori|Growing up in Highwind, I bet you had a pretty good life. I've heard it's nice there.}}
+
+*''It was a great place to grow up.''
+*{{flirt}}''Maybe someday I can take you for a visit.''
+
+{{dialogue|Catori|indent=true|answer=It was a great place to grow up.
+|That sounds like a perfect life. That's what I want my boy to have.}}
+{{dialogue|Catori|indent=true|answer=Maybe someday I can take you for a visit.
+|That would be so far in the future, I can hardly even picture it. There's so much to do here before I could even think of something like that. It's a pretty dream, though.}}
+{{dialogue|Catori|I truly believe in Sandrock's potential to become a booming city. A unique place for tourists to visit, and a wholesome, safe place for people to raise a family.}}
+{{dialogue|Catori|I wouldn't be here if I didn't believe in it with my whole heart. I'm sure you wouldn't have come either if you didn't think Sandrock had a big future ahead.}}
+{{dialogue|Catori|That bright future can't get here quick enough for me.}}
+
+*''You're doing everything you can.''
+*{{flirt}}''You deserve to be happy.''
+
+{{dialogue|Catori|indent=true|answer=You're doing everything you can.
+|You know what? You're right. I really am. We all are. And Sandrock is going to be a true desert rose before we know it.}}
+{{dialogue|Catori|indent=true|reward={{NPC2|Catori|rp=5}}|I'm so glad we had dinner together and got to talk. You're very motivational. We should do it again soon!}}
+{{dialogue|Catori|Aren't you the sweetest? I think you really mean that, too.}}
+{{dialogue|Catori|I'm so glad we had dinner together and got to know each other better. Would you... like to walk me home?}}
+
+*''I should probably be getting home.''
+*{{flirt}}''I was hoping you'd ask.''
+
+{{dialogue|Catori|indent=true|answer=I should probably be getting home.
+|reward={{NPC2|Catori|rp=5}}|Oh. Alright, then. Thank you for a lovely evening. I hope we can do it again sometime.}}
+{{dialogue|Catori|indent=true|answer=I was hoping you'd ask.
+|It's such a pretty night out. Let's take our time.}}
+
+TRIGGER Procedure 0.0 Step 17.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 4) There is a conversation segment (id 10081) that ends:
+{{dialogue|Catori|It's such a pretty night out. Let's take our time.}}
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 82834 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 18.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82834 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderPlayerSit (idName: 8283003) from Player
+STOPWATCH REAL TIME SET || id: 82836 | sec: 2
+
+TRIGGER Procedure 0.0 Step 19.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 82836
+CONDITIONS
+Always:
+ACTIONS
+Catori stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8283_0_4
+
+TRIGGER Procedure 0.0 Step 20.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Saloon to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8283245) to Catori
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8283_24_5)
+Add behavior CommanderMoveToFlagAndAction (idName: 8283005) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8283_0_5)
+DELAY MASK SET || maskId: 82834 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 21.0 Order 15 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8024 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Increment 8283Walk by 1
+
+TRIGGER Procedure 0.0 Step 21.1 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8024 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Check if 8283Walk is == 2
+ACTIONS
+(cId 5) A conversation 3095_0 starts:
+{{dialogue|Catori|Well, uh... this is me.}}
+
+*''Thanks for dinner.''
+*{{flirt}}''(Kiss Catori)'' (No unique dialogue)
+
+{{dialogue|Catori|indent=true|answer=Thanks for dinner.
+|reward={{NPC2|Catori|rp=5}}|My pleasure. I had a great time. Let's do it again sometime soon.}}
+
+TRIGGER Procedure 0.0 Step 22.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) The player picks the second option in conversation segment 10082:
+{{dialogue|Catori|Well, uh... this is me.}}
+
+*''Thanks for dinner.'' (No unique dialogue)
+*{{flirt}}''(Kiss Catori)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+The player interacts (type 2, option 1) with Catori
+
+TRIGGER Procedure 0.0 Step 23.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON INTERACTIVE EXIT || order: 0 | instID: 8024
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 10084 starts:
+{{dialogue|Catori|Tonight was great... I forgot what it was like to just enjoy the moment like that... I'll see you later.}}
+
+TRIGGER Procedure 0.0 Step 25.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+(cId: 5) There is a conversation segment (id 10083) that ends:
+{{dialogue|Catori|My pleasure. I had a great time. Let's do it again sometime soon.}}
+(cId: 4) There is a conversation segment (id 10080) that ends:
+{{dialogue|Catori|Oh. Alright, then. Thank you for a lovely evening. I hope we can do it again sometime.}}
+(cId: 4) There is a conversation segment (id 10077) that ends:
+{{dialogue|Catori|I'm so glad we had dinner together and got to talk. You're very motivational. We should do it again soon!}}
+(cId: 1) There is a conversation segment (id 10061) that ends:
+{{dialogue|Catori|Anyway, thanks for installing the Storage Rack. I'm sure it will be a huge help.}}
+CONDITIONS
+Always:
+ACTIONS
+Catori stops standing still
+CUTSCENE UI STATE EXIT || 
+Catori stops standing still
+Catori stops standing still
+Remove behavior CommanderSit (idName: 8283243) from Catori
+Remove behavior CommanderMoveToFlagAndAction (idName: 8283245) from Catori
+Remove behavior CommanderPlayerSit (idName: 8283003) from Player
+Remove behavior CommanderNPCAction (idName: 8283246) from Catori
+Remove behavior CommanderMoveToFlagAndAction (idName: 8283005) from Player
+Catori gains 5 favor
+SUBMIT MISSION 1800282
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1800282 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Install the Simple Bookcase===
+
+{{mission_details
+|desc = The Simple Bookcase is ready, take it to Catori's Game Center!
+|details = Install the Simple Bookcase
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 828302 | path: S8283_Label | sceneName: GameCenter | flagName: S8283_Label2 | extraParams: S8283_Item|CreatorItem|18000030_1|1547|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 828302 | missionId: 1800282 | iconType: 2
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 828302
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 82831 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82831 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Catori stands still in GameCenter and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: GameCenter | flagName: S8283_1_0_1
+DELAY MASK SET || maskId: 82831 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82831 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 3078_0 starts:
+{{dialogue|Catori|Thank you! This is perfect! I really appreciate your help with this, ''Player''. I have a lot of great ideas, but I don't always have the right skills to make them happen.}}
+
+*''I'm glad I can help. It's what I do.''
+*{{flirt}}''Any time.''
+
+{{dialogue|Catori|Just the same, I do appreciate it.}}
+{{dialogue|Catori|You know, this has me thinking I could eventually add a whole snack bar or even a restaurant in here someday. I'd have to expand the whole Game Center first, of course. Maybe even add some live entertainment.}}
+{{dialogue|Catori|I could hire a magician and do children's parties. Wouldn't that be amazing?}}
+{{dialogue|Catori|Oh! I once saw a mechanical band made of spare parts and electronics in Atara. Boy, that would be something if I could get one of those.}}
+{{dialogue|Catori|If I decorated the robot band to look like friendly animals dressed like people, the kids would go nuts!}}
+
+*''That's a great idea!''
+*''That sounds... interesting.''
+*{{flirt}}''All that beauty and brains, too. Brilliant!''
+
+{{dialogue|Catori|Of course, I'd want to run it by Owen, as a professional courtesy. Or maybe he'd be interested in being partners. Now that would be somethin' wouldn't it? Imagine what I could do with the kind of dough he's got in his pockets.}}
+{{dialogue|Catori|Listen to me, dreamin' impossible dreams. Impossible for now, anyway. One step at a time, right, ''Player''?}}
+{{dialogue|Catori|Expanding to offer a few snacks is a good start. Not exactly competin' with Owen's saloon, but maybe it'll keep my customers here a little longer before they head to his place for a real meal.}}
+
+*''Your customers may never leave!''
+*''All in a day's work, ma'am.''
+*{{flirt}}''I would do anything for you if it made you smile.''
+
+{{dialogue|Catori|indent=true|answer=Your customers may never leave!
+|You're always so helpful and kind. I think we've got a lot in common, always working, always trying to better ourselves and grow our business. Doesn't leave much time for leisure or friendship, does it?}}
+{{dialogue|Catori|indent=true|If you could carve out some time from your busy schedule tomorrow evening, I think I could, too. Care to meet me at the Blue Moon for dinner and a nice long chat?}}
+
+:*''That sounds great. I'd love to.''
+:*''I have plans. Another time, maybe?''
+
+{{dialogue|Catori|indent=double|answer=That sounds great. I'd love to.
+|Terrific! I'll see you there tomorrow at 18:00.}}
+{{dialogue|Catori|indent=double|answer=I have plans. Another time, maybe?
+|Yeah. I get it. There's always more that needs to get done, right? Well, let me know when you're free. I'd love to have that chat over some down time. Thanks for the new rack!}}
+{{dialogue|Catori|indent=true|answer=All in a day's work, ma'am.
+|That's such a sweet thing to say. And you know what? I think I actually believe it.}}
+{{dialogue|Catori|indent=true|I'll tell you what. Why don't I take you to dinner tomorrow night as a sort of... Uh... thank you... for all your help. We can get to know each other a little better.}}
+
+:*''That sounds great.''
+:*''I wish I could, but I'm busy. Another time?''
+
+{{dialogue|Catori|indent=double|answer=That sounds great.
+|Terrific! I'll see you there tomorrow at 18:00.}}
+{{dialogue|Catori|indent=double|answer=I wish I could, but I'm busy. Another time?
+|Sure, sure. Rain check, right? Let me know when you have time.}}
+{{dialogue|Catori|indent=double|reward={{NPC2|Catori|rp=5}}|Anyway, thanks for installing the Storage Rack. I'm sure it will be a huge help.}}
+{{dialogue|Catori|indent=true|answer=I would do anything for you if it made you smile.
+|You're always so helpful and kind. I think we've got a lot in common, always working, always trying to better ourselves and grow our business. Doesn't leave much time for leisure or friendship, does it?}}
+{{dialogue|Catori|indent=true|If you could carve out some time from your busy schedule tomorrow evening, I think I could, too. Care to meet me at the Blue Moon for dinner and a nice long chat?}}
+
+:*''That sounds great. I'd love to.''
+:*''I have plans. Another time, maybe?''
+
+{{dialogue|Catori|indent=double|answer=That sounds great. I'd love to.
+|Terrific! I'll see you there tomorrow at 18:00.}}
+{{dialogue|Catori|indent=double|answer=I have plans. Another time, maybe?
+|Yeah. I get it. There's always more that needs to get done, right? Well, let me know when you're free. I'd love to have that chat over some down time. Thanks for the new rack!}}
+
+TRIGGER Procedure 1.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Check if 8283GO is == 0
+ACTIONS
+Catori gains 3 favor
+SUBMIT MISSION 1800282
+END MISSION 1800283
+
+TRIGGER Procedure 1.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 10055:
+{{dialogue|Catori|If you could carve out some time from your busy schedule tomorrow evening, I think I could, too. Care to meet me at the Blue Moon for dinner and a nice long chat?}}
+
+*''That sounds great. I'd love to.'' (No unique dialogue)
+*''I have plans. Another time, maybe?'' (No unique dialogue)
+
+(cId 1) The player picks the first option in conversation segment 10059:
+{{dialogue|Catori|I'll tell you what. Why don't I take you to dinner tomorrow night as a sort of... Uh... thank you... for all your help. We can get to know each other a little better.}}
+
+*''That sounds great.'' (No unique dialogue)
+*''I wish I could, but I'm busy. Another time?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8283GO to 1

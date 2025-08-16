@@ -1,0 +1,81 @@
+Reading Mission 1200086: Water Tower Repair
+
+<onlyinclude>{{Infobox mission
+|name = Water Tower Repair
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Water Tower Repair:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200085
+CONDITIONS
+CHECK MISSION END TIMES || missionId: 1200085 | result: 1 | compare: 3 | times: 0
+ACTIONS
+DELIVER MULTI MISSION || missionId: 1200085 | maxCount: 4 | rtlm: 5 | rtl: 7 | stlm: 7 | stl: 0 | item: 17000008_1 | npc: 8021
+MISSION ADD TO SCENEITEM || missionId: 1200085 | itemType: 1 | id: 1
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200085
+CONDITIONS
+Always:
+ACTIONS
+Run mission Water Tower Repair
+END MISSION 1200085
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200086
+CONDITIONS
+Always:
+ACTIONS
+===Make Hardwood Fence===
+
+{{mission_details
+|desc = Make the Hardwood Fence needed for to protect the oasis and give it to Burgess.
+|details = Make Hardwood Fence
+*{{i2|Hardwood Fence|0/1}}
+*{{i2|Hardwood Fence|0/1}}
+*{{i2|Hardwood Fence|0/1}}
+*{{i2|Hardwood Fence|0/1}}
+*{{i2|Burgess|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Burgess
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1200085 | targetId: 1 | canSubmit: 1
+ACTIONS
+(cId 0) A conversation 70018 starts:
+{{dialogue|-2|Super duper! Thanks to you, the Church just got 2 percent cooler! Thanks!}}
+BAG MODIFY BY TARGET || targetId: 1 | missionId: 1200085
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1200085
+END MISSION 1200086

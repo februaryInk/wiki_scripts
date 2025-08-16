@@ -1,0 +1,129 @@
+Reading Mission 1300002: Keeping up with the Yakmels
+
+<onlyinclude>{{Infobox mission
+|name = Keeping up with the Yakmels
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Keeping up with the Yakmels:
+
+TRIGGER Procedure 1.0 Step 4.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+Check if SLEEP is == 0
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Cooper stops standing still
+Mabel stops standing still
+START MISSION 1300001
+ACTION PLAYER ADD ATTR VALUE || value: 2 | attrType: SpMax
+ACTION SHOW CUSTOM IMAGE TIPS || content: 80004037 | preset: Mission
+
+TRIGGER Procedure 1.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1300001
+CONDITIONS
+Always:
+ACTIONS
+Run mission Keeping up with the Yakmels
+END MISSION 1300001
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1300002
+CONDITIONS
+Always:
+ACTIONS
+===Get Materials===
+
+{{mission_details
+|desc = Get the materials you need to fix the fence.
+|details = Get Materials
+*{{i2|Bronze Bars|0/3}}
+*{{i2|Thick Rope|0/2}}
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1300001 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Repair Fence===
+
+{{mission_details
+|desc = Approach the fence and use your materials to repair it.
+|details = Repair Fence
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 13002 | path: Lable_Kupozhalan | sceneName: Main | flagName: fix_part13001_2 | extraParams: Mission_Kupozhalan|CreatorItem|19110002_3,19500017_2|1371|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 13002 | missionId: 1300001 | iconType: 2
+
+TRIGGER Procedure 0.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | id: 13002 | itemType: 12 | actorId: 8000
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Cooper===
+
+{{mission_details
+|desc = The fence is fixed, go let Cooper know.
+|details = Talk to Cooper
+}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Cooper
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || exist: 0 | info: 1 | key: cooperanger1302
+ACTIONS
+(cId 0) A conversation 298, 2325, 2324 starts:
+{{dialogue|Cooper|Fine work, young'n! With Builders like you around, Sandrock is sure to be in tip top shape in no time!}}
+{{dialogue|Cooper|I'll holler back atcha for some more work sometime. And you know what they say: you scratch my back, I'll scratch yours. That means if'n you help me, I'll help you, y'hear? A quid pro quo if you will, a mutually beneficial exchange, I say!}}
+{{dialogue||You decide to slowly back away.}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Cooper
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: cooperanger1302 | info: 1 | exist: 1
+ACTIONS
+(cId 1) A conversation 297, 2325, 2324 starts:
+{{dialogue|Cooper|Not bad young'n. Can't say I care for your attitude, but I can't argue with your handiwork.}}
+{{dialogue|Cooper|I'll holler back atcha for some more work sometime. And you know what they say: you scratch my back, I'll scratch yours. That means if'n you help me, I'll help you, y'hear? A quid pro quo if you will, a mutually beneficial exchange, I say!}}
+{{dialogue||You decide to slowly back away.}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1300001
+END MISSION 1300002

@@ -1,0 +1,351 @@
+Reading Mission 1200252: Quali-tea over Quanti-tea
+
+<onlyinclude>{{Infobox mission
+|name = Quali-tea over Quanti-tea
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Quali-tea over Quanti-tea:
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Qi stops standing still
+START MISSION 1200251
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200251
+CONDITIONS
+Always:
+ACTIONS
+Run mission Quali-tea over Quanti-tea
+END MISSION 1200251
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200252
+CONDITIONS
+Always:
+ACTIONS
+===Construct the Express Tea Maker===
+
+{{mission_details
+|desc = On the Assembly Station, construct the Express Tea Maker according to the diagram.
+|details = Construct the Express Tea Maker
+*{{i2|Express Tea Maker|0/1}}
+}}
+Add 1 Express Tea Maker of Default quality (Notify player)
+Add 1 Summer Sand Tea of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: 1200251 | info: 1 | exist: 0
+CHECK SCENEITEM EXIST || sceneItemType: 0 | id: 22522 | exist: 0
+ACTIONS
+SUBMIT MISSION 1200251
+END MISSION 1200252
+
+TRIGGER Procedure 0.0 Step 0.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: 1200251 | info: 1 | exist: 1
+CHECK SCENEITEM EXIST || sceneItemType: 0 | id: 22522 | exist: 0
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: 1200251
+SUBMIT MISSION 1200251
+END MISSION 1200252
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200251 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Qi===
+
+{{mission_details
+|desc = The Express Tea Maker is finished, take it to Qi.
+|details = Talk to Qi
+*{{i2|Express Tea Maker|0/1}}
+*{{i2|Qi|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+CHECK TARGET CAN SUBMIT || canSubmit: 1 | targetId: 2 | missionId: 1200251
+CHECK SCENEITEM EXIST || sceneItemType: 0 | id: 22522 | exist: 0
+ACTIONS
+BAG MODIFY BY TARGET || targetId: 2 | missionId: 1200251
+(cId 0) A conversation 8121 starts:
+{{dialogue|Qi|Thank goodness it's here. Let's see the result!}}
+CUTSCENE UI STATE ENTER || 
+Set global blackboard key 1200251 with info 1.
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 22521 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 14.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+CHECK TARGET CAN SUBMIT || canSubmit: 0 | targetId: 2 | missionId: 1200251
+ACTIONS
+(cId 44) A conversation 8120 starts:
+{{dialogue|Qi|Are you done with the Express Tea Maker? Regular tea kettles will take more than ten minutes to make a cup. The tea maker would save me 4 years of time if I could live up to 70 years old.}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22521
+CONDITIONS
+CHECK CURRENT SCENE || name: Science | flag: 1
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Science | flagName: tea_player1
+Qi stands still in Science
+DELAY MASK SET || maskId: 22521 | delayTime: 0 | durationTime: -2 | curveIndex: 0 | changeType: 1
+SCENEITEM DELETE || id: 218724 | itemType: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 22524 | path: Mission_Item_Teapot_0 | sceneName: Science | flagName: tea_teapot | extraParams: 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 22521 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 22521) to Qi
+(param: CMDAction:StandDrink)
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8007 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 22521) from Qi
+(cId 1) A conversation 8122, 8123, 8124 starts:
+{{dialogue|Qi|The taste... is wonderful...}}
+{{dialogue|Qi|I feel...}}
+{{dialogue|Qi|...Brain, caffeinated. Concentration, maxed out. Work: Engaged.}}
+Add behavior NPC_Conversation (idName: 22521) to Player
+(param: Dialog_TargetID:8007)
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 22522) to Qi
+(param: TargetScene:Science|MoveMode:Run|FlagName:1211_8007_1)
+DELAY MASK SET || maskId: 22522 | delayTime: 2 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22521
+CONDITIONS
+CHECK CURRENT SCENE || name: Science | flag: 0
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Science | flagName: tea_player1
+DELAY MASK SET || maskId: 22521 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Science:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_science
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_science
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Science:
+CONDITIONS
+Always:
+ACTIONS
+Qi stands still in Science
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Science:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 22521) to Qi
+(param: CMDAction:Talk)
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22522
+CONDITIONS
+Always:
+ACTIONS
+Qi stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 22522) from Qi
+Qi stands still in Science
+PLAYER SET POS ROT FLAG || flagName: 1211_Player_2 | sceneName: Science
+DELAY MASK SET || maskId: 22521 | delayTime: 0 | durationTime: -2 | curveIndex: 0 | changeType: 1
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 22522
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 8125, 8126, 2366_0 starts:
+{{dialogue|Qi|Now where was I... ah... satellite analysis!}}
+{{dialogue|Qi|...It's like calculating elliptical movements using integrals... cancel out this... introduce auxiliary variables, then plug it into this formula... so the integral constant here is also the time where it passes periastron... the vector expression of the spacecraft is the same as the elliptical trajectory, that is to say...}}
+{{dialogue|Qi|Aha! You must be fascinated, too! How selfish of me to keep all of this beautiful science to myself! Come, take a look!}}
+
+*''Tell me about your work!''
+*{{flirt}}''I just want to see you.''
+*''I kinda have to go...''
+
+{{dialogue|Qi|indent=true|answer=Tell me about your work!
+|Well... to learn about artificial satellites, we need to start from the beginning. Satellites: nature's companion. Many think that a satellite is simply something revolving around another. But is a planet a satellite? But then would a binary system be a satellite? Well. It is still an important question... Ah! But then there are metorites, moons, asteroids... even Old World space trash. Space trash! Fascinating, truly...}}
+{{dialogue|Qi|indent=true|Ahem. Sorry... sorry. My mind is wandering. So many thoughts, ideas... hypotheses...}}
+{{dialogue|Qi|indent=true|If you don't mind I will tell you about it another time.}}
+{{dialogue|Qi|indent=true|answer=I just want to see you.
+|I understand. You wish to observe my work, correct? Good, good. learning through thorough analysis and practice is always efficient.}}
+{{dialogue|Qi|indent=true|This equation represents the reflectivity of the craft. This is to understand the necessary pressure resistance... and here is the atmospheric density inside the craft, but of course, I don't have to tell you that.}}
+{{dialogue|Qi|indent=true|Now I'm sure you know that when shielded by the earth, the sun's radiation does not affect the craft, or at least is largely reduced, but unshielded, the temperature rises astronomically...}}
+{{dialogue|Qi|indent=true|But for now we should put this aside, it wouldn't dramatically affect the trajectory...}}
+{{dialogue|Qi|indent=true|answer=I kinda have to go...
+|Right. Well, I won't keep you. Goodbye.}}
+{{dialogue|Qi|Hmmm... I can't seem to find my journal...}}
+{{dialogue|Qi|Forget it, forget it, I'll start another one... But my research...}}
+{{dialogue|Qi|The acceleration cause by solar wind... surface to mass ratio...}}
+{{dialogue|Player|Qi seems completely absorbed in his work, it's probably best not to disturb him. Should I help him find his journal, though?}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 22521) from Qi
+Remove behavior NPC_Conversation (idName: 22521) from Player
+CUTSCENE UI STATE EXIT || 
+SCENEITEM CREATE FLAG || itemType: 0 | id: 22521 | path: Mission_CityObj_QiHengRiZhi_0 | sceneName: Science | flagName: tea_journal | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 22522 | extraParams: 0 | sceneName: Science | path: Mission_CityObj_Shopping_0 | flagName: tea_shopping
+SCENEITEM CREATE FLAG || itemType: 0 | id: 22523 | path: Mission_CityObj_QiHengYeYe_0 | sceneName: Science | extraParams: 0 | flagName: tea_qisgrandfather
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 22521 | missionId: 1200251 | iconType: 2
+===Find Qi's Journal===
+
+{{mission_details
+|desc = The journal Qi was working out of seems very important to him. Help him find it.
+|details = Find Qi's Journal
+*{{i2|Qi's Journal|0/1}}
+}}
+GLOBAL BLACK BOARD REMOVE || key: 1200251
+
+TRIGGER Procedure 3.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Qi stops standing still
+
+TRIGGER Procedure 4.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 22521
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 8239 starts:
+{{dialogue||Qi's journal. It is a thick journal, dating back ten years. The most recent pages are scribbled, and hardly legible... there are drawings... is this a robot fighting a Geegler? It must be a study of some sort...}}
+Add 1 Qi's Journal of Default quality (Notify player)
+SCENEITEM DELETE || id: 22521 | itemType: 0
+===Talk to Qi===
+
+{{mission_details
+|desc = You found what Qi was looking for. You should take it back to him.
+|details = Talk to Qi
+*{{i2|Qi's Journal|0/1}}
+*{{i2|Qi|0/1}}
+}}
+
+TRIGGER Procedure 4.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|463}}
+END MISSION 1200252
+
+TRIGGER Procedure 4.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1200251 | targetId: 4 | canSubmit: 1
+ACTIONS
+BAG MODIFY BY TARGET || targetId: 4 | missionId: 1200251
+(cId 3) A conversation 8137, 8138 starts:
+{{dialogue|Qi|My journal! Where did you find it? So much of my research, has now returned!}}
+{{dialogue|Qi|Thank you. I highly appreciate it.}}
+
+TRIGGER Procedure 4.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Qi stops standing still
+SUBMIT MISSION 1200251

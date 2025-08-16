@@ -1,0 +1,152 @@
+Reading Mission 1200039: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200062
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if Elsie has favor < 50
+ACTIONS
+Run mission #1200039
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200039
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1200039 | id: 20391 | sceneName: Main | flagName: elsmael_trigger | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80002263
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 20391
+CONDITIONS
+Check if Elsie is in town
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+{{cutscene|id = 4001}}
+A cutscene CG_ELSIEFISHING (duration: -2.0) starts playing
+Whopper on the Line! - One day, when I was first getting to know Elsie, I found her over at a sandpit trying to pull up a big fish, so I went over to try to help.
+AREA TRIGGER DELETE || id: 20391
+Set ELSIE_SAVED to 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_ELSIEFISHING | state: 8
+CONDITIONS
+Always:
+ACTIONS
+Elsie stands still in Main
+PLAYER SET POS ROT FLAG || flagName: elsmael_player | sceneName: Main
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_ELSIEFISHING | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 285_0 starts:
+{{dialogue|Elsie|Oh! It's you! Sorry to holler at you!}}
+
+*''Old geezer?''
+*''It's alright.''
+
+{{dialogue|Elsie|indent=true|answer=Old geezer?
+|Oh, haha! I must have dozed off... I thought you were my blatherin' old man, Cooper!}}
+{{dialogue|Elsie|indent=true|answer=It's alright.
+|Glad you ain't one to hold a grudge!}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8005 | cId: 0 | missionId: 1200039
+CONDITIONS
+Check if ELSIE_SAVED is == 1
+ACTIONS
+(cId 1) A conversation 557_0 starts:
+{{dialogue|Elsie|Hey, you're tougher'n you look! If not for you, that whopper mighta pulled me in! Say! You ever done much sandfishin' yourself? Givin' it your all, strugglin' against nature, never knowin' for sure who'll come out on top!?}}
+{{dialogue|Elsie|In case you hadn't figured it out, that's kinda my thing!}}
+{{dialogue|Elsie|Yer a city-slicker, ain'tcha? Well don't you be afraid of the great outdoors, now, y'hear? There's a whole desert out there just waitin' to be explored, and all kindsa sandfish just waitin' to be caught!}}
+{{dialogue|Elsie|reward={{i2|Sand Carp|2}}|Here's some stuff that'll get you started; don't worry about hittin' me back, I got plenty more where this came from!}}
+{{dialogue|Elsie|Well, I'd better get gone and find out what happened to my old man before he finds me and talks my dang ear off! So long!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 2441) that ends:
+{{dialogue|Elsie|Here's some stuff that'll get you started; don't worry about hittin' me back, I got plenty more where this came from!}}
+CONDITIONS
+Always:
+ACTIONS
+Add 2 Sand Carp of Default quality (Notify player)
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Elsie stops standing still
+CUTSCENE UI STATE EXIT || 
+Elsie gains 10 favor
+END MISSION 1200039
+
+TRIGGER Procedure 0.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8005 | cId: 0 | missionId: 1200039
+CONDITIONS
+Check if ELSIE_SAVED is == 0
+ACTIONS
+(cId 1) A conversation 558_0 starts:
+{{dialogue|Elsie|Hey, I don't mean to offend, but, eh... the way you handled yourself back there... Say! You ever done much sandfishin' yourself? Givin' it your all, strugglin' against nature, never knowin' for sure who'll come out on top!?}}
+{{dialogue|Elsie|Sandfishin's a good way to get your sand-legs, and like I said, no offense, but I reckon you could use some toughenin' up!}}
+{{dialogue|Elsie|Yer a city-slicker, ain'tcha? Well don't you be afraid of the great outdoors, now, y'hear? There's a whole desert out there just waitin' to be explored, and all kindsa sandfish just waitin' to be caught!}}
+{{dialogue|Elsie|reward={{i2|Sand Carp|2}}|Here's some stuff that'll get you started; don't worry about hittin' me back, I got plenty more where this came from!}}
+{{dialogue|Elsie|Well, I'd better get gone and find out what happened to my old man before he finds me and talks my dang ear off! So long!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE QTE TRIGGER || order: 0 | qte: CG_ELSIEFISHING
+CONDITIONS
+Always:
+ACTIONS
+Set ELSIE_SAVED to 1
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if Elsie has favor >= 50
+ACTIONS
+AREA TRIGGER DELETE || id: 20391
+END MISSION 1200039

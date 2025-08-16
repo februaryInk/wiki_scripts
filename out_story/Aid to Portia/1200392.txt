@@ -1,0 +1,164 @@
+Reading Mission 1200392: Aid to Portia
+
+<onlyinclude>{{Infobox mission
+|name = Aid to Portia
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Aid to Portia:
+
+TRIGGER Procedure 4.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 21784:
+{{dialogue|Trudy|Ah, ''Player''! Did you get time to help do something nice for the Portians?}}
+
+*''Yes.'' (No unique dialogue)
+*''No.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 0
+
+TRIGGER Procedure 5.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200391
+CONDITIONS
+Always:
+ACTIONS
+Run mission Aid to Portia
+END MISSION 1200391
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200392
+CONDITIONS
+Always:
+ACTIONS
+===Wait for a Letter===
+
+{{mission_details
+|desc = Trudy is preparing a list of supplies to send to Portia. Wait for her letter.
+|details = Wait for a Letter
+}}
+Set READ to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|796}}
+ACTION NPC REMOVE CLUSTER || cluster: rebuildportia
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 796
+CONDITIONS
+GROUP 0:
+CHECK PLAYER ITEM || item: 13100003 | itemGrade: -1 | set: 3 | count: 0
+Check if READ is == 0
+
+GROUP 10:
+CHECK PLAYER ITEM || item: 13100007 | itemGrade: -1 | set: 3 | count: 0
+Check if READ is == 0
+
+ACTIONS
+===Prepare Machines===
+
+{{mission_details
+|desc = Mayor Trudy has suggested that you build some equipment for the Portians to help them rebuild their town.
+|details = Prepare Machines
+*{{i2|Industrial Furnace|0/1}}
+*{{i2|Industrial Machine Tools|0/1}}
+}}
+Set READ to 1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 796
+CONDITIONS
+CHECK PLAYER ITEM || item: 13100003 | itemGrade: -1 | set: 2 | count: 1
+CHECK PLAYER ITEM || item: 13100007 | itemGrade: -1 | set: 2 | count: 1
+Check if READ is == 0
+ACTIONS
+===Talk to Trudy===
+
+{{mission_details
+|desc = You have what you need to help out the Portians, make the hand-off to Trudy.
+|details = Talk to Trudy
+*{{i2|Industrial Furnace|0/1}}
+*{{i2|Industrial Machine Tools|0/1}}
+*{{i2|Trudy|0/1}}
+}}
+Set READ to 1
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | targetId: 2 | missionId: 1200391 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Trudy===
+
+{{mission_details
+|desc = You have what you need to help out the Portians, make the hand-off to Trudy.
+|details = Talk to Trudy
+*{{i2|Industrial Furnace|0/1}}
+*{{i2|Industrial Machine Tools|0/1}}
+*{{i2|Trudy|0/1}}
+}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Trudy
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1200391 | targetId: 3 | canSubmit: 1
+ACTIONS
+BAG MODIFY BY TARGET || targetId: 3 | missionId: 1200391
+(cId 0) A conversation 21787, 21788 starts:
+{{dialogue|Trudy|Thanks, ''Player''! I'm sure the Builders who get this equipment will be overjoyed. Portia is well on its way to recovery, and I think this will be just what they need to give them that final push.}}
+{{dialogue|Trudy|I'll have them write you to let you know how your equipment gets used! Thanks again.}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1200391
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|797}}
+END MISSION 1200392

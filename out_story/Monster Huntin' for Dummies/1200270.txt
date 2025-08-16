@@ -1,0 +1,102 @@
+Reading Mission 1200270: Monster Huntin' for Dummies
+
+<onlyinclude>{{Infobox mission
+|name = Monster Huntin' for Dummies
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Monster Huntin' for Dummies:
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+ON MAIL READ || order: 0 | id: 481
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1200269
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200269
+CONDITIONS
+Always:
+ACTIONS
+Run mission Monster Huntin' for Dummies
+END MISSION 1200269
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200270
+CONDITIONS
+Always:
+ACTIONS
+===Make Salted Fish===
+
+{{mission_details
+|desc = Elsie needs several salted fish to make a soup that will attract monsters.
+|details = Make Salted Fish
+*{{i2|Salted Fish|0/5}}
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200269 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Elsie===
+
+{{mission_details
+|desc = The Salted Fish is ready, take it to Elsie so she can make her soup!
+|details = Talk to Elsie
+*{{i2|Salted Fish|0/5}}
+*{{i2|Elsie|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Elsie
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1200269 | targetId: 2 | canSubmit: 1
+ACTIONS
+BAG MODIFY BY TARGET || targetId: 2 | missionId: 1200269
+(cId 0) A conversation 9519 starts:
+{{dialogue|Elsie|Thanks! Alright, I reckon everythin's jus' about ready! Gonna make that soup, an' find me some beasties!}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1200269
+END MISSION 1200270
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800289
+CONDITIONS
+Always:
+ACTIONS
+FAIL MISSION || missionId: 1200269

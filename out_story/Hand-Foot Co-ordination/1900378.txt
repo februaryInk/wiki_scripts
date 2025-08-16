@@ -1,0 +1,284 @@
+Reading Mission 1900378: Hand-Foot Co-ordination
+
+<onlyinclude>{{Infobox mission
+|name = Hand-Foot Co-ordination
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Hand-Foot Co-ordination:
+
+TRIGGER Procedure 0.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if OK is == 1
+ACTIONS
+START MISSION 1900377
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1900377
+CONDITIONS
+Always:
+ACTIONS
+Run mission Hand-Foot Co-ordination
+END MISSION 1900377
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1900378
+CONDITIONS
+Always:
+ACTIONS
+===Dance===
+
+{{mission_details
+|desc = Successfully perform a dance on the stage!
+|details = Dance
+}}
+Set T2 to 0
+Set game to 0
+AREA TRIGGER CREATE || id: 937800 | missionId: 1900377 | flagName: T9378 | sceneName: Main | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Check if game is == 0
+ACTIONS
+AREA TRIGGER DELETE || id: 937800
+AREA TRIGGER CREATE || missionId: 1900377 | id: 937800 | sceneName: Main | flagName: T9378 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 937800
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 9378 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 9378 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: P9378
+Qi stands still in Main and looks at Player
+DELAY MASK SET || maskId: 9378 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.5 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Science:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_science
+Check if T2 is == 1
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_science
+
+TRIGGER Procedure 0.5 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Science:
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 6522}}
+A cutscene CG_QIDANCE (duration: 0.0) starts playing
+Two Left Feet - I tried showing Qi some dance moves, which ended with him stumbling into my arms...
+
+TRIGGER Procedure 0.5 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_QIDANCE | state: 7
+CONDITIONS
+Always:
+ACTIONS
+Qi stands still in Science and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Science | flagName: P9377
+
+TRIGGER Procedure 1.0 Step 4.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 9378 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 17204 starts:
+{{dialogue|Qi|I would recommend we begin with the observational stage. If you are able to adequately demonstrate then we may begin lessons.}}
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTION DANCE START || danceName: DancePlay_TapDance | danceLevel: LvL1
+AREA TRIGGER DELETE || id: 937800
+Set game to 1
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DANCE RESULT || order: 0 | playerJoin: 1 | playerPerfect: -1 | compareRank: 3 | playerRank: 0
+CONDITIONS
+Check if game is == 1
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: P9378_2
+CUTSCENE UI STATE ENTER || 
+(cId 2) A conversation 17205 starts:
+{{dialogue|Qi|Interesting. You are probably classified as a "good dancer."}}
+
+TRIGGER Procedure 3.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 10) A conversation 5197_0 starts:
+{{dialogue|Qi|Preliminary analysis is complete. I believe I am ready to try.}}
+{{dialogue|Qi|But this is not an ideal location for dancing.}}
+
+*''Where should we go?''
+*''This is the perfect place!''
+*{{flirt}}''Are you feeling a little shy?''
+
+{{dialogue|Qi|indent=true|answer=Where should we go?
+|Let's go to the Research Center. There are less people there... ahem... to disrupt our research, of course...}}
+{{dialogue|Qi|indent=true|answer=This is the perfect place!
+|No... Let's go to the Research Center. There are less people there... ahem... to disrupt our research, of course...}}
+{{dialogue|Qi|indent=true|answer=Are you feeling a little shy?
+|Shy? No... no. Ahem... I just... wouldn't want our research to be disrupted...}}
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DANCE RESULT || order: 0 | playerJoin: 1 | playerPerfect: 0 | compareRank: 3 | playerRank: 1
+CONDITIONS
+Check if game is == 1
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: P9378_2
+CUTSCENE UI STATE EXIT || 
+(cId 3) A conversation 17206 starts:
+{{dialogue|Qi|Although I do not have extensive experience, I did notice a few minor mistakes. But regardless, I believe you will be adequate as a teacher.}}
+
+TRIGGER Procedure 2.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DANCE RESULT || order: 0 | playerJoin: 1 | playerPerfect: 0 | compareRank: 3 | playerRank: 2
+CONDITIONS
+Check if game is == 1
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: P9378_2
+CUTSCENE UI STATE ENTER || 
+(cId 4) A conversation 17207, 17208 starts:
+{{dialogue|Qi|So... I am supposed to learn from your mistakes, correct? I understand. You are showing me common pitfalls of beginner dancers.}}
+{{dialogue|Qi|Now you can show me an example of a successful dance.}}
+
+TRIGGER Procedure 3.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTION DANCE START || danceName: DancePlay_TapDance | danceLevel: LvL1
+Set game to 2
+
+TRIGGER Procedure 3.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DANCE RESULT || order: 0 | playerJoin: 1 | playerPerfect: -1 | compareRank: 2 | playerRank: 2
+CONDITIONS
+Check if game is == 2
+ACTIONS
+(cId 10) A conversation 5197_0 starts:
+{{dialogue|Qi|Preliminary analysis is complete. I believe I am ready to try.}}
+{{dialogue|Qi|But this is not an ideal location for dancing.}}
+
+*''Where should we go?''
+*''This is the perfect place!''
+*{{flirt}}''Are you feeling a little shy?''
+
+{{dialogue|Qi|indent=true|answer=Where should we go?
+|Let's go to the Research Center. There are less people there... ahem... to disrupt our research, of course...}}
+{{dialogue|Qi|indent=true|answer=This is the perfect place!
+|No... Let's go to the Research Center. There are less people there... ahem... to disrupt our research, of course...}}
+{{dialogue|Qi|indent=true|answer=Are you feeling a little shy?
+|Shy? No... no. Ahem... I just... wouldn't want our research to be disrupted...}}
+
+TRIGGER Procedure 3.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Qi stops standing still
+===Go to Research Center===
+
+{{mission_details
+|desc = Go to the Research Center with Qi and teach him how to dance.
+|details = Go to Research Center
+}}
+Set T2 to 1
+
+TRIGGER Procedure 3.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_QIDANCE | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 11) A conversation 5201_0 starts:
+{{dialogue|Qi|Was there an electrical leakage? Don't you feel it? Or maybe it's exercise fatigue? My neck, chest, calf all feel pretty sore.}}
+{{dialogue|Qi|''Player'', why don't we call it a day? Thanks for teaching me how to dance. This is truly... an unexpected work out method.}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Qi stops standing still
+SUBMIT MISSION 1900377
+END MISSION 1900377
+END MISSION 1900378

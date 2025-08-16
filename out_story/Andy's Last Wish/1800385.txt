@@ -1,0 +1,642 @@
+Reading Mission 1800385: Andy's Last Wish
+
+<onlyinclude>{{Infobox mission
+|name = Andy's Last Wish
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Andy's Last Wish:
+
+TRIGGER Procedure 0.0 Step 18.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if 8384Acc is == 1
+ACTIONS
+START MISSION 1800384
+
+TRIGGER Procedure 0.0 Step 24.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800384
+CONDITIONS
+Always:
+ACTIONS
+Run mission Andy's Last Wish
+END MISSION 1800384
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800385
+CONDITIONS
+Always:
+ACTIONS
+===Make Super Shield Mark II===
+
+{{mission_details
+|desc = Andy has given you a recipe for the Super Shield Mark II, go and make it on the Worktable.
+|details = Make Super Shield Mark II
+*{{i2|Super Shield Mk. II|0/1}}
+}}
+SCENEITEM DELETE || itemType: 0 | id: 83841
+SCENEITEM CREATE FLAG || itemType: 0 | id: 83841 | path: S8385_InteractAndy | flagName: S8385_InteractAndy | sceneName: LoganOldHome | extraParams: -1
+Set global blackboard key andysick with info 1.
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | canSubmit: 1 | missionId: 1800384 | targetId: 1
+CONDITIONS
+Always:
+ACTIONS
+===Go to Logan's House===
+
+{{mission_details
+|desc = Now that you've made the Super Shield Mark II, go to Logan's house and give it to Andy.
+|details = Go to Logan's House
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the LoganOldHome:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_loganoldhome
+CHECK PLAYER ITEM || item: 19810101 | itemGrade: -1 | set: 2 | count: 1
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_loganoldhome
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the LoganOldHome:
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: LoganOldHome | flagName: S8385_0_1
+Logan stands still in LoganOldHome and looks at Player
+Cooper stands still in LoganOldHome
+Mabel stands still in LoganOldHome
+Trudy stands still in LoganOldHome
+Hugo stands still in LoganOldHome
+Jasmine stands still in LoganOldHome
+Remove behavior Story1800384_8013 (idName: 8384131) from Andy
+Add behavior Story1800384_8013LyingBed (idName: 8385131) to Andy
+(param: -1)
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 83851
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 5270_0 starts:
+{{dialogue|Mabel|Coop, could I trouble you to take that pan with the gelatin out of the oven?}}
+{{dialogue|Cooper|Hold yer horses! Still needs another minute or two, I been watchin' it like a hawk...! And you know about hawks, when they have their eyes on the-}}
+{{dialogue|Mabel|What's with all the sudden interest? Thought you were still sore at the boy for rompin' around in your rutabaga garden?}}
+{{dialogue|Cooper|Precisely, m'dear... We need him alive!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 10.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8385001) to Player
+(param: TargetScene:LoganOldHome|MoveMode:Walk|FlagName:S8385_0_2)
+
+TRIGGER Procedure 0.0 Step 11.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 5271_0 starts:
+{{dialogue|Logan|Hey, ''Player''. Join the party. Whole neighborhood got wind of the Andy situation and, well, see for yourself...}}
+{{dialogue|Hugo|This cabinet is pretty heavy, better let me get it. Don't want you to pull a muscle.}}
+{{dialogue|Trudy|Let's push together. Ready?}}
+{{dialogue|Hugo|...Hng!}}
+{{dialogue|Trudy|Are you okay? Pulled a muscle?}}
+{{dialogue|Hugo|...Almost stepped on a nail.}}
+{{dialogue|Trudy|Close call...}}
+{{dialogue|Logan|They, uh, figured I had my hands full with Andy, offered to do some chores. Somehow that turned into rearranging some furniture.}}
+{{dialogue|Logan|They want me down here taking a break, but... it's kind of turning into a hostage situation. Won't let me help out with anything.}}
+{{dialogue|Logan|Oh, you did end up making that shield? Andy'll love that.}}
+{{dialogue|Logan|He's still resting upstairs, right where you left him.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 12.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Go to Andy's Room===
+
+{{mission_details
+|desc = Andy is resting in his room upstairs. Go and see him and give him the Super Shield Mark II.
+|details = Go to Andy's Room
+}}
+AREA TRIGGER ONCE CREATE || missionId: 1800385 | id: 83851 | showOnMap: 0 | mapIcon: MissionAreaBranch | transId: 0 | flagName: Trigger_83851 | sceneName: LoganOldHome
+AREA TRIGGER ONCE CREATE || flagName: Trigger_83852 | showOnMap: 0 | mapIcon: MissionAreaBranch | transId: 0 | missionId: 1800385 | id: 83852 | sceneName: LoganOldHome
+AREA TRIGGER ONCE CREATE || flagName: Trigger_83853 | missionId: 1800384 | id: 83853 | sceneName: LoganOldHome | showOnMap: 0 | mapIcon: Npc | transId: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 8385001) from Player
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 14.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 83851
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 5272_0 starts:
+{{dialogue|Mabel|Coop! You're makin' a mess!}}
+{{dialogue|Cooper|It's part of my process! I'm an ar-teest! Now pass the pickle juice!}}
+{{dialogue|Mabel|This place was spotless before you came in, Coop... we can't leave it like this...}}
+{{dialogue|Cooper|He'll consider it an honor! To have a legend like m'self spill pickle juice in his kitchen...!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 14.2 Order 51 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Cooper stops standing still
+Mabel stops standing still
+
+TRIGGER Procedure 0.0 Step 16.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 83852
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 5273_0 starts:
+{{dialogue|Trudy|Cabinet looks much better!}}
+{{dialogue|Hugo|Yep. Fixed that fourth leg there. Coulda fallen and hurt somebody.}}
+{{dialogue|Trudy|Especially with kids in the house!}}
+{{dialogue|Hugo|I'll poke around some more, see if there isn't anything else that needs a tune-up...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 16.2 Order 52 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Trudy stops standing still
+Heidi stops standing still
+
+TRIGGER Procedure 0.0 Step 20.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 83853
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 83853 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 21.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83853 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 8385402) to Jasmine
+(param: CMDAction:ReadBook|LookAtActor:8013|Delay:0.0)
+Remove behavior Story1800384_8013LyingBed (idName: 8385131) from Andy
+Add behavior Story1800384_8013LyingBed (idName: 8385132) to Andy
+(param: -1)
+PLAYER SET POS ROT FLAG || sceneName: LoganOldHome | flagName: S8385_0_3
+
+TRIGGER Procedure 0.0 Step 21.3 Order 54 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8013 | behaviourName: Story1800384_8013LyingBed | eventName: LyingBed
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 83853 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+PLAYER SET POS ROT FLAG || sceneName: LoganOldHome | flagName: S8385_0_3
+
+TRIGGER Procedure 0.0 Step 22.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83853 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 17485, 17486, 17487 starts:
+{{dialogue|Jasmine|...And with that, the ten thousand years of space jail was over for evil butler kitty...}}
+{{dialogue|Jasmine|Stay tuned for next time where we'll see evil butler kitty attempt to re-enter society and face the pains of attempting to understand a community that has all but forgotten he ever existed...}}
+{{dialogue|Andy|Oh, h-hey...! ''Player''! You came back and... is that the Super Shock Shield Mark II!?}}
+
+TRIGGER Procedure 0.0 Step 25.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8385002) to Player
+(param: TargetScene:LoganOldHome|MoveMode:Walk|FlagName:S8385_0_4|Action:Give)
+
+TRIGGER Procedure 0.0 Step 27.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 5274_0 starts:
+{{dialogue|Andy|Wow, you really did it, huh? This looks just like I saw it in my head!}}
+{{dialogue|Jasmine|Hey! Don't forget! I made up a whole story for you, too...!}}
+{{dialogue|Andy|Oh, er, yeah! Thanks, Jazz! Thanks... everybody! Didn't know so many people cared...}}
+{{dialogue|Jasmine|Course we care, you're a Sandrocker too, silly!}}
+The conversation ends.
+Remove 1 Super Shield Mk. II of Default quality (Notify player)
+NPC CLOTH ADD MISSION ITEM || itemId: 12401027
+
+TRIGGER Procedure 0.0 Step 28.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Logan stands still in LoganOldHome
+Add behavior CommanderMoveToFlagAndAction (idName: 8385115) to Logan
+(param: TargetScene:LoganOldHome|MoveMode:Walk|FlagName:S8385_11_3)
+Logan stops standing still
+
+TRIGGER Procedure 0.0 Step 30.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8011 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 5275_0 starts:
+{{dialogue|Logan|How ya holdin' up kid? Did you say "thanks for the shield, ''Player''?"}}
+{{dialogue|Andy|As a matter of fact, I did! Get with the times! Er, nevermind, just check this bad boy out! Put this between you and the bad guys and this shock absorber here'll make a ton of bricks feel like a cool breeze...!}}
+{{dialogue|Logan|High praise for one of your own machinations... I'll test it out in some spars, see if I can use it in the field... Thanks again for your help, too, ''Player''.}}
+{{dialogue|Andy|Heh heh... I have a feeling this is the beginning of a bee-yew-teeful friendship, ''Player''... Everytime we team up, it's just hit after hit after hit...!}}
+{{dialogue|Logan|I'll say... it feels lighter... springier... Not unlike yourself, kid. Looks like you're really bouncin' back. Did you take your next dose yet?}}
+{{dialogue|Andy|Last sip in the bottle... Bottoms up!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 30.4 Order 42 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 838502 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 31.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 83854 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 31.0 Order 53 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 838502 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 838502 | delayTime: 0 | changeType: 1 | curveIndex: 0 | durationTime: -2
+(cId 8) A conversation 17498, 17499, 17500, 17501, 17502, 17503 starts:
+{{dialogue|Trudy|Jasmiiine...!}}
+{{dialogue|Jasmine|Coming, Ma! Okay everyone. Time to go. Remember to avoid the pitfalls of organized crime, Andy. Don't be like evil butler kitty!}}
+{{dialogue|Andy|Uh, yeah... sound advice...}}
+{{dialogue|Jasmine|See ya when you feel better! I'll leave some books with you, so long as you promise not to write spoilers in the margins again...!}}
+{{dialogue|Jasmine|Oh! And here's the homework that you missed!}}
+{{dialogue|Andy|Huh?!}}
+
+TRIGGER Procedure 0.0 Step 32.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83854 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8385_0_1
+AREA TRIGGER DELETE || id: 83851
+AREA TRIGGER DELETE || id: 83852
+Cooper stops standing still
+Mabel stops standing still
+Trudy stops standing still
+Hugo stops standing still
+
+TRIGGER Procedure 0.0 Step 33.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from LoganOldHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Cooper stops standing still
+Mabel stops standing still
+Trudy stops standing still
+Hugo stops standing still
+Jasmine stops standing still
+Remove behavior CommanderNPCAction (idName: 8385402) from Jasmine
+Remove behavior CommanderMoveToFlagAndAction (idName: 8385115) from Logan
+Remove behavior CommanderMoveToFlagAndAction (idName: 8385002) from Player
+Cooper stands still in Main and looks at Logan
+Mabel stands still in Main and looks at Logan
+Trudy stands still in Main and looks at Logan
+Hugo stands still in Main and looks at Logan
+Jasmine stands still in Main and looks at Logan
+Logan stands still in Main and looks at Trudy
+Logan stops standing still
+
+TRIGGER Procedure 0.0 Step 36.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from LoganOldHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 83854 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+(cId 10) A conversation 5276_0 starts:
+{{dialogue|Mabel|Now, Logan... if'n you ain't come around to ask how to make that gelatin, we'd have had no clue you had a sick kid on your hands! Don't be a stranger, now! We all want to make amends from what all's happened in the past.}}
+{{dialogue|Hugo|Yeah. Here's to hopin' things could go back to the way they used to be. Logan, you need anything from any of us, just ask.}}
+{{dialogue|Cooper|That's right! Send the boy on over to the ranch, we'll give 'im a lesson in shootin', ridin', how to be a man and a half! Down at the ranch, we can give you the diligence and know-how that can move mountains, m'boy...}}
+{{dialogue|Hugo|Yep. Listen close to your uncle Coop, reckon you could get a lesson in humility there, too.}}
+{{dialogue||Haha...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 37.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Cooper|I don't get it.}}
+Add behavior CommanderNPCAction (idName: 8385045) to Mabel
+(param: CMDAction:Smile)
+Add behavior CommanderNPCAction (idName: 8385065) to Trudy
+(param: CMDAction:Smile)
+Add behavior CommanderNPCAction (idName: 8385405) to Jasmine
+(param: CMDAction:Smile)
+
+TRIGGER Procedure 0.0 Step 38.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC BUBBLE STATE CHANGE || order: 0 | npc: 8003 | flag: 0
+CONDITIONS
+Always:
+ACTIONS
+(cId 11) A conversation 5277_0 starts:
+{{dialogue|Logan|Well, shucks, y'all... I never held nothin' against none of y'all. Things just got a bit sideways for a while, that's all. As for today, I'll make it all up to you at the Blue Moon-}}
+{{dialogue|Mabel|No need! Neighbors help each other out! Now you enjoy your Banana-orange Gelatin, we're all gonna get out of your hair!}}
+{{dialogue|Trudy|Bless your heart. Alright, let us know if you need anything else, Logan!}}
+{{dialogue|Jasmine|Byeeee!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 40.0 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Cooper stops standing still
+Mabel stops standing still
+Trudy stops standing still
+Hugo stops standing still
+Jasmine stops standing still
+STOPWATCH REAL TIME SET || id: 838501 | sec: 2
+Remove behavior CommanderNPCAction (idName: 8385045) from Mabel
+Remove behavior CommanderNPCAction (idName: 8385065) from Trudy
+Remove behavior CommanderNPCAction (idName: 8385405) from Jasmine
+
+TRIGGER Procedure 0.0 Step 42.0 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 838501
+CONDITIONS
+Check relationship with Logan is 5 Friend Best
+ACTIONS
+(cId 12) A conversation 17513, 17514 starts:
+{{dialogue|Logan|Dang. How 'bout that, huh? Looks like I do still have a home here, after all.}}
+{{dialogue|Logan|Think I'm gonna untidy some of the tidying decisions made by certain parties today, however. Catch you soon, ''Player''.}}
+
+TRIGGER Procedure 0.0 Step 50.0 Order 29 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 12) After the conversation ends:
+(cId 14) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Logan stops standing still
+SUBMIT MISSION 1800384
+
+TRIGGER Procedure 0.0 Step 44.0 Order 25 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 838501
+CONDITIONS
+Check relationship with Logan is Lover
+ACTIONS
+(cId 13) A conversation 5278_0 starts:
+{{dialogue|Logan|Whew... can be tough jugglin' all this at times... hope I never made you feel left out.}}
+
+*''I'm always happy to help with Andy.''
+*''How're you going to make it up to me?'' (No unique dialogue)
+*''Just don't forget I'm here...''
+
+{{dialogue|Logan|indent=true|answer=I'm always happy to help with Andy.
+|reward={{NPC2|Logan|rp=2}}|Yeah, it's... I appreciate it. But... do let me know if it's gettin' to be too much.}}
+{{dialogue|Logan|indent=true|Havin' you by my side... well... three of a kind sure beats two, huh?}}
+{{dialogue|Logan|indent=true|But I'm afraid, though I long for your embrace, somebody's still gotta watch this kid. Reckon that somebody oughta be me.}}
+{{dialogue|Logan|indent=true|Once this episode is over, we'll take a day off, jus you an' me...}}
+{{dialogue|Logan|indent=true|answer=Just don't forget I'm here...
+|reward={{NPC2|Logan|rp=2}}|Hey, c'mon... I'd never forget about you...}}
+{{dialogue|Logan|indent=true|End of the day it's just you and me here, ain't it?}}
+{{dialogue|Logan|indent=true|But you may be on to somethin'... a bit more alone time could do us good...}}
+{{dialogue|Logan|indent=true|But I'm afraid, though I long for your embrace, somebody's still gotta watch this kid. Reckon that somebody oughta be me.}}
+{{dialogue|Logan|indent=true|Once this episode is over, we'll take a day off, jus you an' me...}}
+Set 8385Con to 0
+
+TRIGGER Procedure 0.0 Step 51.0 Order 50 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 13) After the conversation ends:
+CONDITIONS
+Check if 8385Con is == 0
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Logan stops standing still
+SUBMIT MISSION 1800384
+
+TRIGGER Procedure 0.0 Step 45.0 Order 26 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 13) The player picks the first option in conversation segment 17515:
+{{dialogue|Logan|Whew... can be tough jugglin' all this at times... hope I never made you feel left out.}}
+
+*''I'm always happy to help with Andy.'' (No unique dialogue)
+*''How're you going to make it up to me?'' (No unique dialogue)
+*''Just don't forget I'm here...'' (No unique dialogue)
+
+(cId 13) The player picks the second option in conversation segment 17515:
+{{dialogue|Logan|Whew... can be tough jugglin' all this at times... hope I never made you feel left out.}}
+
+*''I'm always happy to help with Andy.'' (No unique dialogue)
+*''How're you going to make it up to me?'' (No unique dialogue)
+*''Just don't forget I'm here...'' (No unique dialogue)
+
+(cId 13) The player picks the third option in conversation segment 17515:
+{{dialogue|Logan|Whew... can be tough jugglin' all this at times... hope I never made you feel left out.}}
+
+*''I'm always happy to help with Andy.'' (No unique dialogue)
+*''How're you going to make it up to me?'' (No unique dialogue)
+*''Just don't forget I'm here...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Logan gains 2 favor
+
+TRIGGER Procedure 0.0 Step 46.0 Order 27 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 13) The player picks the second option in conversation segment 17515:
+{{dialogue|Logan|Whew... can be tough jugglin' all this at times... hope I never made you feel left out.}}
+
+*''I'm always happy to help with Andy.'' (No unique dialogue)
+*''How're you going to make it up to me?'' (No unique dialogue)
+*''Just don't forget I'm here...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+The player interacts (type 2, option 0) with Logan
+Set 8385Con to 1
+
+TRIGGER Procedure 0.0 Step 48.0 Order 28 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON INTERACTIVE EXIT || order: 0 | instID: 8011
+CONDITIONS
+Always:
+ACTIONS
+(cId 14) A conversation 17518, 17519, 17523, 17524 starts:
+{{dialogue|Logan|Well, you know me. I'll think of something.}}
+{{dialogue|Logan|Just the two of us. We'll ride off somewhere. No destination. How's that sound?}}
+{{dialogue|Logan|But I'm afraid, though I long for your embrace, somebody's still gotta watch this kid. Reckon that somebody oughta be me.}}
+{{dialogue|Logan|Once this episode is over, we'll take a day off, jus you an' me...}}
+
+TRIGGER Procedure 0.0 Step 52.0 Order 30 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior Story1800384_8013LyingBed (idName: 8385132) from Andy
+SCENEITEM DELETE || itemType: 0 | id: 83841
+Set global blackboard key AndySick with info 1.
+Townsfolk respond to the event:
+
+{{dialogue|Logan|Hey, ''Player''! That shield you and Andy cooked up works like a charm. You should make one for yourself if you haven't already.}}
+
+
+TRIGGER Procedure 0.0 Step 54.0 Order 31 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON REMOVE || missionId: 1800385 | npc: 8011 | missionIcon: 6
+END MISSION 1800385
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 83841
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 17460 starts:
+{{dialogue|Andy|Oh no... is that... the light at the end of the tunnel...!? Oop. False alarm. Thought my eyes were closed.}}
+
+TRIGGER Procedure 2.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1800385
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || id: 83841 | itemType: 0
+Remove behavior Story1800384_8013 (idName: 8384131) from Andy
+Remove behavior Story1800384_8013LyingBed (idName: 8385131) from Andy
+Remove behavior Story1800384_8013LyingBed (idName: 8385132) from Andy
+
+TRIGGER Procedure 2.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key andysick with info 1.
+
+TRIGGER Procedure 15.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1800385
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 83851
+AREA TRIGGER DELETE || id: 83852
+Cooper stops standing still
+Mabel stops standing still
+Trudy stops standing still
+Hugo stops standing still
+Logan stops standing still
+Jasmine stops standing still
+GLOBAL BLACK BOARD REMOVE || key: andysick

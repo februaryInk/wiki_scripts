@@ -1,0 +1,719 @@
+Reading Mission 1700332: I am Gungam!
+
+<onlyinclude>{{Infobox mission
+|name = I am Gungam!
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from I am Gungam!:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 173312
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 4103_0 starts:
+{{dialogue|Qi|Ah, ''Player'', you're here!}}
+{{dialogue|Qi|Look at this! These are the latest upgrades I have designed for the Mobile Suit at the request of City Hall. By making these enhancements, it will become Mobile Suit Mode: F! F stands for Farming.}}
+
+*''Yes! Mode: F!''
+*''Uh...? Really? ...Really?''
+*''No comment.''
+
+{{dialogue|Qi|indent=true|answer=Yes! Mode: F!
+|reward={{NPC2|Qi|rp=5}}|I knew you'd appreciate this as much as I do.}}
+{{dialogue|Qi|Oh sure, you might say, but aren't missiles and plasma swords more exciting? Think of it this way! Have you ever seen a Gung- Mobile Suit doing farming? No! We're treading on new sacred ground here!}}
+{{dialogue|Qi|On the front is a custom Rotavator, capable of churning any terrain. And on the back, an all purpose Multidirectional Spray! Impressive huh? Here, these are the diagrams.}}
+{{dialogue|Qi|When you've constructed these add-ons, please come install them on the Suit. I'll be waiting.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if read is == 0
+ACTIONS
+START MISSION 1700331
+CUTSCENE UI STATE EXIT || 
+Qi stops standing still
+Remove behavior CommanderMoveToFlag (idName: 173311) from Player
+Run mission I am Gungam!
+Add 1 Rotavator of Default quality (Notify player)
+Add 1 Multidirectional Spray of Default quality (Notify player)
+END MISSION 1700331
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700332
+CONDITIONS
+Always:
+ACTIONS
+===Construct Suit Upgrades===
+
+{{mission_details
+|desc = Construct the parts required to upgrade the Mobile Suit: a Rotavator and a Multidirectional Spray. You can construct them on your Assembly Station.
+|details = Construct Suit Upgrades
+*{{i2|Rotavator|0/1}}
+*{{i2|Multidirectional Spray|0/1}}
+}}
+Set choice to 0
+Set quit to 0
+Set refuse to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1700331 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Install Suit Upgrades===
+
+{{mission_details
+|desc = The Rotavator and Multidirectional Spray are ready, install them on the Mobile Suit to continue.
+|details = Install Suit Upgrades
+*{{i2|Rotavator|0/1}}
+*{{i2|Multidirectional Spray|0/1}}
+}}
+SCENEITEM DELETE || itemType: 12 | id: 22421
+SCENEITEM CREATE FLAG || itemType: 11 | id: 173321 | extraParams: Mission_robot3_1|CreatorItem|19810084_1,19810085_1|1547|Fix|1.4 | sceneName: Science | path: Mission_robot3 | flagName: newrobot_robot
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 173321 | missionId: 1700331 | iconType: 5
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 173321
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 173321 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173321 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Qi stands still in Science
+PLAYER SET POS ROT FLAG || sceneName: Science | flagName: MSRT_Player3
+DELAY MASK SET || delayTime: 0 | durationTime: 2 | changeType: 1 | curveIndex: -2 | maskId: 173321
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173321 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 4106_0 starts:
+{{dialogue|Qi|...It's so beautiful...}}
+{{dialogue|Qi|Ahem, I hereby declare the Mobile Suit Mode: F to be fully operational! We did it ''Player''! The bureaucrats and the botanists will be so impressed.}}
+{{dialogue|Qi|But now... Now the question is who among us will pilot this perfection? Perhaps a competition? For science, of course.}}
+
+*''You're not afraid this time?''
+*''I can definitely drive it better than you!''
+*''I don't know how to pilot!''
+
+{{dialogue|Qi|indent=true|answer=You're not afraid this time?
+|Ahem... operating an Air Canon during a war and piloting a Mobile Suit Mode: F are not at all the same thing. Anyway, I believe the two of us are the only ones qualified to pilot it, after what happened to it during the tunnel project...}}
+{{dialogue|Qi|indent=true|answer=I can definitely drive it better than you!
+|I don't doubt your skills, but I too, possess considerable determination.}}
+{{dialogue|Qi|indent=true|answer=I don't know how to pilot!
+|Piloting a Mobile Suit is not about skill, it is about determination and attitude. You need to be one with the machine, let it be an extension of your body... ahem.}}
+{{dialogue|Qi|indent=true|But I still think it's better for us to compete, and see who can pilot it best. It seems the most fair.}}
+{{dialogue|Qi|Regardless, Mode: F is operational, so if you're ready, we can start the pilot test, right now. Mayor Trudy can select the pilot of the Mobile Suit.}}
+
+*''What are we testing?''
+*''Bring. It. On!''
+*''I'm kind of busy...''
+
+{{dialogue|Qi|indent=true|answer=Bring. It. On!
+|Very well, I will go and fetch Mayor Trudy.}}
+{{dialogue|Qi|indent=true|answer=I'm kind of busy...
+|When you're ready, just let me know.}}
+{{dialogue|Qi|I'm glad you asked. I've spent a considerable amount of time designing this test. The Mobile Suit Pilot Exam has three subjects. The first is operational questions. I believe these shouldn't be a problem for either of us.}}
+{{dialogue|Qi|The other two subjects are piloting tests, the winner of these shall be determined by the judge.}}
+{{dialogue|Qi|Regardless, Mode: F is operational, so if you're ready, we can start the pilot test, right now. Mayor Trudy can select the pilot of the Mobile Suit.}}
+
+*''What are we testing?''
+*''Bring. It. On!''
+*''I'm kind of busy...''
+
+{{dialogue|Qi|indent=true|answer=What are we testing?
+|I'm glad you asked. I've spent a considerable amount of time designing this test. The Mobile Suit Pilot Exam has three subjects. The first is operational questions. I believe these shouldn't be a problem for either of us.}}
+{{dialogue|Qi|indent=true|The other two subjects are piloting tests, the winner of these shall be determined by the judge.}}
+{{dialogue|Qi|indent=true|Regardless, Mode: F is operational, so if you're ready, we can start the pilot test, right now. Mayor Trudy can select the pilot of the Mobile Suit.}}
+
+:*''Bring. It. On!''
+:*''I'm kind of busy...''
+
+{{dialogue|Qi|indent=double|answer=Bring. It. On!
+|Very well, I will go and fetch Mayor Trudy.}}
+{{dialogue|Qi|indent=double|answer=I'm kind of busy...
+|When you're ready, just let me know.}}
+{{dialogue|Qi|indent=true|answer=Bring. It. On!
+|Very well, I will go and fetch Mayor Trudy.}}
+{{dialogue|Qi|indent=true|answer=I'm kind of busy...
+|When you're ready, just let me know.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Qi stops standing still
+===Mobile Suit Exam===
+
+{{mission_details
+|desc = Who will pass the test to be the Mobile Suit pilot? Try your best!
+|details = Mobile Suit Exam
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 13945) that ends:
+{{dialogue|Qi|Very well, I will go and fetch Mayor Trudy.}}
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 173322 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: -2
+Set refuse to 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 1396}}
+A cutscene CG_EXAMINEFAILED (duration: 2.0) starts playing
+Failed Exam - Qi tried to pilot his new robot but ultimately ran into trouble, and failed his own test.
+Remove behavior Player_RideMount (idName: 173321) from Player
+
+TRIGGER Procedure 0.0 Step 0.0 Order 27 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 173323
+SCENEITEM DELETE || itemType: 0 | id: 173322
+Trudy stops standing still
+Qi stops standing still
+AREA TRIGGER DELETE || id: 173321
+AREA TRIGGER DELETE || id: 173320
+Remove behavior Player_RideMount (idName: 173321) from Player
+RIDABLE DESTROY || id: 173321
+SUBMIT MISSION 1700331
+END MISSION 1700332
+
+TRIGGER Procedure 0.0 Step 0.0 Order 45 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Move Mobile Suit===
+
+{{mission_details
+|desc = Operate the Mobile Suit to the designated spot.
+|details = Move Mobile Suit
+}}
+AREA TRIGGER CREATE || missionId: 1700331 | id: 173320 | sceneName: Main | flagName: MSRT_Trudy | showOnMap: 0 | mapIcon: 0 | transId: 0
+AREA TRIGGER ONCE CREATE || missionId: 1700331 | id: 173321 | sceneName: Main | flagName: MSRT_Point | showOnMap: 1 | mapIcon: MissionArea | transId: 80020938
+CUTSCENE UI STATE EXIT || 
+In a speech bubble:
+{{dialogue|Qi|Elementary...}}
+STOPWATCH REAL TIME SET || id: 1733210 | sec: 6
+
+TRIGGER Procedure 0.0 Step 12.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior Player_RideMount (idName: 173321) to Player
+(param: RideInstID:173321|MoveMode:Run)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173322 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Trudy stands still in Main
+Qi stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: MSRT_Player
+DELAY MASK SET || delayTime: 0 | durationTime: 2 | changeType: 1 | curveIndex: -2 | maskId: 173322
+RIDABLE CREATE || sceneFlag: Main:MSRT_MS | ownerId: 8000 | instanceId: 173321 | protoId: 1002
+SCENEITEM CREATE FLAG || itemType: 0 | id: 173322 | path: MSRT_OBJ | sceneName: Main | flagName: MSRT_Point | extraParams: -1
+SCENEITEM CREATE FLAG || itemType: 0 | id: 173323 | path: MSRT_OBJ2 | sceneName: Main | flagName: MSRT_Point | extraParams: -1
+SCENEITEM CREATE FLAG || itemType: 0 | id: 173324 | path: MSRT_OBJ | sceneName: Main | flagName: MSRT_Point2 | extraParams: -1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173322 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 4115_0 starts:
+{{dialogue|Trudy|Uhm Director... do we really need to do this...? We're just using it to plant trees faster... right?}}
+{{dialogue|Qi|Mayor, when you asked me for upgrades, I agreed. Why? Because it's my dream to pilot a Mobile Suit! In peace time, there are very stringent rules in place for this to happen, and I must observe them! Or else the very fabric of authenticity would be shattered!}}
+{{dialogue|Trudy|What... rules? Are they from Vega 5?}}
+{{dialogue|Qi|They're... just there, okay? Are you going to stand between a man and his dream...?}}
+{{dialogue|Trudy|Uh... no- fine. Let's just get this over with... Are you both ready?}}
+{{dialogue|Qi|Mayor, for the questions, please use the "Mobile Suit Code of Practice" issued by... Vega 5.}}
+{{dialogue|Trudy|Right...}}
+{{dialogue|Qi|Okay, I'm prepared, ''Player'', are you?}}
+
+*''Let's do it!'' (No unique dialogue)
+*''I'll do my best...'' (No unique dialogue)
+
+{{dialogue|Trudy|Alright, question one: If you encounter pedestrians walking in front of you while piloting the Mobile Suit, you should?}}
+
+*''Prepare for battle.''
+*''Take a detour.''
+*''Slow down to avoid collision.''
+*''Speed up.''
+
+{{dialogue|Trudy|indent=true|answer=Prepare for battle.
+|Uh... ''Player'', I didn't expect you to be so... bold.}}
+{{dialogue|Trudy|indent=true|answer=Take a detour.
+|Good. Public safety is a priority.}}
+{{dialogue|Trudy|indent=true|answer=Slow down to avoid collision.
+|Good. Public safety is a priority.}}
+{{dialogue|Trudy|indent=true|answer=Speed up.
+|Uh... ''Player'', I didn't expect you to be so... bold.}}
+{{dialogue|Trudy|And Qi?}}
+{{dialogue|Qi|There are no options available that fit with the adequate response. I would engage a power jump and avoid the situation entirely.}}
+{{dialogue|Trudy|Well that is certainly... not in the answers... but okay...}}
+{{dialogue|Trudy|Next question. This is a picture question: If you are the pilot of the green Mobile Suit, what should you do in the given situation?}}
+
+*''Decelerate and let the red Mobile Suit overtake.''
+*''Take out your weapon and make them reverse through force.''
+*''Turn on Action Mode and put the pedal to the metal.''
+*''Avoid a collision and report to the authorities.''
+
+{{dialogue|Trudy|indent=true|answer=Decelerate and let the red Mobile Suit overtake.
+|I agree, safety first, no matter what the other suit's doing.}}
+{{dialogue|Trudy|indent=true|answer=Take out your weapon and make them reverse through force.
+|Ahem... this isn't the, uh... recommended... course of action...}}
+{{dialogue|Trudy|indent=true|answer=Turn on Action Mode and put the pedal to the metal.
+|Ahem... this isn't the, uh... recommended... course of action...}}
+{{dialogue|Trudy|indent=true|answer=Avoid a collision and report to the authorities.
+|I agree, safety first, no matter what the other suit's doing.}}
+{{dialogue|Trudy|And you, Director?}}
+{{dialogue|Qi|There isn't an option here that is appropriate, either.}}
+{{dialogue|Trudy|Of course...}}
+{{dialogue|Qi|I would engage Action Mode and then stop in front of the other Mobile Suit and explain the rules they were violating.}}
+{{dialogue|Trudy|But wouldn't you run into them based on this scenario?}}
+{{dialogue|Qi|Actually, I would be in Action Mode while engaging the power jump from the previous question, thus completely avoiding a collision.}}
+{{dialogue|Trudy|Oh... kay...}}
+{{dialogue|Trudy|Well, that ends the theory aspect of the exam. Now we are going to start the operational exam. We'll begin with ''Player'', please take your place on the Mobile Suit.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 13954:
+{{dialogue|Trudy|Alright, question one: If you encounter pedestrians walking in front of you while piloting the Mobile Suit, you should?}}
+
+*''Prepare for battle.'' (No unique dialogue)
+*''Take a detour.'' (No unique dialogue)
+*''Slow down to avoid collision.'' (No unique dialogue)
+*''Speed up.'' (No unique dialogue)
+
+(cId -1) The player picks the fourth option in conversation segment 13954:
+{{dialogue|Trudy|Alright, question one: If you encounter pedestrians walking in front of you while piloting the Mobile Suit, you should?}}
+
+*''Prepare for battle.'' (No unique dialogue)
+*''Take a detour.'' (No unique dialogue)
+*''Slow down to avoid collision.'' (No unique dialogue)
+*''Speed up.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Decrement choice by 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 13954:
+{{dialogue|Trudy|Alright, question one: If you encounter pedestrians walking in front of you while piloting the Mobile Suit, you should?}}
+
+*''Prepare for battle.'' (No unique dialogue)
+*''Take a detour.'' (No unique dialogue)
+*''Slow down to avoid collision.'' (No unique dialogue)
+*''Speed up.'' (No unique dialogue)
+
+(cId -1) The player picks the third option in conversation segment 13954:
+{{dialogue|Trudy|Alright, question one: If you encounter pedestrians walking in front of you while piloting the Mobile Suit, you should?}}
+
+*''Prepare for battle.'' (No unique dialogue)
+*''Take a detour.'' (No unique dialogue)
+*''Slow down to avoid collision.'' (No unique dialogue)
+*''Speed up.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Increment choice by 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 13960:
+{{dialogue|Trudy|Next question. This is a picture question: If you are the pilot of the green Mobile Suit, what should you do in the given situation?}}
+
+*''Decelerate and let the red Mobile Suit overtake.'' (No unique dialogue)
+*''Take out your weapon and make them reverse through force.'' (No unique dialogue)
+*''Turn on Action Mode and put the pedal to the metal.'' (No unique dialogue)
+*''Avoid a collision and report to the authorities.'' (No unique dialogue)
+
+(cId -1) The player picks the third option in conversation segment 13960:
+{{dialogue|Trudy|Next question. This is a picture question: If you are the pilot of the green Mobile Suit, what should you do in the given situation?}}
+
+*''Decelerate and let the red Mobile Suit overtake.'' (No unique dialogue)
+*''Take out your weapon and make them reverse through force.'' (No unique dialogue)
+*''Turn on Action Mode and put the pedal to the metal.'' (No unique dialogue)
+*''Avoid a collision and report to the authorities.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Decrement choice by 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 13960:
+{{dialogue|Trudy|Next question. This is a picture question: If you are the pilot of the green Mobile Suit, what should you do in the given situation?}}
+
+*''Decelerate and let the red Mobile Suit overtake.'' (No unique dialogue)
+*''Take out your weapon and make them reverse through force.'' (No unique dialogue)
+*''Turn on Action Mode and put the pedal to the metal.'' (No unique dialogue)
+*''Avoid a collision and report to the authorities.'' (No unique dialogue)
+
+(cId -1) The player picks the fourth option in conversation segment 13960:
+{{dialogue|Trudy|Next question. This is a picture question: If you are the pilot of the green Mobile Suit, what should you do in the given situation?}}
+
+*''Decelerate and let the red Mobile Suit overtake.'' (No unique dialogue)
+*''Take out your weapon and make them reverse through force.'' (No unique dialogue)
+*''Turn on Action Mode and put the pedal to the metal.'' (No unique dialogue)
+*''Avoid a collision and report to the authorities.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Increment choice by 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: Player_RideMount | eventName: HaveRiddenOnMount
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 13971 starts:
+{{dialogue|Trudy|Okay let's begin. Please operate the Mobile Suit and go to the designated location.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 16 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 1 | id: 173320
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 13985 starts:
+{{dialogue|Player|(The examination hasn't finished, should I really leave)}}
+
+*''(Continue Exam)'' (No unique dialogue)
+*''Leave'' (No unique dialogue)
+
+
+TRIGGER Procedure 0.0 Step 0.0 Order 17 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 13985:
+{{dialogue|Player|(The examination hasn't finished, should I really leave)}}
+
+*''(Continue Exam)'' (No unique dialogue)
+*''Leave'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 173323 | delayTime: 0 | durationTime: 1.5 | changeType: 0 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 18 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173323 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: MSRT_Player
+DELAY MASK SET || delayTime: 0 | durationTime: 2 | changeType: 1 | curveIndex: -2 | maskId: 173323
+
+TRIGGER Procedure 0.0 Step 0.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 13985:
+{{dialogue|Player|(The examination hasn't finished, should I really leave)}}
+
+*''(Continue Exam)'' (No unique dialogue)
+*''Leave'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 173324 | delayTime: 0 | durationTime: 1.5 | changeType: 0 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173324 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Trudy stops standing still
+Qi stops standing still
+AREA TRIGGER DELETE || id: 173321
+AREA TRIGGER DELETE || id: 173320
+Remove behavior Player_RideMount (idName: 173321) from Player
+RIDABLE DESTROY || id: 173321
+DELAY MASK SET || delayTime: 0 | durationTime: 2 | changeType: 1 | curveIndex: -2 | maskId: 173324
+SCENEITEM DELETE || itemType: 0 | id: 173322
+SCENEITEM DELETE || itemType: 0 | id: 173323
+SCENEITEM DELETE || itemType: 0 | id: 173324
+SUBMIT MISSION 1700331
+
+TRIGGER Procedure 0.0 Step 0.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 173321
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 13972 starts:
+{{dialogue|Trudy|Great. It seems you have the basic controls mastered already. Next, please pick up the items from the table, and place them in the designated location.}}
+===Move Object===
+
+{{mission_details
+|desc = Use the Mobile Suit to move the item to the designated spot to pass the test.
+|details = Move Object
+}}
+SCENEITEM CREATE FLAG || itemType: 0 | id: 173325 | path: MSRT_OBJ3 | sceneName: Main | flagName: MSRT_Point2 | extraParams: -1
+AREA TRIGGER ONCE CREATE || missionId: 1700331 | id: 173323 | sceneName: Main | flagName: MSRT_Point2 | showOnMap: 1 | mapIcon: MissionArea | transId: -1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 173325
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 13973, 13974 starts:
+{{dialogue|Trudy|Good. ''Player'' did great! Director Qi, your turn now.}}
+{{dialogue|Qi|Alright...}}
+SCENEITEM CREATE FLAG || itemType: 0 | id: 173326 | path: MSRT_OBJ2 | sceneName: Main | flagName: MSRT_Point2 | extraParams: -1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_EXAMINEFAILED | state: 9
+CONDITIONS
+Check if choice is == 2
+ACTIONS
+(cId -1) A conversation 13975, 13976, 13977, 13980, 13981, 13982, 13983, 13984 starts:
+{{dialogue|Trudy|Director! Are you okay?}}
+{{dialogue|Qi|Ahem... I'm fine.}}
+{{dialogue|Trudy|I'm sorry, Director... ''Player'' passed everything with flying colors. They are clearly more proficient with the Mobile Suit.}}
+{{dialogue|Qi|But no, I...}}
+
+*''Director Qi, keep at it!'' (No unique dialogue)
+*''I won! Yes! I get to pilot!'' (No unique dialogue)
+*''I am Gungam!'' (No unique dialogue)
+
+{{dialogue|Trudy|Director, don't worry. You'll still have the opportunity to practice and get better. Just keep it up.}}
+{{dialogue|Trudy|But for now, ''Player'' will pilot the Mobile Suit for Project Greenland. We'll work out a specific planting schedule soon, I'll let you know.}}
+{{dialogue|Trudy|I'd say that'd about do it for this exam, I'll see you all later.}}
+{{dialogue|Qi|I... need to go drink some tea.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 25 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_EXAMINEFAILED | state: 9
+CONDITIONS
+Check if choice is == -2
+ACTIONS
+(cId -1) A conversation 13975, 13976, 13979, 13980, 13981, 13982, 13983, 13984 starts:
+{{dialogue|Trudy|Director! Are you okay?}}
+{{dialogue|Qi|Ahem... I'm fine.}}
+{{dialogue|Trudy|I'm sorry, Director... although ''Player'' had... somewhat dubious answers to their theory questions... they can study and make that up. Their practical examination results speak for themselves, though.}}
+{{dialogue|Qi|But no, I...}}
+
+*''Director Qi, keep at it!'' (No unique dialogue)
+*''I won! Yes! I get to pilot!'' (No unique dialogue)
+*''I am Gungam!'' (No unique dialogue)
+
+{{dialogue|Trudy|Director, don't worry. You'll still have the opportunity to practice and get better. Just keep it up.}}
+{{dialogue|Trudy|But for now, ''Player'' will pilot the Mobile Suit for Project Greenland. We'll work out a specific planting schedule soon, I'll let you know.}}
+{{dialogue|Trudy|I'd say that'd about do it for this exam, I'll see you all later.}}
+{{dialogue|Qi|I... need to go drink some tea.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 26 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_EXAMINEFAILED | state: 9
+CONDITIONS
+Check if choice is <= (maybe?) 2
+Check if choice is <= (maybe?) -2
+ACTIONS
+(cId -1) A conversation 13975, 13976, 13978, 13980, 13981, 13982, 13983, 13984 starts:
+{{dialogue|Trudy|Director! Are you okay?}}
+{{dialogue|Qi|Ahem... I'm fine.}}
+{{dialogue|Trudy|I'm sorry, Director... ''Player'' passed the practical examination, and although their theory had somewhat mixed results... they're clearly more proficient with the Mobile Suit.}}
+{{dialogue|Qi|But no, I...}}
+
+*''Director Qi, keep at it!'' (No unique dialogue)
+*''I won! Yes! I get to pilot!'' (No unique dialogue)
+*''I am Gungam!'' (No unique dialogue)
+
+{{dialogue|Trudy|Director, don't worry. You'll still have the opportunity to practice and get better. Just keep it up.}}
+{{dialogue|Trudy|But for now, ''Player'' will pilot the Mobile Suit for Project Greenland. We'll work out a specific planting schedule soon, I'll let you know.}}
+{{dialogue|Trudy|I'd say that'd about do it for this exam, I'll see you all later.}}
+{{dialogue|Qi|I... need to go drink some tea.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 28 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_EXAMINEFAILED | state: 7
+CONDITIONS
+Always:
+ACTIONS
+RIDABLE DESTROY || id: 173321
+SCENEITEM DELETE || itemType: 0 | id: 173322
+SCENEITEM DELETE || itemType: 0 | id: 173323
+SCENEITEM DELETE || itemType: 0 | id: 173324
+SCENEITEM DELETE || itemType: 0 | id: 173326
+
+TRIGGER Procedure 0.0 Step 0.0 Order 29 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 173323
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 173323
+
+TRIGGER Procedure 0.0 Step 0.0 Order 30 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|616}}
+END MISSION 1700332
+
+TRIGGER Procedure 0.0 Step 0.0 Order 37 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+Check if refuse is == 0
+ACTIONS
+(cId -1) A conversation 4113_0 starts:
+{{dialogue|Qi|Are you ready to take the Mobile Suit Pilot Exam?}}
+
+*''Bring. It. On!''
+*''I'm kind of busy...''
+
+{{dialogue|Qi|indent=true|answer=Bring. It. On!
+|Very well, I will go and fetch Mayor Trudy.}}
+{{dialogue|Qi|indent=true|answer=I'm kind of busy...
+|When you're ready, just let me know.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 38 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_EXAMINEFAILED | state: 7
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 173323
+SCENEITEM DELETE || itemType: 0 | id: 173324
+SCENEITEM DELETE || itemType: 0 | id: 173325
+
+TRIGGER Procedure 0.0 Step 0.0 Order 39 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_EXAMINEFAILED | state: 7
+CONDITIONS
+Always:
+ACTIONS
+Qi stands still in Main
+Trudy stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: MSRT_Player2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 40 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Trudy stops standing still
+Qi stops standing still
+AREA TRIGGER DELETE || id: 173321
+AREA TRIGGER DELETE || id: 173320
+Remove behavior Player_RideMount (idName: 173321) from Player
+RIDABLE DESTROY || id: 173321
+SCENEITEM DELETE || itemType: 0 | id: 173322
+SCENEITEM DELETE || itemType: 0 | id: 173323
+SCENEITEM DELETE || itemType: 0 | id: 173324
+SUBMIT MISSION 1700331
+END MISSION 1700332
+
+TRIGGER Procedure 0.0 Step 0.0 Order 46 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 1733210
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Qi|I have simulated this in my brain a thousand times...}}

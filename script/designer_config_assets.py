@@ -28,7 +28,7 @@ npc_pet_ids = {
     101: 'Wild Alpha Yakmel',
     102: 'Rocket Rooster',
     103: 'Cock-a-doodle-Doom',
-    104: 'Boxing Jacks',
+    104: 'Boxing Jack',
     105: 'Tripion',
     106: 'Punished Tripion',
     107: 'Pensky',
@@ -43,7 +43,7 @@ npc_pet_ids = {
     116: 'Desert Viper',
     117: 'Supa Hot Hermicrab',
     118: 'Starby-on-a-Horse',
-    119: 'SuperStarby',
+    119: 'Superstarby',
     120: 'Starby',
     # ID + 1000 = Shiny variant.
 }
@@ -399,7 +399,7 @@ pages = {
         'maleIconPath',   # Default icon path.
         'femaleIconPath', # Female variant icon path.
         'nameId',
-        ('name', lambda item: text(item['nameId'])),
+        # ('name', lambda item: text(item['nameId'])),
         'infoId',
         'gradeWeight',
         'orderIndex',
@@ -407,7 +407,8 @@ pages = {
         'buyPrice',
         'sellPrice',
         'itemTag',
-        'cantSold'
+        'cantSold',
+        'cantRefine'
     ],
     'AssetMailTemplateDataMailTemplate': [
         'id',

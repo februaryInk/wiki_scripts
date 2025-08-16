@@ -1,0 +1,116 @@
+Reading Mission 1200226: Something in the Air
+
+<onlyinclude>{{Infobox mission
+|name = Something in the Air
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Something in the Air:
+
+TRIGGER Procedure 3.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 6279) that ends:
+{{dialogue|Trudy|Very good! Now, I didn't mean "turning green" specifically, but it's well documented that there were all sorts of {{textcolor|green|strange Old World buildings under Sandrock}}; we have been known to encounter dangerous substances from time to time...}}
+CONDITIONS
+Always:
+ACTIONS
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Trudy stops standing still
+Justice stops standing still
+Mi-an stops standing still
+Run mission Something in the Air
+Run mission Something in the Air
+Run mission Something in the Air
+START MISSION 1200222
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200226
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 22261) to Trudy
+(param: TargetScene:Guildhall|MoveMode:Walk|FlagName:greenbaby_guildhall_trudy2)
+Musa stands still in Guildhall
+Musa stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 22261) to Musa
+(param: TargetScene:Guildhall|MoveMode:Walk|FlagName:greenbaby_guildhall_musa2)
+AREA TRIGGER ONCE CREATE || missionId: 1200226 | id: 22261 | sceneName: Guildhall | flagName: greenbaby_guildhall_trigger | showOnMap: 1 | mapIcon: MissionArea | transId: 0
+AREA TRIGGER CREATE || missionId: 1200226 | id: 22262 | sceneName: Main | flagName: trigger_guildhall | showOnMap: 1 | mapIcon: MissionArea | transId: 80000767
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22261
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 22261) from Trudy
+Trudy stands still in Guildhall and looks at Musa
+Remove behavior CommanderMoveToFlagAndAction (idName: 22261) from Musa
+Musa stands still in Guildhall and looks at Trudy
+AREA TRIGGER DELETE || id: 22262
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 22261
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 1874_0 starts:
+{{dialogue|Musa|When you said we were going to be seeing a lot more green in Sandrock, this is not what I had in mind.}}
+{{dialogue|Trudy|Ahah... yes...}}
+{{dialogue|Musa|Well, I'm not gonna say anything. I'm just here to observe. But if you do need any help, I'll tap out a telegram.}}
+{{dialogue|Trudy|I think we'll be able to handle it. The people of Sandrock are strong and resourceful.}}
+{{dialogue|Musa|Hmm, I look forward to seeing how you handle the situation.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Trudy stops standing still
+Musa stops standing still
+END MISSION 1200226
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 22261) from Trudy
+Remove behavior CommanderMoveToFlagAndAction (idName: 22261) from Musa
+AREA TRIGGER DELETE || id: 22261
+AREA TRIGGER DELETE || id: 22262
+END MISSION 1200226

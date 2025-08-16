@@ -1,0 +1,493 @@
+Reading Mission 1800317: Give me a Sign
+
+<onlyinclude>{{Infobox mission
+|name = Give me a Sign
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Anyone Can Cook:
+
+TRIGGER Procedure 0.0 Step 12.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Saloon to the -1:
+CONDITIONS
+Always:
+ACTIONS
+Owen stops standing still
+Remove behavior CommanderSit (idName: 831611) from 83161
+Remove behavior CommanderSit (idName: 831621) from 83162
+Remove behavior CommanderSit (idName: 831631) from 83163
+Larry stops standing still
+
+TRIGGER Procedure 1.0 Step 14.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800316
+CONDITIONS
+Always:
+ACTIONS
+Run mission Give me a Sign
+END MISSION 1800316
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800317
+CONDITIONS
+Always:
+ACTIONS
+===Serve Food===
+
+{{mission_details
+|desc = Help deliver Larry's dish to the table.
+|details = Serve Food
+}}
+Add 1 Customer Order: Stir-fry of Default quality (Notify player)
+Add 1 Customer Order: Cold dish of Default quality (Notify player)
+Add 1 Customer Order: Meat dish of Default quality (Notify player)
+SCENEITEM CREATE FLAG || itemType: 11 | id: 83171 | path: S8317_Item1_Mark | sceneName: Saloon | flagName: S8317_Item1 | extraParams: S8317_Item1|CreatorItem|19810053_1|80018987|Serving_Story|1.4
+SCENEITEM CREATE FLAG || extraParams: S8317_Item2|CreatorItem|19810054_1|80018987|Serving_Story|1.4 | itemType: 11 | id: 83172 | path: S8317_Item2_Mark | sceneName: Saloon | flagName: S8317_Item2
+SCENEITEM CREATE FLAG || extraParams: S8317_Item3|CreatorItem|19810055_1|80018987|Serving_Story|1.4 | flagName: S8317_Item3 | sceneName: Saloon | path: S8317_Item3_Mark | id: 83173 | itemType: 11
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 83171 | missionId: 1800316 | iconType: 3
+SCENEITEM ADD ICON STACK || add: 1 | iconType: 3 | itemType: 11 | id: 83172 | missionId: 1800316
+SCENEITEM ADD ICON STACK || add: 1 | iconType: 3 | itemType: 11 | id: 83173 | missionId: 1800316
+AREA TRIGGER CREATE || missionId: 1800317 | id: 83171 | sceneName: Saloon | flagName: Trigger_83171 | showOnMap: 0 | mapIcon: MAX | transId: 0
+AREA TRIGGER CREATE || missionId: 1800317 | id: 83172 | flagName: Trigger_83172 | sceneName: Saloon | showOnMap: 0 | mapIcon: MAX | transId: 0
+NPC SET CAN INTERACT || npc: 83161 | canInteract: 0
+NPC SET CAN INTERACT || npc: 83162 | canInteract: 0
+NPC SET CAN INTERACT || npc: 83163 | canInteract: 0
+Set 8317Done to 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 83171
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+SCENEITEM CREATE FLAG || itemType: 0 | id: 831711 | path: Mission8250_efx_clear | sceneName: Saloon | flagName: S8317_Item1 | extraParams: -1
+MISSION TARGET COUNTER CHANGE || missionId: 1800316 | targetId: 1 | transId: 91004103 | isAdd: 1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 831711
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 3771_0 starts:
+{{dialogue|83161|Mmm that's one heck of a dish! Where's the chef? I want to tell them to their face how much I love it!}}
+
+*''I'll pass on your kind words.''
+*''Sorry, they're a little shy.''
+
+{{dialogue|83161|indent=true|answer=I'll pass on your kind words.
+|Thank you! With cooking like this, I reckon they must be one heck of a person!}}
+{{dialogue|83161|indent=true|answer=Sorry, they're a little shy.
+|Well, I won't force them! With cooking like this, I reckon they must be one heck of a person!}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+SCENEITEM DELETE || itemType: 0 | id: 831711
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+SCENEITEM DELETE || id: 831721 | itemType: 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+SCENEITEM DELETE || itemType: 0 | id: 831731
+
+TRIGGER Procedure 0.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1800316 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Larry===
+
+{{mission_details
+|desc = Go tell Larry the food has been served.
+|details = Talk to Larry
+}}
+
+TRIGGER Procedure 0.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Larry
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+(cId 4) A conversation 12462 starts:
+{{dialogue|Larry|Thank you, strong human. What did the customers think of my cooking?}}
+
+TRIGGER Procedure 0.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 8317001) to Player
+(param: CMDAction:Talk)
+
+TRIGGER Procedure 0.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 3781_0 starts:
+{{dialogue|Larry|A customer... wants to meet me? Because I can cook? But... what if I scare them... no...}}
+
+*''It's fine! I'll go with you.''
+*''Ah, forget it then.''
+
+{{dialogue|Larry|indent=true|answer=It's fine! I'll go with you.
+|reward={{NPC2|Larry|rp=2}}|Thank you. Let us meet the customers.}}
+{{dialogue|Larry|indent=true|answer=Ah, forget it then.
+|Yes... Cooking Boss will return soon. Thank you.}}
+
+TRIGGER Procedure 0.0 Step 10.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 5) There is a conversation segment (id 12464) that ends:
+{{dialogue|Larry|Yes... Cooking Boss will return soon. Thank you.}}
+(cId 8) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 83171
+AREA TRIGGER DELETE || id: 83172
+Larry stops standing still
+Larry stops standing still
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderPlayerAction (idName: 8317001) from Player
+83161 stops standing still
+Larry stops standing still
+Remove behavior CommanderSit (idName: 831611) from 83161
+Remove behavior CommanderMoveToFlag (idName: 8317005) from Player
+SUBMIT MISSION 1800316
+Owen stops standing still
+Set 8317Done to 1
+
+TRIGGER Procedure 0.0 Step 11.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 5) There is a conversation segment (id 12465) that ends:
+{{dialogue|Larry|Thank you. Let us meet the customers.}}
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 83171 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 10.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) The player picks the first option in conversation segment 12463:
+{{dialogue|Larry|A customer... wants to meet me? Because I can cook? But... what if I scare them... no...}}
+
+*''It's fine! I'll go with you.'' (No unique dialogue)
+*''Ah, forget it then.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Larry gains 2 favor
+
+TRIGGER Procedure 0.0 Step 10.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Saloon to the -1:
+When the time is 3:00 (order: 0):
+CONDITIONS
+Check if 8317Done is == 0
+ACTIONS
+Owen stops standing still
+AREA TRIGGER DELETE || id: 83171
+AREA TRIGGER DELETE || id: 83172
+Larry stops standing still
+Larry stops standing still
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderPlayerAction (idName: 8317001) from Player
+83161 stops standing still
+Larry stops standing still
+Remove behavior CommanderSit (idName: 831611) from 83161
+Remove behavior CommanderMoveToFlag (idName: 8317005) from Player
+Remove behavior CommanderSit (idName: 831611) from 83161
+Remove behavior CommanderSit (idName: 831621) from 83162
+Remove behavior CommanderSit (idName: 831631) from 83163
+SCENEITEM DELETE || itemType: 11 | id: 83171
+SCENEITEM DELETE || itemType: 11 | id: 83172
+SCENEITEM DELETE || itemType: 11 | id: 83173
+SCENEITEM DELETE || itemType: 12 | id: 83171
+SCENEITEM DELETE || itemType: 12 | id: 83172
+SCENEITEM DELETE || itemType: 12 | id: 83173
+NPC RANDOM REMOVE || id: 83161
+NPC RANDOM REMOVE || id: 83162
+NPC RANDOM REMOVE || id: 83163
+FAIL MISSION || missionId: 1800316
+
+TRIGGER Procedure 0.0 Step 12.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 83171
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderPlayerAction (idName: 8317001) from Player
+Larry stands still in Saloon and looks at 83161
+83161 stands still in Saloon and looks at Larry
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: S8317_0_1
+DELAY MASK SET || maskId: 83171 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 13.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 83171
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 12466 starts:
+{{dialogue|83161|Ah, so you brought the-}}
+
+TRIGGER Procedure 0.0 Step 14.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 8317002) to Player
+(param: CMDAction:Talk)
+
+TRIGGER Procedure 0.0 Step 13.0 Order 23 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 83170
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: S8317_0_2
+DELAY MASK SET || maskId: 83170 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 15.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 12467 starts:
+{{dialogue|83161|A lizardman?! This is the chef that cooked my meal?}}
+Remove behavior CommanderPlayerAction (idName: 8317002) from Player
+
+TRIGGER Procedure 0.0 Step 16.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 8317003) to Player
+(param: CMDAction:Nod_Story)
+
+TRIGGER Procedure 0.0 Step 17.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 8) A conversation 3784_0 starts:
+{{dialogue|83161|Well, I'll be!}}
+
+*''Tell him about the food.''
+*''Introduce yourself.''
+*''Tell him how we know each other.''
+
+{{dialogue|Larry|indent=true|answer=Tell him about the food.
+|The Cooking Boss taught me how to make this dish. He has taught me a lot... this one is my best. We Geeglers can tell subtle differences between cactus flesh, and I know which is suitable for cooking.}}
+{{dialogue|Larry|indent=true|answer=Introduce yourself.
+|Customer... please don't be alarmed. I am Larry. I am a proud Geegler from the Eufaula.}}
+{{dialogue|Larry|indent=true|I'm temporarily living in Sandrock at the moment.}}
+{{dialogue|Larry|indent=true|answer=Tell him how we know each other.
+|This strong human welcomed me into the town. They fought me before... but when I was at my lowest, they helped me get back on my feet. I really appreciated that.}}
+{{dialogue|Larry|indent=true|Now we are friends. From enemies to friends.}}
+{{dialogue|Larry|I am glad that you like my dish...}}
+{{dialogue|83161|Oh, I love it!}}
+{{dialogue|83161|I apologize for my outburst earlier. You just surprised me. I grew up thinking that you're all monsters...}}
+{{dialogue|83161|But I seem to have been taught wrong... your food is delicious, and it seems like you're a good person as well!}}
+{{dialogue|83161|Well, isn't Sandrock just full of surprises! I've even met a Geegler chef! What next, a talking mole? Haha!}}
+{{dialogue|Larry|Thank you for your compliment. Please, enjoy your meal.}}
+{{dialogue|Larry|Strong human, you have helped me once again. Thank you. I shall return to work. I will not forget this.}}
+The conversation ends.
+Remove behavior CommanderPlayerAction (idName: 8317003) from Player
+
+TRIGGER Procedure 0.0 Step 20.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderSit (idName: 831611) from 83161
+Remove behavior CommanderSit (idName: 831621) from 83162
+Remove behavior CommanderSit (idName: 831631) from 83163
+NPC RANDOM REMOVE || id: 83161
+NPC RANDOM REMOVE || id: 83162
+NPC RANDOM REMOVE || id: 83163
+SCENEITEM DELETE || itemType: 11 | id: 83171
+SCENEITEM DELETE || itemType: 11 | id: 83172
+SCENEITEM DELETE || itemType: 11 | id: 83173
+SCENEITEM DELETE || itemType: 12 | id: 83171
+SCENEITEM DELETE || itemType: 12 | id: 83172
+SCENEITEM DELETE || itemType: 12 | id: 83173
+END MISSION 1800317
+
+TRIGGER Procedure 1.0 Step 0.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 83171
+ON AREA TRIGGER INTERACT || order: 0 | id: 83172 | enter: 0 | npc: 8000
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+(cId 0) A conversation 12450 starts:
+{{dialogue|Player|(I haven't finished helping Larry, should I really leave?)}}
+
+*''(Finish helping)'' (No unique dialogue)
+*''Leave.'' (No unique dialogue)
+
+
+TRIGGER Procedure 1.0 Step 0.1 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the first option in conversation segment 12450:
+{{dialogue|Player|(I haven't finished helping Larry, should I really leave?)}}
+
+*''(Finish helping)'' (No unique dialogue)
+*''Leave.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+DELAY MASK SET || maskId: 83170 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 0.2 Order 5 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the second option in conversation segment 12450:
+{{dialogue|Player|(I haven't finished helping Larry, should I really leave?)}}
+
+*''(Finish helping)'' (No unique dialogue)
+*''Leave.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: P9232
+
+TRIGGER Procedure 1.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 83172
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+SCENEITEM CREATE FLAG || itemType: 0 | id: 831721 | path: Mission8250_efx_clear | sceneName: Saloon | flagName: S8317_Item2 | extraParams: -1
+MISSION TARGET COUNTER CHANGE || isAdd: 1 | transId: 91004104 | targetId: 1 | missionId: 1800316
+
+TRIGGER Procedure 1.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 831712
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 3774_0 starts:
+{{dialogue|83162|Thank you. By the way, I heard there's some kind of Geegler in here. But I didn't see anyone like that...}}
+
+*''Actually, they're the chef!''
+*''Nah, just a rumor.''
+
+{{dialogue|83162|indent=true|answer=Nah, just a rumor.
+|Huh... darn...}}
+{{dialogue|83162|What?! Really?!}}
+
+*''But it's delicious, isn't it?''
+*''Larry's one heck of a chef!''
+
+{{dialogue|83162|indent=true|answer=But it's delicious, isn't it?
+|Well, it certainly is delicious... but I didn't expect a Geegler to cook this well! Well I'll be...}}
+{{dialogue|83162|indent=true|answer=Larry's one heck of a chef!
+|It's got a name?! And they speak our language?! Wow!}}
+{{dialogue|83162|But whatever... this smells so nice... I want seconds!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 831713
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 3779_0 starts:
+{{dialogue|83163|Thanks.}}
+
+*''How does it taste?''
+*''No problem.'' (No unique dialogue)
+
+{{dialogue|83163|indent=true|answer=How does it taste?
+|Good.}}
+
+TRIGGER Procedure 2.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 83173
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+SCENEITEM CREATE FLAG || itemType: 0 | id: 831731 | path: Mission8250_efx_clear | sceneName: Saloon | flagName: S8317_Item3 | extraParams: -1
+MISSION TARGET COUNTER CHANGE || isAdd: 1 | transId: 91004105 | targetId: 1 | missionId: 1800316

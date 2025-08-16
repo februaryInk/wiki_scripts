@@ -1,0 +1,105 @@
+Reading Mission 1200021: Gone with the Wind
+
+<onlyinclude>{{Infobox mission
+|name = Gone with the Wind
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Gone with the Wind:
+
+TRIGGER Procedure 0.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the first option in conversation segment 1106:
+{{dialogue|Mort|Now, I've made peace with losing the photos, but there may yet be time to make a few more memories... Could you make {{textcolor|green|a new Photo Album}} for this old soul?}}
+
+*''Sure thing.'' (No unique dialogue)
+*''Sorry, I'm very busy.'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 1108:
+{{dialogue|Mort|Do you have time to make me a Photo Album now?}}
+
+*''Sure thing.'' (No unique dialogue)
+*''Sorry, I'm very busy.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1200020
+Unlock blueprint for Album
+
+TRIGGER Procedure 0.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200020
+CONDITIONS
+Always:
+ACTIONS
+Run mission Gone with the Wind
+END MISSION 1200020
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200021
+CONDITIONS
+Always:
+ACTIONS
+===Make a Photo Album===
+
+{{mission_details
+|desc = Help Mort make a Photo Album on the Worktable.
+|details = Make a Photo Album
+*{{i2|Album|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 0.5 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200020 | targetId: 0 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Mort===
+
+{{mission_details
+|desc = You've got the new Photo Album, head over and show it to Mort.
+|details = Talk to Mort
+*{{i2|Album|0/1}}
+*{{i2|Mort|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Mort
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1200020 | targetId: 1 | canSubmit: 1
+ACTIONS
+(cId 0) A conversation 862, 863 starts:
+{{dialogue|Mort|My... this Photo Album is very well made, isn't it? To be so young and talented! It's as they say: "The strength of young waves shall push the old ashore..."}}
+{{dialogue|Mort|I shall hold on to this one with great care, and look forward to what it might soon hold. Thank you, young Builder.}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+BAG MODIFY BY TARGET || missionId: 1200020 | targetId: 1
+SUBMIT MISSION 1200020
+END MISSION 1200021

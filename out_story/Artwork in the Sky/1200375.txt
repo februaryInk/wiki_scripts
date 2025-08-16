@@ -1,0 +1,754 @@
+Reading Mission 1200375: Artwork in the Sky
+
+<onlyinclude>{{Infobox mission
+|name = Artwork in the Sky
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Artwork in the Sky:
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200374
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|677}}
+DELIVER MISSION 1200374
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200374
+CONDITIONS
+Always:
+ACTIONS
+Run mission Artwork in the Sky
+END MISSION 1200374
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200375
+CONDITIONS
+GROUP 0:
+CHECK PLAYER ITEM || item: 15400000 | itemGrade: -1 | set: 6 | count: 10
+
+GROUP 10:
+CHECK PLAYER ITEM || item: 15400001 | itemGrade: -1 | set: 6 | count: 10
+
+GROUP 20:
+CHECK PLAYER ITEM || item: 15400002 | itemGrade: -1 | set: 6 | count: 10
+
+GROUP 30:
+CHECK PLAYER ITEM || item: 15400003 | itemGrade: -1 | set: 6 | count: 10
+
+GROUP 40:
+CHECK PLAYER ITEM || item: 15400004 | itemGrade: -1 | set: 6 | count: 10
+
+ACTIONS
+===Make Fireworks===
+
+{{mission_details
+|desc = It is your responsibility to make the fireworks for the tea party. You can make them on the Worktable. If you don't have the recipe you can get it from the Commerce Guild Store.
+|details = Make Fireworks
+*{{i2|Red Fireworks|0/10}}
+*{{i2|Yellow Fireworks|0/10}}
+*{{i2|Blue Fireworks|0/10}}
+*{{i2|Green Fireworks|0/10}}
+*{{i2|Purple Fireworks|0/10}}
+}}
+Set DAY to 0
+Set HEART to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DAY START FOR WEATHER || order: 0 | weather: 2
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: set_weather
+ACTIONS
+WEATHER SET STATE || WeatherState: 0
+UNIQUE ACTION RUN || idStr: set_weather
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+Set HEART to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1200375
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || id: 23753 | itemType: 0
+
+TRIGGER Procedure 0.0 Step 0.5 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200375
+CONDITIONS
+CHECK PLAYER ITEM || item: 15400000 | itemGrade: -1 | set: 2 | count: 10
+CHECK PLAYER ITEM || item: 15400001 | itemGrade: -1 | set: 2 | count: 10
+CHECK PLAYER ITEM || item: 15400002 | itemGrade: -1 | set: 2 | count: 10
+CHECK PLAYER ITEM || item: 15400003 | itemGrade: -1 | set: 2 | count: 10
+CHECK PLAYER ITEM || item: 15400004 | itemGrade: -1 | set: 2 | count: 10
+ACTIONS
+===Talk to Pablo===
+
+{{mission_details
+|desc = You've made the fireworks. Go and talk to Pablo.
+|details = Talk to Pablo
+*{{i2|Red Fireworks|0/10}}
+*{{i2|Yellow Fireworks|0/10}}
+*{{i2|Blue Fireworks|0/10}}
+*{{i2|Green Fireworks|0/10}}
+*{{i2|Purple Fireworks|0/10}}
+*{{i2|Pablo|0/1}}
+}}
+Set DAY to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200374 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Pablo===
+
+{{mission_details
+|desc = You've made the fireworks. Go and talk to Pablo.
+|details = Talk to Pablo
+*{{i2|Red Fireworks|0/10}}
+*{{i2|Yellow Fireworks|0/10}}
+*{{i2|Blue Fireworks|0/10}}
+*{{i2|Green Fireworks|0/10}}
+*{{i2|Purple Fireworks|0/10}}
+*{{i2|Pablo|0/1}}
+}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Pablo
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1200374 | targetId: 2 | canSubmit: 1
+ACTIONS
+(cId 0) A conversation 17589, 17590 starts:
+{{dialogue|Pablo|Well, well. Our star Builder has come through. These look good. Well, with fireworks it's impossible to tell until ignited, but still. I believe in you, little fireworks!}}
+{{dialogue|Pablo|Amirah's usually very busy, seems the only available time for her is {{textcolor|green|tomorrow at 21:00PM}}. Meet us at the usual fireworks spot, don't be late! And remember to bring the fireworks with you!}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Wait for Tomorrow===
+
+{{mission_details
+|desc = The fireworks show is settled for tomorrow night at 21:00PM so take the rest of the day off.
+|details = Wait for Tomorrow
+}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The special gift rule 39 for giving Heart Knot to Amirah is disabled. The rule was:
+The gift is accepted with:
+{{dialogue|-2|Sorry, I need to focus on my career right now.}}
+
+Special gift rule 40 is set for giving Amirah Heart Knot:
+Special results:
+Special result 1, type 0:
+{{dialogue|Amirah|I... I've always thought you're quite amazing... you have a good heart. You're inspiring...}}
+Applied to the following items:
+With tag 369:
+Heart Knot
+The player receives a letter:
+{{mail|678}}
+AREA TRIGGER DELETE || id: 23751
+Run mission Promise for a Rose
+FAIL MISSION || missionId: 1200374
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Set DAY to 1
+===Attend Fireworks Show at 21:00PM===
+
+{{mission_details
+|desc = The fireworks show is at 21:00PM. Make sure you attend on time.
+|details = Attend Fireworks Show at 21:00PM
+}}
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 21:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1200374 | id: 23751 | sceneName: Main | flagName: artwork_trigger | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 23751
+CONDITIONS
+CHECK PLAYER ITEM || item: 15400000 | itemGrade: -1 | set: 2 | count: 10
+CHECK PLAYER ITEM || item: 15400001 | set: 2 | count: 10 | itemGrade: -1
+CHECK PLAYER ITEM || item: 15400002 | itemGrade: -1 | set: 2 | count: 10
+CHECK PLAYER ITEM || item: 15400003 | itemGrade: -1 | set: 2 | count: 10
+CHECK PLAYER ITEM || item: 15400004 | itemGrade: -1 | set: 2 | count: 10
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 23751 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 23751
+CONDITIONS
+Always:
+ACTIONS
+Amirah stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: artwork_player
+AREA TRIGGER DELETE || id: 23751
+DELAY MASK SET || maskId: 23751 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 4.0 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 23751
+CONDITIONS
+GROUP 0:
+CHECK PLAYER ITEM || item: 15400000 | itemGrade: -1 | set: 6 | count: 10
+
+GROUP 10:
+CHECK PLAYER ITEM || item: 15400001 | set: 6 | count: 10 | itemGrade: -1
+
+GROUP 20:
+CHECK PLAYER ITEM || item: 15400002 | itemGrade: -1 | set: 6 | count: 10
+
+GROUP 30:
+CHECK PLAYER ITEM || item: 15400003 | itemGrade: -1 | set: 6 | count: 10
+
+GROUP 40:
+CHECK PLAYER ITEM || item: 15400004 | itemGrade: -1 | set: 6 | count: 10
+
+ACTIONS
+ACTION SHOW CUSTOM IMAGE TIPS || preset: Mission | content: 80028138
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 23751
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 5311_0 starts:
+{{dialogue|Amirah|Ah, ''Player'', you came.}}
+{{dialogue|Amirah|Pablo said he's ill today, and Heidi's wrapped up with work... as usual...}}
+{{dialogue|Amirah|You've got the fireworks? Well, we're the only ones, but we might as well enjoy the show. Why don't we set them up?}}
+
+*''Yeah, let's set them up now.'' (No unique dialogue)
+*''Actually, it's kind of boring if everyone's not here. (Leave)''
+
+{{dialogue|Amirah|indent=true|answer=Actually, it's kind of boring if everyone's not here. (Leave)
+|Oh, I suppose so... well, it was nice to see you. I guess I'll see you around...}}
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 17594) that ends:
+{{dialogue|Amirah|Oh, I suppose so... well, it was nice to see you. I guess I'll see you around...}}
+(cId: 4) There is a conversation segment (id 17616) that ends:
+{{dialogue|Amirah|But it's getting late. ''Player'', let's go back and rest.}}
+(cId: 6) There is a conversation segment (id 3596) that ends:
+{{dialogue|Amirah|Talk to you soon, ''Player''.}}
+CONDITIONS
+IS MARRIAGE || isMarriage: 0
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Amirah stops standing still
+The special gift rule 39 for giving Heart Knot to Amirah is disabled. The rule was:
+The gift is accepted with:
+{{dialogue|-2|Sorry, I need to focus on my career right now.}}
+
+Special gift rule 40 is set for giving Amirah Heart Knot:
+Special results:
+Special result 1, type 0:
+{{dialogue|Amirah|I... I've always thought you're quite amazing... you have a good heart. You're inspiring...}}
+Applied to the following items:
+With tag 369:
+Heart Knot
+Run mission Promise for a Rose
+SUBMIT MISSION 1200374
+END MISSION 1200375
+
+TRIGGER Procedure 3.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 17594) that ends:
+{{dialogue|Amirah|Oh, I suppose so... well, it was nice to see you. I guess I'll see you around...}}
+(cId: 4) There is a conversation segment (id 17616) that ends:
+{{dialogue|Amirah|But it's getting late. ''Player'', let's go back and rest.}}
+(cId: 6) There is a conversation segment (id 3596) that ends:
+{{dialogue|Amirah|Talk to you soon, ''Player''.}}
+CONDITIONS
+GROUP 0:
+IS MARRIAGE || isMarriage: 1
+
+GROUP 10:
+Check relationship with Amirah is Lover
+
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Amirah stops standing still
+The special gift rule 39 for giving Heart Knot to Amirah is disabled. The rule was:
+The gift is accepted with:
+{{dialogue|-2|Sorry, I need to focus on my career right now.}}
+
+SUBMIT MISSION 1200374
+END MISSION 1200375
+
+TRIGGER Procedure 3.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) After the conversation ends:
+CONDITIONS
+IS MARRIAGE || isMarriage: 0
+ACTIONS
+Set global blackboard key 1200376 with info 1.
+CUTSCENE UI STATE EXIT || 
+Amirah stops standing still
+The special gift rule 39 for giving Heart Knot to Amirah is disabled. The rule was:
+The gift is accepted with:
+{{dialogue|-2|Sorry, I need to focus on my career right now.}}
+
+Run mission Promise for a Rose
+SUBMIT MISSION 1200374
+END MISSION 1200375
+
+TRIGGER Procedure 3.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) After the conversation ends:
+CONDITIONS
+GROUP 0:
+IS MARRIAGE || isMarriage: 1
+
+GROUP 10:
+Check relationship with Amirah is Lover
+
+ACTIONS
+Set global blackboard key 1200376 with info 1.
+CUTSCENE UI STATE EXIT || 
+Amirah stops standing still
+The special gift rule 39 for giving Heart Knot to Amirah is disabled. The rule was:
+The gift is accepted with:
+{{dialogue|-2|Sorry, I need to focus on my career right now.}}
+
+SUBMIT MISSION 1200374
+END MISSION 1200375
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 17593:
+{{dialogue|Amirah|You've got the fireworks? Well, we're the only ones, but we might as well enjoy the show. Why don't we set them up?}}
+
+*''Yeah, let's set them up now.'' (No unique dialogue)
+*''Actually, it's kind of boring if everyone's not here. (Leave)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 23752 | delayTime: 0 | durationTime: -2 | changeType: 2 | curveIndex: 0
+Remove 10 Red Fireworks of Default quality (Notify player)
+Remove 10 Yellow Fireworks of Default quality (Notify player)
+Remove 10 Blue Fireworks of Default quality (Notify player)
+Remove 10 Green Fireworks of Default quality (Notify player)
+Remove 10 Purple Fireworks of Default quality (Notify player)
+
+TRIGGER Procedure 4.0 Step 0.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23752 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 23752 | path: Mission_FireworksGroup2 | sceneName: Main | flagName: artwork_fire | extraParams: 0
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 23752
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 5313_0 starts:
+{{dialogue|Amirah|It would have been nice to have the whole group together, though.}}
+
+*''It's a pity, they're really fun.''
+*{{flirt}}''I'm just glad you came.''
+
+{{dialogue|Amirah|indent=true|answer=It's a pity, they're really fun.
+|Yeah, they're just like siblings or something. Always teasing each other.}}
+{{dialogue|Amirah|indent=true|answer=I'm just glad you came.
+|...}}
+{{dialogue|Amirah|indent=true|They're a little unpredictable sometimes. It's kind of typical, they're basically one mind. Well, they're like siblings. They've been friends since they were little.}}
+{{dialogue|Amirah|But it's not like me and Arvio. We don't quite joke around as much. You know, I was hesitant to even come and watch the fireworks. But I just thought it would be fun for us all to get together.}}
+{{dialogue|Amirah|I can't help but feel something like this is just a bit of a waste of time... Oh, sorry! I shouldn't say that... I forgot today is your special celebration!}}
+
+*''You don't like fireworks?''
+*{{flirt}}''Fireworks are only as special as the person you're with.''
+*''No one hates fireworks!''
+
+{{dialogue|Amirah|indent=true|answer=You don't like fireworks?
+|reward={{NPC2|Amirah|rp=2}}|When I was young, we'd watch the fireworks. They're beautiful, but short-lived. I don't know... it makes me a little... sad? Like we can only hold onto these moments for such a short time.}}
+{{dialogue|Amirah|indent=true|answer=Fireworks are only as special as the person you're with.
+|reward={{NPC2|Amirah|rp=2}}|Sorry, I spoke without thinking. You... I didn't offend you, did I?}}
+{{dialogue|Amirah|indent=true|answer=No one hates fireworks!
+|Haha, defending that which you like? I understand.}}
+
+TRIGGER Procedure 5.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 2) There is a conversation segment (id 17601) that ends:
+{{dialogue|Amirah|Sorry, I spoke without thinking. You... I didn't offend you, did I?}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 23752) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:artwork_player|Action:ShakeHead)
+
+TRIGGER Procedure 6.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 2) There is a conversation segment (id 17606) that ends:
+{{dialogue|Amirah|When I was young, we'd watch the fireworks. They're beautiful, but short-lived. I don't know... it makes me a little... sad? Like we can only hold onto these moments for such a short time.}}
+(cId: 3) There is a conversation segment (id 17605) that ends:
+{{dialogue|Amirah|But... Ah. Look at me, going on. Sorry, I don't know what's come over me. Perhaps its these beautiful lights, and you here...}}
+(cId: 2) There is a conversation segment (id 17607) that ends:
+{{dialogue|Amirah|Haha, defending that which you like? I understand.}}
+CONDITIONS
+Check if HEART is == 0
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 23753) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:artwork_player1|Action:LookSky)
+Add behavior CommanderMoveToFlagAndAction (idName: 23753) to Amirah
+(param: TargetScene:Main|MoveMode:Walk|FlagName:artwork_amirah1|Action:LookSky)
+DELAY MASK SET || delayTime: 3 | maskId: 23753 | durationTime: 3 | curveIndex: 0 | changeType: 0
+STOPWATCH REAL TIME SET || sec: 1.5 | id: 23751
+
+TRIGGER Procedure 6.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 2) There is a conversation segment (id 17606) that ends:
+{{dialogue|Amirah|When I was young, we'd watch the fireworks. They're beautiful, but short-lived. I don't know... it makes me a little... sad? Like we can only hold onto these moments for such a short time.}}
+(cId: 3) There is a conversation segment (id 17605) that ends:
+{{dialogue|Amirah|But... Ah. Look at me, going on. Sorry, I don't know what's come over me. Perhaps its these beautiful lights, and you here...}}
+(cId: 2) There is a conversation segment (id 17607) that ends:
+{{dialogue|Amirah|Haha, defending that which you like? I understand.}}
+CONDITIONS
+Check if HEART is >= 1
+ACTIONS
+{{cutscene|id = 3522}}
+A cutscene CG_FIREWORKS (duration: -2.0) starts playing
+Fireworks Show - Amirah and I enjoyed a lovely fireworks show together;  we gazed on as they lit up the sky...
+
+TRIGGER Procedure 4.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the first option in conversation segment 17600:
+{{dialogue|Amirah|I can't help but feel something like this is just a bit of a waste of time... Oh, sorry! I shouldn't say that... I forgot today is your special celebration!}}
+
+*''You don't like fireworks?'' (No unique dialogue)
+*{{flirt}}''Fireworks are only as special as the person you're with.'' (No unique dialogue)
+*''No one hates fireworks!'' (No unique dialogue)
+
+(cId 2) The player picks the second option in conversation segment 17600:
+{{dialogue|Amirah|I can't help but feel something like this is just a bit of a waste of time... Oh, sorry! I shouldn't say that... I forgot today is your special celebration!}}
+
+*''You don't like fireworks?'' (No unique dialogue)
+*{{flirt}}''Fireworks are only as special as the person you're with.'' (No unique dialogue)
+*''No one hates fireworks!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Amirah gains 2 favor
+
+TRIGGER Procedure 4.0 Step 3.0 Order 3 Repeat 2
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 17595:
+{{dialogue|Amirah|It would have been nice to have the whole group together, though.}}
+
+*''It's a pity, they're really fun.'' (No unique dialogue)
+*{{flirt}}''I'm just glad you came.'' (No unique dialogue)
+
+(cId -1) The player picks the second option in conversation segment 17600:
+{{dialogue|Amirah|I can't help but feel something like this is just a bit of a waste of time... Oh, sorry! I shouldn't say that... I forgot today is your special celebration!}}
+
+*''You don't like fireworks?'' (No unique dialogue)
+*{{flirt}}''Fireworks are only as special as the person you're with.'' (No unique dialogue)
+*''No one hates fireworks!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Increment HEART by 1
+
+TRIGGER Procedure 5.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 17602, 17603, 17604, 17605 starts:
+{{dialogue|Amirah|That's good. You know, when I was little, I watched the fireworks in Barnarock. I don't really remember it very well though.}}
+{{dialogue|Amirah|But you're right. Sometimes, when I look at the moon, I think of my parents so far away. That we're all looking at the same moon, in the same sky. I wish there was a passage through our eyes, to transport us there in a moment's notice...}}
+{{dialogue|Amirah|No need to worry about money, no need to worry about time...}}
+{{dialogue|Amirah|But... Ah. Look at me, going on. Sorry, I don't know what's come over me. Perhaps its these beautiful lights, and you here...}}
+Remove behavior CommanderMoveToFlagAndAction (idName: 23752) from Player
+
+TRIGGER Procedure 5.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 23751
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 23755 | path: Mission_FX_Scene_Fireworks_06 | sceneName: Main | flagName: artwork_firework | extraParams: 0
+SOUND PLAY 2D || idStr: Play_story_Amirah_fireworks
+
+TRIGGER Procedure 6.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23753 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Amirah stops standing still
+Amirah stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: artwork_player
+DELAY MASK SET || maskId: 23753 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+SCENEITEM DELETE || itemType: 0 | id: 23755
+SCENEITEM DELETE || itemType: 0 | id: 23752
+SCENEITEM CREATE FLAG || itemType: 0 | id: 23753 | path: Mission_FireworksGroup1 | sceneName: Main | flagName: artwork_fire | extraParams: 0
+
+TRIGGER Procedure 7.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_FIREWORKS | state: 9
+ON DELAY MASK EVENT || order: 0 | maskId: 23753 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 5320_0 starts:
+{{dialogue|Amirah|Though I do wish Pablo and Heidi could make it.}}
+{{dialogue|Amirah|You know, I always thought fireworks were superficial. But actually, perhaps I'm the one that's shallow. It's okay to enjoy moments like these.}}
+
+*''Yeah, it's fine to blow off some steam.''
+*{{flirt}}''And what about me?''
+
+{{dialogue|Amirah|indent=true|answer=Yeah, it's fine to blow off some steam.
+|Maybe you're right. I think I need to stop judging things so quickly. Perhaps being open to new experiences would be good for me.}}
+{{dialogue|Amirah|indent=true|Well, looks like the sky has cleared up. I suppose that's the end of the show. I really didn't expect tonight to be so amazing.}}
+{{dialogue|Amirah|indent=true|But it's getting late. ''Player'', let's go back and rest.}}
+{{dialogue|Amirah|What do you mean...?}}
+
+*''Nothing, forget it.''
+*{{flirt}}''I like you, Amirah.''
+
+{{dialogue|Amirah|indent=true|answer=Nothing, forget it.
+|Okay. You know, I've been meaning to tell you that... I'm sorry. When we first met, I didn't really understand what you did, and asked you to just get clay for me. It seems so stupid of me... that was wrong.}}
+{{dialogue|Amirah|indent=true|But now I see how much you do for everyone. How much you do for this town. You're really amazing.}}
+{{dialogue|Amirah|indent=true|And with everything, like these fireworks, you seem to see the beauty in it.}}
+{{dialogue|Amirah|indent=true|Well, looks like the sky has cleared up. I suppose that's the end of the show. I really didn't expect tonight to be so amazing.}}
+{{dialogue|Amirah|indent=true|But it's getting late. ''Player'', let's go back and rest.}}
+{{dialogue|Amirah|indent=true|answer=I like you, Amirah.
+|You... You're saying you really like me?}}
+Remove behavior CommanderMoveToFlagAndAction (idName: 23753) from Amirah
+Remove behavior CommanderMoveToFlagAndAction (idName: 23753) from Player
+
+TRIGGER Procedure 7.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 4) There is a conversation segment (id 17617) that ends:
+{{dialogue|Amirah|You... You're saying you really like me?}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 23754) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:artwork_player|Action:Nod_Story)
+
+TRIGGER Procedure 7.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) The player picks the second option in conversation segment 17609:
+{{dialogue|Amirah|You know, I always thought fireworks were superficial. But actually, perhaps I'm the one that's shallow. It's okay to enjoy moments like these.}}
+
+*''Yeah, it's fine to blow off some steam.'' (No unique dialogue)
+*{{flirt}}''And what about me?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Amirah gains 2 favor
+
+TRIGGER Procedure 8.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 5326_3_1 starts:
+{{dialogue|Amirah|But... I'm sorry... I'm just... not ready yet. I can't let my feelings complicate things. At least... not until my shop is doing better.}}
+{{dialogue|Amirah|Everyone needs to have a clear plan for their life, don't they? Just to know what you want, then it can just fall into place... I mean... aren't you also still figuring things out in your life, ''Player''?}}
+{{dialogue|Player|(What should I say?)}}
+
+*''I'll be rich, even more than Musa.''
+*''I want to be become a powerful person, and protect you.''
+*''Having no plan, that's the best plan.''
+*''Being the most successful workshop is my plan!'' (No unique dialogue)
+
+{{dialogue|Amirah|indent=true|answer=I'll be rich, even more than Musa.
+|Why do you want to compare yourself to Musa? Do you think life is just a race to be rich? You need to be your own person. Being the best Builder, that's something Musa could never do.}}
+{{dialogue|Amirah|indent=true|answer=I want to be become a powerful person, and protect you.
+|I want to be stronger, I don't want to rely on others to protect me. I want to focus on my future, and what is right ahead of me. Why don't you focus on your career?}}
+{{dialogue|Amirah|indent=true|answer=Having no plan, that's the best plan.
+|Your life philosophy, it's really special... but being without a plan might make you falter. Why don't you focus on your career?}}
+Remove behavior CommanderMoveToFlagAndAction (idName: 23754) from Player
+
+TRIGGER Procedure 8.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) The player picks the fourth option in conversation segment 17621:
+{{dialogue|Player|(What should I say?)}}
+
+*''I'll be rich, even more than Musa.'' (No unique dialogue)
+*''I want to be become a powerful person, and protect you.'' (No unique dialogue)
+*''Having no plan, that's the best plan.'' (No unique dialogue)
+*''Being the most successful workshop is my plan!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Amirah gains 2 favor
+
+TRIGGER Procedure 9.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 7) There is a conversation segment (id 17639) that ends:
+{{dialogue|Amirah|And...}}
+CONDITIONS
+Always:
+ACTIONS
+The player interacts (type 2, option 0) with Amirah
+
+TRIGGER Procedure 9.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON INTERACTIVE EXIT || order: 0 | instID: 8015
+CONDITIONS
+Always:
+ACTIONS
+(cId 8) A conversation 17640 starts:
+{{dialogue|Amirah|Don't forget our promise...!}}
+
+TRIGGER Procedure 10.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) The player picks the fourth option in conversation segment 17621:
+{{dialogue|Player|(What should I say?)}}
+
+*''I'll be rich, even more than Musa.'' (No unique dialogue)
+*''I want to be become a powerful person, and protect you.'' (No unique dialogue)
+*''Having no plan, that's the best plan.'' (No unique dialogue)
+*''Being the most successful workshop is my plan!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 5330_0 starts:
+{{dialogue|Amirah|Aren't you already one of the top workshops? ...I understand, you're not one to rest on your laurels. That's something I really like about you!}}
+{{dialogue|Amirah|I also think that way. And that's actually the main reason I haven't been in a relationship so far. I think it's something that you really have to commit to... and I don't know if that's possible while I'm also striving to be the best pottery maker at the same time...}}
+{{dialogue|Amirah|So, ''Player'', how about this... If in the near future, we both achieve the position we want to be in, then it'll prove that we can balance both our feelings and our careers. When that time comes...}}
+{{dialogue|Amirah|Well, what do you say?}}
+{{dialogue|Player|(What should I say?)}}
+
+*''Alright! First I top the charts, then: dinner date at the Blue Moon!''
+*''Why don't we just try being together, see how it goes?''
+*''I don't want to bargain about this...''
+
+{{dialogue|Amirah|indent=true|answer=Alright! First I top the charts, then: dinner date at the Blue Moon!
+|Good. I'll... be rooting hard for you...}}
+{{dialogue|Amirah|indent=true|And yes, let's also try going out once every week.}}
+{{dialogue|Amirah|indent=true|answer=I don't want to bargain about this...
+|I see. Well. Good that we had this talk now instead of years down the road...}}
+{{dialogue|Amirah|indent=true|Talk to you soon, ''Player''.}}
+{{dialogue|Amirah|I...}}
+{{dialogue|Amirah|I'm sorry, it just doesn't feel right for me yet. I don't feel like we've earned the right to be together; I don't want to just... fall prey to whims and desire...}}
+{{dialogue|Amirah|I want us to be built on a solid foundation, and... I want to start things out without any doubt in my mind. Even if you think it's silly... Can you... please just do this for me?}}
+{{dialogue|Player|(What should I say?)}}
+
+*''Alright! First I top the charts, then: dinner date at the Blue Moon!''
+*''I don't want to bargain about this...''
+
+{{dialogue|Amirah|indent=true|answer=Alright! First I top the charts, then: dinner date at the Blue Moon!
+|Good. I'll... be rooting hard for you...}}
+{{dialogue|Amirah|indent=true|And yes, let's also try going out once every week.}}
+{{dialogue|Amirah|indent=true|answer=I don't want to bargain about this...
+|I see. Well. Good that we had this talk now instead of years down the road...}}
+{{dialogue|Amirah|indent=true|Talk to you soon, ''Player''.}}
+
+TRIGGER Procedure 10.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 6) There is a conversation segment (id 17628) that ends:
+{{dialogue|Amirah|And yes, let's also try going out once every week.}}
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 5335_0 starts:
+{{dialogue|Amirah|Well, that's it, I suppose. Looks like the sky has cleared up. I really didn't expect tonight to be so amazing.}}
+{{dialogue|Amirah|But it's getting late. ''Player'', time to retire.}}
+{{dialogue|Amirah|And...}}
+The conversation ends.

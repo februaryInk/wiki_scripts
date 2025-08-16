@@ -1,0 +1,389 @@
+Reading Mission 1800528: To be a Builder
+
+<onlyinclude>{{Infobox mission
+|name = To be a Builder
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from To be a Builder:
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800527
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1800527
+START MISSION 1800527
+
+TRIGGER Procedure 0.0 Step 6.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800527
+CONDITIONS
+Always:
+ACTIONS
+Run mission To be a Builder
+END MISSION 1800527
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800528
+CONDITIONS
+Always:
+ACTIONS
+===Go to Mi-an's Workshop===
+
+{{mission_details
+|desc = What is the answer in Mi-an's heart? Go to Mi-an's workshop and have a conversation with her!
+|details = Go to Mi-an's Workshop
+}}
+AREA TRIGGER CREATE || sceneName: Main | flagName: Trigger_85281 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80034828 | id: 85281 | missionId: 1800527
+
+TRIGGER Procedure 0.0 Step 5.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 85281
+CONDITIONS
+CHECK WEATHER STATE || weather: 2 | flag: 0
+ACTIONS
+AREA TRIGGER DELETE || id: 85281
+DELAY MASK SET || maskId: 85281 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 6.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85281 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Mi-an stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8528_0_1
+Add behavior CommanderMoveToFlagAndAction (idName: 8528171) to Mi-an
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8528_17_1|Action:Fix|Delay:0.5)
+DELAY MASK SET || maskId: 85281 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 85281 | path: S8528_Item1 | flagName: S8528_Item1 | extraParams: 0 | sceneName: Main
+
+TRIGGER Procedure 0.0 Step 7.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8017 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 23932, 23933 starts:
+{{dialogue|Mi-an|Huh... why is there an extra screw?}}
+{{dialogue|Mi-an|Urgh... I'm going to have to take it all apart again...}}
+Remove behavior CommanderMoveToFlagAndAction (idName: 8528171) from Mi-an
+
+TRIGGER Procedure 0.0 Step 8.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 8528001) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8528_0_2|Delay:0.2|LookAtActor:8017)
+
+TRIGGER Procedure 0.0 Step 9.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 24171 starts:
+{{dialogue|Player|(What should I say?)}}
+
+*''Hey, Mi-an!'' (No unique dialogue)
+*''What are you doing?'' (No unique dialogue)
+*''(Surprise her)'' (No unique dialogue)
+
+Set 8528A to 0
+
+TRIGGER Procedure 0.0 Step 12.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Check if 8528A is == 2
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8528002) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8528_0_3|Delay:0.0|LookAtActor:8017|Action:BeatShoulder)
+
+TRIGGER Procedure 0.0 Step 12.1 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Check if 8528A is == 1
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8528002) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8528_0_3|Delay:0.0|LookAtActor:8017)
+Add behavior CommanderMoveToFlagAndAction (idName: 8528172) to Mi-an
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8528_17_2|Delay:1.0|LookAtActor:8000)
+Remove behavior CommanderMoveToFlagAndAction (idName: 8528171) from Mi-an
+
+TRIGGER Procedure 0.0 Step 10.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the third option in conversation segment 24171:
+{{dialogue|Player|(What should I say?)}}
+
+*''Hey, Mi-an!'' (No unique dialogue)
+*''What are you doing?'' (No unique dialogue)
+*''(Surprise her)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8528A to 2
+
+TRIGGER Procedure 0.0 Step 11.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the first option in conversation segment 24171:
+{{dialogue|Player|(What should I say?)}}
+
+*''Hey, Mi-an!'' (No unique dialogue)
+*''What are you doing?'' (No unique dialogue)
+*''(Surprise her)'' (No unique dialogue)
+
+(cId 2) The player picks the second option in conversation segment 24171:
+{{dialogue|Player|(What should I say?)}}
+
+*''Hey, Mi-an!'' (No unique dialogue)
+*''What are you doing?'' (No unique dialogue)
+*''(Surprise her)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8528A to 1
+
+TRIGGER Procedure 0.0 Step 12.1 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: MoveToFlagOver | behaviourName: CommanderMoveToFlagAndAction | npc: 8000
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8528171) from Mi-an
+Add behavior CommanderMoveToFlagAndAction (idName: 8528172) to Mi-an
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8528_17_2|Delay:1.0|LookAtActor:8000)
+
+TRIGGER Procedure 0.0 Step 13.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8017 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 8302_0 starts:
+{{dialogue|Mi-an|Aaaaah!}}
+{{dialogue|Mi-an|You scared me!}}
+{{dialogue|Mi-an|I'm just doing some maintenance on my Grinder... it broke down so I took it apart, but there's an extra part here somehow...}}
+{{dialogue|Mi-an|Now I have to take it apart again to check!}}
+{{dialogue|Mi-an|Hey... what have you got there...}}
+The conversation ends.
+Mi-an stops standing still
+
+TRIGGER Procedure 0.0 Step 14.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8528002) from Player
+Add behavior CommanderMoveToFlagAndAction (idName: 8528003) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8528_0_4|Delay:0.0|LookAtActor:8017)
+
+TRIGGER Procedure 0.0 Step 13.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8017 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 8303_0 starts:
+{{dialogue|Mi-an|Oh, it's you!}}
+{{dialogue|Mi-an|I'm just doing some maintenance on my Grinder... it broke down so I took it apart, but there's an extra part here somehow...}}
+{{dialogue|Mi-an|Now I have to take it apart again to check!}}
+{{dialogue|Mi-an|Hey... what have you got there...}}
+The conversation ends.
+Mi-an stops standing still
+
+TRIGGER Procedure 0.0 Step 15.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 8304_0 starts:
+{{dialogue|Mi-an|Ah! My photo!}}
+
+*''You were so young!''
+*''I didn't expect that you got your goggles so young!''
+*''You've always been this hardworking then...''
+
+{{dialogue|Mi-an|indent=true|answer=You were so young!
+|Yeah! I learned to use the Pickaxe when I was 3 years old.}}
+{{dialogue|Mi-an|indent=true|You know... in a Builder family like mine, you can imagine what my childhood toys were like...}}
+{{dialogue|Mi-an|indent=true|answer=I didn't expect that you got your goggles so young!
+|Right!? My Grandpa never used to really praise me or anything, so it was kind of surprising... actually, I think I can count on one hand the times he said "well done..."}}
+{{dialogue|Mi-an|indent=true|answer=You've always been this hardworking then...
+|Haha, thanks!}}
+{{dialogue|Mi-an|indent=true|When I was little, I always used to show my Grandpa things I'd made to inspect. He'd give me criticism and feedback... maybe that's why I'm such a perfectionist...}}
+{{dialogue|Mi-an|...I failed my exam that day... I was so scared, but my Grandpa said he was proud of me and gave me my goggles...}}
+{{dialogue|Mi-an|It was because I helped a classmate on my way to the exam... It was the first time I really understood was being a Builder was about.}}
+{{dialogue|Mi-an|Do you feel the same? Before that all I knew was assignments and expectations, but when you help someone and you know you've done something important to them...}}
+{{dialogue|Mi-an|There's no feeling like it.}}
+
+*''I feel the same.''
+*''Yeah, that's what being a Builder is all about.''
+*''That's why I came to Sandrock!''
+
+{{dialogue|Mi-an|indent=true|answer=I feel the same.
+|Haha! I knew it! You always work with such passion!}}
+{{dialogue|Mi-an|indent=true|answer=Yeah, that's what being a Builder is all about.
+|Exactly! It's all about helping others!}}
+{{dialogue|Mi-an|indent=true|answer=That's why I came to Sandrock!
+|Same here. When I was signing the contract I was thinking... what if we can really make a difference? What if we can change the world?}}
+{{dialogue|Mi-an|Thanks for bringing this photo to me. It's really important...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 16.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Check relationship with Mi-an is Lover
+ACTIONS
+(cId 5) A conversation 23954, 23955 starts:
+{{dialogue|Mi-an|By the way... do you want to help me out with this Grinder?}}
+{{dialogue|Mi-an|Two of us working together, we might even be as good as Peach!}}
+
+TRIGGER Procedure 0.0 Step 16.2 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Check relationship with Mi-an is 6 Lover
+ACTIONS
+(cId 7) A conversation 23962 starts:
+{{dialogue|Mi-an|Sorry... I really have to get back to this Grinder...}}
+
+TRIGGER Procedure 0.0 Step 17.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8528172) from Mi-an
+Remove behavior CommanderPlayerAction (idName: 85281) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8528003) from Player
+Add behavior CommanderMoveToFlagAndAction (idName: 8528004) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8528_0_5|Delay:0.5|Action:Fix|LookAtActor:8017)
+Add behavior CommanderMoveToFlagAndAction (idName: 8528173) to Mi-an
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8528_17_5|Delay:0.0|Action:Fix|LookAtActor:8000)
+
+TRIGGER Procedure 0.0 Step 17.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 85283 | path: S8528_Item3 | flagName: S8528_Item3 | extraParams: 0 | sceneName: Main
+
+TRIGGER Procedure 0.0 Step 18.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 23956, 23957, 23958, 23959 starts:
+{{dialogue|Mi-an|Haha! Nothing left over, no rattling, perfect!}}
+{{dialogue|Mi-an|We did it!}}
+{{dialogue|Mi-an|We just Builder Cruise'd this thing out in no time flat! Best team in work and in life!}}
+{{dialogue|Mi-an|Wait a minute...}}
+
+TRIGGER Procedure 0.0 Step 19.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTOR FREEZ COLLIDER || npc: 8017 | freezeCollider: 1
+ACTOR FREEZ COLLIDER || npc: 8000 | freezeCollider: 1
+Remove behavior CommanderMoveToFlagAndAction (idName: 8528004) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8528173) from Mi-an
+Add behavior CommanderMoveToFlagAndAction (idName: 8528174) to Mi-an
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8528_17_6|Delay:0.0|Action:WipeFace|LookAtActor:8000)
+Add behavior CommanderMoveToFlag (idName: 8528005) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8528_0_6|Delay:0.8|LookAtActor:8017)
+
+TRIGGER Procedure 0.0 Step 20.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8017 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 23960, 23961 starts:
+{{dialogue|Mi-an|Hehe... you got a little oil on your face...}}
+{{dialogue|Mi-an|The Grinder is fixed now, though. I'm sure you're busy... I'll see you soon.}}
+
+TRIGGER Procedure 0.0 Step 21.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTOR FREEZ COLLIDER || npc: 8017 | freezeCollider: 0
+ACTOR FREEZ COLLIDER || npc: 8000 | freezeCollider: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 8528174) from Mi-an
+Remove behavior CommanderMoveToFlag (idName: 8528005) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8528003) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8528172) from Mi-an
+Remove behavior CommanderMoveToFlagAndAction (idName: 8528002) from Player
+CUTSCENE UI STATE EXIT || 
+CAMERA PATH STOP ALL || 
+SUBMIT MISSION 1800527
+SCENEITEM DELETE || itemType: 0 | id: 85281
+SCENEITEM DELETE || itemType: 0 | id: 85282
+SCENEITEM DELETE || itemType: 0 | id: 85283
+END MISSION 1800528
+
+TRIGGER Procedure 1.0 Step 17.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 85281) to Player
+(param: CMDAction:Nod_Story)

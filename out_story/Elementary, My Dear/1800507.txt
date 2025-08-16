@@ -1,0 +1,787 @@
+Reading Mission 1800507: Elementary, My Dear
+
+<onlyinclude>{{Infobox mission
+|name = Elementary, My Dear
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Elementary, My Dear:
+
+TRIGGER Procedure 0.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if 8506A is == 1
+ACTIONS
+START MISSION 1800506
+
+TRIGGER Procedure 0.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800506
+CONDITIONS
+Always:
+ACTIONS
+Run mission Elementary, My Dear
+END MISSION 1800506
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800507
+CONDITIONS
+Always:
+ACTIONS
+===Wait Until Tomorrow===
+
+{{mission_details
+|desc = You've arranged to help tutor the child with Qi tomorrow, so rest for today.
+|details = Wait Until Tomorrow
+}}
+Set 8507Sex to 0
+Set global blackboard key 8507Sex with info 0.
+
+TRIGGER Procedure 0.0 Step 1.1 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK CHILD PHASE || childId: 8121 | phaseMax: Children | phaseMin: Children
+ACTIONS
+Set 8507Sex to 1
+Set global blackboard key 8507Sex with info 1.
+
+TRIGGER Procedure 0.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Science:
+CONDITIONS
+Check if 8507Sex is == 1
+ACTIONS
+Child stands still in Science and looks at Qi
+Qi stands still in Science and looks at Child
+PLAYER SET POS ROT FLAG || sceneName: Science | flagName: S8507_0_1
+CUTSCENE UI STATE ENTER || 
+SCENEITEM CREATE FLAG || itemType: 0 | id: 85071 | path: S8507_Item1 | flagName: S8507_Item1 | sceneName: Science | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Science:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 8006_0 starts:
+{{dialogue|Qi|You must review your studies. Not reviewing means that if you learn four things in a day, you'll forget one. Forgetting is most likely to happen within five days of learning something, so now is the most important time to review.}}
+{{dialogue|Qi|Not forgetting important information is a lifelong battle that both of your parents take very seriously.}}
+{{dialogue|Child|Hiya! I can win the battle! If I forget to forget, then I'll never forget anything!}}
+{{dialogue|Qi|While it is possible to develop a photographic memory, there are no shortcuts. Certainly none so semantic as what you've just described...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 85071212) to Child
+(param: TargetScene:Science|MoveMode:Walk|FlagName:S8507_121_2|LookAtActor:8000|Delay:1)
+Add behavior CommanderMoveToFlagAndAction (idName: 8507072) to Qi
+(param: TargetScene:Science|MoveMode:Walk|FlagName:S8507_7_2|LookAtActor:8000|Delay:1)
+Add behavior CommanderMoveToFlag (idName: 8498001) to Player
+(param: TargetScene:Science|MoveMode:Run|FlagName:S8507_0_2|LookAtActor:8007|Delay:0.0)
+
+TRIGGER Procedure 0.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 8007_0 starts:
+{{dialogue|Qi|''Pet Name'', good of you to join us.}}
+{{dialogue|Child|''Parent Name''!}}
+{{dialogue|Qi|We've only just begun. In fact, we've finished our warm-up exercises and are about ready to dive into the actual material.}}
+{{dialogue|Qi|''Pet Name'', which material would you like to be responsible for tutoring? I'd imagined you might take charge of the language assignments and I the math.}}
+
+*''Sure, I'll take language.''
+*''You might need to take the lead on both...''
+*''I'm speaking a language right now!''
+
+{{dialogue|Child|indent=true|answer=Sure, I'll take language.
+|reward={{NPC2|Qi|rp=1}}|reward={{NPC2|Child|rp=1}}|Alright! We're ready!}}
+{{dialogue|Qi|indent=true|answer=You might need to take the lead on both...
+|Ahem... ''Pet Name''... I'm afraid that my knowledge of the liberal arts extends to the lengths of an adjunct professor at best...}}
+{{dialogue|Qi|indent=true|Furthermore, for the sake of appearances, I suggest we both take on a role of authority here. If need be, I'll assist you to the best of my ability in a way that does not undermine your integrity as an educator.}}
+{{dialogue|Child|indent=true|Let's go already!}}
+{{dialogue|Qi|indent=true|answer=I'm speaking a language right now!
+|Indeed you are. Bravo.}}
+{{dialogue|Qi|Let's see what we've been given here...}}
+{{dialogue|Qi|"A summit meeting involving the Mayors of Atara, Tallsky, Portia, as well as the Chief Builder from Highwind is occurring. If all of them shake hands with each other when they meet, how many total handshakes will occur at that time?"}}
+{{dialogue|Qi|Permutations? Sure, why not? When did we learn that, ''Pet Name''? Kindergarten?}}
+{{dialogue|Child|Everybody shakes hands with everybody? That's gross...}}
+{{dialogue|Qi|Yes, I had issues with that at your age as well. Not to worry, we can always wash our hands with soap after touching something "gross."}}
+{{dialogue|Child|Where's the Mayor of Highwind?}}
+{{dialogue|Qi|There is not enough information provided to know what has happened to the mayor; perhaps he is ill. Perhaps he doesn't like summits anymore.}}
+{{dialogue|Qi|Perhaps he is there in disguise, plotting revenge against the other attendees. The possibilities are endless. Since we can't know, better to just work with what we've been given.}}
+{{dialogue|Qi|Let's begin solving the problem by answering this: how many people are there... with plans to shake hands?}}
+{{dialogue|Child|Five.}}
+{{dialogue|Qi|Hm... Mayor of Atara, Mayor of Tallsky, Mayor of Portia, Builder of Highwind: I count four. Care to explain your reasoning?}}
+{{dialogue|Child|Trudy would be there.}}
+{{dialogue|Qi|Likely, yes.}}
+{{dialogue|Qi|However, the text here says clearly that she is not.}}
+{{dialogue|Child|Why?}}
+{{dialogue|Qi|The writers of the textbook likely thought four was enough.}}
+{{dialogue|Child|Why?}}
+{{dialogue|Qi|Four is a complicated enough number to demonstrate that you understand the mathematical concept; adding another name would be a waste of ink.}}
+{{dialogue|Child|Why?}}
+{{dialogue|Qi|There is no inherent difference in difficulty calculating something by four or five.}}
+{{dialogue|Child|Why?}}
+{{dialogue|Qi|This is simply how the human mind works.}}
+{{dialogue|Child|Why?}}
+{{dialogue|Qi|A massive, randomly generated series of events unfolded across eternity and the cosmos to arrive at this particular iteration of consciousness and all the quirks that come with it.}}
+{{dialogue|Child|Why?}}
+{{dialogue|Qi|Because...}}
+{{dialogue|Qi|Your parents love you very much.}}
+{{dialogue|Child|Hmmmmm... Okay!}}
+{{dialogue|Qi|Sweetie: we need to use our imagination, alright? Let's imagine that only four people are at this summit, alright?}}
+
+*''C'mon kiddo, focus!''
+*''You two are too cute together.''
+*''Remind you of anyone...?''
+
+{{dialogue|Child|indent=true|answer=C'mon kiddo, focus!
+|reward={{NPC2|Qi|rp=1}}|You're right, ''Parent Name''! I can do this!}}
+{{dialogue|Child|indent=true|answer=You two are too cute together.
+|reward={{NPC2|Child|rp=1}}|Hahaha!}}
+{{dialogue|Qi|indent=true|Your amiable commentary is duly noted, but we can't encourage this kind of behavior...}}
+{{dialogue|Qi|indent=true|answer=Remind you of anyone...?
+|Some of this behavior matches descriptions given by my parents and grandfather of my own, but surely their accounts were embellished for the sake of narrative; by my own recollection, I was an extraordinarily well-behaved little boy.}}
+{{dialogue|Qi|Let's return our focus to the problem, shall we? The next question we need to ask: how many times will the first person shake hands?}}
+{{dialogue|Child|I got the answer already! It's six. The first mayor shakes with the other three people, take her out. Then the next mayor shakes hands twice, take him out. Then the Builder only has one more person left to shake hands with. Six handshakes.}}
+{{dialogue|Qi|I see. So you've known the answer this entire time.}}
+{{dialogue|Child|That's why I said it was gross...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 8.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+(cId 12) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 22770 starts:
+{{dialogue|Player|(After focusing, your child breezed through the rest of the math homework. Qi tried his best to be helpful and patient, and it might even be fair to say that he succeeded.)}}
+
+TRIGGER Procedure 0.0 Step 9.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Check if 8507Sex is == 1
+ACTIONS
+(cId 4) A conversation 8014_0 starts:
+{{dialogue|Qi|It seems you may be a mathematical prodigy, little one. Which is nice. One less thing to worry about.}}
+{{dialogue|Qi|''Pet Name'', I believe the lingustics section is next. Shall I turn things over to you? Let me just read the first line here for us...}}
+{{dialogue|Qi|"Make your own comparison. Example: Your voice is like music, it sounds good to me."}}
+{{dialogue|Qi|Seems simple enough. X is like Y, where Z is a defining characteristic that binds them. Another example might be... eh... Quantum mechanics is like a box of chocolates- hm, that's no good... often you do and don't know what you're going to get at the same time...}}
+{{dialogue|Child|Um... Com-par-i-son...?}}
+{{dialogue|Player|(What should I say?)}}
+
+*''Your father is like an owl: wise and a little bit funny.''
+*''Our house is like a castle, safe and roomy.''
+*''Researchers are like liquid nitrogen: cooler than ice.''
+*''(Stay silent.)''
+
+{{dialogue|Qi|indent=true|answer=Your father is like an owl: wise and a little bit funny.
+|reward={{NPC2|Child|rp=1}}|...?}}
+{{dialogue|Child|indent=true|Hahaha! And you never remember anybody's name! "Who?" "Whooooo!?"}}
+{{dialogue|Qi|indent=true|I'm afraid this comparison fails: I don't bother to ask "who," I just call them by their profession or choose a new designation based on their appearance.}}
+{{dialogue|Qi|indent=true|answer=Our house is like a castle, safe and roomy.
+|reward={{NPC2|Qi|rp=1}}|reward={{NPC2|Child|rp=1}}|Yes, that is a rather apt comparison. Although, castles have more defensive measures built in than our home. That can be fixed, however. In due time.}}
+{{dialogue|Qi|indent=true|answer=Researchers are like liquid nitrogen: cooler than ice.
+|reward={{NPC2|Qi|rp=3}}|reward={{NPC2|Child|rp=3}}|H... huh!?}}
+{{dialogue|Child|indent=true|Yeah, Pa! You're so cool! Like liquid... nibrogym...}}
+{{dialogue|Qi|indent=true|Oh. I thought you meant temperature-wise and that my life was in danger. Thank you. Very... "cool." Both of you.}}
+{{dialogue|Child|Okay, okay, I got one!}}
+{{dialogue|Child|Learning is like the desert. It goes on forever and ever and it's easy to get lost, but... sometimes it can be really beautiful!}}
+{{dialogue|Qi|Oh. Why... yes. I think that's very true. Did you think of that yourself?}}
+{{dialogue|Qi|''Pet Name'', it's exceptionally rare for a child to show such talent in so many different areas. It's almost as if... as if... our child is...}}
+
+*''A genius!''
+*''As smart as you!''
+*''As smart as me!''
+*''The best of both of us.''
+
+{{dialogue|Qi|indent=true|answer=A genius!
+|Precisely.}}
+{{dialogue|Qi|indent=true|answer=As smart as you!
+|My talents at this age were not so eclectic.}}
+{{dialogue|Qi|indent=true|answer=As smart as me!
+|Can you also claim to have these kinds of math skills at such a young age? I think our child will surpass both of us one day...}}
+{{dialogue|Qi|indent=true|answer=The best of both of us.
+|Perhaps so.}}
+{{dialogue|Qi|With proper planning, we should be able to get you through university by ten or eleven...}}
+{{dialogue|Qi|Little one, isn't that splendid news? You'll be able to accomplish all of the goals I never could as a child! Which I can then, of course, live through you vicariously. You might be a researcher by the ripe young age of eighteen!}}
+{{dialogue|Child|Huh? I don't wanna be a researcher. I just wanna play and have fun.}}
+{{dialogue|Qi|What the- ...Fun!? Oh... darling... where did it all go wrong...?}}
+
+*''You don't have to figure this out yet, honey...'' (No unique dialogue)
+*''And you know what's really fun? Being a Builder!'' (No unique dialogue)
+*''Research is cool, though!'' (No unique dialogue)
+
+{{dialogue|Child|I'm gonna be a poet!}}
+{{dialogue|Qi|A poet? Who has put such preposterous ideas into your head?}}
+{{dialogue|Child|Grandma Vivi! I made a rhyme on accident. She said I'm a poet and I didn't know it! But now I do...}}
+{{dialogue|Qi|I see. There is no denying that also rhymes. However, I do warn you that poets are not known for having comfortable lives. Don't listen to the writer boy who locks himself in his room; his parents have bought him his entire career.}}
+{{dialogue|Child|I don't care about that...}}
+{{dialogue|Child|"Time goes fast and time goes slow..."}}
+{{dialogue|Child|"Fast when I play, slow when I work at home!"}}
+{{dialogue|Child|That's my poem! I'm gonna go play now! Bye bye!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 10.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Qi stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 85071212) from Child
+Child stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8507072) from Qi
+Add behavior CommanderMoveToFlag (idName: 85071213) to Child
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8505_19_3)
+Add behavior CommanderMoveToFlagAndAction (idName: 8507073) to Qi
+(param: TargetScene:Science|MoveMode:Walk|FlagName:S8507_7_3|LookAtActor:8000|Delay:1.2)
+Add behavior CommanderMoveToFlagAndAction (idName: 8507002) to Player
+(param: TargetScene:Science|MoveMode:Walk|FlagName:S8507_0_3|LookAtActor:8007|Delay:1.0)
+
+TRIGGER Procedure 0.0 Step 11.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8007 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Check if 8507Sex is == 1
+ACTIONS
+(cId 5) A conversation 8023_0 starts:
+{{dialogue|Qi|Let's just hope... that's a phase. But at least there was some demonstration that our chats about relativity haven't been all for naught.}}
+{{dialogue|Qi|A poet... is that something you'd be willing to accept?}}
+
+*''I think it could be quite nice.''
+*''We should try to find out how serious this passion is.''
+*''This is just a "rebellion" phase...''
+
+{{dialogue|Qi|indent=true|answer=I think it could be quite nice.
+|''Pet Name'', don't be so sure of that...}}
+{{dialogue|Qi|indent=true|As you know, I'm not particularly fond of "surprises," nor "accidents." I will look into the probability of this actually manifesting into something more tangible, then we can decide how to act from there.}}
+{{dialogue|Qi|indent=true|answer=We should try to find out how serious this passion is.
+|reward={{NPC2|Qi|rp=3}}|Yes... All behavior is rooted in some source of probability. If we can discover what that is, perhaps we can "put a thumb on the scale," so to speak...}}
+{{dialogue|Qi|indent=true|answer=This is just a "rebellion" phase...
+|Hm, yes, ''Pet Name''. I am now recalling several papers on the subject: children at this age do tend to overexert a newfound option of rejecting authority.}}
+{{dialogue|Qi|indent=true|It's said that this phase is fundamental in the development of the self and on one's own perspective. Despite knowing that, I still can't help but be alarmed...}}
+{{dialogue|Qi|Parenting at times can feel like my first day in the lab... Theory is one thing, but actually putting it into practice can nevertheless be nervewracking.}}
+{{dialogue|Qi|At least in the lab, all unknowns are controlled for; here there are an infinite number of variables that could come into play...}}
+{{dialogue|Qi|Sigh...}}
+{{dialogue|Qi|In the case that poetry is inevitable, I will at the very least attempt to prepare for such outcomes.}}
+{{dialogue|Qi|It won't hurt to be acquainted with certain professors of literature in Atara and Vega 5; perhaps even our town writer may have some useful information on the topic...}}
+{{dialogue|Qi|Rest assured, ''Pet Name''. This unknown field will be relatively known to us... soon enough.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 15.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8507002) from Player
+Remove behavior CommanderMoveToFlag (idName: 8507001) from Player
+Remove behavior CommanderMoveToFlag (idName: 85071213) from Child
+Remove behavior CommanderMoveToFlag (idName: 85071213) from Child
+Remove behavior CommanderMoveToFlagAndAction (idName: 8507073) from Qi
+SUBMIT MISSION 1800506
+CUTSCENE UI STATE EXIT || 
+CAMERA PATH STOP ALL || 
+
+TRIGGER Procedure 0.0 Step 11.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8007 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Check if 8507Sex is == 0
+ACTIONS
+(cId 5) A conversation 8549_0 starts:
+{{dialogue|Qi|Let's just hope... that's a phase. But at least there was some demonstration that our chats about relativity haven't been all for naught.}}
+{{dialogue|Qi|A poet... is that something you'd be willing to accept?}}
+
+*''I think it could be quite nice.''
+*''We should try to find out how serious this passion is.''
+*''This is just a "rebellion" phase...''
+
+{{dialogue|Qi|indent=true|answer=I think it could be quite nice.
+|''Pet Name'', don't be so sure of that...}}
+{{dialogue|Qi|indent=true|As you know, I'm not particularly fond of "surprises," nor "accidents." I will look into the probability of this actually manifesting into something more tangible, then we can decide how to act from there.}}
+{{dialogue|Qi|indent=true|answer=We should try to find out how serious this passion is.
+|Yes... All behavior is rooted in some source of probability. If we can discover what that is, perhaps we can "put a thumb on the scale," so to speak...}}
+{{dialogue|Qi|indent=true|answer=This is just a "rebellion" phase...
+|Hm, yes, ''Pet Name''. I am now recalling several papers on the subject: children at this age do tend to overexert a newfound option of rejecting authority.}}
+{{dialogue|Qi|indent=true|It's said that this phase is fundamental in the development of the self and on one's own perspective. Despite knowing that, I still can't help but be alarmed...}}
+{{dialogue|Qi|Parenting at times can feel like my first day in the lab... Theory is one thing, but actually putting it into practice can nevertheless be nervewracking.}}
+{{dialogue|Qi|At least in the lab, all unknowns are controlled for; here there are an infinite number of variables that could come into play...}}
+{{dialogue|Qi|Sigh...}}
+{{dialogue|Qi|In the case that poetry is inevitable, I will at the very least attempt to prepare for such outcomes.}}
+{{dialogue|Qi|It won't hurt to be acquainted with certain professors of literature in Atara and Vega 5; perhaps even our town writer may have some useful information on the topic...}}
+{{dialogue|Qi|Rest assured, ''Pet Name''. This unknown field will be relatively known to us... soon enough.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 20.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+When the player moves from Science to the -1:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 85071
+END MISSION 1800507
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+===Go to the Research Center===
+
+{{mission_details
+|desc = Today is the scheduled time to help with the child's studies. Prepare and head to the research center.
+|details = Go to the Research Center
+}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Science:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_science
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_science
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Science:
+CONDITIONS
+Check if 8507Sex is == 0
+ACTIONS
+Child stands still in Science and looks at Qi
+Qi stands still in Science and looks at Child
+PLAYER SET POS ROT FLAG || sceneName: Science | flagName: S8507_0_1
+CUTSCENE UI STATE ENTER || 
+SCENEITEM CREATE FLAG || itemType: 0 | id: 85071 | path: S8507_Item1 | sceneName: Science | flagName: S8507_Item1 | extraParams: 0
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Science:
+CONDITIONS
+Always:
+ACTIONS
+(cId 11) A conversation 8028_0 starts:
+{{dialogue|Qi|You must review your studies. Not reviewing means that if you learn four things in a day, you'll forget one. Forgetting is most likely to happen within five days of learning something, so now is the most important time to review.}}
+{{dialogue|Qi|Not forgetting important information is a lifelong battle that both of your parents take very seriously.}}
+{{dialogue|Child|Hiya! I can win the battle! If I forget to forget, then I'll never forget anything!}}
+{{dialogue|Qi|While it is possible to develop a photographic memory, there are no shortcuts. Certainly none so semantic as what you've just described...}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 85071212) to Child
+(param: TargetScene:Science|MoveMode:Walk|FlagName:S8507_121_2|LookAtActor:8000|Delay:1)
+Add behavior CommanderMoveToFlagAndAction (idName: 8507072) to Qi
+(param: TargetScene:Science|MoveMode:Walk|FlagName:S8507_7_2|LookAtActor:8000|Delay:1)
+Add behavior CommanderMoveToFlag (idName: 8498001) to Player
+(param: TargetScene:Science|MoveMode:Run|FlagName:S8507_0_2|LookAtActor:8007|Delay:0.0)
+
+TRIGGER Procedure 1.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 12) A conversation 8029_0 starts:
+{{dialogue|Qi|''Pet Name'', good of you to join us.}}
+{{dialogue|Child|''Parent Name''!}}
+{{dialogue|Qi|We've only just begun. In fact, we've finished our warm-up exercises and are about ready to dive into the actual material.}}
+{{dialogue|Qi|''Pet Name'', which material would you like to be responsible for tutoring? I'd imagined you might take charge of the language assignments and I the math.}}
+
+*''Sure, I'll take language.''
+*''You might need to take the lead on both...''
+*''I'm speaking a language right now!''
+
+{{dialogue|Child|indent=true|answer=Sure, I'll take language.
+|reward={{NPC2|Qi|rp=1}}|reward={{NPC2|Child|rp=1}}|Alright! We're ready!}}
+{{dialogue|Qi|indent=true|answer=You might need to take the lead on both...
+|Ahem... ''Pet Name''... I'm afraid that my knowledge of the liberal arts extends to the lengths of an adjunct professor at best...}}
+{{dialogue|Qi|indent=true|Furthermore, for the sake of appearances, I suggest we both take on a role of authority here. If need be, I'll assist you to the best of my ability in a way that does not undermine your integrity as an educator.}}
+{{dialogue|Child|indent=true|Let's go already!}}
+{{dialogue|Qi|indent=true|answer=I'm speaking a language right now!
+|Indeed you are. Bravo.}}
+{{dialogue|Qi|Let's see what we've been given here...}}
+{{dialogue|Qi|"A summit meeting involving the Mayors of Atara, Tallsky, Portia, as well as the Chief Builder from Highwind is occurring. If all of them shake hands with each other when they meet, how many total handshakes will occur at that time?"}}
+{{dialogue|Qi|Permutations? Sure, why not? When did we learn that, ''Pet Name''? Kindergarten?}}
+{{dialogue|Child|Everybody shakes hands with everybody? That's gross...}}
+{{dialogue|Qi|Yes, I had issues with that at your age as well. Not to worry, we can always wash our hands with soap after touching something "gross."}}
+{{dialogue|Child|Where's the Mayor of Highwind?}}
+{{dialogue|Qi|There is not enough information provided to know what has happened to the mayor; perhaps he is ill. Perhaps he doesn't like summits anymore.}}
+{{dialogue|Qi|Perhaps he is there in disguise, plotting revenge against the other attendees. The possibilities are endless. Since we can't know, better to just work with what we've been given.}}
+{{dialogue|Qi|Let's begin solving the problem by answering this: how many people are there... with plans to shake hands?}}
+{{dialogue|Child|Five.}}
+{{dialogue|Qi|Hm... Mayor of Atara, Mayor of Tallsky, Mayor of Portia, Builder of Highwind: I count four. Care to explain your reasoning?}}
+{{dialogue|Child|Trudy would be there.}}
+{{dialogue|Qi|Likely, yes.}}
+{{dialogue|Qi|However, the text here says clearly that she is not.}}
+{{dialogue|Child|Why?}}
+{{dialogue|Qi|The writers of the textbook likely thought four was enough.}}
+{{dialogue|Child|Why?}}
+{{dialogue|Qi|Four is a complicated enough number to demonstrate that you understand the mathematical concept; adding another name would be a waste of ink.}}
+{{dialogue|Child|Why?}}
+{{dialogue|Qi|There is no inherent difference in difficulty calculating something by four or five.}}
+{{dialogue|Child|Why?}}
+{{dialogue|Qi|This is simply how the human mind works.}}
+{{dialogue|Child|Why?}}
+{{dialogue|Qi|A massive, randomly generated series of events unfolded across eternity and the cosmos to arrive at this particular iteration of consciousness and all the quirks that come with it.}}
+{{dialogue|Child|Why?}}
+{{dialogue|Qi|Because...}}
+{{dialogue|Qi|Your parents love you very much.}}
+{{dialogue|Child|Hmmmmm... Okay!}}
+{{dialogue|Qi|Sweetie: we need to use our imagination, alright? Let's imagine that only four people are at this summit, alright?}}
+
+*''C'mon kiddo, focus!''
+*''You two are too cute together.''
+*''Remind you of anyone...?''
+
+{{dialogue|Child|indent=true|answer=C'mon kiddo, focus!
+|reward={{NPC2|Qi|rp=1}}|You're right, ''Parent Name''! I can do this!}}
+{{dialogue|Child|indent=true|answer=You two are too cute together.
+|reward={{NPC2|Child|rp=1}}|Hahaha!}}
+{{dialogue|Qi|indent=true|Your amiable commentary is duly noted, but we can't encourage this kind of behavior...}}
+{{dialogue|Qi|indent=true|answer=Remind you of anyone...?
+|Some of this behavior matches descriptions given by my parents and grandfather of my own, but surely their accounts were embellished for the sake of narrative; by my own recollection, I was an extraordinarily well-behaved little boy.}}
+{{dialogue|Qi|Let's return our focus to the problem, shall we? The next question we need to ask: how many times will the first person shake hands?}}
+{{dialogue|Child|I got the answer already! It's six. The first mayor shakes with the other three people, take her out. Then the next mayor shakes hands twice, take him out. Then the Builder only has one more person left to shake hands with. Six handshakes.}}
+{{dialogue|Qi|I see. So you've known the answer this entire time.}}
+{{dialogue|Child|That's why I said it was gross...}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 9.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Check if 8507Sex is == 0
+ACTIONS
+(cId 14) A conversation 8036_0 starts:
+{{dialogue|Qi|It seems you may be a mathematical prodigy, little one. Which is nice. One less thing to worry about.}}
+{{dialogue|Qi|''Pet Name'', I believe the lingustics section is next. Shall I turn things over to you? Let me just read the first line here for us...}}
+{{dialogue|Qi|"Make your own comparison. Example: Your voice is like music, it sounds good to me."}}
+{{dialogue|Qi|Seems simple enough. X is like Y, where Z is a defining characteristic that binds them. Another example might be... eh... Quantum mechanics is like a box of chocolates- hm, that's no good... often you do and don't know what you're going to get at the same time...}}
+{{dialogue|Child|Um... Com-par-i-son...?}}
+{{dialogue|Player|(What should I say?)}}
+
+*''Your father is like an owl: wise and a little bit funny.''
+*''Our house is like a castle, safe and roomy.''
+*''Researchers are like liquid nitrogen: cooler than ice.''
+*''(Stay silent.)''
+
+{{dialogue|Qi|indent=true|answer=Your father is like an owl: wise and a little bit funny.
+|reward={{NPC2|Child|rp=1}}|...?}}
+{{dialogue|Child|indent=true|Hahaha! And you never remember anybody's name! "Who?" "Whooooo!?"}}
+{{dialogue|Qi|indent=true|I'm afraid this comparison fails: I don't bother to ask "who," I just call them by their profession or choose a new designation based on their appearance.}}
+{{dialogue|Qi|indent=true|answer=Our house is like a castle, safe and roomy.
+|reward={{NPC2|Qi|rp=1}}|reward={{NPC2|Child|rp=1}}|Yes, that is a rather apt comparison. Although, castles have more defensive measures built in than our home. That can be fixed, however. In due time.}}
+{{dialogue|Qi|indent=true|answer=Researchers are like liquid nitrogen: cooler than ice.
+|reward={{NPC2|Qi|rp=3}}|reward={{NPC2|Child|rp=3}}|H... huh!?}}
+{{dialogue|Child|indent=true|Yeah, Pa! You're so cool! Like liquid... nibrogym...}}
+{{dialogue|Qi|indent=true|Oh. I thought you meant temperature-wise and that my life was in danger. Thank you. Very... "cool." Both of you.}}
+{{dialogue|Child|Okay, okay, I got one!}}
+{{dialogue|Child|Learning is like the desert. It goes on forever and ever and it's easy to get lost, but... sometimes it can be really beautiful!}}
+{{dialogue|Qi|Oh. Why... yes. I think that's very true. Did you think of that yourself?}}
+{{dialogue|Qi|''Pet Name'', it's exceptionally rare for a child to show such talent in so many different areas. It's almost as if... as if... our child is...}}
+
+*''A genius!''
+*''As smart as you!''
+*''As smart as me!''
+*''The best of both of us.''
+
+{{dialogue|Qi|indent=true|answer=A genius!
+|Precisely.}}
+{{dialogue|Qi|indent=true|answer=As smart as you!
+|My talents at this age were not so eclectic.}}
+{{dialogue|Qi|indent=true|answer=As smart as me!
+|Can you also claim to have these kinds of math skills at such a young age? I think our child will surpass both of us one day...}}
+{{dialogue|Qi|indent=true|answer=The best of both of us.
+|Perhaps so.}}
+{{dialogue|Qi|With proper planning, we should be able to get you through university by ten or eleven...}}
+{{dialogue|Qi|Little one, isn't that splendid news? You'll be able to accomplish all of the goals I never could as a child! Which I can then, of course, live through you vicariously. You might be a researcher by the ripe young age of eighteen!}}
+{{dialogue|Child|Huh? I don't wanna be a researcher. I just wanna play and have fun.}}
+{{dialogue|Qi|What the- ...Fun!? Oh... darling... where did it all go wrong...?}}
+
+*''You don't have to figure this out yet, honey...'' (No unique dialogue)
+*''And you know what's really fun? Being a Builder!'' (No unique dialogue)
+*''Research is cool, though!'' (No unique dialogue)
+
+{{dialogue|Child|I'm gonna be a poet!}}
+{{dialogue|Qi|A poet? Who has put such preposterous ideas into your head?}}
+{{dialogue|Child|Grandma Vivi! I made a rhyme on accident. She said I'm a poet and I didn't know it! But now I do...}}
+{{dialogue|Qi|I see. There is no denying that also rhymes. However, I do warn you that poets are not known for having comfortable lives. Don't listen to the writer boy who locks himself in his room; his parents have bought him his entire career.}}
+{{dialogue|Child|I don't care about that...}}
+{{dialogue|Child|"Time goes fast and time goes slow..."}}
+{{dialogue|Child|"Fast when I play, slow when I work at home!"}}
+{{dialogue|Child|That's my poem! I'm gonna go play now! Bye bye!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 10.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 14) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Qi stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 85071212) from Child
+Child stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8507072) from Qi
+Add behavior CommanderMoveToFlag (idName: 85071213) to Child
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8505_19_3)
+Add behavior CommanderMoveToFlagAndAction (idName: 8507073) to Qi
+(param: TargetScene:Science|MoveMode:Walk|FlagName:S8507_7_3|LookAtActor:8000|Delay:1.0)
+Add behavior CommanderMoveToFlagAndAction (idName: 8507002) to Player
+(param: TargetScene:Science|MoveMode:Walk|FlagName:S8507_0_3|LookAtActor:8007|Delay:0.0)
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the first option in conversation segment 22732:
+{{dialogue|Qi|''Pet Name'', which material would you like to be responsible for tutoring? I'd imagined you might take charge of the language assignments and I the math.}}
+
+*''Sure, I'll take language.'' (No unique dialogue)
+*''You might need to take the lead on both...'' (No unique dialogue)
+*''I'm speaking a language right now!'' (No unique dialogue)
+
+(cId 12) The player picks the first option in conversation segment 22835:
+{{dialogue|Qi|''Pet Name'', which material would you like to be responsible for tutoring? I'd imagined you might take charge of the language assignments and I the math.}}
+
+*''Sure, I'll take language.'' (No unique dialogue)
+*''You might need to take the lead on both...'' (No unique dialogue)
+*''I'm speaking a language right now!'' (No unique dialogue)
+
+(cId 2) The player picks the first option in conversation segment 22761:
+{{dialogue|Qi|Sweetie: we need to use our imagination, alright? Let's imagine that only four people are at this summit, alright?}}
+
+*''C'mon kiddo, focus!'' (No unique dialogue)
+*''You two are too cute together.'' (No unique dialogue)
+*''Remind you of anyone...?'' (No unique dialogue)
+
+(cId 12) The player picks the first option in conversation segment 22864:
+{{dialogue|Qi|Sweetie: we need to use our imagination, alright? Let's imagine that only four people are at this summit, alright?}}
+
+*''C'mon kiddo, focus!'' (No unique dialogue)
+*''You two are too cute together.'' (No unique dialogue)
+*''Remind you of anyone...?'' (No unique dialogue)
+
+(cId 4) The player picks the second option in conversation segment 22776:
+{{dialogue|Player|(What should I say?)}}
+
+*''Your father is like an owl: wise and a little bit funny.'' (No unique dialogue)
+*''Our house is like a castle, safe and roomy.'' (No unique dialogue)
+*''Researchers are like liquid nitrogen: cooler than ice.'' (No unique dialogue)
+*''(Stay silent.)'' (No unique dialogue)
+
+(cId 14) The player picks the second option in conversation segment 22879:
+{{dialogue|Player|(What should I say?)}}
+
+*''Your father is like an owl: wise and a little bit funny.'' (No unique dialogue)
+*''Our house is like a castle, safe and roomy.'' (No unique dialogue)
+*''Researchers are like liquid nitrogen: cooler than ice.'' (No unique dialogue)
+*''(Stay silent.)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Qi gains 1 favor
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 4) The player picks the third option in conversation segment 22776:
+{{dialogue|Player|(What should I say?)}}
+
+*''Your father is like an owl: wise and a little bit funny.'' (No unique dialogue)
+*''Our house is like a castle, safe and roomy.'' (No unique dialogue)
+*''Researchers are like liquid nitrogen: cooler than ice.'' (No unique dialogue)
+*''(Stay silent.)'' (No unique dialogue)
+
+(cId 14) The player picks the third option in conversation segment 22879:
+{{dialogue|Player|(What should I say?)}}
+
+*''Your father is like an owl: wise and a little bit funny.'' (No unique dialogue)
+*''Our house is like a castle, safe and roomy.'' (No unique dialogue)
+*''Researchers are like liquid nitrogen: cooler than ice.'' (No unique dialogue)
+*''(Stay silent.)'' (No unique dialogue)
+
+(cId 5) The player picks the second option in conversation segment 22805:
+{{dialogue|Qi|A poet... is that something you'd be willing to accept?}}
+
+*''I think it could be quite nice.'' (No unique dialogue)
+*''We should try to find out how serious this passion is.'' (No unique dialogue)
+*''This is just a "rebellion" phase...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Qi gains 3 favor
+
+TRIGGER Procedure 2.0 Step 3.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the first option in conversation segment 22732:
+{{dialogue|Qi|''Pet Name'', which material would you like to be responsible for tutoring? I'd imagined you might take charge of the language assignments and I the math.}}
+
+*''Sure, I'll take language.'' (No unique dialogue)
+*''You might need to take the lead on both...'' (No unique dialogue)
+*''I'm speaking a language right now!'' (No unique dialogue)
+
+(cId 2) The player picks the second option in conversation segment 22761:
+{{dialogue|Qi|Sweetie: we need to use our imagination, alright? Let's imagine that only four people are at this summit, alright?}}
+
+*''C'mon kiddo, focus!'' (No unique dialogue)
+*''You two are too cute together.'' (No unique dialogue)
+*''Remind you of anyone...?'' (No unique dialogue)
+
+(cId 4) The player picks the first option in conversation segment 22776:
+{{dialogue|Player|(What should I say?)}}
+
+*''Your father is like an owl: wise and a little bit funny.'' (No unique dialogue)
+*''Our house is like a castle, safe and roomy.'' (No unique dialogue)
+*''Researchers are like liquid nitrogen: cooler than ice.'' (No unique dialogue)
+*''(Stay silent.)'' (No unique dialogue)
+
+(cId 4) The player picks the second option in conversation segment 22776:
+{{dialogue|Player|(What should I say?)}}
+
+*''Your father is like an owl: wise and a little bit funny.'' (No unique dialogue)
+*''Our house is like a castle, safe and roomy.'' (No unique dialogue)
+*''Researchers are like liquid nitrogen: cooler than ice.'' (No unique dialogue)
+*''(Stay silent.)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Child gains 1 favor
+
+TRIGGER Procedure 2.0 Step 4.0 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 4) The player picks the third option in conversation segment 22776:
+{{dialogue|Player|(What should I say?)}}
+
+*''Your father is like an owl: wise and a little bit funny.'' (No unique dialogue)
+*''Our house is like a castle, safe and roomy.'' (No unique dialogue)
+*''Researchers are like liquid nitrogen: cooler than ice.'' (No unique dialogue)
+*''(Stay silent.)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Child gains 3 favor
+
+TRIGGER Procedure 2.0 Step 5.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 12) The player picks the first option in conversation segment 22835:
+{{dialogue|Qi|''Pet Name'', which material would you like to be responsible for tutoring? I'd imagined you might take charge of the language assignments and I the math.}}
+
+*''Sure, I'll take language.'' (No unique dialogue)
+*''You might need to take the lead on both...'' (No unique dialogue)
+*''I'm speaking a language right now!'' (No unique dialogue)
+
+(cId 12) The player picks the second option in conversation segment 22864:
+{{dialogue|Qi|Sweetie: we need to use our imagination, alright? Let's imagine that only four people are at this summit, alright?}}
+
+*''C'mon kiddo, focus!'' (No unique dialogue)
+*''You two are too cute together.'' (No unique dialogue)
+*''Remind you of anyone...?'' (No unique dialogue)
+
+(cId 14) The player picks the first option in conversation segment 22879:
+{{dialogue|Player|(What should I say?)}}
+
+*''Your father is like an owl: wise and a little bit funny.'' (No unique dialogue)
+*''Our house is like a castle, safe and roomy.'' (No unique dialogue)
+*''Researchers are like liquid nitrogen: cooler than ice.'' (No unique dialogue)
+*''(Stay silent.)'' (No unique dialogue)
+
+(cId 14) The player picks the second option in conversation segment 22879:
+{{dialogue|Player|(What should I say?)}}
+
+*''Your father is like an owl: wise and a little bit funny.'' (No unique dialogue)
+*''Our house is like a castle, safe and roomy.'' (No unique dialogue)
+*''Researchers are like liquid nitrogen: cooler than ice.'' (No unique dialogue)
+*''(Stay silent.)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Child gains 1 favor
+
+TRIGGER Procedure 2.0 Step 6.0 Order 5 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 14) The player picks the third option in conversation segment 22879:
+{{dialogue|Player|(What should I say?)}}
+
+*''Your father is like an owl: wise and a little bit funny.'' (No unique dialogue)
+*''Our house is like a castle, safe and roomy.'' (No unique dialogue)
+*''Researchers are like liquid nitrogen: cooler than ice.'' (No unique dialogue)
+*''(Stay silent.)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Child gains 3 favor
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PLAYER DIVORCE || order: 0 | id: 8007
+CONDITIONS
+Elementary, My Dear is in state 2 with flag 1
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: 8507Sex
+SCENEITEM DELETE || itemType: 0 | id: 85071
+FAIL MISSION || missionId: 1800506

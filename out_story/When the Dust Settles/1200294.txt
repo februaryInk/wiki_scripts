@@ -1,0 +1,409 @@
+Reading Mission 1200294: When the Dust Settles
+
+<onlyinclude>{{Infobox mission
+|name = When the Dust Settles
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from When the Dust Settles:
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 11479) that ends:
+{{dialogue|Logan|Can always use an extra pair of hands. Grab a duster and start dustin'.}}
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1200293
+START MISSION 1200293
+CUTSCENE UI STATE EXIT || 
+Logan stops standing still
+Haru stops standing still
+Andy stops standing still
+Add behavior Npc_SweepLoganOldHome (idName: 22932) to Logan
+(param: -1)
+Add behavior Npc_SweepLoganOldHome (idName: 22932) to Haru
+(param: -1)
+Add behavior Npc_SweepLoganOldHome (idName: 22932) to Andy
+(param: -1)
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200293
+CONDITIONS
+Always:
+ACTIONS
+Run mission When the Dust Settles
+END MISSION 1200293
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | id: 22931 | itemType: 0
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Feather Duster of Perfect quality (Notify player)
+SCENEITEM DELETE || itemType: 0 | id: 22931
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200294
+CONDITIONS
+Always:
+ACTIONS
+===Clean House===
+
+{{mission_details
+|desc = There's a lot of dust and clutter in Logan's house from being uninhabited for so long. Help him clear them out.
+|details = Clean House
+}}
+SCENEITEM CREATE FLAG || path: sandtest9 | itemType: 0 | id: 22941 | sceneName: LoganOldHome | extraParams: 0 | flagName: loganclue_sand
+SCENEITEM CREATE FLAG || itemType: 0 | id: 22942 | path: sandtest10 | sceneName: LoganOldHome | flagName: cleanloganhouse_sand2 | extraParams: 0
+SAND VOLUME SET || id: 22941 | percent: 1
+SAND VOLUME SET || id: 22942 | percent: 1
+SAND SET CLEAN ENABLE || id: 22941 | enable: 0
+SAND SET CLEAN ENABLE || enable: 0 | id: 22942
+SCENEITEM CREATE FLAG || path: Interact_doorbelowvivi | itemType: 0 | id: 22943 | sceneName: LoganOldHome | flagName: cleanloganhouse_out | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SAND CLEAR || order: 0 | id: 22941 | compare: 6 | value: 20
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1200293 | targetId: 1 | transId: 80017418 | isAdd: 1
+SCENEITEM DELETE || itemType: 0 | id: 22941
+Add 1 Logan's Parents Wedding Photo of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SAND CLEAR || order: 0 | id: 22942 | compare: 6 | value: 20
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1200293 | targetId: 1 | transId: 80017418 | isAdd: 1
+SCENEITEM DELETE || itemType: 0 | id: 22942
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200293 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 22941 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22941
+CONDITIONS
+Always:
+ACTIONS
+Logan stands still in LoganOldHome
+Haru stands still in LoganOldHome
+Andy stands still in LoganOldHome
+PLAYER SET POS ROT FLAG || flagName: cleanloganhouse_player2 | sceneName: LoganOldHome
+DELAY MASK SET || maskId: 22941 | delayTime: 3 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 22941
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 11481, 11482, 11483 starts:
+{{dialogue|Logan|Sigh...}}
+{{dialogue|Haru|Hm. A memento. All seems so long ago now...}}
+{{dialogue|Logan|Nah. Just another piece of junk.}}
+SCENEITEM DELETE || itemType: 0 | id: 229402
+SCENEITEM DELETE || itemType: 0 | id: 229404
+SCENEITEM DELETE || itemType: 0 | id: 229406
+SCENEITEM DELETE || itemType: 0 | id: 229408
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || id: 20653 | itemType: 21
+Add behavior CommanderPlayerAction (idName: 22942) to Player
+(param: CMDAction:Give)
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 3513_0 starts:
+{{dialogue|Andy|Whatcha got there, ''Player''?}}
+{{dialogue|Logan|It's my folks... Day of their wedding.}}
+{{dialogue|Andy|Dang, your folks are foxes! Hey, anyone ever tell you you look like your Ma? And wait a sec, looks like this photo was ripped up on purpose...!}}
+{{dialogue|Logan|Reckon that'd be my Pa... He was always a bit torn up himself about the whole ordeal. Never really knew my Ma so... this don't stir up much in the way of emotion for me. Though I do suppose now I'm the only one in our family still around...}}
+{{dialogue|Haru|Logan. You yourself, on multiple occasions, have referred to us as your family...}}
+{{dialogue|Andy|Yeah, c'mon! Gang's better than family, anyway! We're the family we picked ourselves!}}
+{{dialogue|Logan|Yeah, sorry fellas. Just got a little swept up there for a minute...}}
+The conversation ends.
+Remove behavior CommanderPlayerAction (idName: 22942) from Player
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 22943) to Player
+(param: CMDAction:Nod_Story)
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: gracebye | info: 1 | exist: 0
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 22932
+SCENEITEM DELETE || itemType: 0 | id: 22933
+SCENEITEM DELETE || id: 22934 | itemType: 0
+SCENEITEM DELETE || id: 22935 | itemType: 0
+SCENEITEM DELETE || itemType: 0 | id: 22931
+SCENEITEM DELETE || id: 22943 | itemType: 0
+SCENEITEM INTERACT SET || itemType: 9 | id: 14 | canInteract: 1
+Remove behavior Npc_SweepLoganOldHome (idName: 22932) from Logan
+Remove behavior Npc_SweepLoganOldHome (idName: 22932) from Haru
+Remove behavior Npc_SweepLoganOldHome (idName: 22932) from Andy
+Remove behavior CommanderPlayerAction (idName: 22943) from Player
+Logan stops standing still
+Haru stops standing still
+Andy stops standing still
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1200293
+END MISSION 1200294
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: gracebye | info: 1 | exist: 1
+ACTIONS
+(cId 2) A conversation 3514_0 starts:
+{{dialogue|Logan|By the way, Grace said she's leavin' tomorrow morning. Told you too, right, ''Player''?}}
+{{dialogue|Haru|We're going to see her off at the station tomorrow morning. If you've got some time you should come too. We've all been through so much, it's the least we could do.}}
+{{dialogue|Logan|Andy, yer gonna have to get to sleep a little early tonight, we're gonna rise an' shine real early tomorrow.}}
+{{dialogue|Andy|I know, I'm gonna sleep real early, an' I can be the first there to see her off!}}
+{{dialogue|Logan|I bet. What time's her train again? Gotta make sure we ain't late.}}
+{{dialogue|Logan|Thanks for comin' today, ''Player''. Feel free to come by any time.}}
+{{dialogue|Andy|Bye!}}
+The conversation ends.
+Remove behavior CommanderPlayerAction (idName: 22943) from Player
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 22932
+SCENEITEM DELETE || id: 22933 | itemType: 0
+SCENEITEM DELETE || id: 22934 | itemType: 0
+SCENEITEM DELETE || id: 22935 | itemType: 0
+SCENEITEM DELETE || id: 22931 | itemType: 0
+SCENEITEM DELETE || itemType: 0 | id: 22943
+SCENEITEM INTERACT SET || itemType: 9 | id: 14 | canInteract: 1
+Remove behavior Npc_SweepLoganOldHome (idName: 22932) from Logan
+Remove behavior Npc_SweepLoganOldHome (idName: 22932) from Haru
+Remove behavior Npc_SweepLoganOldHome (idName: 22932) from Andy
+Logan stops standing still
+Haru stops standing still
+Andy stops standing still
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1200293
+END MISSION 1200294
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 22943
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 11480 starts:
+{{dialogue|Player|I said I'd help clean up...}}
+
+*''Keep helping.'' (No unique dialogue)
+*''Leave.'' (No unique dialogue)
+
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the second option in conversation segment 11480:
+{{dialogue|Player|I said I'd help clean up...}}
+
+*''Keep helping.'' (No unique dialogue)
+*''Leave.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM INTERACT SET || itemType: 9 | id: 14 | canInteract: 1
+SCENEITEM DELETE || itemType: 0 | id: 22943
+
+TRIGGER Procedure 4.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|747}}
+SCENEITEM DELETE || itemType: 0 | id: 22932
+SCENEITEM DELETE || id: 22933 | itemType: 0
+SCENEITEM DELETE || id: 22934 | itemType: 0
+SCENEITEM DELETE || id: 22935 | itemType: 0
+SCENEITEM DELETE || itemType: 0 | id: 22943
+SCENEITEM DELETE || itemType: 0 | id: 22941
+SCENEITEM DELETE || itemType: 0 | id: 22942
+SCENEITEM INTERACT SET || itemType: 9 | id: 14 | canInteract: 1
+SCENEITEM DELETE || itemType: 0 | id: 22931
+Remove behavior Npc_SweepLoganOldHome (idName: 22932) from Logan
+Remove behavior Npc_SweepLoganOldHome (idName: 22932) from Haru
+Remove behavior Npc_SweepLoganOldHome (idName: 22932) from Andy
+Logan stops standing still
+Haru stops standing still
+Andy stops standing still
+SUBMIT MISSION 1200293
+END MISSION 1200294
+
+TRIGGER Procedure 5.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 22932
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 22941) to Player
+(param: CMDAction:Clean_Story)
+SCENEITEM CREATE FLAG || itemType: 0 | id: 229401 | path: Mission18230_efx_glassbottle | sceneName: LoganOldHome | flagName: S2294_efx_1 | extraParams: 0
+
+TRIGGER Procedure 5.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: NPCActionOver | behaviourName: CommanderPlayerAction | npc: 8000
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+MISSION TARGET COUNTER CHANGE || missionId: 1200293 | targetId: 1 | isAdd: 1 | transId: 80017419
+SCENEITEM DELETE || itemType: 0 | id: 22932
+Remove behavior CommanderPlayerAction (idName: 22941) from Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 229402 | path: Mission18230_efx_clear | sceneName: LoganOldHome | flagName: S2294_efx_1 | extraParams: 0
+SCENEITEM DELETE || itemType: 0 | id: 229401
+
+TRIGGER Procedure 5.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 22933
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 22942) to Player
+(param: CMDAction:Clean_Story)
+SCENEITEM CREATE FLAG || itemType: 0 | id: 229405 | path: Mission18230_efx_glassbottle | sceneName: LoganOldHome | flagName: S2294_efx_3 | extraParams: 0
+
+TRIGGER Procedure 5.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: NPCActionOver | behaviourName: CommanderPlayerAction | npc: 8000
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+MISSION TARGET COUNTER CHANGE || missionId: 1200293 | targetId: 1 | isAdd: 1 | transId: 80017419
+SCENEITEM DELETE || itemType: 0 | id: 22933
+Remove behavior CommanderPlayerAction (idName: 22942) from Player
+SCENEITEM CREATE FLAG || path: Mission18230_efx_clear | itemType: 0 | id: 229406 | sceneName: LoganOldHome | flagName: S2294_efx_3 | extraParams: 0
+SCENEITEM DELETE || itemType: 0 | id: 229405
+
+TRIGGER Procedure 6.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 22934
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 22943) to Player
+(param: CMDAction:Clean_Story)
+SCENEITEM CREATE FLAG || id: 229403 | itemType: 0 | path: Mission18230_efx_glassbottle | sceneName: LoganOldHome | flagName: S2294_efx_2 | extraParams: 0
+
+TRIGGER Procedure 6.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: NPCActionOver | behaviourName: CommanderPlayerAction | npc: 8000
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+MISSION TARGET COUNTER CHANGE || missionId: 1200293 | targetId: 1 | isAdd: 1 | transId: 80017419
+SCENEITEM DELETE || itemType: 0 | id: 22934
+Remove behavior CommanderPlayerAction (idName: 22943) from Player
+SCENEITEM CREATE FLAG || itemType: 0 | path: Mission18230_efx_clear | id: 229404 | sceneName: LoganOldHome | flagName: S2294_efx_2 | extraParams: 0
+SCENEITEM DELETE || itemType: 0 | id: 229403
+
+TRIGGER Procedure 6.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 22935
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 22944) to Player
+(param: CMDAction:Clean_Story)
+SCENEITEM CREATE FLAG || itemType: 0 | id: 229407 | path: Mission18230_efx_glassbottle | flagName: S2294_efx_4 | sceneName: LoganOldHome | extraParams: 0
+
+TRIGGER Procedure 6.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: NPCActionOver | behaviourName: CommanderPlayerAction | npc: 8000
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+MISSION TARGET COUNTER CHANGE || missionId: 1200293 | targetId: 1 | isAdd: 1 | transId: 80017419
+SCENEITEM DELETE || itemType: 0 | id: 22935
+Remove behavior CommanderPlayerAction (idName: 22944) from Player
+SCENEITEM CREATE FLAG || flagName: S2294_efx_4 | path: Mission18230_efx_clear | id: 229408 | itemType: 0 | sceneName: LoganOldHome | extraParams: 0
+SCENEITEM DELETE || itemType: 0 | id: 229407

@@ -1,0 +1,165 @@
+Reading Mission 1700198: Heritage of Sandrock
+
+<onlyinclude>{{Infobox mission
+|name = Heritage of Sandrock
+|image =
+|description = Catori has revealed her second step for her long term plan. This time she wants to upgrade the Museum with a new exhibition stand and rooftop display.
+|type = Side
+|time =
+|location =
+|characters = [[Catori]]
+|condition =
+|details =
+|exp = 2250
+|reputation = 40
+|gols = 1500
+|npc1 = Catori
+|rp1 = 30
+|npc2 = Qi
+|rp2 = 10
+|rewards = {{i2|Token}|50}
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Opportunities Abound:
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1700196 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Catori===
+
+{{mission_details
+|desc = You've gathered all of the materials, now return to Catori.
+|details = Talk to Catori
+*{{i2|Iron Plate|0/15}}
+*{{i2|Tempered Glass|0/10}}
+*{{i2|Plastic Pipe|0/5}}
+*{{i2|Hardwood Planks|0/20}}
+*{{i2|Game Center Sign|0/1}}
+*{{i2|Punch-o-Tron|0/1}}
+*{{i2|Catori|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Catori
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1700196 | targetId: 2 | canSubmit: 1
+ACTIONS
+(cId 1) A conversation 1562_0 starts:
+{{dialogue|Catori|These are all the materials? Wow, yeah, they sure are! Thanks a bunch, ''Player''! I'll get these over to Heidi on the double, and we'll start the expansion of the game center.}}
+{{dialogue|Catori|Next up, step two of Catori World - the Museum! The Mayor really came through and gave me a grant. "The Museum's a heritage of the town, afterall," that's what Trudy said. It means we can upgrade the Museum as well!}}
+{{dialogue|Catori|I don't know if you heard... but Heidi and Trudy are planning on opening a road directly to Portia. Who knows how many more tourists will be coming to Sandrock? A thousand? Ten? I can't let an opportunity like this slip!}}
+{{dialogue|Catori|Besides, haven't you been to the Shipwreck Ruins recently? I'm sure you found loads of new relics you're excited to show to the world!}}
+{{dialogue|Catori|Well... imagine it: countless tourists, all swarming to the Golden Goose and Museum, the "oohs," the "ahhs," the "dang how did I spend this many Gols..."}}
+{{dialogue|Catori|Anyway. I figure we'll be needing some new Exhibition Stands for more relics and a new display to draw attention on an expanded rooftop. Planning ahead and all that. Can you help me out?}}
+
+*''No problem!''
+*''I'm kinda busy...''
+
+{{dialogue|Catori|indent=true|answer=No problem!
+|Haha, thank you! How did I get so lucky, huh? Got a partner with as much vision as me!}}
+{{dialogue|Catori|indent=true|Here's the Recipe for the Exhibition Stand, you can make it on the Worktable.}}
+{{dialogue|Catori|indent=true|Heidi will take care of the new rooftop itself, but I'll need your help for the display. Can you ask Director Qi to make you a Diagram? When you're all done, please install them on location.}}
+{{dialogue|Catori|indent=true|answer=I'm kinda busy...
+|It's okay. I know I've pushed you, you must be pretty tired. You only just completed the Game Center after all. Tell you what, have a break, come back when you're free, I'll give you all the time in the world!}}
+Run mission Heritage of Sandrock
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700198
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1700198
+Set build to 0
+Set global blackboard key MuseumLvUp with info 0.
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 5281) that ends:
+{{dialogue|Catori|Heidi will take care of the new rooftop itself, but I'll need your help for the display. Can you ask Director Qi to make you a Diagram? When you're all done, please install them on location.}}
+(cId: -1) There is a conversation segment (id 5281) that ends:
+{{dialogue|Catori|Heidi will take care of the new rooftop itself, but I'll need your help for the display. Can you ask Director Qi to make you a Diagram? When you're all done, please install them on location.}}
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1700198
+Add 1 Exhibition Stand of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700198
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1700199
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 3
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment build by 1
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if build is == 3
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 17198100
+SCENEITEM CREATE FLAG || itemType: 0 | path: Mission_museumLv2 | sceneName: Main | flagName: default | extraParams: -1 | id: 17198102
+Set global blackboard key MuseumLvUp with info 1.
+SCENEITEM DELETE || itemType: 0 | id: 17198101
+SCENEITEM INTERACT SET || itemType: 9 | id: 22 | canInteract: 1
+
+TRIGGER Procedure 1.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | path: Mission_Museum_Preparing | sceneName: Main | flagName: default | extraParams: -1 | id: 17198101
+MUSEUM SET LEVEL || level: 1
+MUSEUM SET ACTIVE || active: 0
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Catori|How about it? Ready to make the Museum a "newseum?" Ah... yeah, I'll keep working on that one...}}
+
+*''No problem!''
+*''I'm kinda busy...''
+
+{{dialogue|Catori|indent=true|answer=No problem!
+|Haha, thank you! How did I get so lucky, huh? Got a partner with as much vision as me!}}
+{{dialogue|Catori|indent=true|Here's the Recipe for the Exhibition Stand, you can make it on the Worktable.}}
+{{dialogue|Catori|indent=true|Heidi will take care of the new rooftop itself, but I'll need your help for the display. Can you ask Director Qi to make you a Diagram? When you're all done, please install them on location.}}
+{{dialogue|Catori|indent=true|answer=I'm kinda busy...
+|It's okay. I know I've pushed you, you must be pretty tired. You only just completed the Game Center after all. Tell you what, have a break, come back when you're free, I'll give you all the time in the world!}}
+
+==Rewards==
+{{mission reward
+|npc1 = Catori
+|rp1 = 30
+|npc2 = Qi
+|rp2 = 10
+|exp = 2250
+|reputation = 40
+|gols = 1500
+|rewards = {{i2|Token}|50}
+}}

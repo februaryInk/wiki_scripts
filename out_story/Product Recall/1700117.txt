@@ -1,0 +1,462 @@
+Reading Mission 1700117: Product Recall
+
+<onlyinclude>{{Infobox mission
+|name = Product Recall
+|image =
+|description = It turns out all the tourists were buying the Desert Rose photo to ogle Amirah, who is not okay with this. Track down the creepy tourists and get the photos back!
+|type = Side
+|time =
+|location =
+|characters = [[Arvio]]
+|condition =
+|details =
+|exp = 600
+|reputation = None
+|gols = None
+|npc1 = Amirah
+|rp1 = 15
+}}</onlyinclude>
+
+==Overview==
+Run conditions from "Desert Rose":
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Arvio
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1700115 | targetId: 1 | canSubmit: 1
+ACTIONS
+(cId 1) A conversation 637_0 starts:
+{{dialogue|Arvio|You've finished! Amazing! Haha, why do I need all these frames, you ask? Well lately one of my photos, the "Desert Rose" has been flying off the shelves, and...!}}
+
+*''A photo of a flower?''
+*''You're making money selling photos?''
+
+{{dialogue|Arvio|indent=true|answer=A photo of a flower?
+|No, no! Well, yes! In a sense...}}
+{{dialogue|Arvio|indent=true|answer=You're making money selling photos?
+|Indeed! Once I'd heard Jasmine got her hands on an Old World camera, I began to smell with this keen nose of mine, the smell... of opportunity!}}
+{{dialogue|Arvio|You see, I've come up with the term "Desert Rose..." And I made it the title for one of the photos I'm selling! "Desert Rose" of course refers to...}}
+
+*''The Yakmel ranch''
+*''Your sister.''
+*''The city of Sandrock.''
+
+{{dialogue|Arvio|indent=true|answer=The Yakmel ranch
+|Hm... Ah, the Yakmel ranch huh? I... don't really see it. Oh, maybe Mabel is the rose, and Cooper is the thorns? No, I don't follow...}}
+{{dialogue|Arvio|indent=true|answer=Your sister.
+|Y- Aha? Ahaha... what exactly do you mean by that? Ehm, no, don't be silly, ''Player''! Obviously...}}
+{{dialogue|Arvio|indent=true|answer=The city of Sandrock.
+|reward={{NPC2|Arvio|rp=5}}|Yes, precisely!}}
+{{dialogue|Arvio|I've started calling the city of Sandrock, "The Desert Rose!" I'm trying to get the term to catch on; you know, good branding like that could get more tourists out here.}}
+{{dialogue|Arvio|Anyway, ten frames are almost certainly not enough. I have a feeling I'll have to reorder a batch from you once these are sold out! After that I'll give you a share of the profits! Keep in touch!}}
+The conversation ends.
+BAG MODIFY BY TARGET || missionId: 1700115 | targetId: 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1700115
+Run mission Product Recall
+END MISSION 1700116
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700117
+CONDITIONS
+Always:
+ACTIONS
+Set CG to 0
+Set TALK to 1
+Set DAY to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 2
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Increment CG by 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if CG is == 2
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1700117 | id: 171170 | sceneName: Main | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80004324 | flagName: desertrose_next_start
+Arvio stands still in Main
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1701171 | path: desertrose_desk1 | sceneName: Main | flagName: default | extraParams: 0
+Tourist stands still in Main
+Tourist stands still in Main
+Tourist stands still in Main
+Tourist stands still in Main
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 18:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Arvio stops standing still
+Tourist stops standing still
+Tourist stops standing still
+Tourist stops standing still
+Tourist stops standing still
+Tourist stops standing still
+Tourist stops standing still
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1700117
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|205}}
+NPC ICON REMOVE || missionId: 1700117 | npc: 8064 | missionIcon: 2
+NPC ICON REMOVE || missionId: 1700117 | npc: 8065 | missionIcon: 2
+NPC ICON REMOVE || missionId: 1700117 | npc: 8066 | missionIcon: 2
+NPC ICON REMOVE || missionId: 1700117 | npc: 8067 | missionIcon: 2
+NPC ICON REMOVE || missionId: 1700117 | npc: 8068 | missionIcon: 2
+NPC LEAVE BY TRAIN || npc: 8064 | isOut: 1 | params: 0
+NPC LEAVE BY TRAIN || npc: 8065 | isOut: 1 | params: 0
+NPC LEAVE BY TRAIN || npc: 8066 | isOut: 1 | params: 0
+NPC LEAVE BY TRAIN || npc: 8067 | isOut: 1 | params: 0
+NPC LEAVE BY TRAIN || npc: 8068 | isOut: 1 | params: 0
+NPC LEAVE BY TRAIN || npc: 8070 | isOut: 1 | params: 0
+Remove behavior Story1700117_8014_1 (idName: 17001171) from Arvio
+Remove behavior Story1700117_8064_1 (idName: 17001172) from Tourist
+Remove behavior Story1700117_8065_1 (idName: 17001173) from Tourist
+Remove behavior Story1700117_8066_1 (idName: 17001174) from Tourist
+Remove behavior Story1700117_8067_1 (idName: 17001175) from Tourist
+Remove behavior Story1700117_8068_1 (idName: 17001176) from Tourist
+END MISSION 1700118
+
+TRIGGER Procedure 0.0 Step 7.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 2605) that ends:
+{{dialogue|Arvio|Thank you for your support! There's no price I won't pay to right these wrongs I've committed. So long, ''Player''!}}
+CONDITIONS
+Always:
+ACTIONS
+Arvio stops standing still
+Amirah stops standing still
+Add behavior CommanderNPCAction (idName: 11780141) to Arvio
+(param: CMDAction:Give)
+STOPWATCH REAL TIME SET || id: 171171 | sec: 1.4
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlag (idName: 1178015) from Amirah
+Remove behavior CommanderMoveToFlag (idName: 1178000) from Player
+
+TRIGGER Procedure 0.0 Step 8.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+NPC LEAVE BY TRAIN || npc: 8064 | isOut: 1 | params: 0
+NPC LEAVE BY TRAIN || npc: 8065 | isOut: 1 | params: 0
+NPC LEAVE BY TRAIN || npc: 8066 | isOut: 1 | params: 0
+NPC LEAVE BY TRAIN || npc: 8067 | isOut: 1 | params: 0
+NPC LEAVE BY TRAIN || npc: 8068 | isOut: 1 | params: 0
+NPC LEAVE BY TRAIN || npc: 8070 | isOut: 1 | params: 0
+END MISSION 1700117
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 171170
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 7011}}
+A cutscene CG_SELLPHOTOS (duration: 2.0) starts playing
+Desert Rose - Arvio thought he'd finally struck gold with his new picture selling idea. Everything was going great until Amirah arrived to deliver some bad news...
+AREA TRIGGER DELETE || id: 171170
+
+TRIGGER Procedure 1.0 Step 1.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_SELLPHOTOS | state: 3
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 1701171
+Tourist stops standing still
+Tourist stops standing still
+Tourist stops standing still
+Tourist stops standing still
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_SELLPHOTOS | state: 7
+CONDITIONS
+Always:
+ACTIONS
+Arvio stands still in Main
+Amirah stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: desertrose_next_player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1701172 | sceneName: Main | extraParams: 0 | path: desertrose_desk2 | flagName: default
+Tourist stands still in Main
+Tourist stands still in Main
+Tourist stands still in Main
+Tourist stands still in Main
+Tourist stops standing still
+Tourist stops standing still
+Tourist stops standing still
+Tourist stops standing still
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 9 | name: CG_SELLPHOTOS
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+(cId -1) A conversation 645_0 starts:
+{{dialogue|Amirah|Arvio! What are you doing!? What is the meaning of this!? You're selling pictures of me!?}}
+{{dialogue|Arvio|Huh? No! Oh, this one. Well, yes, you're in it, but... No!}}
+{{dialogue|Arvio|I was just telling the Builder here, there's something about the composition of this photo that really resonates with people! It's just a happy coincidence you're featured in it. Hey, you're gonna be famous!}}
+{{dialogue|Amirah|There's nothing "happy" about this, nor is it any semblance of "coincidence." Tourists have been pestering me constantly, asking me to sign this photo, calling me the "Desert Rose." Explain that, Arvio!}}
+{{dialogue|Arvio|Ah?! The title of the photo is "Desert Rose!" That's my new name for Sandrock! But they're... you... they called you... oh... oh, no!}}
+{{dialogue|Arvio|Darn youuuu! Creepy touriiiists!}}
+{{dialogue|Amirah|Don't play dumb with me; you honestly expect me to believe you had no idea? It's been days!}}
+{{dialogue|Arvio|I...}}
+
+*''Arvio really didn't know.''
+*''It was my idea.''
+*''Don't worry, it's not a big deal.''
+
+{{dialogue|Amirah|indent=true|answer=Arvio really didn't know.
+|reward={{NPC2|Arvio|rp=5}}|reward={{NPC2|Amirah|rp=5}}|Even so, this was an extremely careless venture!}}
+{{dialogue|Arvio|indent=true|You are kind to say so, ''Player'', but my sister is right. I've been a fool...}}
+{{dialogue|Amirah|indent=true|answer=It was my idea.
+|reward={{NPC2|Arvio|rp=5}}|reward={{NPC2|Amirah|rp=-5}}|You!? You did this? I barely even know you, ''Player'', what on earth-!}}
+{{dialogue|Arvio|indent=true|Ahah... No, no, dear sister, please: ''Player'', they're just trying to cover for me. It was all my ignorance and foolishess to blame for this.}}
+{{dialogue|Amirah|indent=true|answer=Don't worry, it's not a big deal.
+|reward={{NPC2|Arvio|rp=-5}}|reward={{NPC2|Amirah|rp=-5}}|Hm? And who are you to presume it's "not a big deal?" You're not the one having photos of you passed around without your consent, are you? Are you trying to shift the blame onto me?}}
+{{dialogue|Arvio|indent=true|Sis, dear sister, I'm sure what our friend meant was... it's not a big deal because... we can fix this! Right, ''Player''?}}
+{{dialogue|Amirah|Arvio, you would do well to develop some foresight whenever concocting these schemes of yours. This is doubly true whenever your plans involve an unwitting accomplice. If you're ever not sure, ugh, Light, just ask me.}}
+{{dialogue|Amirah|I will be returning to my shop. My only hope is that my path is not blocked by the rabid tourists that you have wrought, brother. Goodbye.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 2608) that ends:
+{{dialogue|Arvio|Do whatever it takes to get those photos back! Er, without breaking the law, I suppose...}}
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1700117
+START MISSION 1700117
+Arvio stops standing still
+Amirah stops standing still
+Set TALK to 0
+Add behavior CommanderNPCAction (idName: 11780141) to Arvio
+(param: CMDAction:Give)
+STOPWATCH REAL TIME SET || id: 171171 | sec: 1.4
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlag (idName: 1178015) from Amirah
+Remove behavior CommanderMoveToFlag (idName: 1178000) from Player
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 2602) that ends:
+{{dialogue|Amirah|I will be returning to my shop. My only hope is that my path is not blocked by the rabid tourists that you have wrought, brother. Goodbye.}}
+CONDITIONS
+Always:
+ACTIONS
+Amirah stops standing still
+Add behavior CommanderMoveToFlag (idName: 1178015) to Amirah
+(param: TargetScene:Main|MoveMode:Walk|FlagName:player_start2)
+Add behavior CommanderMoveToFlag (idName: 1178000) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:desertrose_next_amirah)
+
+TRIGGER Procedure 1.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700117
+CONDITIONS
+Always:
+ACTIONS
+Run mission Product Recall
+
+TRIGGER Procedure 1.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 171171
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 11780141) from Arvio
+SCENEITEM DELETE || itemType: 0 | id: 1701172
+
+TRIGGER Procedure 2.0 Step 1.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 1721172
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 650_0 starts:
+{{dialogue|Arvio|Wow! She's really mad! Even moreso than that time I ruined her kiln trying to make a pizza in it...}}
+{{dialogue|Arvio|This cannot stand, ''Player''. The thought of those greasy tourists smudging up those photos in their slimy grip, gawking over my poor sister... I can't take it! I've got to get those pictures back!}}
+
+*''I'm with you! Let's go!''
+*''Good luck, bro.''
+
+{{dialogue|Arvio|indent=true|answer=I'm with you! Let's go!
+|Really? You'll help with this, too? You really have a big heart, ''Player''!}}
+{{dialogue|Arvio|indent=true|Alright, let's split up! These guys couldn't have gone far; just be on the look out for anyone creepy looking! Or... anyone you just saw buying a photo!}}
+{{dialogue|Arvio|indent=true|Do whatever it takes to get those photos back! Er, without breaking the law, I suppose...}}
+{{dialogue|Arvio|indent=true|answer=Good luck, bro.
+|Thank you for your support! There's no price I won't pay to right these wrongs I've committed. So long, ''Player''!}}
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 2594:
+{{dialogue|Arvio|I...}}
+
+*''Arvio really didn't know.'' (No unique dialogue)
+*''It was my idea.'' (No unique dialogue)
+*''Don't worry, it's not a big deal.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Arvio gains 5 favor
+Amirah gains 5 favor
+
+TRIGGER Procedure 2.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 2594:
+{{dialogue|Arvio|I...}}
+
+*''Arvio really didn't know.'' (No unique dialogue)
+*''It was my idea.'' (No unique dialogue)
+*''Don't worry, it's not a big deal.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Arvio gains 5 favor
+Amirah gains -5 favor
+
+TRIGGER Procedure 2.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the third option in conversation segment 2594:
+{{dialogue|Arvio|I...}}
+
+*''Arvio really didn't know.'' (No unique dialogue)
+*''It was my idea.'' (No unique dialogue)
+*''Don't worry, it's not a big deal.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Arvio gains -5 favor
+Amirah gains -5 favor
+
+TRIGGER Procedure 2.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Tourist
+CONDITIONS
+Check if TALK is == 1
+ACTIONS
+(cId 3) A conversation 2647, 2716 starts:
+{{dialogue|Tourist|Oi, you! I've got a picture of the Desert Rose, sold out everywhere! You want it? Fifteen Gols, no more no less!}}
+{{dialogue|Tourist|Huh? You don't know the Desert Rose? What, have you been living under a rock-? Er, sorry, I misspoke: have you been livin' under Sandrock? Like in the mines? Cuz that would explain you not knowin'.}}
+
+TRIGGER Procedure 2.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Tourist
+CONDITIONS
+Check if TALK is == 1
+ACTIONS
+(cId 4) A conversation 2645 starts:
+{{dialogue|Tourist|Let's be honest, the Sandrock experience is a four out of ten at best. But hey, at least I'm walkin' away with a photo of the Desert Rose! That made this whole trip worth it...}}
+
+TRIGGER Procedure 2.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Tourist
+CONDITIONS
+Check if TALK is == 1
+ACTIONS
+(cId 5) A conversation 2646 starts:
+{{dialogue|Tourist|By the Stairs is selling photos of the amazing Desert Rose; only ten Gols! But sadly, they're sold out already... Luckily I was able to get a glimpse of her with my own eyes; I'll never let that memory fade!}}
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Set DAY to 0
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment DAY by 1
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if DAY is >= 8
+ACTIONS
+AREA TRIGGER DELETE || id: 171170
+SCENEITEM DELETE || itemType: 0 | id: 1701171
+NPC LEAVE || npc: 8064
+NPC LEAVE || npc: 8065
+NPC LEAVE || npc: 8066
+NPC LEAVE || npc: 8067
+NPC LEAVE || npc: 8068
+END MISSION 1700117
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Justice|Ready to go, pardner?}}
+
+*''Let's do this! {{textcolor|red|(Recommended: Lvl 13-15)}}'' (No unique dialogue)
+*''I'm not ready yet.'' (No unique dialogue)
+
+
+==Rewards==
+{{mission reward
+|npc1 = Amirah
+|rp1 = 15
+|exp = 600
+|reputation = None
+|gols = None
+}}

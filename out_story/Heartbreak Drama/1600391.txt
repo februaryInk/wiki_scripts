@@ -1,0 +1,590 @@
+Reading Mission 1600391: Heartbreak Drama
+
+<onlyinclude>{{Infobox mission
+|name = Heartbreak Drama
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200333
+
+TRIGGER Procedure 1.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Home Visit is successfully completed
+ACTIONS
+Run mission Model Free Cities
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if Jane has favor >= 400
+IS MARRIAGE || isMarriage: 0
+ACTIONS
+Run mission Heartbreak Drama
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1600391
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1600391 | id: 631900 | sceneName: Main | flagName: Story_5394_Area | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+Set 6391Y to 0
+Set 6391E to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8062 | behaviourName: CommanderSit | eventName: SitDownFinished
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 603910 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6391101) The player picks the first option in conversation segment 21002:
+{{dialogue|Jane|Owen is gone... ''Player'', could you stay with me for a while? I'll be off after this glass...}}
+
+*''Alright, I'll stay with you.'' (No unique dialogue)
+*''I still have a lot on my plate.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Increment 6391Y by 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6391104) The player picks the first option in conversation segment 21006:
+{{dialogue|Jane|Hey ''Player''. I've been really down on my luck lately... I wonder if you'd be interested in chatting with me for a bit?}}
+
+*''Alright, I'll stay with you.'' (No unique dialogue)
+*''I still have a lot on my plate.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Increment 6391Y by 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_saloon
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+Check if Owen is in town
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_saloon
+AREA TRIGGER DELETE || id: 631900
+Set 6391E to 1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 603910 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+Owen stands still in Saloon and looks at Jane
+Jane stands still in Saloon
+SCENEITEM CREATE FLAG || itemType: 0 | sceneName: Saloon | id: 006391 | path: S6391_Item_milk | flagName: 16391_milk | extraParams: -1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: 16391_player01
+Add behavior CommanderSit (idName: 163911) to Jane
+(param: SeatDramaName:SaloonSeat01|TargetScene:Saloon)
+
+TRIGGER Procedure 0.0 Step 3.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 603910 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 6391100) A conversation 6884_0 starts:
+{{dialogue|Jane|Ugggghhhh... this stinks. This was the hottest theater show this year... and I actually got  a ticket...}}
+{{dialogue|Jane|Ahhhhh...!}}
+{{dialogue|Jane|Owen, another one please!}}
+{{dialogue|Owen|Well ok, this one is on me-}}
+{{dialogue|Jane|Wow you're so generous Owen!}}
+{{dialogue|Owen|This is the last glass of Yakmel Milk I'm gonna offer you today. Jane, you're in a bad mood, go home and have some rest after this one.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6391100) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 63914 | sec: 3
+Add behavior CommanderMoveToFlagAndAction (idName: 1639117) to Owen
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:S8230_Player_1)
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Jane
+CONDITIONS
+Check if 6391Y is == 0
+Check if 6391E is >= 1
+ACTIONS
+(cId 6391104) A conversation 6887_0 starts:
+{{dialogue|Jane|Hey ''Player''. I've been really down on my luck lately... I wonder if you'd be interested in chatting with me for a bit?}}
+
+*''Alright, I'll stay with you.''
+*''I still have a lot on my plate.''
+
+{{dialogue|Jane|indent=true|answer=I still have a lot on my plate.
+|Well... that's unfortunate...}}
+{{dialogue|Jane|Thank you.}}
+{{dialogue|Jane|"There's no escape, you just have to face it. If fate wants you to be strong, then don't use your weakness as an excuse."}}
+{{dialogue|Jane|Thats a classic line from Miss Jane...}}
+{{dialogue|Jane|But there's still no way I can get over it. I am literally mad!}}
+{{dialogue|Jane|''Player'', did you know Walnut Groove's going to host the "Miss Jane" stage show in a couple of days? It's a celebration of the show's premiere with the original cast reunited for the first time in five years! Tickets were going for ten times the original on the resell market!}}
+{{dialogue|Jane|And guess who was lucky enough to get a hold of a ticket? Me!}}
+{{dialogue|Jane|And then guess who's the unlucky one that can't go watch it? Also- me!}}
+{{dialogue|Jane|"I've never had my heart beating like this before..." Why on earth did a landslide have to happen now?! Now the road leading to Walnut Groove's blocked for a week! I'll miss the show!}}
+
+*''Is there any other way to go?''
+*''It's just a show, don't take it to heart.''
+
+{{dialogue|Jane|indent=true|answer=Is there any other way to go?
+|reward={{NPC2|Jane|rp=5}}|I thought about it! I could take a bus to Portia then go by boat, but that takes forever... Or I could take a train to Atara then take an airship, but that costs way too much! It's too late now, anyway...}}
+{{dialogue|Jane|indent=true|Sigh, there's a reason why I loved this show...}}
+{{dialogue|Jane|indent=true|answer=It's just a show, don't take it to heart.
+|Sigh, I'll move on if it was any other show, but "Miss Jane" means a lot to me...}}
+{{dialogue|Jane|The heroine has the same name as mine, Jane. And we're both emigrants with similar backgrounds...}}
+{{dialogue|Jane|''Player'', I don't think I've ever told you this. My family was originally from Ethea, we were poor there and moved to Atara when I was very little for better opportunities.}}
+{{dialogue|Jane|My Papa was an actor, so he got a job with the Atara University theater. Since I didn't have a lot of friends, and I got free tickets, I went to pretty much every play... That's how I became obsessed with acting.}}
+{{dialogue|Jane|Later, I moved to Walnut Groove to pursue a career. It was much harder than I expected. I participated in countless auditions but I never got selected for any big roles. I was always that tree in the background... I was just never good enough...}}
+{{dialogue|Jane|I watched "Miss Jane" at my lowest point in life. Her story taught me I shouldn't wallow in self pity and instead should figure out a way to "keep moving forward."}}
+{{dialogue|Jane|I thought back to my time with my Pa in the university theater, there were a lot of teachers there, and they were all so nice. And through their productions, I learned a lot about the world. That's how I found my new calling.}}
+{{dialogue|Jane|I thought, if I could bring the same joy and wonder to other kids like the teachers at the university theater did, then my investment in my passion would be worthwhile!}}
+
+*''You must've been through a lot...''
+*{{flirt}}''Jane, I'm impressed by your spirit!''
+
+{{dialogue|Jane|indent=true|answer=You must've been through a lot...
+|Well, that's life, right? Not everything will go perfectly. You just have to "pick yourself up, dust it off, and keep moving!"}}
+{{dialogue|Jane|indent=true|answer=Jane, I'm impressed by your spirit!
+|reward={{NPC2|Jane|rp=5}}|Thanks, I believe anyone with a determined mind will have that same burning spirit. Same goes for you!}}
+{{dialogue|Jane|Sigh, I'm just really disappointed to have to miss the show. And more importantly, seeing Ms. Lola in person. I've always wanted to let her know that the Miss Jane she played inspired me and made me determined to become a teacher.}}
+{{dialogue|Jane|Although I know every word of the play backwards and forwards, Ms. Lola is the real Miss Jane herself!}}
+
+*''How about you put on a show now, I'd love to see it!''
+*''No worries, you'll get more chances.''
+
+{{dialogue|Jane|indent=true|answer=How about you put on a show now, I'd love to see it!
+|reward={{NPC2|Jane|rp=5}}|Oh really? You want to see me as Miss Jane? ...Alright I'll give it a shot!}}
+{{dialogue|Jane|indent=true|answer=No worries, you'll get more chances.
+|reward={{NPC2|Jane|rp=2}}|Do you know the story of "Miss Jane," ''Player''? How about I show it to you!}}
+{{dialogue|Jane|Let me try this part first, to get into the character...}}
+{{dialogue|Jane|"I have been rejected again and again, but I'll keep on trying! Do you know why? Because if I give up now, all the people that didn't believe in me, that laughed at me, that hoped that I would fail... They would have been right!"}}
+{{dialogue|Jane|Haha, that was fun!}}
+{{dialogue|Jane|Now let's play my favorite bit where Jane opened up her heart to Mr. Lau and Lau started to confess his love! How wonderful is that!}}
+{{dialogue|Jane|Oh by the way, you could help if you've watched the play before. Ahem, I'm gonna start!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 63914
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 1639117) from Owen
+Owen stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 163913) to Player
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:16391_player02)
+
+TRIGGER Procedure 1.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 21014:
+{{dialogue|Jane|"I've never had my heart beating like this before..." Why on earth did a landslide have to happen now?! Now the road leading to Walnut Groove's blocked for a week! I'll miss the show!}}
+
+*''Is there any other way to go?'' (No unique dialogue)
+*''It's just a show, don't take it to heart.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Jane gains 5 favor
+
+TRIGGER Procedure 1.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 21032:
+{{dialogue|Jane|Although I know every word of the play backwards and forwards, Ms. Lola is the real Miss Jane herself!}}
+
+*''How about you put on a show now, I'd love to see it!'' (No unique dialogue)
+*''No worries, you'll get more chances.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Jane gains 5 favor
+
+TRIGGER Procedure 1.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 21032:
+{{dialogue|Jane|Although I know every word of the play backwards and forwards, Ms. Lola is the real Miss Jane herself!}}
+
+*''How about you put on a show now, I'd love to see it!'' (No unique dialogue)
+*''No worries, you'll get more chances.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Jane gains 2 favor
+
+TRIGGER Procedure 1.0 Step 0.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 21043:
+{{dialogue|Jane|"Let me go... Mr. Lau, we have talked enough..."}}
+
+*''"Jane."（Help with acting）'' (No unique dialogue)
+*''Stand by and watch'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Jane gains 2 favor
+
+TRIGGER Procedure 1.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 21046:
+{{dialogue|Jane|"Let me go, Mr. Lau. I've made up my mind."}}
+
+*''"Jane, don't go!"（Help with acting）'' (No unique dialogue)
+*''Stand by and watch'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Jane gains 2 favor
+
+TRIGGER Procedure 1.0 Step 0.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 21026:
+{{dialogue|Jane|I thought, if I could bring the same joy and wonder to other kids like the teachers at the university theater did, then my investment in my passion would be worthwhile!}}
+
+*''You must've been through a lot...'' (No unique dialogue)
+*{{flirt}}''Jane, I'm impressed by your spirit!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Jane gains 5 favor
+
+TRIGGER Procedure 1.0 Step 0.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 21050:
+{{dialogue|Jane|"The world thinks that just because I was born poor and powerless, that my voice doesn't matter... but not you. You have always stood by me. For that, I thank you..."}}
+
+*{{flirt}}''"I love you, Jane! I love you!"'' (No unique dialogue)
+*''A big round of applause!'' (No unique dialogue)
+*''Stand by and watch'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Jane gains 5 favor
+
+TRIGGER Procedure 1.0 Step 0.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 21050:
+{{dialogue|Jane|"The world thinks that just because I was born poor and powerless, that my voice doesn't matter... but not you. You have always stood by me. For that, I thank you..."}}
+
+*{{flirt}}''"I love you, Jane! I love you!"'' (No unique dialogue)
+*''A big round of applause!'' (No unique dialogue)
+*''Stand by and watch'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Jane gains 2 favor
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 163913) from Player
+(cId 6391101) A conversation 6885_0 starts:
+{{dialogue|Jane|''Player''! Hey... want a glass of milk? Owen, where's Owen?}}
+{{dialogue|Jane|Owen is gone... ''Player'', could you stay with me for a while? I'll be off after this glass...}}
+
+*''Alright, I'll stay with you.''
+*''I still have a lot on my plate.''
+
+{{dialogue|Jane|indent=true|answer=I still have a lot on my plate.
+|Well... that's unfortunate...}}
+{{dialogue|Jane|Thank you.}}
+{{dialogue|Jane|"There's no escape, you just have to face it. If fate wants you to be strong, then don't use your weakness as an excuse."}}
+{{dialogue|Jane|Thats a classic line from Miss Jane...}}
+{{dialogue|Jane|But there's still no way I can get over it. I am literally mad!}}
+{{dialogue|Jane|''Player'', did you know Walnut Groove's going to host the "Miss Jane" stage show in a couple of days? It's a celebration of the show's premiere with the original cast reunited for the first time in five years! Tickets were going for ten times the original on the resell market!}}
+{{dialogue|Jane|And guess who was lucky enough to get a hold of a ticket? Me!}}
+{{dialogue|Jane|And then guess who's the unlucky one that can't go watch it? Also- me!}}
+{{dialogue|Jane|"I've never had my heart beating like this before..." Why on earth did a landslide have to happen now?! Now the road leading to Walnut Groove's blocked for a week! I'll miss the show!}}
+
+*''Is there any other way to go?''
+*''It's just a show, don't take it to heart.''
+
+{{dialogue|Jane|indent=true|answer=Is there any other way to go?
+|reward={{NPC2|Jane|rp=5}}|I thought about it! I could take a bus to Portia then go by boat, but that takes forever... Or I could take a train to Atara then take an airship, but that costs way too much! It's too late now, anyway...}}
+{{dialogue|Jane|indent=true|Sigh, there's a reason why I loved this show...}}
+{{dialogue|Jane|indent=true|answer=It's just a show, don't take it to heart.
+|Sigh, I'll move on if it was any other show, but "Miss Jane" means a lot to me...}}
+{{dialogue|Jane|The heroine has the same name as mine, Jane. And we're both emigrants with similar backgrounds...}}
+{{dialogue|Jane|''Player'', I don't think I've ever told you this. My family was originally from Ethea, we were poor there and moved to Atara when I was very little for better opportunities.}}
+{{dialogue|Jane|My Papa was an actor, so he got a job with the Atara University theater. Since I didn't have a lot of friends, and I got free tickets, I went to pretty much every play... That's how I became obsessed with acting.}}
+{{dialogue|Jane|Later, I moved to Walnut Groove to pursue a career. It was much harder than I expected. I participated in countless auditions but I never got selected for any big roles. I was always that tree in the background... I was just never good enough...}}
+{{dialogue|Jane|I watched "Miss Jane" at my lowest point in life. Her story taught me I shouldn't wallow in self pity and instead should figure out a way to "keep moving forward."}}
+{{dialogue|Jane|I thought back to my time with my Pa in the university theater, there were a lot of teachers there, and they were all so nice. And through their productions, I learned a lot about the world. That's how I found my new calling.}}
+{{dialogue|Jane|I thought, if I could bring the same joy and wonder to other kids like the teachers at the university theater did, then my investment in my passion would be worthwhile!}}
+
+*''You must've been through a lot...''
+*{{flirt}}''Jane, I'm impressed by your spirit!''
+
+{{dialogue|Jane|indent=true|answer=You must've been through a lot...
+|Well, that's life, right? Not everything will go perfectly. You just have to "pick yourself up, dust it off, and keep moving!"}}
+{{dialogue|Jane|indent=true|answer=Jane, I'm impressed by your spirit!
+|reward={{NPC2|Jane|rp=5}}|Thanks, I believe anyone with a determined mind will have that same burning spirit. Same goes for you!}}
+{{dialogue|Jane|Sigh, I'm just really disappointed to have to miss the show. And more importantly, seeing Ms. Lola in person. I've always wanted to let her know that the Miss Jane she played inspired me and made me determined to become a teacher.}}
+{{dialogue|Jane|Although I know every word of the play backwards and forwards, Ms. Lola is the real Miss Jane herself!}}
+
+*''How about you put on a show now, I'd love to see it!''
+*''No worries, you'll get more chances.''
+
+{{dialogue|Jane|indent=true|answer=How about you put on a show now, I'd love to see it!
+|reward={{NPC2|Jane|rp=5}}|Oh really? You want to see me as Miss Jane? ...Alright I'll give it a shot!}}
+{{dialogue|Jane|indent=true|answer=No worries, you'll get more chances.
+|reward={{NPC2|Jane|rp=2}}|Do you know the story of "Miss Jane," ''Player''? How about I show it to you!}}
+{{dialogue|Jane|Let me try this part first, to get into the character...}}
+{{dialogue|Jane|"I have been rejected again and again, but I'll keep on trying! Do you know why? Because if I give up now, all the people that didn't believe in me, that laughed at me, that hoped that I would fail... They would have been right!"}}
+{{dialogue|Jane|Haha, that was fun!}}
+{{dialogue|Jane|Now let's play my favorite bit where Jane opened up her heart to Mr. Lau and Lau started to confess his love! How wonderful is that!}}
+{{dialogue|Jane|Oh by the way, you could help if you've watched the play before. Ahem, I'm gonna start!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6391101) The player picks the second option in conversation segment 21002:
+{{dialogue|Jane|Owen is gone... ''Player'', could you stay with me for a while? I'll be off after this glass...}}
+
+*''Alright, I'll stay with you.'' (No unique dialogue)
+*''I still have a lot on my plate.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6391104) The player picks the second option in conversation segment 21006:
+{{dialogue|Jane|Hey ''Player''. I've been really down on my luck lately... I wonder if you'd be interested in chatting with me for a bit?}}
+
+*''Alright, I'll stay with you.'' (No unique dialogue)
+*''I still have a lot on my plate.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 21041) that ends:
+{{dialogue|Jane|Oh by the way, you could help if you've watched the play before. Ahem, I'm gonna start!}}
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 603911 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 603911 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderSit (idName: 163911) from Jane
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: 16391_player03
+Jane stands still in Saloon and looks at Player
+DELAY MASK SET || maskId: 603911 | delayTime: 3 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 603911 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 6391103) A conversation 6895_0 starts:
+{{dialogue|Jane|"Everyone, needs to be responsible for themselves, be responsible for the Light! You can't demand this of anyone else!"}}
+{{dialogue|Jane|"Let me go... Mr. Lau, we have talked enough..."}}
+
+*''"Jane."（Help with acting）''
+*''Stand by and watch''
+
+{{dialogue|Jane|answer=Stand by and watch
+|"Let me go, Mr. Lau. I've made up my mind."}}
+
+*''"Jane, don't go!"（Help with acting）''
+*''Stand by and watch''
+
+{{dialogue|Jane|"Let me go! I will find my own way!"}}
+{{dialogue|Jane|"The world thinks that just because I was born poor and powerless, that my voice doesn't matter... but not you. You have always stood by me. For that, I thank you..."}}
+
+*{{flirt}}''"I love you, Jane! I love you!"''
+*''A big round of applause!''
+*''Stand by and watch''
+
+{{dialogue|Jane|indent=true|answer="I love you, Jane! I love you!"
+|reward={{NPC2|Jane|rp=5}}|Uh...}}
+{{dialogue|Jane|indent=true|"I..."}}
+{{dialogue|Jane|indent=true|I...}}
+{{dialogue|Jane|indent=true|Thank you for being with me today, ''Player''. I think I gotta come, I mean, I gotta go! Bye!}}
+{{dialogue|Jane|indent=true|Have a good day, afternoon and night!}}
+{{dialogue|Jane|indent=true|answer=A big round of applause!
+|reward={{NPC2|Jane|rp=2}}|"...Thank you..."}}
+{{dialogue|Jane|indent=true|Alright, that's all I'm going to do, ''Player''!}}
+{{dialogue|Jane|indent=true|Phew, what a blast! I can feel the sensation coming back from when I last watched it. All my distress is now completely gone!}}
+{{dialogue|Jane|indent=true|"Life is too short to worry!" Hehe, that's the last line.}}
+{{dialogue|Jane|indent=true|reward={{NPC2|Jane|rp=50}}|''Player'', thank you for being with me today. I'm feel much better now. I'd better head off, maybe we can do it again sometime! Talk to you later!}}
+{{dialogue|Jane|indent=true|answer=Stand by and watch
+|Alright, that's all I'm going to do, ''Player''!}}
+{{dialogue|Jane|indent=true|Phew, what a blast! I can feel the sensation coming back from when I last watched it. All my distress is now completely gone!}}
+{{dialogue|Jane|indent=true|"Life is too short to worry!" Hehe, that's the last line.}}
+{{dialogue|Jane|indent=true|reward={{NPC2|Jane|rp=50}}|''Player'', thank you for being with me today. I'm feel much better now. I'd better head off, maybe we can do it again sometime! Talk to you later!}}
+
+TRIGGER Procedure 3.0 Step 2.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 21063) that ends:
+{{dialogue|Jane|Have a good day, afternoon and night!}}
+CONDITIONS
+Always:
+ACTIONS
+Jane stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 163916) to Jane
+(param: TargetScene:Main|MoveMode:Run|FlagName:Story_5394_Area)
+STOPWATCH REAL TIME SET || id: 63915 | sec: 3
+
+TRIGGER Procedure 3.0 Step 2.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 63915
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 006391
+Jane gains 50 favor
+Remove behavior CommanderMoveToFlagAndAction (idName: 163916) from Jane
+Jane stops standing still
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 3.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 21058) that ends:
+{{dialogue|Jane|''Player'', thank you for being with me today. I'm feel much better now. I'd better head off, maybe we can do it again sometime! Talk to you later!}}
+CONDITIONS
+Always:
+ACTIONS
+The special gift rule 148 for giving Heart Knot to Jane is disabled. The rule was:
+The gift is accepted with:
+{{dialogue|Jane|A Heart Knot? Oh, I'm more than ready to enroll in the course of love with you!}}
+
+SCENEITEM DELETE || itemType: 0 | id: 006391
+Jane gains 50 favor
+Jane stops standing still
+Jane stops standing still
+CUTSCENE UI STATE EXIT || 
+END MISSION 1600391
+
+TRIGGER Procedure 3.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6391103) The player picks the first option in conversation segment 21050:
+{{dialogue|Jane|"The world thinks that just because I was born poor and powerless, that my voice doesn't matter... but not you. You have always stood by me. For that, I thank you..."}}
+
+*{{flirt}}''"I love you, Jane! I love you!"'' (No unique dialogue)
+*''A big round of applause!'' (No unique dialogue)
+*''Stand by and watch'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Jane gains 5 favor
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Saloon to the Main:
+CONDITIONS
+Check if 6391Y is == 0
+ACTIONS
+The special gift rule 148 for giving Heart Knot to Jane is disabled. The rule was:
+The gift is accepted with:
+{{dialogue|Jane|A Heart Knot? Oh, I'm more than ready to enroll in the course of love with you!}}
+
+SCENEITEM DELETE || itemType: 0 | id: 006391
+Jane stops standing still
+Remove behavior CommanderSit (idName: 163911) from Jane
+END MISSION 1600391
+
+TRIGGER Procedure 5.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission Heartbreak Drama
+END MISSION 1600391

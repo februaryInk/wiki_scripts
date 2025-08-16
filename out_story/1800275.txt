@@ -1,0 +1,171 @@
+Reading Mission 1800275: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100068
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+The Grass is Greener is successfully completed
+CHECK PLAYER WORKSHOP LEVEL || value: 2 | set: 2
+ACTIONS
+Run mission The Request Board
+
+TRIGGER Procedure 3.0 Step 1.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1800273 is result 1 flag 1
+ACTIONS
+Run mission #1800275
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800275
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1800275 | id: 82751 | sceneName: Main | flagName: Trigger_S8275 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 82751
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 82751 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 82751
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82751 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Elsie stands still in Main
+Amirah stands still in Main and looks at Elsie
+Daisy stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8275_0_1
+DELAY MASK SET || maskId: 82751 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82751 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 2706_0 starts:
+{{dialogue|Elsie|Hey, Amirah, here's that White Clay ya wanted. I went to the Salt Plains with Daisy and grabbed it. There's a whole bunch more over there if ya ever need any.}}
+{{dialogue|Amirah|That's wonderful, thank you for your help, Elsie.}}
+{{dialogue|Elsie|Aw don't sweat it. Least I could do.}}
+{{dialogue|Elsie|Teehee, I didn't realize this clay gets its color from bein' mixed with bird poop. No wonder it's got a rare hue!}}
+{{dialogue|Daisy|Quack! Quack!}}
+{{dialogue|Amirah|Oh, er... did she get offended by that...?}}
+{{dialogue|Elsie|Haha, you ain't gotta be scared. She's jus' wants an attagirl.}}
+{{dialogue|Amirah|Well, how should I call her? Just... Martle Duck?}}
+{{dialogue|Elsie|Naw, her name's Daisy. She'll be real glad if ya learn her name!}}
+{{dialogue|Amirah|Well, thank you Daisy!}}
+{{dialogue|Daisy|Quaaack!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderTeleport (idName: 8275152) to Amirah
+(param: TargetFlag:S8275_0_1|TargetScene:Main|Delay:5.0)
+Amirah stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 8275932) to Daisy
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8275_93_2|LookAtActor:8005)
+Add behavior CommanderMoveToFlagAndAction (idName: 8275052) to Elsie
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8275_5_2|LookAtActor:8093)
+Set 8275Move to 0
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8005 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8093 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Check if 8275Move is >= 2
+ACTIONS
+(cId 2) A conversation 2707_0 starts:
+{{dialogue|Elsie|See, Daisy? Ain't it nice helpin' folks out?}}
+{{dialogue|Daisy|Quack, quack!}}
+{{dialogue|Elsie|Haha, don't worry, you'll get yer Salted Fish!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Elsie stops standing still
+Elsie stops standing still
+Daisy stops standing still
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderTeleport (idName: 8275152) from Amirah
+Remove behavior CommanderMoveToFlagAndAction (idName: 8275932) from Daisy
+Remove behavior CommanderMoveToFlagAndAction (idName: 8275052) from Elsie
+Elsie gains 5 favor
+Amirah gains 5 favor
+
+TRIGGER Procedure 0.0 Step 5.0 Order 7 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8005 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8093 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Increment 8275Move by 1
+
+TRIGGER Procedure 1.0 Step 6.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+NPC LEAVE || npc: 8093
+END MISSION 1800275
+
+TRIGGER Procedure 1.0 Step 10.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+We'll Be Ready For 'Em is successfully completed
+ACTIONS
+AREA TRIGGER DELETE || id: 82751
+END MISSION 1800275

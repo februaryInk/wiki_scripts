@@ -1,0 +1,378 @@
+Reading Mission 1200222: Something in the Air
+
+<onlyinclude>{{Infobox mission
+|name = Something in the Air
+|image =
+|description = The pollution in the Valley of Whispers
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 3600
+|reputation = 25
+|gols = 1000
+|npc1 = Justice
+|rp1 = 10
+|npc2 = Unsuur
+|rp2 = 10
+|npc3 = Trudy
+|rp3 = 10
+|npc4 = Mi-an
+|rp4 = 10
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200135
+
+TRIGGER Procedure 5.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1200221
+
+TRIGGER Procedure 5.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1200217 is result 1 flag 1
+Relapse is in state 2 with flag 0
+ACTIONS
+Run mission Something in the Air
+Newspaper adds Article content 1079.
+Title: I Believe in Sandrock!
+It was the best of times, it was the worst of times... wait, got that mixed up; it was the worst of times, and then... the best of times!
+
+That seems as good a way as any to describe the events that unfolded recently at the Blue Moon as Musa made his way into what turned out to be a very unwelcoming welcome party. Now, this reporter doesn't really feel the need to dwell on facts such as "who exploded what" or "what ignited whom," but rather, let us focus on the result!
+
+After a rather dismal first act, it looked like we'd ruined our chances to impress Musa, that is until... the tables turned! And were set on fire! And promptly extinguished. It was an extinguishing... of hope!
+
+Mort shared with us all the most moving of tales... one of loss, one of regret, but ultimately, a tale of inspiration. He spoke solemnly, gaze aligned squarely at our wealthy guest, tears forming in his eyes... 
+
+"I believe in these people. I believe in Sandrock." 
+
+Powerful words. So much so that even the calculating businessman, infamous for his heart of stone in the negotiation room, had no choice but to reconsider his refusal to invest in our town. 
+
+Regardless of Musa's ultimate decision, this reporter is thoughtlessly jumping on the bandwagon. I believe in Sandrock, too!
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200222
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1200222
+
+TRIGGER Procedure 0.0 Step 0.5 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+Relapse is in state 2 with flag 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Fang stands still in Main and looks at Rocky
+Krystal stands still in Main
+Rocky stands still in Main and looks at Fang
+Pebbles stands still in Main
+Arvio stands still in Main
+Owen stands still in Main
+Trudy stands still in Main
+Rian stands still in Main
+Dan-bi stands still in Main
+Cooper stands still in Main
+Musa stands still in Main
+SCENEITEM DELETE || itemType: 0 | id: 20320
+SCENEITEM CREATE FLAG || itemType: 0 | id: 22221 | sceneName: Main | path: Mission_FX_Scene_Smoke_03 | flagName: bridge_kaimu | extraParams: 0
+MONSTER ADD TAG || isAdd: 0 | tag: FarmedYakmel
+MONSTER ADD TAG || tag: FarmedYakmel_Green | isAdd: 1
+NPC CHANGE SKIN COLOR ADD || npc: 8021 | requestID: 22221 | r: 92 | g: 132 | b: 17
+NPC CHANGE SKIN COLOR ADD || npc: 8058 | requestID: 22221 | r: 92 | g: 132 | b: 17
+NPC CHANGE SKIN COLOR ADD || npc: 8043 | requestID: 22221 | r: 92 | g: 132 | b: 17
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+ACTION CUTSCENE START AUDIO TYPE || id: CG_GREENPEBBLES | duration: 0 | audioType: NoTransitionOff
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_GREENPEBBLES | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 6261 starts:
+{{dialogue|Player|(There seems to be a lot of bustle in town square, maybe I should check it out.)}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 22221 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 22221 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: greenbaby_square_player1
+DELAY MASK SET || maskId: 22221 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+{{cutscene|id = 1334}}
+A cutscene CG_GREENPEBBLES_2 (duration: 0.0) starts playing
+Green All Over - It wasn't just Pebbles that turned green! Everyone suspects that the food and air has been contaminated. Something need to be done!
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_GREENPEBBLES_2 | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 6262, 6263, 6264, 6265 starts:
+{{dialogue|Fang|It's... normal... Happens at my clinic... all the time...}}
+{{dialogue|Rocky|This quack's all fouled up, I want a second opinion!}}
+{{dialogue|Fang|You're also... overreacting... Follow me... to the clinic...}}
+{{dialogue|Rocky|Fine!}}
+NPC CHANGE SKIN COLOR ADD || npc: 8020 | requestID: 22221 | r: 92 | g: 132 | b: 17
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTION NPC END TAKE || npc: 8044
+Rocky stops standing still
+Krystal stops standing still
+Pebbles stops standing still
+Add behavior CommanderTeleport (idName: 22221) to Rocky
+(param: TargetScene:Clinic|TargetFlag:greenbaby_clinic_rocky1)
+Add behavior CommanderTeleport (idName: 22221) to Krystal
+(param: TargetScene:Clinic|TargetFlag:greenbaby_clinic_crystal1)
+Add behavior CommanderTeleport (idName: 22221) to Pebbles
+(param: TargetScene:Clinic|TargetFlag:greenbaby_clinic_pebbles1)
+(cId 2) A conversation 6266, 6267 starts:
+{{dialogue|Arvio|Could this be {{textcolor|red|Logan}}'s doing?}}
+{{dialogue|Owen|He's never attacked citizens before...}}
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Burgess stands still in Main
+Burgess stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 22221) to Burgess
+(param: TargetScene:Main|MoveMode:Run|FlagName:greenbaby_square_burgess2|Action:Salute)
+Fang stops standing still
+Add behavior CommanderTeleport (idName: 22221) to Fang
+(param: TargetScene:Clinic|TargetFlag:greenbaby_clinic_fang1)
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8021 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 1870_0 starts:
+{{dialogue|Burgess|Guys! I hate to interrupt your meeting, but I can confirm that there's a mysterious green gas rising up from the {{textcolor|green|Valley of Whispers}}, do you think this could have anything to do with Pebbles' condition?}}
+{{dialogue|Trudy|Um, Burgess, I feel like I already know the answer to this, but... did you breathe in any of the fumes? Are you... okay?}}
+{{dialogue|Burgess|They smelled like chemicals, ma'am! I'm still a little dizzy! But otherwise okay!}}
+{{dialogue|Arvio|Did we really pick the wrong town to be in? It's just one disaster after another...}}
+{{dialogue|Dan-bi|I-I really can't take any more of this, Ri-ri. Sandrock isn't safe for us anymore... or for our future baby.}}
+{{dialogue|Rian|C'mon, babe, it'll be okay...}}
+{{dialogue|Dan-bi|First the water tower, now this weird green mist? Ri-ri...}}
+{{dialogue|Trudy|Now, now, everyone! Let's not panic. We are fully aware of the issue. This is not the first time we've been through something like this...}}
+{{dialogue|Cooper|I been here almost fifty years and I ain't never seen nobody or nothin' turn completely green from head to toe! All my Yakmel are green, by the way, but I'll go 'head and let y'all finish 'fore airin' my concerns. I been known to ramble.}}
+{{dialogue|Trudy|That is... uncharacteristically self-aware. Thank you, Cooper!}}
+{{dialogue|Cooper|I've been workin' on myself!}}
+{{dialogue|Trudy|Very good! Now, I didn't mean "turning green" specifically, but it's well documented that there were all sorts of {{textcolor|green|strange Old World buildings under Sandrock}}; we have been known to encounter dangerous substances from time to time...}}
+{{dialogue|Trudy|Rest assured that City Hall is aware of your concerns, and actions will be taken immediately! Dr. Fang is already working on a remedy!}}
+{{dialogue|Trudy|Those of you affected, please stay in close correspondence with Dr. Fang; any medicine or ingredients he requires will be covered by us! Please stay calm, everyone! City Hall will handle this!}}
+{{dialogue|Trudy|Builders, Justice, please see me in my office, right now.}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 2) There is a conversation segment (id 6270) that ends:
+{{dialogue|Burgess|They smelled like chemicals, ma'am! I'm still a little dizzy! But otherwise okay!}}
+CONDITIONS
+Always:
+ACTIONS
+Owen stops standing still
+Arvio stops standing still
+Arvio stands still in Main
+Owen stands still in Main
+Justice stands still in Main and looks at Trudy
+Trudy stops standing still
+Trudy stands still in Main
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 22222 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 22222 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Rian stops standing still
+Dan-bi stops standing still
+CUTSCENE UI STATE EXIT || 
+Arvio stops standing still
+Owen stops standing still
+Burgess stops standing still
+Cooper stops standing still
+Heidi stops standing still
+Musa stops standing still
+Trudy stops standing still
+Justice stops standing still
+AREA TRIGGER CREATE || missionId: 1200222 | id: 22222 | sceneName: Main | flagName: trigger_guildhall | showOnMap: 1 | transId: 80000767 | mapIcon: MissionArea
+PLAYER SET POS ROT FLAG || sceneName: Guildhall | flagName: musacomes_guildhall_musa
+DELAY MASK SET || maskId: 22221 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 22221) from Burgess
+Remove behavior CommanderTeleport (idName: 22221) from Fang
+Remove behavior CommanderTeleport (idName: 22221) from Rocky
+Remove behavior CommanderTeleport (idName: 22221) from Krystal
+Remove behavior CommanderTeleport (idName: 22221) from Pebbles
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_guildhall
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_guildhall
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 22222
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+Always:
+ACTIONS
+Trudy stands still in Guildhall and looks at Justice
+Justice stands still in Guildhall and looks at Trudy
+Mi-an stands still in Guildhall and looks at Trudy
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 22222) to Trudy
+(param: CMDAction:DeepBreath|Delay:1.5)
+
+TRIGGER Procedure 3.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8006 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 22222) from Trudy
+(cId 3) A conversation 1871_0 starts:
+{{dialogue|Trudy|Okay, it looks like we have another major problem on our hands. And this one's already affecting the health of our citizens. We need to act fast.}}
+{{dialogue|Trudy|Justice, tell the Builders what you know so far.}}
+{{dialogue|Justice|Sure, ma'am. Unsuur and I already took a look from the edge of the canyon this mornin'. It seems to be that there's some {{textcolor|green|liquid}} being leaked out of some {{textcolor|green|Old World pipes}} and that liquid is turning into this green gas.}}
+{{dialogue|Justice|Now, we weren't able to get any closer 'cause I wasn't about to send us into danger unprepared. But here's a {{textcolor|green|drawing that Unsuur did of the leaky pipes}}. Should be good enough to come up with a solution, right?}}
+{{dialogue|Justice|Also, ''Player'', I figure since you're a Corps member now, {{textcolor|green|you'll lead this mission}}. You still got your Protective Suit, right?}}
+
+*''Sure do!'' (No unique dialogue)
+*''I'm the lead?'' (No unique dialogue)
+
+{{dialogue|Mi-an|Trudy and I can can back you up again, ''Player''! We've still got our suits as well!}}
+{{dialogue|Justice|Hold up! Sigh... We can't send both Builders and the Mayor into the canyon... Not this again.}}
+{{dialogue|Justice|This is, and always has been, a job for the Civil Corps! Ms. Mi-an! Two Protective Suits please, put it on the city's tab.}}
+{{dialogue|Mi-an|Um. Okay! Trudy?}}
+{{dialogue|Trudy|Yes... he's right. Thank you, Justice. Well, sounds like a plan. Everyone, we'll be depending on you once again.}}
+{{dialogue|Justice|Yeah, yeah. Just doin' my job. ''Player'', see {{textcolor|green|what materials you'll need to gather to fix that thing}}.}}
+{{dialogue|Mi-an|I should have your suits {{textcolor|green|by tomorrow morning}}!}}
+{{dialogue|Justice|Do you even sleep? Well, okay. Uh... we'll swing by early, to pick up the suits, then rendezvous at your place,  ''Player''. Sound good? Good! See you all tomorrow, then!}}
+The conversation ends.
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Trudy stops standing still
+Justice stops standing still
+Mi-an stops standing still
+Run mission Something in the Air
+Run mission Something in the Air
+Run mission Something in the Air
+START MISSION 1200222
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200222
+CONDITIONS
+Always:
+ACTIONS
+Run mission Something in the Air
+END MISSION 1200222
+
+==Rewards==
+{{mission reward
+|npc1 = Justice
+|rp1 = 10
+|npc2 = Unsuur
+|rp2 = 10
+|npc3 = Trudy
+|rp3 = 10
+|npc4 = Mi-an
+|rp4 = 10
+|exp = 3600
+|reputation = 25
+|gols = 1000
+}}

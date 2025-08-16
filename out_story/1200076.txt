@@ -1,0 +1,184 @@
+Reading Mission 1200076: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = ￥not use￥
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 1100
+|reputation = 20
+|gols = 300
+|npc1 = Trudy
+|rp1 = 10
+}}</onlyinclude>
+
+==Overview==
+Parent not found; run conditions not available.
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200076
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+Trudy stands still in Main
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 352_0 starts:
+{{dialogue|Trudy|￥not use￥}}
+{{dialogue|Trudy|￥not use￥}}
+
+*''￥not use￥''
+*''￥not use￥''
+
+{{dialogue|Trudy|indent=true|answer=￥not use￥
+|￥not use￥}}
+{{dialogue|Trudy|indent=true|answer=￥not use￥
+|￥not use￥}}
+{{dialogue|Trudy|indent=true|￥not use￥}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the first option in conversation segment 1712:
+{{dialogue|Trudy|￥not use￥}}
+
+*''￥not use￥'' (No unique dialogue)
+*''￥not use￥'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 1
+Set global blackboard key plantwithtrudy with info 1.
+
+TRIGGER Procedure 0.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+Trudy stops standing still
+DELAY MASK SET || maskId: 20761 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: 0
+Add behavior CommanderMoveToFlag (idName: 20761) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:explosion_player)
+Add behavior CommanderMoveToFlag (idName: 20761) to Trudy
+(param: TargetScene:Main|MoveMode:Run|FlagName:explosion_player)
+
+TRIGGER Procedure 0.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 20761 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 20761) from Player
+Remove behavior CommanderMoveToFlag (idName: 20761) from Trudy
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: plantwithtrudy_player
+Trudy stands still in Main
+DELAY MASK SET || maskId: 20761 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 20761 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 1716, 1717, 1718, 1957, 1958, 1959 starts:
+{{dialogue|Trudy|￥not use￥}}
+{{dialogue|Trudy|￥not use￥}}
+{{dialogue|Trudy|￥not use￥}}
+{{dialogue|Trudy|￥not use￥}}
+{{dialogue|Trudy|￥not use￥}}
+{{dialogue|Trudy|￥not use￥}}
+
+TRIGGER Procedure 0.0 Step 7.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1200076
+START MISSION 1200076
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 3.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the second option in conversation segment 1712:
+{{dialogue|Trudy|￥not use￥}}
+
+*''￥not use￥'' (No unique dialogue)
+*''￥not use￥'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 2
+Set global blackboard key plantwithtrudy with info 2.
+
+TRIGGER Procedure 1.0 Step 4.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 2
+ACTIONS
+Trudy stops standing still
+CUTSCENE UI STATE EXIT || 
+START MISSION 1200076
+
+TRIGGER Procedure 1.0 Step 5.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200076
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1200077
+END MISSION 1200076
+
+==Rewards==
+{{mission reward
+|npc1 = Trudy
+|rp1 = 10
+|exp = 1100
+|reputation = 20
+|gols = 300
+}}

@@ -1,0 +1,172 @@
+Reading Mission 1200323: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200310
+
+TRIGGER Procedure 7.0 Step 9.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM INTERACT SET || itemType: 9 | id: 33 | canInteract: 1
+
+TRIGGER Procedure 8.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Untilled Now is successfully completed
+ACTIONS
+Set 1200323 to 1
+Run mission #1200323
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+CUTSCENE UI STATE ENTER || 
+ADD KNOWN NPC || showUI: 0 | npc: 8120
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+Professor Luo stands still in Main
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 12969 starts:
+{{dialogue|Professor Luo|Sand Grass... grows year round in arid environments. The soil here is far too porous... it cannot maintain enough moisture for anything...}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 23232) to Professor Luo
+(param: TargetScene:Main|MoveMode:Walk|FlagName:luocome_luo2|Action:Observe)
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8120 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 12970 starts:
+{{dialogue|Professor Luo|This strain is better... but not by much. It's a wonder they're able to grow around here...}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 23232) from Professor Luo
+Add behavior CommanderMoveToFlagAndAction (idName: 23233) to Professor Luo
+(param: TargetScene:Main|MoveMode:Walk|FlagName:npc_beforehome)
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8120 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 3878_0 starts:
+{{dialogue|Professor Luo|Oh! Er... "howdy!" I'm sorry. I was just passing by and notice the Sand Grass around here... and then I had this urge to study them...}}
+{{dialogue|Professor Luo|You work here, right? It's a rather harsh environment... so, eh, can I ask you something? When you work, do you suffer from dehydration? How much do you sweat?}}
+
+*''Yeah, I get tired all the time.''
+*''It doesn't bother me.''
+*''Huh...?''
+
+{{dialogue|Professor Luo|indent=true|answer=Yeah, I get tired all the time.
+|Just as I presumed...}}
+{{dialogue|Professor Luo|indent=true|Sorry, old habit. My wife told me to shave my beard or else...}}
+{{dialogue|Professor Luo|indent=true|answer=It doesn't bother me.
+|Ah, but of course. With hardworking Builders such as yourself, it is no surprise Sandrock has seen such fast development.}}
+{{dialogue|Professor Luo|Oh, where are my manners. My name is Luo, I'm a botanist. I just got here on the morning train, and I must say, this place is fascinating! I should have visited sooner!}}
+{{dialogue|Professor Luo|Now, if you'll excuse me, I am looking for a brilliant botanist named Zeke. See you around!}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Professor Luo stops standing still
+ACTION ACTOR START FADE IN || id: 23231 | npc: 8120 | time: 2
+STOPWATCH REAL TIME SET || id: 23231 | sec: 2
+NPC SET CAN INTERACT || npc: 8120 | canInteract: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 23232) from Professor Luo
+Remove behavior CommanderMoveToFlagAndAction (idName: 23233) from Professor Luo
+Remove behavior CommanderNPCAction (idName: 23235) from Professor Luo
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 12972:
+{{dialogue|Professor Luo|You work here, right? It's a rather harsh environment... so, eh, can I ask you something? When you work, do you suffer from dehydration? How much do you sweat?}}
+
+*''Yeah, I get tired all the time.'' (No unique dialogue)
+*''It doesn't bother me.'' (No unique dialogue)
+*''Huh...?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 23235) to Professor Luo
+(param: CMDAction:Story_Idle)
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 23231
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+ACTION ACTOR END FADE IN || id: 23231 | time: 0
+NPC SET CAN INTERACT || canInteract: 1 | npc: 8120
+Professor Luo stands still in Greenhouse
+Professor Luo stops standing still
+END MISSION 1200323

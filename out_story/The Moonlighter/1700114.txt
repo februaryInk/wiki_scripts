@@ -1,0 +1,283 @@
+Reading Mission 1700114: The Moonlighter
+
+<onlyinclude>{{Infobox mission
+|name = The Moonlighter
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from The Moonlighter:
+
+TRIGGER Procedure 0.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 2562) that ends:
+{{dialogue|Amirah|Hm, indeed.}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 171131) to Amirah
+(param: CMDAction:PickUp)
+STOPWATCH REAL TIME SET || id: 171132 | sec: 2
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700113
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Moonlighter
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700114
+CONDITIONS
+Always:
+ACTIONS
+===Collect Clay===
+
+{{mission_details
+|desc = Amirah needs Clay for her workshop. You'll need to collect some for her, Clay can be obtained by digging in the {{textcolor|green|Abandoned Ruins}}.
+|details = Collect Clay
+*{{i2|Clay|0/5}}
+}}
+Set DT to 1
+Set SUB to 1
+Set COUNTER to 2
+
+TRIGGER Procedure 0.0 Step 1.0 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1700113 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Check if COUNTER is == 2
+ACTIONS
+===Deliver Clay to Amirah===
+
+{{mission_details
+|desc = Amirah's shop needs a lot of Clay. Help her transport Clay twice a week.
+|details = Deliver Clay to Amirah
+*{{i2|Clay|0/5}}
+*{{i2|Amirah|0/1}}
+}}
+Set SUB to 1
+Set COUNTER to 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Amirah
+CONDITIONS
+CHECK PLAYER ITEM || item: 19100008 | itemGrade: -1 | set: 2 | count: 5
+Check if DT is == 1
+Check if SUB is == 1
+ACTIONS
+BAG MODIFY BY TARGET || missionId: 1700113 | targetId: 2
+MONEY PLAYER ADD || money: 20
+(cId 1) A conversation 2564 starts:
+{{dialogue|Amirah|Thank you, ''Player''. Your assistance is much appreciated.}}
+Increment DT by 1
+Set SUB to 0
+Set COUNTER to 0
+
+TRIGGER Procedure 0.0 Step 5.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 2564) that ends:
+{{dialogue|Amirah|Thank you, ''Player''. Your assistance is much appreciated.}}
+(cId: 1) There is a conversation segment (id 2571) that ends:
+{{dialogue|Amirah|Impeccable timing, ''Player''. I was just about to run out.}}
+CONDITIONS
+GROUP 0:
+Check if DT is == 2
+
+GROUP 1:
+Check if DT is == 4
+
+ACTIONS
+===Wait Until Tomorrow===
+
+{{mission_details
+|desc = Today's quota has been reached
+|details = Wait Until Tomorrow
+}}
+
+TRIGGER Procedure 0.0 Step 6.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 2570) that ends:
+{{dialogue|Amirah|Thank you. I hope that you were able to obtain this without any peril...}}
+CONDITIONS
+Check if DT is == 3
+ACTIONS
+===Wait Until Next Week===
+
+{{mission_details
+|desc = This week's quota has been reached
+|details = Wait Until Next Week
+}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Amirah
+CONDITIONS
+CHECK PLAYER ITEM || item: 19100008 | itemGrade: -1 | set: 2 | count: 5
+Check if DT is == 2
+Check if SUB is == 1
+ACTIONS
+BAG MODIFY BY TARGET || missionId: 1700113 | targetId: 2
+MONEY PLAYER ADD || money: 20
+(cId 1) A conversation 2570 starts:
+{{dialogue|Amirah|Thank you. I hope that you were able to obtain this without any peril...}}
+Increment DT by 1
+Set SUB to 0
+Set COUNTER to 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Amirah
+CONDITIONS
+CHECK PLAYER ITEM || item: 19100008 | itemGrade: -1 | set: 2 | count: 5
+Check if DT is == 3
+Check if SUB is == 1
+ACTIONS
+BAG MODIFY BY TARGET || missionId: 1700113 | targetId: 2
+MONEY PLAYER ADD || money: 20
+(cId 1) A conversation 2571 starts:
+{{dialogue|Amirah|Impeccable timing, ''Player''. I was just about to run out.}}
+Increment DT by 1
+Set SUB to 0
+Set COUNTER to 0
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Check if DT is == 2
+Check if COUNTER is == 0
+
+GROUP 1:
+Check if DT is == 4
+Check if COUNTER is == 0
+
+ACTIONS
+Set COUNTER to 2
+===Collect Clay===
+
+{{mission_details
+|desc = Amirah needs Clay for her workshop. You'll need to collect some for her, Clay can be obtained by digging in the {{textcolor|green|Abandoned Ruins}}.
+|details = Collect Clay
+*{{i2|Clay|0/5}}
+}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON EVERY WEEK START || order: 0 | week: 1
+CONDITIONS
+Check if DT is == 3
+Check if COUNTER is == 0
+ACTIONS
+Set COUNTER to 2
+===Collect Clay===
+
+{{mission_details
+|desc = Amirah needs Clay for her workshop. You'll need to collect some for her, Clay can be obtained by digging in the {{textcolor|green|Abandoned Ruins}}.
+|details = Collect Clay
+*{{i2|Clay|0/5}}
+}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Amirah
+CONDITIONS
+CHECK PLAYER ITEM || item: 19100008 | itemGrade: -1 | set: 2 | count: 5
+Check if DT is == 4
+Check if SUB is == 1
+ACTIONS
+BAG MODIFY BY TARGET || missionId: 1700113 | targetId: 1
+(cId 2) A conversation 630_0 starts:
+{{dialogue|Amirah|Thank you, ''Player''. However, it has come to my attention that I ought not be wasting your time like this; I misunderstood what a Builder is meant to do... Well, seems like your duties do not include such menial tasks.}}
+{{dialogue|Amirah|But you don't need to worry; I've spoken with Venti of Eufaula Salvage, she was... quite enthused to assist me in gathering clay from now on.}}
+
+*''I can do it for free!''
+*''Alright, but it was never any trouble.''
+
+{{dialogue|Amirah|indent=true|answer=I can do it for free!
+|reward={{NPC2|Amirah|rp=-5}}|Hm... that won't be necessary. I prefer not to accept "free help." But I am now more aware of your skills; I will call upon you if there is such a need to do so.}}
+{{dialogue|Amirah|indent=true|answer=Alright, but it was never any trouble.
+|reward={{NPC2|Amirah|rp=5}}|Ahah... well, it was my mistake. The only Builder I ever knew left Barnarock before even getting their license. But... In any case, I'm relieved you've not taken any offense.}}
+{{dialogue|Amirah|Thank you, ''Player''. 'Til we meet again.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 2) There is a conversation segment (id 2569) that ends:
+{{dialogue|Amirah|Thank you, ''Player''. 'Til we meet again.}}
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key Moonlighter with info 1.
+SUBMIT MISSION 1700113
+NPC ADD TAG || tag: VentiSendingClay
+END MISSION 1700113
+END MISSION 1700114
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1700114
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key Moonlighter with info 1.
+The player receives a letter:
+{{mail|104}}
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the first option in conversation segment 2566:
+{{dialogue|Amirah|But you don't need to worry; I've spoken with Venti of Eufaula Salvage, she was... quite enthused to assist me in gathering clay from now on.}}
+
+*''I can do it for free!'' (No unique dialogue)
+*''Alright, but it was never any trouble.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Amirah gains -5 favor
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the second option in conversation segment 2566:
+{{dialogue|Amirah|But you don't need to worry; I've spoken with Venti of Eufaula Salvage, she was... quite enthused to assist me in gathering clay from now on.}}
+
+*''I can do it for free!'' (No unique dialogue)
+*''Alright, but it was never any trouble.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Amirah gains 5 favor

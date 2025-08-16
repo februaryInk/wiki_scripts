@@ -1,0 +1,227 @@
+Reading Mission 1100065: The Grass is Greener
+
+<onlyinclude>{{Infobox mission
+|name = The Grass is Greener
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from The Grass is Greener:
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 8
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1100064
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1100064
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Grass is Greener
+END MISSION 1100064
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100065
+CONDITIONS
+Always:
+ACTIONS
+===Make a Desert Planting Toolkit===
+
+{{mission_details
+|desc = Zeke told you to make a Desert Planting Kit on your Worktable and bring it to him!
+|details = Make a Desert Planting Toolkit
+*{{i2|Basic Planting Kit|0/1}}
+}}
+Set SUB to 0
+NPC ADD TAG || tag: PlantZaKe
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON BAG CHANGE || order: 0 | item: 15400022 | changeType: 0 | itemGrade: -1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Zeke===
+
+{{mission_details
+|desc = You've got your Desert Planting Toolkit, time to head back to the Moisture Farm and talk with Zeke.
+|details = Talk to Zeke
+}}
+Set SUB to 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Zeke
+CONDITIONS
+Check if SUB is == 1
+ACTIONS
+(cId 0) A conversation 304, 305, 306, 1287, 311 starts:
+{{dialogue|Zeke|Hey, the Hydrogel is working great. Like I said, in a way, I guess you could say you saved the town.}}
+{{dialogue|Zeke|Things are growing again, and with the Civil Corps on increased alert, I don't think we have too much to worry about from our scaly pals... Now might be the time to make good on my promise to Matilda and teach you about {{textcolor|green|desert planting}}.}}
+{{dialogue|Zeke|First off, it ain't easy; before you can plant anything, you gotta understand a little concept we around here call the {{textcolor|green|straw grid}}. I won't bore you with the details, but basically, the soil around here ain't good enough to plant much of anything.}}
+{{dialogue|Zeke|That is... unless you make a square out of straw around your seeds, protect 'em from the wind. Put a bunch a of squares together and, well, that's why we call it the {{textcolor|green|straw grid}}.}}
+{{dialogue|Zeke|Here, lemme show you how to make a little straw fence in sandy soil...}}
+Set SUB to 4
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+CHECK CURRENT SCENE || name: Greenhouse | flag: 0
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 1100065 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 1100065 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Greenhouse | flagName: ghpe_player
+Zeke stands still in Greenhouse
+SCENEITEM CREATE FLAG || itemType: 0 | id: 11065 | sceneName: Greenhouse | flagName: ghpe_GrassCr | extraParams: 0 | path: Mission_GrassBlockPart
+DELAY MASK SET || maskId: 1100065 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Greenhouse:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 312, 313, 314, 315 starts:
+{{dialogue|Zeke|Then you just gotta {{textcolor|green|plant a seed}} in the middle, {{textcolor|green|water it}} daily, maybe add some {{textcolor|green|fertilizer}} and then... wait.}}
+{{dialogue|Zeke|Once your crop is fully grown, you can {{textcolor|green|harvest}} it. Oh, if you plant often in the same place, your {{textcolor|green|soil}} will retain some nutrients and {{textcolor|green|slowly upgrade}} over time.}}
+{{dialogue|Zeke|That's about it. Um. If you have any other questions, I've actually written {{textcolor|green|a guide}} on the subject... flip through it if you get time...}}
+{{dialogue|Zeke|Here's some other stuff to get you started, too. Just, uh... do all those things I said and everything should go great. For starters, why don't you try growing some {{textcolor|green|Sandrice}}. We'll see how it goes.}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Zeke stops standing still
+CUTSCENE UI STATE EXIT || 
+Add 3 Sandrice Seed of Default quality (Notify player)
+===Harvest Sandrice===
+
+{{mission_details
+|desc = Zeke gave you some straw and seeds; activate the Planting Kit inside your workshop yard and try to grow some Sandrice.
+|details = Harvest Sandrice
+}}
+Set SUB to 2
+GLOBAL BLACK BOARD REMOVE || key: GrassBlockPart
+Add 3 Straw of Default quality (Notify player)
+Add 1 Growing Guide of Default quality (Notify player)
+SCENEITEM CREATE FLAG || itemType: 3 | id: 14 | path: SceneItem_Store_Greenhouse | flagName: Store_14 | sceneName: Greenhouse | extraParams: 0
+SCENEITEM INTERACT SET || itemType: 3 | id: 14 | canInteract: 1
+
+TRIGGER Procedure 0.0 Step 6.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+CHECK CURRENT SCENE || name: Greenhouse | flag: 1
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 1100065 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 1100065 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Greenhouse | flagName: ghpe_player
+Zeke stands still in Greenhouse
+SCENEITEM CREATE FLAG || itemType: 0 | id: 11065 | sceneName: Greenhouse | flagName: ghpe_GrassCr | extraParams: 0 | path: Mission_GrassBlockPart
+DELAY MASK SET || maskId: 1100065 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 8.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 1100065 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 312, 313, 314, 315 starts:
+{{dialogue|Zeke|Then you just gotta {{textcolor|green|plant a seed}} in the middle, {{textcolor|green|water it}} daily, maybe add some {{textcolor|green|fertilizer}} and then... wait.}}
+{{dialogue|Zeke|Once your crop is fully grown, you can {{textcolor|green|harvest}} it. Oh, if you plant often in the same place, your {{textcolor|green|soil}} will retain some nutrients and {{textcolor|green|slowly upgrade}} over time.}}
+{{dialogue|Zeke|That's about it. Um. If you have any other questions, I've actually written {{textcolor|green|a guide}} on the subject... flip through it if you get time...}}
+{{dialogue|Zeke|Here's some other stuff to get you started, too. Just, uh... do all those things I said and everything should go great. For starters, why don't you try growing some {{textcolor|green|Sandrice}}. We'll see how it goes.}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PLANT HARVEST || order: 0 | item: 19310001
+CONDITIONS
+Check if SUB is == 2
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Set SUB to 3
+DELAY MASK SET || maskId: 20651 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 20651
+CONDITIONS
+Always:
+ACTIONS
+Zeke stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+DELAY MASK SET || maskId: 20651 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 20651
+CONDITIONS
+Check if SUB is == 3
+ACTIONS
+(cId 5) A conversation 320, 321, 1442 starts:
+{{dialogue|Zeke|Looks like you've figured it out! Here, take these as well.}}
+{{dialogue|Zeke|Planting in the desert is the best step we can take towards fixing the climate here in Sandrock. Plus you get to eat stuff. Glad to have you aboard.}}
+{{dialogue|Zeke|Oh, um... You're probably going to need more seeds and stuff at some point. Just check out {{textcolor|green|Burgess's store}} at the Water Tower or {{textcolor|green|my store}}; the Church is always supposed to keep us stocked up. Now I better make like a tree... and get outta here. Catch ya, ''Player''.}}
+
+TRIGGER Procedure 1.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Zeke stops standing still
+NPC REMOVE TAG || tag: PlantZaKe
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1100064
+END MISSION 1100065

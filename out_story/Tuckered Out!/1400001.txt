@@ -1,0 +1,187 @@
+Reading Mission 1400001: Tuckered Out!
+
+<onlyinclude>{{Infobox mission
+|name = Tuckered Out!
+|image =
+|description = Mi-an doesn't seem well lately; go ask if she needs help.
+|type = Side
+|time =
+|location =
+|characters = [[Mi-an]]
+|condition =
+|details =
+|exp = 715
+|reputation = None
+|gols = None
+|npc1 = Mi-an
+|rp1 = 15
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200030
+
+TRIGGER Procedure 0.0 Step 2.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if Mi-an has favor >= 200
+Check if mission Shonash Canyon Bridge Opening Ceremony is result 1 flag 1
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+Run mission Mysterious Box
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Moisture Farm Blues is successfully completed
+Check if Mi-an has favor >= 300
+License for Ransom is successfully completed
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+
+GROUP 10:
+Moisture Farm Blues is successfully completed
+Check if Mi-an has favor >= 300
+License for Ransom has failed
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+
+ACTIONS
+Run mission Tuckered Out!
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1400001
+CONDITIONS
+Always:
+ACTIONS
+Set m0 to 0
+Set m00 to 0
+AREA TRIGGER CREATE || missionId: 1400001 | id: 40011 | sceneName: Main | flagName: havesomerest_trigger | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80001700
+NPC ADD TAG || tag: MianNeedRest
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the first option in conversation segment 1153:
+{{dialogue|Mi-an|Wait, no. No time for health concerns. I've got this {{textcolor|green|commission}} here from Heidi that needs to be done ASAP. Well, off I go then! S-See you, ''Player''!}}
+
+*''Wait, let me do it.'' (No unique dialogue)
+*''Yep, good luck. Bye.'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 1156:
+{{dialogue|Mi-an|Can't sleep yet... Must build bookcase for... Heidi?}}
+
+*''Wait, let me do it.'' (No unique dialogue)
+*''Yep, good luck. Bye.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set m00 to 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if m00 is == 1
+ACTIONS
+START MISSION 1400001
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1400001
+CONDITIONS
+Always:
+ACTIONS
+Run mission Tuckered Out!
+END MISSION 1400001
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 40011
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 40011 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 40011
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 40011 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: havesomerest_player
+Mi-an stands still in Main
+DELAY MASK SET || maskId: 40011 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+{{cutscene|id = 3001}}
+A cutscene CG_MIANDAZED (duration: 0.0) starts playing
+Overworked - Mi-an almost collapsed out on main street one day. Hopefully she learned her lesson not to overburden herself like this in the future...
+ACTION DATE SET FLAG || flag: MianBrokenArm
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_MIANDAZED | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 222_0 starts:
+{{dialogue|Mi-an|Ahhhh! Ow... My back, my waist, my... tibia! My whole body aches...}}
+{{dialogue|Mi-an|Might be time to cut back on the late night commissions, I passed out on the side of the road last night and now... Oh, no, I'll bet everybody saw me sleeping on the job! This is so embarrassing...!}}
+{{dialogue|Mi-an|Thanks for catching me, ''Player''. If not for you I might've broken a bone or something. Maybe I should go to the doctor. Don't worry! This leg still works kinda. I can make it... to the clinic...}}
+{{dialogue|Mi-an|Wait, no. No time for health concerns. I've got this {{textcolor|green|commission}} here from Heidi that needs to be done ASAP. Well, off I go then! S-See you, ''Player''!}}
+
+*''Wait, let me do it.''
+*''Yep, good luck. Bye.''
+
+{{dialogue|Mi-an|indent=true|answer=Wait, let me do it.
+|Really? You'd do that for me? Wow... well, ok! It's just a normal {{textcolor|green|bookcase}}; when you're finished just take it over to Heidi for me! Now I have no excuse not to go see Dr. Fang... Ow! I bit my tongue... Okay thee yah!}}
+{{dialogue|Mi-an|indent=true|answer=Yep, good luck. Bye.
+|Yep! Thanks. I mean, those are the rules; never accept a commission you can't finish! And I'm not about to let my good friend Heidi down! Well, be seeing you, ''Player''!}}
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Mi-an stops standing still
+DELIVER MISSION 1400001
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Mi-an|Can't sleep yet... Must build bookcase for... Heidi?}}
+
+*''Wait, let me do it.''
+*''Yep, good luck. Bye.''
+
+{{dialogue|Mi-an|indent=true|answer=Wait, let me do it.
+|Really? You'd do that for me? Wow... well, ok! It's just a normal {{textcolor|green|bookcase}}; when you're finished just take it over to Heidi for me! Now I have no excuse not to go see Dr. Fang... Ow! I bit my tongue... Okay thee yah!}}
+{{dialogue|Mi-an|indent=true|answer=Yep, good luck. Bye.
+|Yep! Thanks. I mean, those are the rules; never accept a commission you can't finish! And I'm not about to let my good friend Heidi down! Well, be seeing you, ''Player''!}}
+
+==Rewards==
+{{mission reward
+|npc1 = Mi-an
+|rp1 = 15
+|exp = 715
+|reputation = None
+|gols = None
+}}

@@ -1,0 +1,160 @@
+Reading Mission 1200005: The Gift of Water
+
+<onlyinclude>{{Infobox mission
+|name = The Gift of Water
+|image =
+|description = Burgess has come on behalf of the Church of the Light to give you a free gift.
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100068
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100068
+CONDITIONS
+Always:
+ACTIONS
+Set KAISHI to 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Becoming Official is successfully completed
+CHECK WEATHER STATE || weather: 2 | flag: 0
+The Show Must Go On is in state 1 with flag 0
+Farewell Party is in state 2 with flag 0
+Farewell Party is in state 1 with flag 0
+ACTIONS
+Run mission The Gift of Water
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200005
+CONDITIONS
+Always:
+ACTIONS
+Set LEAVE to 0
+DELIVER MISSION 1200005
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+CHECK WEATHER STATE || weather: 2 | flag: 0
+The Show Must Go On is in state 1 with flag 0
+Farewell Party is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: robtrainbegian | info: 1 | exist: 0
+Pitching In is in state 1 with flag 0
+The Old Man and the Tree is in state 1 with flag 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+Set LEAVE to 1
+Burgess stands still in Main
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Check if LEAVE is == 1
+CHECK NPC RECOGNIZED || npc: 8021 | flag: 0
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Check if LEAVE is == 1
+CHECK NPC RECOGNIZED || npc: 8021 | flag: 1
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+
+TRIGGER Procedure 1.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 387) that ends:
+{{dialogue|Burgess|Hello, Builder! So nice to see you again! As per the Minister's instructions, I have come with a gift. {{textcolor|green|Water}}, to be more specific. The most precious gift of all!}}
+(cId: 0) There is a conversation segment (id 390) that ends:
+{{dialogue|Burgess|Ah, yes! As per the Minister's instructions, I have come with a gift. {{textcolor|green|Water}}, to be more specific. The most precious gift of all!}}
+CONDITIONS
+Always:
+ACTIONS
+Add 2 Water of Outstanding quality (Notify player)
+
+TRIGGER Procedure 1.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1200005
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200005
+CONDITIONS
+Always:
+ACTIONS
+Burgess stops standing still
+Run mission The Gift of Water
+END MISSION 1200005
+
+TRIGGER Procedure 2.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Check if LEAVE is == 1
+CHECK NPC RECOGNIZED || npc: 8021 | flag: 0
+ACTIONS
+(cId 0) A conversation 386, 389, 390, 391, 744, 743, 745, 746 starts:
+{{dialogue|Burgess|Hello, new Builder! It is wonderful to have you here amongst our desert flock! I am Burgess, Chief Safety Inspector of the Sandrock chapter of the Church of the Light.}}
+{{dialogue|Burgess|I mostly patrol the oasis, and if that water level moves even a centimeter, boy, you'd better believe I'll let everyone and their mother know about it! Now, where was I...}}
+{{dialogue|Burgess|Ah, yes! As per the Minister's instructions, I have come with a gift. {{textcolor|green|Water}}, to be more specific. The most precious gift of all!}}
+{{dialogue|Burgess|In Sandrock, Martle's Oasis is pretty much our only reliable source of natural water. We also get some water from the other city-states, but it's expensive, so we need to be really careful and smart about how we divvy it out...}}
+{{dialogue|Burgess|Might I bring your attention to the humble little fence propped up around the oasis... It's the town's friendly way of saying: 'don't take water out of the oasis all willy-nilly! ...Or cut down the trees, for that matter...'}}
+{{dialogue|Burgess|If you're short on water in your workshop, might I recommend checking the plants around your workshop for fresh morning {{textcolor|green|dew}}... or just come on down to the {{textcolor|green|water tower}} overlooking the oasis!}}
+{{dialogue|Burgess|I'm pretty sure Builder machines {{textcolor|green|won't run without water in their Water Tank}}... So I guess that means we'll be seeing a lot of each other in the future!}}
+{{dialogue|Burgess|Well, I won't take up any more of your time. See you at the water tower, new pal!}}
+
+TRIGGER Procedure 2.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Check if LEAVE is == 1
+CHECK NPC RECOGNIZED || npc: 8021 | flag: 1
+ACTIONS
+(cId 1) A conversation 387, 391, 744, 743, 745, 746 starts:
+{{dialogue|Burgess|Hello, Builder! So nice to see you again! As per the Minister's instructions, I have come with a gift. {{textcolor|green|Water}}, to be more specific. The most precious gift of all!}}
+{{dialogue|Burgess|In Sandrock, Martle's Oasis is pretty much our only reliable source of natural water. We also get some water from the other city-states, but it's expensive, so we need to be really careful and smart about how we divvy it out...}}
+{{dialogue|Burgess|Might I bring your attention to the humble little fence propped up around the oasis... It's the town's friendly way of saying: 'don't take water out of the oasis all willy-nilly! ...Or cut down the trees, for that matter...'}}
+{{dialogue|Burgess|If you're short on water in your workshop, might I recommend checking the plants around your workshop for fresh morning {{textcolor|green|dew}}... or just come on down to the {{textcolor|green|water tower}} overlooking the oasis!}}
+{{dialogue|Burgess|I'm pretty sure Builder machines {{textcolor|green|won't run without water in their Water Tank}}... So I guess that means we'll be seeing a lot of each other in the future!}}
+{{dialogue|Burgess|Well, I won't take up any more of your time. See you at the water tower, new pal!}}

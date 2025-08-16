@@ -1,0 +1,258 @@
+Reading Mission 1200110: A New Look
+
+<onlyinclude>{{Infobox mission
+|name = A New Look
+|image =
+|description = Qi wants Heidi to lend him the Mobile Suit so he can practice and peform some research. After the last fall, however, Heidi isn't particularly keen on lending it to him.
+|type = Side
+|time =
+|location =
+|characters = [[Qi]]
+|condition =
+|details =
+|exp = 1350
+|reputation = 20
+|gols = None
+|npc1 = Qi
+|rp1 = 30
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200112
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if Qi has favor >= 50
+Check if mission Shonash Canyon Bridge Opening Ceremony is result 1 flag 1
+CHECK DATE FLAG || compare: 5 | days: 7 | flag: DATE:qi1
+Duvos Attacks! is in state 2 with flag 0
+ACTIONS
+Run mission A New Look
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1200110 | id: 21101 | sceneName: Main | flagName: company_trigger | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80004702
+Set CHOICE to 0
+Set DAY to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Company:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_company
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_company
+Heidi stands still in Company
+Qi stands still in Company
+AREA TRIGGER DELETE || id: 21101
+
+TRIGGER Procedure 0.0 Step 2.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Company:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Company | flagName: newrobot_player1
+DELIVER MISSION 1200110
+
+TRIGGER Procedure 0.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Company:
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 724_0 starts:
+{{dialogue|Qi|Heidi, lend me the Mobile Suit for a few days. I need it. For research.}}
+{{dialogue|Heidi|Eh, and what "research" is this, specifically?}}
+{{dialogue|Qi|Specifically? One: analyze the operative efficiency of the Mobile Suit over various terrains. Two: analyze the feedback efficiency of the suit while testing specific control inputs. Three: synthesize these and other data in order to improve pilotability of the suit.}}
+{{dialogue|Heidi|Alright, I walked into that one... That's on me. So what you're sayin' is: you wanna learn to drive it better?}}
+{{dialogue|Qi|Framing my research with such terminology diminishes the prestige somewhat, but, yes. One could say that.}}
+{{dialogue|Heidi|Well, doc, I know you love that thing but, ah... let's not forget what happened at the ribbon cutting ceremony. You crashed the suit, and that was a whole lotta hurt!}}
+{{dialogue|Qi|The injuries I sustained from said accident were minor and have since healed. You needn't concern yourself with-}}
+{{dialogue|Heidi|I wasn't talking about you! The suit! Thing's all banged up now! Won't even start...}}
+{{dialogue|Qi|I see. Was this inoperative status of the Mobile Suit caused by my actions?}}
+{{dialogue|Heidi|Well, to be fair, just us using it on the bridge is where most of the wear and tear came from, I think your little fender bender was just the straw that broke the camel's back...}}
+{{dialogue|Heidi|I mean, it looks like the front armor is damaged and the ancillary engine is broken. On top of that, several hydaulic powered joints are beyond stressed. I'd say it needs an overhaul to say the least.}}
+{{dialogue|Heidi|Tell you what: the city's got no plans to use the suit anytime soon. Fix 'er up, keep 'er in tip-top shape, and you can go on your little joyride- er, sorry, do all the "research" you want. Whaddya think about that?}}
+{{dialogue|Qi|I accept. Although I will, however, need a whole host of rather complex materials to make the repairs. And to say that the Civil Corps could handle such a task would be a rather dubious claim...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Heidi stops standing still
+Heidi stands still in Company and looks at Player
+Add behavior CommanderMoveToFlag (idName: 21101) to Player
+(param: TargetScene:Company|MoveMode:Walk|FlagName:newrobot_player2)
+
+TRIGGER Procedure 0.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 2822, 3153 starts:
+{{dialogue|Heidi|Well look who it is! When it comes to mats, why not ask our friendly neighborhood Builder here to help us out? ''Player'': quick, reliable, and a deft hand. There's no one better for the job! Er, that is, if you want to do it, ''Player''!}}
+{{dialogue|Qi|Hm, yes. The Builder has proven their ability to acquire specific materials in the past. Indeed, they would be quite suited for such a task. One moment, please...}}
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 21101) to Qi
+(param: CMDAction:StandWrite)
+
+TRIGGER Procedure 0.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8007 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 730_0 starts:
+{{dialogue|Qi|Here is a list of the materials needed to repair the Mobile Suit based on Heidi's conclusions. I believe you will find the list comprehensive and easy to understand.}}
+
+*''Sure, I can do it.''
+*''Too much on my plate right now.''
+
+{{dialogue|Qi|indent=true|answer=Sure, I can do it.
+|Excellent. Please check the list carefully. If you're thinking of emulating the Civil Corps habit of misreading an indexed item and recovering an incorrect material, instead: do not do that.}}
+{{dialogue|Qi|indent=true|I'll move the Mobile Suit to my {{textcolor|green|Research Center}}, for its own protection. Please take care of it after you've found all of the required materials.}}
+{{dialogue|Qi|indent=true|answer=Too much on my plate right now.
+|Hm. Perhaps it was rude of me to assume you would accept. Oh well. I forgive myself. If your situation changes, please inform me.}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Qi stops standing still
+Heidi stops standing still
+Remove behavior CommanderMoveToFlag (idName: 21101) from Player
+Remove behavior CommanderNPCAction (idName: 21101) from Qi
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the first option in conversation segment 2823:
+{{dialogue|Qi|Here is a list of the materials needed to repair the Mobile Suit based on Heidi's conclusions. I believe you will find the list comprehensive and easy to understand.}}
+
+*''Sure, I can do it.'' (No unique dialogue)
+*''Too much on my plate right now.'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 2824:
+{{dialogue|Qi|Are you available to acquire the materials needed to repair the Mobile Suit? I intend to begin my research as soon as possible...}}
+
+*''Sure, I can do it.'' (No unique dialogue)
+*''Too much on my plate right now.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 1
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Add behavior CommanderMoveToFlagAndAction (idName: 21102) to Qi
+(param: TargetScene:Science|MoveMode:Walk|FlagName:robot_qi)
+Qi stops standing still
+Heidi stops standing still
+START MISSION 1200110
+Remove behavior CommanderMoveToFlag (idName: 21101) from Player
+Remove behavior CommanderNPCAction (idName: 21101) from Qi
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200110
+CONDITIONS
+Always:
+ACTIONS
+Run mission A New Look
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment DAY by 1
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if DAY is >= 7
+ACTIONS
+AREA TRIGGER DELETE || id: 21101
+END MISSION 1200110
+
+TRIGGER Procedure 1.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the -1:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 21102) from Qi
+Qi stands still in Science
+END MISSION 1200110
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Qi|Are you available to acquire the materials needed to repair the Mobile Suit? I intend to begin my research as soon as possible...}}
+
+*''Sure, I can do it.''
+*''Too much on my plate right now.''
+
+{{dialogue|Qi|indent=true|answer=Sure, I can do it.
+|Excellent. Please check the list carefully. If you're thinking of emulating the Civil Corps habit of misreading an indexed item and recovering an incorrect material, instead: do not do that.}}
+{{dialogue|Qi|indent=true|I'll move the Mobile Suit to my {{textcolor|green|Research Center}}, for its own protection. Please take care of it after you've found all of the required materials.}}
+{{dialogue|Qi|indent=true|answer=Too much on my plate right now.
+|Hm. Perhaps it was rude of me to assume you would accept. Oh well. I forgive myself. If your situation changes, please inform me.}}
+
+NPC in-mission talks:
+
+{{dialogue|Qi|Ah, you're here. And not in the ruins getting my materials. That's... interesting. Well, don't forget that my research depends on you completing your task, so definitely consider... completing your task.}}
+
+==Rewards==
+{{mission reward
+|npc1 = Qi
+|rp1 = 30
+|exp = 1350
+|reputation = 20
+|gols = None
+}}

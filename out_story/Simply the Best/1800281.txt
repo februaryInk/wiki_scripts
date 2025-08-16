@@ -1,0 +1,768 @@
+Reading Mission 1800281: Simply the Best
+
+<onlyinclude>{{Infobox mission
+|name = Simply the Best
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Simply the Best:
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 9948) that ends:
+{{dialogue|Pen|Huzzah for romance!}}
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1800280
+START MISSION 1800280
+
+TRIGGER Procedure 0.0 Step 4.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800280
+CONDITIONS
+Always:
+ACTIONS
+Run mission Simply the Best
+END MISSION 1800280
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800281
+CONDITIONS
+Always:
+ACTIONS
+===Wait Until Tomorrow===
+
+{{mission_details
+|desc = Wait till tomorrow to go to Paradise Lost with Pen.
+|details = Wait Until Tomorrow
+}}
+Set 8281A to 0
+Set 8281BE to 0
+Set 8281Kill to 0
+
+TRIGGER Procedure 0.0 Step 1.1 Order 38 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+===Head for Paradise Lost at 18:00PM===
+
+{{mission_details
+|desc = Meet Pen at Paradise Lost, 18:00.
+|details = Head for Paradise Lost at 18:00PM
+}}
+
+TRIGGER Procedure 0.0 Step 1.2 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+When the time is 18:00 (order: 0):
+CONDITIONS
+Check if 8281A is == 0
+ACTIONS
+AREA TRIGGER ONCE CREATE || missionId: 1800280 | id: 82811 | sceneName: Main | flagName: Trigger_S8281 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 82811
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 82811
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 82811 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+Set 8281A to 1
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82811 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Pen stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8281_0_1
+DELAY MASK SET || maskId: 82811 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82811 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 2819_0 starts:
+{{dialogue|Pen|Ah, Skinny! You're finally here! I've been waiting for this moment for a long time... Somehow the last hours have been simply unbearable...}}
+{{dialogue|Pen|Let us waste no more time, and waste only the enemies that stand before us!}}
+{{dialogue|Pen|Onward, Skinny! Fight towards the epicenter of this robotic plague! Let us send them back to the corrupted age from whence they were born!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Go into Paradise Lost===
+
+{{mission_details
+|desc = Follow Pen and destroy robots to increase the passion of your fervor!
+|details = Go into Paradise Lost
+}}
+AREA TRIGGER ONCE CREATE || missionId: 1800280 | id: 82812 | sceneName: Main | flagName: Trigger_S82812 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80000997
+Pen stops standing still
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8020 | state: Attack
+CUTSCENE UI STATE EXIT || 
+NPC SET CAN INTERACT || npc: 8020 | canInteract: 0
+NPC ADD TAG || tag: PenGeckoDungeon
+
+TRIGGER Procedure 0.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 82812
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 82812 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+NPC REMOVE TAG || tag: PenGeckoDungeon
+
+TRIGGER Procedure 0.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82812 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Pen stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8281_0_2
+DELAY MASK SET || maskId: 82812 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+ACTOR BLIND SET || set: 1
+
+TRIGGER Procedure 0.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82812 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 2820_0 starts:
+{{dialogue|Pen|Skinny...}}
+{{dialogue|Pen|This is even better than I thought! The two of us fighting side by side, each step in tandem as we are soon to become lovers... My heart races!}}
+{{dialogue|Pen|More! I need more! Let us press forward!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 10.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || curveIndex: 0 | delayTime: 0 | durationTime: -2 | changeType: 0 | maskId: 82813
+
+TRIGGER Procedure 0.0 Step 11.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 82813
+CONDITIONS
+Always:
+ACTIONS
+Pen stands still in Gecko_Dungeon and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Gecko_Dungeon | flagName: S8281_0_3
+DELAY MASK SET || maskId: 82813 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 11.2 Order 44 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Gecko_Dungeon:
+CONDITIONS
+Always:
+ACTIONS
+MONSTER ADD TAG || isAdd: 1 | tag: penghu_1
+
+TRIGGER Procedure 0.0 Step 11.2 Order 45 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 0 | tag: penghu_1
+CONDITIONS
+Check if 8281Kill is >= 2
+ACTIONS
+MONSTER ADD TAG || isAdd: 1 | tag: penghu_2
+
+TRIGGER Procedure 0.0 Step 12.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Gecko_Dungeon:
+CONDITIONS
+Always:
+ACTIONS
+Pen stops standing still
+Pen stops standing still
+CUTSCENE UI STATE EXIT || 
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8020 | state: Attack
+ACTOR BLIND SET || set: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 82813 | path: S8281_Item3 | flagName: S8281_Item3 | extraParams: 0 | sceneName: Gecko_Dungeon
+===Continue through Paradise Lost===
+
+{{mission_details
+|desc = More enemies have appeared. Clear the obstacles standing between you and your love!
+|details = Continue through Paradise Lost
+}}
+AUTOSAVE TRY || 
+
+TRIGGER Procedure 0.0 Step 12.2 Order 43 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 0 | tag: penghu_1
+ON MONSTER TAG DEAD || order: 0 | tag: penghu_2
+CONDITIONS
+Always:
+ACTIONS
+Increment 8281Kill by 1
+MISSION TARGET COUNTER CHANGE EX || missionId: 1800280 | targetId: 3 | transId: 80017254 | num: 1
+
+TRIGGER Procedure 0.0 Step 13.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1800280 | targetId: 3 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 82814 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+MONSTER ADD TAG || isAdd: 0 | tag: penghu_1
+MONSTER ADD TAG || isAdd: 0 | tag: penghu_2
+
+TRIGGER Procedure 0.0 Step 14.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82814 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Pen stands still in Gecko_Dungeon and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Gecko_Dungeon | flagName: S8281_0_4
+DELAY MASK SET || maskId: 82812 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 828191 | path: S8281_light | sceneName: Gecko_Dungeon | flagName: S8281_light | extraParams: -1
+
+TRIGGER Procedure 0.0 Step 15.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82814 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 9958 starts:
+{{dialogue|Pen|Amazing, Skinny! We've made short work of our adversaries. The only thing that could make this any better now is-}}
+
+TRIGGER Procedure 0.0 Step 16.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+MONSTER ADD TAG || isAdd: 1 | tag: penghu_Boss
+ACTOR BLIND SET || set: 1
+
+TRIGGER Procedure 0.0 Step 17.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 828131
+CONDITIONS
+Always:
+ACTIONS
+(cId 41) A conversation 9991 starts:
+{{dialogue||Gruuaaaaaaaagh! Rararararaararrrrrrr!}}
+
+TRIGGER Procedure 0.0 Step 17.2 Order 35 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 41) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 82812041) to Pen
+(param: TargetScene:Gecko_Dungeon|MoveMode:Walk|FlagName:S8281_20_41|LookAtActor:0)
+Add behavior CommanderMoveToFlagAndAction (idName: 82810041) to Player
+(param: TargetScene:Gecko_Dungeon|MoveMode:Walk|FlagName:S8281_0_41)
+
+TRIGGER Procedure 0.0 Step 17.3 Order 36 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 828132
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 9959, 9960 starts:
+{{dialogue|Pen|Yes! Perfect timing! A boss fight!}}
+{{dialogue|Pen|Let's go, Skinny! Lay into this creature with all your might! Show no mercy!}}
+
+TRIGGER Procedure 0.0 Step 18.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 82815 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 19.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82815 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8020 | state: Attack
+SCENEITEM DELETE || itemType: 0 | id: 82811
+DELAY MASK SET || maskId: 82815 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Pen stops standing still
+Pen stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 82812041) from Pen
+Remove behavior CommanderMoveToFlagAndAction (idName: 82810041) from Player
+===Continue through Paradise Lost===
+
+{{mission_details
+|desc = More enemies have appeared. Clear the obstacles standing between you and your love!
+|details = Continue through Paradise Lost
+}}
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 20.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82815 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 8281001 | sec: 3
+ACTOR BLIND SET || set: 0
+
+TRIGGER Procedure 0.0 Step 21.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 0 | tag: penghu_Boss
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 82816 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+ACTOR BLIND SET || set: 1
+MONSTER ADD TAG || tag: penghu_Boss | isAdd: 0
+
+TRIGGER Procedure 0.0 Step 22.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82816 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Pen stands still in Gecko_Dungeon and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Gecko_Dungeon | flagName: S8281_0_5
+DELAY MASK SET || maskId: 82816 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 23.0 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82816 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 9992, 9961, 9962, 9963 starts:
+{{dialogue||Gruuuuaaaghhh...}}
+{{dialogue|Pen|Ah, yeah...}}
+{{dialogue|Pen|That's the stuff...}}
+{{dialogue|Pen|Was that good for you, Skinny? It was good for me. Wait! Don't answer... There's one more thing I must do to complete this moment...}}
+
+TRIGGER Procedure 0.0 Step 24.0 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 82812 | path: S8281_Item2 | sceneName: Gecko_Dungeon | flagName: S8281_Item2 | extraParams: -1
+(cId 6) A conversation 2821_0 starts:
+{{dialogue|Pen|Hyah!}}
+{{dialogue|Pen|Huh!}}
+{{dialogue|Pen|Rip this one's head off...!}}
+{{dialogue|Pen|This one's soft enough to be a cushion...!}}
+{{dialogue|Pen|And...}}
+The conversation ends.
+SOUND PLAY 2D || idStr: Play_Story_Pen_sofa_01
+
+TRIGGER Procedure 0.0 Step 24.2 Order 41 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 6) There is a conversation segment (id 9964) that ends:
+{{dialogue|Pen|Hyah!}}
+CONDITIONS
+Always:
+ACTIONS
+SOUND PLAY 2D || idStr: Play_Story_Pen_sofa_02
+
+TRIGGER Procedure 0.0 Step 24.3 Order 42 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 6) There is a conversation segment (id 9967) that ends:
+{{dialogue|Pen|This one's soft enough to be a cushion...!}}
+CONDITIONS
+Always:
+ACTIONS
+SOUND PLAY 2D || idStr: Play_Story_Pen_sofa_03
+
+TRIGGER Procedure 0.0 Step 25.0 Order 37 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 82817 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+SOUND PLAY 2D || idStr: Play_Story_Pen_sofa_04
+
+TRIGGER Procedure 0.0 Step 26.0 Order 26 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 82817
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 82812
+Pen stands still in Gecko_Dungeon and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Gecko_Dungeon | flagName: S8281_0_5
+DELAY MASK SET || maskId: 82817 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 82814 | path: S8281_Item4 | flagName: S8281_Item4 | extraParams: -1 | sceneName: Gecko_Dungeon
+SCENEITEM DELETE || itemType: 0 | id: 82813
+
+TRIGGER Procedure 0.0 Step 27.0 Order 25 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 82817
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 2822_0 starts:
+{{dialogue|Pen|Voila! A throne, Skinny! A throne for two, composed entirely of our fallen enemies, deserving only the buttocks of royalty such as ourselves...}}
+{{dialogue|Pen|Take your rightful place, Skinny... And let us seal our new romance with a lover's kiss...}}
+
+*''How many of these thrones have you built...?''
+*''I'm having second thoughts...''
+*{{flirt}}''It couldn't have come sooner...''
+*{{flirt}}''(Kiss Pen)''
+
+{{dialogue|Pen|indent=true|answer=I'm having second thoughts...
+|Second thoughts? What!? Don't be such a tease, Skinny! You brought me down into these ruins; my blood is boiling and you want to back out now!?}}
+
+:*''Yeah, I just can't do this...''
+:*{{flirt}}''Actually, I do want this. (Kiss Pen)''
+
+{{dialogue|Pen|indent=double|answer=Yeah, I just can't do this...
+|Ugh!}}
+{{dialogue|Pen|indent=double|How... could you!?}}
+{{dialogue|Pen|indent=double|To be nearly given the gift of true love, and then had it snatched away from me at the last moment...}}
+{{dialogue|Pen|indent=double|I... can't say I understand, Skinny...}}
+{{dialogue|Pen|indent=double|But I do want you to know... my heart will forever be open to you. I pray that one day you will consider a rekindling of our flame, because if there's ever one thing I've known for certain in my life...}}
+{{dialogue|Pen|indent=double|It's that our coupling would be nothing short of glorious!}}
+{{dialogue|Pen|indent=double|Until then... I will earnestly await that moment...}}
+{{dialogue|Pen|indent=double|Goodbye, Skinny Arms.}}
+{{dialogue|Pen|indent=double|answer=Actually, I do want this. (Kiss Pen)
+|Come here, you...}}
+{{dialogue|Pen|indent=true|answer=It couldn't have come sooner...
+|Come here, you...}}
+{{dialogue|Pen|indent=true|answer=(Kiss Pen)
+|Come here, you...}}
+{{dialogue|Pen|B... baby, don't spoil the mood! Why think about others now? All that matters is me and... me.}}
+
+*''You mean, "me and you?"''
+*''I'm having second thoughts...''
+*{{flirt}}''Okay. (Kiss Pen)''
+
+{{dialogue|Pen|indent=true|answer=I'm having second thoughts...
+|Second thoughts? What!? Don't be such a tease, Skinny! You brought me down into these ruins; my blood is boiling and you want to back out now!?}}
+
+:*''Yeah, I just can't do this...''
+:*{{flirt}}''Actually, I do want this. (Kiss Pen)''
+
+{{dialogue|Pen|indent=double|answer=Yeah, I just can't do this...
+|Ugh!}}
+{{dialogue|Pen|indent=double|How... could you!?}}
+{{dialogue|Pen|indent=double|To be nearly given the gift of true love, and then had it snatched away from me at the last moment...}}
+{{dialogue|Pen|indent=double|I... can't say I understand, Skinny...}}
+{{dialogue|Pen|indent=double|But I do want you to know... my heart will forever be open to you. I pray that one day you will consider a rekindling of our flame, because if there's ever one thing I've known for certain in my life...}}
+{{dialogue|Pen|indent=double|It's that our coupling would be nothing short of glorious!}}
+{{dialogue|Pen|indent=double|Until then... I will earnestly await that moment...}}
+{{dialogue|Pen|indent=double|Goodbye, Skinny Arms.}}
+{{dialogue|Pen|indent=double|answer=Actually, I do want this. (Kiss Pen)
+|Come here, you...}}
+{{dialogue|Pen|indent=true|answer=Okay. (Kiss Pen)
+|Come here, you...}}
+{{dialogue|Pen|Y... yeah, of course, Skinny! I'm just so lost in those arms of yours...}}
+
+*''I'm having second thoughts...''
+*{{flirt}}''This is fine. (Kiss Pen)''
+
+{{dialogue|Pen|indent=true|answer=This is fine. (Kiss Pen)
+|Come here, you...}}
+{{dialogue|Pen|Second thoughts? What!? Don't be such a tease, Skinny! You brought me down into these ruins; my blood is boiling and you want to back out now!?}}
+
+*''Yeah, I just can't do this...''
+*{{flirt}}''Actually, I do want this. (Kiss Pen)''
+
+{{dialogue|Pen|indent=true|answer=Yeah, I just can't do this...
+|Ugh!}}
+{{dialogue|Pen|indent=true|How... could you!?}}
+{{dialogue|Pen|indent=true|To be nearly given the gift of true love, and then had it snatched away from me at the last moment...}}
+{{dialogue|Pen|indent=true|I... can't say I understand, Skinny...}}
+{{dialogue|Pen|indent=true|But I do want you to know... my heart will forever be open to you. I pray that one day you will consider a rekindling of our flame, because if there's ever one thing I've known for certain in my life...}}
+{{dialogue|Pen|indent=true|It's that our coupling would be nothing short of glorious!}}
+{{dialogue|Pen|indent=true|Until then... I will earnestly await that moment...}}
+{{dialogue|Pen|indent=true|Goodbye, Skinny Arms.}}
+{{dialogue|Pen|indent=true|answer=Actually, I do want this. (Kiss Pen)
+|Come here, you...}}
+
+TRIGGER Procedure 0.0 Step 29.0 Order 29 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Check if 8281BE is == 2
+ACTIONS
+{{cutscene|id = 7301}}
+A cutscene CG_NESTLE (duration: 1.0) starts playing
+Loveseat - Pen declared his love to me by creating a couch out of our defeated enemies. Very on brand.
+
+TRIGGER Procedure 1.0 Step 30.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Check if 8281BE is == 1
+ACTIONS
+Pen stops standing still
+DELAY MASK SET || maskId: 82818 | delayTime: 3 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 28.0 Order 27 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) The player picks the first option in conversation segment 9973:
+{{dialogue|Pen|Second thoughts? What!? Don't be such a tease, Skinny! You brought me down into these ruins; my blood is boiling and you want to back out now!?}}
+
+*''Yeah, I just can't do this...'' (No unique dialogue)
+*{{flirt}}''Actually, I do want this. (Kiss Pen)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8281BE to 1
+
+TRIGGER Procedure 0.0 Step 28.1 Order 28 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) The player picks the third option in conversation segment 9970:
+{{dialogue|Pen|Take your rightful place, Skinny... And let us seal our new romance with a lover's kiss...}}
+
+*''How many of these thrones have you built...?'' (No unique dialogue)
+*''I'm having second thoughts...'' (No unique dialogue)
+*{{flirt}}''It couldn't have come sooner...'' (No unique dialogue)
+*{{flirt}}''(Kiss Pen)'' (No unique dialogue)
+
+(cId 7) The player picks the fourth option in conversation segment 9970:
+{{dialogue|Pen|Take your rightful place, Skinny... And let us seal our new romance with a lover's kiss...}}
+
+*''How many of these thrones have you built...?'' (No unique dialogue)
+*''I'm having second thoughts...'' (No unique dialogue)
+*{{flirt}}''It couldn't have come sooner...'' (No unique dialogue)
+*{{flirt}}''(Kiss Pen)'' (No unique dialogue)
+
+(cId 7) The player picks the third option in conversation segment 9971:
+{{dialogue|Pen|B... baby, don't spoil the mood! Why think about others now? All that matters is me and... me.}}
+
+*''You mean, "me and you?"'' (No unique dialogue)
+*''I'm having second thoughts...'' (No unique dialogue)
+*{{flirt}}''Okay. (Kiss Pen)'' (No unique dialogue)
+
+(cId 7) The player picks the second option in conversation segment 9972:
+{{dialogue|Pen|Y... yeah, of course, Skinny! I'm just so lost in those arms of yours...}}
+
+*''I'm having second thoughts...'' (No unique dialogue)
+*{{flirt}}''This is fine. (Kiss Pen)'' (No unique dialogue)
+
+(cId 7) The player picks the second option in conversation segment 9973:
+{{dialogue|Pen|Second thoughts? What!? Don't be such a tease, Skinny! You brought me down into these ruins; my blood is boiling and you want to back out now!?}}
+
+*''Yeah, I just can't do this...'' (No unique dialogue)
+*{{flirt}}''Actually, I do want this. (Kiss Pen)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8281BE to 2
+
+TRIGGER Procedure 0.0 Step 31.1 Order 30 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_NESTLE | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 8) A conversation 2826_0 starts:
+{{dialogue|Pen|It is official, then, Skinny. We are now "a thing!" I bellow it loud for the whole world to hear: "I love Skinny Arms!"}}
+{{dialogue|Pen|Yes... now that I've felt our hearts rage together, intertwined and soldered by the fiery thrill of combat, I have no doubts in my mind that our love is true, and our physical infatuations just a nice little cherry on top. A hot, tasty cherry.}}
+{{dialogue|Pen|I'm afraid this moment cannot last forever... We must return to the hustle and bustle of city life... But let us always remember this place. Our lovers cocoon where, for one brief evening, the world was ours...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 31.3 Order 39 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 8) There is a conversation segment (id 9984) that ends:
+{{dialogue|Pen|It is official, then, Skinny. We are now "a thing!" I bellow it loud for the whole world to hear: "I love Skinny Arms!"}}
+CONDITIONS
+Always:
+ACTIONS
+NPC DO CONFESSION || npc: 8020
+
+TRIGGER Procedure 0.0 Step 32.1 Order 31 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) After the conversation ends:
+CONDITIONS
+Check if 8281BE is == 2
+ACTIONS
+The player interacts (type 2, option 0) with Pen
+
+TRIGGER Procedure 0.0 Step 31.2 Order 46 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_NESTLE | state: 7
+CONDITIONS
+Always:
+ACTIONS
+Pen stands still in Gecko_Dungeon and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Gecko_Dungeon | flagName: S8281_0_8
+
+TRIGGER Procedure 0.0 Step 32.3 Order 40 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON INTERACTIVE EXIT || order: 0 | instID: 8020
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 82819 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 33.1 Order 32 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 82819
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 82819 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8281_0_7
+Pen stands still in Main and looks at Player
+Pen stops standing still
+
+TRIGGER Procedure 0.0 Step 34.1 Order 33 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId 9) A conversation 2827_0 starts:
+{{dialogue|Pen|Goodbye, my love!}}
+{{dialogue|Pen|Expect to see me again soon...}}
+{{dialogue|Pen|I'll swing by your place later for a major make-out sesh!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 39.0 Order 34 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 828191
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8020
+Pen stops standing still
+Pen stops standing still
+ACTOR BLIND SET || set: 0
+NPC SET CAN INTERACT || npc: 8020 | canInteract: 1
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1800280
+END MISSION 1800281
+
+TRIGGER Procedure 1.0 Step 31.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 82818
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8281_0_7
+DELAY MASK SET || maskId: 82818 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+ACTION ACTOR REMOVE FOLLOWER || tActor: 8020 | mActor: 8000
+ACTOR BLIND SET || set: 0
+SCENEITEM DELETE || id: 828191 | itemType: 0
+NPC SET CAN INTERACT || canInteract: 1 | npc: 8020
+
+TRIGGER Procedure 1.0 Step 32.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Main:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1800280
+END MISSION 1800281
+
+TRIGGER Procedure 2.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PLAYER MARRIAGE || order: 0 | id: -1
+CONDITIONS
+Always:
+ACTIONS
+NPC REMOVE TAG || tag: PenGeckoDungeon
+AREA TRIGGER DELETE || id: 82812
+AREA TRIGGER DELETE || id: 82811
+SCENEITEM DELETE || itemType: 0 | id: 828191
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8020
+Pen stops standing still
+Pen stops standing still
+ACTOR BLIND SET || set: 0
+NPC SET CAN INTERACT || npc: 8020 | canInteract: 1
+SUBMIT MISSION 1800280
+END MISSION 1800281

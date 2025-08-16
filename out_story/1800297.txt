@@ -1,0 +1,411 @@
+Reading Mission 1800297: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200310
+
+TRIGGER Procedure 0.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200310
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1700294
+
+TRIGGER Procedure 0.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission Sandrock Strikes Back is result 1 flag 1
+ACTIONS
+Run mission #1800297
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800297
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1800297 | id: 82971 | sceneName: Main | flagName: Trigger_S8297 | showOnMap: 1 | mapIcon: MissionArea | transId: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 25 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700298
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 82971
+NPC RANDOM REMOVE || id: 82971
+END MISSION 1800297
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 82971
+CONDITIONS
+CHECK WEATHER STATE || weather: 2 | flag: 0
+ACTIONS
+Set global blackboard key NoCutSceneObstacle with info 1.
+DELAY MASK SET || maskId: 82971 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 82971
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82971 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Arvio stands still in Main and looks at Haru
+Haru stands still in Main and looks at Arvio
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8297_0_1
+DELAY MASK SET || maskId: 82971 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82971 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 11545 starts:
+{{dialogue|Arvio|Haru! It's so good to see you! I've made loads of money from selling your skin cream, and I've put aside a share for you! Here, I'm sure you're going to need it.}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8297142) to Arvio
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8297_14_1|Action:GiveMoneyBag_Story|Delay:0.0)
+Add behavior CommanderMoveToFlagAndAction (idName: 8297122) to Haru
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8297_12_1|Action:GetMoneyBag_Story|Delay:0.5)
+Set 8297Move to 0
+
+TRIGGER Procedure 0.0 Step 4.1 Order 5 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8012 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: MoveToFlagAndActionOver | behaviourName: CommanderMoveToFlagAndAction | npc: 8014
+CONDITIONS
+Always:
+ACTIONS
+Increment 8297Move by 1
+
+TRIGGER Procedure 0.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8012 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+ON ACTOR BEHAVIOUR EVENT || order: 10 | eventName: MoveToFlagAndActionOver | behaviourName: CommanderMoveToFlagAndAction | npc: 8014
+CONDITIONS
+Check if 8297Move is >= 2
+ACTIONS
+(cId 2) A conversation 3523_0 starts:
+{{dialogue|Haru|Wow, there's so much here. That's uh... really heavy.}}
+{{dialogue|Arvio|What can I say? By The Stairs is the most profitable general store in town! Your products are amazing, and my charm makes them fly off the shelf! I'm sure in no time you'll be able to get back on your feet in town!}}
+{{dialogue|Haru|Thank you, Arvio. If I can put some money aside, maybe I can afford to go to a university somewhere.}}
+{{dialogue|Arvio|What a fantastic idea! If you study, then you'll be able to make more products, and we'll be able to sell even more products! As my Pa used to say, "study makes a big brain more big!"}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Haru stands still in Main and looks at 82971
+Arvio stands still in Main and looks at 82971
+NPC RANDOM ADD || id: 1 | instId: 82971 | scene: Main | flagName: S8297_RNPC_1 | dailyBehavior: RandomNPC
+Add behavior CommanderMoveToFlagAndAction (idName: 829701) to 82971
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8297_RNPC_2)
+Add behavior CommanderMoveToFlagAndAction (idName: 8297143) to Arvio
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8297_14_3|Delay:3.0)
+Add behavior CommanderMoveToFlagAndAction (idName: 8297123) to Haru
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8297_12_3|Delay:3.0)
+
+TRIGGER Procedure 0.0 Step 7.0 Order 8 Repeat 3
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8012 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: MoveToFlagOver | behaviourName: CommanderMoveToFlagAndAction | npc: 8014
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 82971 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Increment 8297Move1 by 1
+
+TRIGGER Procedure 0.0 Step 8.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8012 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 10 | eventName: MoveToFlagOver | behaviourName: CommanderMoveToFlagAndAction | npc: 8014
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 82971 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Check if 8297Move1 is >= 3
+ACTIONS
+(cId 3) A conversation 11550 starts:
+{{dialogue|82971|Hey! You! This is way too expensive! How about knocking off a few Gols for me? Wait... what's this? Are you harboring fugitives!?}}
+STOPWATCH REAL TIME SET || id: 82971 | sec: 1.5
+Set 8297Num1 to 0
+
+TRIGGER Procedure 0.0 Step 8.5 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8297001) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8297_0_2|Delay:0.0)
+
+TRIGGER Procedure 0.0 Step 9.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+ON CAMERA PATH END || order: 0 | id: 82974
+CONDITIONS
+Check if 8297Num1 is >= 2
+ACTIONS
+(cId 4) A conversation 3524_0 starts:
+{{dialogue|Arvio|Ahhh! You've misunderstood, no, this isn't a fugitive, those posters are outdated!}}
+
+*''Oh yeah, it's old news.''
+*''I think you're mistaken. That's not the same person.''
+*''WHAT!? You're right! Lock him up!''
+
+{{dialogue|82971|indent=true|answer=Oh yeah, it's old news.
+|reward={{NPC2|Arvio|rp=2}}|Eh? Then why haven't you taken it down already? Checkmate, Mr. Salesman.}}
+{{dialogue|Arvio|indent=true|Uh... I guess the Civil Corps was too busy? They have so much to do... this little minor inconvenience...}}
+{{dialogue|Haru|indent=true|Don't make excuses for me. ''Player'', Arvio, I appreciate the concern, but there's no avoiding it.}}
+{{dialogue|82971|indent=true|answer=I think you're mistaken. That's not the same person.
+|reward={{NPC2|Arvio|rp=2}}|No, no, I have perfect vision. My ophthalmologist said I have better vision than an eagle! The only difference is the poster has a mask!}}
+{{dialogue|Arvio|indent=true|No, no, no, you don't understand! I saw that dastardly bandit under his mask, and he's completely different! His teeth stick out at crazy angles, and... and... he has a moustache! That's right, a big thick one!}}
+{{dialogue|Haru|indent=true|Don't make excuses for me. ''Player'', Arvio, I appreciate the concern, but there's no avoiding it.}}
+{{dialogue|Arvio|indent=true|answer=WHAT!? You're right! Lock him up!
+|Huh? Ah! Haha! ''Player'', you're so funny! So. Funny.}}
+{{dialogue|Haru|It's true. I am that bandit.}}
+{{dialogue|82971|Why- what- this is an outrage! An outrage I tell you! An outrage! Wait until I tell the Civil Corps about this! Harumphy!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 9.0 Order 2 Repeat 2
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+ON CAMERA PATH END || order: 0 | id: 82974
+CONDITIONS
+Always:
+ACTIONS
+Increment 8297Num1 by 1
+
+TRIGGER Procedure 0.0 Step 10.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 829702) to 82971
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8297_RNPC_3)
+Add behavior CommanderMoveToFlagAndAction (idName: 8297124) to Haru
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8297_12_4|Delay:2.0)
+Add behavior CommanderMoveToFlagAndAction (idName: 8297144) to Arvio
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8297_14_4|Delay:3.0)
+Haru stops standing still
+Arvio stops standing still
+
+TRIGGER Procedure 0.0 Step 10.5 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 82971241) to Haru
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8297_12_1|Delay:0.0)
+
+TRIGGER Procedure 0.0 Step 10.6 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8012 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 51) A conversation 11561, 11562, 11563, 11564 starts:
+{{dialogue|Haru|I'm sorry. You shouldn't have to lose customers just because I'm here.}}
+{{dialogue|Arvio|Haru, don't say that! It's just a misunderstanding, I'm sure the Civil Corps will explain.}}
+{{dialogue|Arvio|Besides, the hearing is coming up soon! I'll back you up, we all know you didn't really do anything wrong!}}
+{{dialogue|Haru|Whatever happens, Logan and I will accept the result. For now, I should leave.}}
+
+TRIGGER Procedure 0.0 Step 11.2 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 51) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderTeleport (idName: 8297125) to Haru
+(param: TargetScene:Main|TargetFlag:S8297_12_5|Delay:4.0)
+STOPWATCH REAL TIME SET || id: 82972 | sec: 2
+
+TRIGGER Procedure 0.0 Step 13.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 51) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 82971441) to Arvio
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8297_14_41|Delay:0.0)
+Add behavior CommanderMoveToFlagAndAction (idName: 8297002) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8297_0_3|Delay:0.0)
+
+TRIGGER Procedure 0.0 Step 11.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8012 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 11560 starts:
+{{dialogue|Haru|Don't be afraid... wait...}}
+
+TRIGGER Procedure 0.0 Step 11.1 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 82971 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderTeleport (idName: 829703) to 82971
+(param: TargetScene:Main|TargetFlag:S8297_RNPC_3|Delay:0.0)
+Remove behavior CommanderTeleport (idName: 829703) from 82971
+NPC RANDOM REMOVE || id: 82971
+
+TRIGGER Procedure 0.0 Step 11.5 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 82972
+CONDITIONS
+Always:
+ACTIONS
+(cId 51) A conversation 11565 starts:
+{{dialogue|Arvio|Haru... don't go...}}
+
+TRIGGER Procedure 0.0 Step 11.6 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8012 | behaviourName: CommanderTeleport | eventName: Teleported
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderTeleport (idName: 8297125) from Haru
+Remove behavior CommanderMoveToFlagAndAction (idName: 8297124) from Haru
+Remove behavior CommanderMoveToFlagAndAction (idName: 8297122) from Haru
+Remove behavior CommanderMoveToFlagAndAction (idName: 8297123) from Haru
+Haru stops standing still
+Haru stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 82971241) from Haru
+
+TRIGGER Procedure 0.0 Step 13.2 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8014 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 3529_0 starts:
+{{dialogue|Arvio|Sigh... the old me blamed Logan... I really thought Haru had been brainwashed by him.}}
+{{dialogue|Arvio|But of course things are always more complex than we think! I was too naive...}}
+{{dialogue|Arvio|''Player'', will you be at the hearing? Please, make sure you speak up! We all need to say our piece!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 15.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderTeleport (idName: 8297125) from Haru
+Remove behavior CommanderMoveToFlagAndAction (idName: 8297124) from Haru
+Remove behavior CommanderMoveToFlagAndAction (idName: 82971441) from Arvio
+Remove behavior CommanderTeleport (idName: 8297125) from Haru
+Remove behavior CommanderMoveToFlagAndAction (idName: 8297001) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8297124) from Haru
+Remove behavior CommanderTeleport (idName: 8297125) from Haru
+Remove behavior CommanderMoveToFlagAndAction (idName: 8297142) from Arvio
+Remove behavior CommanderMoveToFlagAndAction (idName: 8297122) from Haru
+Remove behavior CommanderMoveToFlagAndAction (idName: 829701) from 82971
+Remove behavior CommanderMoveToFlagAndAction (idName: 829702) from 82971
+Remove behavior CommanderMoveToFlagAndAction (idName: 8297144) from Arvio
+Haru stops standing still
+Arvio stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8297002) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8297143) from Arvio
+CUTSCENE UI STATE EXIT || 
+GLOBAL BLACK BOARD REMOVE || key: NoCutSceneObstacle
+
+TRIGGER Procedure 0.0 Step 40.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+When the player moves from Main to the -1:
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM REMOVE || id: 82971
+END MISSION 1800297
+
+TRIGGER Procedure 1.0 Step 9.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) The player picks the first option in conversation segment 11551:
+{{dialogue|Arvio|Ahhh! You've misunderstood, no, this isn't a fugitive, those posters are outdated!}}
+
+*''Oh yeah, it's old news.'' (No unique dialogue)
+*''I think you're mistaken. That's not the same person.'' (No unique dialogue)
+*''WHAT!? You're right! Lock him up!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Arvio gains 2 favor
+
+TRIGGER Procedure 1.0 Step 10.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) The player picks the second option in conversation segment 11551:
+{{dialogue|Arvio|Ahhh! You've misunderstood, no, this isn't a fugitive, those posters are outdated!}}
+
+*''Oh yeah, it's old news.'' (No unique dialogue)
+*''I think you're mistaken. That's not the same person.'' (No unique dialogue)
+*''WHAT!? You're right! Lock him up!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Arvio gains 2 favor

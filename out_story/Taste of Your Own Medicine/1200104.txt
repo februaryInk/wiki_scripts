@@ -1,0 +1,153 @@
+Reading Mission 1200104: Taste of Your Own Medicine
+
+<onlyinclude>{{Infobox mission
+|name = Taste of Your Own Medicine
+|image =
+|description = Fang has started a medicine testing activity at the door of his clinic. Go and see what's going on.
+|type = Side
+|time =
+|location =
+|characters = [[X]]
+|condition =
+|details =
+|exp = 400
+|reputation = None
+|gols = None
+|npc1 = Fang
+|rp1 = 20
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200106
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200106
+CONDITIONS
+Always:
+ACTIONS
+ACTION SOCIAL ADD MASK || npc: 8016 | mask: LockFavor
+ACTION NPC ADD FLAG || npc: 8016 | flag: 32
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE || compare: 2 | year: -1 | month: 2 | day: 8
+ACTIONS
+Run mission Taste of Your Own Medicine
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200104
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1200104
+Add behavior XReagent (idName: 21041) to X
+(param: -1)
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to X
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 2547, 2548, 2549 starts:
+{{dialogue|X|Goodies! It's free!}}
+{{dialogue|X|Yummy yummy yum!}}
+
+*''Where?'' (No unique dialogue)
+*''What "goodies?"'' (No unique dialogue)
+
+{{dialogue|X|Come one come all! To Faaang's Clinic! One per customer, no cuttin'! No cuttin'! Buh-bye!}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior XReagent (idName: 21041) from X
+START MISSION 1200104
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200104
+CONDITIONS
+Always:
+ACTIONS
+Run mission Taste of Your Own Medicine
+END MISSION 1200104
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON EVERY WEEK START || order: 0 | week: 3
+ON EVERY WEEK START || order: 0 | week: 5
+CONDITIONS
+CHECK WEATHER STATE || weather: 2 | flag: 0
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1200105 | id: 210511 | sceneName: Main | flagName: tastemed_trigger | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80004136
+Set REAGENT to 1
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200104
+CONDITIONS
+CHECK SCENEITEM EXIST || sceneItemType: 0 | id: 20325 | exist: 1
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1200105 | id: 210511 | sceneName: Main | flagName: tastemed_trigger | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80004136
+
+TRIGGER Procedure 1.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 210511
+CONDITIONS
+CHECK SCENEITEM EXIST || sceneItemType: 0 | id: 20325 | exist: 1
+ACTIONS
+Remove behavior XReagent (idName: 21041) from X
+CUTSCENE UI STATE ENTER || 
+{{cutscene|id = 2021}}
+A cutscene CG_SELLPRODUCTS (duration: -2.0) starts playing
+Taste at Your Own Risk - One day the strange doctor, Fang, started handing out free medicine in front of his clinic. It seemed a bit dubious, but his bird was able to convince people to try.
+AREA TRIGGER DELETE || id: 210511
+START MISSION 1200104
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+When the time is 18:00 (order: 0):
+CONDITIONS
+GROUP 0:
+CHECK DAY OF WEEK || dayOfWeek: 3 | set: 1
+
+GROUP 1:
+CHECK DAY OF WEEK || dayOfWeek: 5 | set: 1
+
+GROUP 2:
+CHECK DAY OF WEEK || dayOfWeek: 4 | set: 1
+
+GROUP 3:
+CHECK DAY OF WEEK || dayOfWeek: 6 | set: 1
+
+ACTIONS
+AREA TRIGGER DELETE || id: 210511
+
+==Rewards==
+{{mission reward
+|npc1 = Fang
+|rp1 = 20
+|exp = 400
+|reputation = None
+|gols = None
+}}

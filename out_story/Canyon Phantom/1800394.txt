@@ -1,0 +1,117 @@
+Reading Mission 1800394: Canyon Phantom
+
+<onlyinclude>{{Infobox mission
+|name = Canyon Phantom
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100068
+
+TRIGGER Procedure 4.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON REMOVE || missionId: 1900407 | npc: 8040 | missionIcon: 6
+
+TRIGGER Procedure 8.0 Step 3.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON FESTIVAL STATE || order: 0 | festival: 2 | state: 2
+CONDITIONS
+Always:
+ACTIONS
+Run mission Canyon Phantom
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800394
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1800394 | id: 83941 | sceneName: Main | flagName: Trigger_83941 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+Set 8394A to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 83941
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 2074}}
+A cutscene CG_CANYON (duration: 0.0) starts playing
+A Glimmer of Memories - A mysterious figure appeared by the cliff on the Day of Memories. She looked on with an emotional grace, and encouraged me to move forward with determination.
+AREA TRIGGER DELETE || id: 83941
+Set 8394A to 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 19:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 83941
+
+TRIGGER Procedure 0.0 Step 2.1 Order 6 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON FESTIVAL STATE || order: 0 | festival: 2 | state: 2
+CONDITIONS
+Check if 8394A is <= (maybe?) 1
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1800394 | id: 83941 | sceneName: Main | flagName: Trigger_83941 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 0.0 Step 2.2 Order 7 Repeat -1
+------------------------------------------------------------
+EVENTS
+When the time is 19:00 (order: 0):
+CONDITIONS
+Check if 8394A is <= (maybe?) 1
+ACTIONS
+AREA TRIGGER DELETE || id: 83941
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON FESTIVAL STATE || order: 0 | festival: 2 | state: 2
+CONDITIONS
+Check if 8394A is == 1
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 83941 | path: S8394_Item1 | sceneName: Main | flagName: S8394_Item1 | extraParams: -1
+
+TRIGGER Procedure 0.0 Step 6.0 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+When the time is 19:00 (order: 0):
+CONDITIONS
+Check if 8394A is == 1
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 83941
+
+TRIGGER Procedure 0.0 Step 7.0 Order 5 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 83941
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 22019 starts:
+{{dialogue|Player|(It's some kind of Old World device...?)}}

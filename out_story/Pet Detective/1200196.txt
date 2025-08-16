@@ -1,0 +1,580 @@
+Reading Mission 1200196: Pet Detective
+
+<onlyinclude>{{Infobox mission
+|name = Pet Detective
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Pet Detective:
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 21951) from Player
+(cId 3) A conversation 1536_0 starts:
+{{dialogue|Bronco the Kid|Citizen! Welcome! I had a feeling you'd have no trouble finding my secret hideout; I've heard good things about you.}}
+
+*''This is a hotel room.''
+*''Wow, nice hideout, my guy.''
+
+{{dialogue|Bronco the Kid|indent=true|answer=This is a hotel room.
+|Indeed it is, my astute associate!}}
+{{dialogue|Bronco the Kid|indent=true|answer=Wow, nice hideout, my guy.
+|Indubitably!}}
+{{dialogue|Bronco the Kid|What better place to hide, than in plain sight...?}}
+{{dialogue|Bronco the Kid|Anyway! After doing a bit of surveying in town, there's one thing I'm absolutely certain of... there is a spy in Sandrock.}}
+{{dialogue|Bronco the Kid|That's right, a mole, a double agent, a spy! Someone is relaying information to the Logan Gang from inside Sandrock... and who knows what kind of diabolical mischief they could accomplish with such a connection!?}}
+{{dialogue|Bronco the Kid|And the worst part... everyone is a suspect. Even you. I'm going out on a limb for you, citizen. Don't make me regret it.}}
+{{dialogue|Bronco the Kid|I actually did send letters to several citizens, but you're the only one that showed up, so far. That makes them extra suspicious.}}
+{{dialogue|Bronco the Kid|Now, I have only been able to clear a select few inhabitants of the town of any suspicion. Indeed, the only people we can trust are not people at all! We require the assistance from none other than...}}
+{{dialogue|Bronco the Kid|...The pets of Sandrock.}}
+
+*''Of course.'' (No unique dialogue)
+*''The pets?'' (No unique dialogue)
+
+{{dialogue|Bronco the Kid|That's right. They're the only ones who have nothing to gain by speaking with Logan. And that's where you come in, citizen.}}
+{{dialogue|Bronco the Kid|These pets...they can be bought. We need to catch some sandfish and get some dog food, then use those to coax the pets over to our side; the side of truth and justice! I'm setting up my feng shui compass, so I'll need your help for that.}}
+
+*''I won't let you down, sir.''
+*''I can't believe how ridiculous this is!''
+
+{{dialogue|Bronco the Kid|indent=true|answer=I won't let you down, sir.
+|That's what I like to hear.}}
+{{dialogue|Bronco the Kid|indent=true|answer=I can't believe how ridiculous this is!
+|The only thing ridiculous about it is how long it took me to come up with the idea!}}
+{{dialogue|Bronco the Kid|indent=true|And think of it this way, believe in me who believes in myself. Just listen to what I have to say!}}
+{{dialogue|Bronco the Kid|Once you've gained your targets' trust, ask them if they've noticed any suspicious behavior around town.}}
+{{dialogue|Bronco the Kid|Good luck, citizen. Find me when you've accomplished your part of the mission. Now back to my feng shui compass and...}}
+The conversation ends.
+SCENEITEM DELETE || itemType: 0 | id: 21951
+
+TRIGGER Procedure 3.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Check if read is == 0
+ACTIONS
+DELIVER MISSION 1200195
+CUTSCENE UI STATE EXIT || 
+Bronco the Kid stops standing still
+START MISSION 1200195
+Run mission Pet Detective
+END MISSION 1200195
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200196
+CONDITIONS
+Always:
+ACTIONS
+===Prepare Animal Food===
+
+{{mission_details
+|desc = Kid needs to adjust his Feng Shui Dowsing Plate, prepare some food, then gather the animals.
+|details = Prepare Animal Food
+*{{i2|Sand Carp|0/2}}
+*{{i2|Dog Food|0/1}}
+}}
+Set BANJO to 0
+Set SALOON to 0
+Set CAT1 to 0
+Set CAT2 to 0
+Set DOG1 to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Pet Detective is in state 2 with flag 0
+Pet Detective is in state 3 with flag 0
+Check if mission Pet Detective is result 1 flag 1
+ACTIONS
+DELIVER MISSION 1200195
+START MISSION 1200195
+===Prepare Animal Food===
+
+{{mission_details
+|desc = Kid needs to adjust his Feng Shui Dowsing Plate, prepare some food, then gather the animals.
+|details = Prepare Animal Food
+*{{i2|Sand Carp|0/2}}
+*{{i2|Dog Food|0/1}}
+}}
+Set BANJO to 0
+Set SALOON to 0
+Set CAT1 to 0
+Set CAT2 to 0
+Set DOG1 to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200195 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Feed Pets===
+
+{{mission_details
+|desc = When you've prepared some food, go and see if pets in town know anything.
+|details = Feed Pets
+}}
+NPC ICON ADD || missionId: 1200195 | npc: 8049 | missionIcon: 3
+NPC ICON ADD || missionId: 1200195 | npc: 8050 | missionIcon: 3
+NPC ICON ADD || missionId: 1200195 | npc: 8051 | missionIcon: 3
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Banjo
+CONDITIONS
+CHECK PLAYER ITEM || item: 19702001 | itemGrade: -1 | set: 2 | count: 1
+ACTIONS
+(cId 0) A conversation 1543_0 starts:
+{{dialogue|Banjo|Meow.}}
+
+*''Have you... seen any spies around?''
+*''This is dumb, I'm not doing this.'' (No unique dialogue)
+
+{{dialogue|Banjo|Meowwww.}}
+{{dialogue|Player|(It seems like the cat knows something...?)}}
+
+*''You're holding out on me, Banjo! Spill the beans!''
+*''Leave'' (No unique dialogue)
+
+{{dialogue|Banjo|Meow meow meow?}}
+
+*''Don't play dumb with me, cat! Tell me who the spy is!''
+*''Leave'' (No unique dialogue)
+
+{{dialogue|Banjo|indent=true|answer=Don't play dumb with me, cat! Tell me who the spy is!
+|Meow!}}
+Remove 1 Sand Carp of Default quality (Notify player)
+Set CAT1 to 1
+NPC ICON REMOVE || missionId: 1200195 | npc: 8050 | missionIcon: 3
+
+TRIGGER Procedure 0.0 Step 2.5 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Banjo
+CONDITIONS
+CHECK PLAYER ITEM || item: 19702001 | itemGrade: -1 | set: 6 | count: 1
+Check if CAT1 is == 0
+ACTIONS
+(cId 7) A conversation 100026 starts:
+{{dialogue|Player|(I didn't bring any food that they'll like. I need to come back with some pet food)}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 0) There is a conversation segment (id 30538) that ends:
+{{dialogue|Banjo|Meow!}}
+CONDITIONS
+Always:
+ACTIONS
+Set BANJO to 1
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Check if BANJO is == 0
+Check if CAT2 is == 1
+Check if DOG1 is == 1
+ACTIONS
+===Talk to Bronco===
+
+{{mission_details
+|desc = Bronco's animal interviews are a dead end. Go back and tell him.
+|details = Talk to Bronco
+}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Check if BANJO is == 1
+CHECK CURRENT SCENE || name: Saloon | flag: 0
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 21961) to Banjo
+(param: TargetScene:Saloon|MoveMode:Run|FlagName:detective_saloon_banjo1)
+AREA TRIGGER CREATE || flagName: Mission_1600096_Trigger_2 | id: 21961 | missionId: 1200195 | sceneName: Main | showOnMap: 1 | mapIcon: MissionArea | transId: 0
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Check if BANJO is == 1
+CHECK CURRENT SCENE || name: Saloon | flag: 1
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 21961) to Banjo
+(param: TargetScene:Saloon|MoveMode:Run|FlagName:detective_saloon_banjo1)
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 21961 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 21961 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Grace stands still in Saloon
+Banjo stands still in Saloon
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: detective_saloon_player1
+Set SALOON to 1
+DELAY MASK SET || maskId: 21961 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+{{cutscene|id = 1311}}
+A cutscene CG_CATFISH (duration: 0.0) starts playing
+Catfish - Banjo was helping me find a spy, but he only found a fish! He jumped up on the surface and startled Grace.
+Remove behavior CommanderMoveToFlagAndAction (idName: 21961) from Banjo
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_saloon
+Check if SALOON is == 0
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+UNIQUE ACTION RUN || idStr: enter_saloon
+Remove behavior CommanderMoveToFlagAndAction (idName: 21961) from Banjo
+AREA TRIGGER DELETE || id: 21961
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+Owen stands still in Saloon and looks at Player
+Grace stands still in Saloon
+Banjo stands still in Saloon
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: detective_saloon_player1
+
+TRIGGER Procedure 2.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+ACTION CUTSCENE START AUDIO TYPE || id: CG_CATFISH | duration: 0 | audioType: NoTransitionOff
+
+TRIGGER Procedure 2.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+CHECK CUTSCENE PHOTO UNLOCK || cutscene: CG_CATFISH | set: 0
+ACTIONS
+ACTION CUTSCENE START AUDIO TYPE || id: CG_CATFISH | duration: 0 | audioType: NoTransitionOff
+PLAYER SET POS ROT FLAG || flagName: detective_saloon_player1 | sceneName: Saloon
+
+TRIGGER Procedure 2.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_CATFISH | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 1547_0 starts:
+{{dialogue|Grace|Yow! Stupid cat! Get out of here!}}
+
+*''I guess Banjo was hungry.''
+*''Grace! Are you a spy?!''
+
+{{dialogue|Grace|indent=true|answer=I guess Banjo was hungry.
+|''Player'', did you let the cat in here?! Can you get it out? I'm trying to work!}}
+{{dialogue|Grace|indent=true|answer=Grace! Are you a spy?!
+|Yes, I'm a secret agent that makes 25 Gols an hour plus tips. Have you lost your mind? Help me get this cat out of here!}}
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Banjo stops standing still
+Grace gains 5 favor
+(cId 2) A conversation 5206 starts:
+{{dialogue|Grace|Thanks! Agh! He always tries to steal food when he comes in!}}
+
+TRIGGER Procedure 3.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Owen stops standing still
+CUTSCENE UI STATE EXIT || 
+Grace stops standing still
+MISSION TARGET COUNTER CHANGE || missionId: 1200195 | transId: 80008601 | isAdd: 1 | targetId: 2
+NPC ICON ADD || missionId: 1200195 | npc: 8001 | missionIcon: 6
+
+TRIGGER Procedure 3.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Check if BANJO is == 0
+ACTIONS
+MISSION TARGET COUNTER CHANGE || isAdd: 1 | missionId: 1200195 | targetId: 2 | transId: 80008601
+
+TRIGGER Procedure 3.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Owen
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 5582 starts:
+{{dialogue|Owen|Hey, ''Player''! On the lookout for a spy, huh? That's crazy! I mean, I guess if you were going to try to implicate someone, it'd be a person with... motive, means, intent, ties to the criminal, no alibi, and... oh man... I better stop talking, huh?}}
+NPC ICON REMOVE || missionIcon: 6 | npc: 8001 | missionId: 1200195
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Nemo
+CONDITIONS
+CHECK PLAYER ITEM || item: 19800001 | itemGrade: -1 | set: 2 | count: 1
+ACTIONS
+(cId 3) A conversation 1550_0 starts:
+{{dialogue|Nemo|Bowwow!}}
+
+*''Good, good. Tell me what you know about a... spy!''
+*''Leave'' (No unique dialogue)
+
+{{dialogue|Nemo|Bowwow!}}
+
+*''Keep pressing''
+*''Leave'' (No unique dialogue)
+
+{{dialogue|Nemo|indent=true|answer=Keep pressing
+|Bowwow!}}
+
+:*''Pet Nemo'' (No unique dialogue)
+:*''Leave'' (No unique dialogue)
+
+Remove 1 Dog Food of Default quality (Notify player)
+Set DOG1 to 1
+NPC ICON REMOVE || missionId: 1200195 | npc: 8051 | missionIcon: 3
+MISSION TARGET COUNTER CHANGE || missionId: 1200195 | targetId: 2 | transId: 80008603 | isAdd: 1
+
+TRIGGER Procedure 4.0 Step 0.5 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Nemo
+CONDITIONS
+CHECK PLAYER ITEM || item: 19800001 | itemGrade: -1 | set: 6 | count: 1
+Check if DOG1 is == 0
+ACTIONS
+(cId 7) A conversation 100026 starts:
+{{dialogue|Player|(I didn't bring any food that they'll like. I need to come back with some pet food)}}
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the first option in conversation segment 5210:
+{{dialogue|Nemo|Bowwow!}}
+
+*''Pet Nemo'' (No unique dialogue)
+*''Leave'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Nemo gains 2 favor
+Run mission Pet Detective
+
+TRIGGER Procedure 4.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Captain
+CONDITIONS
+CHECK PLAYER ITEM || item: 19702001 | itemGrade: -1 | set: 2 | count: 1
+ACTIONS
+(cId 4) A conversation 5211 starts:
+{{dialogue|Captain|Meow.}}
+
+*''Pet Captain'' (No unique dialogue)
+*''See any spies, Cap?'' (No unique dialogue)
+
+Remove 1 Sand Carp of Default quality (Notify player)
+Set CAT2 to 1
+NPC ICON REMOVE || missionId: 1200195 | npc: 8049 | missionIcon: 3
+MISSION TARGET COUNTER CHANGE || missionId: 1200195 | targetId: 2 | transId: 80008605 | isAdd: 1
+
+TRIGGER Procedure 5.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+(cId 3) After the conversation ends:
+(cId 2) After the conversation ends:
+CONDITIONS
+Check if CAT1 is == 1
+Check if CAT2 is == 1
+Check if DOG1 is == 1
+ACTIONS
+(cId 5) A conversation 5212 starts:
+{{dialogue|Player|(I guess that's all I'm going to get out of the animals. I should report to Bronco and tell him this didn't work.)}}
+===Talk to Bronco===
+
+{{mission_details
+|desc = Bronco's animal interviews are a dead end. Go back and tell him.
+|details = Talk to Bronco
+}}
+
+TRIGGER Procedure 4.0 Step 4.0 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Captain
+CONDITIONS
+Check if CAT2 is == 0
+CHECK PLAYER ITEM || item: 19702001 | itemGrade: -1 | set: 6 | count: 1
+ACTIONS
+(cId 7) A conversation 100026 starts:
+{{dialogue|Player|(I didn't bring any food that they'll like. I need to come back with some pet food)}}
+
+TRIGGER Procedure 5.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Bronco the Kid
+CONDITIONS
+Check if BANJO is == 1
+ACTIONS
+(cId 6) A conversation 1553_0 starts:
+{{dialogue|Bronco the Kid|Excellent work, citizen. What have you learned?}}
+
+*''Absolutely nothing.''
+*''There is no spy.''
+*''Grace is a spy.''
+*''Mi-an is a spy.''
+*''Captain knows something.''
+
+{{dialogue|Bronco the Kid|indent=true|answer=Absolutely nothing.
+|Nothing! I see... This Logan Gang is even more insidious than I thought. Evading us at every turn! No matter, this will just make capturing them that much sweeter!}}
+{{dialogue|Bronco the Kid|indent=true|answer=There is no spy.
+|Oh ho, citizen! Do not be fooled so easily! The pets turned out not to be as informative as I'd hoped, but we will get to the bottom of this, I promise you that much!}}
+{{dialogue|Bronco the Kid|indent=true|answer=Grace is a spy.
+|Grace! The cook? But of course! It's the perfect front! She overhears conversations at the saloon and relays the information to Logan, no doubt! Meanwhile, she distracts us all with delicious food, leaving the citizens of Sandrock none the wiser!}}
+{{dialogue|Bronco the Kid|indent=true|Hm? Not delicious, you say? Well, the rest stands!}}
+{{dialogue|Bronco the Kid|indent=true|Impeccable work, citizen. May I ask how you discovered her true identity?}}
+
+:*''Just a hunch.''
+:*''The animal told me.''
+
+{{dialogue|Bronco the Kid|indent=double|answer=Just a hunch.
+|Oh, I see. I was hoping you had more concrete evidence than that. Well, I shall investigate your "hunch" in any case and let you know what I discover.}}
+{{dialogue|Bronco the Kid|indent=double|answer=The animal told me.
+|Ah hah! I knew it! They all thought I was mad, well who's laughing now? Ha ha ha ha ha haha!}}
+{{dialogue|Bronco the Kid|indent=true|answer=Mi-an is a spy.
+|Mi-an!? The Builder? Aha! I knew it, the perfect disguise, exploring the ruins, sending supplies secretly under the guise of work... and distracts us all by being so helpful and "charming." Despicable.}}
+{{dialogue|Bronco the Kid|indent=true|Says she's coming over to help Sandrock but actually... she came to help the bandits!}}
+{{dialogue|Bronco the Kid|indent=true|Impeccable work, citizen. May I ask how you discovered her true identity?}}
+
+:*''Just a hunch.''
+:*''The animal told me.''
+
+{{dialogue|Bronco the Kid|indent=double|answer=Just a hunch.
+|Oh, I see. I was hoping you had more concrete evidence than that. Well, I shall investigate your "hunch" in any case and let you know what I discover.}}
+{{dialogue|Bronco the Kid|indent=double|answer=The animal told me.
+|Ah hah! I knew it! They all thought I was mad, well who's laughing now? Ha ha ha ha ha haha!}}
+{{dialogue|Bronco the Kid|indent=true|answer=Captain knows something.
+|You think Captain knows something? Hmmm tell me where he's been, I'll take a note...}}
+{{dialogue|Bronco the Kid|indent=true|Very interesting indeed... I'll follow these leads. I don't know if he's any more reliable than the others in the Civil Corps, though...}}
+{{dialogue|Bronco the Kid|Well done, citizen. You have earned my trust somewhat. I'll inform you when there is more work to do.}}
+The conversation ends.
+
+TRIGGER Procedure 5.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 21961
+Mi-an stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 22501) from Nemo
+END MISSION 1200250
+AREA TRIGGER DELETE || id: 22501
+NPC ICON REMOVE || missionId: 1200195 | npc: 8001 | missionIcon: 6
+Remove behavior CommanderMoveToFlagAndAction (idName: 21961) from Banjo
+SUBMIT MISSION 1200195
+END MISSION 1200196
+
+TRIGGER Procedure 5.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Bronco the Kid
+CONDITIONS
+Check if BANJO is == 0
+ACTIONS
+(cId 6) A conversation 1560_0 starts:
+{{dialogue|Bronco the Kid|Excellent work, citizen. What have you learned?}}
+
+*''Absolutely nothing.''
+*''There is no spy.''
+*''Grace is a spy.''
+*''Mi-an is a spy.''
+*''Captain knows something.''
+
+{{dialogue|Bronco the Kid|indent=true|answer=Absolutely nothing.
+|Nothing! I see... This Logan Gang is even more insidious than I thought. Evading us at every turn! No matter, this will just make capturing them that much sweeter!}}
+{{dialogue|Bronco the Kid|indent=true|answer=There is no spy.
+|Oh ho, citizen! Do not be fooled so easily! The pets turned out not to be as informative as I'd hoped, but we will get to the bottom of this, I promise you that much!}}
+{{dialogue|Bronco the Kid|indent=true|answer=Grace is a spy.
+|Grace! The cook? But of course! It's the perfect front! She overhears conversations at the saloon and relays the information to Logan, no doubt! Meanwhile, she distracts us all with delicious food, leaving the citizens of Sandrock none the wiser!}}
+{{dialogue|Bronco the Kid|indent=true|Hm? Not delicious, you say? Well, the rest stands!}}
+{{dialogue|Bronco the Kid|indent=true|Impeccable work, citizen. May I ask how you discovered her true identity?}}
+
+:*''Just a hunch.''
+:*''The animal told me.''
+
+{{dialogue|Bronco the Kid|indent=double|answer=Just a hunch.
+|Oh, I see. I was hoping you had more concrete evidence than that. Well, I shall investigate your "hunch" in any case and let you know what I discover.}}
+{{dialogue|Bronco the Kid|indent=double|answer=The animal told me.
+|Ah hah! I knew it! They all thought I was mad, well who's laughing now? Ha ha ha ha ha haha!}}
+{{dialogue|Bronco the Kid|indent=true|answer=Mi-an is a spy.
+|Mi-an!? The Builder? Aha! I knew it, the perfect disguise, exploring the ruins, sending supplies secretly under the guise of work... and distracts us all by being so helpful and "charming." Despicable.}}
+{{dialogue|Bronco the Kid|indent=true|Says she's coming over to help Sandrock but actually... she came to help the bandits!}}
+{{dialogue|Bronco the Kid|indent=true|Impeccable work, citizen. May I ask how you discovered her true identity?}}
+
+:*''Just a hunch.''
+:*''The animal told me.''
+
+{{dialogue|Bronco the Kid|indent=double|answer=Just a hunch.
+|Oh, I see. I was hoping you had more concrete evidence than that. Well, I shall investigate your "hunch" in any case and let you know what I discover.}}
+{{dialogue|Bronco the Kid|indent=double|answer=The animal told me.
+|Ah hah! I knew it! They all thought I was mad, well who's laughing now? Ha ha ha ha ha haha!}}
+{{dialogue|Bronco the Kid|indent=true|answer=Captain knows something.
+|You think Captain knows something? Hmmm tell me where he's been, I'll take a note...}}
+{{dialogue|Bronco the Kid|indent=true|Very interesting indeed... I'll follow these leads. I don't know if he's any more reliable than the others in the Civil Corps, though...}}
+{{dialogue|Bronco the Kid|Well done, citizen. You have earned my trust somewhat. I'll inform you when there is more work to do.}}
+The conversation ends.

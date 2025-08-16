@@ -1,0 +1,165 @@
+Reading Mission 1900396: The Stars Align
+
+<onlyinclude>{{Infobox mission
+|name = The Stars Align
+|image =
+|description = Catori invited you out for an evening walk and talk.
+|type = Side
+|time =
+|location =
+|characters = [[Catori]]
+|condition =
+|details =
+|exp = 1600
+|reputation = None
+|gols = None
+|npc1 = Catori
+|rp1 = 15
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200289
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if Catori has favor >= 400
+Opportunities Abound is successfully completed
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+The Happiest Place in the Free Cities is in state 3 with flag 0
+ACTIONS
+Run mission Birthday Blues
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Birthday Blues is successfully completed
+CHECK WEATHER STATE || weather: 0 | flag: 1
+IS MARRIAGE || isMarriage: 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+
+GROUP 10:
+CHECK GLOBAL BLACKBOARD || key: 1900384 | info: 1 | exist: 1
+CHECK WEATHER STATE || weather: 0 | flag: 1
+IS MARRIAGE || isMarriage: 0
+
+ACTIONS
+Run mission The Stars Align
+GLOBAL BLACK BOARD REMOVE || key: 1900384
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1900396
+CONDITIONS
+Always:
+ACTIONS
+Set Done2 to 0
+Set Aq to 0
+Set SP to 0
+DELIVER MISSION 1900396
+The player receives a letter:
+{{mail|757}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Catori
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 5813_0 starts:
+{{dialogue|Catori|I was hoping I'd run into you. You free tonight? Let's go for a walk at, say 18:00? I know a place with a beautiful view.}}
+
+*''Sure! I need a break.''
+*{{flirt}}''It's a date.''
+*''Too much on my plate.''
+
+{{dialogue|Catori|indent=true|answer=Sure! I need a break.
+|Alright! See you then!}}
+{{dialogue|Catori|indent=true|answer=It's a date.
+|Haha, sure. It's a date! See you then!}}
+{{dialogue|Catori|indent=true|answer=Too much on my plate.
+|Sure. I get it. But if you find some time, let me know. I'd really like to sit down for a chat.}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Set Aq to 1
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 0) There is a conversation segment (id 18778) that ends:
+{{dialogue|Catori|Alright! See you then!}}
+(cId: -1) There is a conversation segment (id 18778) that ends:
+{{dialogue|Catori|Alright! See you then!}}
+(cId: 0) There is a conversation segment (id 18779) that ends:
+{{dialogue|Catori|Haha, sure. It's a date! See you then!}}
+(cId: -1) There is a conversation segment (id 18779) that ends:
+{{dialogue|Catori|Haha, sure. It's a date! See you then!}}
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1900396
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1900396
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON REMOVE || missionId: 1900396 | npc: 8024 | missionIcon: 0
+Set Aq to 1
+Set SP to 1
+Run mission The Stars Align
+END MISSION 1900396
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1900396
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|758}}
+Set Aq to 1
+Set SP to 1
+NPC ICON REMOVE || missionId: 1900396 | npc: 8024 | missionIcon: 0
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Catori|So, you in the mood for a little walk?}}
+
+*''Sure! I need a break.''
+*''It's a date.''
+*''Too much on my plate.''
+
+{{dialogue|Catori|indent=true|answer=Sure! I need a break.
+|Alright! See you then!}}
+{{dialogue|Catori|indent=true|answer=It's a date.
+|Haha, sure. It's a date! See you then!}}
+{{dialogue|Catori|indent=true|answer=Too much on my plate.
+|Sure. I get it. But if you find some time, let me know. I'd really like to sit down for a chat.}}
+
+==Rewards==
+{{mission reward
+|npc1 = Catori
+|rp1 = 15
+|exp = 1600
+|reputation = None
+|gols = None
+}}

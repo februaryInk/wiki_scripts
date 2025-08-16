@@ -1,0 +1,160 @@
+Reading Mission 1100099: Jasmine Co. Official Sandrock Tour
+
+<onlyinclude>{{Infobox mission
+|name = Jasmine Co. Official Sandrock Tour
+|image =
+|description = Jasmine is eager to show you around Sandrock, go to the locations shown on the map with her.
+|type = Side
+|time =
+|location =
+|characters = [[Jasmine]]
+|condition =
+|details =
+|exp = 230
+|reputation = None
+|gols = None
+|npc1 = Jasmine
+|rp1 = 20
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100098
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Check if SCENE is == 1
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+ACTION CUTSCENE START AUDIO TYPE || id: CG_SENDNEWS | duration: 0 | audioType: NoTransitionOff
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_SENDNEWS | state: 9
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|16}}
+The player receives a letter:
+{{mail|271}}
+Run mission Jasmine Co. Official Sandrock Tour
+END MISSION 1100098
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 1.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100099
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: yiriyou1 | info: 1 | exist: 0
+ACTIONS
+Set CHOICE to 0
+(cId 0) A conversation 122_0 starts:
+{{dialogue|Jasmine|Hi, I'm Jasmine! I was delivering your sample newspaper!}}
+{{dialogue|Jasmine|If you like reading it, just go to the {{textcolor|green|newsstand}} near City Hall to subscribe! Then you will get each issue in the mail!}}
+{{dialogue|Jasmine|Oh. Hey! I'll bet it's hard moving to a new place... I know this town like the back of my hand! Let me show you around! I'm a super good tour guide! I know lots of stuff about Sandrock!}}
+
+*''That sounds great, let's go.''
+*''Sorry, I don't have time right now.''
+
+{{dialogue|Jasmine|indent=true|answer=That sounds great, let's go.
+|Yeah! Cool! The Jasmine Co. Official Sandrock Tour is now beginning! Our first stop will be... the {{textcolor|green|Wandering Y Yakmel Ranch}}!}}
+{{dialogue|Jasmine|indent=true|answer=Sorry, I don't have time right now.
+|Oh... okay. Well, if you aren't too busy later, I can still give you a tour. I mean... I'm pretty busy, too! You need to find me {{textcolor|green|before noon}} if you want a tour; I do... business in the afternoon! Seeya!}}
+DELIVER MISSION 1100099
+
+TRIGGER Procedure 0.0 Step 3.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the first option in conversation segment 537:
+{{dialogue|Jasmine|Oh. Hey! I'll bet it's hard moving to a new place... I know this town like the back of my hand! Let me show you around! I'm a super good tour guide! I know lots of stuff about Sandrock!}}
+
+*''That sounds great, let's go.'' (No unique dialogue)
+*''Sorry, I don't have time right now.'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 542:
+{{dialogue|Jasmine|Ready for a tour of Sandrock?}}
+
+*''That sounds great, let's go.'' (No unique dialogue)
+*''Sorry, I don't have time right now.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 1
+
+TRIGGER Procedure 0.0 Step 4.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+Jasmine stops standing still
+CUTSCENE UI STATE EXIT || 
+START MISSION 1100099
+
+TRIGGER Procedure 0.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+START MISSION 1100099
+
+TRIGGER Procedure 0.0 Step 6.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1100099
+CONDITIONS
+Always:
+ACTIONS
+Run mission Jasmine Co. Official Sandrock Tour
+END MISSION 1100099
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 0
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Jasmine stops standing still
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1100099
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key yiriyou2 with info 1.
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Jasmine|Ready for a tour of Sandrock?}}
+
+*''That sounds great, let's go.''
+*''Sorry, I don't have time right now.''
+
+{{dialogue|Jasmine|indent=true|answer=That sounds great, let's go.
+|Yeah! Cool! The Jasmine Co. Official Sandrock Tour is now beginning! Our first stop will be... the {{textcolor|green|Wandering Y Yakmel Ranch}}!}}
+{{dialogue|Jasmine|indent=true|answer=Sorry, I don't have time right now.
+|Oh... okay. Well, if you aren't too busy later, I can still give you a tour. I mean... I'm pretty busy, too! You need to find me {{textcolor|green|before noon}} if you want a tour; I do... business in the afternoon! Seeya!}}
+
+==Rewards==
+{{mission reward
+|npc1 = Jasmine
+|rp1 = 20
+|exp = 230
+|reputation = None
+|gols = None
+}}

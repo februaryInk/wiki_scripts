@@ -1,0 +1,928 @@
+Reading Mission 1200233: Clear the Air
+
+<onlyinclude>{{Infobox mission
+|name = Clear the Air
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Clear the Air:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200232
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1200232
+START MISSION 1200232
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200232
+CONDITIONS
+Always:
+ACTIONS
+Run mission Clear the Air
+END MISSION 1200232
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200233
+CONDITIONS
+Always:
+ACTIONS
+===Bring Sample to Qi===
+
+{{mission_details
+|desc = In order to get to the root of the problem, Qi needs a sample of Greeno.
+|details = Bring Sample to Qi
+*{{i2|Greeno Sample|0/1}}
+*{{i2|Qi|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 22337
+AREA TRIGGER ONCE CREATE || flagName: mist_pipe3_pipe0 | missionId: 1200232 | id: 22336 | sceneName: Main | showOnMap: 1 | mapIcon: MissionArea | transId: 0
+ACTION AREA TRIGGER SET RADIUS || id: 22336 | radius: 20
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1200232 | targetId: 1 | canSubmit: 1
+ACTIONS
+(cId 0) A conversation 1922_0 starts:
+{{dialogue|Qi|Fascinating! So this is the source of the canyon's pollution? What does it... do?}}
+
+*''It just turns people green. That's it.''
+*''It's dangerous...''
+*''Try some. It smells good.''
+
+{{dialogue|Qi|indent=true|answer=It just turns people green. That's it.
+|For... cosmetic purposes? How daft...}}
+{{dialogue|Qi|indent=true|answer=It's dangerous...
+|Is it now? Let's see here...}}
+{{dialogue|Qi|indent=true|answer=Try some. It smells good.
+|Is that so?}}
+{{dialogue|Qi|indent=true|Hm... You may be mistaken, ''Player''. This substance seems to be odorless...}}
+{{dialogue|Qi|If I know what this goo is made of, I should be able to create an 'antidote' of sorts, something to neutralize the toxicity.}}
+{{dialogue|Qi|That is... I assume, why you brought it here?}}
+{{dialogue|Qi|Hm. I'm afraid this substance, despite its superficial function, appears to be rather complex. I may need a few days to analyze it. Bring me {{textcolor|green|10 Data Discs}} as well, might speed along the work...}}
+{{dialogue|Qi|Well, I'll get to it, straight away.}}
+The conversation ends.
+BAG MODIFY BY TARGET || missionId: 1200232 | targetId: 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Collect Data Discs===
+
+{{mission_details
+|desc = Qi needs some time to analyze the samples. Bring him Data Discs to help his research.
+|details = Collect Data Discs
+*{{i2|Data Disc|0/10}}
+*{{i2|Qi|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1200232 | targetId: 2 | canSubmit: 1
+ACTIONS
+BAG MODIFY BY TARGET || targetId: 2 | missionId: 1200232
+(cId 1) A conversation 6563, 6564 starts:
+{{dialogue|Qi|Brilliant. I've nearly cracked this substance already. It's made of glycerine... distilled water... Mm, but probably much more importantly: clostridium perfringens extract. It's very interesting!}}
+{{dialogue|Qi|These Data Discs should be enough to fill in the gaps. I'll send you a solution soon, likely by tomorrow.}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Wait for a Letter===
+
+{{mission_details
+|desc = It will take some time for Qi to analyze the samples. Wait for news.
+|details = Wait for a Letter
+}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+NPC CHANGE SKIN COLOR ADD || npc: 8007 | requestID: 22331 | r: 92 | g: 132 | b: 17
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|399}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 399
+CONDITIONS
+Always:
+ACTIONS
+===Go to the Research Center===
+
+{{mission_details
+|desc = Qi has finished the diagram. He needs to explain the diagram in detail so you know how the machine works. Go and see him.
+|details = Go to the Research Center
+}}
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Science:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_science
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+UNIQUE ACTION RUN || idStr: enter_science
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Science:
+CONDITIONS
+Always:
+ACTIONS
+Qi stands still in Science and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Science | flagName: qiandheidi1_heidi
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Science:
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 1927_0 starts:
+{{dialogue|Qi|Ah! ''Player'', there you are.}}
+{{dialogue|Qi|So it turns out the ingredients stated on the pamphlet were a bit of a red herring. As it were, this goo is {{textcolor|green|sulfur based}}. They'd left out a few substances on the ingredient list... I wonder... were they hiding the product's toxicity?}}
+{{dialogue|Qi|In any case, from there I thought I could just synthesize a few pesky electrons out of the mix, maybe use a filter, but it turns out I'd been barking up the wrong polymer chain the whole time.}}
+{{dialogue|Qi|Oxidation, reduction, halogenation. All nil. Then, after hours of banging my head against the wall, it finally hit me... the answer was right there in front of me all along!}}
+
+*''I uh...'' (No unique dialogue)
+*''Er...'' (No unique dialogue)
+*''It was the, um...'' (No unique dialogue)
+
+{{dialogue|Qi|{{textcolor|green|Granulated sodium bicarbonate!}}}}
+{{dialogue|Qi|Ahahah! Like, duh!}}
+{{dialogue|Qi|Well, anyway, just wanted to share that amusing little anecdote with you. You'll find it as you do most granulated sodium bicarbonate, but perhaps a bit more reactive than what you might be used to! I've given it a bit of a... personal touch.}}
+{{dialogue|Qi|It's the perfect {{textcolor|green|neutralizing agent for the toxic goo}}, and, as we all know, it's highly reactive with sulfur trioxide in case we ever need more... I mean, in case we ever need any sulfuric acid...}}
+{{dialogue|Qi|Here is the diagram for the cleaner containing the antidote. You will notice that it closely resembles a {{textcolor|green|vacuum cleaner}}. It is multi-functional and can be used for cleaning as well.}}
+{{dialogue|Qi|This was in fact a prototype for "Vega 5 Commercial Technology Competition," but my move to Sandrock... well, suffice to say it would have been a sure thing.}}
+{{dialogue|Qi|Hahaha... granulated sodium bicarbonate... too much.}}
+{{dialogue|Qi|Now the second diagram is of an {{textcolor|green|Air Purifier}}. I didn't see a need for it, as gas will thin out over time once the source is gone. But the Mayor came and was adamant about getting this solved "immediately" since the rich investor's here.}}
+{{dialogue|Qi|Since she was nice enough to bring me free tea, I accepted. Here you go. You just need to install it in the canyon. I designed it to be powerful enough to not only clean up this type of gas but all the other airborne pollutants as well.}}
+{{dialogue|Qi|Good luck.}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Qi stops standing still
+CUTSCENE UI STATE EXIT || 
+===Construct the Machines===
+
+{{mission_details
+|desc = Construct the Air Purifier and Simple Vacuum Cleaner according to the diagrams.
+|details = Construct the Machines
+*{{i2|Air Purifier|0/1}}
+*{{i2|Vacuum Cleaner|0/1}}
+}}
+Add 1 Air Purifier of Default quality (Notify player)
+Add 1 Vacuum Cleaner of Default quality (Notify player)
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the -1 option in conversation segment 6568:
+{{dialogue|Qi|Oxidation, reduction, halogenation. All nil. Then, after hours of banging my head against the wall, it finally hit me... the answer was right there in front of me all along!}}
+
+*''I uh...'' (No unique dialogue)
+*''Er...'' (No unique dialogue)
+*''It was the, um...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Qi gains 3 favor
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | canSubmit: 1 | targetId: 5 | missionId: 1200232
+CONDITIONS
+Always:
+ACTIONS
+===Install the Air Purifier===
+
+{{mission_details
+|desc = Once the Air Purifier is assembled, head to the designated location in the Valley of Whispers to install it and speed up the dissipation of the green gas.
+|details = Install the Air Purifier
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 22331 | sceneName: Main | path: Mission_hydroponic_empey | flagName: mist_cg_airpurifier2 | extraParams: -1|CreatorItem|14000013_1|1547|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 22331 | missionId: 1200232 | iconType: 3
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 22331
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 12 | id: 22331
+SCENEITEM CREATE FLAG || path: Mission_CityObj_AirPurifier_0 | itemType: 12 | id: 22332 | extraParams: -1 | sceneName: Main | flagName: mist_cg_airpurifier
+===Eliminate the Source of Contamination===
+
+{{mission_details
+|desc = Use the Simple Vacuum Cleaner to clean the green goo and enter the Valley of Whispers The antidote in the device will break down the contaminants.
+|details = Eliminate the Source of Contamination
+}}
+SAND SET CLEAN ENABLE || id: 35004 | enable: 0
+SAND SET CLEAN ENABLE || id: 35005 | enable: 0
+SAND SET CLEAN ENABLE || id: 35006 | enable: 0
+SAND SET CLEAN ENABLE || id: 35007 | enable: 0
+SAND SET CLEAN ENABLE || id: 35008 | enable: 0
+SAND SET CLEAN ENABLE || id: 35009 | enable: 0
+SAND SET CLEAN ENABLE || enable: 0 | id: 350010
+SAND SET CLEAN ENABLE || id: 35001 | enable: 0
+SAND SET CLEAN ENABLE || id: 35002 | enable: 0
+SAND SET CLEAN ENABLE || id: 35003 | enable: 0
+AREA TRIGGER CREATE || missionId: 1200232 | id: 22335 | sceneName: Main | showOnMap: 1 | mapIcon: MissionArea | transId: 80010538 | flagName: mist_pipe2_pipe0
+AREA TRIGGER CREATE || id: 22336 | transId: 80010538 | missionId: 1200232 | mapIcon: MissionArea | showOnMap: 1 | flagName: mist_pipe3_pipe0 | sceneName: Main
+AREA TRIGGER CREATE || id: 22337 | transId: 80010538 | missionId: 1200232 | mapIcon: MissionArea | showOnMap: 1 | sceneName: Main | flagName: mist_pipe1_pipe0
+ACTION AREA TRIGGER SET RADIUS || id: 22335 | radius: 20
+ACTION AREA TRIGGER SET RADIUS || id: 22336 | radius: 20
+ACTION AREA TRIGGER SET RADIUS || id: 22337 | radius: 20
+Set CLEAN1 to 0
+Set CLEAN2 to 0
+Set CLEAN3 to 0
+
+TRIGGER Procedure 2.0 Step 4.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DIRT CLEAR || order: 0 | id: 35002 | compare: 6 | value: 20
+CONDITIONS
+Always:
+ACTIONS
+Increment CLEAN1 by 1
+MISSION TARGET COUNTER CHANGE || missionId: 1200232 | targetId: 7 | transId: 80010539 | isAdd: 1
+SCENEITEM DELETE || id: 218711 | itemType: 0
+SCENEITEM DELETE || itemType: 0 | id: 2187111
+
+TRIGGER Procedure 2.0 Step 5.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DIRT CLEAR || order: 0 | id: 35004 | compare: 6 | value: 20
+CONDITIONS
+Always:
+ACTIONS
+Increment CLEAN1 by 1
+MISSION TARGET COUNTER CHANGE || missionId: 1200232 | targetId: 7 | transId: 80010539 | isAdd: 1
+SCENEITEM DELETE || id: 218714 | itemType: 0
+SCENEITEM DELETE || id: 2187141 | itemType: 0
+
+TRIGGER Procedure 2.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DIRT CLEAR || order: 0 | id: 35005 | compare: 6 | value: 20
+CONDITIONS
+Always:
+ACTIONS
+Increment CLEAN1 by 1
+MISSION TARGET COUNTER CHANGE || missionId: 1200232 | targetId: 7 | transId: 80010539 | isAdd: 1
+SCENEITEM DELETE || id: 218715 | itemType: 0
+SCENEITEM DELETE || id: 2187151 | itemType: 0
+
+TRIGGER Procedure 2.0 Step 7.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DIRT CLEAR || order: 10 | id: 35005 | compare: 6 | value: 20
+ON DIRT CLEAR || order: 10 | id: 35002 | compare: 6 | value: 20
+ON DIRT CLEAR || order: 10 | id: 35004 | compare: 6 | value: 20
+CONDITIONS
+Check if CLEAN1 is >= 3
+ACTIONS
+AREA TRIGGER DELETE || id: 22337
+
+TRIGGER Procedure 2.0 Step 8.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DIRT CLEAR || order: 0 | id: 35003 | compare: 6 | value: 20
+CONDITIONS
+Always:
+ACTIONS
+Increment CLEAN2 by 1
+MISSION TARGET COUNTER CHANGE || missionId: 1200232 | targetId: 7 | transId: 80010539 | isAdd: 1
+SCENEITEM DELETE || id: 218712 | itemType: 0
+SCENEITEM DELETE || itemType: 0 | id: 2187121
+
+TRIGGER Procedure 2.0 Step 9.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DIRT CLEAR || order: 0 | id: 35006 | compare: 6 | value: 20
+CONDITIONS
+Always:
+ACTIONS
+Increment CLEAN2 by 1
+MISSION TARGET COUNTER CHANGE || missionId: 1200232 | targetId: 7 | transId: 80010539 | isAdd: 1
+SCENEITEM DELETE || id: 218716 | itemType: 0
+SCENEITEM DELETE || itemType: 0 | id: 2187161
+
+TRIGGER Procedure 2.0 Step 10.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DIRT CLEAR || order: 0 | id: 35007 | compare: 6 | value: 20
+CONDITIONS
+Always:
+ACTIONS
+Increment CLEAN2 by 1
+MISSION TARGET COUNTER CHANGE || missionId: 1200232 | targetId: 7 | transId: 80010539 | isAdd: 1
+SCENEITEM DELETE || id: 218717 | itemType: 0
+SCENEITEM DELETE || itemType: 0 | id: 2187171
+
+TRIGGER Procedure 2.0 Step 11.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DIRT CLEAR || order: 10 | id: 35003 | compare: 6 | value: 20
+ON DIRT CLEAR || order: 10 | id: 35006 | compare: 6 | value: 20
+ON DIRT CLEAR || order: 10 | id: 35007 | compare: 6 | value: 20
+CONDITIONS
+Check if CLEAN2 is >= 3
+ACTIONS
+AREA TRIGGER DELETE || id: 22335
+
+TRIGGER Procedure 2.0 Step 12.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DIRT CLEAR || order: 0 | id: 35001 | compare: 6 | value: 20
+CONDITIONS
+Always:
+ACTIONS
+Increment CLEAN3 by 1
+MISSION TARGET COUNTER CHANGE || missionId: 1200232 | targetId: 7 | transId: 80010539 | isAdd: 1
+SCENEITEM DELETE || itemType: 0 | id: 218710
+SCENEITEM DELETE || itemType: 0 | id: 2187101
+
+TRIGGER Procedure 2.0 Step 13.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DIRT CLEAR || order: 0 | id: 35008 | compare: 6 | value: 20
+CONDITIONS
+Always:
+ACTIONS
+Increment CLEAN3 by 1
+MISSION TARGET COUNTER CHANGE || missionId: 1200232 | targetId: 7 | transId: 80010539 | isAdd: 1
+SCENEITEM DELETE || itemType: 0 | id: 218718
+SCENEITEM DELETE || itemType: 0 | id: 2187181
+
+TRIGGER Procedure 2.0 Step 14.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DIRT CLEAR || order: 0 | id: 35009 | compare: 6 | value: 20
+CONDITIONS
+Always:
+ACTIONS
+Increment CLEAN3 by 1
+MISSION TARGET COUNTER CHANGE || missionId: 1200232 | targetId: 7 | transId: 80010539 | isAdd: 1
+SCENEITEM DELETE || itemType: 0 | id: 218719
+SCENEITEM DELETE || itemType: 0 | id: 2187191
+
+TRIGGER Procedure 2.0 Step 15.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DIRT CLEAR || order: 0 | id: 350010 | compare: 6 | value: 20
+CONDITIONS
+Always:
+ACTIONS
+Increment CLEAN3 by 1
+MISSION TARGET COUNTER CHANGE || missionId: 1200232 | targetId: 7 | transId: 80010539 | isAdd: 1
+SCENEITEM DELETE || itemType: 0 | id: 218720
+SCENEITEM DELETE || itemType: 0 | id: 2187201
+
+TRIGGER Procedure 2.0 Step 16.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DIRT CLEAR || order: 10 | id: 35008 | compare: 6 | value: 20
+ON DIRT CLEAR || order: 10 | id: 35009 | compare: 6 | value: 20
+ON DIRT CLEAR || order: 10 | id: 35001 | compare: 6 | value: 20
+ON DIRT CLEAR || order: 10 | id: 350010 | compare: 6 | value: 20
+CONDITIONS
+Check if CLEAN3 is >= 4
+ACTIONS
+AREA TRIGGER DELETE || id: 22336
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200232 | targetId: 7 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 22331 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 22335
+AREA TRIGGER DELETE || id: 22336
+AREA TRIGGER DELETE || id: 22337
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22331
+CONDITIONS
+Always:
+ACTIONS
+Trudy stands still in Main and looks at Player
+Musa stands still in Main and looks at Player
+Justice stands still in Main and looks at Player
+Qi stands still in Main
+PLAYER SET POS ROT FLAG || flagName: mist_cg_player | sceneName: Main
+DELAY MASK SET || maskId: 22331 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+{{cutscene|id = 1335}}
+A cutscene CG_DISSIPATION (duration: 0.0) starts playing
+No More Green - The gas has finally been cleaned up. Another problem solved!
+SCENEITEM DELETE || id: 22221 | itemType: 0
+SCENEITEM DELETE || itemType: 0 | id: 21872
+MONSTER ADD TAG || isAdd: 0 | tag: FarmedYakmel_Green
+MONSTER ADD TAG || tag: FarmedYakmel | isAdd: 1
+SCENEITEM DELETE || itemType: 0 | id: 21876
+SCENEITEM DELETE || itemType: 0 | id: 218721
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 9 | name: CG_DISSIPATION
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 6578, 6579 starts:
+{{dialogue|Trudy|It's working! You've done it! Fantastic work, ''Player''! Thank you! Thank you!}}
+{{dialogue|Musa|Do I smell... Starberries?}}
+
+TRIGGER Procedure 3.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 22332) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:mist_cg_player|LookAtActor:8007)
+Justice stops standing still
+Trudy stops standing still
+Musa stops standing still
+Justice stands still in Main and looks at Qi
+Musa stands still in Main and looks at Qi
+Trudy stands still in Main and looks at Qi
+Qi stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 22332) to Qi
+(param: TargetScene:Main|MoveMode:Walk|FlagName:mist_cg_qi2)
+
+TRIGGER Procedure 3.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8007 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 6580, 6581, 6582, 6583 starts:
+{{dialogue|Qi|Greetings. I've just come to admire our handiwork. Seems everything's gone according to plan. Well done, ''Player''. You've once again managed to manifest my designs flawlessly.}}
+{{dialogue|Musa|Director, what's happening to the gas? Did you synthesize it? Was its molecular makeup similar in some way to... Starberries?}}
+{{dialogue|Qi|Mm... No...}}
+{{dialogue|Qi|I just like Starberries.}}
+
+TRIGGER Procedure 3.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 22333) to Qi
+(param: CMDAction:DeepBreath)
+
+TRIGGER Procedure 3.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8007 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 22333) from Qi
+Remove behavior CommanderMoveToFlagAndAction (idName: 22332) from Qi
+(cId 5) A conversation 6584, 6585, 6586 starts:
+{{dialogue|Trudy|I see... Well, everything worked, so I won't look a gift Yakmel in the mouth.}}
+{{dialogue|Trudy|I'd say this is a {{textcolor|green|perfect ending}}... don't you agree, Mr. Musa?}}
+{{dialogue|Musa|Yea-}}
+
+TRIGGER Procedure 3.0 Step 7.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 22332) from Player
+Add behavior CommanderMoveToFlagAndAction (idName: 22332) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:mist_cg_player|LookAtActor:8021)
+Justice stops standing still
+Trudy stops standing still
+Musa stops standing still
+Justice stands still in Main and looks at Burgess
+Musa stands still in Main and looks at Burgess
+Trudy stands still in Main and looks at Burgess
+Burgess stands still in Main
+Burgess stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 22332) to Burgess
+(param: TargetScene:Main|MoveMode:Run|FlagName:mist_cg_burgess)
+
+TRIGGER Procedure 3.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 22332 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8021 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 6587, 6588 starts:
+{{dialogue|Burgess|Mayor! Mayor Trudy! Huff... huff!}}
+{{dialogue|Burgess|Come quickly! Huff! Dan-bi and Rian are leaving town, and I can't convince them to stay!}}
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22332
+CONDITIONS
+Always:
+ACTIONS
+Justice stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 22332) from Burgess
+Remove behavior CommanderMoveToFlagAndAction (idName: 22332) from Player
+Musa stops standing still
+Trudy stops standing still
+Rian stands still in Main
+Dan-bi stands still in Main
+Trudy stands still in Main
+Burgess stands still in Main
+Musa stands still in Main
+PLAYER SET POS ROT FLAG || flagName: mist_station_player1 | sceneName: Main
+DELAY MASK SET || maskId: 22332 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 22331 | sceneName: Main | extraParams: 0 | path: Mission_CityObj_Luggage_0 | flagName: mist_station_package
+
+TRIGGER Procedure 4.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 22332
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 22333) to Rian
+(param: CMDAction:LookAround)
+Add behavior CommanderNPCAction (idName: 22333) to Dan-bi
+(param: CMDAction:LookAround)
+
+TRIGGER Procedure 4.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8074 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 6589 starts:
+{{dialogue|Trudy|Dan-bi!}}
+
+TRIGGER Procedure 4.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 22333) from Dan-bi
+Remove behavior CommanderNPCAction (idName: 22333) from Rian
+Rian stops standing still
+Dan-bi stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 22333) to Rian
+(param: TargetScene:Main|MoveMode:Walk|FlagName:mist_station_rian2|LookAtTarget:8006)
+Add behavior CommanderMoveToFlagAndAction (idName: 22333) to Dan-bi
+(param: TargetScene:Main|MoveMode:Walk|FlagName:mist_station_danbi2|LookAtTarget:8006)
+Add behavior CommanderMoveToFlagAndAction (idName: 22333) to Trudy
+(param: TargetScene:Main|MoveMode:RunFast|FlagName:mist_station_trudy2|LookAtTarget:8074)
+Add behavior CommanderMoveToFlagAndAction (idName: 22333) to Burgess
+(param: TargetScene:Main|MoveMode:Run|FlagName:mist_station_burgess2|LookAtTarget:8074)
+Add behavior CommanderMoveToFlagAndAction (idName: 22333) to Musa
+(param: TargetScene:Main|MoveMode:Run|FlagName:mist_station_musa2|LookAtTarget:8074)
+Add behavior CommanderMoveToFlagAndAction (idName: 22333) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:mist_station_player2|LookAtTarget:8074)
+
+TRIGGER Procedure 4.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) The player picks the first option in conversation segment 6595:
+{{dialogue|Trudy|I know that Dan-bi! And we're working towards that! Everyone in Sandrock is giving it their all. And we're on the cusp of achieving that! Please don't go...}}
+
+*''We need you.'' (No unique dialogue)
+*''We don't need you.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Burgess gains 6 favor
+Rian gains 6 favor
+Dan-bi gains 6 favor
+
+TRIGGER Procedure 4.0 Step 3.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || path: Mission_SandUnit1 | itemType: 0 | id: 218710 | sceneName: Main | flagName: bridge_kaimu | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 218711 | sceneName: Main | path: Mission_SandUnit2 | extraParams: 0 | flagName: bridge_kaimu
+SCENEITEM CREATE FLAG || itemType: 0 | id: 218712 | sceneName: Main | path: Mission_SandUnit3 | extraParams: 0 | flagName: bridge_kaimu
+SAND SET CLEAN ENABLE || enable: 0 | id: 35001
+SAND SET CLEAN ENABLE || enable: 0 | id: 35002
+SAND SET CLEAN ENABLE || enable: 0 | id: 35003
+DIRT VOLUME SET || id: 35001 | percent: 1
+DIRT VOLUME SET || id: 35002 | percent: 1
+DIRT VOLUME SET || percent: 1 | id: 35003
+
+TRIGGER Procedure 4.0 Step 3.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 22331
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || path: Mission_SandUnit1 | itemType: 0 | id: 218710 | sceneName: Main | flagName: bridge_kaimu | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 218711 | sceneName: Main | path: Mission_SandUnit2 | extraParams: 0 | flagName: bridge_kaimu
+SCENEITEM CREATE FLAG || itemType: 0 | id: 218712 | sceneName: Main | path: Mission_SandUnit3 | extraParams: 0 | flagName: bridge_kaimu
+SAND SET CLEAN ENABLE || enable: 0 | id: 35001
+SAND SET CLEAN ENABLE || enable: 0 | id: 35002
+SAND SET CLEAN ENABLE || enable: 0 | id: 35003
+DIRT VOLUME SET || id: 35001 | percent: 1
+DIRT VOLUME SET || id: 35002 | percent: 1
+DIRT VOLUME SET || percent: 1 | id: 35003
+
+TRIGGER Procedure 4.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8006 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 8) A conversation 1928_0 starts:
+{{dialogue|Dan-bi|Mayor Trudy?!}}
+{{dialogue|Trudy|Hey, hey, guys... wait! The whole 'people turning green' thing, it's been solved! ''Player'' just fixed everything!}}
+{{dialogue|Rian|Sorry, my fellas, I tried...}}
+{{dialogue|Dan-bi|Even if you fixed this 'green' thing, it's always something in this town! Next week, everyone'll be turning purple! Or worse, mauve!}}
+{{dialogue|Dan-bi|We need stability and safety if we're ever going to raise a family!}}
+{{dialogue|Trudy|I know that Dan-bi! And we're working towards that! Everyone in Sandrock is giving it their all. And we're on the cusp of achieving that! Please don't go...}}
+
+*''We need you.''
+*''We don't need you.''
+
+{{dialogue|Trudy|indent=true|answer=We need you.
+|reward={{NPC2|Burgess|rp=6}}|reward={{NPC2|Rian|rp=6}}|reward={{NPC2|Dan-bi|rp=6}}|We really do...}}
+{{dialogue|Dan-bi|indent=true|answer=We don't need you.
+|Huh!?}}
+{{dialogue|Burgess|indent=true|Erm! Exactly! We don't need you... like we don't need Yakmel! Hahaha! Am I right?}}
+{{dialogue|Trudy|Dan-bi, you're one of the most hard working people I've ever met. And Rian... well... you're Rian! Who else can say that?}}
+{{dialogue|Rian|That's a good point...}}
+{{dialogue|Trudy|Sure, we've hit a few snags, but I know we're on the other side of this struggle now. Do you know why? The vision of that great and green Sandrock, Dan-bi, we've always had a vision, but not the means to execute it.}}
+{{dialogue|Trudy|We have that now! Because of people like you and ''Player''. If nothing else, the last few events have proven to me that Sandrockers nowadays can and will rise up to the occasion, no matter how bleak or green it looks!}}
+{{dialogue|Trudy|So can I selfishly ask you to stay a little longer? So that we can see our vision come to pass?}}
+{{dialogue|Dan-bi|...}}
+{{dialogue|Dan-bi|Trudy... Sniff, I really don't want to leave...}}
+{{dialogue|Dan-bi|Yeah... hic... you're right. I want to see my dream come true! Sniff, we've come so far...}}
+The conversation ends.
+
+TRIGGER Procedure 5.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 1336}}
+A cutscene CG_TOGETHER (duration: -2.0) starts playing
+No! Don't Go! - Dan-bi and Rian won't be leaving Sandrock anymore! Although "everything will be fine" seems to be a tagline for disaster, it really feels like things will get better from here.
+
+TRIGGER Procedure 5.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 9 | name: CG_TOGETHER
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 22333) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 22333) from Trudy
+Remove behavior CommanderMoveToFlagAndAction (idName: 22333) from Burgess
+Remove behavior CommanderMoveToFlagAndAction (idName: 22333) from Musa
+Remove behavior CommanderMoveToFlagAndAction (idName: 22333) from Rian
+Remove behavior CommanderMoveToFlagAndAction (idName: 22333) from Dan-bi
+Dan-bi stops standing still
+Rian stops standing still
+Burgess stops standing still
+Trudy stops standing still
+Musa stops standing still
+Rian stands still in Main and looks at Dan-bi
+Dan-bi stands still in Main and looks at Rian
+CUTSCENE UI STATE EXIT || 
+AREA TRIGGER ONCE CREATE || missionId: 1200232 | id: 22334 | sceneName: Main | flagName: mist_station_trigger | showOnMap: 1 | mapIcon: MissionArea | transId: 80010542
+ACTION AREA TRIGGER SET RADIUS || id: 22334 | radius: 10
+SUBMIT MISSION 1200232
+
+TRIGGER Procedure 5.0 Step 1.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 218714 | sceneName: Main | extraParams: 0 | path: Mission_SandUnit4 | flagName: bridge_kaimu
+SCENEITEM CREATE FLAG || itemType: 0 | id: 218715 | sceneName: Main | extraParams: 0 | path: Mission_SandUnit5 | flagName: bridge_kaimu
+SCENEITEM CREATE FLAG || itemType: 0 | id: 218716 | sceneName: Main | extraParams: 0 | path: Mission_SandUnit6 | flagName: bridge_kaimu
+SCENEITEM CREATE FLAG || itemType: 0 | id: 218717 | sceneName: Main | extraParams: 0 | path: Mission_SandUnit7 | flagName: bridge_kaimu
+SCENEITEM CREATE FLAG || path: Mission_SandUnit8 | itemType: 0 | id: 218718 | sceneName: Main | flagName: bridge_kaimu | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 218719 | sceneName: Main | path: Mission_SandUnit9 | extraParams: 0 | flagName: bridge_kaimu
+SCENEITEM CREATE FLAG || itemType: 0 | id: 218720 | sceneName: Main | path: Mission_SandUnit10 | extraParams: 0 | flagName: bridge_kaimu
+SAND SET CLEAN ENABLE || enable: 0 | id: 35004
+SAND SET CLEAN ENABLE || enable: 0 | id: 35005
+SAND SET CLEAN ENABLE || enable: 0 | id: 35006
+SAND SET CLEAN ENABLE || id: 35007 | enable: 0
+SAND SET CLEAN ENABLE || id: 35008 | enable: 0
+SAND SET CLEAN ENABLE || id: 35009 | enable: 0
+SAND SET CLEAN ENABLE || id: 350010 | enable: 0
+DIRT VOLUME SET || id: 35004 | percent: 1
+DIRT VOLUME SET || percent: 1 | id: 35005
+DIRT VOLUME SET || percent: 1 | id: 35006
+DIRT VOLUME SET || percent: 1 | id: 35007
+DIRT VOLUME SET || percent: 1 | id: 35008
+DIRT VOLUME SET || percent: 1 | id: 35009
+DIRT VOLUME SET || percent: 1 | id: 350010
+
+TRIGGER Procedure 5.0 Step 1.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 22331
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 218714 | sceneName: Main | extraParams: 0 | path: Mission_SandUnit4 | flagName: bridge_kaimu
+SCENEITEM CREATE FLAG || itemType: 0 | id: 218715 | sceneName: Main | extraParams: 0 | path: Mission_SandUnit5 | flagName: bridge_kaimu
+SCENEITEM CREATE FLAG || itemType: 0 | id: 218716 | sceneName: Main | extraParams: 0 | path: Mission_SandUnit6 | flagName: bridge_kaimu
+SCENEITEM CREATE FLAG || itemType: 0 | id: 218717 | sceneName: Main | extraParams: 0 | path: Mission_SandUnit7 | flagName: bridge_kaimu
+SCENEITEM CREATE FLAG || path: Mission_SandUnit8 | itemType: 0 | id: 218718 | sceneName: Main | flagName: bridge_kaimu | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 218719 | sceneName: Main | path: Mission_SandUnit9 | extraParams: 0 | flagName: bridge_kaimu
+SCENEITEM CREATE FLAG || itemType: 0 | id: 218720 | sceneName: Main | path: Mission_SandUnit10 | extraParams: 0 | flagName: bridge_kaimu
+SAND SET CLEAN ENABLE || enable: 0 | id: 35004
+SAND SET CLEAN ENABLE || enable: 0 | id: 35005
+SAND SET CLEAN ENABLE || enable: 0 | id: 35006
+SAND SET CLEAN ENABLE || id: 35007 | enable: 0
+SAND SET CLEAN ENABLE || id: 35008 | enable: 0
+SAND SET CLEAN ENABLE || id: 35009 | enable: 0
+SAND SET CLEAN ENABLE || id: 350010 | enable: 0
+DIRT VOLUME SET || id: 35004 | percent: 1
+DIRT VOLUME SET || percent: 1 | id: 35005
+DIRT VOLUME SET || percent: 1 | id: 35006
+DIRT VOLUME SET || percent: 1 | id: 35007
+DIRT VOLUME SET || percent: 1 | id: 35008
+DIRT VOLUME SET || percent: 1 | id: 35009
+DIRT VOLUME SET || percent: 1 | id: 350010
+
+TRIGGER Procedure 5.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22334
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 5.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 22336
+CONDITIONS
+Always:
+ACTIONS
+(cId 9) A conversation 1932_0 starts:
+{{dialogue|Rian|Babe, wait, don't you think you're being a bit hasty?}}
+{{dialogue|Dan-bi|What!? I thought you wanted to stay!}}
+{{dialogue|Rian|Well, yeah, but I mean... we already packed up all our stuff...}}
+{{dialogue|Dan-bi|Gr... I'll unpack everything, alright? And I'll pack everything up for a second time if I change my mind again!}}
+{{dialogue|Rian|You know babe, I have a feeling that everything's gonna be... okay.}}
+{{dialogue|Dan-bi|Alright, alright, let's go...}}
+The conversation ends.
+
+TRIGGER Procedure 5.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Rian stops standing still
+Add behavior CommanderNPCAction (idName: 22335) to Dan-bi
+(param: CMDAction:Talk)
+
+TRIGGER Procedure 5.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 22334
+Rian stops standing still
+Dan-bi stops standing still
+SCENEITEM DELETE || itemType: 0 | id: 22331
+END MISSION 1200233
+
+TRIGGER Procedure 5.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8074 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 22335) from Dan-bi
+Dan-bi stops standing still
+SCENEITEM DELETE || itemType: 0 | id: 22331
+END MISSION 1200233
+
+TRIGGER Procedure 6.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 22331
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 2187141 | sceneName: Main | extraParams: 0 | path: Mission_fxpickup | flagName: mist_pipefx1
+SCENEITEM CREATE FLAG || itemType: 0 | id: 2187151 | sceneName: Main | extraParams: 0 | path: Mission_fxpickup | flagName: mist_pipefx2
+SCENEITEM CREATE FLAG || itemType: 0 | id: 2187161 | sceneName: Main | extraParams: 0 | path: Mission_fxpickup | flagName: mist_pipefx3
+SCENEITEM CREATE FLAG || itemType: 0 | id: 2187171 | sceneName: Main | extraParams: 0 | path: Mission_fxpickup | flagName: mist_pipefx4
+SCENEITEM CREATE FLAG || path: Mission_fxpickup | itemType: 0 | id: 2187181 | sceneName: Main | flagName: mist_pipefx5 | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 2187191 | sceneName: Main | path: Mission_fxpickup | extraParams: 0 | flagName: mist_pipefx6
+SCENEITEM CREATE FLAG || itemType: 0 | id: 2187201 | sceneName: Main | path: Mission_fxpickup | extraParams: 0 | flagName: mist_pipefx7
+SCENEITEM CREATE FLAG || itemType: 0 | id: 2187101 | path: Mission_fxpickup | sceneName: Main | extraParams: 0 | flagName: mist_pipefx8
+SCENEITEM CREATE FLAG || itemType: 0 | id: 2187111 | path: Mission_fxpickup | extraParams: 0 | sceneName: Main | flagName: mist_pipefx9
+SCENEITEM CREATE FLAG || itemType: 0 | id: 2187121 | path: Mission_fxpickup | sceneName: Main | flagName: mist_pipefx10 | extraParams: 0

@@ -1,0 +1,324 @@
+Reading Mission 1700098: Keep on Rockin'
+
+<onlyinclude>{{Infobox mission
+|name = Keep on Rockin'
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Keep on Rockin':
+
+TRIGGER Procedure 2.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 172972
+CONDITIONS
+Always:
+ACTIONS
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700097
+CONDITIONS
+Always:
+ACTIONS
+Run mission Keep on Rockin'
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700098
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Qi===
+
+{{mission_details
+|desc = You will need Qi's help to make the diagram for the Sorting Machine. Talk with him about it.
+|details = Talk to Qi
+}}
+Set global blackboard key noticketoffjj with info 0.
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 2366 starts:
+{{dialogue|Qi|A Sorting Machine? Quite doable; bring me 5 Data Discs and you'll have what you want.}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+CHECK PLAYER ITEM || item: 19200001 | itemGrade: -1 | set: 2 | count: 5
+ACTIONS
+===Talk to Qi===
+
+{{mission_details
+|desc = You've got enought Data Discs, now go talk to Qi to get the diagram.
+|details = Talk to Qi
+*{{i2|Data Disc|0/5}}
+*{{i2|Qi|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+CHECK PLAYER ITEM || item: 19200001 | itemGrade: -1 | set: 6 | count: 5
+ACTIONS
+===Collect Data Discs===
+
+{{mission_details
+|desc = You need prepare 5 Data Discs to get the diagram of the Sorting Machine. Return to Qi when you collect enough of them.
+|details = Collect Data Discs
+*{{i2|Data Disc|0/5}}
+*{{i2|Qi|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON BAG CHANGE || order: 0 | item: 19200001 | changeType: -1 | itemGrade: -1
+CONDITIONS
+CHECK PLAYER ITEM || item: 19200001 | itemGrade: -1 | set: 2 | count: 5
+ACTIONS
+===Talk to Qi===
+
+{{mission_details
+|desc = You've got enought Data Discs, now go talk to Qi to get the diagram.
+|details = Talk to Qi
+*{{i2|Data Disc|0/5}}
+*{{i2|Qi|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+CHECK PLAYER ITEM || item: 19200001 | itemGrade: -1 | set: 2 | count: 5
+ACTIONS
+(cId 1) A conversation 2367 starts:
+{{dialogue|Qi|Okay, I'll get started. Check your mail soon.}}
+
+TRIGGER Procedure 0.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 2367) that ends:
+{{dialogue|Qi|Okay, I'll get started. Check your mail soon.}}
+CONDITIONS
+Always:
+ACTIONS
+Remove 5 Data Disc of Default quality (Notify player)
+Set letter to 1
+===Wait for Diagrams===
+
+{{mission_details
+|desc = It takes time for Qi to draw the diagram, wait for his mail.
+|details = Wait for Diagrams
+}}
+
+TRIGGER Procedure 0.0 Step 8.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if letter is == 1
+ACTIONS
+The player receives a letter:
+{{mail|86}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 86
+CONDITIONS
+Always:
+ACTIONS
+===Construct the Sorting Machine===
+
+{{mission_details
+|desc = You have the diagram for the Sorting Machine. Construct it as soon as possible.
+|details = Construct the Sorting Machine
+*{{i2|Sorting Machine|0/1}}
+}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | targetId: 4 | missionId: 1700097 | canSubmit: 1
+CONDITIONS
+CHECK SCENE ITEM DAYS LEFT || type: 20 | id: 200322 | compare: 2 | days: 1
+ACTIONS
+===Install the Sorting Machine===
+
+{{mission_details
+|desc = The Sorting Machine is constructed and is ready to be installed in the {{textcolor|green|backyard of Eufaula Salvage Co}}. Install it at the designated location.
+|details = Install the Sorting Machine
+*{{i2|Sorting Machine|0/1}}
+}}
+Set sortingMC to 1
+SCENEITEM CREATE FLAG || itemType: 11 | sceneName: Main | id: 173981 | path: Mission_Kor_flag | flagName: kor_SortingMC | extraParams: Mission_Kor|CreatorItem|14000043_1|1547|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 173981 | missionId: 1700097 | iconType: 3
+
+TRIGGER Procedure 1.0 Step 2.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 173981
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+{{cutscene|id = 2051}}
+A cutscene CG_GROUPHUG (duration: 1.0) starts playing
+Bring It In, Boys - Rocky, overwhelmed with emotion after having one of his friends leave his company gave us all a hug. At this moment, I could really feel the struggle of the people of Sandrock.
+
+TRIGGER Procedure 1.0 Step 3.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | targetId: 4 | missionId: 1700097 | canSubmit: 1
+CONDITIONS
+CHECK SCENE ITEM DAYS LEFT || type: 20 | compare: 6 | days: 1 | id: 200322
+ACTIONS
+===Install the Sorting Machine===
+
+{{mission_details
+|desc = The Sorting Machine is constructed and is ready to be installed in the {{textcolor|green|backyard of Eufaula Salvage Co}}. Install it at the designated location.
+|details = Install the Sorting Machine
+*{{i2|Sorting Machine|0/1}}
+}}
+Set sortingMC to 1
+SCENEITEM CREATE FLAG || itemType: 11 | sceneName: Main | id: 173981 | path: Mission_Kor_flag | flagName: kor_SortingMC | extraParams: Mission_Kor|CreatorItem|14000043_1|1547|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 173981 | missionId: 1700097 | iconType: 3
+AREA TRIGGER CREATE || missionId: 1700097 | id: 170982 | sceneName: Main | flagName: kor_trigger_block | showOnMap: 0 | mapIcon: -1 | transId: -1
+Set global blackboard key noticketoffjj with info 1.
+Set global blackboard key SLYPurchased with info 1.
+
+TRIGGER Procedure 1.0 Step 5.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 173981
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 2051}}
+A cutscene CG_GROUPHUG (duration: 1.0) starts playing
+Bring It In, Boys - Rocky, overwhelmed with emotion after having one of his friends leave his company gave us all a hug. At this moment, I could really feel the struggle of the people of Sandrock.
+AREA TRIGGER DELETE || id: 170982
+GLOBAL BLACK BOARD REMOVE || key: SLYPurchased
+
+TRIGGER Procedure 1.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Rocky stops standing still
+Fei stops standing still
+Peck stops standing still
+Venti stops standing still
+SCENEITEM DELETE || itemType: 11 | id: 173981
+SUBMIT MISSION 1700097
+ACTION DATE LOCKER UNLOCK || id: 200322
+Remove behavior Bamna (idName: 179780371) from Bamna
+NPC LEAVE || npc: 8037
+GLOBAL BLACK BOARD REMOVE || key: noticketoffjj
+
+TRIGGER Procedure 1.0 Step 6.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_GROUPHUG | state: 8
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: kor_player2
+Rocky stands still in Main
+Fei stands still in Main
+Peck stands still in Main
+Venti stands still in Main
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_GROUPHUG | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 2377 starts:
+{{dialogue|Rocky|Thanks again, Builder. I think this machine you built for us has inspired some hope; maybe in me more than anyone. I'm gonna try to do somethin' nice for you, too, alright? You keep an eye on your mailbox...}}
+Set sendletter to 3
+Rocky gains 20 favor
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if sendletter is != (maybe?) 0
+ACTIONS
+Decrement sendletter by 1
+
+TRIGGER Procedure 2.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if sendletter is == 0
+ACTIONS
+The player receives a letter:
+{{mail|87}}
+SCENEITEM INTERACT SET || itemType: 0 | id: 70982 | canInteract: 1
+END MISSION 1700097
+END MISSION 1700098
+
+TRIGGER Procedure 2.0 Step 4.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 170982
+CONDITIONS
+Always:
+ACTIONS
+(cId 8000) A conversation 2500 starts:
+{{dialogue|Player|(I need to install the Sorting Machine.)}}
+
+TRIGGER Procedure 2.0 Step 5.0 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 8000) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 171983 | delayTime: 0 | durationTime: 0.5 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 6.0 Order 5 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 171983 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: kor_player2
+DELAY MASK SET || maskId: 170983 | delayTime: 0.5 | durationTime: 0.5 | changeType: 1 | curveIndex: 0
+CUTSCENE UI STATE EXIT || 

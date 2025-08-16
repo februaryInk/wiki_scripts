@@ -1,0 +1,1235 @@
+Reading Mission 1200279: Fall from Grace
+
+<onlyinclude>{{Infobox mission
+|name = Fall from Grace
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Fall from Grace:
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1200278
+START MISSION 1200278
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200278
+CONDITIONS
+Always:
+ACTIONS
+Run mission Fall from Grace
+END MISSION 1200278
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200279
+CONDITIONS
+Always:
+ACTIONS
+===Meet Grace at Midnight===
+
+{{mission_details
+|desc = At 12:00, meet Grace at the Church Cellar
+|details = Meet Grace at Midnight
+}}
+SCENEITEM CREATE FLAG || flagName: machineroom_enter | itemType: 0 | id: 22791 | sceneName: Main | extraParams: 0 | path: Interact_ClinicDoor
+SCENEITEM CREATE FLAG || itemType: 0 | id: 227910 | path: Mission_Repather_1200278_3 | sceneName: Main | flagName: bridge_kaimu | extraParams: 0
+CALENDAR SET REMINDER || transId: 80015086 | hour: 23 | addDays: 0
+Set global blackboard key 1200279 with info 1.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 15) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Grace stops standing still
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8002 | state: Defense
+===Look for another way out===
+
+{{mission_details
+|desc = Pen and Miguel are looking around where you just were, traverse deeper and look for another exit.
+|details = Look for another way out
+}}
+CUTSCENE UI STATE EXIT || 
+AREA TRIGGER ONCE CREATE || id: 22793 | missionId: 1200278 | showOnMap: 0 | sceneName: Warehouse_Dungeon | flagName: machineroom_letter_trigger | mapIcon: 0 | transId: 0
+AUTOSAVE TRY || 
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 22791
+CONDITIONS
+CHECK TIME || compare: 2 | hour: 7 | minute: 0
+CHECK TIME || compare: 5 | hour: 23 | minute: 59
+ACTIONS
+(cId 0) A conversation 9990 starts:
+{{dialogue|Player|(It's a bit crowded right now... better to come back at night.)}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 22791
+CONDITIONS
+CHECK TIME || compare: 2 | hour: 0 | minute: 0
+CHECK TIME || compare: 5 | hour: 2 | minute: 59
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 22791 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+STOP ENGAGEMENT || stopType: 2
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22791
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 22791 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+PLAYER SET POS ROT FLAG || sceneName: Warehouse_Dungeon | flagName: machineroom_player3
+SCENEITEM DELETE || itemType: 0 | id: 22791
+SCENEITEM DELETE || id: 227910 | itemType: 0
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1800273 is result 1 flag 1
+CHECK GLOBAL BLACKBOARD || key: 1200279 | info: 1 | exist: 0
+ACTIONS
+===Meet Grace at Midnight===
+
+{{mission_details
+|desc = At 12:00, meet Grace at the Church Cellar
+|details = Meet Grace at Midnight
+}}
+SCENEITEM CREATE FLAG || flagName: machineroom_enter | itemType: 0 | id: 22791 | sceneName: Main | extraParams: 0 | path: Interact_ClinicDoor
+SCENEITEM CREATE FLAG || itemType: 0 | id: 227910 | path: Mission_Repather_1200278_3 | sceneName: Main | flagName: bridge_kaimu | extraParams: 0
+CALENDAR SET REMINDER || transId: 80015086 | hour: 23 | addDays: 0
+GLOBAL BLACK BOARD REMOVE || key: 1200279
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Warehouse_Dungeon:
+CONDITIONS
+Always:
+ACTIONS
+Grace stands still in Warehouse_Dungeon and looks at Player
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Warehouse_Dungeon:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 22797) to Grace
+(param: CMDAction:Squat)
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 22793
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 9809 starts:
+{{dialogue|Grace|Psst! In here!}}
+
+TRIGGER Procedure 1.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key 1200279 with info 1.
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 22791) to Player
+(param: TargetScene:Warehouse_Dungeon|MoveMode:Run|FlagName:machineroom_player4)
+Remove behavior CommanderNPCAction (idName: 22797) from Grace
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 22791) from Player
+(cId 1) A conversation 2775_0 starts:
+{{dialogue|Grace|''Player''. Good of you to come. Don't worry, no one's gonna be here around this time.}}
+{{dialogue|Grace|I need you with me all the way now. Whatever we find in there, let's have each other's back.}}
+
+*''Let's do it.''
+*''Do I have a choice?''
+
+{{dialogue|Grace|indent=true|answer=Let's do it.
+|Good!}}
+{{dialogue|Grace|indent=true|answer=Do I have a choice?
+|Nope! I need a trustworthy Builder with me!}}
+{{dialogue|Grace|Now, if you would... please direct your attention to the {{textcolor|green|Bookshelf}} over there... Seems innocuous enough, right?}}
+{{dialogue|Grace|Go over and pull {{textcolor|green|the second box}}.}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+NPC SET CAN INTERACT || npc: 8002 | canInteract: 0
+===Check the Cabinet===
+
+{{mission_details
+|desc = Grace said something would happen if you pull the middle shelf on the nearby cabinet. Check it out.
+|details = Check the Cabinet
+}}
+AREA TRIGGER CREATE || missionId: 1200278 | id: 22791 | sceneName: Warehouse_Dungeon | flagName: machineroom_bookshelf | showOnMap: 1 | mapIcon: MissionArea | transId: 80015088
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON TRIGGER TRIGGER || order: 0 | scene: Warehouse_Dungeon | id: 33
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 9816, 9817, 9818 starts:
+{{dialogue|Grace|And there you have it.}}
+{{dialogue|Grace|Here's hoping it's just hiding something embarrassing, like Qi's Old World cartoon stuff. But... as I've said before, the water numbers coming out of this place is always just slightly lower than the water going in...}}
+{{dialogue|Grace|''Player'', the door, if you please?}}
+AREA TRIGGER DELETE || id: 22791
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 1355}}
+A cutscene CG_HIDDENDOOR (duration: 1.5) starts playing
+Behind Closed Doors - There really is a secret door! I used the Anti-Lock to get in, and soon we'll know what's going on once and for all!
+STOPWATCH REAL TIME SET || id: 22794 | sec: 1.6
+
+TRIGGER Procedure 3.0 Step 1.5 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 22794
+CONDITIONS
+Always:
+ACTIONS
+GEAR TRIGGER TRIGGER || id: 34 | scene: Warehouse_Dungeon
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 7 | name: CG_HIDDENDOOR
+CONDITIONS
+Always:
+ACTIONS
+GEAR TRIGGER TRIGGER || id: 41 | scene: Warehouse_Dungeon
+
+TRIGGER Procedure 3.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_HIDDENDOOR | state: 7
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 227901 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 3.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Find Clues around the room===
+
+{{mission_details
+|desc = You've arrived at a secret water reservoir of some sort. Look around for evidence that proves who the criminals are.
+|details = Find Clues around the room
+}}
+CUTSCENE UI STATE EXIT || 
+SCENEITEM CREATE FLAG || flagName: machineroom_handbook | id: 22792 | itemType: 0 | path: Interact_machineroom | sceneName: Warehouse_Dungeon | extraParams: 0
+SCENEITEM CREATE FLAG || flagName: machineroom_watersystem | id: 22793 | itemType: 0 | path: Interact_machineroom | sceneName: Warehouse_Dungeon | extraParams: 0
+SCENEITEM CREATE FLAG || flagName: machineroom_diagram | itemType: 0 | path: Interact_machineroom | id: 22794 | sceneName: Warehouse_Dungeon | extraParams: 0
+SCENEITEM CREATE FLAG || flagName: machineroom_polishingmachine | path: Interact_machineroom | itemType: 0 | id: 22795 | sceneName: Warehouse_Dungeon | extraParams: 0
+SCENEITEM CREATE FLAG || flagName: machineroom_burntletters | path: Interact_machineroom | itemType: 0 | id: 22796 | sceneName: Warehouse_Dungeon | extraParams: 0
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 22792 | missionId: 1200278 | iconType: 3
+SCENEITEM ADD ICON STACK || add: 1 | id: 22793 | itemType: 0 | missionId: 1200278 | iconType: 3
+SCENEITEM ADD ICON STACK || add: 1 | id: 22794 | itemType: 0 | missionId: 1200278 | iconType: 3
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 22795 | missionId: 1200278 | iconType: 3
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 22796 | missionId: 1200278 | iconType: 3
+Grace stops standing still
+AUTOSAVE TRY || 
+
+TRIGGER Procedure 3.0 Step 3.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 227901 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 9819, 9820 starts:
+{{dialogue|Grace|A corridor, huh. And look at this piping, it's coming from the auxiliary tank...}}
+{{dialogue|Grace|Only one way to go. Let's move!}}
+Grace stands still in Warehouse_Dungeon
+Grace stops standing still
+
+TRIGGER Procedure 3.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: machineroom_anmen_player | sceneName: Warehouse_Dungeon
+Grace stops standing still
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8002 | state: Defense
+===Explore the Secret Area===
+
+{{mission_details
+|desc = The secret door is open. Head deeper into the cellar to look for clues.
+|details = Explore the Secret Area
+}}
+CUTSCENE UI STATE EXIT || 
+AREA TRIGGER CREATE || missionId: 1200278 | id: 22792 | sceneName: Warehouse_Dungeon | flagName: machineroom_trigger2 | showOnMap: 0 | transId: 0 | mapIcon: MissionArea
+AREA TRIGGER ONCE CREATE || id: 22794 | missionId: 1200278 | sceneName: Warehouse_Dungeon | flagName: machineroom_bubble1 | showOnMap: 0 | mapIcon: 0 | transId: 0
+AREA TRIGGER ONCE CREATE || id: 22795 | missionId: 1200278 | sceneName: Warehouse_Dungeon | flagName: machineroom_bubble2 | showOnMap: 0 | mapIcon: 0 | transId: 0
+AREA TRIGGER ONCE CREATE || id: 22796 | missionId: 1200278 | sceneName: Warehouse_Dungeon | flagName: machineroom_bubble3 | showOnMap: 0 | mapIcon: 0 | transId: 0
+AUTOSAVE TRY || 
+
+TRIGGER Procedure 3.0 Step 3.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 227901 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 227901 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22794
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Grace|Resist the urge to be a star and... stay out of those searchlights!}}
+
+TRIGGER Procedure 3.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22795
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Grace|We need to get to {{textcolor|green|that panel at the center of the room}}...}}
+STOPWATCH REAL TIME SET || id: 22793 | sec: 3
+
+TRIGGER Procedure 3.0 Step 7.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 22793
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Grace|Can we turn off these searchlights somehow?}}
+
+TRIGGER Procedure 3.0 Step 8.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22796
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Grace|Hah! We're in. Piece of cake!}}
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22792
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 22792
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 4.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 227928
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Warehouse_Dungeon | flagName: machineroom_room_player
+Grace stands still in Warehouse_Dungeon
+
+TRIGGER Procedure 4.0 Step 7.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 227929
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 9821, 9822, 9823 starts:
+{{dialogue|Grace|Looks like this is it. This is whatever they don't want us to find.}}
+{{dialogue|Grace|If my sense of direction has not failed me, we're... directly {{textcolor|green|under the oasis}} right now. Somehow get the feeling that's no coincidence...}}
+{{dialogue|Grace|This looks to be some Old World facility, ''Player''. Let's look around and see if we can figure out what it is.}}
+
+TRIGGER Procedure 5.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 22792
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 22792
+Add behavior CommanderMoveToFlagAndAction (idName: 22792) to Grace
+(param: TargetScene:Warehouse_Dungeon|MoveMode:Run|FlagName:machineroom_handbook_grace)
+Add behavior CommanderMoveToFlag (idName: 22792) to Player
+(param: TargetScene:Warehouse_Dungeon|MoveMode:Run|FlagName:machineroom_handbook_player)
+MISSION TARGET COUNTER CHANGE || transId: 80015095 | isAdd: 1 | targetId: 4 | missionId: 1200278
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 5.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8002 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 2779_0 starts:
+{{dialogue|0|Welcome, proud owner of the Embezzlo-Valve 9000! All you have to do is turn "left" to make the water level go up and "right" for the water level to go down. I've added notes to the valve control in case you forget!}}
+{{dialogue|0|This manual is mainly for Builders. I know some newbie somewhere is reading this right now! Just check the diagram and do whatever's asked of you! Keep your head down and maybe you'll even see a pinch of these profits I am pilfering!}}
+{{dialogue|0|NOTE: {{textcolor|green|The regulator valve control that controls the amount of water going into the oasis is attached to this Old World doohickey that seems to create water like magic!}} I wonder what the rest of the church would say if they knew they were drinking Corrupted Age water. Hah!}}
+{{dialogue|0|In any case, DO NOT FIDDLE with the Old World relic! We have no idea how it works! Break this thing and our whole scam goes belly up, Sandrock'll be dried up in a week!}}
+{{dialogue|0|NOTE 2: The older this thing gets, the less water it seems to be generating. I don't know why, but who cares!}}
+{{dialogue|0|NOTE 3: Also check {{textcolor|green|that pipe coming in from the auxiliary tank once in a while. It's used to swipe water from the town.}} If that thing leaks, they might find out in a hurry! So always have your suitcase ready!}}
+{{dialogue|Grace|Seriously? A user manual? Seems like... a bit of an oversight leaving something like this around.}}
+{{dialogue|Grace|Then again, it's pretty obvious who the author is, so I'm not surprised...}}
+
+*''Yan's the mastermind.''
+*''Yan's getting paid?''
+*''Yan's just conserving water...''
+
+{{dialogue|Grace|indent=true|answer=Yan's the mastermind.
+|I'm amazed and suspicious that the Commissioner has been able to cheat the workshop ratings for so long. His is some of the sloppiest villainy I've ever laid eyes on.}}
+{{dialogue|Grace|indent=true|I mean, look around, pretty much everything you can pick up in this room is enough to put him away for life.}}
+{{dialogue|Grace|indent=true|answer=Yan's getting paid?
+|reward={{NPC2|Grace|rp=1}}|Yes... clearly Yan is in this for the money. Big shocker. But the messages we intercepted were far more sinister than some two-bit Gols scam...}}
+{{dialogue|Grace|indent=true|answer=Yan's just conserving water...
+|reward={{NPC2|Grace|rp=1}}|That's... another take, I guess. But the messages we intercepted implied that Duvos wants Sandrock off the map.}}
+{{dialogue|Grace|Yan has no idea what he's wrapped up in. He wrote this manual for someone he thinks is just as greedy as himself, but there's more at play here.}}
+{{dialogue|Grace|Still, this is our definitive proof that they're stealing water from Sandrock.}}
+{{dialogue|Grace|Hey look, there's a post note as well.}}
+{{dialogue|Grace|What do you know, a window into the thinking of a criminal mastermind...}}
+{{dialogue|Grace|What's your assessment here, ''Player''?}}
+
+*''Left is up, right is down.''
+*''Too complicated.''
+*''Yan is such an idiot...''
+
+{{dialogue|Grace|indent=true|answer=Left is up, right is down.
+|Ah. Of course. It's so simple now that you explain it. Glad we brought an expert.}}
+{{dialogue|Grace|indent=true|answer=Too complicated.
+|Right. Two arrows. Could mean anything. I think we could've figured it out if there was only one. Don't feel bad, I know you tried your best. Let's just hope this isn't important.}}
+{{dialogue|Grace|indent=true|answer=Yan is such an idiot...
+|He is. He really, really is.}}
+{{dialogue|Grace|As silly as this is, perhaps it does actually give us some insight as to the way his mind works...}}
+{{dialogue|Grace|Yan must actually think other people are this dumb. Fits in well with the rest of his profile. He is rather blatant about many of his misdeeds, and yet, he never seems to get caught... That changes soon.}}
+The conversation ends.
+
+TRIGGER Procedure 5.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 22792) from Grace
+Remove behavior CommanderMoveToFlag (idName: 22792) from Player
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 5.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+CHECK TARGET CAN SUBMIT || canSubmit: 0 | missionId: 1200278 | targetId: 4
+ACTIONS
+(cId 6) A conversation 9847 starts:
+{{dialogue|Grace|Let's keep looking.}}
+
+TRIGGER Procedure 10.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 5) There is a conversation segment (id 9846) that ends:
+{{dialogue|Grace|Yan must actually think other people are this dumb. Fits in well with the rest of his profile. He is rather blatant about many of his misdeeds, and yet, he never seems to get caught... That changes soon.}}
+(cId 7) After the conversation ends:
+(cId 8) After the conversation ends:
+(cId 9) After the conversation ends:
+(cId 10) After the conversation ends:
+CONDITIONS
+CHECK TARGET CAN SUBMIT || targetId: 4 | canSubmit: 1 | missionId: 1200278
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 22792 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 5.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) The player picks the second option in conversation segment 9832:
+{{dialogue|Grace|Then again, it's pretty obvious who the author is, so I'm not surprised...}}
+
+*''Yan's the mastermind.'' (No unique dialogue)
+*''Yan's getting paid?'' (No unique dialogue)
+*''Yan's just conserving water...'' (No unique dialogue)
+
+(cId 5) The player picks the third option in conversation segment 9832:
+{{dialogue|Grace|Then again, it's pretty obvious who the author is, so I'm not surprised...}}
+
+*''Yan's the mastermind.'' (No unique dialogue)
+*''Yan's getting paid?'' (No unique dialogue)
+*''Yan's just conserving water...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Grace gains 1 favor
+
+TRIGGER Procedure 6.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 22793
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 22793
+Add behavior CommanderMoveToFlagAndAction (idName: 22793) to Grace
+(param: TargetScene:Warehouse_Dungeon|MoveMode:Run|FlagName:machineroom_watersystem_grace)
+Add behavior CommanderMoveToFlag (idName: 22793) to Player
+(param: TargetScene:Warehouse_Dungeon|MoveMode:Run|FlagName:machineroom_watersystem_player)
+MISSION TARGET COUNTER CHANGE || transId: 80015095 | isAdd: 1 | targetId: 4 | missionId: 1200278
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 6.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8002 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 2788_0 starts:
+{{dialogue|0|(You notice a pipe going out of an Old World water tank up to the surface. Connected to the pipe is a {{textcolor|green|new regulator valve control system}} that seems to be regulating the water flow in the pipe. )}}
+{{dialogue|Grace|Anything noteworthy about this setup?}}
+
+*''The valve is modern, the tank is Old World.''
+*''The valve is Old World, the tank is modern.''
+*''These were built by aliens.''
+
+{{dialogue|Grace|indent=true|answer=The valve is modern, the tank is Old World.
+|reward={{NPC2|Grace|rp=3}}|I see...}}
+{{dialogue|Grace|indent=true|answer=The valve is Old World, the tank is modern.
+|Er, think you might have misspoke, ''Player''. This valve system looks like it was built by modern Builders. The water tank looks like a relic of some kind.}}
+{{dialogue|Grace|indent=true|answer=These were built by aliens.
+|If only we could simply explain everything we don't understand by attributing it to aliens...}}
+{{dialogue|Grace|Hm... so the valve mechanism controls the water going into the oasis?  But {{textcolor|green|this relic}}... this is where the water comes from? Bizarre. I always figured the oasis water coming from some aquifer.}}
+{{dialogue|Grace|There's something written on it... {{textcolor|green|"Purification Tank 01..."}}}}
+
+*''It's some kind of code.''
+*''There must be more like this.''
+*''Wow, top ranked tank.''
+
+{{dialogue|Grace|indent=true|answer=It's some kind of code.
+|While our perpetrators do have plenty to hide, I think this relic was made with good intentions.}}
+{{dialogue|Grace|indent=true|More likely, this is a serial number. Which implies the existence of others like it...}}
+{{dialogue|Grace|indent=true|answer=There must be more like this.
+|Very possible.}}
+{{dialogue|Grace|indent=true|answer=Wow, top ranked tank.
+|Yes, I'm sure the competitions for farming tools or whatever this was used for were absolutely ferocious. What an honor to be sharing room with greatness: the number one "purification tank."}}
+{{dialogue|Grace|indent=true|I'm sorry if this investigation is boring you, ''Player''. I'll try to be more on the ball. But, yes... this number does seem to imply that there are more relics just like this one.}}
+{{dialogue|Grace|Though it may also be possible that this is the only one still intact. Or that they planned to make more and never got around to it.}}
+{{dialogue|Grace|I wonder if it would have bothered Martle... to know that her 'natural beauty' was some kind of... Old World accident...}}
+{{dialogue|Grace|Well. This is how it works. Good to know.}}
+The conversation ends.
+
+TRIGGER Procedure 6.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 22793) from Grace
+Remove behavior CommanderMoveToFlag (idName: 22793) from Player
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 6.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) The player picks the first option in conversation segment 9849:
+{{dialogue|Grace|Anything noteworthy about this setup?}}
+
+*''The valve is modern, the tank is Old World.'' (No unique dialogue)
+*''The valve is Old World, the tank is modern.'' (No unique dialogue)
+*''These were built by aliens.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Grace gains 3 favor
+
+TRIGGER Procedure 6.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) The player picks the second option in conversation segment 9864:
+{{dialogue|Grace|...Ah?}}
+CONDITIONS
+Always:
+ACTIONS
+Grace gains 1 favor
+
+TRIGGER Procedure 7.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 22794
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 22794
+Add behavior CommanderMoveToFlagAndAction (idName: 22794) to Grace
+(param: TargetScene:Warehouse_Dungeon|MoveMode:Run|FlagName:machineroom_diagram_grace)
+Add behavior CommanderMoveToFlag (idName: 22794) to Player
+(param: TargetScene:Warehouse_Dungeon|MoveMode:Run|FlagName:machineroom_diagram_player)
+MISSION TARGET COUNTER CHANGE || transId: 80015095 | isAdd: 1 | targetId: 4 | missionId: 1200278
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 7.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8002 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 8) A conversation 2797_0 starts:
+{{dialogue|Grace|Eh... what does all this mean, ''Player''? Think you're probably more suited for reading diagrams.}}
+{{dialogue|Player|(What should I say?)}}
+
+*''They're going to steal the Peach statue.''
+*''There's piping in the Peach statue.''
+*''They're turning the Peach statue into a kill-bot.''
+
+{{dialogue|Grace|indent=true|answer=They're going to steal the Peach statue.
+|...Ah?}}
+{{dialogue|Grace|indent=true|I love Peach as much as the next gal, but... There's one in every town. I'm sure you can get them commissioned pretty easily.}}
+{{dialogue|Grace|indent=true|Look closer...}}
+{{dialogue|Grace|indent=true|answer=There's piping in the Peach statue.
+|You're right!}}
+{{dialogue|Grace|indent=true|They installed piping in the Peach statue!}}
+{{dialogue|Grace|indent=true|Look, it seems the water comes out from right under the statue's base. Before they built the statue and that valve thing beneath the statue, the water must have gone directly into the oasis.}}
+{{dialogue|Grace|indent=true|answer=They're turning the Peach statue into a kill-bot.
+|Hm. I guess people would think twice before firing on a beloved historical figure. Realistically, though... look closer...}}
+{{dialogue|Player|(What should I say?)}}
+
+*''They're going to steal the Peach statue.''
+*''There's piping in the Peach statue.''
+*''They're turning the Peach statue into a kill-bot.''
+
+{{dialogue|Grace|indent=true|answer=They're going to steal the Peach statue.
+|...Ah?}}
+{{dialogue|Grace|indent=true|I love Peach as much as the next gal, but... There's one in every town. I'm sure you can get them commissioned pretty easily.}}
+{{dialogue|Grace|indent=true|Look closer...}}
+{{dialogue|Grace|indent=true|answer=There's piping in the Peach statue.
+|You're right!}}
+{{dialogue|Grace|indent=true|They installed piping in the Peach statue!}}
+{{dialogue|Grace|indent=true|Look, it seems the water comes out from right under the statue's base. Before they built the statue and that valve thing beneath the statue, the water must have gone directly into the oasis.}}
+{{dialogue|Grace|indent=true|answer=They're turning the Peach statue into a kill-bot.
+|Hm. I guess people would think twice before firing on a beloved historical figure. Realistically, though... look closer...}}
+{{dialogue|Player|(What should I say?)}}
+
+*''They're going to steal the Peach statue.''
+*''There's piping in the Peach statue.''
+*''They're turning the Peach statue into a kill-bot.''
+
+{{dialogue|Grace|indent=true|answer=They're going to steal the Peach statue.
+|...Ah?}}
+{{dialogue|Grace|indent=true|I love Peach as much as the next gal, but... There's one in every town. I'm sure you can get them commissioned pretty easily.}}
+{{dialogue|Grace|indent=true|Look closer...}}
+{{dialogue|Player|indent=true|(What should I say?)}}
+
+:*''There's piping in the Peach statue.''
+:*''They're turning the Peach statue into a kill-bot.''
+
+{{dialogue|Grace|indent=double|answer=There's piping in the Peach statue.
+|You're right!}}
+{{dialogue|Grace|indent=double|They installed piping in the Peach statue!}}
+{{dialogue|Grace|indent=double|Look, it seems the water comes out from right under the statue's base. Before they built the statue and that valve thing beneath the statue, the water must have gone directly into the oasis.}}
+{{dialogue|Grace|indent=double|answer=They're turning the Peach statue into a kill-bot.
+|Hm. I guess people would think twice before firing on a beloved historical figure. Realistically, though... look closer...}}
+{{dialogue|Player|indent=double|(What should I say?)}}
+
+::*''There's piping in the Peach statue.''
+
+{{dialogue|Grace|indent=3|answer=There's piping in the Peach statue.
+|You're right!}}
+{{dialogue|Grace|indent=3|They installed piping in the Peach statue!}}
+{{dialogue|Grace|indent=3|Look, it seems the water comes out from right under the statue's base. Before they built the statue and that valve thing beneath the statue, the water must have gone directly into the oasis.}}
+{{dialogue|Grace|indent=true|answer=There's piping in the Peach statue.
+|You're right!}}
+{{dialogue|Grace|indent=true|They installed piping in the Peach statue!}}
+{{dialogue|Grace|indent=true|Look, it seems the water comes out from right under the statue's base. Before they built the statue and that valve thing beneath the statue, the water must have gone directly into the oasis.}}
+{{dialogue|Grace|indent=true|answer=They're turning the Peach statue into a kill-bot.
+|Hm. I guess people would think twice before firing on a beloved historical figure. Realistically, though... look closer...}}
+{{dialogue|Player|indent=true|(What should I say?)}}
+
+:*''They're going to steal the Peach statue.''
+:*''There's piping in the Peach statue.''
+
+{{dialogue|Grace|indent=double|answer=They're going to steal the Peach statue.
+|...Ah?}}
+{{dialogue|Grace|indent=double|I love Peach as much as the next gal, but... There's one in every town. I'm sure you can get them commissioned pretty easily.}}
+{{dialogue|Grace|indent=double|Look closer...}}
+{{dialogue|Player|indent=double|(What should I say?)}}
+
+::*''There's piping in the Peach statue.''
+
+{{dialogue|Grace|indent=3|answer=There's piping in the Peach statue.
+|You're right!}}
+{{dialogue|Grace|indent=3|They installed piping in the Peach statue!}}
+{{dialogue|Grace|indent=3|Look, it seems the water comes out from right under the statue's base. Before they built the statue and that valve thing beneath the statue, the water must have gone directly into the oasis.}}
+{{dialogue|Grace|indent=double|answer=There's piping in the Peach statue.
+|You're right!}}
+{{dialogue|Grace|indent=double|They installed piping in the Peach statue!}}
+{{dialogue|Grace|indent=double|Look, it seems the water comes out from right under the statue's base. Before they built the statue and that valve thing beneath the statue, the water must have gone directly into the oasis.}}
+
+TRIGGER Procedure 7.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 22794) from Grace
+Remove behavior CommanderMoveToFlag (idName: 22794) from Player
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 7.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) The player picks the second option in conversation segment 9863:
+{{dialogue|Grace|Eh... what does all this mean, ''Player''? Think you're probably more suited for reading diagrams.}}
+CONDITIONS
+Always:
+ACTIONS
+Grace gains 1 favor
+
+TRIGGER Procedure 8.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 22795
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 22795
+Add behavior CommanderMoveToFlagAndAction (idName: 22795) to Grace
+(param: TargetScene:Warehouse_Dungeon|MoveMode:Run|FlagName:machineroom_polishingmachine_grace)
+Add behavior CommanderMoveToFlag (idName: 22795) to Player
+(param: TargetScene:Warehouse_Dungeon|MoveMode:Run|FlagName:machineroom_polishingmachine_player)
+MISSION TARGET COUNTER CHANGE || transId: 80015095 | isAdd: 1 | targetId: 4 | missionId: 1200278
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 8.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8002 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 9) A conversation 2803_0 starts:
+{{dialogue|Grace|Hm... some kind of generator? What do you think it was used for?}}
+
+*''It powers the relic.''
+*''It made things we no longer understand.''
+*''Just decoration.''
+
+{{dialogue|Grace|indent=true|answer=It powers the relic.
+|Er... ''Player''... It's not even on, while that water tank relic is on. It can't possibly be powering anything in this room...}}
+{{dialogue|Grace|indent=true|answer=It made things we no longer understand.
+|reward={{NPC2|Grace|rp=1}}|Yeah, I agree. We have lost so much knowledge over the years...}}
+{{dialogue|Grace|indent=true|answer=Just decoration.
+|Heh. Well, Old World folk did get real opulent towards the end, maybe it was a fashion statement.}}
+{{dialogue|Grace|Yeah, if I ever get more time down here, I'd like a chance to figure out what this place did.}}
+The conversation ends.
+
+TRIGGER Procedure 8.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 22795) from Grace
+Remove behavior CommanderMoveToFlag (idName: 22795) from Player
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 8.0 Step 1.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8002 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+ON STOPWATCH REAL TIME END || order: 0 | id: 22795
+CONDITIONS
+Always:
+ACTIONS
+(cId 10) A conversation 2808_0 starts:
+{{dialogue|Grace|There seems to be some burnt letters in this pile of trash... Someone didn't want anyone else to see them! But there are still some unburnt spots.}}
+{{dialogue|Grace|Ohho! Jackpot! Encoded messages. We broke these codes months ago! Hah. Amateurs...}}
+{{dialogue|Grace|Hm. Cryptic. Definitely {{textcolor|green|Duvos}}, though. I'd recognize these in my sleep.}}
+{{dialogue|Grace|This piece says...}}
+{{dialogue|Grace|"extraction of funds."}}
+{{dialogue|Grace|Then...}}
+{{dialogue|Grace|"Pull the plug."}}
+{{dialogue|Grace|And the last one...}}
+{{dialogue|Grace|"Nullify previous order"}}
+{{dialogue|Grace|...?}}
+
+*''It's a timeline.''
+*''Something to do with water plugs?''
+*''Crossword puzzle answers.''
+
+{{dialogue|Grace|indent=true|answer=It's a timeline.
+|Maybe...}}
+{{dialogue|Grace|indent=true|answer=Something to do with water plugs?
+|Eh, I don't think "pull the plug" is meant to be literal...}}
+{{dialogue|Grace|indent=true|answer=Crossword puzzle answers.
+|Come on, ''Player''! Be serious! Let me just... think for a second...}}
+{{dialogue|Grace|It's too hard to guess what these messages say without the entire sentence and proper context. But at least we now know it's definitely Duvos behind everything.}}
+{{dialogue|Grace|But why smuggle secret letters... {{textcolor|green|don't they use the telegraph?}}}}
+The conversation ends.
+
+TRIGGER Procedure 8.0 Step 2.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 22796) from Grace
+Remove behavior CommanderMoveToFlag (idName: 22796) from Player
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 8.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) The player picks the second option in conversation segment 9871:
+{{dialogue|Grace|Hm... some kind of generator? What do you think it was used for?}}
+
+*''It powers the relic.'' (No unique dialogue)
+*''It made things we no longer understand.'' (No unique dialogue)
+*''Just decoration.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Grace gains 1 favor
+
+TRIGGER Procedure 9.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 22796
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 22796
+Add behavior CommanderMoveToFlagAndAction (idName: 22796) to Grace
+(param: TargetScene:Warehouse_Dungeon|MoveMode:Run|FlagName:machineroom_burntletters_grace)
+Add behavior CommanderMoveToFlag (idName: 22796) to Player
+(param: TargetScene:Warehouse_Dungeon|MoveMode:Run|FlagName:machineroom_burntletters_player)
+MISSION TARGET COUNTER CHANGE || transId: 80015095 | isAdd: 1 | targetId: 4 | missionId: 1200278
+CUTSCENE UI STATE ENTER || 
+STOPWATCH REAL TIME SET || id: 22795 | sec: 5
+
+TRIGGER Procedure 10.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22792
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: machineroom_afterall_player1 | sceneName: Warehouse_Dungeon
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8002
+Grace stands still in Warehouse_Dungeon
+DELAY MASK SET || maskId: 22792 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 10.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 22792
+CONDITIONS
+Always:
+ACTIONS
+(cId 11) A conversation 9891, 9892, 9893, 9894 starts:
+{{dialogue|Grace|I think that's about all the evidence we'll find around here, let's summarize what we know so far.}}
+{{dialogue|Grace|{{textcolor|green|This "Purification Tank" relic was the main water supply for the oasis}}, but at a certain point, Yan, working with an unknown party, built the Peach statue and put {{textcolor|green|a valve on the water going into the oasis}}.}}
+{{dialogue|Grace|I can only postulate that {{textcolor|green|Duvos agents}} used Yan to build the device and piping to slowly decrease Sandrock's water supply, eventually driving away all the people.}}
+{{dialogue|Grace|What we need to-}}
+
+TRIGGER Procedure 10.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SOUND PLAY 2D || idStr: Play_story_footstep
+STOPWATCH REAL TIME SET || id: 22791 | sec: 2.5
+
+TRIGGER Procedure 10.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 22791
+CONDITIONS
+Always:
+ACTIONS
+(cId 12) A conversation 9895, 9896, 9897 starts:
+{{dialogue|Grace|...!}}
+{{dialogue|Grace|Someone's coming!}}
+{{dialogue|Grace|Sh! We've gotta find a place to hide! See if you can create any openings around here!}}
+
+TRIGGER Procedure 11.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 12) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 22793 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 11.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22793
+CONDITIONS
+Always:
+ACTIONS
+Miguel stands still in Warehouse_Dungeon and looks at Pen
+Pen stands still in Warehouse_Dungeon and looks at Miguel
+PLAYER SET POS ROT FLAG || sceneName: Warehouse_Dungeon | flagName: machineroom_hiding_grace1
+Grace stops standing still
+Grace stands still in Warehouse_Dungeon and looks at Miguel
+DELAY MASK SET || maskId: 22793 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+{{cutscene|id = 1356}}
+A cutscene CG_DEPOTTALK (duration: 0.0) starts playing
+For the Empire - Grace and I were searching for information, when we suddenly heard footsteps! We found somewhere to hide, but it turns out the mystery conspirators were Pen and Miguel!
+SCENEITEM CREATE FLAG || itemType: 0 | id: 22799 | path: Mission_CityObj_XiKeSiDeXin_0 | sceneName: Warehouse_Dungeon | extraParams: 0 | flagName: machineroom_letter
+GEAR TRIGGER TRIGGER || id: 36 | scene: Warehouse_Dungeon
+
+TRIGGER Procedure 11.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 9 | name: CG_DEPOTTALK
+CONDITIONS
+Always:
+ACTIONS
+(cId 13) A conversation 2813_0 starts:
+{{dialogue|Miguel|...I'm telling you, someone has been in here! The lock has been tampered with!}}
+{{dialogue|Pen|I dunno, maybe you just came in and forgot? You've been kinda jumpy lately, relax! We're doing great!}}
+{{dialogue|Miguel|I would never be so careless. It must be Logan! He knows about our water scheme somehow! Howlett must have told him something! What with the Civil Corps hot on his tail, I fear our plan is in danger...}}
+{{dialogue|Pen|Oh puh-lease! Last time he bothered us was that whole Matilda debacle, hilarious, by the way. All it took was a few good old fashioned shots to the dome and now he's forgotten all about us. Good guys win. The end.}}
+{{dialogue|Miguel|Hubris will be your downfall, knight. Search the premises!}}
+{{dialogue|Pen|Since when do I take orders from you?}}
+{{dialogue|Miguel|We both take orders from a higher power, and if you don't wish to disappoint him, I suggest you start searching!}}
+{{dialogue|Grace|Smile for the camera...}}
+{{dialogue|Pen|Tell you what. With Skinny coming back the way they did from that fall right in the area of where Logan might be hiding... I have my suspicions. I'll humor you. Kay?}}
+{{dialogue|Miguel|Our plan can't fail here... for the Empire.}}
+{{dialogue|Pen|For the Empire.}}
+The conversation ends.
+
+TRIGGER Procedure 12.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 13) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Miguel stops standing still
+Pen stops standing still
+Add behavior CommanderTeleport (idName: 22791) to Miguel
+(param: TargetScene:Warehouse_Dungeon|TargetFlag:machineroom_player3|Delay:2)
+Add behavior CommanderTeleport (idName: 22791) to Pen
+(param: TargetScene:Warehouse_Dungeon|TargetFlag:machineroom_grace1|Delay:2)
+DELAY MASK SET || maskId: 22794 | changeType: 0 | delayTime: 0 | durationTime: 2 | curveIndex: 0
+
+TRIGGER Procedure 12.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22794
+CONDITIONS
+Always:
+ACTIONS
+Grace stops standing still
+Grace stands still in Warehouse_Dungeon and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Warehouse_Dungeon | flagName: machineroom_hiding_grace2
+DELAY MASK SET || maskId: 22794 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Remove behavior CommanderTeleport (idName: 22791) from Miguel
+Remove behavior CommanderTeleport (idName: 22791) from Pen
+Miguel stands still in Main
+Pen stands still in Main
+Miguel stops standing still
+Pen stops standing still
+
+TRIGGER Procedure 12.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 22794
+CONDITIONS
+Always:
+ACTIONS
+(cId 15) A conversation 9909, 9910 starts:
+{{dialogue|Grace|Well, well, well. All we're missing now is a little pink ribbon on top. This should be everything I need to close the books on "The Case of the Duvos Water Thieves." Excellent work, ''Player''.}}
+{{dialogue|Grace|Let's see where this little tunnel goes. I don't really want to face off with Pen right now, if I had a choice.}}
+
+TRIGGER Procedure 13.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | id: 22793 | enter: 0
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 227910) to Grace
+(param: TargetScene:Warehouse_Dungeon|MoveMode:Run|FlagName:machineroom_letter_grace)
+Add behavior CommanderMoveToFlag (idName: 227910) to Player
+(param: TargetScene:Warehouse_Dungeon|MoveMode:Run|FlagName:machineroom_letter_player)
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 13.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 16) A conversation 2814_0 starts:
+{{dialogue|Player|(There's a letter here...)}}
+{{dialogue|Grace|Someone left a letter?}}
+{{dialogue|0|To my replacement,
+
+The main valve control leaks sometimes, just kick it if it's giving you trouble. 
+And in case you're not my replacement, and the jig is up... Please don't judge me too harshly. Every man has his price, and his regrets.
+
+Mason}}
+{{dialogue|0|{{textcolor|green|P.S. Be REALLY careful around the Peach Statue. Make sure there's always water around it and no one messes with it; I had to cut corners on the piping and... yeah, if that statue got knocked over, well, people might start asking questions.}}}}
+{{dialogue|Grace|Mason! Drat! I should have taken a closer look at him!}}
+{{dialogue|Grace|Wait, there's more on the back...}}
+{{dialogue|0|P.P.S. If the jig's up, I want to say that their whole plan is to siphon water slowly from the auxiliary tank, then whenever Sandrock's water level is critical, Miguel will use city funds to buy water directly from the Commerce Guild, or Yan to be exact, who gets his water from this relic. I... ain't proud of it.}}
+{{dialogue|Grace|More evidence against the water thieves, I'll take it.}}
+The conversation ends.
+
+TRIGGER Procedure 13.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 16) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Leave the Cellar===
+
+{{mission_details
+|desc = Your mission is complete, much of what was dark has now been brought to light... Now hurry up and get out of here!
+|details = Leave the Cellar
+}}
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlag (idName: 227910) from Player
+SCENEITEM DELETE || itemType: 0 | id: 22799
+SCENEITEM CREATE FLAG || flagName: machineroom_arrow | path: Mission_NewArrow | itemType: 0 | extraParams: 0 | sceneName: Warehouse_Dungeon | id: 227911
+
+TRIGGER Procedure 14.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Warehouse_Dungeon to the Main:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+TIME SET ENABLE || bool: 0
+SCENEITEM DELETE || itemType: 0 | id: 227912
+
+TRIGGER Procedure 14.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Warehouse_Dungeon to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 227910) from Grace
+Grace stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || flagName: machineroom_out_player1 | sceneName: Main
+SCENEITEM CREATE FLAG || itemType: 0 | id: 22797 | path: Mission_Repather_1200278_1 | sceneName: Main | flagName: bridge_kaimu | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 22798 | path: Mission_Repather_1200278_2 | sceneName: Main | flagName: bridge_kaimu | extraParams: 0
+
+TRIGGER Procedure 14.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Warehouse_Dungeon to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId 17) A conversation 9919, 9920, 9921, 9922 starts:
+{{dialogue|Grace|That's that, then.}}
+{{dialogue|Grace|Your work here is done, ''Player''. Get a good night's sleep. You've earned it.}}
+{{dialogue|Grace|I've got just a few more things to take care of tonight. I'll send word to HQ and we should have enough backup to make this as painless as possible within a couple of days...}}
+{{dialogue|Grace|Thank you again for your help. The Free Cities thanks you, too.}}
+
+TRIGGER Procedure 14.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 17) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Grace stops standing still
+Add behavior CommanderMoveToFlag (idName: 227911) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:machineroom_out_player2)
+DELAY MASK SET || maskId: 22795 | delayTime: 1 | durationTime: -2 | changeType: 0 | curveIndex: 0
+NPC SET CAN INTERACT || canInteract: 1 | npc: 8002
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8002
+
+TRIGGER Procedure 15.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22795
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 227911) from Player
+PLAYER SET POS ROT FLAG || flagName: machineroom_out_player3 | sceneName: Main
+Haru stands still in Main and looks at Player
+DELAY MASK SET || maskId: 22795 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 15.0 Step 0.1 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 22795
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 227912) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:machineroom_out_player4)
+
+TRIGGER Procedure 15.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 18) A conversation 9923 starts:
+{{dialogue|Haru|There you are. I was starting to worry. ''Player''... Grace had told us about the mission, glad you're safe! You seem to be in high spirits. What did you find?}}
+
+TRIGGER Procedure 16.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 18) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 227913) to Player
+(param: CMDAction:Talk)
+DELAY MASK SET || maskId: 22796 | delayTime: 1 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 16.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 19) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTION ACTOR START FADE IN || id: 22791 | npc: 8012 | time: 2
+STOPWATCH REAL TIME SET || sec: 2 | id: 22792
+Add behavior CommanderMoveToFlag (idName: 22791) to Haru
+(param: MoveMode:Run|TargetScene:Main|FlagName:machineroom_out_haru2)
+
+TRIGGER Procedure 16.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 22792
+CONDITIONS
+Always:
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: 1200279
+Remove behavior CommanderMoveToFlag (idName: 227912) from Player
+Remove behavior CommanderMoveToFlag (idName: 22791) from Haru
+CUTSCENE UI STATE EXIT || 
+Haru stops standing still
+SCENEITEM DELETE || itemType: 0 | id: 22797
+SCENEITEM DELETE || itemType: 0 | id: 22798
+TIME SET ENABLE || bool: 1
+ACTION ACTOR END FADE IN || id: 22791 | time: 0
+NPC LEAVE || npc: 8012
+SUBMIT MISSION 1200278
+END MISSION 1200279
+
+TRIGGER Procedure 16.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 22796 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 19) A conversation 9924, 9925, 9926, 9927 starts:
+{{dialogue|Haru|I had my suspicions... but wow.}}
+{{dialogue|Haru|I'm glad Logan's name will be cleared soon. It's been nerve-wracking for us lately. We've had to keep the goats tied up; Justice is out on patrol with all sorts of strong smelling animal treats.}}
+{{dialogue|Haru|But this is the homestretch, justice will be served soon!}}
+{{dialogue|Haru|Thanks ''Player'', I'll go tell Logan the good news!}}
+Remove behavior CommanderPlayerAction (idName: 227913) from Player
+
+TRIGGER Procedure 16.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22796
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 22796 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0

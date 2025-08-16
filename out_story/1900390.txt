@@ -1,0 +1,138 @@
+Reading Mission 1900390: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200310
+
+TRIGGER Procedure 13.0 Step 0.7 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1500359
+
+TRIGGER Procedure 13.0 Step 0.8 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1900390
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 12:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1900390 | id: 193702 | sceneName: Main | flagName: Msa_Avo | showOnMap: 1 | mapIcon: MissionArea | transId: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 193702
+END MISSION 1900390
+
+TRIGGER Procedure 1.0 Step 4.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Musa
+CONDITIONS
+Always:
+ACTIONS
+(cId 11) A conversation 15439 starts:
+{{dialogue|Musa|I love speaking at events like these. It's a chance for me to give back to the community, and meet some tenacious young up-and-comers whose resumes I can file into the back of my mind...}}
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 193702
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 93702 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 193702
+
+TRIGGER Procedure 3.0 Step 0.5 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 93702 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: PN9370 | sceneName: Main
+DELAY MASK SET || maskId: 93702 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Arvio stands still in Main and looks at Musa
+Musa stands still in Main and looks at Arvio
+
+TRIGGER Procedure 3.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 93702 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 30) A conversation 4851_0 starts:
+{{dialogue|Arvio|Mr. Musa...}}
+{{dialogue|Musa|You're... that young man...}}
+{{dialogue|Musa|I remember now, our previous conversation. In fact, I wanted to congratulate you.}}
+{{dialogue|Arvio|Congratulate... me?}}
+{{dialogue|Musa|Yes. Obviously, you took all my words to heart. Not long ago, your general store appeared on the first page of my assistant's "Emerging Businesses Hot or Not" list. You... as it were... were "hot."}}
+{{dialogue|Musa|This indicates that, by various measures, your store is performing well. And your market share is steadily rising.}}
+{{dialogue|Arvio|That's right, Mr. Musa. After that, I did everything you suggested, and started to try to have more foresight! And I guess you could say... it worked like a charm! So... thanks!}}
+{{dialogue|Musa|No, young man, you should thank yourself.}}
+{{dialogue|Musa|I see the changes in you. And no man is an island. I don't doubt there are more people in your life other than myself who pushed you to be better either.}}
+{{dialogue|Arvio|Yes! ''Player'' has also helped me a lot!}}
+{{dialogue|Musa|Hm, indeed. The impact that Builders can make on this world is huge. I believe with young people like you in Sandrock, development can only get better and better.}}
+{{dialogue|Arvio|Thank you, Mr. Musa. So... will you invest in me this time?}}
+{{dialogue|Musa|Of course. I'll have my assistant get in touch with you.}}
+{{dialogue|Arvio|That's great! ''Player'', did you hear that? I finally getting investment from Mr. Musa!}}
+The conversation ends.
+STOPWATCH REAL TIME SET || id: 2937001 | sec: 1
+
+TRIGGER Procedure 3.0 Step 2.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 30) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Musa stops standing still
+Arvio stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 293703) from Player
+
+TRIGGER Procedure 3.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 2937001
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 293703) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:PN9370_1|LookAtActor:8014)

@@ -1,0 +1,266 @@
+Reading Mission 1200256: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200264
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK CREATION CAN CREATE || creationId: 14000006 | canCreate: 1
+ACTIONS
+Run mission #1200256
+ACTION WEATHER ACTIVE || weather: 1
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200256
+CONDITIONS
+Always:
+ACTIONS
+Set ATTEND to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+Where's Mi-an is in state 1 with flag 0
+The Childhood Friend is in state 1 with flag 0
+Goodbye, Nia is in state 1 with flag 0
+The Kidnapping is in state 1 with flag 0
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+CHECK WEATHER STATE || flag: 1 | weather: 1
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+Check if Owen is in town
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the first option in conversation segment 8303:
+{{dialogue|Owen|Good morning, ''Player''! I wanted to stop by to see the look on your face; this is your first rain in Sandrock, isn't it? What do you think, isn't it amazing!?}}
+
+*''It's very nice!'' (No unique dialogue)
+*''It rains all the time in Highwind...'' (No unique dialogue)
+*''Holy moly! Wowee zowee! I'm blown awaaaay!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Owen gains 1 favor
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the third option in conversation segment 8303:
+{{dialogue|Owen|Good morning, ''Player''! I wanted to stop by to see the look on your face; this is your first rain in Sandrock, isn't it? What do you think, isn't it amazing!?}}
+
+*''It's very nice!'' (No unique dialogue)
+*''It rains all the time in Highwind...'' (No unique dialogue)
+*''Holy moly! Wowee zowee! I'm blown awaaaay!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Owen gains 3 favor
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CALENDAR SET REMINDER || hour: 20 | addDays: 0 | transId: 80013173
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 20:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1200256 | id: 22561 | sceneName: Main | showOnMap: 1 | transId: 80013173 | mapIcon: MissionAreaBranch | flagName: 1600069_MissionArea_2
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Check if ATTEND is == 0
+ACTIONS
+AREA TRIGGER DELETE || id: 22561
+The player receives a letter:
+{{mail|473}}
+END MISSION 1200256
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_saloon
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_saloon
+AREA TRIGGER DELETE || id: 22561
+Set ATTEND to 1
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+Owen stands still in Saloon
+Cooper stands still in Saloon
+Hugo stands still in Saloon
+Vivi stands still in Saloon and looks at Owen
+Jasmine stands still in Saloon and looks at Owen
+Burgess stands still in Saloon and looks at Owen
+Mi-an stands still in Saloon and looks at Owen
+Arvio stands still in Saloon and looks at Owen
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: raincelebration_player
+SCENEITEM CREATE FLAG || id: 22561 | itemType: 0 | sceneName: Saloon | extraParams: 0 | path: Mission_Midikeyboard | flagName: coogoband_midikeyboard_1
+SCENEITEM CREATE FLAG || itemType: 0 | id: 22562 | path: Mission_Microphone | sceneName: Saloon | flagName: coogoband_microphone_1 | extraParams: 0
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 2445_0 starts:
+{{dialogue|Owen|Welcome everyone! I want to thank you all for coming together tonight to celebrate what can only be called a miracle. I've lived here in Sandrock my entire life, and in all my rainy days, few as they may be, I never thought I'd see one quite so rainy as this...!}}
+{{dialogue|Owen|The skies opened up and our most precious resource fell down on us in rivers. It was truly humbling to see so much water at once.}}
+{{dialogue|Owen|In true Sandrock fashion, I saw neighbors helping one another to collect as much as they could in every bucket, vase, and container they could find, often working together to gather far more than anyone could alone.}}
+{{dialogue|Owen|As a result, Sandrock has been blessed this day with almost more water than we can store. But more than that, Sandrock has, once again, shown its people to be generous, clever, and kind to one another.}}
+{{dialogue|Owen|Tonight Cooper and Hugo are going to entertain us; Grace and I cooked up a feast, so to everyone: all you need to do is kick back, enjoy the tunes, and help yourselves to a meal.}}
+{{dialogue|Owen|Tomorrow we'll be back to our dry, water-conserving selves. Tonight, we celebrate our good fortune, not just in the rain, but also our good fortune in having each other.}}
+{{dialogue|Owen|Let's celebrate!}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Owen stops standing still
+Vivi stops standing still
+Jasmine stops standing still
+Burgess stops standing still
+Mi-an stops standing still
+Arvio stops standing still
+CUTSCENE UI STATE EXIT || 
+SCENEITEM CREATE FLAG || path: Mission_MU_001_KuGuo_001_02 | itemType: 0 | id: 22563 | sceneName: Saloon | extraParams: 0 | flagName: raincelebration_cooper
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Check if ATTEND is == 1
+ACTIONS
+Cooper stops standing still
+Hugo stops standing still
+SCENEITEM DELETE || itemType: 0 | id: 22561
+SCENEITEM DELETE || itemType: 0 | id: 22562
+SCENEITEM DELETE || id: 22563 | itemType: 0
+END MISSION 1200256
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DAY START FOR WEATHER || order: 0 | weather: 0
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: set_weather
+ACTIONS
+UNIQUE ACTION RUN || idStr: set_weather
+WEATHER SET STATE || WeatherState: 1
+The player receives a letter:
+{{mail|472}}
+
+TRIGGER Procedure 4.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Owen stands still in Main
+PLAYER SET POS ROT FLAG || flagName: player_beforehome | sceneName: Main
+
+TRIGGER Procedure 4.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+ACTION CUTSCENE START AUDIO TYPE || id: CG_RAIN | duration: 0 | audioType: NoTransitionOff
+
+TRIGGER Procedure 4.0 Step 3.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_RAIN | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 2440_0 starts:
+{{dialogue|Owen|Good morning, ''Player''! I wanted to stop by to see the look on your face; this is your first rain in Sandrock, isn't it? What do you think, isn't it amazing!?}}
+
+*''It's very nice!''
+*''It rains all the time in Highwind...''
+*''Holy moly! Wowee zowee! I'm blown awaaaay!''
+
+{{dialogue|Owen|indent=true|answer=It's very nice!
+|reward={{NPC2|Owen|rp=1}}|Haha, yeah it is, isn't it? Almost as breathtaking as it is rare...}}
+{{dialogue|Owen|indent=true|answer=It rains all the time in Highwind...
+|Oh... right... I guess it does...}}
+{{dialogue|Owen|indent=true|Well, a lot of people get really excited about days like today, so, eh... maybe just play along, even if this is all old news to you.}}
+{{dialogue|Owen|indent=true|answer=Holy moly! Wowee zowee! I'm blown awaaaay!
+|reward={{NPC2|Owen|rp=3}}|Haha! Woah, ''Player''! Didn't know you were such a fan of the rain. Glad I stopped by!}}
+{{dialogue|Owen|By the by, in honor of this momentous occasion, I'm throwing a celebration tonight down at the Blue Moon around 20:00. Coogo will play music on the stage, everyone will be there... It's gonna be a ball!}}
+{{dialogue|Owen|Hm, there was one more thing... Burgess wanted me to tell you... uh... something about... "conserve water?" No, you already knew that...}}
+{{dialogue|Owen|Oh, yeah! That is it! You might want to set out some {{textcolor|green|Dew Collectors, other containers}} today. I have a feeling they'll be way more effective than usual; call it a hunch...}}
+{{dialogue|Owen|Alright. I better head off. Gettin' kinda damp out here. Blue Moon, 20:00, come hungry!}}
+The conversation ends.
+
+TRIGGER Procedure 4.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Owen stops standing still
+CUTSCENE UI STATE EXIT || 
+Owen gains 10 favor

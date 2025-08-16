@@ -188,7 +188,7 @@ class ConvBuilder:
         lines = []
         talk = None
 
-        self.print_debug()
+        # self.print_debug()
 
         assert self._common_series[0][0] == self.identifier
 

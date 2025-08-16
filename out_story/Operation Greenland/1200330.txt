@@ -1,0 +1,266 @@
+Reading Mission 1200330: Operation Greenland
+
+<onlyinclude>{{Infobox mission
+|name = Operation Greenland
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Operation Greenland:
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8006 | behaviourName: CommanderTeleport | eventName: Teleported
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Trudy stops standing still
+Remove behavior CommanderTeleport (idName: 23291) from Trudy
+START MISSION 1200329
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200329
+CONDITIONS
+Always:
+ACTIONS
+Run mission Operation Greenland
+END MISSION 1200329
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200330
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: 1200329 | info: 1 | exist: 1
+ACTIONS
+===Go to Eufaula Outback===
+
+{{mission_details
+|desc = Go to the Eufaula Outback to begin the next phase of planting.
+|details = Go to Eufaula Outback
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the DesertOutback:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: DesertOutback | flagName: successplant_player
+Professor Luo stands still in DesertOutback
+Qi stands still in DesertOutback
+Zeke stands still in DesertOutback
+Trudy stands still in DesertOutback
+Nia stands still in DesertOutback
+Mi-an stands still in DesertOutback
+DELAY MASK SET || maskId: 23301 | delayTime: 0 | durationTime: 0 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 1.5 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the DesertOutback:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 23301 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23301 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 4194_0 starts:
+{{dialogue|Trudy|Thank you for coming everyone! Before we get started, Professor Luo would like to say a few words.}}
+{{dialogue|Professor Luo|It has been a pleasure working on it with all of you. I usually try and separate my work and my hobbies, but I admit my trip here has fulfilled both of those. It has truly been a very fulfilling adventure...}}
+{{dialogue|Trudy|And we truly appreciate you coming out here to help us!}}
+{{dialogue|Zeke|Yes. In such a short time, we went from almost giving up to being able to partially tame the desert...}}
+{{dialogue|Trudy|So... I say let's get started!}}
+{{dialogue|Qi|I have accepted that I am not Sandrock's resident Mobile Suit pilot. ''Player'', will you do the honors?}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: 1200329 | info: 1 | exist: 1
+ACTIONS
+===Plant with Mobile Suit===
+
+{{mission_details
+|desc = Operate the Mobile Suit to plant trees quickly!
+|details = Plant with Mobile Suit
+}}
+GLOBAL BLACK BOARD REMOVE || key: 1200329
+Professor Luo stops standing still
+Qi stops standing still
+Zeke stops standing still
+Trudy stops standing still
+Nia stops standing still
+Mi-an stops standing still
+CUTSCENE UI STATE EXIT || 
+SCENEITEM CREATE FLAG || itemType: 0 | id: 23301 | path: Mission_Plant_DesertOutBack_2_0 | flagName: showdown_desertoutback | sceneName: DesertOutback | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 23302 | path: Mission_Plant_DesertOutBack_2_1 | flagName: showdown_desertoutback | sceneName: DesertOutback | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 23303 | path: Mission_Plant_DesertOutBack_2_NPCArea_0 | flagName: showdown_desertoutback | sceneName: DesertOutback | extraParams: 0
+SCENEITEM CREATE FLAG || id: 23304 | path: Mission_Plant_DesertOutBack_2_FX_0 | flagName: showdown_desertoutback | sceneName: DesertOutback | extraParams: 0 | itemType: 0
+Add 100 Black Saxoul Seed of Default quality (Notify player)
+Add 100 Biocrust of Default quality (Notify player)
+RIDABLE CREATE || sceneFlag: DesertOutback:successplant_robot | protoId: 1001 | instanceId: 23301 | ownerId: 8000
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: 1200329 | info: 1 | exist: 0
+ACTIONS
+START MISSION 1200329
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200329
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: 1200329 | info: 1 | exist: 0
+ACTIONS
+===Plant with Mobile Suit===
+
+{{mission_details
+|desc = Operate the Mobile Suit to plant trees quickly!
+|details = Plant with Mobile Suit
+}}
+GLOBAL BLACK BOARD REMOVE || key: 1200329
+Professor Luo stops standing still
+Qi stops standing still
+Zeke stops standing still
+Trudy stops standing still
+Nia stops standing still
+Mi-an stops standing still
+CUTSCENE UI STATE EXIT || 
+SCENEITEM CREATE FLAG || itemType: 0 | id: 23301 | path: Mission_Plant_DesertOutBack_2_0 | sceneName: DesertOutback | flagName: showdown_desertoutback | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 23302 | path: Mission_Plant_DesertOutBack_2_1 | sceneName: DesertOutback | flagName: showdown_desertoutback | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 23303 | path: Mission_Plant_DesertOutBack_2_NPCArea_0 | sceneName: DesertOutback | flagName: showdown_desertoutback | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 23304 | path: Mission_Plant_DesertOutBack_2_FX_0 | sceneName: DesertOutback | flagName: showdown_desertoutback | extraParams: 0
+Add 100 Black Saxoul Seed of Default quality (Notify player)
+Add 100 Biocrust of Default quality (Notify player)
+RIDABLE CREATE || protoId: 1001 | instanceId: 23301 | ownerId: 8000 | sceneFlag: DesertOutback:successplant_robot
+AREA TRIGGER ONCE CREATE || missionId: 1200329 | id: 23301 | sceneName: DesertOutback | flagName: successplant_robot | showOnMap: 1 | mapIcon: MissionArea | transId: 0
+ACTION AREA TRIGGER SET RADIUS || id: 23301 | radius: 15
+SCENEITEM CREATE FLAG || itemType: 0 | id: 23305 | path: Mission_NewArrow | sceneName: DesertOutback | flagName: successplant_arrow | extraParams: 0
+
+TRIGGER Procedure 2.0 Step 0.0 Order 2 Repeat 100
+------------------------------------------------------------
+EVENTS
+ON SEED PLANT || order: 0 | id: 16100030
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1200329 | targetId: 2 | transId: 80006101 | isAdd: 1
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23302 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: DesertOutback | flagName: successplant_player
+Professor Luo stands still in DesertOutback
+Qi stands still in DesertOutback
+Zeke stands still in DesertOutback
+Trudy stands still in DesertOutback
+Nia stands still in DesertOutback
+Mi-an stands still in DesertOutback
+DELAY MASK SET || maskId: 23302 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SEED PLANT || order: 10 | id: 16100030
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1200329 | targetId: 2 | canSubmit: 1
+ACTIONS
+DELAY MASK SET || maskId: 23302 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+SCENEITEM DELETE || itemType: 0 | id: 23304
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 23302
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 4195_0 starts:
+{{dialogue|Trudy|Excellent! Looks like everything is functioning as expected. Oh, I'm thrilled! Now we just have to wait a while to see how big the forest will grow!}}
+{{dialogue|Nia|Yeah! You're like a professional, ''Player''! I was impressed.}}
+{{dialogue|Professor Luo|I'm very impressed with the expertise that Sandrock houses. I think Project Greenland is in capable hands!}}
+{{dialogue|Professor Luo|Nia and I will be departing tomorrow. I am glad we're leaving on a positive note.}}
+{{dialogue|Qi|I will send you my copies soon, professor.}}
+{{dialogue|Professor Luo|Appreciated.}}
+{{dialogue|Nia|You worked on a project together?}}
+{{dialogue|Qi|No, I found that Professor Luo had a volume he'd missed. I have a spare, it would be a shame for him to miss the entire War in the Locket arc.}}
+{{dialogue|Player|(What should I say?)}}
+
+*''It's been a pleasure having you here.''
+*''I'll miss you, Nia.''
+*''Thanks for your help, Nia.''
+
+{{dialogue|Professor Luo|indent=true|answer=It's been a pleasure having you here.
+|Thank you.}}
+{{dialogue|Nia|indent=true|I won't be gone forever! I'll see you again.}}
+{{dialogue|Nia|indent=true|answer=I'll miss you, Nia.
+|Hehe, well, don't worry too much. I'll be back soon...}}
+{{dialogue|Nia|indent=true|answer=Thanks for your help, Nia.
+|You've been working so hard to develop Sandrock, honestly, your motivation is infectious! And it's not just me... Professor Luo worked even harder than me!}}
+{{dialogue|Trudy|Well, it certainly has been wonderful having you both here.}}
+{{dialogue|Professor Luo|Make sure you keep me updated on the progress of the forest. There is much I believe we can learn from it. I look forward to returning in a few years to see a mighty green forest right here in the Outback.}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 23305
+AREA TRIGGER DELETE || id: 23301
+Professor Luo stops standing still
+Qi stops standing still
+Zeke stops standing still
+Trudy stops standing still
+Nia stops standing still
+Mi-an stops standing still
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1200329
+END MISSION 1200330
+
+TRIGGER Procedure 2.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 23301
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || id: 23305 | itemType: 0

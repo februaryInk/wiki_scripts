@@ -1,0 +1,257 @@
+Reading Mission 1900409: Class Reunion
+
+<onlyinclude>{{Infobox mission
+|name = Class Reunion
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Class Reunion:
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 789
+CONDITIONS
+Check if Day3 is > (maybe?) 3
+ACTIONS
+START MISSION 1900405
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1900405
+CONDITIONS
+Always:
+ACTIONS
+Run mission Class Reunion
+END MISSION 1900405
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1900409
+CONDITIONS
+Always:
+ACTIONS
+===Go to Clinic===
+
+{{mission_details
+|desc = Heidi wrote you a letter asking you to join her as she catches up with her old colleague, Gust.
+|details = Go to Clinic
+}}
+Set D3 to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_clinic
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_clinic
+DELAY MASK SET || maskId: 94090 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Ginger stands still in Clinic and looks at Heidi
+Add behavior CommanderSit (idName: 2940906) to Ginger
+(param: TargetScene:Clinic|SeatDramaName:9405Seat|LookAtActor:8009)
+Heidi stands still in Clinic and looks at Ginger
+Gust stands still in Clinic and looks at Heidi
+PLAYER SET POS ROT FLAG || sceneName: Clinic | flagName: P9409_A0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 94090 | delayTime: 3 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Add behavior CommanderMoveToFlagAndAction (idName: 2940900) to Player
+(param: TargetScene:Clinic|MoveMode:Walk|FlagName:P9409_A1|LookAtActor:8107)
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 94090 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 20578, 20579 starts:
+{{dialogue|Ginger|So he said...}}
+{{dialogue|Heidi|Right! He said he had to go back to Portia. We were all shocked! Most of all Verna! You know it was Verna that gave him that pig, right?}}
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 2940901) to Heidi
+(param: TargetScene:Clinic|MoveMode:Walk|FlagName:Hd9409_A1|LookAtActor:8000)
+
+TRIGGER Procedure 0.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8009 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 20580, 20581, 20582 starts:
+{{dialogue|Heidi|Hey, ''Player''! Came to see Ginger? I brought her some flowers. I know she's cooped up in bed all day, thought a little nature might do her some good.}}
+{{dialogue|Ginger|Thank you, Heidi.}}
+{{dialogue|Gust|Heidi?!}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 2940902) to Gust
+(param: TargetScene:Clinic|MoveMode:Walk|FlagName:Gst9409_A1|LookAtActor:8009)
+Remove behavior CommanderMoveToFlagAndAction (idName: 2940900) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 2940901) from Heidi
+Add behavior CommanderMoveToFlagAndAction (idName: 2940903) to Heidi
+(param: TargetScene:Clinic|MoveMode:Walk|FlagName:Hd9409_A2|LookAtActor:8108)
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8108 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 6480_0 starts:
+{{dialogue|Heidi|Long time no see, Goldilocks.}}
+{{dialogue|Gust|Oh... right, you're from Sandrock.}}
+{{dialogue|Heidi|Yeah, funny thing that, eh? A Sandrocker bein' in Sandrock an' all.}}
+{{dialogue|Gust|...}}
+{{dialogue|Heidi|Haha, I came to see if you'd changed any, an' yer still the same ol' Gust!}}
+{{dialogue|Gust|Right, you've got your own place now, don't you. Construction Highway or something. Albert told me about it. When my sister is better I'll come take a look...}}
+{{dialogue|Ginger|Go on, Gust. I'm okay, ''Player'' is here with me.}}
+{{dialogue|Gust|Alright, alright, let's go. I want to see those designs from the contest...}}
+{{dialogue|Heidi|I gotcha. Oh, and it's Construction Junction...}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 2940902) from Gust
+Remove behavior CommanderMoveToFlagAndAction (idName: 2940903) from Heidi
+Add behavior CommanderMoveToFlagAndAction (idName: 2940904) to Heidi
+(param: TargetScene:Clinic|MoveMode:Walk|FlagName:Hd9409_A3|LookAtActor:8108)
+Add behavior CommanderMoveToFlagAndAction (idName: 2940905) to Gust
+(param: TargetScene:Clinic|MoveMode:Walk|FlagName:Gst9409_A3|LookAtActor:8009)
+(cId 4) A conversation 6481_0 starts:
+{{dialogue|Ginger|Heidi's amazing... University degree, has her own studio, a career...}}
+{{dialogue|Ginger|When I'm better, I want to try everything. I don't know if I can build houses like Heidi... but small things. Beautiful necklaces... bracelets...}}
+
+*''You can do it!''
+*''Just focus on getting better first. One step at a time.''
+
+{{dialogue|Ginger|indent=true|answer=You can do it!
+|Thank you... that gives me a little confidence.}}
+{{dialogue|Ginger|indent=true|answer=Just focus on getting better first. One step at a time.
+|Yes, you're right... small steps.}}
+{{dialogue|Ginger|These last couple of days I feel like I've been getting better, but I can't help but be anxious. I know Dr.Fang is doing his best, but I hope I can be discharged soon...}}
+{{dialogue|Ginger|I have been thinking about what I'll do when I get out. I want to take off my parasol and walk around in the sunshine... see the beauty of the deserts.}}
+{{dialogue|Ginger|''Player'', I actually brought sunscreen with me... just in case. My friend in Portia made it for me.}}
+
+*''Tonight when the sun goes down, we can go for a walk.''
+*''When you're better I'll go with you.''
+*''Just make sure you rest first.''
+
+{{dialogue|Ginger|indent=true|answer=Tonight when the sun goes down, we can go for a walk.
+|Are you sure my brother will be okay with it? Are we going to sneak out?}}
+{{dialogue|Ginger|indent=true|I haven't done anything exciting since I was little!}}
+{{dialogue|Ginger|indent=true|How about tomorrow night? Come to the clinic after 21:00PM... I'll be waiting for you.}}
+{{dialogue|Ginger|indent=true|answer=Just make sure you rest first.
+|Ok, I understand.}}
+{{dialogue|Ginger|indent=true|Don't worry, ''Player''. I'll get better! Thank you for visiting me today. I've got my diary to keep me company, though.}}
+{{dialogue|Ginger|You want to go with me? For a walk?}}
+{{dialogue|Ginger|My brother never lets me go out... but maybe after the sun's gone down?}}
+{{dialogue|Ginger|We can sneak out! I haven't done anything this exciting since I was little!}}
+
+*''Let's do it!''
+*''Hmmm maybe we'd better not.''
+
+{{dialogue|Ginger|indent=true|answer=Let's do it!
+|How about tomorrow night? Come to the clinic after 21:00PM... I'll be waiting for you.}}
+{{dialogue|Ginger|indent=true|answer=Hmmm maybe we'd better not.
+|Ok, I understand.}}
+{{dialogue|Ginger|indent=true|Don't worry, ''Player''. I'll get better! Thank you for visiting me today. I've got my diary to keep me company, though.}}
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 2940904) from Heidi
+Remove behavior CommanderMoveToFlagAndAction (idName: 2940905) from Gust
+Remove behavior CommanderSit (idName: 2940906) from Ginger
+Heidi stops standing still
+Gust stops standing still
+Ginger stops standing still
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1900405
+END MISSION 1900405
+END MISSION 1900409
+
+TRIGGER Procedure 2.0 Step 0.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment D3 by 1
+
+TRIGGER Procedure 2.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if D3 is != (maybe?) 3
+ACTIONS
+FAIL MISSION || missionId: 1900405
+END MISSION 1900409
+
+TRIGGER Procedure 2.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 4) There is a conversation segment (id 20601) that ends:
+{{dialogue|Ginger|How about tomorrow night? Come to the clinic after 21:00PM... I'll be waiting for you.}}
+CONDITIONS
+Always:
+ACTIONS
+Run mission One Night in Sandrock

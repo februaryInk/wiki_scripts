@@ -1,0 +1,224 @@
+Reading Mission 1200027: Recipe for Fun
+
+<onlyinclude>{{Infobox mission
+|name = Recipe for Fun
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Recipe for Fun:
+
+TRIGGER Procedure 1.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 32
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1200026
+Set global blackboard key sandskiingmail with info 1.
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200026
+CONDITIONS
+Always:
+ACTIONS
+Run mission Recipe for Fun
+END MISSION 1200026
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200027
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: sandskiingmail | info: 1 | exist: 1
+ACTIONS
+===Go to City Hall===
+
+{{mission_details
+|desc = The Church of the Light asked you to join their discussion in City Hall.
+|details = Go to City Hall
+}}
+Set DONE to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_guildhall
+CHECK GLOBAL BLACKBOARD || key: sandskiingmail | info: 1 | exist: 1
+ACTIONS
+Matilda stops standing still
+UNIQUE ACTION RUN || idStr: enter_guildhall
+Catori stops standing still
+Catori stands still in Guildhall
+Matilda stands still in Guildhall
+Matilda stops standing still
+AREA TRIGGER DELETE || id: 20261
+
+TRIGGER Procedure 0.0 Step 2.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: sandskiingmail | info: 1 | exist: 1
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Guildhall | flagName: huasha_player
+Add behavior CommanderSit (idName: 20271) to Matilda
+(param: SeatDramaName:GuildHallSeat01|TargetScene:Guildhall)
+
+TRIGGER Procedure 0.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: sandskiingmail | info: 1 | exist: 1
+ACTIONS
+Remove behavior CommanderSit (idName: 20271) from Matilda
+===Construct Sandrunning Decorations===
+
+{{mission_details
+|desc = Construct the Sign-in Table for the upcoming Sandrunning grand opening at your {{textcolor|green|Intermediate Worktable}}.
+|details = Construct Sandrunning Decorations
+*{{i2|Sandrunning Kiosk|0/1}}
+}}
+CUTSCENE UI STATE EXIT || 
+Matilda stops standing still
+Catori stops standing still
+Unlock blueprint for Sandrunning Kiosk
+NPC REMOVE TAG || tag: nosermons
+GUIDE ADD CONTROL || forced: 1 | id: 1111
+
+TRIGGER Procedure 0.0 Step 3.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8018 | behaviourName: CommanderSit | eventName: SitDownFinished
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 178_0 starts:
+{{dialogue|Matilda|''Player''! How are you?}}
+{{dialogue|Matilda|I take it you got our letter? My, that Burgess... That child went around to everyone in town to check up on their wellness; he has such a big heart.}}
+{{dialogue|Matilda|The results he came back with, I must say, were rather shocking: eighty percent of those who took the survey reported that they were at least suffering some form of anxiety! Some from the Geeglers, some from the state of things.}}
+{{dialogue|Matilda|So I got together with our resident expert in fun, Catori here, and-}}
+{{dialogue|Matilda|Well, Catori, why don't you tell our fine Builder friend here what we came up with?}}
+{{dialogue|Catori|It's my pleasure, Minister. I must thank you again for getting the Church to support this project.}}
+{{dialogue|Catori|See now, ''Player'', way I see it, the only cure to these psychological drudgery type have-you-do, how-do-you-dos is one word: entertainment!}}
+{{dialogue|Catori|Seeing as Gecko Station has recently become unoccupied, we now have the opportunity to turn a negative into a positive: I present to you Sandsledding! But we won't call it that, no, too simple: we'll call it "{{textcolor|green|Sandrunning}}!"}}
+{{dialogue|Catori|Sounds sleek and sophisticated, something the youth can identify with. Our tourism profits will quintuple overnight! And the mental health crisis, I assume... will also be resolved.}}
+{{dialogue|Matilda|This is where you come in, Builder. We need you to help us build up some of the things involved in creatin' such an attraction!}}
+{{dialogue|Catori|I've already explained our needs to Mi-an, she'll be making the Sandsleds. I need you to help us make the {{textcolor|green|Sign-in Table}}. Here is the diagram, I drew it up myself.}}
+{{dialogue|Catori|When you're done, please install them {{textcolor|green|north of the 'ol Geegler building}}.}}
+{{dialogue|Matilda|How lovely! I love it when a plan comes together. Looking forward to seeing what the two of you come up with!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200026 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Install Sandrunning Decorations===
+
+{{mission_details
+|desc = Go install the decorations near the Sandrunning grounds.
+|details = Install Sandrunning Decorations
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 20271 | path: Label_breachstone | sceneName: Main | flagName: huasha_decorated | extraParams: Lable_RigisterDesk|CreatorItem|14000039_1|1547|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 20271 | missionId: 1200026 | iconType: 3
+
+TRIGGER Procedure 1.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 20271
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 20271 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 20271 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Catori stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: huasha_player2
+DELAY MASK SET || maskId: 20271 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 2.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 20271 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 934, 935 starts:
+{{dialogue|Catori|Alright, alright, alright! This looks great! You're legit, Builder; and you're gonna love what we do at the Sandrunner Extravoplaza, I guarantee it!}}
+{{dialogue|Catori|I'll be in my Museum... devising plans! I'll make sure this is the best dang attraction this town has ever seen! Check your mailbox, I don't want you missing the {{textcolor|green|opening ceremony}}!}}
+
+TRIGGER Procedure 1.0 Step 2.5 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Catori stops standing still
+SUBMIT MISSION 1200026
+GLOBAL BLACK BOARD REMOVE || key: sandskiingmail
+Run mission Sandapalooza
+
+TRIGGER Procedure 1.0 Step 3.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200027
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: sandskiingmail | info: 1 | exist: 0
+ACTIONS
+===Construct Sandrunning Decorations===
+
+{{mission_details
+|desc = Construct the Sign-in Table for the upcoming Sandrunning grand opening at your {{textcolor|green|Intermediate Worktable}}.
+|details = Construct Sandrunning Decorations
+*{{i2|Sandrunning Kiosk|0/1}}
+}}
+
+TRIGGER Procedure 1.0 Step 3.5 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Catori
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 1424 starts:
+{{dialogue|Catori|Between you and me, I'm actually kinda surprised Matilda supported this endeavor. I guess that's what makes her such a great leader. Here's hopin' we get a lot more opportunities like this!}}
+
+TRIGGER Procedure 1.0 Step 4.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+END MISSION 1200027

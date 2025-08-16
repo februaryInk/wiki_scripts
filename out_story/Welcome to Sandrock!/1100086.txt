@@ -1,0 +1,457 @@
+Reading Mission 1100086: Welcome to Sandrock!
+
+<onlyinclude>{{Infobox mission
+|name = Welcome to Sandrock!
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Welcome to Sandrock!:
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+START MISSION 1100085
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1100085
+CONDITIONS
+Always:
+ACTIONS
+Run mission Welcome to Sandrock!
+END MISSION 1100085
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100086
+CONDITIONS
+Always:
+ACTIONS
+===Head for the Commerce Guild===
+
+{{mission_details
+|desc = Mi-an wants to take you to meet the Old Builder in town and the Commerce Guild Commissioner, go check it out!
+|details = Head for the Commerce Guild
+}}
+SET ALL INTERACT || flag: 0
+AREA TRIGGER CREATE || id: 10341 | sceneName: Main | flagName: start_shanghui | showOnMap: 1 | mapIcon: MissionArea | transId: 80000524 | missionId: 1100085
+Mi-an stops standing still
+Add behavior CommanderFollowOpera (idName: 10344) to Mi-an
+(param: CMDFollowOperaPlayerID:8000|CMDFollowRadius2:40|CMDFollowRadius1:50|CMDRunSpeed:Run)
+Add behavior CommanderFollowPlayerOpera (idName: 10345) to Player
+(param: CMDFollowOperaNPCID:8017|DialogID:806|FoucsPointName:StartOperaPoint01)
+GUIDE ADD MULTI CONTROL || ids: 101,1 | forced: 0
+AUTOSAVE TRY || 
+PICK UP RESOURCE REFRESH || id: 1310
+Pen stands still in Main
+Set ShotCutTimerFlag to 0
+Set ShotCutSkipFlag to 0
+Set STEP to 0
+Set over to 0
+Set IN to 0
+STOPWATCH REAL TIME SET || id: 20863 | sec: 2.5
+Set GUIDE to 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8017 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Check if STEP is == 0
+ACTIONS
+Increment IN by 1
+
+TRIGGER Procedure 0.0 Step 4.0 Order 2 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON GUIDE TIPS HIDE || order: 0 | id: 1
+ON GUIDE TIPS HIDE || order: 0 | id: 101
+CONDITIONS
+Always:
+ACTIONS
+Increment GUIDE by 1
+
+TRIGGER Procedure 0.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON GUIDE TIPS HIDE || order: 10 | id: 1
+ON GUIDE TIPS HIDE || order: 10 | id: 101
+CONDITIONS
+Check if GUIDE is >= 2
+ACTIONS
+GUIDE ADD CONTROL || forced: 0 | id: 1035
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 10341
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Remove behavior CommanderFollowPlayerOpera (idName: 10345) from Player
+Add behavior CommanderMoveToFlag (idName: 20862) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:start_shanghui_player)
+Remove behavior CommanderFollowOpera (idName: 10344) from Mi-an
+NPC STOP ACTION CACHE || npc: 8017
+Add behavior CommanderMoveToFlagAndAction (idName: 20861) to Mi-an
+(param: TargetScene:Main|MoveMode:Run|FlagName:start_shanghui_mian)
+AREA TRIGGER DELETE || id: 10341
+
+TRIGGER Procedure 1.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8017 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 10 | behaviourName: CommanderMoveToFlag | npc: 8000 | eventName: MoveToFlagOver
+CONDITIONS
+Check if IN is == 2
+ACTIONS
+(cId 10) A conversation 563, 849, 793 starts:
+{{dialogue|Yan|Howdy there, ''Player''! I'm Yan, President of the Sandrock Commerce Guild. Pleased to make your acquaintance, yadda yadda yadda...!}}
+{{dialogue|Yan|I'll be overseeing you and Mi-an, but don't think of me as your boss! Think of me as more of a buddy that's your... supervisor!}}
+{{dialogue|Yan|This here's {{textcolor|green|Mason}}, he's retiring, hence, y'know, the whole reason for you being here and what not. But you knew that already, what am I talkin' about!? Anyway!}}
+
+TRIGGER Procedure 1.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 101) A conversation 772 starts:
+{{dialogue|Yan|See that workshop there on the other side of the tracks? It used to be Mason's, but now it's all yours! Ain't that swell!}}
+STOPWATCH REAL TIME SET || id: 20861 | sec: 4
+Add behavior CommanderPlayerAction (idName: 118601) to Player
+(param: CMDAction:TurnLeft_Story|Delay:0.8|LookAtActor:8020)
+Add behavior CommanderMoveToFlag (idName: 118601) to Mi-an
+(param: TargetScene:Main|MoveMode:Walk|FlagName:start_shanghui_mian2|LookAtActor:8020|Delay:1.2)
+Add behavior CommanderIdle (idName: 118601) to Mason
+(param: LookAtActor:8020)
+STOPWATCH REAL TIME SET || id: 11861 | sec: 1
+
+TRIGGER Procedure 1.0 Step 3.1 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8017 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 118601) from Mi-an
+Add behavior CommanderIdle (idName: 118602) to Mi-an
+(param: LookAtActor:8020)
+Remove behavior CommanderMoveToFlagAndAction (idName: 20861) from Mi-an
+
+TRIGGER Procedure 1.0 Step 3.2 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderPlayerAction (idName: 118601) from Player
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 20861
+CONDITIONS
+Always:
+ACTIONS
+Set ShotCutTimerFlag to 1
+
+TRIGGER Procedure 1.0 Step 4.1 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 772) that ends:
+{{dialogue|Yan|See that workshop there on the other side of the tracks? It used to be Mason's, but now it's all yours! Ain't that swell!}}
+(cId 101) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Set ShotCutSkipFlag to 1
+
+TRIGGER Procedure 1.0 Step 4.2 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 20861
+CONDITIONS
+Check if ShotCutSkipFlag is == 1
+ACTIONS
+(cId 102) A conversation 773, 564, 565, 566, 567 starts:
+{{dialogue|Yan|Just think of all the great stuff you'll be able to make in there for our Commerce Guild! And for other people too, I guess.}}
+{{dialogue|Yan|Well, I am now speechless! Mason, as the established Builder of Sandrock, why don't you say a couple inspiring words?}}
+{{dialogue|Mason|Uh... well, let's not get too friendly. I mean, I am on my way out of here... Ahem... My workshop is yours now, ''Player''.}}
+{{dialogue|Mason|You may find it run down and dilapidated... ill-equipped... and... it is certainly those things, but you may also find that the place has a lot of... heart.}}
+{{dialogue|Mason|I believe that will suffice. May you bring telesis to the land. Now if you'll excuse me, I'm off to the Blue Moon. There are only so many more days I'll be able to get my Yakmel Milk on.}}
+Pen stops standing still
+Pen stands still in Main
+Remove behavior CommanderIdle (idName: 118602) from Mi-an
+Remove behavior CommanderMoveToFlag (idName: 20862) from Player
+Add behavior CommanderPlayerAction (idName: 118602) to Player
+(param: CMDAction:TurnRight_Story)
+Add behavior CommanderMoveToFlagAndAction (idName: 118603) to Mi-an
+(param: TargetScene:Main|MoveMode:Run|FlagName:start_shanghui_mian|LookAtActor:8043)
+
+TRIGGER Procedure 1.0 Step 4.4 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 102) There is a conversation segment (id 564) that ends:
+{{dialogue|Yan|Well, I am now speechless! Mason, as the established Builder of Sandrock, why don't you say a couple inspiring words?}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderIdle (idName: 118610) to Player
+(param: LookAtActor:8027)
+Add behavior CommanderIdle (idName: 118610) to Mi-an
+(param: LookAtActor:8027)
+Remove behavior CommanderMoveToFlagAndAction (idName: 118603) from Mi-an
+Remove behavior CommanderPlayerAction (idName: 118602) from Player
+
+TRIGGER Procedure 1.0 Step 6.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 102) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Mason stops standing still
+STOPWATCH REAL TIME SET || sec: 3.5 | id: 20862
+Add behavior CommanderIdle (idName: 118601) to Yan
+(param: LookAtActor:8027)
+Remove behavior CommanderIdle (idName: 118601) from Mason
+
+TRIGGER Procedure 1.0 Step 4.3 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 772) that ends:
+{{dialogue|Yan|See that workshop there on the other side of the tracks? It used to be Mason's, but now it's all yours! Ain't that swell!}}
+(cId 101) After the conversation ends:
+CONDITIONS
+Check if ShotCutTimerFlag is == 1
+ACTIONS
+(cId 102) A conversation 773, 564, 565, 566, 567 starts:
+{{dialogue|Yan|Just think of all the great stuff you'll be able to make in there for our Commerce Guild! And for other people too, I guess.}}
+{{dialogue|Yan|Well, I am now speechless! Mason, as the established Builder of Sandrock, why don't you say a couple inspiring words?}}
+{{dialogue|Mason|Uh... well, let's not get too friendly. I mean, I am on my way out of here... Ahem... My workshop is yours now, ''Player''.}}
+{{dialogue|Mason|You may find it run down and dilapidated... ill-equipped... and... it is certainly those things, but you may also find that the place has a lot of... heart.}}
+{{dialogue|Mason|I believe that will suffice. May you bring telesis to the land. Now if you'll excuse me, I'm off to the Blue Moon. There are only so many more days I'll be able to get my Yakmel Milk on.}}
+Pen stops standing still
+Pen stands still in Main
+Remove behavior CommanderIdle (idName: 118602) from Mi-an
+Remove behavior CommanderMoveToFlag (idName: 20862) from Player
+Add behavior CommanderPlayerAction (idName: 118602) to Player
+(param: CMDAction:TurnRight_Story)
+Add behavior CommanderMoveToFlagAndAction (idName: 118603) to Mi-an
+(param: TargetScene:Main|MoveMode:Run|FlagName:start_shanghui_mian|LookAtActor:8043)
+
+TRIGGER Procedure 1.0 Step 6.1 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 20862
+CONDITIONS
+Always:
+ACTIONS
+Yan stops standing still
+Remove behavior CommanderIdle (idName: 118601) from Yan
+Add behavior CommanderMoveToFlagAndAction (idName: 10863) to Yan
+(param: TargetScene:Main|MoveMode:Walk|FlagName:start_shanghui_yan2|LookAtActor:8000)
+Remove behavior CommanderIdle (idName: 118610) from Mi-an
+Remove behavior CommanderIdle (idName: 118610) from Player
+Add behavior CommanderIdle (idName: 118611) to Mi-an
+(param: LookAtActor:8043)
+Add behavior CommanderIdle (idName: 118611) to Player
+(param: LookAtActor:8043)
+
+TRIGGER Procedure 1.0 Step 7.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8043 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 11) A conversation 978, 568, 569, 570, 846, 866 starts:
+{{dialogue|Yan|... He was always a bit awkward, mind you.}}
+{{dialogue|Yan|Anyway, back to business. Before you start, I need to tell y'all a bit about how we work here in the desert. I know you already hold Builder licenses, but things are a bit different here from what you're used to.}}
+{{dialogue|Yan|To start with, there aren't too many trees around, so don't go swinging your axe around too much, it's frowned upon, anyway. But there's plenty of {{textcolor|green|scrap metal and drift wood}} you can break apart.}}
+{{dialogue|Yan|For that, you'll need somethin' called a {{textcolor|green|Pickhammer}}. It's a pick with a hammer just as the name implies. We use it not only because it's useful for breaking up rocks, but it's also durable enough to break up the {{textcolor|green|Old World scrap}} all around here!}}
+{{dialogue|Yan|Easy stuff to make as well. You just need to find some {{textcolor|green|Stone and Wood}} and craft it at your {{textcolor|green|Worktable}}! Why don't you two try making one for yourselves? You'll be needing it right away, anyway.}}
+{{dialogue|Yan|When you're done, just come find me in the {{textcolor|green|Commerce Guild}}. But, y'know. No rush. See you... there!}}
+
+TRIGGER Procedure 1.0 Step 8.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 10863) from Yan
+NPC ADD TAG || tag: yaninshang
+Add behavior CommanderPlayerAction (idName: 118612) to Player
+(param: CMDAction:TurnRight_Story)
+STOPWATCH REAL TIME SET || id: 11869 | sec: 2
+Remove behavior CommanderIdle (idName: 118611) from Mi-an
+Remove behavior CommanderIdle (idName: 118611) from Player
+Add behavior CommanderMoveToFlagAndAction (idName: 118612) to Mi-an
+(param: TargetScene:Main|MoveMode:Walk|FlagName:start_shanghui_mian3|LookAtActor:8000|Delay:0.8)
+
+TRIGGER Procedure 1.0 Step 9.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 11869
+CONDITIONS
+Always:
+ACTIONS
+(cId 20) A conversation 571, 572 starts:
+{{dialogue|Mi-an|True... it is pretty easy to make. We should be able to find the Stone and Wood we need by just searching through {{textcolor|green|Junk Piles on the ground near our Workshops}}. Picking up things is fun!}}
+{{dialogue|Mi-an|Hey! Let's go to your workshop and see what kind of machines Mason left for ya! Let me take you there; I'm already getting pretty acquainted around here, so I can make sure you don't get lost!}}
+
+TRIGGER Procedure 2.0 Step 5.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 20) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderIdle (idName: 118603) from Player
+Add behavior CommanderFollowPlayerOpera (idName: 103451) to Player
+(param: CMDFollowOperaNPCID:8017|DialogID:77|FoucsPointName:StartOperaPoint02)
+===Head for your Workshop===
+
+{{mission_details
+|desc = Mi-an wants to take you to Mason's old workshop to see what he's left for you.
+|details = Head for your Workshop
+}}
+AREA TRIGGER CREATE || id: 10862 | sceneName: Main | flagName: trigger_start0 | showOnMap: 1 | mapIcon: MissionArea | transId: 80000495 | missionId: 1100085
+SCENEITEM CREATE FLAG || itemType: 0 | id: 10861 | path: Mission_NewArrow | sceneName: Main | flagName: trigger_start0 | extraParams: 0
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderIdle (idName: 118604) from Mi-an
+Add behavior CommanderMoveToFlagAndAction (idName: 10861) to Mi-an
+(param: TargetScene:Main|MoveMode:Run|FlagName:start_home_mian0)
+GUIDE ADD CONTROL || id: 4 | forced: 0
+Set STEP to 1
+Set IN to 0
+STOPWATCH REAL TIME SET || id: 11000869 | sec: 5
+Remove behavior CommanderMoveToFlagAndAction (idName: 118612) from Mi-an
+Remove behavior CommanderPlayerAction (idName: 118612) from Player
+
+TRIGGER Procedure 2.0 Step 5.5 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 10862
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 10862
+SCENEITEM DELETE || itemType: 0 | id: 10861
+Remove behavior CommanderFollowPlayerOpera (idName: 103451) from Player
+Add behavior CommanderMoveToFlag (idName: 20864) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:start_home_player)
+Remove behavior CommanderMoveToFlagAndAction (idName: 10861) from Mi-an
+Add behavior CommanderMoveToFlagAndAction (idName: 20864) to Mi-an
+(param: TargetScene:Main|MoveMode:Run|FlagName:start_home_mian)
+
+TRIGGER Procedure 2.0 Step 8.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8017 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON CAMERA PATH END || order: 10 | id: 20865
+CONDITIONS
+Check if STEP is == 1
+Check if IN is == 3
+ACTIONS
+(cId 21) A conversation 774, 775, 979, 1134, 1135, 776 starts:
+{{dialogue|Mi-an|Hm... Kind of slim pickings... but at least he did leave you a {{textcolor|green|Worktable}}. That should be all you need to make a {{textcolor|green|Pickhammer}}!}}
+{{dialogue|Mi-an|You know, Sandrock is still well-known across all the Free Cities for being directly on top of an Old World metropolis. They say some old scraps even end up here on the surface when the wind blows.}}
+{{dialogue|Mi-an|Once we have our Pickhammers, we can smash 'em up and get all the resources we need!}}
+{{dialogue|Mi-an|Also I kinda wanted to say something to you privately. Uhmm... see, the reason I came to Sandrock is because it's not doing so well for itself. Everybody in the Free Cities knows that. But I didn't hesitate signing that contract.}}
+{{dialogue|Mi-an|I thought it'd be the best way for me to make a difference in the world. I bet you feel the same way. So let's make a promise, Builder to Builder. {{textcolor|green|Let's take Sandrock back to its glory days during our time here. Let's give it our all, okay?}}}}
+{{dialogue|Mi-an|Whew! Well, I'm off to make my Pickhammer! See you around!}}
+
+TRIGGER Procedure 2.0 Step 9.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 21) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 20864) from Player
+GUIDE ADD CONTROL || forced: 0 | id: 9
+Remove behavior CommanderMoveToFlagAndAction (idName: 20864) from Mi-an
+SET ALL INTERACT || flag: 1
+TIME SET ENABLE || bool: 1
+Run mission The New Builder
+Run mission Welcome to Sandrock!
+Set over to 10
+CUTSCENE UI STATE EXIT || 
+Pen stops standing still
+SUBMIT MISSION 1100085
+
+TRIGGER Procedure 2.0 Step 9.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Welcome to Sandrock! is in state 3 with flag 0
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 20864) from Player
+GUIDE ADD CONTROL || forced: 0 | id: 9
+Remove behavior CommanderMoveToFlagAndAction (idName: 20864) from Mi-an
+SET ALL INTERACT || flag: 1
+TIME SET ENABLE || bool: 1
+Set over to 10
+CUTSCENE UI STATE EXIT || 
+Pen stops standing still
+SUBMIT MISSION 1100085
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8017 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Check if STEP is == 1
+ACTIONS
+Increment IN by 1
+
+TRIGGER Procedure 3.0 Step 6.5 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 20865
+CONDITIONS
+Check if STEP is == 1
+ACTIONS
+Increment IN by 1
+
+TRIGGER Procedure 3.0 Step 10.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 23:00 (order: 0):
+CONDITIONS
+Check if over is == 10
+ACTIONS
+Remove behavior CommanderIdle (idName: 118602) from Mi-an
+SCENEITEM DELETE || itemType: 0 | id: 110864157
+END MISSION 1100086

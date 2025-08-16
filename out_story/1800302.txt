@@ -1,0 +1,156 @@
+Reading Mission 1800302: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200135
+
+TRIGGER Procedure 9.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+We'll Be Ready For 'Em is successfully completed
+The Battle of Sandrock is in state 3 with flag 0
+ACTIONS
+NPC ADD TAG || tag: NoRandomNPCInTown
+
+TRIGGER Procedure 9.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 12) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1800290
+Run mission #1800291
+Run mission #1800292
+Run mission #1800302
+Run mission #1800303
+Run mission #1800304
+Run mission #1800299
+Run mission #1800301
+Run mission #1800300
+Run mission #1800293
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800302
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || flagName: Trigger_Temple | id: 83021 | transId: 0 | missionId: 1800302 | sceneName: Main | showOnMap: 1 | mapIcon: MissionArea
+AREA TRIGGER ONCE CREATE || missionId: 1800302 | id: 828821 | sceneName: Temple | flagName: Trigger_8288_Temple1 | showOnMap: 1 | mapIcon: MissionArea | transId: 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800302
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM ADD || id: 10 | instId: 83021 | scene: Temple | flagName: S8288_T_s1 | dailyBehavior: RandomNPC
+NPC RANDOM ADD || id: 10 | instId: 83022 | scene: Temple | flagName: S8288_T_s2 | dailyBehavior: RandomNPC
+83021 stands still in Temple
+83022 stands still in Temple
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 828821
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 10716 starts:
+{{dialogue|83021|Make me a donut!}}
+
+TRIGGER Procedure 0.0 Step 3.1 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8288171) to Mi-an
+(param: TargetScene:Temple|MoveMode:Walk|FlagName:S8288_17_1)
+
+TRIGGER Procedure 0.0 Step 3.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | id: 828821 | enter: 0
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 83021
+
+TRIGGER Procedure 0.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8017 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 3351_0 starts:
+{{dialogue|Mi-an|That's not what Builders do! And even if it was, I'd never help you!}}
+{{dialogue|83022|Heh! She can't even make us a donut! What a loser.}}
+{{dialogue|83021|Geez, no wonder her boss hates her so much.}}
+{{dialogue|Mi-an|He... what? What did he tell you?}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 9.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Mi-an stops standing still
+83021 stops standing still
+83022 stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8288171) from Mi-an
+Remove behavior CommanderMoveToFlagAndAction (idName: 8288172) from Mi-an
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 40.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM REMOVE || id: 83021
+NPC RANDOM REMOVE || id: 83022
+END MISSION 1800302
+
+TRIGGER Procedure 0.0 Step 40.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 22841
+CONDITIONS
+Always:
+ACTIONS
+83021 stops standing still
+83022 stops standing still
+Mi-an stops standing still
+AREA TRIGGER DELETE || id: 83021
+AREA TRIGGER DELETE || id: 828821
+NPC RANDOM REMOVE || id: 83021
+NPC RANDOM REMOVE || id: 83022
+END MISSION 1800302

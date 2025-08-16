@@ -1,0 +1,234 @@
+Reading Mission 1900233: Leaving the Nest
+
+<onlyinclude>{{Infobox mission
+|name = Leaving the Nest
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200106
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Leaving the Nest is successfully completed
+Duvos Attacks! is in state 2 with flag 0
+
+GROUP 10:
+Leaving the Nest has failed
+Duvos Attacks! is in state 2 with flag 0
+
+ACTIONS
+Run mission #1900232
+
+TRIGGER Procedure 4.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Leaving the Nest is successfully completed
+Duvos Attacks! is in state 2 with flag 0
+
+GROUP 10:
+Leaving the Nest has failed
+Duvos Attacks! is in state 2 with flag 0
+
+ACTIONS
+Run mission Leaving the Nest
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1900233
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER ONCE CREATE || flagName: T9233 | sceneName: Saloon | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0 | id: 192330 | missionId: 1900233
+AREA TRIGGER CREATE || missionId: 1900233 | id: 192331 | sceneName: Main | flagName: T92331 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER ONCE CREATE || flagName: T9233 | sceneName: Saloon | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0 | id: 192330 | missionId: 1900233
+
+TRIGGER Procedure 0.0 Step 0.5 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 192330
+CONDITIONS
+CHECK WEATHER STATE || weather: 2 | flag: 0
+ACTIONS
+DELAY MASK SET || maskId: 923310 | delayTime: 1 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 9233001
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 1965_0 starts:
+{{dialogue|Fang|Tell me about... the new inventions...}}
+{{dialogue|Owen|Hahah! You mean Grace's new dish? I guess you could call what she does "inventing!" Director Qi might take issue with that definition, though!}}
+{{dialogue|Fang|Why?}}
+{{dialogue|Owen|Well, it was... how can I put it? Maybe... too ahead of its time.}}
+{{dialogue|Owen|Although she doesn't always seem to aim for delicious... I admire her innovative attitude!}}
+{{dialogue|Fang|It's like new medicine.}}
+{{dialogue|Owen|How so? Like developing new medicine, you mean?}}
+{{dialogue|Fang|Mm. Sometimes good, sometimes bad.}}
+{{dialogue|Owen|Haha, you know, our good doctor here and Grace might have a lot in common! Well, maybe not "a lot" but...}}
+{{dialogue|Owen|Whatever the case... Hey, I actually have a few servings of her "experimental" dish left, I think...}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 0.5 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 6679) that ends:
+{{dialogue|Owen|Whatever the case... Hey, I actually have a few servings of her "experimental" dish left, I think...}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 923304) to Player
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:P9233|LookAtActor:8001)
+Add behavior CommanderSit (idName: 923303) to Fang
+(param: TargetScene:Saloon|SeatDramaName:SaloonCounterSeatArvio)
+
+TRIGGER Procedure 0.0 Step 2.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 1956_0 starts:
+{{dialogue|Owen|Hey, ''Player''! You're here, too! How'd you like to try one of Grace's new concoctions with our doctor here?}}
+
+*''Great! Let's try!''
+*''Owen, you're too generous!''
+*''I don't know about that...''
+
+{{dialogue|Owen|indent=true|answer=Great! Let's try!
+|reward={{NPC2|Owen|rp=1}}|Haha, it would be so great if more guests were open to new recipes like you are!}}
+{{dialogue|Owen|indent=true|answer=Owen, you're too generous!
+|reward={{NPC2|Owen|rp=2}}|Ahh come on, it's just a little food, don't be so polite! Dig in!}}
+{{dialogue|Fang|Is it... safe?}}
+{{dialogue|Owen|reward={{i2|Barbecue Scallop|1}}|Ha! Afraid, are we? Don't worry, all Grace's dishes are taste tested by me. Even if they're... surprising, eh, they won't do something like turn you blue, for example...}}
+{{dialogue|Owen|You know, if you have any comments or suggestions, you I'll pass it on the to chef!}}
+{{dialogue|Fang|Curious. I wonder... how it tastes...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Owen stops standing still
+Fang stops standing still
+Remove behavior CommanderSit (idName: 923303) from Fang
+CUTSCENE UI STATE EXIT || 
+AREA TRIGGER DELETE || id: 192331
+Remove behavior CommanderMoveToFlagAndAction (idName: 923304) from Player
+Fang gains 5 favor
+Owen gains 6 favor
+END MISSION 1900233
+
+TRIGGER Procedure 1.0 Step 3.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 2) There is a conversation segment (id 6684) that ends:
+{{dialogue|Owen|Ha! Afraid, are we? Don't worry, all Grace's dishes are taste tested by me. Even if they're... surprising, eh, they won't do something like turn you blue, for example...}}
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Barbecue Scallop of Default quality (Notify player)
+
+TRIGGER Procedure 1.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 192331
+CONDITIONS
+Check if Owen is in town
+ACTIONS
+Owen stands still in Saloon and looks at Fang
+Fang stands still in Saloon and looks at Owen
+STOPWATCH REAL TIME SET || id: 9233002 | sec: 0.1
+
+TRIGGER Procedure 1.0 Step 0.5 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 923310 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: P9233_0 | sceneName: Saloon
+DELAY MASK SET || maskId: 923310 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+STOPWATCH REAL TIME SET || id: 9233001 | sec: 0.6
+STOPWATCH REAL TIME SET || id: 9233004 | sec: 0.85
+
+TRIGGER Procedure 1.0 Step 1.5 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the first option in conversation segment 6680:
+{{dialogue|Owen|Hey, ''Player''! You're here, too! How'd you like to try one of Grace's new concoctions with our doctor here?}}
+
+*''Great! Let's try!'' (No unique dialogue)
+*''Owen, you're too generous!'' (No unique dialogue)
+*''I don't know about that...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Owen gains 1 favor
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the second option in conversation segment 6680:
+{{dialogue|Owen|Hey, ''Player''! You're here, too! How'd you like to try one of Grace's new concoctions with our doctor here?}}
+
+*''Great! Let's try!'' (No unique dialogue)
+*''Owen, you're too generous!'' (No unique dialogue)
+*''I don't know about that...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Owen gains 2 favor
+
+TRIGGER Procedure 1.0 Step 2.5 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the third option in conversation segment 6680:
+{{dialogue|Owen|Hey, ''Player''! You're here, too! How'd you like to try one of Grace's new concoctions with our doctor here?}}
+
+*''Great! Let's try!'' (No unique dialogue)
+*''Owen, you're too generous!'' (No unique dialogue)
+*''I don't know about that...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Fang gains 2 favor

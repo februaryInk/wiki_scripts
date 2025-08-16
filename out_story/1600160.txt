@@ -1,0 +1,66 @@
+Reading Mission 1600160: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Parent not found; run conditions not available.
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1600160
+CONDITIONS
+Always:
+ACTIONS
+Set IsPerDayUrge to 0
+Add 20 Sandworm of Unknown quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Owen
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: NormalMission1004 | exist: 1 | info: MissionReceiveFlag
+Check if IsPerDayUrge is == 0
+ACTIONS
+(cId 0) A conversation 110038 starts:
+{{dialogue|Owen|The Saloon's fish crisis is kind of urgent you know... Ah, sorry. Just come get me when you got it all, okay?}}
+Set IsPerDayUrge to 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: NormalMission1004 | info: MissionReceiveFlag | exist: 1
+ACTIONS
+Set IsPerDayUrge to 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+When the player moves from -1 to the Main:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: NormalMission1004 | info: MissionEndFlag | exist: 1
+ACTIONS
+GROUP 0:
+GLOBAL BLACK BOARD REMOVE || key: NormalMission1004
+
+GROUP 1:
+END MISSION 1600160
+

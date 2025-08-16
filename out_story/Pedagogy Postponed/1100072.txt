@@ -1,0 +1,131 @@
+Reading Mission 1100072: Pedagogy Postponed
+
+<onlyinclude>{{Infobox mission
+|name = Pedagogy Postponed
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Pedagogy Postponed:
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+START MISSION 1100071
+CUTSCENE UI STATE EXIT || 
+Pen stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 20712) from Burgess
+
+TRIGGER Procedure 0.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1100071
+CONDITIONS
+Always:
+ACTIONS
+Run mission Pedagogy Postponed
+END MISSION 1100071
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100072
+CONDITIONS
+Always:
+ACTIONS
+===Build Stone Sword and Shield===
+
+{{mission_details
+|desc = Burgess has lost his practice sword and shield. Pen hopes you can help build a new Stone Sword and Shield.
+|details = Build Stone Sword and Shield
+}}
+Set DONE to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1100071 | targetId: 0 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Pen===
+
+{{mission_details
+|desc = Your Sword and Shield is complete, show Pen.
+|details = Talk to Pen
+*{{i2|Pen|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100072
+CONDITIONS
+CHECK PLAYER ITEM || item: 11000025 | itemGrade: -1 | set: 2 | count: 1
+ACTIONS
+===Talk to Pen===
+
+{{mission_details
+|desc = Your Sword and Shield is complete, show Pen.
+|details = Talk to Pen
+*{{i2|Pen|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Pen
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1100071 | targetId: 1 | canSubmit: 1
+ACTIONS
+(cId 0) A conversation 372, 373, 374, 375 starts:
+{{dialogue|Pen|Oh! Yes! Right... well it seems in classic Pen fashion, I've solved the problem myself and forgotten to inform you! We've found Burgess's sword and shield. They were under his bed. It's always the last place you look, am I right?}}
+{{dialogue|Pen|Here's an idea: why don't you keep them! Take 'em out into the desert, swing the sword around a bit, who knows what kind of fun you could have out there? Sure it might be dangerous, but isn't that half of the excitement?}}
+{{dialogue|Pen|Heck! Maybe you can finally be the one to take down that dastardly Logan and his gang! Hah! That'd be rich!}}
+{{dialogue|Pen|Well, in any case, ta.}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Set DONE to 1
+NPC ADD TAG || tag: PlaySword
+SUBMIT MISSION 1100071
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if DONE is == 1
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 20711
+END MISSION 1100072
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1100072
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 20711

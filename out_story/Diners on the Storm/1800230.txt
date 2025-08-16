@@ -1,0 +1,240 @@
+Reading Mission 1800230: Diners on the Storm
+
+<onlyinclude>{{Infobox mission
+|name = Diners on the Storm
+|image =
+|description = Grace and Owen are pretty hectic in the Blue Moon trying to fix the chaos from earlier.
+|type = Side
+|time =
+|location =
+|characters = [[Grace]]
+|condition =
+|details =
+|exp = 850
+|reputation = 5
+|gols = None
+|npc1 = Grace
+|rp1 = 20
+|npc2 = Owen
+|rp2 = 10
+|rewards = {{i2|Royal Desert Warrior Boots}|1}
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100068
+
+TRIGGER Procedure 3.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Run mission Gungam Zeroed
+
+TRIGGER Procedure 3.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1200217 is result 1 flag 1
+ACTIONS
+Run mission Diners on the Storm
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800230
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1800230 | id: 82300 | sceneName: Main | flagName: Trigger_82301 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80009945
+Set 8230DAY to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 12 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment 8230DAY by 1
+Remove behavior CommanderNPCActionLoop (idName: 8230029) from Grace
+
+TRIGGER Procedure 0.0 Step 0.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 8230DAY is >= 2
+ACTIONS
+AREA TRIGGER DELETE || id: 82300
+END MISSION 1800230
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_saloon
+Check if 8230DAY is < 2
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_saloon
+AREA TRIGGER DELETE || id: 82300
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+Grace stands still in Saloon
+Grace stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 8230022) to Grace
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:S8230_Grace_1|Action:Sweep)
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: S8230_Player_1
+DELAY MASK SET || maskId: 82301 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 82301
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 1840_0 starts:
+{{dialogue|Grace|Hey... sure... Grace will take care of it...}}
+{{dialogue|Grace|Thanks, Grace! We can always count on you to clean up our messes!}}
+{{dialogue|Grace|Hey... it's no problem, folks...}}
+{{dialogue|Grace|You're the best employee the Blue Moon's ever had!}}
+{{dialogue|Grace|Really, it's no trouble at all...}}
+{{dialogue|Grace|And just wait til you see what we left in the bathroom!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8230023) to Grace
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:S8230_Grace_2|LookAtActor:8000)
+
+TRIGGER Procedure 0.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8002 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 1841_0 starts:
+{{dialogue|Grace|Ah! ''Player''!}}
+{{dialogue|Grace|What's the matter, never seen a grown woman talk to herself before...?}}
+
+*''Do you need a hand?'' (No unique dialogue)
+*''I have. But never so convincingly!''
+*''Didn't mean to interrupt, see ya.''
+
+{{dialogue|Grace|indent=true|answer=Didn't mean to interrupt, see ya.
+|Right. Bye.}}
+{{dialogue|Grace|Hah. Good one...}}
+
+*''Do you need a hand?'' (No unique dialogue)
+*''You missed a spot. See ya.''
+
+{{dialogue|Grace|indent=true|answer=You missed a spot. See ya.
+|Right. Bye.}}
+DELIVER MISSION 1800230
+
+TRIGGER Procedure 0.0 Step 10.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Grace stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8230022) from Grace
+Remove behavior CommanderMoveToFlagAndAction (idName: 8230023) from Grace
+CUTSCENE UI STATE EXIT || 
+Add behavior CommanderNPCActionLoop (idName: 8230029) to Grace
+(param: CMDAction:Sweep)
+
+TRIGGER Procedure 0.0 Step 8.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the first option in conversation segment 6180:
+{{dialogue|Grace|What's the matter, never seen a grown woman talk to herself before...?}}
+
+*''Do you need a hand?'' (No unique dialogue)
+*''I have. But never so convincingly!'' (No unique dialogue)
+*''Didn't mean to interrupt, see ya.'' (No unique dialogue)
+
+(cId 2) The player picks the first option in conversation segment 6181:
+{{dialogue|Grace|Hah. Good one...}}
+
+*''Do you need a hand?'' (No unique dialogue)
+*''You missed a spot. See ya.'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 6184:
+{{dialogue|Grace|...?}}
+
+*''Do you need a hand?'' (No unique dialogue)
+*''You missed a spot. See ya.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 1842_0 starts:
+{{dialogue|Grace|Ah, yeah, ''Player''. That'd be just wonderful. Obviously, you don't need to, but sure, if you see something you can pick up, I'd appreciate it. Thanks!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 10.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Grace stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8230022) from Grace
+Remove behavior CommanderMoveToFlagAndAction (idName: 8230023) from Grace
+CUTSCENE UI STATE EXIT || 
+START MISSION 1800230
+
+TRIGGER Procedure 0.0 Step 12.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800230
+CONDITIONS
+Always:
+ACTIONS
+Run mission Diners on the Storm
+END MISSION 1800230
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Grace|...?}}
+
+*''Do you need a hand?'' (No unique dialogue)
+*''You missed a spot. See ya.''
+
+{{dialogue|Grace|indent=true|answer=You missed a spot. See ya.
+|Right. Bye.}}
+
+==Rewards==
+{{mission reward
+|npc1 = Grace
+|rp1 = 20
+|npc2 = Owen
+|rp2 = 10
+|exp = 850
+|reputation = 5
+|gols = None
+|rewards = {{i2|Royal Desert Warrior Boots}|1}
+}}

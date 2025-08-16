@@ -1,0 +1,156 @@
+Reading Mission 1200118: Saving Private Raven
+
+<onlyinclude>{{Infobox mission
+|name = Saving Private Raven
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Saving Private Raven:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200117
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1200117
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200117
+CONDITIONS
+Always:
+ACTIONS
+Run mission Saving Private Raven
+END MISSION 1200117
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200118
+CONDITIONS
+Always:
+ACTIONS
+===Wait for Reply===
+
+{{mission_details
+|desc = How can you help X? Wait for his reply.
+|details = Wait for Reply
+}}
+Set DAY to 0
+Run mission Saving Private Raven
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|214}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 214
+CONDITIONS
+Always:
+ACTIONS
+===Build a Bird Swing===
+
+{{mission_details
+|desc = Build a Bird Swing from the diagram given by Fang on the Workshop.
+|details = Build a Bird Swing
+*{{i2|Bird Swing|0/1}}
+}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to X
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 2987 starts:
+{{dialogue|X|X saw picture! CoCo like! Will like!}}
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Fang
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 2988 starts:
+{{dialogue|Fang|Ma made a swing... before.}}
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200117 | targetId: 2 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Install the Bird Swing===
+
+{{mission_details
+|desc = The Bird Swing is ready, go to the clinic to install it.
+|details = Install the Bird Swing
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 21181 | sceneName: Main | path: Mission_BirdSwingEmpty | flagName: thief3_birdswing | extraParams: Mission_BirdSwing|CreatorItem|19810012_1|1547|-1|0
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 21181 | missionId: 1200117 | iconType: 2
+
+TRIGGER Procedure 1.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | id: 21181 | itemType: 12
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 21181 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 21181
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: thief3_player
+X stands still in Main
+CoCo stands still in Main
+DELAY MASK SET || maskId: 21181 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+{{cutscene|id = 6011}}
+A cutscene CG_REAGENT_SUCCESS (duration: 0.0) starts playing
+Bird Swing - We built X the Bird Swing, and he finally impressed his little friend. They seemed very happy, flying around playfully, and finally resting on the swing. It made me feel proud to bring my little friends joy.
+
+TRIGGER Procedure 1.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_REAGENT_SUCCESS | state: 9
+CONDITIONS
+Always:
+ACTIONS
+CoCo stops standing still
+X stops standing still
+CUTSCENE UI STATE EXIT || 
+NPC ADD TAG || tag: BirdSwingAppear
+SUBMIT MISSION 1200117
+END MISSION 1200118

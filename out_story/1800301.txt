@@ -1,0 +1,131 @@
+Reading Mission 1800301: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200135
+
+TRIGGER Procedure 9.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+We'll Be Ready For 'Em is successfully completed
+The Battle of Sandrock is in state 3 with flag 0
+ACTIONS
+NPC ADD TAG || tag: NoRandomNPCInTown
+
+TRIGGER Procedure 9.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 12) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1800290
+Run mission #1800291
+Run mission #1800292
+Run mission #1800302
+Run mission #1800303
+Run mission #1800304
+Run mission #1800299
+Run mission #1800301
+Run mission #1800300
+Run mission #1800293
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800301
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || flagName: Trigger_Saloon | id: 82884 | transId: 0 | missionId: 1800301 | sceneName: Main | showOnMap: 1 | mapIcon: MissionArea
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Commander Lefu stops standing still
+Remove behavior CommanderNPCAction (idName: 8288012) from Owen
+Remove behavior CommanderNPCAction (idName: 8288012) from Owen
+Owen stops standing still
+CUTSCENE UI STATE EXIT || 
+END MISSION 1800301
+
+TRIGGER Procedure 0.0 Step 0.1 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_saloon
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+Check if Owen is in town
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_saloon
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+Owen stands still in Saloon
+Commander Lefu stands still in Saloon and looks at Owen
+AREA TRIGGER DELETE || id: 82884
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 8288012) to Owen
+(param: CMDAction:Cook_Story)
+
+TRIGGER Procedure 0.0 Step 3.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8001 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 3355_0 starts:
+{{dialogue|Commander Lefu|Yes! Now add some more vinegar!}}
+{{dialogue|Owen|I... I can't add any more vinegar... the soup's too sour as it is!}}
+{{dialogue|Commander Lefu|I said, "Do it!"}}
+{{dialogue|Owen|I can't! I physically can't!}}
+{{dialogue|Commander Lefu|I like my soup sour! I want to feel my face scrunch up to the size of a blueberry every time I take a bite! Do it now! Pour the vinegar!}}
+{{dialogue|Owen|Ah... hnghhh... I feel so... vile!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 40.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 22841
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 82884
+END MISSION 1800301

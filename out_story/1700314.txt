@@ -1,0 +1,417 @@
+Reading Mission 1700314: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200310
+
+TRIGGER Procedure 5.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission Ghost Recon
+
+TRIGGER Procedure 5.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Ghost Recon is successfully completed
+Just Give a Whistle is successfully completed
+
+GROUP 10:
+Ghost Recon is successfully completed
+Just Give a Whistle is in state 2 with flag 1
+
+ACTIONS
+Run mission #1700314
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+
+TRIGGER Procedure 0.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+NPC ADD TAG || tag: LarryDazed
+(cId 3) A conversation 12490, 12491, 12492, 12493 starts:
+{{dialogue|Justice|He's out again! Doc, do somethin'!}}
+{{dialogue|Fang|Acupuncture may help...}}
+{{dialogue|Fang|Does he have... acupoints?}}
+{{dialogue|Fang|...}}
+
+TRIGGER Procedure 0.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 173141) to Fang
+(param: Action:Needle|FlagName:GKA_Needle|TargetScene:Clinic)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 12504) that ends:
+{{dialogue|Logan|I did some diggin' around. After their leader died... seems like there was some sorta infightin', then they all moved off someplace else. That leader's partner died in the chaos or somethin'...}}
+CONDITIONS
+Always:
+ACTIONS
+Logan stands still in Clinic
+Trudy stands still in Clinic
+Qi stands still in Clinic
+
+TRIGGER Procedure 0.0 Step 0.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 173141
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 12883, 12884, 12885, 12886, 12887, 12888, 12889, 12890 starts:
+{{dialogue|Qi|Dr Fang, may I have some tissue samples of the Geegler?}}
+{{dialogue|Fang|Hm? Why?}}
+{{dialogue|Qi|For research. I will get a saliva sample myself, but a tissue sample from you would be appreciated. Geeglers moult, do they not?}}
+{{dialogue|Fang|Patient privacy.}}
+{{dialogue|Qi|But it's a Geegler.}}
+{{dialogue|Fang|Still... patient.}}
+{{dialogue|Qi|...Fine. Well, if it sheds it's skin-}}
+{{dialogue|Fang|No.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+When the player moves from Clinic to the -1:
+CONDITIONS
+Always:
+ACTIONS
+Fang stops standing still
+Qi stops standing still
+END MISSION 1700314
+
+TRIGGER Procedure 0.0 Step 0.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 12510) that ends:
+{{dialogue|Trudy|He talks?!}}
+CONDITIONS
+Always:
+ACTIONS
+ACTION NPC RENAME || npc: 8097 | nameTransId: 30038136
+
+TRIGGER Procedure 0.0 Step 0.0 Order 50 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_clinic
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_clinic
+
+TRIGGER Procedure 0.0 Step 0.0 Order 52 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700314
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key 1700314 with info 1.
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key NoCutSceneObstacle with info 1.
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+Justice stands still in Main
+CUTSCENE UI STATE ENTER || 
+ADD KNOWN NPC || npc: 8097 | showUI: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 12481 starts:
+{{dialogue|Justice|Hey, ''Player''. I got some news, seems like that Geegler woke up. Let's go check it out at the Clinic!}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 173140 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173140 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Clinic | flagName: GKA_Player
+DELAY MASK SET || maskId: 173140 | delayTime: 2 | durationTime: 2 | changeType: 1 | curveIndex: -2
+ACTION NPC RENAME || npc: 8097 | nameTransId: 80018460
+CUTSCENE UI STATE EXIT || 
+Justice stops standing still
+AREA TRIGGER ONCE CREATE || missionId: 1700314 | id: 73141 | sceneName: Main | flagName: kidintown9_trigger1 | showOnMap: 1 | mapIcon: MissionArea | transId: 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173141 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 173143) from Fang
+GLOBAL BLACK BOARD REMOVE || key: NoCutSceneObstacle
+Trudy stops standing still
+Qi stops standing still
+Justice stops standing still
+Logan stops standing still
+Larry stops standing still
+Fang stops standing still
+Fang stands still in Clinic
+Qi stands still in Clinic
+AREA TRIGGER ONCE CREATE || missionId: 1700314 | id: 173141 | sceneName: Clinic | flagName: GKA_Fang2 | showOnMap: 0 | mapIcon: MissionAreaBranch | transId: 0
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 173141) from Trudy
+Remove behavior CommanderMoveToFlagAndAction (idName: 173141) from Qi
+Remove behavior CommanderMoveToFlagAndAction (idName: 173141) from Logan
+Justice stops standing still
+Remove behavior Story1700314 (idName: 173141) from Larry
+Remove behavior CommanderMoveToFlagAndAction (idName: 173141) from Fang
+Remove behavior CommanderNPCAction (idName: 173142) from Fang
+Remove behavior CommanderMoveToFlagAndAction (idName: 173142) from Fang
+Logan stands still in Clinic
+Justice stands still in Clinic
+Trudy stands still in Clinic
+Run mission #1200309
+DELAY MASK SET || maskId: 173141 | delayTime: 1.5 | durationTime: 2 | changeType: 1 | curveIndex: -2
+GLOBAL BLACK BOARD REMOVE || key: 1700314
+
+TRIGGER Procedure 0.0 Step 4.0 Order 49 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+Trudy stands still in Clinic
+Qi stands still in Clinic
+Fang stands still in Clinic
+Logan stands still in Clinic
+Justice stands still in Clinic
+Larry stands still in Clinic
+Add behavior Story1700314 (idName: 173141) to Larry
+(param: TargetScene:Clinic|DramaName:LarryBed|DramaType:Daze|TargetFlag:GKA_Larry)
+PLAYER SET POS ROT FLAG || sceneName: Clinic | flagName: GKA_Player
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 1731401 | delayTime: 0 | durationTime: 2 | changeType: 2 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 4.0 Order 51 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 173143) from Fang
+GLOBAL BLACK BOARD REMOVE || key: NoCutSceneObstacle
+Trudy stops standing still
+Qi stops standing still
+Justice stops standing still
+Logan stops standing still
+Larry stops standing still
+Fang stops standing still
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 173141) from Trudy
+Remove behavior CommanderMoveToFlagAndAction (idName: 173141) from Qi
+Remove behavior CommanderMoveToFlagAndAction (idName: 173141) from Logan
+Justice stops standing still
+Remove behavior Story1700314 (idName: 173141) from Larry
+Remove behavior CommanderMoveToFlagAndAction (idName: 173141) from Fang
+Remove behavior CommanderNPCAction (idName: 173142) from Fang
+Remove behavior CommanderMoveToFlagAndAction (idName: 173142) from Fang
+Fang stops standing still
+Qi stops standing still
+END MISSION 1700314
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 12482, 12483, 12484, 12485, 12486, 12487, 12488, 12489 starts:
+{{dialogue|Justice|Okay, let me try this: ssss, sss, ss, ssssssss, ss.... sss?}}
+{{dialogue|Larry|Where... where am I? Who are you? What... what do you mean my mother was a fish...?}}
+{{dialogue|Justice|Oh, uh... Is that what I said, sorry... Nevermind that, you can speak our language?! Wait, why am I surprised... What's yer name? Why were you in that canyon?}}
+{{dialogue|Larry|The canyon...? What canyon? I...}}
+{{dialogue|Justice|Hey, uhm... you bump your head or somethin'? You're real polite for a Geegler...}}
+{{dialogue|Larry|That's rude! Anybody can be polite! I- Wait, who am I?! Where did I come from?! I can't remember!}}
+{{dialogue|Justice|Hey, hey! It's okay, relax buddy!}}
+{{dialogue|Larry|How can I relax when I can't remem-!}}
+
+TRIGGER Procedure 0.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8016 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 12494, 12495, 12496, 12497, 12498, 12499, 12500, 12501, 12502, 12503, 12504, 12505, 12506, 12507, 12508, 12509, 12510, 12511, 12512, 12513, 12514, 12515, 12593, 3789_3_0, 12539 starts:
+{{dialogue|Larry|Ow! Sssss! Sssss!}}
+{{dialogue|Fang|Sheriff, do not... scare the patient anymore.}}
+{{dialogue|Justice|Wha? All I did was...}}
+{{dialogue|Justice|Alright, alright, I get it!}}
+{{dialogue|Larry|I remember...}}
+{{dialogue|Justice|Y-yeah? Go on...}}
+{{dialogue|Larry|I was at Gecko Station... with my brethren...}}
+{{dialogue|Justice|Gecko Station? You're one of the Geeglers from over there?}}
+{{dialogue|Larry|I used to... Urgh... My head...}}
+{{dialogue|Logan|Howdy. I heard you got a Geegler cooped up in here. He awake yet?}}
+{{dialogue|Logan|I did some diggin' around. After their leader died... seems like there was some sorta infightin', then they all moved off someplace else. That leader's partner died in the chaos or somethin'...}}
+{{dialogue||Huh?!}}
+{{dialogue|Justice|Logan, watch what you're sayin'! The Doc said nothin' too shockin'.}}
+{{dialogue|Logan|What'd I say...?}}
+{{dialogue|Fang|Are you okay?}}
+{{dialogue||I... remember!}}
+{{dialogue|Trudy|He talks?!}}
+{{dialogue|Larry|I'm Larry! The President of the Geeglers!}}
+{{dialogue|Justice|Wha...?! You?! Really... lost weight!}}
+{{dialogue|Larry|You! You said Xena died! What does that mean?!}}
+{{dialogue|Trudy|Ah... I'm sorry for you loss, and I know it's a lot to take in, but you need to calm down-}}
+{{dialogue|Larry|Calm down?! My wife is dead and you want me to calm down?!}}
+{{dialogue|Justice|Hey, hold on now, you only just woke up...}}
+{{dialogue|Player|(What should I say?)}}
+
+*''Think about all your Geegler friends back home!''
+*''Think about your responsibilities! Don't give up!''
+*''Your wife wouldn't want to see you like this!''
+
+{{dialogue|Larry|indent=true|answer=Think about all your Geegler friends back home!
+|My cousin, Gary... he must still be alive! Maybe I can find him...}}
+{{dialogue|Logan|indent=true|Gary...? Ain't that the name of the new President?}}
+{{dialogue|Larry|indent=true|What?!}}
+{{dialogue|Logan|indent=true|I heard that Gary took over the organization and ordered the rest to follow him elsewhere. I dunno what type of welcome this cousin of yours will give ya.}}
+{{dialogue|Larry|indent=true|Huh?!}}
+{{dialogue|Larry|indent=true|answer=Think about your responsibilities! Don't give up!
+|Yes... I'm responsible for our Holy Book!}}
+{{dialogue|Qi|indent=true|Holy Book? The cover says "Geegle Company Handbook." I have one of these from Vega 5. Do you understand what this is?}}
+{{dialogue|Larry|indent=true|Yes, I can read. This book was with them when our ancestors took their first steps. It speaks of the sins of your people! "They have partaken in deception, and shall be punished accordingly. They will not qualify."}}
+{{dialogue|Qi|indent=true|There should be more... you seem to have a torn up version! "They will not qualify for promotion." It means an employee violation. If they have violated the company rules, they will not be able to get a higher position in the company, that is all.}}
+{{dialogue|Larry|indent=true|Whaa- impossible... You're trying to trick me human!}}
+{{dialogue|Qi|indent=true|Now why would I waste time to do that?}}
+{{dialogue|Larry|indent=true|It's... not divine punishment? B-but what about: "We must replace them, city by city, until Geegle..."}}
+{{dialogue|Qi|indent=true|..Is the only available option to consumers. Yes. Historically Geegle was a technology company aiming for monopolization of the market. A common trend in Old World business. Ethics were secondary to profits.}}
+{{dialogue|Larry|indent=true|Company? Business? I... I don't understand. It's our Holy Book... it told us to take over the world...}}
+{{dialogue|Qi|indent=true|Simple misinterpretation. You are not the first to misunderstand the content of a book.}}
+{{dialogue|Larry|indent=true|I... can't believe it...}}
+{{dialogue|Justice|indent=true|Director Qi... what are you doing here anyway?}}
+{{dialogue|Qi|indent=true|I was just getting a check up on my heart rate, but this is far more interesting.}}
+{{dialogue|Justice|indent=true|Oh.}}
+{{dialogue|Larry|indent=true|answer=Your wife wouldn't want to see you like this!
+|She was supposed to grow old with me, raise our young... and now she's but a memory, bittersweet...}}
+{{dialogue|Logan|indent=true|Well, when I was lookin' into your old spot...}}
+{{dialogue|Logan|indent=true|I found some egg shells... No idea if they were yours though.}}
+{{dialogue|Larry|indent=true|Huh?!}}
+{{dialogue|Larry|Wha-!}}
+NPC REMOVE TAG || tag: LarryDazed
+Remove behavior CommanderMoveToFlagAndAction (idName: 173141) from Fang
+Add behavior CommanderMoveToFlagAndAction (idName: 173142) to Fang
+(param: FlagName:GKA_Needle|TargetScene:Clinic)
+
+TRIGGER Procedure 0.0 Step 10.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 12540 starts:
+{{dialogue|Justice|Jab 'im, doc?}}
+NPC ADD TAG || tag: LarryDazed
+
+TRIGGER Procedure 0.0 Step 11.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 173142) from Fang
+Add behavior CommanderMoveToFlagAndAction (idName: 173143) to Fang
+(param: Action:Needle|FlagName:GKA_Needle|TargetScene:Clinic)
+
+TRIGGER Procedure 0.0 Step 11.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 173141 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 12.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8016 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 12541, 12542, 12543, 12544, 12545, 12546, 12547, 12548, 12549, 12550, 12551, 12552, 12553 starts:
+{{dialogue|Larry|Urgh... my head...}}
+{{dialogue|Fang|He's unstable.}}
+{{dialogue|Larry|I'm... I'm fine. "Work is the lifeblood of the strong... that is why we smile on unpaid overtime." This is what the Holy Book... the company handbook has taught me. Please... if there is anything else... I can handle it.}}
+{{dialogue|Trudy|Larry. I am Trudy, the Mayor of Sandrock. I know it's hard for you right now, but we have to clear up something.}}
+{{dialogue|Trudy|You tore up the peace agreement you signed with Howlett, and tried to take over Sandrock after his death. I don't know what your plans are, but it seems to me like there is nowhere you can go back to now.}}
+{{dialogue|Trudy|If you abandon your previous plans of invasion, then we are willing to help you. When you have recovered, you may go where you please.}}
+{{dialogue|Larry|You- You'll help me?}}
+{{dialogue|Logan|Yeah, sure.}}
+{{dialogue|Larry|The Holy Book... was a lie. My people... I don't want to be your enemy. I signed an agreement with Howlett... I admired him. But when he... left... the Holy Book said to honor the agreement, without Howlett, there was no agreement.}}
+{{dialogue|Logan|Simple misunderstandin' is all.}}
+{{dialogue|Qi|It seems that the Geeglers have considerably less cognitive function than us.}}
+{{dialogue|Trudy|Look, I don't care what he's done before, he needs help and us Sandrockers ain't the kind to turn someone away when they're in need. Larry, you get some rest, we'll talk in a bit.}}
+{{dialogue|Trudy|Now, we've taken enough of the good doctor's time. Let's get back to business everyone.}}
+NPC REMOVE TAG || tag: LarryDazed
+Add behavior CommanderMoveToFlagAndAction (idName: 173142) to Fang
+(param: FlagName:GKA_Needle|TargetScene:Clinic)

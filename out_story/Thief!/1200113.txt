@@ -1,0 +1,343 @@
+Reading Mission 1200113: Thief!
+
+<onlyinclude>{{Infobox mission
+|name = Thief!
+|image =
+|description = Strange disappearances have been happening across Sandrock. Small, inexpensive items have been reported missing. Is there a thief?
+|type = Side
+|time =
+|location =
+|characters = [[Justice]]
+|condition =
+|details =
+|exp = 600
+|reputation = None
+|gols = None
+|npc1 = Justice
+|rp1 = 10
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200106
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE || compare: 2 | year: -1 | month: 2 | day: 8
+ACTIONS
+Run mission Taste of Your Own Medicine
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if Pablo is in town
+CHECK REAGINT IS FINISHED || set: 1
+ACTIONS
+Run mission Thief!
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200113
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1200113 | id: 21131 | sceneName: Main | flagName: vivishop_trigger | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80004812
+Set CHOICE to 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 21131 | sceneName: Main | flagName: thief_pit | extraParams: 0 | path: Mission_pit
+SCENEITEM CREATE FLAG || itemType: 0 | id: 21132 | path: Interact_featherarvio | sceneName: Main | extraParams: 0 | flagName: thief_featherarvio
+SCENEITEM CREATE FLAG || itemType: 0 | id: 21133 | path: Interact_featherpablo | sceneName: PabloHome | flagName: thief_featherpablo | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 21134 | path: Interact_magnifierempty | sceneName: HugoHome | flagName: thief_feather | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 21135 | path: Interact_featherarvio | sceneName: PabloHome | flagName: thief_featherpablo2 | extraParams: 0
+SCENEITEM DELETE || id: 21130 | itemType: 0
+Set DAY to 0
+ACTION NPC REMOVE ACCESSORY || npc: 8022 | part: Finger
+ACTION NPC REMOVE ACCESSORY || npc: 8014 | part: Finger
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 21131
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 21131 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+DELIVER MISSION 1200113
+AREA TRIGGER DELETE || id: 21131
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 21131
+CONDITIONS
+Always:
+ACTIONS
+Vivi stands still in Main and looks at Justice
+Justice stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: thief_player1
+DELAY MASK SET || maskId: 21131 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Sandy stands still in Main
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 21131
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 743_0 starts:
+{{dialogue|Vivi|Justice, I got a situation to report. I rose this mornin', put the kettle on, put in my toast, and started doin' the laundry. 'Bout half way through the wash, I realised I'd left the toast burnin' in the toaster...}}
+{{dialogue|Justice|Eh, grams... I got a couple other cases to get through today, so if you don't mind, uh...}}
+{{dialogue|Vivi|Alright, alright! You used to love hearin' my stories... Point is: for the life of me, I just cannot find my magnifying glass! I got reason to believe someone went and crept in through the window and snatched it they did!}}
+{{dialogue|Justice|Just a magnifying glass? I mean, why would anybody... do that? Er... I'm sure it'll turn up around the house, just keep lookin'. You sure you ain't just misplaced it somewhere?}}
+{{dialogue|Vivi|Misplaced it!? Nerve of you whipper-snappers... I ain't lost a magnifying glass yet, and I don't plan on startin' now, uh-huh! I'm tellin' you, somebody glass-napped it!}}
+{{dialogue|Justice|Well... I mean, it's the first time I've heard of a stolen magnifyin' glass. Oh, it musta been a real nice one, right? Jewel encrusted, solid gold, handed down for generations, so on and so forth?}}
+{{dialogue|Vivi|Goodness, no! I've known you since you were playing yakboys an' bandits in little booties! Has my family ever come across as having that kind of money? It was made by my husband. It's got sentimental value, Maurice!}}
+{{dialogue|Justice|Ah, c'mon, grams! You know it's Justice now! It has been for years...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Arvio stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 21131) to Arvio
+(param: TargetScene:Main|MoveMode:Walk|FlagName:thief_arvio2)
+Vivi stops standing still
+Vivi stands still in Main and looks at Arvio
+Justice stops standing still
+Justice stands still in Main and looks at Arvio
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8014 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 744_0 starts:
+{{dialogue|Arvio|It is rude to eavesdrop, but my ears cannot help but overhear! What an awful turn of events! But of course, none of this ever would've happened had you purchased one of my world renowned satchel locks!}}
+{{dialogue|Arvio|Take a look at my bag, the contents are as safe as precious gold in an Ataran vault! See this metal lock here...}}
+{{dialogue|Arvio|Huh!? What the...!}}
+{{dialogue|Arvio|It can't be, where's my latch!? Someone must've stolen it! Justice, quick! There's undoubtedly some treacherous fiend lurking in our midst! But why, why would they steal the lock off my bag!?}}
+{{dialogue|Vivi|Oh, goodness! The glass-napper strikes again! And he's worked his way up to metal... Where did you lose it? Let me talk to my boy, he can make you another one! Ooh, but not til we catch that thief first...!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Justice stops standing still
+Vivi stops standing still
+Pablo stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 21131) to Pablo
+(param: TargetScene:Main|MoveMode:Run|FlagName:thief_pablo2)
+Vivi stands still in Main and looks at Pablo
+Justice stands still in Main and looks at Pablo
+Remove behavior CommanderMoveToFlagAndAction (idName: 21131) from Arvio
+Arvio stands still in Main and looks at Pablo
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8022 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 745_0 starts:
+{{dialogue|Pablo|Sheriff! Your authoritative presence is required!}}
+{{dialogue|Justice|Aw, man, another one!?}}
+{{dialogue|Pablo|My jewelry! My back turned for not but a second, and some lawless vagabond absconded with my rare, limited edition ring!}}
+{{dialogue|Justice|What, limited edition!? Not just some sewing trinket, or janky lock, but a genuine, certified, honest to Light, stolen treasure? Perhaps there is indeed something foul in the state of Sandrock...}}
+{{dialogue|Justice|Mr. Pablo, would you describe this ring as "priceless?"}}
+{{dialogue|Pablo|Indeed, lawman, to an artist such as me, it is priceless! Of course, to a vendor... 5 Gols tops... but you can't define value by vulgar estimations! No, no! To fit within my refined wardrobe, its true worth was immeasurable...}}
+{{dialogue|Justice|... Right... right...}}
+{{dialogue|Justice|Now! Don't worry folks! I think I've got it all about pieced together, jus' rest assured that the Civil Corps will fulfill our duty to handle all y'all's problems! No matter how small or... well, small.}}
+{{dialogue|Justice|But we are a little short handed... Hmm...}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 1.1 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 21132) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:thief_player2)
+Vivi stops standing still
+Vivi stands still in Main and looks at Player
+Arvio stops standing still
+Arvio stands still in Main and looks at Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 21131) from Pablo
+Pablo stands still in Main and looks at Player
+Justice stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 21132) to Justice
+(param: TargetScene:Main|MoveMode:Walk|FlagName:thief_justice2)
+
+TRIGGER Procedure 1.0 Step 1.2 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8008 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 2904 starts:
+{{dialogue|Justice|Well if it ain't our humble but hardy Builder! Wait, don't tell me you've gone an' lost something too? ...Seriously, please don't.}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 21132) from Player
+Add behavior CommanderMoveToFlagAndAction (idName: 21131) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:thief_player2|Action:ShakeHead)
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 746_0 starts:
+{{dialogue|Justice|Phew! That's a relief!}}
+{{dialogue|Justice|Er, say! We're a bit short handed at the Civil Corps right now, City Hall is having us form a scouting party down south. Could you maybe saddle up and lend this ol' horse a helping... hoof?}}
+
+*''I'd be happy to help!''
+*''I've got a lot on my plate right now...''
+
+{{dialogue|Justice|indent=true|answer=I'd be happy to help!
+|Aha! Our ardent ''Player'', always the first to step up to the plate! Thanks for givin' me a hoof, er, hand... or whatever. It's your time to shine now!}}
+{{dialogue|Justice|indent=true|All you gotta do is speak with all of our er... "victims," see what they know. Then check out the crime scene. See what you can deduce with them keen peepers of yours. And if you don't find anything... well... It is what it is...}}
+{{dialogue|Justice|indent=true|Alright, I'm off. Thanks for covering this one!}}
+{{dialogue|Justice|indent=true|answer=I've got a lot on my plate right now...
+|That's right, you're a Builder, I'm sure you got plenty things happenin' in that ol' workshop of yours. If only we weren't so short on folks right now...}}
+Remove behavior CommanderMoveToFlagAndAction (idName: 21131) from Player
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Vivi stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 21131) from Pablo
+Arvio stops standing still
+Sandy stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 21132) from Justice
+Pablo stops standing still
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the first option in conversation segment 2906:
+{{dialogue|Justice|Er, say! We're a bit short handed at the Civil Corps right now, City Hall is having us form a scouting party down south. Could you maybe saddle up and lend this ol' horse a helping... hoof?}}
+
+*''I'd be happy to help!'' (No unique dialogue)
+*''I've got a lot on my plate right now...'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 2911:
+{{dialogue|Justice|''Player'', you got a minute? Care to contribute to the safety and wellbeing of our precious town by investigatin' this so-called "theft epidemic?"}}
+
+*''I'd be happy to help!'' (No unique dialogue)
+*''I've got a lot on my plate right now...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 1
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+Sandy stops standing still
+CUTSCENE UI STATE EXIT || 
+Vivi stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 21131) from Pablo
+START MISSION 1200113
+Arvio stops standing still
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200113
+CONDITIONS
+Always:
+ACTIONS
+Run mission Thief!
+END MISSION 1200113
+
+TRIGGER Procedure 2.0 Step 3.5 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment DAY by 1
+
+TRIGGER Procedure 3.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 2888) that ends:
+{{dialogue|Vivi|Goodness, no! I've known you since you were playing yakboys an' bandits in little booties! Has my family ever come across as having that kind of money? It was made by my husband. It's got sentimental value, Maurice!}}
+CONDITIONS
+Always:
+ACTIONS
+Arvio stands still in Main and looks at Vivi
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 2893) that ends:
+{{dialogue|Arvio|It can't be, where's my latch!? Someone must've stolen it! Justice, quick! There's undoubtedly some treacherous fiend lurking in our midst! But why, why would they steal the lock off my bag!?}}
+CONDITIONS
+Always:
+ACTIONS
+Pablo stands still in Main and looks at Justice
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Justice|''Player'', you got a minute? Care to contribute to the safety and wellbeing of our precious town by investigatin' this so-called "theft epidemic?"}}
+
+*''I'd be happy to help!''
+*''I've got a lot on my plate right now...''
+
+{{dialogue|Justice|indent=true|answer=I'd be happy to help!
+|Aha! Our ardent ''Player'', always the first to step up to the plate! Thanks for givin' me a hoof, er, hand... or whatever. It's your time to shine now!}}
+{{dialogue|Justice|indent=true|All you gotta do is speak with all of our er... "victims," see what they know. Then check out the crime scene. See what you can deduce with them keen peepers of yours. And if you don't find anything... well... It is what it is...}}
+{{dialogue|Justice|indent=true|Alright, I'm off. Thanks for covering this one!}}
+{{dialogue|Justice|indent=true|answer=I've got a lot on my plate right now...
+|That's right, you're a Builder, I'm sure you got plenty things happenin' in that ol' workshop of yours. If only we weren't so short on folks right now...}}
+
+==Rewards==
+{{mission reward
+|npc1 = Justice
+|rp1 = 10
+|exp = 600
+|reputation = None
+|gols = None
+}}

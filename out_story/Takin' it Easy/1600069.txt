@@ -1,0 +1,694 @@
+Reading Mission 1600069: Takin' it Easy
+
+<onlyinclude>{{Infobox mission
+|name = Takin' it Easy
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Takin' it Easy:
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 18) After the conversation ends:
+(cId 19) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Elsie stops standing still
+Mi-an stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 1668001) from Player
+CUTSCENE UI STATE EXIT || 
+START MISSION 1600068
+AUTOSAVE TRY || 
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1600068
+CONDITIONS
+Always:
+ACTIONS
+Run mission Takin' it Easy
+END MISSION 1600068
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1600069
+CONDITIONS
+Always:
+ACTIONS
+===Meet Elsie at the Game Center===
+
+{{mission_details
+|desc = Elsie and Mi-an are waiting for you at the Game Center.
+|details = Meet Elsie at the Game Center
+}}
+Add behavior CommanderMoveToFlagAndAction (idName: 1669051) to Elsie
+(param: TargetScene:Main|MoveMode:RunFast|FlagName:1600069_G1_8005_1|LookAtActor:8000
+)
+Add behavior CommanderMoveToFlagAndAction (idName: 1669171) to Mi-an
+(param: TargetScene:Main|MoveMode:RunFast|FlagName:1600069_G1_8017_1|LookAtActor:8000)
+AREA TRIGGER CREATE || missionId: 1600069 | id: 16691 | sceneName: Main | flagName: 1600069_Trigger_1 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80002678
+Remove behavior CommanderMoveToFlagAndAction (idName: 1668001) from Player
+Set PlayerAcceptEnum to 0
+Set IsBubbleActive to 0
+Set IsMianSit to 0
+
+TRIGGER Procedure 0.0 Step 0.1 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Chamber to the Main:
+CONDITIONS
+CHECK NPC PK STATE || npc: 8000 | set: 0
+ACTIONS
+Elsie stands still in Main
+STOPWATCH REAL TIME SET || id: 166905 | sec: 0.2
+Mi-an stands still in Main
+
+TRIGGER Procedure 0.0 Step 0.2 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 166905
+CONDITIONS
+Always:
+ACTIONS
+Elsie stops standing still
+Mi-an stops standing still
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 16691
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 1669001) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:1600069_G1_Player_1|LookAtActor:8017)
+(cId 10) A conversation 1758 starts:
+{{dialogue|Mi-an|Hey, ''Player''! We were just about to go in! Ready to get your game on?}}
+
+*''Let's do it.'' (No unique dialogue)
+*''Actually, hold on...'' (No unique dialogue)
+
+Set PlayerAcceptEnum to 1
+Elsie stands still in Main and looks at Player
+Mi-an stands still in Main and looks at Player
+AREA TRIGGER DELETE || id: 16691
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION CHOICE MADE END || order: 0 | npc: 8017 | selectIndex: 0 | cId: 10 | missionId: 1600069 | id: 1758
+CONDITIONS
+Always:
+ACTIONS
+(cId 11) A conversation 1760, 1761, 1762 starts:
+{{dialogue|Elsie|Well. Here we are. Same ole Game Center. Yawn. Y'all can pick a game to play, I'll watch.}}
+{{dialogue|Elsie|I think I've seen folks on these games before: {{textcolor|green|on some, two people can play at the same time}}. I guess the point is to see who the better... gamer is...? Whew, I'm fallin' asleep listenin' to myself explain this... guess it runs in the family... zzzzz...}}
+{{dialogue|Mi-an|Don't mind her, ''Player''. How about Whac-a-mole? Let's try that one first!}}
+AREA TRIGGER DELETE || id: 16691
+Set PlayerAcceptEnum to 0
+
+TRIGGER Procedure 0.0 Step 3.1 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+NPC SET CAN INTERACT || npc: 8017 | canInteract: 0
+ACTION MINI GAME SET GOLD COUNT || type: WhacMole | isSingle: 0 | count: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 1669171) from Mi-an
+Remove behavior CommanderMoveToFlagAndAction (idName: 1669051) from Elsie
+Add behavior CommanderMoveToFlag (idName: 1669052) to Elsie
+(param: TargetScene:GameCenter|MoveMode:Run|FlagName:1600069_G2_8005_1)
+Mi-an stops standing still
+Elsie stops standing still
+ACTION ENTER DOUBLE WHAC MOLE || npc: 8017
+
+TRIGGER Procedure 0.0 Step 2.1 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION CHOICE MADE END || order: 0 | npc: 8017 | selectIndex: 1 | cId: 10 | missionId: 1600069 | id: 1758
+CONDITIONS
+Always:
+ACTIONS
+(cId 12) A conversation 1759 starts:
+{{dialogue|Mi-an|No worries, we'll wait!}}
+
+TRIGGER Procedure 0.0 Step 2.2 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 12) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 1669001) from Player
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 2.3 Order 14 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Mi-an
+CONDITIONS
+Check if PlayerAcceptEnum is >= 1
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+(cId 101) A conversation 460_0 starts:
+{{dialogue|Mi-an|Hey, ''Player''! We were just about to go in! Ready to get your game on?}}
+
+*''Let's do it.''
+*''Actually, hold on...''
+
+{{dialogue|Elsie|indent=true|answer=Let's do it.
+|Well. Here we are. Same ole Game Center. Yawn. Y'all can pick a game to play, I'll watch.}}
+{{dialogue|Elsie|indent=true|I think I've seen folks on these games before: {{textcolor|green|on some, two people can play at the same time}}. I guess the point is to see who the better... gamer is...? Whew, I'm fallin' asleep listenin' to myself explain this... guess it runs in the family... zzzzz...}}
+{{dialogue|Mi-an|indent=true|Don't mind her, ''Player''. How about Whac-a-mole? Let's try that one first!}}
+{{dialogue|Mi-an|indent=true|answer=Actually, hold on...
+|No worries, we'll wait!}}
+Set PlayerAcceptEnum to 2
+
+TRIGGER Procedure 0.0 Step 2.5 Order 16 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 101) After the conversation ends:
+CONDITIONS
+Check if PlayerAcceptEnum is == 3
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Elsie stops standing still
+Mi-an stops standing still
+
+TRIGGER Procedure 0.0 Step 2.7 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 101) After the conversation ends:
+CONDITIONS
+Check if PlayerAcceptEnum is == 4
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+NPC SET CAN INTERACT || canInteract: 0 | npc: 8017
+ACTION MINI GAME SET GOLD COUNT || type: WhacMole | isSingle: 0 | count: 0
+Elsie stops standing still
+Mi-an stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 1669171) from Mi-an
+ACTION ENTER DOUBLE WHAC MOLE || npc: 8017
+Remove behavior CommanderMoveToFlagAndAction (idName: 1669051) from Elsie
+Add behavior CommanderMoveToFlag (idName: 1669052) to Elsie
+(param: TargetScene:GameCenter|MoveMode:Run|FlagName:1600069_G2_8005_1)
+Set PlayerAcceptEnum to 0
+AREA TRIGGER DELETE || id: 16691
+
+TRIGGER Procedure 0.0 Step 3.0 Order 19 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 101) After the conversation ends:
+CONDITIONS
+Check if IsBubbleActive is == 1
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 16690599) from Elsie
+Remove behavior CommanderNPCAction (idName: 16691799) from Mi-an
+Set IsBubbleActive to 0
+
+TRIGGER Procedure 0.0 Step 2.4 Order 15 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 101) The player picks the second option in conversation segment 1758:
+{{dialogue|Mi-an|Hey, ''Player''! We were just about to go in! Ready to get your game on?}}
+
+*''Let's do it.'' (No unique dialogue)
+*''Actually, hold on...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set PlayerAcceptEnum to 3
+
+TRIGGER Procedure 0.0 Step 2.6 Order 20 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 101) The player picks the first option in conversation segment 1758:
+{{dialogue|Mi-an|Hey, ''Player''! We were just about to go in! Ready to get your game on?}}
+
+*''Let's do it.'' (No unique dialogue)
+*''Actually, hold on...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set PlayerAcceptEnum to 4
+
+TRIGGER Procedure 0.0 Step 2.9 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 16691
+CONDITIONS
+Check if PlayerAcceptEnum is >= 1
+ACTIONS
+In a speech bubble:
+{{dialogue|Elsie|Over here!}}
+Add behavior CommanderNPCAction (idName: 16691799) to Mi-an
+(param: CMDAction:Hi)
+Add behavior CommanderNPCAction (idName: 16690599) to Elsie
+(param: CMDAction:Cheer_Story)
+Set IsBubbleActive to 1
+
+TRIGGER Procedure 0.0 Step 3.2 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8005 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 1669052) from Elsie
+Add behavior CommanderSit (idName: 16690521) to Elsie
+(param: TargetScene:GameCenter|SeatDramaName:GameMachine00)
+
+TRIGGER Procedure 0.0 Step 3.3 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 16691 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 16691 | delayTime: 0 | durationTime: 2 | changeType: 1 | curveIndex: 0
+Mi-an stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: 1600069_G1_Player_2
+
+TRIGGER Procedure 0.0 Step 3.4 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 16691 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 13) A conversation 1763, 1764 starts:
+{{dialogue|Mi-an|That was fun! I've played that one by myself, but it's even more fun with two people!}}
+{{dialogue|Mi-an|Eh? Where'd Elsie go...? Could she have gone inside? Let's check!}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 13) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Mi-an stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 1669001) from Player
+Add behavior CommanderMoveToFlagAndAction (idName: 1669172) to Mi-an
+(param: TargetScene:GameCenter|MoveMode:Run|FlagName:1600069_G2_8017_1)
+CUTSCENE UI STATE EXIT || 
+===Play a Game with Mi-an===
+
+{{mission_details
+|desc = Mi-an invited you to play a game with her; Elsie opted to sit out.
+|details = Play a Game with Mi-an
+}}
+AREA TRIGGER CREATE || missionId: 1600069 | id: 16692 | sceneName: GameCenter | flagName: 1600069_Trigger_2 | showOnMap: 1 | mapIcon: MissionArea | transId: 80002676
+AUTOSAVE TRY || 
+AREA TRIGGER CREATE || missionId: 1600069 | id: 166921 | sceneName: Main | flagName: 1600069_MissionArea_1 | showOnMap: 1 | mapIcon: MissionArea | transId: 80002680
+
+TRIGGER Procedure 0.0 Step 5.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the GameCenter:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 16692 | delayTime: 0 | durationTime: 0.1 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 16.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MINI GAME END || order: 0 | type: WhacMole
+CONDITIONS
+Always:
+ACTIONS
+NPC SET CAN INTERACT || canInteract: 1 | npc: 8017
+ACTION MINI GAME CLEAR GOLD SET || type: WhacMole | isSingle: 0
+DELAY MASK SET || maskId: 16691 | delayTime: 0 | durationTime: 0 | changeType: 0 | curveIndex: 0
+AUTOSAVE TRY || 
+
+TRIGGER Procedure 1.0 Step 0.1 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 16692 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Elsie stands still in GameCenter
+Elsie stops standing still
+Mi-an stands still in GameCenter and looks at Elsie
+Remove behavior CommanderMoveToFlagAndAction (idName: 1669172) from Mi-an
+Add behavior CommanderMoveToFlagAndAction (idName: 1669173) to Mi-an
+(param: TargetScene:GameCenter|MoveMode:Run|FlagName:1600069_G2_8017_2|LookAtActor:8005)
+Add behavior CommanderSit (idName: 166921) to Elsie
+(param: TargetScene:GameCenter|SeatDramaName:GameMachine00)
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderMoveToFlagAndAction (idName: 1669002) to Player
+(param: TargetScene:GameCenter|MoveMode:Run|FlagName:1600069_G2_Player_1|LookAtActor:8005)
+STOPWATCH REAL TIME SET || id: 166909 | sec: 1.5
+DELAY MASK SET || maskId: 16692 | delayTime: 0 | durationTime: 2 | changeType: 1 | curveIndex: 0
+AREA TRIGGER DELETE || id: 16692
+AREA TRIGGER DELETE || id: 166921
+
+TRIGGER Procedure 1.0 Step 1.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 166909
+CONDITIONS
+Always:
+ACTIONS
+Mi-an stops standing still
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8017 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 21) A conversation 1765, 1766, 1767, 1768, 1769, 1770, 4028, 1771, 1772 starts:
+{{dialogue|Mi-an|Hey! There you are-}}
+{{dialogue|Elsie|Yeeeeehawww! Get wrecked, ya ole scrub! What the- I lost!? Let's go again, you dumb machine!}}
+{{dialogue|Mi-an|Elle! I thought you didn't want to play?}}
+{{dialogue|Elsie|Huh? Wha? Mi-an? ''Player''? Bug off, y'all're bad luck!}}
+{{dialogue|Elsie|Oh, dang... I'm outta Gols...}}
+{{dialogue|Elsie|Mi-an! How 'come you never told me how great games are!? My heart's pounding, my mind is racing... I've never felt so alive! I-}}
+{{dialogue|Mi-an|...}}
+{{dialogue|Elsie|Dang! All this pro gamin' has worked me up an appetite! Onward, posse, let's head on over to the {{textcolor|green|Blue Moon}} to rustle up some grub!}}
+{{dialogue|Mi-an|Yeah! Come on, ''Player'', let's go!}}
+
+TRIGGER Procedure 1.0 Step 16.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 21) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+GROUP 1:
+
+GROUP 2:
+
+GROUP 0:
+Remove behavior CommanderMoveToFlagAndAction (idName: 1669002) from Player
+Remove behavior CommanderMoveToFlag (idName: 1669172) from Mi-an
+Add behavior CommanderMoveToFlagAndAction (idName: 1669173) to Mi-an
+(param: TargetScene:Saloon|MoveMode:RunFast|FlagName:1600069_G3_8017_1|LookAtActor:8000)
+Remove behavior CommanderSit (idName: 16690521) from Elsie
+Add behavior CommanderMoveToFlagAndAction (idName: 1669053) to Elsie
+(param: TargetScene:Saloon|MoveMode:RunFast|FlagName:1600069_G3_8005_1|LookAtActor:8000)
+CUTSCENE UI STATE EXIT || 
+===Head for Saloon===
+
+{{mission_details
+|desc = Elsie is hungry and wants to take you and Mi-an out for a meal.
+|details = Head for Saloon
+}}
+AREA TRIGGER CREATE || missionId: 1600069 | id: 166931 | sceneName: Main | flagName: 1600069_MissionArea_2 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80002682
+AUTOSAVE TRY || 
+Remove behavior CommanderSit (idName: 166921) from Elsie
+
+
+TRIGGER Procedure 1.0 Step 12.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from GameCenter to the Main:
+CONDITIONS
+CHECK NPC PK STATE || npc: 8000 | set: 0
+ACTIONS
+Elsie stands still in Main
+STOPWATCH REAL TIME SET || id: 166904 | sec: 0.2
+Mi-an stands still in Main
+
+TRIGGER Procedure 1.0 Step 13.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 166904
+CONDITIONS
+Always:
+ACTIONS
+Elsie stops standing still
+Mi-an stops standing still
+
+TRIGGER Procedure 1.0 Step 16.1 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8017 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Check if IsMianSit is == 0
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 1669173) from Mi-an
+Add behavior CommanderSit (idName: 16691731) to Mi-an
+(param: TargetScene:Saloon|SeatDramaName:SaloonSeat08)
+Set IsMianSit to 1
+
+TRIGGER Procedure 1.0 Step 16.2 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Check if IsMianSit is == 0
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 1669173) from Mi-an
+Add behavior CommanderSit (idName: 16691731) to Mi-an
+(param: TargetScene:Saloon|SeatDramaName:SaloonSeat08)
+AREA TRIGGER DELETE || id: 166931
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: 1600069_G3_Player_0
+Set IsMianSit to 1
+
+TRIGGER Procedure 2.0 Step 0.2 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderSit (idName: 166931) to Mi-an
+(param: TargetScene:Saloon|SeatDramaName:SaloonSeat08)
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderMoveToFlagAndAction (idName: 16691001) to Player
+(param: TargetScene:Saloon|MoveMode:Run|FlagName:1600069_G3_Player_1|LookAtActor:8017)
+Add behavior CommanderNPCAction (idName: 1669054) to Elsie
+(param: CMDAction:Hi|LookAtActor:8000)
+In a speech bubble:
+{{dialogue|Elsie|Hey! You made it!}}
+STOPWATCH REAL TIME SET || id: 166908 | sec: 1.5
+Elsie stands still in Saloon
+ACTION MINI GAME SET GOLD COUNT || type: OrderingFood | isSingle: 0 | count: 0
+
+TRIGGER Procedure 2.0 Step 2.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 16691001) from Player
+Add behavior CommanderPlayerSit (idName: 1669003) to Player
+(param: TargetScene:Saloon|SeatDramaName:SaloonSeat07)
+STOPWATCH REAL TIME SET || id: 166903 | sec: 0.3
+
+TRIGGER Procedure 2.0 Step 2.1 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 166903
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 1669054) from Elsie
+Remove behavior CommanderMoveToFlagAndAction (idName: 1669053) from Elsie
+Add behavior CommanderMoveToFlagAndAction (idName: 1669055) to Elsie
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:1600069_G3_8005_2|LookAtActor:8017)
+
+TRIGGER Procedure 2.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8005 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 31) A conversation 1773, 1774 starts:
+{{dialogue|Elsie|This one's on me, cowpokes! Go ahead, help yourself! But don't just go an' order all the most expensive stuff on the menu, I only work part-time for my parents...}}
+{{dialogue|Elsie|Ya'll hold tight! While you're orderin', I'm gonna go grab a {{textcolor|green|surprise}}! Don't worry about me, I'll be riiiiight back!}}
+
+TRIGGER Procedure 2.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 31) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Elsie stops standing still
+(cId 32) A conversation 1775 starts:
+{{dialogue|Mi-an|A surprise, huh? I wonder what on earth she could be planning...? Oh well, let's eat!}}
+Remove behavior CommanderMoveToFlagAndAction (idName: 1669055) from Elsie
+Add behavior CommanderMoveToFlagAndAction (idName: 1669056) to Elsie
+(param: TargetScene:Main|MoveMode:Run|FlagName:1600069_G1_8005_1)
+Remove behavior CommanderMoveToFlagAndAction (idName: 1669053) from Elsie
+
+TRIGGER Procedure 2.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 32) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 1669056) from Elsie
+Add behavior CommanderMoveToFlagAndAction (idName: 1669057) to Elsie
+(param: TargetScene:Saloon|MoveMode:Run|FlagName:1600069_G3_8005_3)
+ACTION ENTER ORDERING FOOD GAME || npc: 8017
+
+TRIGGER Procedure 2.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MINI GAME END || order: 0 | type: OrderingFood
+CONDITIONS
+Always:
+ACTIONS
+(cId 33) A conversation 1776, 1777, 1778 starts:
+{{dialogue|Elsie|Ta-da!  I hope y'all left room in your stomachs for some... surprise! Don't be shy, go 'head and open it up!}}
+{{dialogue|Mi-an|Gosh, Elsie! You really had a gift all ready for us? You shouldn't have!}}
+{{dialogue|Mi-an|''Player'', will you do the honors?}}
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 33) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CAMERA PATH STOP DEFAULT || id: 16690032
+CAMERA PATH STOP DEFAULT || id: 16690033
+CAMERA PATH STOP DEFAULT || id: 16690034
+CAMERA PATH STOP DEFAULT || id: 16690035
+{{cutscene|id = 2011}}
+A cutscene CG_GIFTBOX (duration: 0.0) starts playing
+Surprise! - After having fun all day, Elsie told us at the saloon that she had a surprise in store for us. In classic Elsie fashion, the surprise was not a pleasant one.
+
+TRIGGER Procedure 3.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_GIFTBOX | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 34) A conversation 1779, 1780, 1781, 1782, 1783, 1784 starts:
+{{dialogue|Elsie|Ahahaha! Hahaha! Whew! Y'all shoulda seen the look on y'all's faces! Hahaha, you were all like "Ahh!"}}
+{{dialogue|Mi-an|Elsie!}}
+{{dialogue|Elsie|What? I told ya I was gonna {{textcolor|green|surprise}} you. Was I fibbin'?}}
+{{dialogue|Elsie|I dare y'all to come up with a more interesting gift to give me! I'll be waitin' for ya...}}
+{{dialogue|Elsie|Well, until then... I bid y'all, adieu... That was fun, until we meet again! See ya!}}
+{{dialogue|Mi-an|See ya!}}
+SCENEITEM CREATE FLAG || itemType: 0 | id: 160006901 | path: Mission_SurpriseBox | sceneName: Saloon | flagName: 1600069_1 | extraParams: 0
+
+TRIGGER Procedure 3.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 34) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 1669057) from Elsie
+Add behavior CommanderMoveToFlagAndAction (idName: 1669058) to Elsie
+(param: TargetScene:CooperHome|MoveMode:Run|FlagName:1600069_G3_8005_4)
+(cId 35) A conversation 1785 starts:
+{{dialogue|Mi-an|''Player'', what did you think of Elsie's "surprise?" Did it frighten you?}}
+
+*''Not at all!'' (No unique dialogue)
+*''Yes, a bit...'' (No unique dialogue)
+
+
+TRIGGER Procedure 3.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION CHOICE MADE END || order: 0 | npc: 8017 | id: 1785 | selectIndex: 0 | cId: 35 | missionId: 1600069
+CONDITIONS
+Always:
+ACTIONS
+(cId 36) A conversation 1786 starts:
+{{dialogue|Mi-an|Haha, nerves of steel, huh? I can't stand jump scares like that! Elsie gets me almost every time with her crazy pranks...}}
+
+TRIGGER Procedure 3.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 36) After the conversation ends:
+(cId 37) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 38) A conversation 1788, 1789, 1790 starts:
+{{dialogue|Mi-an|Well, it was nice to get out today, anyway. If you get time, you should take your other friends out, too! {{textcolor|green|Maybe warm them up with a few gifts if they don't accept your invitation at first...}}}}
+{{dialogue|Mi-an|I think you'll find most people more relaxing to be around, Elsie can be a bit... lively.}}
+{{dialogue|Mi-an|Well, I'd better get back to the workshop. Catch you later, it was fun today!}}
+
+TRIGGER Procedure 3.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION CHOICE MADE END || order: 0 | npc: 8017 | id: 1785 | selectIndex: 1 | cId: 35 | missionId: 1600069
+CONDITIONS
+Always:
+ACTIONS
+(cId 37) A conversation 1787 starts:
+{{dialogue|Mi-an|So it's not just me! Elsie's always pulling these pranks on me, sometimes I'm afraid to even leave my workshop...}}
+
+TRIGGER Procedure 3.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 38) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 16690599) from Elsie
+Remove behavior CommanderSit (idName: 16690521) from Elsie
+Elsie stops standing still
+Mi-an stops standing still
+ACTION MINI GAME CLEAR GOLD SET || type: OrderingFood | isSingle: 0
+Remove behavior CommanderSit (idName: 166931) from Mi-an
+Remove behavior CommanderSit (idName: 16691731) from Mi-an
+Remove behavior CommanderMoveToFlagAndAction (idName: 1669058) from Elsie
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderPlayerSit (idName: 1669003) from Player
+SCENEITEM DELETE || itemType: 0 | id: 160006901
+SUBMIT MISSION 1600068
+END MISSION 1600069
+
+TRIGGER Procedure 4.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1600069
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 16691
+AREA TRIGGER DELETE || id: 16692
+AREA TRIGGER DELETE || id: 166921
+AREA TRIGGER DELETE || id: 166931
+Remove behavior CommanderMoveToFlagAndAction (idName: 1669051) from Elsie
+Remove behavior CommanderMoveToFlagAndAction (idName: 1669171) from Mi-an
+Remove behavior CommanderMoveToFlagAndAction (idName: 16690521) from Elsie
+Remove behavior CommanderMoveToFlagAndAction (idName: 1669172) from Mi-an
+Remove behavior CommanderMoveToFlagAndAction (idName: 1669053) from Elsie
+Remove behavior CommanderMoveToFlagAndAction (idName: 16691731) from Mi-an
+Remove behavior CommanderMoveToFlagAndAction (idName: 1669173) from Mi-an
+Elsie stops standing still
+Mi-an stops standing still
+Remove behavior CommanderSit (idName: 16690521) from Elsie
+Remove behavior CommanderNPCAction (idName: 16690599) from Elsie

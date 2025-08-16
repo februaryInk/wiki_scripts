@@ -1,0 +1,517 @@
+Reading Mission 1100103: Operation De-Geeglate
+
+<onlyinclude>{{Infobox mission
+|name = Operation De-Geeglate
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Operation De-Geeglate:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100102
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|20}}
+Set SCENE to 0
+Set global blackboard key justicewait with info 1.
+Justice stands still in CivilCorp
+Unsuur stands still in CivilCorp
+Mi-an stands still in CivilCorp
+Heidi stands still in CivilCorp
+DELIVER MISSION 1100102
+AREA TRIGGER CREATE || missionId: 1100102 | id: 11010 | sceneName: Main | flagName: trigger_civilcorp | showOnMap: 1 | mapIcon: MissionArea | transId: 80001618
+ACTION DATE REMOVE FLAG || flag: DATE:EasterEggAfterGH
+AREA TRIGGER DELETE || id: 171592
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1100102
+CONDITIONS
+Always:
+ACTIONS
+Run mission Operation De-Geeglate
+END MISSION 1100102
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 21
+CONDITIONS
+CHECK CREATION CAN CREATE || canCreate: 0 | creationId: 13000002
+ACTIONS
+===Upgrade Worktable===
+
+{{mission_details
+|desc = Heidi thinks you need a {{textcolor|green|Intermediate Worktable}} to finish the Trolley. If you don't have the diagram yet, you can go to the {{textcolor|green|Research Center}} to research, and then upgrade your Worktable in the {{textcolor|green|Worktable upgrade page}}.
+|details = Upgrade Worktable
+}}
+Set SUODAO to 0
+Set CHOICE to 0
+Set DAY to 3
+NPC ADD TAG || tag: MianWork
+
+TRIGGER Procedure 0.0 Step 0.1 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 10 | id: 21
+CONDITIONS
+CHECK CREATION CAN CREATE || creationId: 13000002 | canCreate: 1
+ACTIONS
+===Construct the Tram Cart===
+
+{{mission_details
+|desc = Now that you have the diagram, construct the Tram Cart on the Assembly Station.
+|details = Construct the Tram Cart
+}}
+Set SUODAO to 0
+Set CHOICE to 0
+Set DAY to 4
+
+TRIGGER Procedure 0.0 Step 0.5 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON HOME MACHINE UPGRADE || order: 0 | tag: SyntheticTable
+ON BAG CHANGE || order: 0 | item: 13000002 | itemGrade: -1 | changeType: 0
+CONDITIONS
+Check if DAY is == 3
+ACTIONS
+===Construct the Tram Cart===
+
+{{mission_details
+|desc = Now that you have the diagram, construct the Tram Cart on the Assembly Station.
+|details = Construct the Tram Cart
+}}
+Set DAY to 4
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON BAG CHANGE || order: 0 | item: 14000024 | changeType: 0 | itemGrade: 0
+CONDITIONS
+Check if DAY is == 4
+ACTIONS
+===Install the Tram Cart===
+
+{{mission_details
+|desc = The Tram Cart is finished! Go install it!
+|details = Install the Tram Cart
+}}
+Set SUODAO to 1
+SCENEITEM CREATE FLAG || itemType: 11 | id: 11030 | extraParams: -1|CreatorItem|14000024_1_0|-1|-1|0 | flagName: suodao_suodaop | sceneName: Main | path: Label_suodao
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 11030 | missionId: 1100102 | iconType: 3
+AUTOSAVE TRY || 
+
+TRIGGER Procedure 0.0 Step 1.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the CivilCorp:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_civilcorp
+CHECK GLOBAL BLACKBOARD || key: justicewait | info: 1 | exist: 1
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_civilcorp
+Set SCENE to 1
+Justice stops standing still
+Unsuur stops standing still
+Mi-an stops standing still
+Heidi stops standing still
+Justice stands still in CivilCorp
+Unsuur stands still in CivilCorp
+Mi-an stands still in CivilCorp
+Heidi stands still in CivilCorp
+
+TRIGGER Procedure 0.0 Step 1.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 11010
+CUTSCENE UI STATE EXIT || 
+Justice stops standing still
+Unsuur stops standing still
+Mi-an stops standing still
+Heidi stops standing still
+===Wait for Diagram===
+
+{{mission_details
+|desc = Wait for Heidi to mail you the diagram you need.
+|details = Wait for Diagram
+}}
+Set DAY to 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 11030
+CONDITIONS
+Always:
+ACTIONS
+TIME SET ENABLE || bool: 0
+DELAY MASK SET || maskId: 11030 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: 0
+NPC REMOVE TAG || tag: MianWork
+SCENEITEM CREATE FLAG || itemType: 0 | id: 92630 | path: Ls9263_1 | sceneName: Main | flagName: LanSheng01 | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 11030 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 11030 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+{{cutscene|id = 1141}}
+A cutscene CG_SUODAO (duration: 0.0) starts playing
+Ready to Roll - Following Heidi's diagram, we built two trams to help Justice get a better view of the Gecko Station. Not long after, we hopped on to try to repair the engines on the other side...
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: suodao_player
+Mi-an stands still in Main
+Justice stands still in Main
+Captain stands still in Main
+Unsuur stands still in Main
+SCENEITEM CREATE FLAG || itemType: 0 | id: 21031 | path: Mission_SuoDao | sceneName: Main | flagName: suodao_suodaop | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 21032 | path: Mission_SuoDao | sceneName: Main | flagName: suodao_suodaom | extraParams: 0
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_SUODAO | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 140_0 starts:
+{{dialogue|Justice|Next step is riding you Builders over to fix the engines. Things might go south over there, over in the, er, west, what with the Geeglers and all, so you might want to {{textcolor|red|arm yourselves}}! Are you ready to go?}}
+
+*''Let's do this! {{textcolor|red|(Recommended: Lvl 13-15)}}''
+*''I'm not ready yet.''
+
+{{dialogue|Justice|indent=true|answer=Let's do this! {{textcolor|red|(Recommended: Lvl 13-15)}}
+|I knew I could count on you. Let's roll.}}
+{{dialogue|Justice|indent=true|answer=I'm not ready yet.
+|Be quick about yer business, our town's in a pinch here!}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the CivilCorp:
+CONDITIONS
+Check if SCENE is == 1
+CHECK GLOBAL BLACKBOARD || key: justicewait | info: 1 | exist: 1
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: CivilCorp | flagName: civil_player
+
+TRIGGER Procedure 1.0 Step 0.5 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the CivilCorp:
+CONDITIONS
+Check if SCENE is == 1
+CHECK GLOBAL BLACKBOARD || key: justicewait | exist: 1 | info: 1
+ACTIONS
+(cId 0) A conversation 636, 637, 1118, 638, 639, 640, 641, 642, 1246_0, 644, 645 starts:
+{{dialogue|Mi-an|Hi ''Player''! You're just in time!}}
+{{dialogue|Justice|Everyone here? I'll get right to the point, we need y'all's help in the upcoming Civil Corps' mission to chase off the Geeglers.}}
+{{dialogue|Justice|Way I figure, taking the bridge into Geegler territory is a bit dangerous; we'd be walkin' into whatever traps they might have set up for us. They'd also see us from a league away.}}
+{{dialogue|Justice|Plus, walkin' over that bridge lately gives me the willies... them Geeglers have been takin' pieces from the bridge for... Peach knows what. I don't think it's very stable right now.}}
+{{dialogue|Justice|Heidi, is there any way we could sneak over on that {{textcolor|green|old trolley system}} behind our office? That way we could get in undetected.}}
+{{dialogue|Heidi|You mean the tram system left over from the early days of Sandrock? The two cables are still there, but we have a couple of problems.}}
+{{dialogue|Heidi|First, there are no tram carts; and second, the trolly engines are broken. Not to mention they're on the other side of the canyon... on top of that, we'll have to check the integrity of the cables...}}
+{{dialogue|Justice|Okay, that was more than two things... but, uh, nevermind that... Sounds to me like the first step is gettin' ourselves some {{textcolor|green|tram carts}}! Builders, can y'all handle that?}}
+{{dialogue|Mi-an|We can each build one tram cart. What do you think, ''Player''?}}
+
+*''No problem at all!''
+*''Sounds pretty hard...''
+
+{{dialogue|Mi-an|indent=true|answer=No problem at all!
+|Yeah! It's our time to shine!}}
+{{dialogue|Mi-an|indent=true|answer=Sounds pretty hard...
+|C'mon, you should believe in yourself! Builders have to have spirit! You've already done so much for this town, this should be nothing for you!}}
+{{dialogue|Mi-an|indent=true|So, we'll each build a carriage, then we can manually pull ourselves over to those engines on the other side and fix 'em up!}}
+{{dialogue|Heidi|I think it's doable. Qi still has some old diagrams from the early days in his collection, let me go check and see if he's got one for the tram cart. I can get back to you on that soon.}}
+{{dialogue|Justice|Yeah, sounds good. Thanks pardners, just let me know when you're done. I hate to rush you, but, well, without the railroad, I don't know how long our water will last. So do try to hurry.}}
+GLOBAL BLACK BOARD REMOVE || key: justicewait
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the first option in conversation segment 647:
+{{dialogue|Justice|Next step is riding you Builders over to fix the engines. Things might go south over there, over in the, er, west, what with the Geeglers and all, so you might want to {{textcolor|red|arm yourselves}}! Are you ready to go?}}
+
+*''Let's do this! {{textcolor|red|(Recommended: Lvl 13-15)}}'' (No unique dialogue)
+*''I'm not ready yet.'' (No unique dialogue)
+
+(cId 10) The player picks the first option in conversation segment 650:
+{{dialogue|Justice|Ready to go, pardner?}}
+
+*''Let's do this! {{textcolor|red|(Recommended: Lvl 13-15)}}'' (No unique dialogue)
+*''I'm not ready yet.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 1
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the second option in conversation segment 647:
+{{dialogue|Justice|Next step is riding you Builders over to fix the engines. Things might go south over there, over in the, er, west, what with the Geeglers and all, so you might want to {{textcolor|red|arm yourselves}}! Are you ready to go?}}
+
+*''Let's do this! {{textcolor|red|(Recommended: Lvl 13-15)}}'' (No unique dialogue)
+*''I'm not ready yet.'' (No unique dialogue)
+
+(cId 10) The player picks the second option in conversation segment 650:
+{{dialogue|Justice|Ready to go, pardner?}}
+
+*''Let's do this! {{textcolor|red|(Recommended: Lvl 13-15)}}'' (No unique dialogue)
+*''I'm not ready yet.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 2
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Justice
+CONDITIONS
+Check if CHOICE is == 2
+Check if SUODAO is == 2
+ACTIONS
+(cId 10) A conversation 141_0 starts:
+{{dialogue|Justice|Ready to go, pardner?}}
+
+*''Let's do this! {{textcolor|red|(Recommended: Lvl 13-15)}}''
+*''I'm not ready yet.''
+
+{{dialogue|Justice|indent=true|answer=Let's do this! {{textcolor|red|(Recommended: Lvl 13-15)}}
+|I knew I could count on you. Let's roll.}}
+{{dialogue|Justice|indent=true|answer=I'm not ready yet.
+|Be quick about yer business, our town's in a pinch here!}}
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 110310 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: 0
+TIME SET ENABLE || bool: 0
+Set CHOICE to 2
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 2
+ACTIONS
+===Fix the Tram Engines===
+
+{{mission_details
+|desc = The Tram Carts are installed, now you need to go across the canyon to fix the engines. It might be dangerous near the station, so you need to be fully prepare. Talk to Justice whenever you're ready.
+|details = Fix the Tram Engines
+}}
+Set SUODAO to 2
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+TIME SET ENABLE || bool: 1
+
+TRIGGER Procedure 1.0 Step 5.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100103
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: justicewait | info: 1 | exist: 1
+ACTIONS
+===Go to the Civil Corps===
+
+{{mission_details
+|desc = The Civil Corps is working on a plan to drive away the Geeglers, and they want your help. Go to the Civil Corps and talk with Justice.
+|details = Go to the Civil Corps
+}}
+Set DAY to 1
+
+TRIGGER Procedure 1.0 Step 6.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100103
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: justicewait | info: 2 | exist: 1
+ACTIONS
+===Wait for Diagram===
+
+{{mission_details
+|desc = Wait for Heidi to mail you the diagram you need.
+|details = Wait for Diagram
+}}
+Set DAY to 1
+
+TRIGGER Procedure 1.0 Step 7.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if DAY is == 1
+ACTIONS
+Set DAY to 2
+The player receives a letter:
+{{mail|21}}
+Set global blackboard key pablocome with info 1.
+
+TRIGGER Procedure 1.0 Step 10.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if DAY is == 3
+CHECK CREATION CAN CREATE || creationId: 13000002 | canCreate: 1
+ACTIONS
+===Construct the Tram Cart===
+
+{{mission_details
+|desc = Now that you have the diagram, construct the Tram Cart on the Assembly Station.
+|details = Construct the Tram Cart
+}}
+Set DAY to 4
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 110310 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: 0
+TIME SET ENABLE || bool: 0
+Set CHOICE to 2
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 110310 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Justice stops standing still
+Mi-an stops standing still
+Unsuur stops standing still
+Captain stops standing still
+DELAY MASK SET || maskId: 110310 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+SCENEITEM DELETE || itemType: 0 | id: 92630
+{{cutscene|id = 1142}}
+A cutscene CG_ZUOSUODAO (duration: 0.0) starts playing
+Oh Snap! - Somehow, we were wrong about the strength of the wires overlooking the canyon. While we were halfway across, the one holding us up snapped! In an incredible turn of luck, the tram swung us down into a building that led into Gecko Station.
+
+TRIGGER Procedure 2.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Justice
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 2
+
+TRIGGER Procedure 2.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Justice
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 2
+
+TRIGGER Procedure 2.0 Step 5.0 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the first option in conversation segment 647:
+{{dialogue|Justice|Next step is riding you Builders over to fix the engines. Things might go south over there, over in the, er, west, what with the Geeglers and all, so you might want to {{textcolor|red|arm yourselves}}! Are you ready to go?}}
+
+*''Let's do this! {{textcolor|red|(Recommended: Lvl 13-15)}}'' (No unique dialogue)
+*''I'm not ready yet.'' (No unique dialogue)
+
+(cId 10) The player picks the first option in conversation segment 650:
+{{dialogue|Justice|Ready to go, pardner?}}
+
+*''Let's do this! {{textcolor|red|(Recommended: Lvl 13-15)}}'' (No unique dialogue)
+*''I'm not ready yet.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 1
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_ZUOSUODAO | state: 7
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Metro_Dungeon | flagName: metro_player1
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Metro_Dungeon:
+CONDITIONS
+Always:
+ACTIONS
+Justice stands still in Metro_Dungeon
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Metro_Dungeon:
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 1143}}
+A cutscene CG_XIYIRENDONG (duration: -1.0) starts playing
+Belly of the Beast - We survived the fall, but weren't out of the woods yet. There were still several floors to traverse, and about a thousand Geeglers between us and freedom...
+ACTION BATTLE SET STATE || set: 1
+ACTOR BLIND SET || set: 1
+
+TRIGGER Procedure 3.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_XIYIRENDONG | state: 9
+CONDITIONS
+Always:
+ACTIONS
+ACTOR BLIND SET || set: 0
+SUBMIT MISSION 1100102
+Run mission Belly of the Beast
+ACTION MISSION TRACE 1100106
+MONSTER ADD TAG || tag: xiyiren1 | isAdd: 1
+MONSTER MODIFIER ADD || name: 11031 | tag: xiyiren1 | type: Faction | data: NormalMonster
+END MISSION 1100103

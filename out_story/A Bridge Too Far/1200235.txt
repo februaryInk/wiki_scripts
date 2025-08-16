@@ -1,0 +1,252 @@
+Reading Mission 1200235: A Bridge Too Far
+
+<onlyinclude>{{Infobox mission
+|name = A Bridge Too Far
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from A Bridge Too Far:
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Steel Panels of Default quality (Notify player)
+Add 1 Steel Braces of Default quality (Notify player)
+CUTSCENE UI STATE EXIT || 
+Heidi stops standing still
+Mint stops standing still
+DELIVER MISSION 1200234
+START MISSION 1200234
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200234
+CONDITIONS
+Always:
+ACTIONS
+Run mission A Bridge Too Far
+END MISSION 1200234
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200235
+CONDITIONS
+Always:
+ACTIONS
+===Upgrade the Pickhammer===
+
+{{mission_details
+|desc = To quickly and efficiently clear the collapsed structures from the bridge, you'll need a more powerful Pickhammer. (You can purchase the recipe from the Commerce Guild)
+|details = Upgrade the Pickhammer
+*{{i2|Chromium Pickhammer|0/1}}
+}}
+Set global blackboard key unlockpickhammer4 with info 1.
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200234 | canSubmit: 1 | targetId: 1
+CONDITIONS
+Always:
+ACTIONS
+===Clear the Way===
+
+{{mission_details
+|desc = In order to strengthen the bridge, you need to clear all the debris from the area around the collapsed structure.
+|details = Clear the Way
+}}
+AREA TRIGGER CREATE || missionId: 1200235 | id: 22351 | sceneName: Main | flagName: reinforce_resource | transId: 80012246 | showOnMap: 1 | mapIcon: MissionArea
+SCENEITEM DELETE || id: 21874 | itemType: 0
+RESOURCE LOCK INTERACT || id: 120023901 | set: 1
+RESOURCE LOCK INTERACT || id: 120023902 | set: 1
+RESOURCE LOCK INTERACT || id: 120023903 | set: 1
+RESOURCE LOCK INTERACT || id: 120023904 | set: 1
+PICK UP RESOURCE REFRESH || id: 120023401
+PICK UP RESOURCE REFRESH || id: 120023402
+PICK UP RESOURCE REFRESH || id: 120023403
+PICK UP RESOURCE REFRESH || id: 120023404
+PICK UP RESOURCE REFRESH || id: 120023405
+
+TRIGGER Procedure 0.0 Step 1.1 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 10
+At the beginning of the day:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: 1200235 | info: 1 | exist: 0
+ACTIONS
+PICK UP RESOURCE REFRESH || id: 120023404
+PICK UP RESOURCE REFRESH || id: 120023401
+PICK UP RESOURCE REFRESH || id: 120023402
+PICK UP RESOURCE REFRESH || id: 120023403
+PICK UP RESOURCE REFRESH || id: 120023405
+
+TRIGGER Procedure 0.0 Step 2.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON RESOURCE PICK UP || order: 0 | id: 120023401 | npc: 8000
+ON RESOURCE PICK UP || order: 0 | id: 120023402 | npc: 8000
+ON RESOURCE PICK UP || order: 0 | id: 120023403 | npc: 8000
+ON RESOURCE PICK UP || order: 0 | id: 120023404 | npc: 8000
+ON RESOURCE PICK UP || order: 0 | id: 120023405 | npc: 8000
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: 1200235 | info: 1 | exist: 0
+ACTIONS
+MISSION TARGET COUNTER CHANGE || transId: 80012461 | isAdd: 1 | targetId: 2 | missionId: 1200234
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON RESOURCE PICK UP || order: 10 | id: 120023401 | npc: 8000
+ON RESOURCE PICK UP || order: 10 | id: 120023402 | npc: 8000
+ON RESOURCE PICK UP || order: 10 | id: 120023403 | npc: 8000
+ON RESOURCE PICK UP || order: 10 | id: 120023404 | npc: 8000
+ON RESOURCE PICK UP || order: 10 | id: 120023405 | npc: 8000
+CONDITIONS
+CHECK TARGET CAN SUBMIT || canSubmit: 1 | targetId: 2 | missionId: 1200234
+ACTIONS
+AREA TRIGGER DELETE || id: 22351
+===Construct the Reinforcements===
+
+{{mission_details
+|desc = The path has been cleared, now you need to build the parts to reinforce the bridge.
+|details = Construct the Reinforcements
+*{{i2|Steel Braces|0/4}}
+*{{i2|Steel Panels|0/5}}
+}}
+Set global blackboard key 1200235 with info 1.
+PICK UP RESOURCE DELETE || id: 120023401
+PICK UP RESOURCE DELETE || id: 120023402
+PICK UP RESOURCE DELETE || id: 120023403
+PICK UP RESOURCE DELETE || id: 120023404
+PICK UP RESOURCE DELETE || id: 120023405
+
+TRIGGER Procedure 0.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key 1200235 with info 1.
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200234 | canSubmit: 1 | targetId: 3
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1200235 | id: 22359 | sceneName: Main | flagName: reinforce_resource | showOnMap: 1 | mapIcon: MissionArea | transId: 0
+===Install the Reinforcements===
+
+{{mission_details
+|desc = Now you've constructed all the reinforcements, head to the designated location to install them.
+|details = Install the Reinforcements
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 22352 | flagName: bridge_kaimu | sceneName: Main | extraParams: Mission_Broken_Building_Qiao_M|CreatorItem|14000019_5|1547|Fix|1.4 | path: Mission_Broken_Building_Qiao_M_empty
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 22352 | missionId: 1200234 | iconType: 3
+
+TRIGGER Procedure 1.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22351
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: reinforce_player
+Heidi stands still in Main and looks at Player
+Mint stands still in Main and looks at Player
+SCENEITEM DELETE || itemType: 12 | id: 22351
+SCENEITEM DELETE || itemType: 12 | id: 22352
+SCENEITEM DELETE || itemType: 12 | id: 22353
+SCENEITEM CREATE FLAG || itemType: 0 | id: 22354 | sceneName: Main | path: Mission_Broken_Building_Qiao | flagName: bridge_kaimu | extraParams: 0
+DELAY MASK SET || maskId: 22351 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 22352
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1200234 | targetId: 4 | isAdd: 1 | transId: 80012252
+SCENEITEM CREATE FLAG || itemType: 11 | id: 22351 | sceneName: Main | flagName: bridge_kaimu | extraParams: Mission_Broken_Building_Qiao_L|CreatorItem|14000018_2|1547|Fix|1.4 | path: Mission_Broken_Building_Qiao_L_empty
+SCENEITEM CREATE FLAG || path: Mission_Broken_Building_Qiao_R_empty | flagName: bridge_kaimu | itemType: 11 | extraParams: Mission_Broken_Building_Qiao_R|CreatorItem|14000018_2|1547|Fix|1.4 | sceneName: Main | id: 22353
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 22351 | missionId: 1200234 | iconType: 3
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 22353 | missionId: 1200234 | iconType: 3
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 22351
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 22353
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1200234 | targetId: 4 | transId: 80012251 | isAdd: 1
+
+TRIGGER Procedure 1.0 Step 2.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 22351
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 22351 | sec: 6
+
+TRIGGER Procedure 1.0 Step 2.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 22351
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 7456, 7457, 7458 starts:
+{{dialogue|Heidi|Nice work, ''Player''! Not as fancy as our other bridge, but it'll get the job done!}}
+{{dialogue|Heidi|We just finished our survey, so let's have a meeting {{textcolor|green|tomorrow at City Hall}} to discuss how we'll proceed next. See you there.}}
+{{dialogue|Mint|See you!}}
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | targetId: 4 | missionId: 1200234 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 22351 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 22359
+
+TRIGGER Procedure 1.0 Step 3.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Heidi stops standing still
+Mint stops standing still
+CUTSCENE UI STATE EXIT || 
+GLOBAL BLACK BOARD REMOVE || key: 1200235
+SUBMIT MISSION 1200234
+END MISSION 1200235

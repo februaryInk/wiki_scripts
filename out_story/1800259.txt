@@ -1,0 +1,201 @@
+Reading Mission 1800259: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200107
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL BACK || order: 0 | mailID: 468 | backMailID: 80013142
+ON MAIL BACK || order: 0 | mailID: 468 | backMailID: 80013143
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key mail4680 with info 1.
+
+TRIGGER Procedure 2.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE FLAG || flag: mail468 | compare: 2 | days: 3
+Duvos Attacks! is in state 2 with flag 0
+ACTIONS
+Run mission #1800259
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800259
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1800259 | id: 82591 | sceneName: Main | flagName: Trigger_AmirahHome | transId: 0 | mapIcon: MissionAreaBranch | showOnMap: 1
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the AmirahHome:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_amirahhome
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_amirahhome
+AREA TRIGGER DELETE || id: 82591
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the AmirahHome:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Amirah stands still in AmirahHome and looks at Ernest
+Ernest stands still in AmirahHome and looks at Amirah
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the AmirahHome:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: mail4680 | info: 1 | exist: 1
+ACTIONS
+(cId 1) A conversation 2485_0 starts:
+{{dialogue|Ernest|Hi, Amirah. Do you still have any of the ceramics that you sent to Atara? My sister saw it displayed there and asked if I could buy her some more.}}
+{{dialogue|Amirah|Usually you'd need to order in advance, but luckily I've just finished firing a kiln. Wait a moment, I'll bring out a few and you can choose what you think she'd like.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8259152) to Amirah
+(param: TargetScene:AmirahHome|MoveMode:Walk|FlagName:S8259_15_2|Delay:0.0)
+DELAY MASK SET || delayTime: 1.5 | maskId: 82591 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 3.2 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the AmirahHome:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: mail4680 | info: 1 | exist: 0
+ACTIONS
+(cId 1) A conversation 2486_0 starts:
+{{dialogue|Ernest|Hi, Amirah. You've managed to improve delivery, right? I can send things to Atara? I really want to send a souvenir to my sister back home.}}
+{{dialogue|Amirah|Usually you'd need to order in advance, but luckily I've just finished firing a kiln. Wait a moment, I'll bring out a few and you can choose what you think she'd like.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82591 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Amirah stands still in AmirahHome
+PLAYER SET POS ROT FLAG || sceneName: AmirahHome | flagName: S8259_0_1
+DELAY MASK SET || maskId: 82591 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 82591 | path: S8259_Item1 | sceneName: AmirahHome | flagName: S8259_Item1 | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 7.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 825921
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 2487_0 starts:
+{{dialogue|Ernest|Wow, Amirah. These are beautiful. I think these days you're just as good as some of the artists from Walnut Groove!}}
+
+*''Amirah's a real artisan!''
+*''I want one too!''
+
+{{dialogue|Amirah|indent=true|answer=Amirah's a real artisan!
+|reward={{NPC2|Amirah|rp=1}}|Come one,  you make me sound far too proficient. I'm still learning every day, there's a lot I need to improve on.}}
+{{dialogue|Ernest|indent=true|Nonsense! ''Player'' is right, you're a real artist. Tell you what, take it as a sign of support from a fellow artist, I'll buy all of these and send them to Atara!}}
+{{dialogue|Amirah|indent=true|answer=I want one too!
+|''Player'', you like my ceramics too? That's so great to hear. You know, since you've helped me so much, I prepared a piece just for you.}}
+{{dialogue|Ernest|indent=true|Of course ''Player'' likes them too! No one would scoff at your work. Hmm... okay, let's see. I need one for Ma, one for Pa, one for Luna... the housekeeper... nanny... our butler... Ah, let me just buy them all.}}
+{{dialogue|Amirah|Ah... I'm sorry, Ernest. These ceramics are limited to one piece per customer.}}
+{{dialogue|Ernest|What? Erm... may I ask why?}}
+{{dialogue|Amirah|Well, it was actually Arvio's idea. Apparently intricate ceramics such as mine are best sold in small quanities. He said mass production would diminish the value.}}
+{{dialogue|Amirah|He called it "limited run sales," he said he found it in an Old World marketing book.}}
+{{dialogue|Amirah|Honestly, I don't really get the specifics, but I think a piece should be special, and unique to the person. I do believe something is lost when an artistic work is replicated.}}
+{{dialogue|Ernest|It seems that Arvio's recent awakening has benefited both your livelihoods! Well, since I can only buy one, let me see... this one with twilight in Sandrock painted on it... it's remarkable. The shining of the moon, my sister will love it.}}
+{{dialogue|Amirah|Certainly! I'll pack this up and send it to your address in Atara.}}
+{{dialogue|Ernest|Fantastic, thank you so much!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 8.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8259692) from Ernest
+Ernest stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 8259154) to Amirah
+(param: TargetScene:AmirahHome|MoveMode:Walk|FlagName:S8259_15_3)
+
+TRIGGER Procedure 0.0 Step 10.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8015 | eventName: MoveToFlagOver | behaviourName: CommanderMoveToFlagAndAction
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 8619 starts:
+{{dialogue|Amirah|Ah, I almost forgot. Here's your gift too, ''Player''. Thank you for helping us. I'll never forget all you've done.}}
+
+TRIGGER Procedure 0.0 Step 12.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8259154) from Amirah
+SCENEITEM DELETE || itemType: 0 | id: 82591
+Amirah stops standing still
+Amirah stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8259152) from Amirah
+CUTSCENE UI STATE EXIT || 
+Add 1 Ceramic Vase of Default quality (Notify player)
+Ernest gains 5 favor
+Amirah gains 5 favor
+END MISSION 1800259
+
+TRIGGER Procedure 1.0 Step 7.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the first option in conversation segment 8606:
+{{dialogue|Ernest|Wow, Amirah. These are beautiful. I think these days you're just as good as some of the artists from Walnut Groove!}}
+
+*''Amirah's a real artisan!'' (No unique dialogue)
+*''I want one too!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Amirah gains 1 favor

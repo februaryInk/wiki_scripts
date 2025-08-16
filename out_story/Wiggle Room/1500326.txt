@@ -1,0 +1,420 @@
+Reading Mission 1500326: Wiggle Room
+
+<onlyinclude>{{Infobox mission
+|name = Wiggle Room
+|image =
+|description = In order to improve the soil around Sandrock, Nia is planning to cultivate some helpful Sandworms to introduce to the environment. Help her build a Terrarium for them to live in.
+|type = Side
+|time =
+|location =
+|characters = [[Nia]]
+|condition =
+|details =
+|exp = 2000
+|reputation = 10
+|gols = 300
+|npc1 = Nia
+|rp1 = 10
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200192
+
+TRIGGER Procedure 1.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+The North South Water Diversion Project is in state 2 with flag 1
+Check if mission 1500341 is result 1 flag 1
+
+GROUP 10:
+The North South Water Diversion Project is successfully completed
+
+ACTIONS
+Run mission Back in Town
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1200331 is result 1 flag 1
+Check if Nia has favor >= 600
+ACTIONS
+Run mission Wiggle Room
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Where's Mi-an is in state 1 with flag 0
+The Childhood Friend is in state 1 with flag 0
+Goodbye, Nia is in state 1 with flag 0
+The Kidnapping is in state 1 with flag 0
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: triallogan | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+ACTIONS
+DELIVER MISSION 1500326
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 13689:
+{{dialogue|Nia|Sooooo... can you help me outwith the Sandworm Terrarium?}}
+
+*''Of course!'' (No unique dialogue)
+*''Got a lot on my plate right now...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1500326
+Add 1 Sandworm Terrarium of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 2.0 Order 3 Repeat 7
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment DayNumber by 1
+
+TRIGGER Procedure 0.0 Step 2.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if DayNumber is >= 7
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1500326 | id: 532601 | sceneName: Main | flagName: Story_5326_Area | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80020493
+AREA TRIGGER CREATE || missionId: 1500326 | id: 532602 | sceneName: Greenhouse | flagName: Story_5326_Area1 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80020493
+
+TRIGGER Procedure 0.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 532602
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 53260001 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 53260001 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Nia stands still in Greenhouse
+DELAY MASK SET || maskId: 53260001 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+PLAYER SET POS ROT FLAG || sceneName: Greenhouse | flagName: Story_5326_Player1
+
+TRIGGER Procedure 0.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 53260001 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 532605) A conversation 13716, 13717, 13718, 13719, 13720, 13721 starts:
+{{dialogue|Nia|''Player''! I was just thinking of coming to see you!}}
+{{dialogue|Nia|The Sandworm Terrarium you made me is so amazing! The cultivated worms have managed to increase the soil quality so fast! I even buried them alongside crops, causing a yield increase! Even some really picky plants thrived!}}
+{{dialogue|Nia|I think the worms could be a key element in normalizing the environment around here once the trees are in place. I mean, we can't always go around watering the place with algae juice, it needs to be self sustainable.}}
+{{dialogue|Nia|Along with the worms, Zeke thinks that we should be introducing more plant species into the desert. So that's what we've been working on.}}
+{{dialogue|Nia|If everything goes smoothly, we'll be able to increase the plant variety around Sandrock tenfold! It's so exciting!}}
+{{dialogue|Nia|Oh! I almost forgot! Here are some crops I managed to grow using the soil from the terrarium!}}
+
+TRIGGER Procedure 0.0 Step 7.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 532605) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add 4 Raspberry of Default quality (Notify player)
+Add 6 Cantaloupe of Default quality (Notify player)
+Nia stops standing still
+CUTSCENE UI STATE EXIT || 
+AREA TRIGGER DELETE || id: 532601
+AREA TRIGGER DELETE || id: 532602
+END MISSION 1500326
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Nia stands still in Main
+
+TRIGGER Procedure 1.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Nia stops standing still
+
+TRIGGER Procedure 1.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Nia stops standing still
+
+TRIGGER Procedure 1.0 Step 0.5 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Nia
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 4038_0 starts:
+{{dialogue|Nia|Oh, good! I was afraid you might have left already.}}
+{{dialogue|Nia|I've had this idea at work recently, and I just need a teeny weeny, little, really really tiny little favor...}}
+{{dialogue|Nia|I've been studying soil nutrients with Zeke, and I want to cultivate a terrarium, a kind of ranch, for... Sandworms. It's a really common method used for improving soil nutrient structure, I studied it pretty extensively at school.}}
+{{dialogue|Nia|Design wise it'd just be a pretty simple, but sturdy, box that can hold the worms and soil. Oh, it'd need some sort of heating to keep a constant temperature, that way it can be consistent.}}
+{{dialogue|Nia|So, what do you think? Could you build me a Sandworm Terrarium?}}
+
+*''Of course!''
+*''I'm not going to... worm out of this one!''
+*''Got a lot on my plate right now...''
+
+{{dialogue|Nia|indent=true|answer=Of course!
+|I knew I could count on you!}}
+{{dialogue|Nia|indent=true|I asked Director Qi to make some adjustments based on the terrarium I used in school. I must say, despite his attitude issues, he's really good at his job. Here's the diagram with everything I'll need.}}
+{{dialogue|Nia|indent=true|When you've built it, we need to put in some paper, water, and soil. Oh! And some food for the little guys of course! Then we can put in some Sandworms and we're good to go!}}
+{{dialogue|Nia|indent=true|When it's ready, just bring it to me and we'll start farming Sandworms! It's going to be so much fun!}}
+{{dialogue|Nia|indent=true|Thank you so much for doing this. You have no idea how much this is going to help me in my experiments.}}
+{{dialogue|Nia|indent=true|reward={{i2|Sandworm Terrarium|1}}|You're the best!}}
+{{dialogue|Nia|indent=true|answer=I'm not going to... worm out of this one!
+|Hahaha, you're so stupid... but thanks.}}
+{{dialogue|Nia|indent=true|I asked Director Qi to make some adjustments based on the terrarium I used in school. I must say, despite his attitude issues, he's really good at his job. Here's the diagram with everything I'll need.}}
+{{dialogue|Nia|indent=true|When you've built it, we need to put in some paper, water, and soil. Oh! And some food for the little guys of course! Then we can put in some Sandworms and we're good to go!}}
+{{dialogue|Nia|indent=true|When it's ready, just bring it to me and we'll start farming Sandworms! It's going to be so much fun!}}
+{{dialogue|Nia|indent=true|Thank you so much for doing this. You have no idea how much this is going to help me in my experiments.}}
+{{dialogue|Nia|indent=true|reward={{i2|Sandworm Terrarium|1}}|You're the best!}}
+{{dialogue|Nia|indent=true|answer=Got a lot on my plate right now...
+|Sigh... that's fine. I guess we're all really busy... well, if you get some time, just let me know.}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 13696) that ends:
+{{dialogue|Nia|You're the best!}}
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1500326
+Add 1 Sandworm Terrarium of Default quality (Notify player)
+
+TRIGGER Procedure 2.0 Step 0.5 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1500326
+CONDITIONS
+Always:
+ACTIONS
+===Make Sandworm Terrarium===
+
+{{mission_details
+|desc = Use the recipe from Nia to build a Sandworm Terrarium on your Worktable.
+|details = Make Sandworm Terrarium
+*{{i2|Sandworm Terrarium|0/1}}
+}}
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1500326 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Prepare Worm Essentials===
+
+{{mission_details
+|desc = Get a few essential things to help the worms live happily in their new home.
+|details = Prepare Worm Essentials
+*{{i2|Paper|0/4}}
+*{{i2|Water|0/4}}
+*{{i2|Sandworm|0/4}}
+*{{i2|Bran Bait|0/4}}
+}}
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1500326 | targetId: 2 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Go to Moisture Farm===
+
+{{mission_details
+|desc = Take the Sandworm Terrarium to Nia at the Moisture Farm and install it.
+|details = Go to Moisture Farm
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 532601 | path: Mission_BugBox | sceneName: Greenhouse | flagName: Story_BugBox | extraParams: Mission_BugBox1|CreatorItem|19810058_1|1547|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 532601 | missionId: 1500326 | iconType: 2
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 532601
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 532601 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 532601 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Nia stands still in Greenhouse
+DELAY MASK SET || maskId: 532602 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Greenhouse | flagName: Story_5326_Player
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 532601 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 532602) A conversation 13697, 13698 starts:
+{{dialogue|Nia|Is that the terrarium? It's... even better than I imagined! You're amazing!}}
+{{dialogue|Nia|Alright... let's get these little guys settled in! First, put the paper, then a little water... then we can put in our Sandworms!}}
+
+TRIGGER Procedure 3.0 Step 3.5 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 532603
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 532601) to Player
+(param: CMDAction:Give)
+
+TRIGGER Procedure 3.0 Step 3.6 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 532602 | path: Mission_BugBox2 | sceneName: Greenhouse | flagName: Story_BugBox1 | extraParams: 0
+STOPWATCH REAL TIME SET || id: 532601 | sec: 1
+
+TRIGGER Procedure 3.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 532601
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 5326001) to Nia
+(param: TargetScene:Greenhouse|MoveMode:Run|FlagName:Story_5326_NiYa1)
+
+TRIGGER Procedure 3.0 Step 4.5 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8059 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 532603) A conversation 13699 starts:
+{{dialogue|Nia|Perfect!}}
+
+TRIGGER Procedure 3.0 Step 5.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 532603) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 5326002) to Nia
+(param: CMDAction:Call_1)
+
+TRIGGER Procedure 3.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8059 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 532604) A conversation 13700, 4046_0 starts:
+{{dialogue|Nia|Looks like the little guys were thirsty. I bet they're hungry, too. Come on, let's give them a bit of food... There you go, Nibbler...}}
+{{dialogue|Nia|Wow, Nibbler was starving! I think Amy and Zapp ate all of his food!}}
+
+*''You already named them?''
+*''How do you know their names?''
+*''Let's call that one Nia!''
+
+{{dialogue|Nia|indent=true|answer=You already named them?
+|Yeah, not bad, huh?}}
+{{dialogue|Nia|indent=true|What, you wanted to name them? I don't know... ever since you named my chicken "Doggy" and my cat "Ducky," I've got a bad feeling whenever you try to come up with names...}}
+{{dialogue|Nia|indent=true|Anyway, these guys are basically my colleagues. If I call them ridiculous names it'll get embarrassing...}}
+{{dialogue|Nia|indent=true|answer=How do you know their names?
+|You just need to listen to them. C'mon, just be quiet a second and listen... ''Player''... Nia is amazing... See! They talk!}}
+{{dialogue|Nia|indent=true|Hahaha, just kidding! I named them, of course!}}
+{{dialogue|Nia|indent=true|answer=Let's call that one Nia!
+|Ah, you're right! This one looks just like me. Oh, and this one looks like you, too! We could call this one Nia and then name this one after you...}}
+{{dialogue|Nia|indent=true|Ahhh, but that would be super confusing. Let's say I'm working and Zeke says "Hey, Nia!" Who's he talking to? Me or the worm?}}
+{{dialogue|Nia|Well, I guess all that's left is for me to feed them every day and wait for the soil to fertilize...aaand... wait for more worms to appear!}}
+{{dialogue|Nia|By the way, if you want to raise some of the little guys yourself, you can just make the Sandworm Terrarium and put a couple of Sandworms in there!}}
+{{dialogue|Nia|Anyway, I've got a few plants that should be sprouting. It's actually really interesting, these ones I'm growing at the moment have a really unique germination cycle, so I'm trying to... ahh I'm getting carried away...}}
+{{dialogue|Nia|Well, I'll let you go now, don't worry haha! I'll see you later!}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 532604) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlag (idName: 5326001) from Nia
+Nia stops standing still
+Remove behavior CommanderPlayerAction (idName: 532601) from Player
+SUBMIT MISSION 1500326
+Set DayNumber to 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 5326001) from Nia
+Remove behavior CommanderNPCAction (idName: 5326002) from Nia
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Nia|Sooooo... can you help me outwith the Sandworm Terrarium?}}
+
+*''Of course!''
+*''Got a lot on my plate right now...''
+
+{{dialogue|Nia|indent=true|answer=Of course!
+|I knew I could count on you!}}
+{{dialogue|Nia|indent=true|answer=Got a lot on my plate right now...
+|Sigh... that's fine. I guess we're all really busy... well, if you get some time, just let me know.}}
+
+==Rewards==
+{{mission reward
+|npc1 = Nia
+|rp1 = 10
+|exp = 2000
+|reputation = 10
+|gols = 300
+}}

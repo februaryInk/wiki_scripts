@@ -53,7 +53,8 @@ class ConvOption:
     def choice_type(self) -> str:
         type_map = {
             -1: None,
-            4: 'flirt'
+            4: 'flirt',
+            6: 'unknown',
         }
         
         return type_map[self._choice_type]
@@ -258,7 +259,7 @@ class ConvSegment:
         # it doesn't need to be the last segment in the talk. However, the
         # parent's next talk ids are only for the last segment.
         if self.talk_parent and self.is_last_in_talk:
-            print(f'{self.id} is the last segment in parent talk')
+            # print(f'{self.id} is the last segment in parent talk')
             
             talk_ids = []
             stack_talk_ids = [item.id for item in self._parent_stack if isinstance(item, ConvTalk)]

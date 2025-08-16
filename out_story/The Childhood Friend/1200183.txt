@@ -1,0 +1,170 @@
+Reading Mission 1200183: The Childhood Friend
+
+<onlyinclude>{{Infobox mission
+|name = The Childhood Friend
+|image =
+|description = Your childhood friend is finally coming to visit you in Sandrock. It's a really exciting moment.
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 1000
+|reputation = None
+|gols = 200
+|npc1 = Nia
+|rp1 = 20
+|rewards = {{i2|Water}|10}{{i2|Pomato Seeds}|5}{{i2|Highwind Fried Rice}|3}{{i2|Nia's Satchel}|1}
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200192
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Childhood Friend
+ACTION SOCIAL REMOVE MASK || mask: LockFavor | npc: 8059
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200183
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|293}}
+Set DAY to 0
+Set global blackboard key niaday1 with info 1.
+ACTION SOCIAL ADD MASK || npc: 8059 | mask: UnlockBirthday
+ADD KNOWN NPC || showUI: 0 | npc: 8059
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DAY START FOR WEATHER || order: 0 | weather: 2
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: set_weather
+ACTIONS
+UNIQUE ACTION RUN || idStr: set_weather
+WEATHER SET STATE || WeatherState: 0
+DELIVER MISSION 1200183
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player wakes up:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+(cId 0) A conversation 4505 starts:
+{{dialogue|Player|(Nia will be arriving today. I should go to the station to pick her up.)}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 21831 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 21831
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: niashows_player1
+DELAY MASK SET || maskId: 21831 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Nia stands still in Main and looks at Player
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+ACTION CUTSCENE START AUDIO TYPE || id: CG_BIGHUG | duration: 0 | audioType: NoTransitionOff
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 9 | name: CG_BIGHUG
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 1304_3_0 starts:
+{{dialogue|Nia|Have the sand bandits been caught yet? Were you scared back then? I mean... I think I would have been.}}
+{{dialogue|Player|(What should I say?)}}
+
+*''I'm fine, really.''
+*''They haven't caught them yet.''
+
+{{dialogue|Nia|indent=true|answer=I'm fine, really.
+|I hope so. You know, if you're scared you can tell me. I won't tease you... too much, teehee. But seriously, if you need to talk about it, I'm here for you.}}
+{{dialogue|Nia|indent=true|answer=They haven't caught them yet.
+|What's taking them so long? Is this Logan guy really as nefarious and cunning as the papers say? I hope he gets caught soon.}}
+
+TRIGGER Procedure 1.0 Step 1.1 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8059 | cId: 1 | missionId: 1200183
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 1307_0 starts:
+{{dialogue|Nia|Phew! But it's great that you're alright...! You don't know how relieved I am to see your face.}}
+{{dialogue|Nia|And oh! Look, look, I brought you a whole bunch of stuff. But take me to the famous "Blue Moon Saloon" first, I'm dying to try all that sand-food. I'm absolutely starving! We can catch up while eating, I have so much to tell you!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Nia stops standing still
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8059 | state: Defense
+START MISSION 1200183
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200183
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Childhood Friend
+END MISSION 1200183
+
+==Rewards==
+{{mission reward
+|npc1 = Nia
+|rp1 = 20
+|exp = 1000
+|reputation = None
+|gols = 200
+|rewards = {{i2|Water}|10}{{i2|Pomato Seeds}|5}{{i2|Highwind Fried Rice}|3}{{i2|Nia's Satchel}|1}
+}}

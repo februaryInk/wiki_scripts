@@ -1,0 +1,503 @@
+Reading Mission 1900407: Trudy and Jasmine's Big Day Out
+
+<onlyinclude>{{Infobox mission
+|name = Trudy and Jasmine's Big Day Out
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Trudy and Jasmine's Big Day Out:
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON EVERY WEEK START || order: 0 | week: 1
+CONDITIONS
+Check if Cha is >= 2
+ACTIONS
+CLOSE MISSION || missionId: 1900406
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1900406
+CONDITIONS
+Always:
+ACTIONS
+Run mission Trudy and Jasmine's Big Day Out
+END MISSION 1900406
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1900407
+CONDITIONS
+Always:
+ACTIONS
+Set DD to 0
+Set week to 0
+Set CC to 0
+===Wait til Sunday===
+
+{{mission_details
+|desc = Trudy said she won't have time to go out until Sunday.
+|details = Wait til Sunday
+}}
+STOPWATCH REAL TIME SET || id: 4070 | sec: 6
+
+TRIGGER Procedure 0.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 4070
+CONDITIONS
+CHECK DAY OF WEEK || dayOfWeek: 0 | set: 1
+ACTIONS
+===Talk to Trudy===
+
+{{mission_details
+|desc = It's Sunday. Go meet with Trudy and spend the day with her and Jasmine.
+|details = Talk to Trudy
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Trudy
+CONDITIONS
+CHECK DAY OF WEEK || dayOfWeek: 0 | set: 1
+Check if week is > (maybe?) 2
+CHECK TARGET CAN SUBMIT || missionId: 1900406 | targetId: 1 | canSubmit: 0
+ACTIONS
+(cId 0) A conversation 6601_0 starts:
+{{dialogue|Trudy|Hello, ''Player''! Have you come to spend the day with me and Jasmine?}}
+
+*''Yeah! I can't wait!''
+*''Sorry, today's not good for me.''
+
+{{dialogue|Trudy|indent=true|answer=Yeah! I can't wait!
+|That's wonderful! I'll go get Jasmine now.}}
+{{dialogue|Trudy|indent=true|answer=Sorry, today's not good for me.
+|I understand. If you make some time, you know where to find me.}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 0) There is a conversation segment (id 20346) that ends:
+{{dialogue|Trudy|I understand. If you make some time, you know where to find me.}}
+CONDITIONS
+Always:
+ACTIONS
+Set DD to 1
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Trudy
+CONDITIONS
+Check if DD is == 1
+ACTIONS
+(cId 1) A conversation 6604_0 starts:
+{{dialogue|Trudy|Hello, ''Player''! Have you come to spend the day with me and Jasmine?}}
+
+*''Yeah! I can't wait!''
+*''Sorry, today's not good for me.''
+
+{{dialogue|Trudy|indent=true|answer=Yeah! I can't wait!
+|That's wonderful! I'll go get Jasmine now.}}
+{{dialogue|Trudy|indent=true|answer=Sorry, today's not good for me.
+|I understand. If you make some time, you know where to find me.}}
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 0) There is a conversation segment (id 20347) that ends:
+{{dialogue|Trudy|That's wonderful! I'll go get Jasmine now.}}
+(cId: 1) There is a conversation segment (id 20347) that ends:
+{{dialogue|Trudy|That's wonderful! I'll go get Jasmine now.}}
+CONDITIONS
+Always:
+ACTIONS
+Set DD to 2
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+(cId 1) After the conversation ends:
+CONDITIONS
+Check if DD is == 2
+ACTIONS
+DELAY MASK SET || maskId: 94070 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON EVERY WEEK START || order: 0 | week: 0
+CONDITIONS
+Always:
+ACTIONS
+Increment week by 1
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DAY OF WEEK || dayOfWeek: 0 | set: 1
+Check if week is > (maybe?) 1
+ACTIONS
+===Talk to Trudy===
+
+{{mission_details
+|desc = Talk to Trudy
+|details = Talk to Trudy
+}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 94070 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: P9407_A0
+Jasmine stands still in Main and looks at Trudy
+Trudy stands still in Main and looks at Jasmine
+Add behavior CommanderMoveToFlagAndAction (idName: 2940700) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:P9407_A1|LookAtActor:8040)
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 94070 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 94070 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 10) A conversation 6605_0 starts:
+{{dialogue|Jasmine|Yay! ''Player'', you came! Ma and me are going to have a super fun day, she's not even going to work. Uhhh... will the City Hall be mad at you, Ma? Heidi gets real mad if I miss any lessons...}}
+{{dialogue|Trudy|Don't worry, Jasmine, I won't get into trouble. Aunt Heidi is kindly dealing with the City Hall affairs today. She said I can take the day off and no one will mind!}}
+{{dialogue|Jasmine|Wow! Maybe I can ask Aunt Heidi to take my class for me while I go and play...}}
+
+*''No you can't do that. You have to study!''
+*''Yeah! Maybe she'll cover for me at the Commerce Guild, too...''
+
+{{dialogue|Jasmine|indent=true|answer=No you can't do that. You have to study!
+|Awww... fine.}}
+{{dialogue|Trudy|indent=true|Studying is fun, Jasmine! If you study hard you can grow up to be anything you want!}}
+{{dialogue|Jasmine|indent=true|That's pretty cool, I guess...}}
+{{dialogue|Jasmine|indent=true|answer=Yeah! Maybe she'll cover for me at the Commerce Guild, too...
+|Yeah! She can do anything!}}
+{{dialogue|Trudy|indent=true|Ha! You two...}}
+{{dialogue|Jasmine|''Player'', Ma said she's taking us to the Moisture Farm. Mr. Zeke gave me a little garden, I've got loads of really cool stuff growing there! I'll show it to you. Uncle Owen said he'd teach me to cook what I've grown, too!}}
+{{dialogue|Trudy|We'll go to the Blue Moon later, we can bring some of your plants to Owen, and maybe we can eat some tonight!}}
+{{dialogue|Jasmine|Really?! Owen's the best! Uh... except you, ''Player''!}}
+
+*''I can't wait to see what you've grown!''
+*''I'm waaay better than Owen!''
+
+{{dialogue|Jasmine|indent=true|answer=I can't wait to see what you've grown!
+|Mr Zeke says I'm a super good gardener, and he doesn't even help me water the plants 'cos he says that if someone else waters your plants they get really unhappy so I always go and water them after school.}}
+{{dialogue|Jasmine|indent=true|He says they get really happy and bloom when they see me!}}
+{{dialogue|Jasmine|indent=true|answer=I'm waaay better than Owen!
+|Yeah you are! Owen's stories are super cool though! I know he does his thing on Saturday, but he also tells me stories whenever I go in! I think people get really jealous of that.}}
+{{dialogue|Trudy|Okay, don't make ''Player'' too tired before we even get there! Come on, let's head to the Moisture Farm. Zeke will be waiting for us!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 94071 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON EVERY WEEK START || order: 0 | week: 1
+CONDITIONS
+Check if week is >= 1
+ACTIONS
+FAIL MISSION || missionId: 1900406
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 94071 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Trudy stops standing still
+Jasmine stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 2940700) from Player
+PLAYER SET POS ROT FLAG || sceneName: Greenhouse | flagName: P9407_G0
+Jasmine stands still in Greenhouse and looks at Zeke
+Trudy stands still in Greenhouse and looks at Jasmine
+Zeke stands still in Greenhouse and looks at Jasmine
+Add behavior CommanderMoveToFlagAndAction (idName: 2940701) to Player
+(param: TargetScene:Greenhouse|MoveMode:Walk|FlagName:P9407_G1|LookAtActor:8040)
+Add behavior CommanderMoveToFlagAndAction (idName: 2940702) to Trudy
+(param: TargetScene:Greenhouse|MoveMode:Walk|FlagName:Dd9407_G1|LookAtActor:8040)
+Add behavior CommanderMoveToFlagAndAction (idName: 2940703) to Jasmine
+(param: TargetScene:Greenhouse|MoveMode:Run|FlagName:Sx9407_G1|LookAtActor:8033)
+DELAY MASK SET || maskId: 94071 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 94071 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 2940704) to Zeke
+(param: CMDAction:Hi)
+
+TRIGGER Procedure 2.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8040 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 20) A conversation 20363, 20364, 20365 starts:
+{{dialogue|Jasmine|Mr Zeke! How's my garden doing?}}
+{{dialogue|Zeke|Hey, Jasmine. Look, all your flowers have woken up to see you.}}
+{{dialogue|Jasmine|Wow! Hey, ''Player'', Ma, come look at my garden!}}
+
+TRIGGER Procedure 2.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 20) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 94072 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 94072 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 2940704) from Zeke
+Remove behavior CommanderMoveToFlagAndAction (idName: 1940704) from Zeke
+Remove behavior CommanderMoveToFlagAndAction (idName: 2940703) from Jasmine
+Remove behavior CommanderMoveToFlagAndAction (idName: 2940702) from Trudy
+Trudy stops standing still
+Jasmine stops standing still
+Zeke stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 2940701) from Player
+PLAYER SET POS ROT FLAG || sceneName: Greenhouse | flagName: P9407_H0
+Jasmine stands still in Greenhouse
+Trudy stands still in Greenhouse and looks at Jasmine
+Zeke stands still in Greenhouse and looks at Jasmine
+DELAY MASK SET || maskId: 94072 | delayTime: 0 | durationTime: -1 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 94072 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 30) A conversation 6613_0 starts:
+{{dialogue|Jasmine|We've got Potatoes, Tomatoes, Cantaloupes- I love Cantaloupes, and Broad Beans! Oh, I got some Desert Rose and Mountain Horn, too! But you can't eat those ones, I just think they're really pretty.}}
+
+*''Wow, you grew them all by yourself?''
+*''Are you sure Zeke isn't helping you?''
+
+{{dialogue|Jasmine|indent=true|answer=Wow, you grew them all by yourself?
+|Uh-huh!}}
+{{dialogue|Trudy|indent=true|That's right, she's been coming here every day and watering them. Most days I don't even have to remind her!}}
+{{dialogue|Jasmine|indent=true|answer=Are you sure Zeke isn't helping you?
+|Nuh-uh!}}
+{{dialogue|Trudy|indent=true|She's been coming here every day all on her own!}}
+{{dialogue|Zeke|I don't touch them. I want to make sure Jasmine knows the hard work you have to put in.}}
+{{dialogue|Jasmine|Zeke says that I'm doing better than lots of grown-ups! Oh! ''Player''! I want you to plant one! I think we have... Raspberry, Rose Willow, or Sand Leek. Which one do you want?}}
+
+*''Let's plant Raspberry!''
+*''Rose Willow is really pretty!''
+*''Sand Leek all day!''
+*''Can't we plant them all?''
+
+{{dialogue|Jasmine|indent=true|answer=Let's plant Raspberry!
+|Good choice! They're really tasty, too. I was going to plant them, but I wanted Cantaloupes, and Ma said that I shouldn't eat too many sweet things. I think if you chose them then she wouldn't mind...}}
+{{dialogue|Trudy|indent=true|I don't mind, but don't eat too many before bed!}}
+{{dialogue|Jasmine|indent=true|answer=Rose Willow is really pretty!
+|It is! I haven't grown this one before, Zeke said it's a little harder to grow than the others, but I think we can do it together!}}
+{{dialogue|Trudy|indent=true|I think you're ready for it, Jasmine.}}
+{{dialogue|Jasmine|indent=true|answer=Sand Leek all day!
+|It doesn't look so pretty, but Ma is always telling me to eat healthy, and Sand Leek can be used in loads of different food! Maybe Owen can make something super tasty with it.}}
+{{dialogue|Trudy|indent=true|I'm sure he can! We'll bring it to him when it's fully grown.}}
+{{dialogue|Jasmine|indent=true|answer=Can't we plant them all?
+|Well I'd like to but... I don't really have much more space... Zeke says I need to wait until I'm older before I can grow a bigger garden.}}
+{{dialogue|Player|indent=true|(What should I plant?)}}
+
+:*''Let's plant Raspberry!''
+:*''Rose Willow is really pretty!''
+:*''Sand Leek all day!''
+
+{{dialogue|Jasmine|indent=double|answer=Let's plant Raspberry!
+|Good choice! They're really tasty, too. I was going to plant them, but I wanted Cantaloupes, and Ma said that I shouldn't eat too many sweet things. I think if you chose them then she wouldn't mind...}}
+{{dialogue|Trudy|indent=double|I don't mind, but don't eat too many before bed!}}
+{{dialogue|Jasmine|indent=double|answer=Rose Willow is really pretty!
+|It is! I haven't grown this one before, Zeke said it's a little harder to grow than the others, but I think we can do it together!}}
+{{dialogue|Trudy|indent=double|I think you're ready for it, Jasmine.}}
+{{dialogue|Jasmine|indent=double|answer=Sand Leek all day!
+|It doesn't look so pretty, but Ma is always telling me to eat healthy, and Sand Leek can be used in loads of different food! Maybe Owen can make something super tasty with it.}}
+{{dialogue|Trudy|indent=double|I'm sure he can! We'll bring it to him when it's fully grown.}}
+{{dialogue|Jasmine|Mr Zeke, do you have anything else we can play?}}
+{{dialogue|Trudy|How about we cut some vegetables to bring to Owen?}}
+{{dialogue|Jasmine|I don't want to clear out my garden, though...}}
+{{dialogue|Trudy|Don't worry, Jasmine. They'll all grow back soon, then we can harvest them again!}}
+{{dialogue|Jasmine|Wow! OK! What should we pick, Ma?}}
+{{dialogue|Trudy|Hmmm, how about some Broad Beans, some Potatoes and some Tomatoes?}}
+{{dialogue|Jasmine|Awesome selection! Do you think Uncle Owen can make something really delicious with that?}}
+{{dialogue|Trudy|Oh, I think that'll be no trouble for him.}}
+{{dialogue|Jasmine|''Player'', have you eaten Owen's cooking?}}
+
+*''All the time!''
+*''I think Grace is a better chef...''
+*''I cook way better than Owen!''
+
+{{dialogue|Jasmine|indent=true|answer=All the time!
+|Wow! He's so good, right? Ma takes me to the Blue Moon to eat sometimes, and Uncle Owen always has something super tasty for us.}}
+{{dialogue|Trudy|indent=true|Today's gonna be one of our eat-out days, isn't it?}}
+{{dialogue|Trudy|indent=true|Usually when I'm too tired to cook...}}
+{{dialogue|Jasmine|indent=true|answer=I think Grace is a better chef...
+|Blurgh! There's always so much sand in her cooking! It's so crunchy and horrible.}}
+{{dialogue|Trudy|indent=true|Jasmine, don't be mean, now!}}
+{{dialogue|Trudy|indent=true|Though it is crunchy...}}
+{{dialogue|Jasmine|indent=true|answer=I cook way better than Owen!
+|Wow! Can we go to ''Player'''s house for dinner soon, Ma? Please? Pleeeease?}}
+{{dialogue|Trudy|indent=true|Haha, that's not for me to decide, Jasmine!}}
+{{dialogue|Trudy|Okay, let's go to the Blue Moon now, Owen told me he wants to cook you dinner!}}
+{{dialogue|Jasmine|Yesss! And I can give him my vegetables to cook too!}}
+{{dialogue|Trudy|Say goodbye to Zeke, Jasmine.}}
+{{dialogue|Jasmine|Buh-bye Mr Zeke!}}
+{{dialogue|Trudy|''Player'', would you like to join us for dinner?}}
+{{dialogue|Jasmine|Yeah! Come on, ''Player'', pleeeease!}}
+{{dialogue|Player|(Should I go with them for dinner? Or end it here?)}}
+
+*''I'd love to!''
+*''I've got other plans...''
+
+{{dialogue|Jasmine|indent=true|answer=I'd love to!
+|Yesss! Let's go!}}
+{{dialogue|Jasmine|indent=true|answer=I've got other plans...
+|Awww...}}
+{{dialogue|Trudy|indent=true|That's okay, ''Player''. Jasmine, don't worry. ''Player'' will see you again soon!}}
+{{dialogue|Jasmine|indent=true|Bye...}}
+
+TRIGGER Procedure 3.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 30) There is a conversation segment (id 20405) that ends:
+{{dialogue|Jasmine|Yesss! Let's go!}}
+(cId: 31) There is a conversation segment (id 20405) that ends:
+{{dialogue|Jasmine|Yesss! Let's go!}}
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 94073 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+Set CC to 2
+NPC ICON REMOVE || missionId: 1900407 | npc: 8040 | missionIcon: 6
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 30) After the conversation ends:
+CONDITIONS
+Check if CC is == 1
+ACTIONS
+Jasmine stops standing still
+Trudy stops standing still
+Zeke stops standing still
+SUBMIT MISSION 1900406
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 3.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 30) The player picks the second option in conversation segment 20404:
+{{dialogue|Player|(Should I go with them for dinner? Or end it here?)}}
+
+*''I'd love to!'' (No unique dialogue)
+*''I've got other plans...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CC to 1
+
+TRIGGER Procedure 3.0 Step 5.0 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Jasmine
+CONDITIONS
+Check if CC is == 1
+ACTIONS
+(cId 31) A conversation 6629_0 starts:
+{{dialogue|Jasmine|Are you gonna come with us now!?}}
+{{dialogue|Player|(Should I go with them for dinner? Or end it here?)}}
+
+*''I'd love to!''
+*''I've got other plans...''
+
+{{dialogue|Jasmine|indent=true|answer=I'd love to!
+|Yesss! Let's go!}}
+{{dialogue|Jasmine|indent=true|answer=I've got other plans...
+|Awww...}}
+{{dialogue|Trudy|indent=true|That's okay, ''Player''. Jasmine, don't worry. ''Player'' will see you again soon!}}
+{{dialogue|Jasmine|indent=true|Bye...}}
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 94073 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Jasmine stops standing still
+Trudy stops standing still
+Zeke stops standing still
+DELAY MASK SET || maskId: 94073 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 4.0 Step 2.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 23:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+END MISSION 1900406
+END MISSION 1900407
+
+TRIGGER Procedure 5.0 Step 5.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 94073 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1900406
+END MISSION 1900406
+Run mission Trudy and Jasmine's Big Day Out
+END MISSION 1900407

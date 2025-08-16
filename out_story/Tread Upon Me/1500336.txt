@@ -1,0 +1,264 @@
+Reading Mission 1500336: Tread Upon Me
+
+<onlyinclude>{{Infobox mission
+|name = Tread Upon Me
+|image =
+|description = Burgess has been having strange sleepwalking nightmares that have led him to nearly drown himself in the oasis. Maybe there's something you can do to ease his mind...
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200364
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 3
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment 1500336 by 1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission Tread Upon Me
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1500336
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1500336 | id: 533601 | sceneName: Main | flagName: Story_533601_Area | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80021801
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 533601
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 533501 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 533501 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderDrama (idName: 5335003) to Burgess
+(param: TargetScene:Main|DramaName:Story_5335_Bo|DramaType:Sleep|TargetFlag:Story_533501_Bo)
+Dan-bi stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: Story_5335_Player
+DELAY MASK SET || maskId: 533502 | delayTime: 3 | durationTime: -2 | changeType: 1 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 533501 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 533501) A conversation 14861, 14862, 14863 starts:
+{{dialogue|Dan-bi|Minister Burgy-boy...! Are you okay?!}}
+{{dialogue|Burgess|Cough... cough... water... somehow... harming me...?!}}
+{{dialogue|Dan-bi|Holy smokes! Quit breathin' it in...! I don't need to remind you that as Chief Safety Inspector, this is not a good look! ...Wait a sec... Did you have the nightmare again? Let me help you up...}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 533501) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 533503 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment BridgeDay by 1
+
+TRIGGER Procedure 0.0 Step 7.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if BridgeDay is == 1
+ACTIONS
+The player receives a letter:
+{{mail|625}}
+
+TRIGGER Procedure 0.0 Step 8.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 625
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1500336
+START MISSION 1500336
+Run mission Tread Upon Me
+END MISSION 1500336
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 533503 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Burgess stands still in Main
+Dan-bi stands still in Main
+DELAY MASK SET || maskId: 533504 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 533503 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 533502) A conversation 14864, 14865, 14866 starts:
+{{dialogue|Burgess|Yes...! The nightmare... I see myself... here! Standing by the oasis... the kids are about to cross the oasis... with their shoes on!}}
+{{dialogue|Burgess|I rush to try to stop them, but when I open my mouth, no sound comes out. So I dive into the oasis! I try to be a bridge to the other side! But my body isn't long enough... They step their shoes off my face and into the water, then I scream and wake up here...}}
+{{dialogue|Dan-bi|Geez, that's weird!}}
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 533502) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 5335001) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:Story_5335_Player1)
+
+TRIGGER Procedure 1.0 Step 3.4 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 533503) A conversation 4361_0 starts:
+{{dialogue|Dan-bi|Oh... Hey, ''Player''! Thinking of taking that old path across the oasis? Well... too much water there now, I'm afraid...!}}
+
+*''That's inconvenient...''
+*''Suffering from success...''
+*''Is Burgess... okay?''
+*''Uh... let's skip to the part where you ask me to build something.''
+
+{{dialogue|Dan-bi|indent=true|answer=That's inconvenient...
+|I mean... kinda! For people like me who enjoy running around, it's not that big of a deal.}}
+{{dialogue|Burgess|indent=true|At the end of the day, there's no amount of detours or sleep paralysis demons that could ever make me want to go back to the old days of no water.}}
+
+:*''How about building a bridge?''
+:*''Why don't you try lying down again, and let me walk over?''
+
+{{dialogue|Dan-bi|indent=double|answer=How about building a bridge?
+|A bridge, eh...? It's just crazy enough to work!}}
+{{dialogue|Burgess|indent=double|Splendid! A bridge, it is, then! I'll speak with Mayor Trudy on this plan immediately! ''Player'', if you would, please keep an eye on your mailbox for updates!}}
+{{dialogue|Burgess|indent=double|answer=Why don't you try lying down again, and let me walk over?
+|Wowee, ''Player''! Is this what they meant when they said, "find someone who makes your dreams come true...?"}}
+{{dialogue|Dan-bi|indent=double|Sigh... I think it doesn't count when those dreams happen to be nightmares! Besides! You... trying to be a human bridge... It's just... not good for anybody!}}
+{{dialogue|Burgess|indent=double|Ah hah... so perhaps instead of a human bridge, what we need is...}}
+{{dialogue|Dan-bi|indent=double|A bridge bridge! Fantastic plan Burgy-boy! That'll stop people from walking through the oasis with their shoes on! Which, to be clear, we're not even sure is really an issue. But if it might cure your sleepwalking...}}
+{{dialogue|Burgess|indent=double|Splendid! A bridge bridge, it is, then! I'll speak with Mayor Trudy on this plan immediately! ''Player'', if you would, please keep an eye on your mailbox for updates!}}
+{{dialogue|Dan-bi|indent=true|answer=Suffering from success...
+|Dang, you're right! I never could've imagined a world where more water could mean more problems...!}}
+{{dialogue|Burgess|indent=true|To be fair... The problems we faced in the past... I mean, there's no amount of detours or sleep paralysis demons that could ever make me want to go back to the old days of no water.}}
+
+:*''How about building a bridge?''
+:*''Why don't you try lying down again, and let me walk over?''
+
+{{dialogue|Dan-bi|indent=double|answer=How about building a bridge?
+|A bridge, eh...? It's just crazy enough to work!}}
+{{dialogue|Burgess|indent=double|Splendid! A bridge, it is, then! I'll speak with Mayor Trudy on this plan immediately! ''Player'', if you would, please keep an eye on your mailbox for updates!}}
+{{dialogue|Burgess|indent=double|answer=Why don't you try lying down again, and let me walk over?
+|Wowee, ''Player''! Is this what they meant when they said, "find someone who makes your dreams come true...?"}}
+{{dialogue|Dan-bi|indent=double|Sigh... I think it doesn't count when those dreams happen to be nightmares! Besides! You... trying to be a human bridge... It's just... not good for anybody!}}
+{{dialogue|Burgess|indent=double|Ah hah... so perhaps instead of a human bridge, what we need is...}}
+{{dialogue|Dan-bi|indent=double|A bridge bridge! Fantastic plan Burgy-boy! That'll stop people from walking through the oasis with their shoes on! Which, to be clear, we're not even sure is really an issue. But if it might cure your sleepwalking...}}
+{{dialogue|Burgess|indent=double|Splendid! A bridge bridge, it is, then! I'll speak with Mayor Trudy on this plan immediately! ''Player'', if you would, please keep an eye on your mailbox for updates!}}
+{{dialogue|Burgess|indent=true|answer=Is Burgess... okay?
+|reward={{NPC2|Dan-bi|rp=3}}|reward={{NPC2|Burgess|rp=3}}|Oh! I'm fine. Just... sleepwalking I guess! Keep waking up here in the oasis, fully-clothed... But choking on the water always wakes me right up!}}
+{{dialogue|Dan-bi|indent=true|This is... alarming behavior...}}
+{{dialogue|Dan-bi|indent=true|If only we had some way of more conveniently crossing the oasis now that the water level's risen... Some kind of object... that connects two points on land that would otherwise be inaccessible between each other... But what could that be!?}}
+
+:*''How about building a bridge?''
+:*''Why don't you try lying down again, and let me walk over?''
+
+{{dialogue|Dan-bi|indent=double|answer=How about building a bridge?
+|A bridge, eh...? It's just crazy enough to work!}}
+{{dialogue|Burgess|indent=double|Splendid! A bridge, it is, then! I'll speak with Mayor Trudy on this plan immediately! ''Player'', if you would, please keep an eye on your mailbox for updates!}}
+{{dialogue|Burgess|indent=double|answer=Why don't you try lying down again, and let me walk over?
+|Wowee, ''Player''! Is this what they meant when they said, "find someone who makes your dreams come true...?"}}
+{{dialogue|Dan-bi|indent=double|Sigh... I think it doesn't count when those dreams happen to be nightmares! Besides! You... trying to be a human bridge... It's just... not good for anybody!}}
+{{dialogue|Burgess|indent=double|Ah hah... so perhaps instead of a human bridge, what we need is...}}
+{{dialogue|Dan-bi|indent=double|A bridge bridge! Fantastic plan Burgy-boy! That'll stop people from walking through the oasis with their shoes on! Which, to be clear, we're not even sure is really an issue. But if it might cure your sleepwalking...}}
+{{dialogue|Burgess|indent=double|Splendid! A bridge bridge, it is, then! I'll speak with Mayor Trudy on this plan immediately! ''Player'', if you would, please keep an eye on your mailbox for updates!}}
+{{dialogue|Burgess|indent=true|answer=Uh... let's skip to the part where you ask me to build something.
+|B... Build... something?}}
+{{dialogue|Dan-bi|indent=true|How 'bout a bridge!}}
+{{dialogue|Burgess|indent=true|Oh... sure! That'll probably solve everything. We'll send you something in the mail, ''Player''! Thanks!}}
+{{dialogue|Burgess|Ow... might stop in at the clinic first... all that thrashing around in the oasis has given me a couple of open woundskies!}}
+{{dialogue|Dan-bi|Er... Yeah, take care of yourself, Minister! See you, ''Player''!}}
+The conversation ends.
+Add behavior CommanderMoveToFlagAndAction (idName: 5335002) to Dan-bi
+(param: TargetScene:Main|MoveMode:Run|FlagName:Story_533505_Dan)
+
+TRIGGER Procedure 1.0 Step 4.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 533503) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Set BridgeDay to 0
+Dan-bi stops standing still
+Burgess stops standing still
+Dan-bi stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 5335002) from Dan-bi
+Remove behavior CommanderMoveToFlag (idName: 5335001) from Player
+AREA TRIGGER DELETE || id: 533601
+Remove behavior CommanderDrama (idName: 5335003) from Burgess
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 3.5 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 533503) The player picks the third option in conversation segment 14867:
+{{dialogue|Dan-bi|Oh... Hey, ''Player''! Thinking of taking that old path across the oasis? Well... too much water there now, I'm afraid...!}}
+
+*''That's inconvenient...'' (No unique dialogue)
+*''Suffering from success...'' (No unique dialogue)
+*''Is Burgess... okay?'' (No unique dialogue)
+*''Uh... let's skip to the part where you ask me to build something.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Burgess gains 3 favor
+Dan-bi gains 3 favor

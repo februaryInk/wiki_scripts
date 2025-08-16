@@ -1,0 +1,214 @@
+Reading Mission 1800282: Top Shelf
+
+<onlyinclude>{{Infobox mission
+|name = Top Shelf
+|image =
+|description = Catori has realized a minor weakness in her way of doing business. After a bit of thinking, she decided the best course of action was to expand her inventory. Help her build a shelf to carry this new inventory.
+|type = Side
+|time =
+|location =
+|characters = [[Catori]]
+|condition =
+|details =
+|exp = 700
+|reputation = 5
+|gols = 200
+|npc1 = Catori
+|rp1 = 10
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200289
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check relationship with Catori is Friend
+Opportunities Abound is successfully completed
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+Run mission Top Shelf
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800282
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1800282 | id: 82821 | sceneName: Main | flagName: Trigger_S8282 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80015249
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 82821
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 82821 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 82821
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82821 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM ADD || id: 1 | instId: 82821 | scene: Main | flagName: S8282_RNPC1 | dailyBehavior: RandomNPC
+NPC RANDOM ADD || flagName: S8282_RNPC2 | dailyBehavior: RandomNPC | id: 1 | instId: 82822 | scene: Main
+Catori stands still in Main
+82821 stands still in Main and looks at 82822
+82822 stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8282_0_1
+DELAY MASK SET || maskId: 82821 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82821 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|82821|That Blue Moon place looks pretty good. Let's grab something from there.}}
+STOPWATCH REAL TIME SET || id: 82821 | sec: 6
+
+TRIGGER Procedure 0.0 Step 3.1 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 82821
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|82822|I'd eat a tumbleweed right now, I'm so hungry.}}
+STOPWATCH REAL TIME SET || id: 82822 | sec: 4.5
+
+TRIGGER Procedure 0.0 Step 3.2 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 82822
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|82821|I almost beat my high score. Can't game on an empty stomach, though.}}
+STOPWATCH REAL TIME SET || id: 82823 | sec: 3
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 82823
+CONDITIONS
+Always:
+ACTIONS
+82821 stops standing still
+82822 stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 8282001) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8282_0_2|LookAtActor:8024)
+Add behavior CommanderMoveToFlagAndAction (idName: 8282242) to Catori
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8282_24_2|LookAtActor:8000|Delay:2.5)
+
+TRIGGER Procedure 0.0 Step 5.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 3074_0 starts:
+{{dialogue|Catori|''Player''! Thank goodness you're here. Did you see that? Paying customers walked right out the door looking for grub.}}
+{{dialogue|Catori|It's not enough that I gotta pull the customers in. I gotta keep 'em here somehow!}}
+{{dialogue|Catori|That's why I came up with a terrific idea to turn this challenge into an opportunity!}}
+{{dialogue|Catori|If people don't have to leave to get a snack, they'll keep dropping tokens into my machines. And if the snacks are also bought with tokens, that's a double win, am I right?}}
+{{dialogue|Catori|So, here's what 'm thinking. I need a Storage Rack, then I can offer something for people to snack on to keep them from wandering off.}}
+{{dialogue|Catori|Think you can make me one?}}
+
+*''Of course. It's a great idea.''
+*''Too much on my plate right now.''
+
+{{dialogue|Catori|indent=true|answer=Of course. It's a great idea.
+|Great! I think you make it on your Worktable. But, eh, when you're done, can you please install it for me as well? Thanks!}}
+{{dialogue|Catori|indent=true|answer=Too much on my plate right now.
+|Oh. Well, if you change your mind, let me know.}}
+DELIVER MISSION 1800282
+
+TRIGGER Procedure 0.0 Step 5.5 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8282242) from Catori
+Remove behavior CommanderMoveToFlagAndAction (idName: 8282001) from Player
+Catori stops standing still
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 6.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 10044) that ends:
+{{dialogue|Catori|Great! I think you make it on your Worktable. But, eh, when you're done, can you please install it for me as well? Thanks!}}
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1800282
+
+TRIGGER Procedure 0.0 Step 7.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800282
+CONDITIONS
+Always:
+ACTIONS
+Run mission Top Shelf
+
+TRIGGER Procedure 0.0 Step 10.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM REMOVE || id: 82822
+NPC RANDOM REMOVE || id: 82821
+END MISSION 1800282
+
+TRIGGER Procedure 1.0 Step 8.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM REMOVE || id: 82822
+NPC RANDOM REMOVE || id: 82821
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Catori|Hey, you came back! Do you have time to build me a Storage Rack now?}}
+
+*''I'm ready!''
+*''Too much on my plate right now.''
+
+{{dialogue|Catori|indent=true|answer=I'm ready!
+|Great! I think you make it on your Worktable. But, eh, when you're done, can you please install it for me as well? Thanks!}}
+{{dialogue|Catori|indent=true|answer=Too much on my plate right now.
+|Oh. Well, if you change your mind, let me know.}}
+
+==Rewards==
+{{mission reward
+|npc1 = Catori
+|rp1 = 10
+|exp = 700
+|reputation = 5
+|gols = 200
+}}

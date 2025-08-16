@@ -1,0 +1,302 @@
+Reading Mission 1900260: The Assistant
+
+<onlyinclude>{{Infobox mission
+|name = The Assistant
+|image =
+|description = Director Qi has recently been recruiting an assistant. The process doesn't seem to be going very well.
+|type = Side
+|time =
+|location =
+|characters = [[Qi]]
+|condition =
+|details =
+|exp = 2000
+|reputation = None
+|gols = 500
+|npc1 = Qi
+|rp1 = 15
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200112
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+In Trusses We Trust is successfully completed
+CHECK GLOBAL BLACKBOARD || key: bridgebroken | info: 1 | exist: 0
+Mutual Misstep is successfully completed
+Excavating the Sky is successfully completed
+ACTIONS
+Run mission A Window to the Cosmos
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if Qi has favor >= 50
+Check relationship with Qi is 5 Friend Good
+Duvos Attacks! is in state 2 with flag 0
+ACTIONS
+Run mission The Assistant
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1900260
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 19261 | path: Qi9256_pp | sceneName: Main | flagName: aP9262 | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 19263 | path: Qi9256_pp | sceneName: Main | flagName: aP9264 | extraParams: 0
+Set Open to 0
+Set Done to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Science:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_science
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_science
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Science:
+CONDITIONS
+Always:
+ACTIONS
+Qi stands still in Science
+NPC RANDOM ADD || id: 1 | instId: 9261 | scene: Science | dailyBehavior: CommanderIdle | flagName: S9256
+PLAYER SET POS ROT FLAG || sceneName: Science | flagName: P9256
+DELIVER MISSION 1900260
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Science:
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 1902601 | sec: 0.4
+Add behavior CommanderMoveToFlagAndAction (idName: 29260) to 9261
+(param: TargetScene:Science|MoveMode:Run|FlagName:S9256_1|LookAtActor:8000)
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 9261 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 7987 starts:
+{{dialogue|9261|Agh! You're here for the interview too?! J-just... run away while you still can! He's crazy, crazy I tell ya!}}
+
+TRIGGER Procedure 1.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 1902602 | sec: 0.2
+STOPWATCH REAL TIME SET || id: 1902603 | sec: 0.6
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 7994:
+{{dialogue|Qi|City Hall promised me a capable assistant. At first they even suggested that fry cook at the saloon. An archaeologist? What next, a sociologist? The nerve of those people!}}
+
+*''Why don't I help you?'' (No unique dialogue)
+*''Well good luck with that.'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 7999:
+{{dialogue|Qi|Before long, an Old World orbital construction facility will transit right over Sandrock. With me concentrating on the preparations for the observation, an assistant is rather necessary for... everything else.}}
+
+*''Why don't I help you?'' (No unique dialogue)
+*''Well good luck with that.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set Done to 1
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if Done is == 1
+ACTIONS
+START MISSION 1900260
+Qi stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 29262) from Player
+Remove behavior CommanderNPCAction (idName: 29263) from Qi
+Remove behavior CommanderMoveToFlagAndAction (idName: 29264) from Qi
+Remove behavior CommanderNPCAction (idName: 29265) from Qi
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Grace
+CONDITIONS
+Always:
+ACTIONS
+(cId 9) A conversation 7986 starts:
+{{dialogue|Grace|Qi is hiring again? What does he even need assistants for? It's not like he ever actually leaves his house.}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 1 | itemType: 0 | id: 19261
+ON SCENEITEM INTERACT || order: 3 | itemType: 0 | id: 19263
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 45159 starts:
+{{dialogue||Can efficiently manage large data sorting.
+Can independently collect large amounts of resources.
+Can assist in completing regular experimental observations.
+Board and lodging will be organised by the applicant themselves, and salary will be paid according to local regulations. 
+The Sandrock Research Center}}
+Set Open to 1
+
+TRIGGER Procedure 1.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1900260
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 19261
+SCENEITEM DELETE || itemType: 0 | id: 19263
+Run mission The Assistant
+END MISSION 1900260
+
+TRIGGER Procedure 2.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 29263) to Qi
+(param: CMDAction:KnockHead)
+Remove behavior CommanderMoveToFlagAndAction (idName: 29260) from 9261
+Remove behavior CommanderMoveToFlagAndAction (idName: 29261) from 9261
+NPC RANDOM REMOVE || id: 9261
+
+TRIGGER Procedure 2.0 Step 3.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 1902602
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 7988 starts:
+{{dialogue|Qi|Assistant, come here and analyse this data!}}
+
+TRIGGER Procedure 2.0 Step 4.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 1902603
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 29261) to 9261
+(param: TargetScene:Science|MoveMode:Walk|FlagName:S9256_2)
+Add behavior CommanderMoveToFlagAndAction (idName: 29262) to Player
+(param: TargetScene:Science|MoveMode:Walk|FlagName:P9256_1)
+
+TRIGGER Procedure 2.0 Step 7.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Qi stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 29262) from Player
+Remove behavior CommanderNPCAction (idName: 29263) from Qi
+Remove behavior CommanderMoveToFlagAndAction (idName: 29264) from Qi
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 3.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8007 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 29264) to Qi
+(param: TargetScene:Science|MoveMode:Walk|FlagName:Q9256_1)
+(cId 4) A conversation 7989 starts:
+{{dialogue|Qi|There appears to be a miscalculation on page 117, you've left a recursive digit. I would suggest you repeat these calculations... Assistant. Hand me the data from last night.}}
+
+TRIGGER Procedure 3.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 2291_0 starts:
+{{dialogue|Qi|Hm, it appears that my assistant has somehow... changed into the Builder. Interesting.}}
+{{dialogue|Qi|So? Where did he go? The man just now, where is he?}}
+{{dialogue|Qi|You aren't the assistant that was appointed to me by City Hall. Just now, did he... run away? Tsk, Atara's education system is underwhelming.}}
+{{dialogue|Qi|I am finding the lack of interest in the subject somewhat surprising of these assistants. They give up so readily on the pursuit of knowledge. Do they not find science utterly fascinating?}}
+{{dialogue|Qi|City Hall promised me a capable assistant. At first they even suggested that fry cook at the saloon. An archaeologist? What next, a sociologist? The nerve of those people!}}
+
+*''Why don't I help you?''
+*''Well good luck with that.''
+
+{{dialogue|Qi|indent=true|answer=Why don't I help you?
+|I see a glint of discovery in your eyes. Perhaps you could fulfill this role. I am quite busy making preparations for an observation of an Old World orbital construction facility, so your assistance would be appreciated.}}
+{{dialogue|Qi|indent=true|We will begin tomorrow. You can report to the Research Center at your convenience. There are many things to be done, so come prepared.}}
+{{dialogue|Qi|indent=true|For the sake of clarity: I will be paying you according to Sandrock regulation. See you tomorrow.}}
+{{dialogue|Qi|indent=true|answer=Well good luck with that.
+|If you find a good candidate, please send them to me.}}
+
+TRIGGER Procedure 3.0 Step 6.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1900260
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 19261
+SCENEITEM DELETE || itemType: 0 | id: 19263
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Qi|Before long, an Old World orbital construction facility will transit right over Sandrock. With me concentrating on the preparations for the observation, an assistant is rather necessary for... everything else.}}
+
+*''Why don't I help you?''
+*''Well good luck with that.''
+
+{{dialogue|Qi|indent=true|answer=Why don't I help you?
+|I see a glint of discovery in your eyes. Perhaps you could fulfill this role. I am quite busy making preparations for an observation of an Old World orbital construction facility, so your assistance would be appreciated.}}
+{{dialogue|Qi|indent=true|We will begin tomorrow. You can report to the Research Center at your convenience. There are many things to be done, so come prepared.}}
+{{dialogue|Qi|indent=true|For the sake of clarity: I will be paying you according to Sandrock regulation. See you tomorrow.}}
+{{dialogue|Qi|indent=true|answer=Well good luck with that.
+|If you find a good candidate, please send them to me.}}
+
+==Rewards==
+{{mission reward
+|npc1 = Qi
+|rp1 = 15
+|exp = 2000
+|reputation = None
+|gols = 500
+}}

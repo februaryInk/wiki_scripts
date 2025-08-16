@@ -1,0 +1,636 @@
+Reading Mission 1800522: Private Prescription
+
+<onlyinclude>{{Infobox mission
+|name = Private Prescription
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Private Prescription:
+
+TRIGGER Procedure 0.0 Step 19.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Fang stops standing still
+Remove behavior Story1800359_8107 (idName: 8521002) from Player
+CUTSCENE UI STATE EXIT || 
+CAMERA PATH STOP ALL || 
+X stops standing still
+Fang stops standing still
+
+TRIGGER Procedure 0.0 Step 21.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800521
+CONDITIONS
+Always:
+ACTIONS
+Fang stops standing still
+Remove behavior Story1800359_8107 (idName: 8521002) from Player
+CUTSCENE UI STATE EXIT || 
+CAMERA PATH STOP ALL || 
+X stops standing still
+Fang stops standing still
+Run mission Private Prescription
+END MISSION 1800521
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800522
+CONDITIONS
+Always:
+ACTIONS
+===Wait Until Tomorrow===
+
+{{mission_details
+|desc = Fang plans to make an aid your sleep and has agreed to collect herbs with you the next day.
+|details = Wait Until Tomorrow
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DAY START FOR WEATHER || order: 0 | weather: 2
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: set_weather
+ACTIONS
+UNIQUE ACTION RUN || idStr: set_weather
+WEATHER SET STATE || WeatherState: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+===Go to the Herb Field Before 16:00===
+
+{{mission_details
+|desc = Today is the scheduled day to collect herbs. Make sure to find Fang at the herb field before 16:00.
+|details = Go to the Herb Field Before 16:00
+}}
+AREA TRIGGER CREATE || missionId: 1800521 | id: 85221 | showOnMap: 1 | mapIcon: MissionAreaBranch | sceneName: Main | flagName: Trigger_85221 | transId: 80032321
+Set 8522Finish to 0
+Set 8522Trigger to 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 16:00 (order: 0):
+CONDITIONS
+Check if 8522Trigger is == 0
+ACTIONS
+AREA TRIGGER DELETE || id: 85221
+The player receives a letter:
+{{mail|830}}
+FAIL MISSION || missionId: 1800521
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 85221
+CONDITIONS
+CHECK WEATHER STATE || weather: 2 | flag: 0
+ACTIONS
+AREA TRIGGER DELETE || id: 85221
+DELAY MASK SET || maskId: 85221 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+Set 8522Trigger to 1
+
+TRIGGER Procedure 0.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85221 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8522_0_1
+Fang stands still in Main and looks at Player
+DELAY MASK SET || maskId: 85221 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85221 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 8193_0 starts:
+{{dialogue|Fang|Good. You're here.}}
+{{dialogue|Fang|This area should have all of what we need.}}
+{{dialogue|Fang|The satchel will require Yellow Lavender, Alfalfa, and Foggy Bassia.}}
+{{dialogue|Fang|I'll begin searching this way. Why don't you look over there?}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 8.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Set 8522Gather to 0
+CUTSCENE UI STATE EXIT || 
+CAMERA PATH STOP ALL || 
+
+TRIGGER Procedure 0.0 Step 8.2 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Gather Herbs===
+
+{{mission_details
+|desc = Upon arriving at the herb field, split up and collect various necessary herbs with Fang.
+|details = Gather Herbs
+*{{i2|Yellow Lavender|0/5}}
+*{{i2|Alfalfa|0/5}}
+*{{i2|Foggy Bassia|0/5}}
+}}
+PICK UP RESOURCE REFRESH || id: 1800521
+
+TRIGGER Procedure 0.0 Step 9.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Fang
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1800521 | targetId: 3 | canSubmit: 0
+ACTIONS
+(cId 2) A conversation 23371 starts:
+{{dialogue|Fang|If you're tired, take a break.}}
+
+TRIGGER Procedure 0.0 Step 10.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1800521 | targetId: 3 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Fang===
+
+{{mission_details
+|desc = The herbs have been collected. Hurry up and report back to Fang.
+|details = Talk to Fang
+*{{i2|Yellow Lavender|0/5}}
+*{{i2|Alfalfa|0/5}}
+*{{i2|Foggy Bassia|0/5}}
+*{{i2|Fang|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 11.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Fang
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1800521 | targetId: 4 | canSubmit: 1
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+(cId 3) A conversation 23372, 23373 starts:
+{{dialogue|Fang|That's enough. Between us, we have everything.}}
+{{dialogue|Fang|We finished quickly, more quickly than I anticipated. Let's enjoy the scenery for a bit, shall we?}}
+BAG MODIFY BY TARGET || missionId: 1800521 | targetId: 4
+Set 8522Gather to 1
+
+TRIGGER Procedure 0.0 Step 12.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85222 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 13.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85222 | eventType: 2
+CONDITIONS
+CHECK CURRENT SCENE || flag: 1 | name: Main
+ACTIONS
+Fang stops standing still
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8522_0_2
+DELAY MASK SET || maskId: 85221 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Add behavior CommanderDramaWithIndexEvent (idName: 8522162) to Fang
+(param: DramaName:FangSeat2|DelayTime:0|TargetScene:Main|DramaIndex:0|DramaType:SitGround)
+Add behavior CommanderPlayerDramaWithIndexEvent (idName: 8522002) to Player
+(param: DramaName:FangSeat1|DelayTime:0|TargetScene:Main|DramaIndex:0|DramaType:SitGround)
+X stands still in Main and looks at Fang
+
+TRIGGER Procedure 0.0 Step 15.0 Order 25 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85222 | eventType: 2
+CONDITIONS
+CHECK CURRENT SCENE || flag: 0 | name: Main
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8522_0_2
+DELAY MASK SET || maskId: 85221 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Add behavior CommanderDramaWithIndexEvent (idName: 8522162) to Fang
+(param: DramaName:FangSeat2|DelayTime:0|TargetScene:Main|DramaIndex:0|DramaType:SitGround)
+Add behavior CommanderPlayerDramaWithIndexEvent (idName: 8522002) to Player
+(param: DramaName:FangSeat1|DelayTime:0|TargetScene:Main|DramaIndex:0|DramaType:SitGround)
+X stands still in Main and looks at Fang
+
+TRIGGER Procedure 0.0 Step 16.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85222 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 85221 | sec: 4
+
+TRIGGER Procedure 0.0 Step 16.0 Order 35 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | behaviourName: CommanderDramaWithIndexEvent | eventName: DramaPrepared | npc: 8016
+CONDITIONS
+Always:
+ACTIONS
+ACTION NPC SEND BEHAVIOUR EVENT1 || npc: 8016 | event: DramaIndex | type: Int | value: 4
+
+TRIGGER Procedure 0.0 Step 17.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 85221
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 8194_0, 8198_3_1 starts:
+{{dialogue|Fang|I brought these steamed buns; mostly cabbage inside. But also wormwood powder. Improves breathing, staves off colds.}}
+{{dialogue|Fang|I've been cooking more. Since... making Mapo Tofu.}}
+{{dialogue|Fang|Still... these might taste bitter. Because of the medicine. But we must eat to keep our strength up.}}
+
+*''Maybe I'm just hungry, but I like it.''
+*''Mm, wormwoody goodness!''
+*''Yep, it's bad...''
+
+{{dialogue|Fang|indent=true|answer=Maybe I'm just hungry, but I like it.
+|reward={{NPC2|Fang|rp=1}}|Hunger is the best spice.}}
+{{dialogue|Fang|indent=true|answer=Mm, wormwoody goodness!
+|reward={{NPC2|Fang|rp=1}}|You like it? That is a pleasant surprise.}}
+{{dialogue|Fang|indent=true|answer=Yep, it's bad...
+|Yes... I know.}}
+{{dialogue|Fang|I'd like to make something better for you. Something delicious, healthy. That is... what I've studied all these years. Finding what's good for people.}}
+{{dialogue|Fang|I looked to medicine so that I might save lives. To spare others from the loss I suffered. Operations, procedures, surgery... these are all necessary. But much can be prevented with a healthy lifestyle. Herbs. Diet. Exercise.}}
+{{dialogue|Fang|Perhaps, though... flavor is something I have neglected over the years...}}
+The conversation ends.
+{{dialogue|Player|(It's nice to be able to rest and chat like this. What should I say?)}}
+
+*''What about medicine did you find interesting?''
+*''I'll bet you were a top student.''
+*''Have you always picked herbs like this? Alone?''
+*''(End Conversation)'' (No unique dialogue)
+
+{{dialogue|Fang|indent=true|answer=I'll bet you were a top student.
+|I was.}}
+{{dialogue|Fang|indent=true|I needed to succeed. But... this brought... complications.}}
+{{dialogue|Fang|indent=true|Lots of unwanted attention. Everyone wanted something.}}
+{{dialogue|Fang|indent=true|In the end, I preferred to be alone.}}
+{{dialogue|Fang|indent=true|answer=Have you always picked herbs like this? Alone?
+|X accompanies me. Always has. Always makes it better.}}
+{{dialogue|Fang|indent=true|Except once... He ate a fermented fruit and fainted.}}
+{{dialogue|Fang|indent=true|But not before the fermented sugar, now alcohol, "changed" him. He performed some rather insulting impressions of my colleagues at the time, tried some aerial tricks, then crashed into a tree.}}
+{{dialogue|Fang|A few things.}}
+{{dialogue|Fang|A Seesaian author I admire wrote something called "Curing the Incurable." It was my favorite as a teenager; it gave me hope that perhaps one day I might make a discovery of my own.}}
+{{dialogue|Fang|reward={{NPC2|Fang|rp=1}}|The author was known for his wild experiments... In the end, he poisoned himself with one of his own medicines. He could find no one willing to test his newest experiment, and tested it on himself. A cautionary tale.}}
+
+*''You should be careful yourself...''
+*''He was brave.''
+
+{{dialogue|Fang|indent=true|answer=You should be careful yourself...
+|Of course. I would never.}}
+{{dialogue|Fang|indent=true|answer=He was brave.
+|Perhaps. But he was wrong.}}
+{{dialogue|Fang|indent=true|Brilliance and madness can be frighteningly close.}}
+{{dialogue|Player|(It's nice to be able to rest and chat like this. What should I say?)}}
+
+*''What about medicine did you find interesting?''
+*''I'll bet you were a top student.''
+*''Have you always picked herbs like this? Alone?''
+*''(End Conversation)'' (No unique dialogue)
+
+{{dialogue|Fang|indent=true|answer=What about medicine did you find interesting?
+|A few things.}}
+{{dialogue|Fang|indent=true|A Seesaian author I admire wrote something called "Curing the Incurable." It was my favorite as a teenager; it gave me hope that perhaps one day I might make a discovery of my own.}}
+{{dialogue|Fang|indent=true|reward={{NPC2|Fang|rp=1}}|The author was known for his wild experiments... In the end, he poisoned himself with one of his own medicines. He could find no one willing to test his newest experiment, and tested it on himself. A cautionary tale.}}
+
+:*''You should be careful yourself...''
+:*''He was brave.''
+
+{{dialogue|Fang|indent=double|answer=You should be careful yourself...
+|Of course. I would never.}}
+{{dialogue|Player|indent=double|(It's nice to be able to rest and chat like this. What should I say?)}}
+
+::*''I'll bet you were a top student.''
+::*''Have you always picked herbs like this? Alone?''
+::*''(End Conversation)'' (No unique dialogue)
+
+{{dialogue|Fang|indent=3|answer=I'll bet you were a top student.
+|I was.}}
+{{dialogue|Fang|indent=3|I needed to succeed. But... this brought... complications.}}
+{{dialogue|Fang|indent=3|Lots of unwanted attention. Everyone wanted something.}}
+{{dialogue|Fang|indent=3|In the end, I preferred to be alone.}}
+{{dialogue|Fang|indent=3|answer=Have you always picked herbs like this? Alone?
+|X accompanies me. Always has. Always makes it better.}}
+{{dialogue|Fang|indent=3|Except once... He ate a fermented fruit and fainted.}}
+{{dialogue|Fang|indent=3|But not before the fermented sugar, now alcohol, "changed" him. He performed some rather insulting impressions of my colleagues at the time, tried some aerial tricks, then crashed into a tree.}}
+{{dialogue|Fang|indent=double|answer=He was brave.
+|Perhaps. But he was wrong.}}
+{{dialogue|Fang|indent=double|Brilliance and madness can be frighteningly close.}}
+{{dialogue|Player|indent=double|(It's nice to be able to rest and chat like this. What should I say?)}}
+
+::*''I'll bet you were a top student.''
+::*''Have you always picked herbs like this? Alone?''
+::*''(End Conversation)'' (No unique dialogue)
+
+{{dialogue|Fang|indent=3|answer=I'll bet you were a top student.
+|I was.}}
+{{dialogue|Fang|indent=3|I needed to succeed. But... this brought... complications.}}
+{{dialogue|Fang|indent=3|Lots of unwanted attention. Everyone wanted something.}}
+{{dialogue|Fang|indent=3|In the end, I preferred to be alone.}}
+{{dialogue|Fang|indent=3|answer=Have you always picked herbs like this? Alone?
+|X accompanies me. Always has. Always makes it better.}}
+{{dialogue|Fang|indent=3|Except once... He ate a fermented fruit and fainted.}}
+{{dialogue|Fang|indent=3|But not before the fermented sugar, now alcohol, "changed" him. He performed some rather insulting impressions of my colleagues at the time, tried some aerial tricks, then crashed into a tree.}}
+{{dialogue|Fang|indent=true|answer=I'll bet you were a top student.
+|I was.}}
+{{dialogue|Fang|indent=true|I needed to succeed. But... this brought... complications.}}
+{{dialogue|Fang|indent=true|Lots of unwanted attention. Everyone wanted something.}}
+{{dialogue|Fang|indent=true|In the end, I preferred to be alone.}}
+{{dialogue|Fang|indent=true|answer=Have you always picked herbs like this? Alone?
+|X accompanies me. Always has. Always makes it better.}}
+{{dialogue|Fang|indent=true|Except once... He ate a fermented fruit and fainted.}}
+{{dialogue|Fang|indent=true|But not before the fermented sugar, now alcohol, "changed" him. He performed some rather insulting impressions of my colleagues at the time, tried some aerial tricks, then crashed into a tree.}}
+
+TRIGGER Procedure 0.0 Step 17.2 Order 27 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 8) A conversation 8202_0 starts:
+{{dialogue|Fang|This has been the most pleasant end to a day of picking herbs... ever, for me.}}
+{{dialogue|Fang|Feels... better than even the first time.}}
+
+*''Something special about your first time picking herbs?''
+*''What do you mean?''
+
+{{dialogue|Fang|indent=true|answer=Something special about your first time picking herbs?
+|No...}}
+{{dialogue|Fang|I mean... the first time... I was with you. Somehow, this is better.}}
+{{dialogue|Fang|I look forward to many more firsts. And many more moments like this.}}
+{{dialogue|Fang|Even if we live something a thousand times, it will always feel like the first time to me.}}
+{{dialogue|Fang|reward={{NPC2|Fang|rp=1}}|Having you in my life... it's like a brand new day.}}
+
+*''I'll always be by your side, Fang.''
+*''I'm happy I make you feel that way.''
+
+{{dialogue|Fang|indent=true|answer=I'll always be by your side, Fang.
+|And I with you.}}
+{{dialogue|Fang|indent=true|answer=I'm happy I make you feel that way.
+|Only you could.}}
+{{dialogue|Fang|In the past, it's always been you who has helped me.}}
+{{dialogue|Fang|With these few days, I hoped to help you instead. Though, it could never amount to what you've done.}}
+{{dialogue|Fang|I will try to help more. And not take for granted... how giving you are.}}
+{{dialogue|Fang|reward={{NPC2|Fang|rp=1}}|Whatever difficulties may lie ahead, I will do my best to aid you.}}
+
+*''I'm certain our future will be bright.''
+*''Thank you in advance, then.''
+
+{{dialogue|Fang|indent=true|answer=I'm certain our future will be bright.
+|Yes. I'm certain, too.}}
+{{dialogue|Fang|indent=true|answer=Thank you in advance, then.
+|No need.}}
+
+TRIGGER Procedure 0.0 Step 17.3 Order 31 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 4) There is a conversation segment (id 23375) that ends:
+{{dialogue|Fang|I've been cooking more. Since... making Mapo Tofu.}}
+CONDITIONS
+Always:
+ACTIONS
+ACTION NPC SEND BEHAVIOUR EVENT1 || npc: 8000 | event: DramaIndex | type: Int | value: 3
+
+TRIGGER Procedure 0.0 Step 17.4 Order 33 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId: 4) There is a conversation segment (id 23393) that ends:
+{{dialogue|Fang|X accompanies me. Always has. Always makes it better.}}
+CONDITIONS
+Always:
+ACTIONS
+ACTION NPC SEND BEHAVIOUR EVENT1 || npc: 8000 | event: DramaIndex | type: Int | value: 2
+
+TRIGGER Procedure 0.0 Step 17.5 Order 34 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId: 4) There is a conversation segment (id 23394) that ends:
+{{dialogue|Fang|Except once... He ate a fermented fruit and fainted.}}
+CONDITIONS
+Always:
+ACTIONS
+ACTION NPC SEND BEHAVIOUR EVENT1 || npc: 8000 | event: DramaIndex | type: Int | value: 1
+
+TRIGGER Procedure 0.0 Step 19.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 85225
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 23411 starts:
+{{dialogue|Fang|A view like this... is rare...}}
+
+TRIGGER Procedure 0.0 Step 20.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 6048}}
+A cutscene CG_FIELD (duration: -2.0) starts playing
+Secret Garden - In the herb garden, Fang kissed me. The wind blew through the garden, and we shared a romantic moment amidst the plants.
+
+TRIGGER Procedure 0.0 Step 20.1 Order 28 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_FIELD | state: 3
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderPlayerDramaWithIndexEvent (idName: 8522002) from Player
+Remove behavior CommanderDramaWithIndexEvent (idName: 8522162) from Fang
+
+TRIGGER Procedure 0.0 Step 21.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_FIELD | state: 7
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: S8522_0_5 | sceneName: Main
+Remove behavior CommanderDramaWithIndexPlayer (idName: 8522002) from Player
+Fang stands still in Main and looks at Player
+X stops standing still
+
+TRIGGER Procedure 0.0 Step 24.0 Order 32 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 852261
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 8211_0 starts:
+{{dialogue|X|Welcome back! Welcome back! Hi! Hello!}}
+{{dialogue|Fang|Hello, X. Our trip was pleasant.}}
+{{dialogue|X|Didja hold hands? Didja kiss? Mwah mwah?}}
+{{dialogue|Fang|...We got the herbs.}}
+{{dialogue|X|Ooh! Got the herbs! Got the herbs! Good bird! Good bird!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 25.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8522422) to X
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8522_42_2|Delay:0)
+Add behavior CommanderMoveToFlagAndAction (idName: 8522166) to Fang
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8522_16_4|Delay:1.0|LookAtActor:8000)
+Add behavior CommanderMoveToFlagAndAction (idName: 8522006) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8522_0_4|Delay:0.0|LookAtActor:8016)
+X stops standing still
+Remove behavior CommanderDramaWithIndex (idName: 8522162) from Fang
+
+TRIGGER Procedure 0.0 Step 28.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8016 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 8212_0 starts:
+{{dialogue|Fang|Thank you for choosing to come with me today. It is a day I won't forget.}}
+{{dialogue|Fang|It is getting late... I hope you'll recall what we discussed and get a good night's rest tonight.}}
+{{dialogue|Fang|I wish you... sweet dreams.}}
+The conversation ends.
+Set 8522Finish to 1
+
+TRIGGER Procedure 0.0 Step 29.0 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8522003) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8522422) from X
+Remove behavior CommanderMoveToFlagAndAction (idName: 8522006) from Player
+X stops standing still
+Fang stops standing still
+Fang stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8522166) from Fang
+CAMERA PATH STOP ALL || 
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1800521
+
+TRIGGER Procedure 0.0 Step 30.0 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 8522Finish is == 1
+ACTIONS
+The player receives a letter:
+{{mail|831}}
+END MISSION 1800522
+
+TRIGGER Procedure 2.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) The player picks the first option in conversation segment 23376:
+{{dialogue|Fang|Still... these might taste bitter. Because of the medicine. But we must eat to keep our strength up.}}
+
+*''Maybe I'm just hungry, but I like it.'' (No unique dialogue)
+*''Mm, wormwoody goodness!'' (No unique dialogue)
+*''Yep, it's bad...'' (No unique dialogue)
+
+(cId 4) The player picks the second option in conversation segment 23376:
+{{dialogue|Fang|Still... these might taste bitter. Because of the medicine. But we must eat to keep our strength up.}}
+
+*''Maybe I'm just hungry, but I like it.'' (No unique dialogue)
+*''Mm, wormwoody goodness!'' (No unique dialogue)
+*''Yep, it's bad...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Fang gains 1 favor
+
+TRIGGER Procedure 2.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 23385) that ends:
+{{dialogue|Fang|The author was known for his wild experiments... In the end, he poisoned himself with one of his own medicines. He could find no one willing to test his newest experiment, and tested it on himself. A cautionary tale.}}
+
+*''You should be careful yourself...'' (No unique dialogue)
+*''He was brave.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Fang gains 1 favor
+
+TRIGGER Procedure 2.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 23402) that ends:
+{{dialogue|Fang|Having you in my life... it's like a brand new day.}}
+
+*''I'll always be by your side, Fang.'' (No unique dialogue)
+*''I'm happy I make you feel that way.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Fang gains 1 favor
+
+TRIGGER Procedure 2.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 23408) that ends:
+{{dialogue|Fang|Whatever difficulties may lie ahead, I will do my best to aid you.}}
+
+*''I'm certain our future will be bright.'' (No unique dialogue)
+*''Thank you in advance, then.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Fang gains 1 favor

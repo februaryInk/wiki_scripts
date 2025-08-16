@@ -1,0 +1,904 @@
+Reading Mission 1800399: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200112
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION END || order: 0 | missionEndResult: 1 | missionId: 1900377
+CONDITIONS
+Always:
+ACTIONS
+The special gift rule 43 for giving Heart Knot to Qi is disabled. The rule was:
+The gift is accepted with:
+{{dialogue|Qi|What is this? I don't understand.}}
+
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Hand-Foot Co-ordination is successfully completed
+IS MARRIAGE || isMarriage: 0
+CHECK DIALOG SELECTED INDEX || segmentId: 17210 | index: 2
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+Run mission #1800399
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800399
+CONDITIONS
+Always:
+ACTIONS
+Set 8399Day to 0
+Set 8399Finish to 0
+Set 8399Talk to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 46 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8007 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 8399079) from Qi
+END MISSION 1800399
+
+TRIGGER Procedure 0.0 Step 0.0 Order 47 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 83991
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Qi stands still in Main and looks at Player
+NPC ICON ADD || missionId: 1800399 | npc: 8007 | missionIcon: 6
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+When the time is 13:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Qi stops standing still
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+CHECK CURRENT SCENE || flag: 0 | name: Reservoir_Dungeon
+CHECK GLOBAL BLACKBOARD || key: 1200111 | info: 1 | exist: 0
+ACTIONS
+(cId 1) A conversation 5663_0, 5664_0 starts:
+{{dialogue|Qi|Ah, there you are. Give me your hand.}}
+{{dialogue|Qi|It's just a test. Do not be afraid.}}
+{{dialogue|Qi|It moved!}}
+{{dialogue|Qi|Yes! I felt it!}}
+{{dialogue|Qi|This feeling... deep inside me. Every time we touch...}}
+{{dialogue|Qi|Perhaps I should explain. When we danced the other day... I felt something, deep inside me. A type of... shock? Sudden and strong.}}
+The conversation ends.
+{{dialogue|Qi|Hence, I built this thermo-electronitron. It can measure a body's electronic impulse fluctuations. I have been checking for any irregularities over the last few days.}}
+
+*''It's probably just static electricity.''
+*{{flirt}}''Are you sure it's not... love?''
+
+{{dialogue|Qi|indent=true|answer=It's probably just static electricity.
+|I suppose that's a possibility... Static electricity is easily built up in dry environments such as this... However, it is puzzling. Why do I only feel the charges when I am with you?}}
+{{dialogue|Qi|indent=true|answer=Are you sure it's not... love?
+|My love of Science has not increased lately, and I have not had any complications before. I would expect that I would have increased impulses in the Research Center were that the case...}}
+{{dialogue|Qi|I need to do more tests. I will report back with conclusive results tomorrow.}}
+
+*''Uh huh... bye, then.''
+*{{flirt}}''I'll come and help you.''
+
+{{dialogue|Qi|indent=true|answer=I'll come and help you.
+|Hm... you wish to come with me? Perhaps that would be helpful. It would provide sufficient natural conditions for study. First we go to the Clinic. We need to check for bodily abnormalities.}}
+{{dialogue|Qi|...}}
+
+*''Sorry, I really don't care.''
+*{{flirt}}''Let me come with you!''
+*{{flirt}}''It sounds interesting. Let me come!''
+
+{{dialogue|Qi|indent=true|answer=Sorry, I really don't care.
+|I see. I thought, perhaps, you also felt this reaction. Seems it was just me... farewell, then.}}
+{{dialogue|Qi|indent=true|answer=Let me come with you!
+|Hm... you wish to come with me? Perhaps that would be helpful. It would provide sufficient natural conditions for study. First we go to the Clinic. We need to check for bodily abnormalities.}}
+{{dialogue|Qi|indent=true|answer=It sounds interesting. Let me come!
+|Hm... you wish to come with me? Perhaps that would be helpful. It would provide sufficient natural conditions for study. First we go to the Clinic. We need to check for bodily abnormalities.}}
+Set 8399Heart to 0
+Set 8399Go to 0
+
+TRIGGER Procedure 0.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Check if 8399Go is == 0
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Qi stops standing still
+
+TRIGGER Procedure 0.0 Step 9.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+(cId 2) After the conversation ends:
+CONDITIONS
+Check if 8399Go is == 1
+ACTIONS
+Qi stops standing still
+NPC ICON REMOVE || missionId: 1800399 | npc: 8007 | missionIcon: 6
+DELAY MASK SET || maskId: 83991 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER CREATE || flagName: kidintown9_trigger1 | missionId: 1800399 | id: 83991 | sceneName: Main | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+Set global blackboard key 1800399 with info 1.
+
+TRIGGER Procedure 0.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 18513:
+{{dialogue|Qi|I need to do more tests. I will report back with conclusive results tomorrow.}}
+
+*''Uh huh... bye, then.'' (No unique dialogue)
+*{{flirt}}''I'll come and help you.'' (No unique dialogue)
+
+(cId -1) The player picks the second option in conversation segment 18514:
+{{dialogue|Qi|...}}
+
+*''Sorry, I really don't care.'' (No unique dialogue)
+*{{flirt}}''Let me come with you!'' (No unique dialogue)
+*{{flirt}}''It sounds interesting. Let me come!'' (No unique dialogue)
+
+(cId -1) The player picks the third option in conversation segment 18514:
+{{dialogue|Qi|...}}
+
+*''Sorry, I really don't care.'' (No unique dialogue)
+*{{flirt}}''Let me come with you!'' (No unique dialogue)
+*{{flirt}}''It sounds interesting. Let me come!'' (No unique dialogue)
+
+(cId -1) The player picks the second option in conversation segment 18515:
+{{dialogue|Qi|Perhaps there is some sort of electrical leak from one of my machines... No, I have double checked that already...}}
+
+*''Uh huh... bye, then.'' (No unique dialogue)
+*{{flirt}}''I'll come and help you.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8399Go to 1
+The special gift rule 43 for giving Heart Knot to Qi is disabled. The rule was:
+The gift is accepted with:
+{{dialogue|Qi|What is this? I don't understand.}}
+
+Special gift rule 45 is set for giving Qi Heart Knot:
+The gift is accepted with:
+{{dialogue|Qi|Please, I am running some final tests. I will contact you soon when I have conclusive results.}}
+
+
+TRIGGER Procedure 0.0 Step 6.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+Check if 8399Go is == 0
+CHECK CURRENT SCENE || flag: 0 | name: Reservoir_Dungeon
+ACTIONS
+(cId 2) A conversation 5670_0 starts:
+{{dialogue|Qi|Perhaps there is some sort of electrical leak from one of my machines... No, I have double checked that already...}}
+
+*''Uh huh... bye, then.''
+*{{flirt}}''I'll come and help you.''
+
+{{dialogue|Qi|indent=true|answer=I'll come and help you.
+|Hm... you wish to come with me? Perhaps that would be helpful. It would provide sufficient natural conditions for study. First we go to the Clinic. We need to check for bodily abnormalities.}}
+{{dialogue|Qi|...}}
+
+*''Sorry, I really don't care.''
+*{{flirt}}''Let me come with you!''
+*{{flirt}}''It sounds interesting. Let me come!''
+
+{{dialogue|Qi|indent=true|answer=Sorry, I really don't care.
+|I see. I thought, perhaps, you also felt this reaction. Seems it was just me... farewell, then.}}
+{{dialogue|Qi|indent=true|answer=Let me come with you!
+|Hm... you wish to come with me? Perhaps that would be helpful. It would provide sufficient natural conditions for study. First we go to the Clinic. We need to check for bodily abnormalities.}}
+{{dialogue|Qi|indent=true|answer=It sounds interesting. Let me come!
+|Hm... you wish to come with me? Perhaps that would be helpful. It would provide sufficient natural conditions for study. First we go to the Clinic. We need to check for bodily abnormalities.}}
+
+TRIGGER Procedure 0.0 Step 7.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Check if 8399Go is == 0
+ACTIONS
+The special gift rule 45 for giving Heart Knot to Qi is disabled. The rule was:
+The gift is accepted with:
+{{dialogue|Qi|Please, I am running some final tests. I will contact you soon when I have conclusive results.}}
+
+The special gift rule 43 for giving Heart Knot to Qi is disabled. The rule was:
+The gift is accepted with:
+{{dialogue|Qi|What is this? I don't understand.}}
+
+NPC ICON REMOVE || missionId: 1800399 | npc: 8007 | missionIcon: 6
+CUTSCENE UI STATE EXIT || 
+Qi stops standing still
+END MISSION 1800399
+
+TRIGGER Procedure 0.0 Step 7.1 Order 45 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Check if 8399Go is == 0
+ACTIONS
+The special gift rule 45 for giving Heart Knot to Qi is disabled. The rule was:
+The gift is accepted with:
+{{dialogue|Qi|Please, I am running some final tests. I will contact you soon when I have conclusive results.}}
+
+The special gift rule 43 for giving Heart Knot to Qi is disabled. The rule was:
+The gift is accepted with:
+{{dialogue|Qi|What is this? I don't understand.}}
+
+NPC ICON REMOVE || missionId: 1800399 | npc: 8007 | missionIcon: 6
+Qi stops standing still
+END MISSION 1800399
+
+TRIGGER Procedure 0.0 Step 10.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83991 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Clinic | flagName: S8399_0_1
+CUTSCENE UI STATE EXIT || 
+DELAY MASK SET || maskId: 83991 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 11.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Clinic:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_clinic
+Check if X is in town
+Check if Fang is in town
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_clinic
+AREA TRIGGER DELETE || id: 23991
+
+TRIGGER Procedure 0.0 Step 12.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Clinic | flagName: S8399_0_1
+Qi stands still in Clinic and looks at Fang
+Fang stands still in Clinic and looks at Qi
+X stands still in Clinic and looks at Qi
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 13.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Clinic:
+CONDITIONS
+Leaving the Nest is in state 3 with flag 0
+Leaving the Nest is in state 4 with flag 0
+ACTIONS
+(cId 3) A conversation 5671_0 starts:
+{{dialogue|Fang|Healthy.}}
+{{dialogue|Qi|Impossible. But the electrical charges... Have you checked the thermo-electronitron?}}
+{{dialogue|Qi|This happened when I was with...}}
+{{dialogue|Qi|A friend.}}
+{{dialogue|X|Ooooh lovebirds! Mwa mwa mwa!}}
+{{dialogue|Qi|No, no. A human friend actually.}}
+{{dialogue|X|Mwa mwa mwa mwa!}}
+{{dialogue|Fang|''Player''. Ill?}}
+
+*''I'm fine.''
+*''I'm in love.''
+
+{{dialogue|X|indent=true|answer=I'm in love.
+|Oooh juicy! Who is it? Who is it, honey?}}
+{{dialogue|Qi|...I'm getting arrhythmia. I need to go outside.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 15.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Qi stops standing still
+X stops standing still
+Fang stops standing still
+DELAY MASK SET || maskId: 83992 | delayTime: 1 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 14.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Clinic:
+CONDITIONS
+GROUP 0:
+Leaving the Nest is successfully completed
+
+GROUP 1:
+Leaving the Nest has failed
+
+ACTIONS
+(cId 4) A conversation 5672_0 starts:
+{{dialogue|Fang|Your body, fine, very healthy.}}
+{{dialogue|Qi|Impossible. But the electrical charges... Have you checked the thermo-electronitron?}}
+{{dialogue|Qi|This happened when I was with...}}
+{{dialogue|Qi|A friend.}}
+{{dialogue|X|Ooooh lovebirds! Mwa mwa mwa!}}
+{{dialogue|Qi|No, no. A human friend actually.}}
+{{dialogue|X|Mwa mwa mwa mwa!}}
+{{dialogue|Fang|''Player'', here for checkup? How do you feel?}}
+
+*''I'm fine.''
+*''I'm in love.''
+
+{{dialogue|Qi|indent=true|answer=I'm fine.
+|Fine? Good.}}
+{{dialogue|X|indent=true|answer=I'm in love.
+|Who is it? Who is it? Who do you like?}}
+{{dialogue|Fang|indent=true|X. Do not bother them.}}
+{{dialogue|Qi|...I'm getting arrhythmia. I need to go outside.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 15.3 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Qi stops standing still
+(cId 5) A conversation 18535 starts:
+{{dialogue|Fang|He is fine. Very healthy.}}
+
+TRIGGER Procedure 0.0 Step 16.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83992 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8399_0_2
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 17.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Clinic to the Main:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 18.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Clinic to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Qi stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8399_0_2
+DELAY MASK SET || maskId: 83992 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 19.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83992 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 5677_0 starts:
+{{dialogue|Qi|Hmmm seems we are finished at the Clinic. I have another hypothesis...}}
+
+*''You're acting kind of weird.''
+*{{flirt}}''It's because of me, isn't it?''
+
+{{dialogue|Qi|indent=true|answer=You're acting kind of weird.
+|You think I'm acting odd? I do feel odd right now. Perhaps all great scientists have this feeling just before they make a significant discovery.}}
+{{dialogue|Qi|indent=true|answer=It's because of me, isn't it?
+|No, it is statistically unlikely. I believe there to be a 0.2% probability of you being the cause. An outlier...}}
+
+:*''Right...''
+:*{{flirt}}''You want it to be that 0.2%, don't you?''
+
+{{dialogue|Qi|indent=double|answer=Right...
+|I need to do more calculations...}}
+{{dialogue|Qi|indent=double|answer=You want it to be that 0.2%, don't you?
+|I'm a researcher. I deal with truth, not wishes.}}
+{{dialogue|Qi|I shouldn't jump to conclusions like this. I'll do some further analysis and get back to you tomorrow.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 20.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Qi stops standing still
+AREA TRIGGER ONCE CREATE || missionId: 1800399 | id: 83991 | sceneName: Main | flagName: Trigger_83991 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 20.2 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 83991
+
+TRIGGER Procedure 0.0 Step 21.0 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | id: 83991 | enter: 0 | npc: 8000
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 83992 | delayTime: 1 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 22.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83992 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8399_0_3
+Vivi stands still in Main and looks at Qi
+Qi stands still in Main and looks at Vivi
+DELAY MASK SET || maskId: 83992 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 23.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 83992
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 18542, 18543, 18544 starts:
+{{dialogue|Vivi|I never heard of static electricity having that effect. I have experience. I can't tell you how often I get shocked working with Yakmel fur...}}
+{{dialogue|Qi|Hmmm... Static electricity is common in Sandrock's climate, it is possible... but you're right. It's unlikely.}}
+{{dialogue|Vivi|Right. Now, are you going to finally buy some clean clothes?}}
+
+TRIGGER Procedure 0.0 Step 24.0 Order 25 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Vivi stops standing still
+Qi stops standing still
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 30.2 Order 26 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Special gift rule 43 is set for giving Qi Heart Knot:
+The gift is accepted with:
+{{dialogue|Qi|What is this? I don't understand.}}
+
+The special gift rule 45 for giving Heart Knot to Qi is disabled. The rule was:
+The gift is accepted with:
+{{dialogue|Qi|Please, I am running some final tests. I will contact you soon when I have conclusive results.}}
+
+
+TRIGGER Procedure 0.0 Step 31.0 Order 27 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Check if 8399Heart is == 1
+ACTIONS
+Qi stands still in Main and looks at Player
+NPC ICON ADD || missionId: 1800399 | npc: 8007 | missionIcon: 6
+
+TRIGGER Procedure 0.0 Step 32.0 Order 29 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+When the time is 13:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Qi stops standing still
+
+TRIGGER Procedure 0.0 Step 33.0 Order 28 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: 1200111 | info: 1 | exist: 0
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+(cId 8) A conversation 5682_0 starts:
+{{dialogue|Qi|Ah. Here you are. I need to inform you of my conclusions.}}
+{{dialogue|Qi|After careful analysis, it seems that in fact, I... like you.}}
+
+*''Can you prove your hypothesis?''
+*''Sorry, I don't feel the same.''
+*{{flirt}}''I like you too!''
+
+{{dialogue|Qi|indent=true|answer=Sorry, I don't feel the same.
+|Ah. Perhaps I was mistaken... Electro-magnetism? No... Ley-lines? Come on, Qi. You're grasping at straws now.}}
+{{dialogue|Qi|indent=true|answer=I like you too!
+|Hear me out. I did not jump to any conclusions, quite the contrary, in fact... Wait! Did you say you feel the same?!}}
+{{dialogue|Qi|indent=true|That's fantastic! Seems that my calculations are correct after all! Let me tell you how I was able to prove that statement.}}
+{{dialogue|Qi|indent=true|I made three, no, four hypotheses after I got shocked.}}
+{{dialogue|Qi|indent=true|First hypothesis was electrical leakage at the Research Center. This was proven to be false through my detector.}}
+{{dialogue|Qi|indent=true|What I did first was to turn my thermo-electronitron to 100 volts and test all possible nodes at the Center. Then I changed it to 1000 volts and tried again... Anyways, the result was that there was no leakage at the Research Center.}}
+{{dialogue|Qi|indent=true|The second hypothesis was that the "shock" was caused by a condition in my heart. However, I should have been getting stronger lately due to my training for the Mobile Suit.}}
+{{dialogue|Qi|indent=true|My heart rate did not deviate from my regular 120 beats per minute, average for someone with a caffeine consumption as high as mine. Besides, the doctor's diagnosis also said I was healthy. Thus the second hypothesis was false.}}
+{{dialogue|Qi|indent=true|The third hypothesis was that the shock came from static electricity due to physical contact. My investigation of static shock at Vivi's showed me that the shock I experienced was completely different.}}
+{{dialogue|Qi|indent=true|Which means the truth should be my fourth hypothesis. That is, it's a reaction caused by my proximity with the one I like. Another piece of information I received was the statement from you, that you like me too!}}
+
+:*''Will you just hug me already?''
+:*''Woah, I meant "like" you as a friend...''
+
+{{dialogue|Qi|indent=double|answer=Will you just hug me already?
+|Yes, of course.}}
+{{dialogue|Qi|indent=double|I remember the thrill I had when I was able to complete a research essay in a single day on the dynamics of a two-body problem. But that amount of excitement is only a fraction of how I feel right now!}}
+{{dialogue|Qi|indent=double|answer=Woah, I meant "like" you as a friend...
+|Ah. Perhaps I was mistaken... Electro-magnetism? No... Ley-lines? Come on, Qi. You're grasping at straws now.}}
+{{dialogue|Qi|That's right. Let me tell you how I came to this conclusion.}}
+{{dialogue|Qi|I made three, no, four hypotheses after I got shocked.}}
+{{dialogue|Qi|First hypothesis was electrical leakage at the Research Center. This was proven to be false through my detector.}}
+{{dialogue|Qi|What I did first was to turn my thermo-electronitron to 100 volts and test all possible nodes at the Center. Then I changed it to 1000 volts and tried again... Anyways, the result was that there was no leakage at the Research Center.}}
+{{dialogue|Qi|The second hypothesis was that the "shock" was caused by a condition in my heart. However, I should have been getting stronger lately due to my training for the Mobile Suit.}}
+{{dialogue|Qi|My heart rate did not deviate from my regular 120 beats per minute, average for someone with a caffeine consumption as high as mine. Besides, the doctor's diagnosis also said I was healthy. Thus the second hypothesis was false.}}
+{{dialogue|Qi|The third hypothesis was that the shock came from static electricity due to physical contact. My investigation of static shock at Vivi's showed me that the shock I experienced was completely different.}}
+{{dialogue|Qi|Which means the truth should be my fourth hypothesis. That is, it's a reaction caused by my proximity with the one I like.}}
+{{dialogue|Qi|There are also some phenomena that couldn't be explained by a simple electric shock. Yet, they would make sense if I put "I like you" as a premise. For example, my heart rate could reach 140 beats per minute when you're around me.}}
+
+*''I'm not convinced. Anything else?''
+*''I think I understand.''
+
+{{dialogue|Qi|indent=true|answer=I think I understand.
+|That is my conclusion thus far. ''Player''... what do you think?}}
+
+:*''I feel the same about you!''
+:*''Sorry, I only see you as a friend.''
+
+{{dialogue|Qi|indent=double|answer=I feel the same about you!
+|That's fantastic! Seems that my calculations are correct after all!}}
+{{dialogue|Qi|indent=double|I remember the thrill I had when I was able to complete a research essay in a single day on the dynamics of a two-body problem. But that excitement is only a fraction of how I feel right now!}}
+{{dialogue|Qi|indent=double|As such, starting today, I am officially your "boyfriend." I will continue my studies into what exactly that entails.}}
+{{dialogue|Qi|indent=double|answer=Sorry, I only see you as a friend.
+|Ah. Perhaps I was mistaken... Electro-magnetism? No... Ley-lines? Come on, Qi. You're grasping at straws now.}}
+{{dialogue|Qi|Yes. Another one would be that I become unable to work when my mind is filled with you. I had to force any thoughts of you out of my mind before I can concentrate. Yet somehow, my work efficiency greatly increases when you're near. That's odd.}}
+
+*''Still not enough.''
+*''I think I understand.''
+
+{{dialogue|Qi|indent=true|answer=Still not enough.
+|That's all my research thus far. Love is a new field for me. I don't have any published papers. If you give me a chance, I will surely gain enough experience to publish a new thesis.}}
+
+:*''I feel the same about you!''
+:*''Sorry, I only see you as a friend.''
+
+{{dialogue|Qi|indent=double|answer=I feel the same about you!
+|That's fantastic! Seems that my calculations are correct after all!}}
+{{dialogue|Qi|indent=double|I remember the thrill I had when I was able to complete a research essay in a single day on the dynamics of a two-body problem. But that excitement is only a fraction of how I feel right now!}}
+{{dialogue|Qi|indent=double|As such, starting today, I am officially your "boyfriend." I will continue my studies into what exactly that entails.}}
+{{dialogue|Qi|indent=double|answer=Sorry, I only see you as a friend.
+|Ah. Perhaps I was mistaken... Electro-magnetism? No... Ley-lines? Come on, Qi. You're grasping at straws now.}}
+{{dialogue|Qi|indent=true|answer=I think I understand.
+|That is my conclusion thus far. ''Player''... what do you think?}}
+
+:*''I feel the same about you!''
+:*''Sorry, I only see you as a friend.''
+
+{{dialogue|Qi|indent=double|answer=I feel the same about you!
+|That's fantastic! Seems that my calculations are correct after all!}}
+{{dialogue|Qi|indent=double|I remember the thrill I had when I was able to complete a research essay in a single day on the dynamics of a two-body problem. But that excitement is only a fraction of how I feel right now!}}
+{{dialogue|Qi|indent=double|As such, starting today, I am officially your "boyfriend." I will continue my studies into what exactly that entails.}}
+{{dialogue|Qi|indent=double|answer=Sorry, I only see you as a friend.
+|Ah. Perhaps I was mistaken... Electro-magnetism? No... Ley-lines? Come on, Qi. You're grasping at straws now.}}
+NPC ICON REMOVE || missionIcon: 6 | npc: 8007 | missionId: 1800399
+Set 8399Hug to 0
+
+TRIGGER Procedure 0.0 Step 35.0 Order 30 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) After the conversation ends:
+CONDITIONS
+Check if 8399Hug is == 1
+ACTIONS
+The player interacts (type 2, option 0) with Qi
+
+TRIGGER Procedure 0.0 Step 40.0 Order 33 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) After the conversation ends:
+CONDITIONS
+Check if 8399Hug is <= (maybe?) 1
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Qi stops standing still
+The special gift rule 43 for giving Heart Knot to Qi is disabled. The rule was:
+The gift is accepted with:
+{{dialogue|Qi|What is this? I don't understand.}}
+
+The special gift rule 45 for giving Heart Knot to Qi is disabled. The rule was:
+The gift is accepted with:
+{{dialogue|Qi|Please, I am running some final tests. I will contact you soon when I have conclusive results.}}
+
+
+TRIGGER Procedure 0.0 Step 34.0 Order 31 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) The player picks the first option in conversation segment 18556:
+{{dialogue|Qi|Which means the truth should be my fourth hypothesis. That is, it's a reaction caused by my proximity with the one I like. Another piece of information I received was the statement from you, that you like me too!}}
+
+*''Will you just hug me already?'' (No unique dialogue)
+*''Woah, I meant "like" you as a friend...'' (No unique dialogue)
+
+(cId 8) The player picks the first option in conversation segment 18569:
+{{dialogue|Qi|That's all my research thus far. Love is a new field for me. I don't have any published papers. If you give me a chance, I will surely gain enough experience to publish a new thesis.}}
+
+*''I feel the same about you!'' (No unique dialogue)
+*''Sorry, I only see you as a friend.'' (No unique dialogue)
+
+(cId 8) The player picks the first option in conversation segment 18570:
+{{dialogue|Qi|That is my conclusion thus far. ''Player''... what do you think?}}
+
+*''I feel the same about you!'' (No unique dialogue)
+*''Sorry, I only see you as a friend.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8399Hug to 1
+
+TRIGGER Procedure 0.0 Step 36.0 Order 32 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON INTERACTIVE EXIT || order: 0 | instID: 8007
+CONDITIONS
+Always:
+ACTIONS
+Qi gains 20 favor
+NPC DO CONFESSION || npc: 8007
+Qi stops standing still
+CUTSCENE UI STATE EXIT || 
+The special gift rule 43 for giving Heart Knot to Qi is disabled. The rule was:
+The gift is accepted with:
+{{dialogue|Qi|What is this? I don't understand.}}
+
+Add behavior CommanderNPCAction (idName: 8399079) to Qi
+(param: CMDAction:StandThink|LookAtActor:8000)
+The special gift rule 45 for giving Heart Knot to Qi is disabled. The rule was:
+The gift is accepted with:
+{{dialogue|Qi|Please, I am running some final tests. I will contact you soon when I have conclusive results.}}
+
+
+TRIGGER Procedure 0.0 Step 41.0 Order 34 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON ADD || missionIcon: 6 | missionId: 1800399 | npc: 8007
+
+TRIGGER Procedure 0.0 Step 42.0 Order 35 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+Always:
+ACTIONS
+(cId 11) A conversation 5691_0 starts:
+{{dialogue|Qi|It appears the feelings were not an alternating current. It is simply... unidirectional.}}
+
+*''What's an "alternating current?"''
+*''Sorry... catch you around...''
+
+{{dialogue|Qi|indent=true|answer=What's an "alternating current?"
+|...I'm sorry, I am in no mood for science right now...}}
+{{dialogue|Qi|indent=true|No. What am I saying? Alternating currents are often in sinusoidal wave forms. Hm... A sine wave. Apt for my feelings currently...}}
+{{dialogue|Qi|indent=true|answer=Sorry... catch you around...
+|You do not wish to talk to me right now? Even... about science?}}
+NPC ICON REMOVE || missionId: 1800399 | npc: 8007 | missionIcon: 6
+
+TRIGGER Procedure 0.0 Step 43.0 Order 36 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON REMOVE || missionId: 1800399 | npc: 8007 | missionIcon: 6
+NPC ICON ADD || missionIcon: 6 | missionId: 1800399 | npc: 8007
+
+TRIGGER Procedure 0.0 Step 44.0 Order 38 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+Always:
+ACTIONS
+(cId 12) A conversation 18579 starts:
+{{dialogue|Qi|It appears love is not a science that I am suited to research. I will focus my studies elsewhere.}}
+NPC ICON REMOVE || missionId: 1800399 | npc: 8007 | missionIcon: 6
+
+TRIGGER Procedure 0.0 Step 45.0 Order 37 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON REMOVE || missionId: 1800399 | npc: 8007 | missionIcon: 6
+NPC ICON ADD || missionIcon: 6 | missionId: 1800399 | npc: 8007
+
+TRIGGER Procedure 0.0 Step 46.0 Order 40 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+Always:
+ACTIONS
+(cId 12) A conversation 18580 starts:
+{{dialogue|Qi|Perhaps this feeling can push me further into my work. I suppose this has been the drive for many great scientists.}}
+NPC ICON REMOVE || missionId: 1800399 | npc: 8007 | missionIcon: 6
+
+TRIGGER Procedure 0.0 Step 47.0 Order 39 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON REMOVE || missionId: 1800399 | npc: 8007 | missionIcon: 6
+END MISSION 1800399
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 18510:
+{{dialogue|Qi|Hence, I built this thermo-electronitron. It can measure a body's electronic impulse fluctuations. I have been checking for any irregularities over the last few days.}}
+
+*''It's probably just static electricity.'' (No unique dialogue)
+*{{flirt}}''Are you sure it's not... love?'' (No unique dialogue)
+
+(cId -1) The player picks the second option in conversation segment 18513:
+{{dialogue|Qi|I need to do more tests. I will report back with conclusive results tomorrow.}}
+
+*''Uh huh... bye, then.'' (No unique dialogue)
+*{{flirt}}''I'll come and help you.'' (No unique dialogue)
+
+(cId -1) The player picks the second option in conversation segment 18515:
+{{dialogue|Qi|Perhaps there is some sort of electrical leak from one of my machines... No, I have double checked that already...}}
+
+*''Uh huh... bye, then.'' (No unique dialogue)
+*{{flirt}}''I'll come and help you.'' (No unique dialogue)
+
+(cId -1) The player picks the third option in conversation segment 18514:
+{{dialogue|Qi|...}}
+
+*''Sorry, I really don't care.'' (No unique dialogue)
+*{{flirt}}''Let me come with you!'' (No unique dialogue)
+*{{flirt}}''It sounds interesting. Let me come!'' (No unique dialogue)
+
+(cId -1) The player picks the second option in conversation segment 18536:
+{{dialogue|Qi|Hmmm seems we are finished at the Clinic. I have another hypothesis...}}
+
+*''You're acting kind of weird.'' (No unique dialogue)
+*{{flirt}}''It's because of me, isn't it?'' (No unique dialogue)
+
+(cId -1) The player picks the second option in conversation segment 18537:
+{{dialogue|Qi|No, it is statistically unlikely. I believe there to be a 0.2% probability of you being the cause. An outlier...}}
+
+*''Right...'' (No unique dialogue)
+*{{flirt}}''You want it to be that 0.2%, don't you?'' (No unique dialogue)
+
+(cId -1) The player picks the third option in conversation segment 18547:
+{{dialogue|Qi|After careful analysis, it seems that in fact, I... like you.}}
+
+*''Can you prove your hypothesis?'' (No unique dialogue)
+*''Sorry, I don't feel the same.'' (No unique dialogue)
+*{{flirt}}''I like you too!'' (No unique dialogue)
+
+(cId -1) The player picks the second option in conversation segment 18514:
+{{dialogue|Qi|...}}
+
+*''Sorry, I really don't care.'' (No unique dialogue)
+*{{flirt}}''Let me come with you!'' (No unique dialogue)
+*{{flirt}}''It sounds interesting. Let me come!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8399Heart to 1
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment 8399Day by 1
+
+TRIGGER Procedure 3.0 Step 1.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 18545) that ends:
+{{dialogue|Qi|Please, I am running some final tests. I will contact you soon when I have conclusive results.}}
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Heart Knot of Default quality (Notify player)
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PLAYER MARRIAGE || order: 0 | id: 8007
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 83991
+NPC ICON REMOVE || missionId: 1800399 | npc: 8007 | missionIcon: 6
+The special gift rule 45 for giving Heart Knot to Qi is disabled. The rule was:
+The gift is accepted with:
+{{dialogue|Qi|Please, I am running some final tests. I will contact you soon when I have conclusive results.}}
+
+Qi stops standing still
+The special gift rule 43 for giving Heart Knot to Qi is disabled. The rule was:
+The gift is accepted with:
+{{dialogue|Qi|What is this? I don't understand.}}
+
+Qi stops standing still
+END MISSION 1800399

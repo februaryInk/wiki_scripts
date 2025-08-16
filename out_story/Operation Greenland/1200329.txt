@@ -1,0 +1,185 @@
+Reading Mission 1200329: Operation Greenland
+
+<onlyinclude>{{Infobox mission
+|name = Operation Greenland
+|image =
+|description = The Mobile Suit is now ready to help with planting. Use it in the Outback to greatly improve the speed of reforestation.
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 5500
+|reputation = 30
+|gols = 4000
+|npc1 = Qi
+|rp1 = 10
+|npc2 = Zeke
+|rp2 = 10
+|npc3 = Trudy
+|rp3 = 10
+|npc4 = Nia
+|rp4 = 10
+|npc5 = Mi-an
+|rp5 = 10
+|rewards = {{i2|Future Kamel Rider Boots}|1}
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200310
+
+TRIGGER Procedure 9.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+I am Gungam! is in state 2 with flag 1
+
+GROUP 10:
+I am Gungam! is successfully completed
+
+ACTIONS
+Run mission #1800335
+
+TRIGGER Procedure 9.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+I am Gungam! is successfully completed
+ACTIONS
+Run mission Operation Greenland
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+CHECK WEATHER STATE || weather: 0 | flag: 1
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+Trudy stands still in Main
+Set CHOICE to 0
+DELIVER MISSION 1200329
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+SCENEITEM DELETE || itemType: 0 | id: 23181
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 4191_0 starts:
+{{dialogue|Trudy|''Player'', all the preparations are complete, everyone's in the Outback, let's head there together and we can start planting!}}
+
+*''Great let's go!''
+*''I'm not ready yet...''
+
+{{dialogue|Trudy|indent=true|answer=Great let's go!
+|Let's head out!}}
+{{dialogue|Trudy|indent=true|answer=I'm not ready yet...
+|Okay, I'll head there first, then. Take your time, and come when you're ready!}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the second option in conversation segment 14157:
+{{dialogue|Trudy|''Player'', all the preparations are complete, everyone's in the Outback, let's head there together and we can start planting!}}
+
+*''Great let's go!'' (No unique dialogue)
+*''I'm not ready yet...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 1
+Set global blackboard key 1200329 with info 1.
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+Add behavior CommanderTeleport (idName: 23291) to Trudy
+(param: TargetScene:Main|TargetFlag:greenbaby_square_fang1|Delay:3)
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8006 | behaviourName: CommanderTeleport | eventName: Teleported
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Trudy stops standing still
+Remove behavior CommanderTeleport (idName: 23291) from Trudy
+START MISSION 1200329
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200329
+CONDITIONS
+Always:
+ACTIONS
+Run mission Operation Greenland
+END MISSION 1200329
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 0
+ACTIONS
+DELAY MASK SET || maskId: 23291 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23291 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 23291 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+PLAYER SET POS ROT FLAG || sceneName: DesertOutback | flagName: successplant_player
+Trudy stops standing still
+CUTSCENE UI STATE EXIT || 
+Run mission Operation Greenland
+END MISSION 1200329
+
+==Rewards==
+{{mission reward
+|npc1 = Qi
+|rp1 = 10
+|npc2 = Zeke
+|rp2 = 10
+|npc3 = Trudy
+|rp3 = 10
+|npc4 = Nia
+|rp4 = 10
+|npc5 = Mi-an
+|rp5 = 10
+|exp = 5500
+|reputation = 30
+|gols = 4000
+|rewards = {{i2|Future Kamel Rider Boots}|1}
+}}

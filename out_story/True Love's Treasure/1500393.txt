@@ -1,0 +1,665 @@
+Reading Mission 1500393: True Love's Treasure
+
+<onlyinclude>{{Infobox mission
+|name = True Love's Treasure
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from True Love's Treasure:
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 539210) There is a conversation segment (id 19635) that ends:
+{{dialogue|Logan|Huh? I am? I thought I was bein'... y'know, smooth...}}
+CONDITIONS
+Always:
+ACTIONS
+(cId 539211) A conversation 6171_0 starts:
+{{dialogue|Logan|Ahem... Anyway. There's a treasure map, wanna come check it out? W-with... me?}}
+
+*''Of course!''
+*''I'm kind of busy...''
+
+{{dialogue|Logan|indent=true|answer=Of course!
+|Alright, I got the map with me. We can set off right away.}}
+{{dialogue|Logan|indent=true|answer=I'm kind of busy...
+|No worries, I'll wait 'til you got a bit of time then we can look for the treasure together.}}
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 19640) that ends:
+{{dialogue|Logan|Alright, I got the map with me. We can set off right away.}}
+CONDITIONS
+Always:
+ACTIONS
+Logan stops standing still
+CUTSCENE UI STATE EXIT || 
+START MISSION 1500392
+===Seek the Treasure===
+
+{{mission_details
+|desc = Follow the map and find the treasure with Logan.
+|details = Seek the Treasure
+}}
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8011 | state: Defense
+Run mission True Love's Treasure
+END MISSION 1500392
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1500393
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1500392 | id: 539301 | sceneName: Main | flagName: Story_5393_Area | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80031283
+Set choose to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 539301
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 539301 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8011
+AREA TRIGGER DELETE || id: 539301
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 539301 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Logan stands still in Main
+Andy stands still in Main
+Jasmine stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: Story_5393_Player
+DELAY MASK SET || maskId: 539301 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+SCENEITEM CREATE FLAG || itemType: 0 | id: 539303 | path: Mission_RemoteControl1 | sceneName: Main | flagName: Story_5393_Item | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 539301 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 539301) A conversation 19644 starts:
+{{dialogue|Logan|I think we're here...at least that's what the map says. Lemme see... let's dig around.}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 539301) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 5393001) to Player
+(param: CMDAction:Stone_1)
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 539303
+SCENEITEM CREATE FLAG || itemType: 0 | id: 539301 | path: Mission_RemoteControl | sceneName: Main | flagName: Story_5393_Item | extraParams: 0
+STOPWATCH REAL TIME SET || id: 539301 | sec: 1
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 539301
+CONDITIONS
+Always:
+ACTIONS
+(cId 539302) A conversation 19645 starts:
+{{dialogue|Logan|Looks like... there's a box.}}
+
+TRIGGER Procedure 0.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8011 | cId: 539302 | missionId: 1500393
+CONDITIONS
+Always:
+ACTIONS
+(cId 539303) A conversation 6128_0 starts:
+{{dialogue|Logan|Wha...?}}
+
+*''Looks like a remote control.''
+*''What do you think it is?''
+
+{{dialogue|Logan|indent=true|answer=Looks like a remote control.
+|...Yeah, looks like it is...}}
+{{dialogue|Logan|indent=true|answer=What do you think it is?
+|Huh... shouldn't it be like, gems or somethin'?}}
+
+TRIGGER Procedure 0.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8011 | cId: 539303 | missionId: 1500393
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCActionLoop (idName: 5393002) to Logan
+(param: CMDAction:LookAround)
+STOPWATCH REAL TIME SET || id: 539302 | sec: 3
+
+TRIGGER Procedure 0.0 Step 10.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 539302
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCActionLoop (idName: 5393002) from Logan
+(cId 539304) A conversation 19651 starts:
+{{dialogue|Logan|Looks like there ain't anythin' else... maybe we can try it out?}}
+
+TRIGGER Procedure 0.0 Step 11.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8011 | cId: 539304 | missionId: 1500393
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 5393003) to Player
+(param: CMDAction:Story_Switch)
+STOPWATCH REAL TIME SET || id: 539304 | sec: 3
+
+TRIGGER Procedure 0.0 Step 12.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 539304
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 539302 | path: Mission_GearBalloonBox | sceneName: Main | flagName: showdown_main | extraParams: 0
+STOPWATCH REAL TIME SET || id: 539305 | sec: 1
+
+TRIGGER Procedure 0.0 Step 13.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 539305
+CONDITIONS
+Always:
+ACTIONS
+GEAR TRIGGER TRIGGER || id: 1500393 | scene: Main
+STOPWATCH REAL TIME SET || id: 539306 | sec: 8
+STOPWATCH REAL TIME SET || sec: 13 | id: 539307
+
+TRIGGER Procedure 0.0 Step 14.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 539306
+CONDITIONS
+Always:
+ACTIONS
+(cId 539305) A conversation 19652 starts:
+{{dialogue|Andy|Oh no! It's blowing away!}}
+Add behavior CommanderNPCAction (idName: 5393004) to Logan
+(param: CMDAction:Shoot)
+
+TRIGGER Procedure 0.0 Step 14.5 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 539307
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 5393009) to Logan
+(param: TargetScene:Main|MoveMode:Run|FlagName:Story_539306)
+
+TRIGGER Procedure 0.0 Step 15.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8011 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 5393009) from Logan
+Add behavior CommanderMoveToFlagAndAction (idName: 5393005) to Logan
+(param: TargetScene:Main|MoveMode:Run|FlagName:Story_539304)
+Add behavior CommanderMoveToFlagAndAction (idName: 5393006) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:Story_5393_Player1)
+
+TRIGGER Procedure 0.0 Step 16.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 539310000 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 539306) A conversation 19653 starts:
+{{dialogue|Logan|Phew... that was close...}}
+
+TRIGGER Procedure 0.0 Step 17.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8011 | cId: 539306 | missionId: 1500393
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 5393007) to Logan
+(param: TargetScene:Main|MoveMode:Run|FlagName:Story_539305)
+
+TRIGGER Procedure 0.0 Step 17.0 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8011 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 5393100) to Logan
+(param: CMDAction:GetGift)
+DELAY MASK SET || maskId: 539310000 | delayTime: 1 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 17.0 Order 25 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 539310000 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 539310000 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Remove behavior CommanderNPCAction (idName: 5393100) from Logan
+SCENEITEM DELETE || itemType: 0 | id: 539302
+SCENEITEM CREATE FLAG || itemType: 0 | id: 539330 | path: Mission_GearBalloonBox1 | sceneName: Main | flagName: showdown_main | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 19.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8011 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 539307) A conversation 19654, 19655 starts:
+{{dialogue|Logan|Darlin', I got something to tell ya.}}
+{{dialogue|Logan|Ever since I met you, it's been like a...}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8011 | cId: 539307 | missionId: 1500393
+CONDITIONS
+Always:
+ACTIONS
+(cId 539308) A conversation 19656, 19657, 19658 starts:
+{{dialogue|Logan|...This ain't me. I'm not one for these prepared speeches or nothin'. Hon', listen to me, I gonna talk from my heart.}}
+{{dialogue|Logan|I love you. I've thought a thousand times what would happen if I ever left you... but I just can't imagine life without you.}}
+{{dialogue|Logan|I wanna spend the rest of my life with you.}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8011 | cId: 539308 | missionId: 1500393
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderDrama (idName: 5393008) to Logan
+(param: TargetScene:Main|DramaName:Story_5393_Logan|DramaType:Propose|TargetFlag:Story_539305)
+STOPWATCH REAL TIME SET || id: 539308 | sec: 5
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 539308
+CONDITIONS
+Always:
+ACTIONS
+(cId 539309) A conversation 6131_0 starts:
+{{dialogue|Logan|''Player'', will you marry me?}}
+
+*''Of course I will!''
+*''I'm sorry...''
+
+{{dialogue|Logan|indent=true|answer=Of course I will!
+|You will?!}}
+{{dialogue|Logan|indent=true|answer=I'm sorry...
+|I understand... We gotta take time. I don't wanna push you into somethin' you don't want. I hope this little treasure hunt wasn't too... borin'.}}
+{{dialogue|Logan|indent=true|C'mon, let's head back.}}
+Set choose to 0
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 539309) There is a conversation segment (id 19663) that ends:
+{{dialogue|Logan|C'mon, let's head back.}}
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 539330
+Logan stops standing still
+Remove behavior CommanderPlayerAction (idName: 5393001) from Player
+Remove behavior CommanderNPCActionLoop (idName: 5393002) from Logan
+Remove behavior CommanderNPCAction (idName: 5393004) from Logan
+Remove behavior CommanderPlayerAction (idName: 5393003) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 5393005) from Logan
+Remove behavior CommanderMoveToFlagAndAction (idName: 5393006) from Player
+Remove behavior CommanderDrama (idName: 5393008) from Logan
+Remove behavior CommanderMoveToFlagAndAction (idName: 5393007) from Logan
+Remove behavior CommanderMoveToFlagAndAction (idName: 5393009) from Logan
+SCENEITEM DELETE || itemType: 0 | id: 539302
+SCENEITEM DELETE || itemType: 0 | id: 539301
+CUTSCENE UI STATE EXIT || 
+UNLOCK NPC MARRIAGE || npc: 8011
+STOPWATCH REAL TIME SET || id: 1500393 | sec: 10
+SUBMIT MISSION 1500392
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 539308) The player picks the second option in conversation segment 19659:
+{{dialogue|Logan|''Player'', will you marry me?}}
+
+*''Of course I will!'' (No unique dialogue)
+*''I'm sorry...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderDrama (idName: 5393008) from Logan
+Set choose to 2
+
+TRIGGER Procedure 1.0 Step 5.1 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 1500393
+CONDITIONS
+Always:
+ACTIONS
+Jasmine stops standing still
+Andy stops standing still
+
+TRIGGER Procedure 1.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 539309) The player picks the first option in conversation segment 19659:
+{{dialogue|Logan|''Player'', will you marry me?}}
+
+*''Of course I will!'' (No unique dialogue)
+*''I'm sorry...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 539310) A conversation 19665 starts:
+{{dialogue|Logan|These last few days... I've been goin' over it over an' over this plan... Jasmine an' Andy helped me set it all up...}}
+Set choose to 1
+
+TRIGGER Procedure 1.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8011 | cId: 539310 | missionId: 1500393
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderDrama (idName: 5393008) from Logan
+(cId 539311) A conversation 19666, 19667 starts:
+{{dialogue|Logan|Haha, they had a bunch more plans... but I couldn't wait. Seein' you in front of me like that...}}
+{{dialogue|Logan|I wanna spend the rest of my days with you. It's been in my mind a while, an' it's finally real...}}
+
+TRIGGER Procedure 1.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 539311) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 8021}}
+A cutscene CG_LOGANHAPPY (duration: -2.0) starts playing
+True Love's Treasure - Logan conceived a pretty elaborate plan to propose to me; it was a truly heartwarming moment.
+
+TRIGGER Procedure 1.0 Step 10.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_LOGANHAPPY | state: 7
+CONDITIONS
+Always:
+ACTIONS
+Logan stands still in Main
+Andy stands still in Main
+Jasmine stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+
+TRIGGER Procedure 1.0 Step 11.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_LOGANHAPPY | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 539312) A conversation 19675, 19676 starts:
+{{dialogue|Logan|I hope you ain't too tired from today... from now on, we gonna be together forever.}}
+{{dialogue|Logan|I ain't never gonna let anythin' happen to you. From now on... I'm your husband. I can't believe it...}}
+
+TRIGGER Procedure 1.0 Step 12.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 539312) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 539330
+Logan stops standing still
+Andy stops standing still
+Jasmine stops standing still
+Logan stops standing still
+Remove behavior CommanderPlayerAction (idName: 5393001) from Player
+Remove behavior CommanderNPCActionLoop (idName: 5393002) from Logan
+Remove behavior CommanderNPCAction (idName: 5393004) from Logan
+Remove behavior CommanderPlayerAction (idName: 5393003) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 5393005) from Logan
+Remove behavior CommanderMoveToFlagAndAction (idName: 5393006) from Player
+Remove behavior CommanderDrama (idName: 5393008) from Logan
+Remove behavior CommanderMoveToFlagAndAction (idName: 5393007) from Logan
+Andy stops standing still
+Jasmine stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 5393009) from Logan
+SCENEITEM DELETE || itemType: 0 | id: 539301
+SCENEITEM DELETE || itemType: 0 | id: 539302
+CUTSCENE UI STATE EXIT || 
+ACTION SOCIAL MARRIAGE || npcId: 8011
+SUBMIT MISSION 1500392
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Logan
+CONDITIONS
+Always:
+ACTIONS
+(cId 5393100) A conversation 19677 starts:
+{{dialogue|Logan|The kids put in a lot of effort today... maybe I should give 'em a coupla gifts.}}
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Andy
+CONDITIONS
+Always:
+ACTIONS
+(cId 5393101) A conversation 19679 starts:
+{{dialogue|Andy|Logan worked real hard to remember all those lines, an' he didn't even say it! I can't wait to move in with y'all!}}
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Jasmine
+CONDITIONS
+Always:
+ACTIONS
+(cId 5393102) A conversation 19678 starts:
+{{dialogue|Jasmine|Congratulations! It's just like a storybook... so romantic!}}
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Logan
+CONDITIONS
+Always:
+ACTIONS
+(cId 5393103) A conversation 19680 starts:
+{{dialogue|Logan|If I'm honest, I kinda thought you'd say yes... I feel a little embarrassed but it's alright. Maybe it was a little sudden.}}
+
+TRIGGER Procedure 2.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Jasmine
+CONDITIONS
+Always:
+ACTIONS
+(cId 5393104) A conversation 19681 starts:
+{{dialogue|Jasmine|Awww I thought you guys were gonna get married...}}
+
+TRIGGER Procedure 2.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Andy
+CONDITIONS
+Always:
+ACTIONS
+(cId 5393105) A conversation 19682 starts:
+{{dialogue|Andy|Not everythin' is like Jasmine's books.}}
+
+TRIGGER Procedure 2.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+True Love's Treasure is in state 2 with flag 1
+ACTIONS
+Andy stops standing still
+Jasmine stops standing still
+AREA TRIGGER DELETE || id: 539301
+SUBMIT MISSION 1500392
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8011
+END MISSION 1500393
+
+TRIGGER Procedure 2.0 Step 6.1 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Jasmine stops standing still
+Andy stops standing still
+END MISSION 1500393
+
+TRIGGER Procedure 2.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PLAYER MARRIAGE || order: 0 | id: -1
+CONDITIONS
+Check if choose is == 0
+ACTIONS
+Logan stops standing still
+Andy stops standing still
+Jasmine stops standing still
+Logan stops standing still
+Remove behavior CommanderPlayerAction (idName: 5393001) from Player
+Remove behavior CommanderNPCActionLoop (idName: 5393002) from Logan
+Remove behavior CommanderNPCAction (idName: 5393004) from Logan
+Remove behavior CommanderPlayerAction (idName: 5393003) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 5393005) from Logan
+Remove behavior CommanderMoveToFlagAndAction (idName: 5393006) from Player
+Remove behavior CommanderDrama (idName: 5393008) from Logan
+Remove behavior CommanderMoveToFlagAndAction (idName: 5393007) from Logan
+Andy stops standing still
+Jasmine stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 5393009) from Logan
+SCENEITEM DELETE || itemType: 0 | id: 539301
+SCENEITEM DELETE || itemType: 0 | id: 539302
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1500392
+AREA TRIGGER DELETE || id: 539301
+UNLOCK NPC MARRIAGE || npc: 8011
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8011
+END MISSION 1500393
+
+TRIGGER Procedure 2.0 Step 8.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Logan
+CONDITIONS
+True Love's Treasure is successfully completed
+ACTIONS
+(cId 5393106) A conversation 19683 starts:
+{{dialogue|Logan|Today was a bit of a surprise... but we're a family now. I'll never let you down.}}
+
+TRIGGER Procedure 2.0 Step 9.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+True Love's Treasure is successfully completed
+Check if choose is == 1
+ACTIONS
+The player receives a letter:
+{{mail|808}}
+
+TRIGGER Procedure 2.0 Step 10.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PLAYER BREAKUP || order: 0 | id: 8011
+CONDITIONS
+Check if choose is == 0
+ACTIONS
+Logan stops standing still
+Andy stops standing still
+Jasmine stops standing still
+Logan stops standing still
+Remove behavior CommanderPlayerAction (idName: 5393001) from Player
+Remove behavior CommanderNPCActionLoop (idName: 5393002) from Logan
+Remove behavior CommanderNPCAction (idName: 5393004) from Logan
+Remove behavior CommanderPlayerAction (idName: 5393003) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 5393005) from Logan
+Remove behavior CommanderMoveToFlagAndAction (idName: 5393006) from Player
+Remove behavior CommanderDrama (idName: 5393008) from Logan
+Remove behavior CommanderMoveToFlagAndAction (idName: 5393007) from Logan
+Andy stops standing still
+Jasmine stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 5393009) from Logan
+SCENEITEM DELETE || itemType: 0 | id: 539301
+SCENEITEM DELETE || itemType: 0 | id: 539302
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1500392
+AREA TRIGGER DELETE || id: 539301
+UNLOCK NPC MARRIAGE || npc: 8011
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8011
+END MISSION 1500393
+
+TRIGGER Procedure 3.0 Step 6.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+True Love's Treasure is in state 2 with flag 0
+ACTIONS
+Andy stops standing still
+Jasmine stops standing still
+AREA TRIGGER DELETE || id: 539301
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8011
+END MISSION 1500393

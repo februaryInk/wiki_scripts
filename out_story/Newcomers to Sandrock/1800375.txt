@@ -1,0 +1,568 @@
+Reading Mission 1800375: Newcomers to Sandrock
+
+<onlyinclude>{{Infobox mission
+|name = Newcomers to Sandrock
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Newcomers to Sandrock:
+
+TRIGGER Procedure 0.0 Step 13.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if 8374Acc is == 1
+ACTIONS
+START MISSION 1800374
+
+TRIGGER Procedure 0.0 Step 24.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800374
+CONDITIONS
+Always:
+ACTIONS
+Run mission Newcomers to Sandrock
+END MISSION 1800374
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800375
+CONDITIONS
+Always:
+ACTIONS
+===Collect Materials===
+
+{{mission_details
+|desc = You need to gather materials to repair the abandoned houses. Gather all the materials needed for reconstruction.
+|details = Collect Materials
+*{{i2|Limestone Bricks|0/15}}
+*{{i2|Tempered Glass|0/6}}
+*{{i2|Petrified Wooden Stick|0/9}}
+*{{i2|Magnesium Aluminum Alloy|0/9}}
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 31 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Hernandez
+CONDITIONS
+Check if Day2 is == 0
+ACTIONS
+(cId 0) A conversation 16853 starts:
+{{dialogue|Hernandez|A fantastic house with even better decorations...}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 32 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Lupita
+CONDITIONS
+Check if Day3 is == 0
+ACTIONS
+(cId 0) A conversation 16881 starts:
+{{dialogue|Lupita|Whew... what I wouldn't give for a helping hand...}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 33 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Jyn
+CONDITIONS
+Check if Day3 is == 0
+ACTIONS
+(cId 0) A conversation 16879 starts:
+{{dialogue|Jyn|Better watch out for my sister, she's bad news!}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 34 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Ann
+CONDITIONS
+Check if Day3 is == 0
+ACTIONS
+(cId 0) A conversation 16880 starts:
+{{dialogue|Ann|Better watch out for my brother, he's bad news!}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | canSubmit: 1 | missionId: 1800374 | targetId: 1
+CONDITIONS
+Always:
+ACTIONS
+===Repair First Old House===
+
+{{mission_details
+|desc = You have the materials to repair the first house, go and repair it.
+|details = Repair First Old House
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 83751 | path: S8375_Item1_Mark | flagName: S8375_Item1 | sceneName: Main | extraParams: S8375_Item1|CreatorItem|19112024_5,19110006_2,19800020_3,19112020_3|1371|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 83751 | missionId: 1800374 | iconType: 2
+SCENEITEM DELETE || itemType: 0 | id: 2059125
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 83751
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 83751 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+SCENEITEM DELETE || itemType: 0 | id: 83741
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83751 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8375_0_1
+Add behavior CommanderMoveToFlagAndAction (idName: 83751282) to Chen
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8375_128_2)
+Add behavior CommanderMoveToFlagAndAction (idName: 83751292) to Kira
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8375_129_2)
+Add behavior CommanderMoveToFlagAndAction (idName: 83751302) to Calli
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8375_130_2)
+DELAY MASK SET || maskId: 83751 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Set 8375Move1 to 0
+
+TRIGGER Procedure 0.0 Step 3.1 Order 5 Repeat 3
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8128 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8129 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8130 | eventName: MoveToFlagOver | behaviourName: CommanderMoveToFlagAndAction
+CONDITIONS
+Always:
+ACTIONS
+Increment 8375Move1 by 1
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver | npc: 8128
+ON ACTOR BEHAVIOUR EVENT || order: 10 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver | npc: 8129
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8130 | eventName: MoveToFlagOver | behaviourName: CommanderMoveToFlagAndAction
+CONDITIONS
+Check if 8375Move1 is >= 3
+ACTIONS
+(cId 1) A conversation 5138_0 starts:
+{{dialogue|Chen|Hm... are we there yet?}}
+{{dialogue|Kira|We are! All these years on the road... and finally a place to call our own!}}
+{{dialogue|Calli|Wow! What a pretty house! What a pretty garden!}}
+{{dialogue|Kira|Oh, hello. Excuse me, are you the Builder who built this house? I'd just like to introduce myself, I'm Kira, this is my husband Chen, and my daughter Calli!}}
+
+*''Welcome to Sandrock!''
+*''Nice timing, your home is ready!''
+*''Don't talk to me so casually. I'm famous.''
+
+{{dialogue|Kira|indent=true|answer=Welcome to Sandrock!
+|Thank you! It's our pleasure to be here!}}
+{{dialogue|Kira|indent=true|answer=Nice timing, your home is ready!
+|Amazing! It looks even better than we expected! And we didn't think we'd be able to move in right away either...}}
+{{dialogue|Calli|indent=true|Thank you, Builder!}}
+{{dialogue|Kira|indent=true|answer=Don't talk to me so casually. I'm famous.
+|Haha! Oh... yes! Um... sorry to bother you! Yes, you're ''Player'', the famous Builder!}}
+{{dialogue|Calli|indent=true|Wow! I heard you're the best Builder in the whole world! I wanna be like you when I grow up!}}
+{{dialogue|Chen|indent=true|That's right, sugar plum. Soak it in. You're looking at greatness right there. And nevermind that you've said you want to be twenty-five other professions before this...}}
+{{dialogue|Kira|Well, I guess we're neighbors now... I hope we can be friends one day!}}
+{{dialogue|Chen|''Player''... It's very nice to meet you!}}
+{{dialogue|Calli|Bye bye, Builder!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 83751282) from Chen
+Remove behavior CommanderMoveToFlagAndAction (idName: 83751292) from Kira
+Remove behavior CommanderMoveToFlagAndAction (idName: 83751302) from Calli
+Add behavior CommanderTeleport (idName: 83751283) to Chen
+(param: TargetFlag:S8375_128_3|TargetScene:Main|Delay:2.0)
+Add behavior CommanderTeleport (idName: 83751293) to Kira
+(param: TargetFlag:S8375_129_3|TargetScene:Main|Delay:3.0)
+Add behavior CommanderTeleport (idName: 83751303) to Calli
+(param: TargetFlag:S8375_130_3|TargetScene:Main|Delay:4.0)
+CUTSCENE UI STATE EXIT || 
+===Repair Second Old House===
+
+{{mission_details
+|desc = You have the materials to repair the second house, go and repair it.
+|details = Repair Second Old House
+}}
+SCENEITEM CREATE FLAG || extraParams: S8375_Item2|CreatorItem|19112024_5,19110006_2,19800020_3,19112020_3|1371|Fix|1.4 | path: S8375_Item2_Mark | sceneName: Main | flagName: S8375_Item2 | id: 83752 | itemType: 11
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 83752 | missionId: 1800374 | iconType: 2
+SCENEITEM DELETE || itemType: 0 | id: 2059132
+Set Day1 to 0
+
+TRIGGER Procedure 0.0 Step 12.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 83752
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 83752 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+SCENEITEM DELETE || itemType: 0 | id: 83742
+
+TRIGGER Procedure 0.0 Step 13.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83752 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8375_0_2
+Add behavior CommanderMoveToFlagAndAction (idName: 83751312) to Petrov
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8375_131_2)
+Add behavior CommanderMoveToFlagAndAction (idName: 83751322) to Hernandez
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8375_132_2)
+DELAY MASK SET || maskId: 83752 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Set 8375Move2 to 0
+
+TRIGGER Procedure 0.0 Step 13.1 Order 9 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8131 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8132 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Increment 8375Move2 by 1
+
+TRIGGER Procedure 0.0 Step 14.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver | npc: 8131
+ON ACTOR BEHAVIOUR EVENT || order: 10 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver | npc: 8132
+CONDITIONS
+Check if 8375Move2 is >= 2
+ACTIONS
+(cId 2) A conversation 5142_0 starts:
+{{dialogue|Petrov|Hey, Pa... almost there...}}
+{{dialogue|Hernandez|Wait... isn't this it?}}
+{{dialogue|Petrov|Ah, so it is! Hello there. Are you the Builder who worked on this house?}}
+
+*''That's me!''
+*''Yep, your new home is ready!''
+*''Welcome to "The Rock..."''
+
+{{dialogue|Petrov|indent=true|answer=That's me!
+|Wonderful! Yes, you Builders here are quite well-known around the Free Cities these days. Sandrock's development really turned a lot of heads. Hey... wait a sec, are you... that famous Builder, ''Player''?}}
+{{dialogue|Petrov|indent=true|Hey, how about that? Pa, look! We had the world famous Builder, ''Player'', working on our house!}}
+{{dialogue|Hernandez|indent=true|Isn't that something...! Thank you, ''Player''. This house looks fantastic. The craftsmanship is impeccable.}}
+{{dialogue|Petrov|indent=true|answer=Yep, your new home is ready!
+|Ah, it's everything we could have hoped for. Thank you so much!}}
+{{dialogue|Hernandez|indent=true|Indeed, for someone so young, you really know your craft.}}
+{{dialogue|Petrov|indent=true|answer=Welcome to "The Rock..."
+|The Rock? Hm... I've never heard this town be referred to by that name.}}
+{{dialogue|Hernandez|indent=true|I suppose we have a lot to learn.}}
+{{dialogue|Petrov|We've heard nothing but good things about the new Sandrock. We've just came in from Tallsky, and it seems the rumors were true! The two of us are getting on with the years... my Pa here likes to draw, and... well, we're just happy to find somewhere peaceful to settle down.}}
+{{dialogue|Petrov|I wonder if that salvage company needs any part-time workers...?}}
+{{dialogue|Hernandez|Yes, yes... we'll see, now, won't we? Let's not take up any more of our friend here's time, eh?}}
+{{dialogue|Petrov|You got it, Pa. Thanks again, Builder!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 15.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 83751312) from Petrov
+Remove behavior CommanderMoveToFlagAndAction (idName: 83751322) from Hernandez
+Add behavior CommanderTeleport (idName: 83751313) to Petrov
+(param: TargetFlag:S8375_131_3|TargetScene:Main|Delay:4.0)
+Add behavior CommanderTeleport (idName: 83751323) to Hernandez
+(param: TargetFlag:S8375_132_3|TargetScene:Main|Delay:3.0)
+CUTSCENE UI STATE EXIT || 
+===Repair Third Old House===
+
+{{mission_details
+|desc = You have the materials to repair the third house, go and repair it.
+|details = Repair Third Old House
+}}
+SCENEITEM CREATE FLAG || extraParams: S8375_Item3|CreatorItem|19112024_5,19110006_2,19800020_3,19112020_3|1371|Fix|1.4 | path: S8375_Item3_Mark | sceneName: Main | flagName: S8375_Item3 | id: 83753 | itemType: 11
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 83753 | missionId: 1800374 | iconType: 2
+SCENEITEM DELETE || itemType: 0 | id: 2059126
+Set Day2 to 0
+
+TRIGGER Procedure 0.0 Step 22.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 83753
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 83753 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+SCENEITEM DELETE || itemType: 0 | id: 83743
+
+TRIGGER Procedure 0.0 Step 23.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83753 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8375_0_3
+Add behavior CommanderMoveToFlagAndAction (idName: 83751332) to Lupita
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8375_133_2)
+Add behavior CommanderMoveToFlagAndAction (idName: 83751342) to Jyn
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8375_134_2)
+Add behavior CommanderMoveToFlagAndAction (idName: 83751352) to Ann
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8375_135_2)
+DELAY MASK SET || maskId: 83753 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Set 8375Move3 to 0
+
+TRIGGER Procedure 0.0 Step 23.1 Order 14 Repeat 3
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8133 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8134 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8135 | eventName: MoveToFlagOver | behaviourName: CommanderMoveToFlagAndAction
+CONDITIONS
+Always:
+ACTIONS
+Increment 8375Move3 by 1
+
+TRIGGER Procedure 0.0 Step 24.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver | npc: 8133
+ON ACTOR BEHAVIOUR EVENT || order: 10 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver | npc: 8134
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8135 | eventName: MoveToFlagOver | behaviourName: CommanderMoveToFlagAndAction
+CONDITIONS
+Check if 8375Move3 is >= 3
+ACTIONS
+(cId 3) A conversation 5146_0 starts:
+{{dialogue|Lupita|Whew... finally... we're here! Now, let's get your things inside... c'mon, scoot!}}
+{{dialogue|Jyn|Grandma! Ann's making faces again! She made me spill my Yakmel Milk!}}
+{{dialogue|Ann|Did not!}}
+{{dialogue|Jyn|Did too!}}
+{{dialogue|Lupita|Now, now, settle down you two... There's plenty more where that came from...}}
+{{dialogue|Jyn|I want that bottle! I don't want a new one!}}
+{{dialogue|Ann|You spilled it yourself, I didn't do anything!}}
+{{dialogue|Lupita|Now, wait a sec... I think I see something inside... Is that a big ole Yakmel dolly? Should we go in and check?}}
+{{dialogue|Jyn|Yeah! Let's go inside!}}
+{{dialogue|Ann|Me first, me first!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 25.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 83751342) from Jyn
+Remove behavior CommanderMoveToFlagAndAction (idName: 83751352) from Ann
+Remove behavior CommanderMoveToFlagAndAction (idName: 83751332) from Lupita
+Add behavior CommanderTeleport (idName: 83751343) to Jyn
+(param: TargetFlag:S8375_134_3|TargetScene:Main|Delay:4.0)
+Add behavior CommanderTeleport (idName: 83751353) to Ann
+(param: TargetFlag:S8375_135_3|TargetScene:Main|Delay:4.0)
+Add behavior CommanderMoveToFlagAndAction (idName: 83751331) to Lupita
+(param: FlagName:S8375_133_4|TargetScene:Main|MoveMode:Walk)
+Set Day3 to 0
+
+TRIGGER Procedure 0.0 Step 26.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8133 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 5147_0 starts:
+{{dialogue|Lupita|Heh... kids.}}
+{{dialogue|Lupita|Hope we weren't bothering you just now... Hey, you're that Builder, ''Player''! The Mayor said you'd be helping out on our house, I wasn't sure we'd actually get to meet you...}}
+{{dialogue|Lupita|Well... in any case, everything looks great, so... thank you so much!}}
+
+*''Welcome to Sandrock!''
+*''Must've been a hard journey with kids.''
+*''What made you want to move here?''
+*''Better keep those two rascals under control.''
+
+{{dialogue|Lupita|indent=true|answer=Welcome to Sandrock!
+|Haha, why thank you! I'm Lupita. My grand kids are Jyn and Ann. I do hope we'll fit in around here!}}
+{{dialogue|Lupita|indent=true|answer=Must've been a hard journey with kids.
+|Whew, you better believe it. Wasn't so bad when their Ma was still around... And with their father working with the Rangers up north... Yeah. But... somebody's gotta do it!}}
+{{dialogue|Lupita|indent=true|These two get into all kinds of trouble if you don't keep both eyes on 'em...}}
+{{dialogue|Lupita|indent=true|answer=What made you want to move here?
+|Well, let's see... I suppose it all started when their father moved up to the north to help with the settlements up there, but our plans changed when he told us how dangerous it can be up there.}}
+{{dialogue|Lupita|indent=true|So we came here instead! Visiting should be easy, soon enough. And if things get better, maybe we can make our way north one day.}}
+{{dialogue|Lupita|indent=true|I must say, though, it would be hard for us to leave Sandrock... just look at what you all have done with the place! Plus, and it may be too early to tell, but I just love the teacher you have here!}}
+{{dialogue|Lupita|indent=true|answer=Better keep those two rascals under control.
+|Oh... of course! They're actually very well behaved normally...}}
+{{dialogue|Jyn|Grandma! Where's the toy!?}}
+{{dialogue|Ann|Grandma! Jyn scratched me!}}
+{{dialogue|Jyn|Did not! I was scratchin' my ears, then you got in the way!}}
+{{dialogue|Lupita|Well, I think that's my cue. Very nice to meet you, Builder. Hope to see more of you in the future.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 28.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 83751331) from Lupita
+Add behavior CommanderTeleport (idName: 83751333) to Lupita
+(param: TargetFlag:S8375_133_3|TargetScene:Main|Delay:3.0)
+CUTSCENE UI STATE EXIT || 
+===Talk to Trudy===
+
+{{mission_details
+|desc = The three old houses have all been repaired. The newcomers have all moved in, now go and report back to Trudy.
+|details = Talk to Trudy
+}}
+
+TRIGGER Procedure 0.0 Step 30.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Trudy
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 16882, 16883 starts:
+{{dialogue|Trudy|I've heard from our new neighbors! Great work, ''Player''. And I can rest easy knowing that their homes have been tuned up by none other than yourself.}}
+{{dialogue|Trudy|There are still a lot of people contacting me about moving here, and... the more the merrier, I say! Whew... Sandrock sure has changed a lot lately, huh...? Thanks again, ''Player''! See you.}}
+
+TRIGGER Procedure 0.0 Step 31.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1800374
+
+TRIGGER Procedure 0.0 Step 35.0 Order 30 Repeat -1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderTeleport (idName: 83751283) from Chen
+Remove behavior CommanderTeleport (idName: 83751293) from Kira
+Remove behavior CommanderTeleport (idName: 83751303) from Calli
+Remove behavior CommanderTeleport (idName: 83751313) from Petrov
+Remove behavior CommanderTeleport (idName: 83751323) from Hernandez
+Remove behavior CommanderTeleport (idName: 83751333) from Lupita
+Remove behavior CommanderTeleport (idName: 83751343) from Jyn
+Remove behavior CommanderTeleport (idName: 83751353) from Ann
+Increment Day1 by 1
+Increment Day2 by 1
+Increment Day3 by 1
+
+TRIGGER Procedure 0.0 Step 38.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: 1800374
+Remove behavior CommanderTeleport (idName: 83751283) from Chen
+Remove behavior CommanderTeleport (idName: 83751293) from Kira
+Remove behavior CommanderTeleport (idName: 83751303) from Calli
+Remove behavior CommanderTeleport (idName: 83751313) from Petrov
+Remove behavior CommanderTeleport (idName: 83751323) from Hernandez
+Remove behavior CommanderTeleport (idName: 83751333) from Lupita
+Remove behavior CommanderTeleport (idName: 83751343) from Jyn
+Remove behavior CommanderTeleport (idName: 83751353) from Ann
+ACTION SCHOOL ADD STUDENT || id: 8134 | parent: 8133
+ACTION SCHOOL ADD STUDENT || id: 8135 | parent: 8133
+ACTION SCHOOL ADD STUDENT || id: 8130 | parent: 8128
+END MISSION 1800375
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Chen
+CONDITIONS
+Check if Day1 is == 0
+ACTIONS
+(cId 0) A conversation 16836 starts:
+{{dialogue|Chen|Sandrock is great! You guys really turned things around out here.}}
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Kira
+CONDITIONS
+Check if Day1 is == 0
+ACTIONS
+(cId 0) A conversation 16837 starts:
+{{dialogue|Kira|This is the new hotbed for Alliance development! And not just... because it's hot here. And to think, this all used to be desert...!}}
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Calli
+CONDITIONS
+Check if Day1 is == 0
+ACTIONS
+(cId 0) A conversation 16838 starts:
+{{dialogue|Calli|I want to be friends with Jasmine! But she runs so fast...}}
+
+TRIGGER Procedure 2.0 Step 2.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+CHECK SCENEITEM EXIST || exist: 1 | id: 83751 | sceneItemType: 12
+ACTIONS
+SCENEITEM DELETE || itemType: 12 | id: 83751
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Petrov
+CONDITIONS
+Check if Day2 is == 0
+ACTIONS
+(cId 0) A conversation 16854 starts:
+{{dialogue|Petrov|I'll just unpack a bit then head over to the salvage company to submit my resume!}}
+
+TRIGGER Procedure 2.0 Step 3.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+CHECK SCENEITEM EXIST || exist: 1 | id: 83752 | sceneItemType: 12
+ACTIONS
+SCENEITEM DELETE || itemType: 12 | id: 83752
+
+TRIGGER Procedure 2.0 Step 4.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+CHECK SCENEITEM EXIST || exist: 1 | id: 83753 | sceneItemType: 12
+ACTIONS
+SCENEITEM DELETE || itemType: 12 | id: 83753

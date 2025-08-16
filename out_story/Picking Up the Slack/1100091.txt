@@ -1,0 +1,108 @@
+Reading Mission 1100091: Picking Up the Slack
+
+<onlyinclude>{{Infobox mission
+|name = Picking Up the Slack
+|image =
+|description = Eufaula Salvage has been waiting a long time to have two Crane Lifts built for easier access to the Abandoned Ruins near Paradise Lost, it's up to you to help them!
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 600
+|reputation = 20
+|gols = 600
+|npc1 = Rocky
+|rp1 = 30
+|npc2 = Mi-an
+|rp2 = 10
+|rewards = {{i2|Seaside Casual Shorts}|1}
+}}</onlyinclude>
+
+==Overview==
+Run conditions from First Day on the Job:
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 119013
+CONDITIONS
+Always:
+ACTIONS
+(cId 10) A conversation 476, 477 starts:
+{{dialogue|Mi-an|Based on this diagram... We won't be able to find these parts from any random scrap... I guess we'll need to go take a look at {{textcolor|green|Rocky's salvage yard}}. Looks like we'll need to use a {{textcolor|green|Furnace}} as well.}}
+{{dialogue|Mi-an|Well, we can't finish if we don't get started! Let's do our best, ''Player''!}}
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 11901) from Yan
+Remove behavior CommanderIdle (idName: 20903) from Yan
+Remove behavior CommanderMoveToFlag (idName: 20902) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 20902) from Mi-an
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1100089
+Run mission Picking Up the Slack
+ACTION MISSION TRACE 1100091
+Set global blackboard key finishcrane with info 1.
+Townsfolk respond to the event:
+
+{{dialogue|Mi-an|Hey, ''Player''! How's it going on your end? My Crane Lift is almost done; things have been much easier since I built a {{textcolor|green|Furnace}}. Say, has Yan been buggin' you like he's been buggin' me? He came to check on my progress like ten times already!}}
+
+Remove behavior CommanderIdle (idName: 11902) from Rocky
+Yan stops standing still
+END MISSION 1100090
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100091
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1100091 | id: 10921 | sceneName: Main | flagName: hruin1_trigger | showOnMap: 1 | mapIcon: MissionArea | transId: 31045
+DELIVER MISSION 1100091
+START MISSION 1100091
+ACTION MISSION TRACE 1100091
+SCENEITEM CREATE FLAG || itemType: 0 | id: 20911 | path: Mission_NewArrow | sceneName: Main | extraParams: 0 | flagName: backyarddoor
+AREA TRIGGER CREATE || missionId: 1100091 | id: 20911 | sceneName: Main | flagName: backyarddoor_trigger | showOnMap: 0 | mapIcon: 0 | transId: 0
+Set DAY to 0
+ACTION DATE LOCKER UNLOCK || id: 200322
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1100091
+CONDITIONS
+Always:
+ACTIONS
+Run mission Picking Up the Slack
+END MISSION 1100091
+
+NPC in-mission talks:
+
+{{dialogue|Yan|Hey, quick word: do you think you're actually going to finish Rocky's commission? If it's not happening, I really need you to let me know, cause train ticket prices always go up the closer you get to your departure date...}}
+
+==Rewards==
+{{mission reward
+|npc1 = Rocky
+|rp1 = 30
+|npc2 = Mi-an
+|rp2 = 10
+|exp = 600
+|reputation = 20
+|gols = 600
+|rewards = {{i2|Seaside Casual Shorts}|1}
+}}
+==Post-conduct==
+
+If the player successfully completes the mission, some of the townsfolk will comment on it:
+
+{{dialogue|Yan|So you did finish that commission, huh! Well, what do ya know? Looks like I'm an even better supervisor than I thought!}}

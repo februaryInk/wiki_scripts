@@ -1,0 +1,112 @@
+Reading Mission 1200101: A Man of Quality
+
+<onlyinclude>{{Infobox mission
+|name = A Man of Quality
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from A Man of Quality:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200100
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key amanofquality with info 0.
+Set aquiredjlj to 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200100
+CONDITIONS
+Always:
+ACTIONS
+Run mission A Man of Quality
+END MISSION 1200100
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200100 | targetId: 4 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Owen===
+
+{{mission_details
+|desc = The Ceramic Bottle (High Quality) is finished. Give it to Owen.
+|details = Talk to Owen
+*{{i2|Owen|0/1}}
+}}
+
+TRIGGER Procedure 2.0 Step 6.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1200101
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 20101
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200101
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: amanofquality | info: 2 | exist: 1
+ACTIONS
+===Make a Ceramic Bottle (High Quality)===
+
+{{mission_details
+|desc = First prepare a Ceramic Bottle, then use the Refiner to improve its quality.
+|details = Make a Ceramic Bottle (High Quality)
+}}
+
+TRIGGER Procedure 4.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION SUBMIT GRADE ITEM || order: 0 | missionId: 1200100 | targetId: 5
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: amanofquality | info: 2 | exist: 1
+ACTIONS
+(cId 1) A conversation 2410 starts:
+{{dialogue|Owen|Hey, thanks, ''Player''! This looks like exactly what I was hoping for. You really nailed the whole "high quality" thing! My folks are celebrating their 30th anniversary soon; I wanted to get 'em something special. Thanks again!}}
+
+TRIGGER Procedure 4.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: amanofquality | info: 2 | exist: 1
+ACTIONS
+SUBMIT MISSION 1200100
+GLOBAL BLACK BOARD REMOVE || key: amanofquality
+END MISSION 1200101
+
+TRIGGER Procedure 4.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1200100
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|93}}
+GLOBAL BLACK BOARD REMOVE || key: amanofquality
+END MISSION 1200101

@@ -1,0 +1,113 @@
+Reading Mission 1700302: The Wei Forward
+
+<onlyinclude>{{Infobox mission
+|name = The Wei Forward
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from The Wei Forward:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700301
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|593}}
+DELIVER MISSION 1700301
+
+TRIGGER Procedure 0.0 Step 0.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 10 | maskId: 173011 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Trudy stops standing still
+Heidi stops standing still
+Wei stops standing still
+Mi-an stops standing still
+Slack stops standing still
+Wang Jr stops standing still
+173011 stops standing still
+173012 stops standing still
+173013 stops standing still
+Run mission The Wei Forward
+Run mission The Wei Forward
+DELAY MASK SET || maskId: 173011 | delayTime: 0 | durationTime: 2 | changeType: 1 | curveIndex: -2
+END MISSION 1700301
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700302
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Steel Frames of Default quality (Do not notify player)
+===Construct Steel Frames===
+
+{{mission_details
+|desc = To finish the tunnel, everyone needs to make ten Steel Frames. Construct them on your Assembly Station.
+|details = Construct Steel Frames
+*{{i2|Steel Frames|0/10}}
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1700301 | targetId: 2 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Heidi===
+
+{{mission_details
+|desc = Your Steel Frames are ready, take them to Heidi.
+|details = Talk to Heidi
+*{{i2|Steel Frames|0/10}}
+*{{i2|Heidi|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Heidi
+CONDITIONS
+Always:
+ACTIONS
+BAG MODIFY BY TARGET || missionId: 1700301 | targetId: 2
+(cId 1) A conversation 12225, 12226, 12227, 12228, 12229 starts:
+{{dialogue|Heidi|Hey, ''Player''! What did the tunnel say at the trial when it's accused of a lack of foundation?}}
+{{dialogue|Heidi|I've been framed!}}
+{{dialogue|Heidi|Heh. Well, now that you've given me these Steel Frames, it will be framed! We're one step closer to making that a reality!}}
+{{dialogue|Heidi|If there's anything else we need from you, I'll let you know, but drilling should be pretty close to done in a few days. Maybe take a break 'til then and once we're through, we can all meet up again to talk about what's next.}}
+{{dialogue|Heidi|See ya, ''Player''! And thanks as always for the top notch work!}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key notrain with info 1.
+SUBMIT MISSION 1700301
+Run mission The Wei Forward
+END MISSION 1700302

@@ -1,0 +1,294 @@
+Reading Mission 1100088: The New Builder
+
+<onlyinclude>{{Infobox mission
+|name = The New Builder
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from The New Builder:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100087
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1100087
+START MISSION 1100087
+ACTION MISSION TRACE 1100087
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1100087
+CONDITIONS
+Always:
+ACTIONS
+Run mission The New Builder
+END MISSION 1100087
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100088
+CONDITIONS
+Always:
+ACTIONS
+Set CANSUB to 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 108899 | path: Mission_NewArrow | sceneName: Main | flagName: arrow_feipindui | extraParams: 0
+AREA TRIGGER CREATE || id: 108899 | sceneName: Main | flagName: trigger_feipindui | showOnMap: 0 | mapIcon: MissionArea | transId: -1 | missionId: 1100087
+Set STEP to 0
+===Find in Junk Piles:===
+
+{{mission_details
+|desc = Sandrock is built on the ruins of the Old World. Resources are often unburied and blown around by the wind. Try to find the materials you need from Junk Piles around your workshop.
+|details = Find in Junk Piles:
+*{{i2|Stone|0/4}}
+*{{i2|Wood|0/2}}
+}}
+SCENEITEM CREATE FLAG || itemType: 0 | id: 118812 | path: Mission_NewArrow | sceneName: Main | flagName: arrow_feipindui2 | extraParams: 0
+AREA TRIGGER CREATE || id: 118812 | sceneName: Main | flagName: trigger_feipindui2 | showOnMap: 0 | mapIcon: MissionArea | transId: -1 | missionId: 1100087
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 10881
+CONDITIONS
+Always:
+ACTIONS
+GUIDE ADD CONTROL || id: 1013 | forced: 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON HOME MACHINE OPERATE || order: 0 | item: 13000004
+CONDITIONS
+Check if CANSUB is != (maybe?) 3
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 10882
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON HOME MACHINE OPERATE || order: 0 | item: 13000001
+CONDITIONS
+Always:
+ACTIONS
+HOME UNIT SET TRACE || item: 13000001 | set: 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 118812
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 118812
+SCENEITEM DELETE || itemType: 0 | id: 118812
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 108899
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 108899
+SCENEITEM DELETE || itemType: 0 | id: 108899
+
+TRIGGER Procedure 1.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON BAG CHANGE || order: 10 | item: 11000004 | itemGrade: 0 | changeType: 0
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Yan===
+
+{{mission_details
+|desc = You've made a Pickhammer, now return to Yan to see what's next.
+|details = Talk to Yan
+}}
+Set CANSUB to 3
+MISSION REQUIRE ITEM REMOVE || id: 10881
+GUIDE ADD CONTROL || id: 10 | forced: 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Yan
+CONDITIONS
+Check if CANSUB is == 3
+ACTIONS
+(cId 20) A conversation 577, 578, 742, 579, 848 starts:
+{{dialogue|Yan|Now that's a nice lookin' Pickhammer! It is the soul of a desert Builder, never lose it... but if you do, now you know how to build another one, I suppose.}}
+{{dialogue|Yan|Next, let me tell you about the {{textcolor|green|Recycler}}! It's another indispensable tool for a desert Builder. It's the machine that's synonymous with: "make do."}}
+{{dialogue|Yan|Once it's made, you can put the {{textcolor|green|scrap}} you collect with your {{textcolor|green|Pickhammer}} into the {{textcolor|green|Recycler}} to get all kinds of useful items.}}
+{{dialogue|Yan|You can construct the Recycler on your {{textcolor|green|Assembly Station}}. Here's the diagram for it, just look it up in your {{textcolor|green|Workshop Handbook}}. You can also open to it on the {{textcolor|green|control panel}} at the Assembly Station.}}
+{{dialogue|Yan|Eh, don't worry so much, you'll figure it out. Come back to the Commerce Guild when you finish. Bye now!}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 20) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Construct on Assembly Station===
+
+{{mission_details
+|desc = Yan wants you to make a Recycler. Use your {{textcolor|green|Assembly Station}} to construct it.
+|details = Construct on Assembly Station
+}}
+Set CANSUB to 4
+Unlock blueprint for Recycler
+Unlock blueprint for Stone Axe, Pickhammer, Bronze Pickhammer, Bronze Axe, Stone Daggers, Stone Spear, Stone Sword, Stone Sword and Shield, Casual T-shirt, Casual Shorts, Casual Hat, Casual Shoes, Mini Storage Box, Stone Trough, Wooden Bookcase, Grinding Saws, Raw Animal Skin, Thin Thread, Basic Leather, Wooden Stick, Water
+ACTION SHOW CUSTOM IMAGE TIPS || content: 7093 | preset: Creation
+SCENEITEM CREATE FLAG || itemType: 0 | id: 10882 | path: Mission_NewArrow | sceneName: Main | flagName: arrow_assembly | extraParams: 0
+GUIDE ADD CONTROL || id: 1038 | forced: 0
+
+TRIGGER Procedure 1.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON BAG CHANGE || order: 10 | item: 13000013 | changeType: 0 | itemGrade: 0
+CONDITIONS
+Check if CANSUB is == 4
+ACTIONS
+===Talk to Yan===
+
+{{mission_details
+|desc = The Recycler is finished, go speak with Yan.
+|details = Talk to Yan
+}}
+Set CANSUB to 5
+
+TRIGGER Procedure 1.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Yan
+CONDITIONS
+Check if CANSUB is == 5
+ACTIONS
+(cId 21) A conversation 106_0 starts:
+{{dialogue|Yan|Hey, there you are! No, no need to show me the Recycler. I'm sure it's fine. You have a Builder's License, right? Besides, what's the worst it could do? Explode and burn our whole town to the ground? Hahaha! Ha...}}
+{{dialogue|Yan|The main thing to take away here is that from now on, whenever you have questions, you can just consult your Workshop Handbook and definitely not ask me anything related to building whatsoever; yes, I'll be far, far too busy to handle your questions...}}
+{{dialogue|Yan|So now that you have the basic knowledge of a desert Builder, why don't you mosey on over to {{textcolor|green|City Hall}} and register your workshop.}}
+{{dialogue|Yan|Normally the mayor handles registrations, but {{textcolor|green|Minister Matilda}} is taking over administrative type stuff for her at the moment.}}
+
+*''Where's the mayor?''
+*''Okay, got it.''
+
+{{dialogue|Yan|indent=true|answer=Where's the mayor?
+|Oh, you hadn't heard? She's off trying to plant things in the Eufaula Desert. Puh! Didn't no-one ever tell her plants need dirt to grow!? ... Say, she's been gone for a while... I sure hope she's still alive!}}
+{{dialogue|Yan|indent=true|answer=Okay, got it.
+|Mindlessly following orders, alright! You're my kinda Builder!}}
+{{dialogue|Yan|Oh, by the way! I found a couple of {{textcolor|green|extra diagrams}} I was probably going to throw away- er... but why would I do that when I could just recycle them... to you! No need to thank me! Consider it a new employee bonus... thingy!}}
+{{dialogue|Yan|Anyway, hurry over to {{textcolor|green|City Hall}} and have {{textcolor|green|Matilda}} register your workshop. While you're out, I'll be preparing a job for ya. Hurry back when you're registered!}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 21) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 10881
+SCENEITEM DELETE || itemType: 0 | id: 10882
+SUBMIT MISSION 1100087
+Run mission Becoming Official
+ACTION MISSION TRACE 1100049
+SCENEITEM DELETE || itemType: 0 | id: 118812
+SCENEITEM DELETE || itemType: 0 | id: 108899
+AREA TRIGGER DELETE || id: 118812
+AREA TRIGGER DELETE || id: 108899
+END MISSION 1100088
+
+TRIGGER Procedure 2.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 21) There is a conversation segment (id 777) that ends:
+{{dialogue|Yan|Oh, by the way! I found a couple of {{textcolor|green|extra diagrams}} I was probably going to throw away- er... but why would I do that when I could just recycle them... to you! No need to thank me! Consider it a new employee bonus... thingy!}}
+CONDITIONS
+Always:
+ACTIONS
+Unlock blueprint for Worktable, Furnace, Drying Rack, Basic Awning
+ACTION SHOW CUSTOM IMAGE TIPS || preset: Creation | content: 7094
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON BAG CHANGE || order: 0 | itemGrade: -1 | changeType: 0 | item: 19100001
+ON BAG CHANGE || order: 0 | item: 19000001 | changeType: 0 | itemGrade: -1
+CONDITIONS
+CHECK PLAYER ITEM || itemGrade: -1 | item: 19100001 | set: 2 | count: 4
+CHECK PLAYER ITEM || itemGrade: -1 | item: 19000001 | set: 2 | count: 2
+Check if CANSUB is == 0
+ACTIONS
+HOME UNIT SET TRACE || item: 13000001 | set: 1
+===Make on Worktable===
+
+{{mission_details
+|desc = Yan asked you to make a Pickhammer, which can be made from {{textcolor|green|Stone}} and{{textcolor|green| Wood}} at your {{textcolor|green|Worktable}}.
+|details = Make on Worktable
+*{{i2|Pickhammer|0/1}}
+}}
+
+TRIGGER Procedure 1.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON GUIDE TIPS HIDE || order: 0 | id: 1038
+CONDITIONS
+Always:
+ACTIONS
+GUIDE ADD CONTROL || forced: 0 | id: 1055
+
+TRIGGER Procedure 1.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON GUIDE TIPS HIDE || order: 0 | id: 1055
+CONDITIONS
+Always:
+ACTIONS
+GUIDE ADD CONTROL || forced: 0 | id: 1056
+
+TRIGGER Procedure 2.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 10881
+SCENEITEM DELETE || itemType: 0 | id: 10882
+SUBMIT MISSION 1100087
+Run mission Becoming Official
+ACTION MISSION TRACE 1100049
+SCENEITEM DELETE || itemType: 0 | id: 118812
+SCENEITEM DELETE || itemType: 0 | id: 108899
+AREA TRIGGER DELETE || id: 118812
+AREA TRIGGER DELETE || id: 108899
+END MISSION 1100088
+
+TRIGGER Procedure 3.0 Step 3.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON HOME MACHINE OPERATE || order: 0 | item: 13000004
+CONDITIONS
+Check if CANSUB is == 4
+ACTIONS
+STOPWATCH REAL TIME SET || id: 10881 | sec: 5

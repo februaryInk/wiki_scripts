@@ -1,0 +1,152 @@
+Reading Mission 1200221: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200135
+
+TRIGGER Procedure 5.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+First Impressions is successfully completed
+ACTIONS
+Run mission #1200217
+END MISSION 1200214
+AREA TRIGGER DELETE || id: 22141
+
+TRIGGER Procedure 5.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1200221
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200221
+CONDITIONS
+Always:
+ACTIONS
+Set DAY to 0
+Add behavior CommanderMoveToFlagAndAction (idName: 22211) to Trudy
+(param: TargetScene:Guildhall|MoveMode:Walk|FlagName:musacomes_guildhall_trudy)
+Add behavior CommanderMoveToFlagAndAction (idName: 22211) to Heidi
+(param: TargetScene:Guildhall|MoveMode:Walk|FlagName:musacomes_guildhall_heidi)
+Add behavior CommanderMoveToFlagAndAction (idName: 22211) to Musa
+(param: TargetScene:Guildhall|MoveMode:Walk|FlagName:musacomes_guildhall_musa)
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_guildhall
+Something in the Air is in state 1 with flag 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_guildhall
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+Always:
+ACTIONS
+Trudy stands still in Guildhall and looks at Musa
+Musa stands still in Guildhall and looks at Heidi
+Heidi stands still in Guildhall and looks at Musa
+PLAYER SET POS ROT FLAG || sceneName: Guildhall | flagName: musacomes_guildhall_player
+AREA TRIGGER DELETE || id: 22211
+Remove behavior CommanderMoveToFlagAndAction (idName: 22211) from Trudy
+Remove behavior CommanderMoveToFlagAndAction (idName: 22211) from Heidi
+Remove behavior CommanderMoveToFlagAndAction (idName: 22211) from Musa
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 1846_0 starts:
+{{dialogue|Heidi|...And then, you said what happened!?}}
+{{dialogue|Musa|Yeah, your Civil Corps rained bullets down on that researcher's robot. Some of their shots hit various plates and dishes sending food flying everywhere. I really thought they were going to hurt someone.}}
+{{dialogue|Trudy|...}}
+{{dialogue|Heidi|That's really rough, glad you're okay, sir...}}
+{{dialogue|Heidi|How is it always that the wildest parties are the ones I can never make it to...?}}
+{{dialogue|Musa|...}}
+{{dialogue|Musa|Ahah... Hahaha!}}
+{{dialogue|Musa|Alright, guess we've got a comedian on our hands. Reminds me of my roommate in college, a medical student. Never met an architect with a penchant for gallows humor, though.}}
+{{dialogue|Heidi|Eh, well, I like newspaper comics, too. I try not to limit myself.}}
+{{dialogue|Musa|I can see you've got a sharp mind, Ms. Heidi. That bodes well. Tell me about your plans.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Trudy stops standing still
+Heidi stops standing still
+Musa stops standing still
+CUTSCENE UI STATE EXIT || 
+ACTION NPC GEN CLUSTER || cluster: MusaMeeting | behavior: Story1200221_Chat | min: 3 | max: 4 | npcs: 8079,8009,8006 | randomNpcs: -1 | leader: 8079
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+ACTION NPC REMOVE CLUSTER || cluster: MusaMeeting
+Remove behavior CommanderBubbleTag (idName: 22211) from Trudy
+Remove behavior CommanderBubbleTag (idName: 22211) from Heidi
+Remove behavior CommanderBubbleTag (idName: 22211) from Musa
+END MISSION 1200221
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment DAY by 1
+Remove behavior CommanderMoveToFlagAndAction (idName: 22211) from Trudy
+Remove behavior CommanderMoveToFlagAndAction (idName: 22211) from Heidi
+Remove behavior CommanderMoveToFlagAndAction (idName: 22211) from Musa
+ACTION NPC REMOVE CLUSTER || cluster: MusaMeeting
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 22211
+END MISSION 1200221

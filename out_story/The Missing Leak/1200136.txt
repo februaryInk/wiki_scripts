@@ -1,0 +1,139 @@
+Reading Mission 1200136: The Missing Leak
+
+<onlyinclude>{{Infobox mission
+|name = The Missing Leak
+|image =
+|description = The Mayor has been studying the possibility of desert planting. Now she's back from the desert, and has some exciting news.
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 2700
+|reputation = 50
+|gols = 1800
+|npc1 = Trudy
+|rp1 = 10
+|npc2 = Mi-an
+|rp2 = 10
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200135
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+ACTION NPC REMOVE CLUSTER || cluster: Story1200173_Root
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission The Desks They are A'Changing is result 1 flag 1
+The Missing Leak is in state 3 with flag 0
+The Missing Leak is in state 2 with flag 0
+The Missing Leak is in state 1 with flag 0
+ACTIONS
+Run mission The Missing Leak
+SCENEITEM DELETE || itemType: 0 | id: 21341
+Newspaper adds Article content 1070.
+Title: Renowned Representative Returns, Rejoice!
+After what seems like ages, finally our beloved mayor has rejoined our ranks! 
+
+Mayor Trudy set off into the desert testing new plant samples for Zeke's ongoing research into desert planting. It was dangerous, perhaps some might even say reckless, but whatever you believe, it's hard to argue with results! 
+
+That's right, Trudy has returned safely, what did she find out there in the desert? Find out more at the upcoming Fireside!
+
+When pressed for comment, Mayor Trudy had this to say on the matter: "Oh, Heidi. You don't need to do a news article on me. I'm sure people will just find out on their own if they're interested." Well guess, what? I did it anyway! 
+
+Welcome back, Trudy!
+
+Reported by Heidi
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Set DAY to 0
+
+TRIGGER Procedure 0.0 Step 0.1 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+CHECK WEATHER STATE || weather: 2 | flag: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+ACTION NPC REMOVE CLUSTER || cluster: Story1200134_Root
+Mi-an stands still in Main
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+DELIVER MISSION 1200136
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 3310, 3311, 3312 starts:
+{{dialogue|Mi-an|Hi, ''Player''! Mayor Trudy asked me to come get you, she has something she wants to talk to us about over at the Moisture Farm! Something related to what she found in the desert.}}
+{{dialogue|Mi-an|Nobody seemed interested in Mayor Trudy's expedition at the Fireside, but for some reason, what she said really stuck with me. Last night I had a dream that we turned a sand dune into a forest full of trees!}}
+{{dialogue|Mi-an|Er, that was kind of a weird tangent, sorry. Anyway, let's head to the Moisture Farm!}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1200136
+DELAY MASK SET || maskId: 21361 | delayTime: 0 | durationTime: -2 | changeType: 2 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 21361
+CONDITIONS
+Always:
+ACTIONS
+Mi-an stops standing still
+Mi-an stands still in Greenhouse
+Run mission The Missing Leak
+PLAYER SET POS ROT FLAG || sceneName: Greenhouse | flagName: clothing_player
+CUTSCENE UI STATE EXIT || 
+END MISSION 1200136
+
+==Rewards==
+{{mission reward
+|npc1 = Trudy
+|rp1 = 10
+|npc2 = Mi-an
+|rp2 = 10
+|exp = 2700
+|reputation = 50
+|gols = 1800
+}}

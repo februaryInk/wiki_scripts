@@ -1,0 +1,211 @@
+Reading Mission 1900255: Trouble at the Old Dorm
+
+<onlyinclude>{{Infobox mission
+|name = Trouble at the Old Dorm
+|image =
+|description = Burgess came to you in distress. It seems there's a problem at the Church dormitory.
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 650
+|reputation = None
+|gols = None
+|npc1 = Pen
+|rp1 = 10
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Who's the Muscliest of Them All:
+
+TRIGGER Procedure 1.0 Step 6.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8020 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 2272_0 starts:
+{{dialogue|Pen|Skinny... this is glorious. The precision... the craftsmanship... the definition... I mean, just look at that veiny vascularity!}}
+{{dialogue|Pen|You can't possibly know what it's like. To have something you've worked so hard to create, finally be right in front of you. Something made by your own blood, sweat, and tears. To be a creator.}}
+{{dialogue|Pen|...}}
+{{dialogue|Pen|Leave me, Skinny. I... need some time to bask in my glory.}}
+{{dialogue|Pen|You'll get your check... in the... mail...}}
+The conversation ends.
+Set eco to 1
+
+TRIGGER Procedure 1.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if eco is == 1
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 92439
+Run mission The Protector's Weakness
+Run mission Trouble at the Old Dorm
+Remove behavior CommanderBubbleTag (idName: 192430) from Pen
+Pen stops standing still
+END MISSION 1900243
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1900255
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1900255
+Set Lock to 0
+Set Daily to 0
+NPC ICON ADD || missionId: 1900255 | npc: 8021 | missionIcon: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END || order: 0 | result: 1 | missionId: 1200265
+CONDITIONS
+Always:
+ACTIONS
+Burgess stops standing still
+Remove behavior CommanderNPCAction (idName: 92471) from Burgess
+CLOSE MISSION || missionId: 1900255
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Burgess
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 2274_0 starts:
+{{dialogue|Burgess|''Player''! Oh, the humanity! The bombacity! Oh, I told him not to do it... I told him that the abyss would stare right back... He's... he's...}}
+
+*''What happened?''
+*''Burgess, what are you talking about?''
+*''He's what?''
+*''Out with it, man!''
+
+{{dialogue|Burgess|It's Pen! He's trapped! Just come quickly. Trouble down by the Lightshack! I mean! In the dormitory! He's stuck in the dormitory!}}
+
+*''I'm on my way!''
+*''I have a lot on my plate...''
+
+{{dialogue|Burgess|indent=true|answer=I'm on my way!
+|Oh, thank the Light! We're saved! I'll explain when we get there!}}
+{{dialogue|Burgess|indent=true|answer=I have a lot on my plate...
+|Uh... I tend to get nervous enough in non-life threatening situations! But... No! You're right! It's like my Ma always says: I'm a big boy now! But, er, i-if you do get time, I'll definitely need back up! Okay bye!}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 0) There is a conversation segment (id 7923) that ends:
+{{dialogue|Burgess|Uh... I tend to get nervous enough in non-life threatening situations! But... No! You're right! It's like my Ma always says: I'm a big boy now! But, er, i-if you do get time, I'll definitely need back up! Okay bye!}}
+CONDITIONS
+Always:
+ACTIONS
+Burgess stops standing still
+NPC ICON REMOVE || missionId: 1900255 | npc: 8021 | missionIcon: 0
+Remove behavior CommanderNPCAction (idName: 92471) from Burgess
+Set Lock to 1
+END MISSION 1900246
+CLOSE MISSION || missionId: 1900255
+
+TRIGGER Procedure 1.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+
+TRIGGER Procedure 1.0 Step 1.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Burgess stands still in Main and looks at Player
+
+TRIGGER Procedure 1.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Burgess|''Player''! Oh, the humanity! The bombacity! Oh, I told him not to do it... I told him that the abyss would stare right back... He's... he's...}}
+Add behavior CommanderNPCAction (idName: 92471) to Burgess
+(param: CMDAction:Hi)
+
+TRIGGER Procedure 1.0 Step 3.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 0) There is a conversation segment (id 7922) that ends:
+{{dialogue|Burgess|Oh, thank the Light! We're saved! I'll explain when we get there!}}
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON REMOVE || missionId: 1900255 | npc: 8021 | missionIcon: 0
+Burgess stops standing still
+START MISSION 1900255
+
+TRIGGER Procedure 1.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1900255
+CONDITIONS
+Always:
+ACTIONS
+Run mission Trouble at the Old Dorm
+END MISSION 1900255
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1900255
+CONDITIONS
+Always:
+ACTIONS
+Burgess stops standing still
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1900255
+CONDITIONS
+Always:
+ACTIONS
+Burgess stops standing still
+
+TRIGGER Procedure 2.0 Step 3.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the fourth option in conversation segment 7920:
+{{dialogue|Burgess|''Player''! Oh, the humanity! The bombacity! Oh, I told him not to do it... I told him that the abyss would stare right back... He's... he's...}}
+
+*''What happened?'' (No unique dialogue)
+*''Burgess, what are you talking about?'' (No unique dialogue)
+*''He's what?'' (No unique dialogue)
+*''Out with it, man!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Pen gains 1 favor
+
+==Rewards==
+{{mission reward
+|npc1 = Pen
+|rp1 = 10
+|exp = 650
+|reputation = None
+|gols = None
+}}

@@ -1,0 +1,135 @@
+Reading Mission 1200220: Gungam Zeroed
+
+<onlyinclude>{{Infobox mission
+|name = Gungam Zeroed
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Gungam Zeroed:
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+START MISSION 1200219
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200219
+CONDITIONS
+Always:
+ACTIONS
+Run mission Gungam Zeroed
+END MISSION 1200219
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200220
+CONDITIONS
+Always:
+ACTIONS
+===Repair Mobile Suit===
+
+{{mission_details
+|desc = Repair Qi's damaged mobile suit.
+|details = Repair Mobile Suit
+}}
+SCENEITEM CREATE FLAG || path: Mission_brokenrobot | extraParams: 0 | itemType: 0 | id: 22201 | sceneName: Saloon | flagName: mourningrobot_robot1
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 22201 | missionId: 1200219 | iconType: 2
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 22201
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 22201) to Player
+(param: CMDAction:Fix)
+SOUND PLAY 2D || idStr: player_fix
+
+TRIGGER Procedure 0.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+SOUND PLAY 2D || idStr: player_interact_buildover
+SCENEITEM DELETE || id: 22191 | itemType: 0
+SCENEITEM DELETE || itemType: 0 | id: 22201
+SCENEITEM CREATE FLAG || itemType: 0 | id: 22202 | path: Mission_FX_Machine_1 | sceneName: Saloon | flagName: mourningrobot_robot2 | extraParams: 0
+SCENEITEM CREATE FLAG || flagName: mourningrobot_robot2 | itemType: 0 | id: 22203 | path: Mission_robot | sceneName: Saloon | extraParams: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 22192) from Qi
+Qi stops standing still
+Qi stands still in Saloon
+(cId 0) A conversation 6172 starts:
+{{dialogue|Qi|Fantastic work, ''Player''. This repair was far quicker than its last. The rate of progress you've maintained since arriving here as a Builder is statistically improbable. You should be proud. Now, if you'll excuse me...}}
+Remove behavior CommanderPlayerAction (idName: 22201) from Player
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 22202
+Qi stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 22201) to Qi
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:mourningrobot_qi1|Action:GetGift)
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1200219
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8007 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 22201) from Qi
+SCENEITEM DELETE || itemType: 0 | id: 22203
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 21111 | path: Mission_robot | sceneName: Science | flagName: newrobot_robot | extraParams: 0
+END MISSION 1200220
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1200220
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 22201
+Qi stops standing still
+SCENEITEM DELETE || itemType: 0 | id: 22191
+SCENEITEM CREATE FLAG || itemType: 0 | id: 21111 | path: Mission_robot | sceneName: Science | flagName: newrobot_robot | extraParams: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 22201) from Qi
+Remove behavior CommanderMoveToFlagAndAction (idName: 22192) from Qi

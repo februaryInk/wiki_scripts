@@ -1,0 +1,197 @@
+Reading Mission 1200385: Venti Cup of Sadness
+
+<onlyinclude>{{Infobox mission
+|name = Venti Cup of Sadness
+|image =
+|description = Venti has been really sad since Rocky caught her last time. Rocky wants your help to cheer her up.
+|type = Side
+|time =
+|location =
+|characters = [[Rocky]]
+|condition =
+|details =
+|exp = 800
+|reputation = None
+|gols = None
+|npc1 = Venti
+|rp1 = 20
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200387
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Another Night Out is successfully completed
+Check if Venti has favor >= 150
+ACTIONS
+Run mission Another Another Night Out
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Another Another Night Out is successfully completed
+ACTIONS
+Run mission Venti Cup of Sadness
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200385
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 1
+
+TRIGGER Procedure 0.0 Step 0.5 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+Where's Mi-an is in state 1 with flag 0
+The Childhood Friend is in state 1 with flag 0
+Goodbye, Nia is in state 1 with flag 0
+The Kidnapping is in state 1 with flag 0
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: triallogan | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Rocky stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 6186_0 starts:
+{{dialogue|Rocky|Uh, hey, yo, ''Player''. You talked to Venti lately?}}
+{{dialogue|Rocky|Maybe I went too far, I dunno, I thought I kept my head screwed on better than usual...}}
+{{dialogue|Rocky|I asked all the boys, and Peck said Venti's takin' personal time, diggin' up scrap in places we ain't gotta go all so she can give it to... you.}}
+{{dialogue|Rocky|She ain't never had a lot of friends so, like... I think she's worried... maybe, I dunno, like somehow she screwed everything up with everybody. Me, you, all da boys...}}
+{{dialogue|Rocky|I was gonna talk to her myself, but then Krystal said you better do it; I might fly off the handle again.}}
+{{dialogue|Rocky|But, uh, you guys are pals, too, right? Think you can find out what's goin' on in her head? Maybe {{textcolor|green|cheer her up}} a little?}}
+
+*''Yeah, I'm on it.''
+*''Think I'd rather stay out of it...''
+
+{{dialogue|Rocky|indent=true|answer=Yeah, I'm on it.
+|Hey, thanks. Really appreciate it.}}
+{{dialogue|Rocky|indent=true|Venti's an all-star over at the Salvage Co. so... Yeah it'd be silly to let somethin' like this come between us. Tell 'er how we feel, too, if you get the chance, yeah?}}
+{{dialogue|Rocky|indent=true|She's mostly been sittin' {{textcolor|green|out front of the scrap yard}}, mopin', talkin' to herself about... somethin'. You can't miss her. Good luck.}}
+{{dialogue|Rocky|indent=true|answer=Think I'd rather stay out of it...
+|Ah, shucks, ''Player''... Sorry to hear that. Well, alright. I'll do what I can. Let me know if you change your mind before too long.}}
+DELIVER MISSION 1200385
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the first option in conversation segment 19826:
+{{dialogue|Rocky|But, uh, you guys are pals, too, right? Think you can find out what's goin' on in her head? Maybe {{textcolor|green|cheer her up}} a little?}}
+
+*''Yeah, I'm on it.'' (No unique dialogue)
+*''Think I'd rather stay out of it...'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 19828:
+{{dialogue|Rocky|Hey, think you could go {{textcolor|green|talk to Venti}} for us?}}
+
+*''Yeah, I'm on it.'' (No unique dialogue)
+*''Think I'd rather stay out of it...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 0
+ACTIONS
+Rocky stops standing still
+CUTSCENE UI STATE EXIT || 
+START MISSION 1200385
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+Rocky stops standing still
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Venti
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 19829 starts:
+{{dialogue|Venti|Oh no, how could I do such a thing...? I'm such a terrible person.}}
+
+TRIGGER Procedure 1.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PLAYER MARRIAGE || order: 0 | id: -1
+CONDITIONS
+Always:
+ACTIONS
+CLOSE MISSION || missionId: 1200385
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200385
+CONDITIONS
+Always:
+ACTIONS
+Run mission Venti Cup of Sadness
+END MISSION 1200385
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Rocky|Hey, think you could go {{textcolor|green|talk to Venti}} for us?}}
+
+*''Yeah, I'm on it.''
+*''Think I'd rather stay out of it...''
+
+{{dialogue|Rocky|indent=true|answer=Yeah, I'm on it.
+|Hey, thanks. Really appreciate it.}}
+{{dialogue|Rocky|indent=true|Venti's an all-star over at the Salvage Co. so... Yeah it'd be silly to let somethin' like this come between us. Tell 'er how we feel, too, if you get the chance, yeah?}}
+{{dialogue|Rocky|indent=true|She's mostly been sittin' {{textcolor|green|out front of the scrap yard}}, mopin', talkin' to herself about... somethin'. You can't miss her. Good luck.}}
+{{dialogue|Rocky|indent=true|answer=Think I'd rather stay out of it...
+|Ah, shucks, ''Player''... Sorry to hear that. Well, alright. I'll do what I can. Let me know if you change your mind before too long.}}
+
+==Rewards==
+{{mission reward
+|npc1 = Venti
+|rp1 = 20
+|exp = 800
+|reputation = None
+|gols = None
+}}

@@ -1,0 +1,1432 @@
+Reading Mission 1700334: Into the Abyss
+
+<onlyinclude>{{Infobox mission
+|name = Into the Abyss
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Into the Abyss:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700333
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1700333
+START MISSION 1700333
+Run mission Into the Abyss
+END MISSION 1700333
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the BiologicalLaboratory_Dungeon:
+CONDITIONS
+Always:
+ACTIONS
+===Explore the ruins===
+
+{{mission_details
+|desc = Continue to explore the ruins, searching for clues about the algae.
+|details = Explore the ruins
+}}
+Set leave to 0
+Set Code to 0
+Larry stands still in BiologicalLaboratory_Dungeon
+Gary stands still in BiologicalLaboratory_Dungeon
+Xena stands still in BiologicalLaboratory_Dungeon
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1733499 | sceneName: BiologicalLaboratory_Dungeon | flagName: LarryChairPos | extraParams: -1 | path: BioLabSeat
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1733498 | flagName: XenaChairPos | extraParams: -1 | sceneName: BiologicalLaboratory_Dungeon | path: BioLabSeat
+SCENEITEM CREATE FLAG || id: 1733497 | itemType: 0 | path: BioLabWave | sceneName: BiologicalLaboratory_Dungeon | flagName: BioLabWave | extraParams: -1
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1733495 | path: BioLabResource | sceneName: BiologicalLaboratory_Dungeon | extraParams: -1 | flagName: BioLabResource
+ACTOR IGNORE SHOW DISTANCE || npc: 8097 | ignore: 1
+ACTOR IGNORE SHOW DISTANCE || npc: 8125 | ignore: 1
+ACTOR IGNORE SHOW DISTANCE || npc: 8099 | ignore: 1
+NPC SET CAN INTERACT || npc: 8097 | canInteract: 0
+NPC SET CAN INTERACT || npc: 8099 | canInteract: 0
+Set monster to 0
+ACTOR SET FACTION || isAdd: 1 | npc: 8059 | id: 8
+ACTOR SET LEVEL || npc: 8011 | level: 53
+ACTOR SET LEVEL || npc: 8059 | level: 53
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 173331
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 4229_0 starts:
+{{dialogue|-2|...Sssss... Ssssss...}}
+{{dialogue|-2|S-stay away! Ssss...}}
+{{dialogue|-2|Sssss....}}
+{{dialogue|-2|No! Stay away! Help me Larry-!}}
+{{dialogue|-2|XEEENAAA- Oof!}}
+{{dialogue|Nia|Wasn't that last voice Larry?}}
+{{dialogue|Logan|Yeah, and he said Xena, that was his wife's name, wasn't it?}}
+
+*''Sounds like they're in trouble!''
+*''Who was the other voice?''
+*''XEEENAAA!''
+
+{{dialogue|Logan|indent=true|answer=Sounds like they're in trouble!
+|Well, at least we know why Larry didn't show up!}}
+{{dialogue|Nia|indent=true|answer=Who was the other voice?
+|Did Larry have any enemies?}}
+{{dialogue|Logan|indent=true|Other than us? Not that I know of, I always thought he was admired by his people.}}
+{{dialogue|Logan|indent=true|answer=XEEENAAA!
+|Come on, no need to let anyone know we're here!}}
+{{dialogue|Logan|Anyhow, we gotta go save Larry's hide. Let's see where this road leads us...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 173342) to Nia
+(param: TargetScene:BiologicalLaboratory_Dungeon|FlagName:HoloRoom_Nia3|MoveMode:Run)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Logan stops standing still
+Nia stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 173341) from Logan
+Remove behavior CommanderMoveToFlagAndAction (idName: 173341) from Nia
+Remove behavior CommanderMoveToFlag (idName: 173341) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 173342) from Nia
+CUTSCENE UI STATE EXIT || 
+===Find Passcodes===
+
+{{mission_details
+|desc = Search for the two passcodes in order to access the algae cultivation room.
+|details = Find Passcodes
+*{{i2|Administrator's Note: Algae Cultivation|0/1}}
+*{{i2|Administrator's Note: Mutant Creatures|0/1}}
+}}
+ACTOR BLIND SET || set: 0
+AUTOSAVE TRY || 
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8011 | state: Attack
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8059 | state: Attack
+
+TRIGGER Procedure 0.0 Step 0.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+AUTOSAVE TRY || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 14276) that ends:
+{{dialogue|Nia|Tell us how you really feel...}}
+CONDITIONS
+Always:
+ACTIONS
+Nia stands still in BiologicalLaboratory_Dungeon
+
+TRIGGER Procedure 0.0 Step 0.0 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 173342 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: -2
+===Defeat Gary===
+
+{{mission_details
+|desc = Larry's cousin Gary, AKA: Mr. Steal Your Girl, AKA: Mr. Steal Your Company, AKA: Mr. Steal Your Old Schtick, has threatened to destroy you and conquer Sandrock. Show him how you feel about that.
+|details = Defeat Gary
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 29 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderDrama (idName: 173341) to Larry
+(param: DramaName:DramaLarry|DramaType:Kiss|TargetScene:BiologicalLaboratory_Dungeon)
+Add behavior CommanderDrama (idName: 173341) to Xena
+(param: DramaName:DramaXena|DramaType:Kiss|TargetScene:BiologicalLaboratory_Dungeon)
+(cId -1) A conversation 14335, 14336, 14337 starts:
+{{dialogue|Logan|Ahem... so Nia... we came here on a mission...}}
+{{dialogue|Nia|Ah... right. I'm going to take some algae samples. But these machines look well preserved. I think we should salvage some of the core components, might be useful if we want to cultivate this type of algae on our own.}}
+{{dialogue|Nia|''Player'', can you help with the salvaging? Thanks!}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 30 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Salvage Algae Tech===
+
+{{mission_details
+|desc = Check around the algae cultivation room and break down the algae cultivation equipment to carry back to Sandrock.
+|details = Salvage Algae Tech
+}}
+AREA TRIGGER CREATE || missionId: 1700333 | id: 17334100 | sceneName: BiologicalLaboratory_Dungeon | flagName: BioLabResource | showOnMap: 1 | mapIcon: MissionArea | transId: -1
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8011 | state: Attack
+ACTION ACTOR ADD FOLLOWER || state: Attack | mActor: 8000 | tActor: 8059
+ACTION ACTOR REMOVE FOLLOWER || tActor: 8011 | mActor: 8000
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8059
+
+TRIGGER Procedure 0.0 Step 0.0 Order 33 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if leave is == 1
+ACTIONS
+Logan stops standing still
+Nia stops standing still
+Trudy stands still in Guildhall
+Professor Luo stands still in Guildhall
+PLAYER SET POS ROT FLAG || sceneName: Guildhall | flagName: ABD_Player
+Logan stands still in Guildhall
+Nia stands still in Guildhall
+ACTOR IGNORE SHOW DISTANCE || npc: 8097 | ignore: 0
+ACTOR IGNORE SHOW DISTANCE || npc: 8099 | ignore: 0
+ACTOR IGNORE SHOW DISTANCE || npc: 8125 | ignore: 0
+NPC LEAVE || npc: 8099
+NPC LEAVE || npc: 8097
+
+TRIGGER Procedure 0.0 Step 0.0 Order 34 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 14247) that ends:
+{{dialogue|-2|Thank you for completing our visitor registration form! Please take this complementary Geegle Leaflet and enjoy your stay!}}
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Geegle Corp Leaflet of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 35 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 14252) that ends:
+{{dialogue|Nia|Well... you can have it back whenever you need! I'll just keep it safe for now. Thanks, ''Player''! What a lovely souvenir to remember my first Sandrock adventure by...!}}
+CONDITIONS
+Always:
+ACTIONS
+Remove 1 Geegle Corp Leaflet of Default quality (Notify player)
+Nia gains 10 favor
+
+TRIGGER Procedure 0.0 Step 0.0 Order 65 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 14286) that ends:
+{{dialogue|Logan|Only one way to find out.}}
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1733420 | sceneName: BiologicalLaboratory_Dungeon | extraParams: -1 | path: Interact_AirGear | flagName: AirGear
+
+TRIGGER Procedure 0.0 Step 0.0 Order 70 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 1733402 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 73 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1700329
+CUTSCENE UI STATE EXIT || 
+Logan stops standing still
+Nia stops standing still
+
+TRIGGER Procedure 0.0 Step 0.0 Order 74 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 14273) that ends:
+{{dialogue|Logan|Ah! Yeah! I reckon yer thinking the same thing. Larry lost all that weight, but it just doesn't look good...!}}
+CONDITIONS
+Always:
+ACTIONS
+GEAR TRIGGER TRIGGER || id: 301 | scene: BiologicalLaboratory_Dungeon
+
+TRIGGER Procedure 0.0 Step 0.0 Order 85 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Continue Downward===
+
+{{mission_details
+|desc = Head for the lower levels of the lab to continue your search for the algae samples.
+|details = Continue Downward
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 88 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Logan stops standing still
+Nia stops standing still
+
+TRIGGER Procedure 0.0 Step 0.0 Order 92 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Logan stops standing still
+Nia stops standing still
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 173332
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 14237, 14238, 14239, 14240, 14241, 14242 starts:
+{{dialogue|Nia|Huh...?}}
+{{dialogue|Logan|Odd weather... all things considered.}}
+{{dialogue|Nia|Well, it's fake. Clouds like that wouldn't just appear out of nowhere in Sandrock; it's got to be simulated weather. Perhaps needed for some of the experiments they were doing?}}
+{{dialogue|Logan|Wouldn't rule that out. Though wasn't this place meant to be deep in the ocean? Maybe it was for folks livin' here, in case they missed bein' up on the surface.}}
+{{dialogue|Nia|Sometimes these things remain a mystery. Let's press on. The whole "fake sky, dark room" thing is giving me the creeps...}}
+{{dialogue|Logan|Up yonder. That door looks as promising as any. Let's check it out.}}
+ACTOR BLIND SET || set: 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 173341
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 4234_0 starts:
+{{dialogue||Geegle Co. Visitor Registration Form}}
+
+*''Fill in the form.''
+*''(Leave)'' (No unique dialogue)
+
+{{dialogue||Please input visitor name.}}
+
+*''''Player''.''
+*''Administrator.''
+*''Buttface.''
+*''(Leave)'' (No unique dialogue)
+
+{{dialogue||Please input your profession.}}
+
+*''Builder.''
+*''Murder-for-hire.''
+*''Systems analyst.''
+*''Corporate espionage enthusiast.''
+*''(Leave)'' (No unique dialogue)
+
+{{dialogue||Please input your reason for visiting today.}}
+
+*''Just visiting.''
+*''To see a family member.''
+*''To steal your algae.''
+*''To burn this place to the ground!''
+*''(Leave)'' (No unique dialogue)
+
+{{dialogue|-2|reward={{i2|Geegle Corp Leaflet|1}}|Thank you for completing our visitor registration form! Please take this complementary Geegle Leaflet and enjoy your stay!}}
+{{dialogue|Nia|Woah! What did you do? What is that...?}}
+{{dialogue|Nia|Geegle Co. Official Leaflet? Nice! This counts as rare literature. All you did was fill in the form on the console? Cool, let me get one, too!}}
+{{dialogue|Nia|Mhmm... aaand... Wha...? It says there are none left! Huh. What are the odds...}}
+
+*''Here, take mine!''
+*''Them's the breaks. Let's go.''
+
+{{dialogue|Nia|indent=true|answer=Here, take mine!
+|Ah, really? I can just have it?}}
+{{dialogue|Nia|indent=true|reward={{NPC2|Nia|rp=10}}|Well... you can have it back whenever you need! I'll just keep it safe for now. Thanks, ''Player''! What a lovely souvenir to remember my first Sandrock adventure by...!}}
+{{dialogue|Nia|indent=true|answer=Them's the breaks. Let's go.
+|Aww. Well,not really a pressing issue at the moment...}}
+SCENEITEM INTERACT SET || canInteract: 0 | itemType: 0 | id: 173341
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 173336
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 14306, 14307, 14308, 14309, 14310, 14311, 14312, 14313, 14314, 14315, 14316, 14317, 14318, 14319, 14320, 14321, 14322 starts:
+{{dialogue|Logan|Look inside! Who're they?}}
+{{dialogue|Gary|Xena, Xena, babe, why do you deny me so...? I, am the President now! As the most capable lady in our company, you should be with me! Forget about your former good-for-nothing husband...}}
+{{dialogue|Xena|Gary! How could you say that!? Larry lives! He's right there!}}
+{{dialogue|Larry|Mmhph!}}
+{{dialogue|Gary|Is he? Well, that won't be for long. You've been holding out on me for way too long, my dear Xena. Always saying Larry will be back. Too bad for you, I am in control now.}}
+{{dialogue|Gary|And Larry? He comes back a traitor, saying nonsense about how the Holy Book is false and the humans in Sandrock are not our enemies. Tsk, tsk, tsk...}}
+{{dialogue|Gary|Larry, cousin, it's hard to say this, but... you're fired.}}
+{{dialogue|Xena|Gasp!}}
+{{dialogue|Larry|Ommhph!}}
+{{dialogue|Xena|You can take away his dignity, but he'll always be a better leader than you will ever be!}}
+{{dialogue|Xena|You're nothing compared to him!}}
+{{dialogue|Gary|Fine, have it the hard way. I'll have you personally witness the end of my dear cousin for good. In the end, you don't get a choice! You will become mine!}}
+{{dialogue|Gary|Then together, we will finally conquer Sandrock!}}
+{{dialogue|Gary|VP, Managers! Do what you must do!}}
+{{dialogue|Nia|I didn't expect to stumble upon an internal power struggle...}}
+{{dialogue|Logan|Gary... I remember him! But he wasn't always this... plump!}}
+{{dialogue|Nia|We've got to hurry!}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 173334
+CONDITIONS
+Always:
+ACTIONS
+ACTOR BLIND SET || set: 1
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 173341 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173341 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8011
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8059
+Nia stands still in BiologicalLaboratory_Dungeon
+Logan stands still in BiologicalLaboratory_Dungeon
+PLAYER SET POS ROT FLAG || sceneName: BiologicalLaboratory_Dungeon | flagName: HoloRoom_Player1
+DELAY MASK SET || maskId: 173341 | delayTime: 1 | durationTime: 2 | changeType: 1 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173341 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 173341) to Logan
+(param: TargetScene:BiologicalLaboratory_Dungeon|FlagName:HoloRoom_Logan2)
+Add behavior CommanderMoveToFlagAndAction (idName: 173341) to Nia
+(param: TargetScene:BiologicalLaboratory_Dungeon|FlagName:HoloRoom_Nia2)
+Add behavior CommanderMoveToFlag (idName: 173341) to Player
+(param: TargetScene:BiologicalLaboratory_Dungeon|FlagName:HoloRoom_Player2)
+STOPWATCH REAL TIME SET || id: 173341 | sec: 3
+
+TRIGGER Procedure 0.0 Step 0.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 173341
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 14272, 14273, 14274, 14275, 14276, 14278 starts:
+{{dialogue|Nia|Hey, let's stop here for a sec. Take a breather. Besides. Think it might be about time to talk about the elephant in the room...}}
+{{dialogue|Logan|Ah! Yeah! I reckon yer thinking the same thing. Larry lost all that weight, but it just doesn't look good...!}}
+{{dialogue|Nia|I was more referring to that elephant.}}
+{{dialogue|Logan|Ah...! I see... Well. I stand by what I said!}}
+{{dialogue|Nia|Tell us how you really feel...}}
+{{dialogue|Nia|But... let's keep our eyes on the prize. Looks like two paths are ahead. Let's check that closed door first!}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8059 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 14279, 14280, 14281, 14282 starts:
+{{dialogue|Nia|It says "Two seperate codes combine into a passcode required to open the administrative door. "}}
+{{dialogue|Nia|So close, and yet so far... the algae is right behind this door!}}
+{{dialogue|Logan|Passcode? Shoot, we ain't got a clue.}}
+{{dialogue|Nia|Let's look around, maybe it's written somewhere around here.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON BAG CHANGE || order: 0 | itemGrade: -1 | changeType: 0 | item: 10000025
+CONDITIONS
+Always:
+ACTIONS
+Increment Code by 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON BAG CHANGE || order: 0 | itemGrade: -1 | changeType: 0 | item: 10000026
+CONDITIONS
+Always:
+ACTIONS
+Increment Code by 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 173343
+CONDITIONS
+Always:
+ACTIONS
+===Restore Power===
+
+{{mission_details
+|desc = Find <color=#f06861>four Simple Wires}} to repair the equipment that supplies power in the main lobby.
+|details = Restore Power
+}}
+ACTOR BLIND SET || set: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 173333
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || curveIndex: 0 | changeType: 0 | durationTime: -2 | delayTime: 0 | maskId: 173343
+
+TRIGGER Procedure 0.0 Step 0.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 173337
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 4241_0 starts:
+{{dialogue|Gary|What is this!?}}
+{{dialogue|Gary|Humans! SssSS!}}
+
+*''Sssss.... Sss!''
+*''Gary, we'll stop you!''
+*''Larry, hold on! We're here to help!''
+
+{{dialogue|Gary|indent=true|answer=Sssss.... Sss!
+|I'll wash your mouth out, filthy human!}}
+{{dialogue|Gary|indent=true|answer=Gary, we'll stop you!
+|Hahaha! You underestimate my power, humans!}}
+{{dialogue|Larry|indent=true|answer=Larry, hold on! We're here to help!
+|Mmmkhhwo!}}
+{{dialogue|Logan|Reach for the sky, Gary...}}
+{{dialogue|Gary|Come and make me, you small fry!}}
+The conversation ends.
+GEAR TRIGGER TRIGGER || id: 308 | scene: BiologicalLaboratory_Dungeon
+
+TRIGGER Procedure 0.0 Step 0.0 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173342 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 173342 | delayTime: 0 | durationTime: 2 | changeType: 1 | curveIndex: -2
+MONSTER ADD TAG || isAdd: 1 | tag: Aviation_Gecko_VicePresident_1_1
+MONSTER ADD TAG || tag: Aviation_Gecko_VicePresident_1_3 | isAdd: 1
+Gary stops standing still
+NPC LEAVE || npc: 8125
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8059
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8011
+ACTION ACTOR ADD FOLLOWER FLAG || flag: HatredHold | id: 8000 | targetId: 8059 | state: Attack
+ACTION ACTOR ADD FOLLOWER FLAG || flag: HatredHold | id: 8000 | state: Attack | targetId: 8011
+
+TRIGGER Procedure 0.0 Step 0.0 Order 25 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR HP CHANGE || order: 0 | npc: 5075001
+CONDITIONS
+CHECK ACTOR RUNTIME ATTR || npc: 5075001 | attrType: Hp | isPercent: 1 | compare: 6 | value: 0.5
+Check if monster is == 0
+ACTIONS
+Set monster to 1
+{{cutscene|id = 1394}}
+A cutscene CG_LARRYSAVED (duration: 0.0) starts playing
+Super Gary - Gary pulled out all the stops to try to defeat us. He even consumed some algae to turn into a more monstrous version of himself.
+ACTOR BLIND SET || set: 1
+Larry stands still in BiologicalLaboratory_Dungeon
+Add behavior CommanderNPCActionLoop (idName: 173341) to Larry
+(param: CMDAction:KnockOut)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 26 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_LARRYSAVED | state: 8
+CONDITIONS
+Always:
+ACTIONS
+MONSTER ADD TAG || tag: Aviation_Gecko_VicePresident_1_1 | isAdd: 0
+MONSTER ADD TAG || tag: Aviation_Gecko_VicePresident_1_2 | isAdd: 1
+ACTOR BLIND SET || set: 0
+Larry stops standing still
+Remove behavior CommanderDrama (idName: 173341) from Larry
+SCENEITEM DELETE || itemType: 0 | id: 1733497
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1733496 | path: BioLabWave2 | sceneName: BiologicalLaboratory_Dungeon | flagName: BioLabWave | extraParams: -1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 27 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_GARYBEAT | state: 3
+CONDITIONS
+Always:
+ACTIONS
+MONSTER ADD TAG || isAdd: 0 | tag: Aviation_Gecko_VicePresident_1_3
+Larry stops standing still
+Remove behavior CommanderNPCActionLoop (idName: 173341) from Larry
+Logan stands still in BiologicalLaboratory_Dungeon
+Nia stands still in BiologicalLaboratory_Dungeon
+Larry stands still in BiologicalLaboratory_Dungeon
+Xena stands still in BiologicalLaboratory_Dungeon
+Remove behavior CommanderDrama (idName: 173341) from Xena
+SCENEITEM DELETE || itemType: 0 | id: 1733495
+PLAYER SET POS ROT FLAG || flagName: FinnalPos_Player | sceneName: BiologicalLaboratory_Dungeon
+SCENEITEM DELETE || itemType: 0 | id: 1733498
+SCENEITEM DELETE || itemType: 0 | id: 1733499
+PICK UP RESOURCE REFRESH || id: 101
+PICK UP RESOURCE REFRESH || id: 102
+PICK UP RESOURCE REFRESH || id: 103
+
+TRIGGER Procedure 0.0 Step 0.0 Order 28 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_GARYBEAT | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 14330, 14331, 14332, 14333, 14334 starts:
+{{dialogue|Logan|Good thing we got 'im when we did. Larry, you alright?}}
+{{dialogue|Larry|I am! Thanks to you all! Xena...}}
+{{dialogue|Xena|I am fine, husband. Haha, the President's wife isn't so fragile.}}
+{{dialogue|Xena|Husband... I've been thinking about you every day. That dispicable snake Gary kidnapped me. But now you are alive... Oh Larry!}}
+{{dialogue|Larry|Oh Xena!}}
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8011
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8059
+
+TRIGGER Procedure 0.0 Step 0.0 Order 31 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 14898:
+{{dialogue|Logan|Alright, suit yerself. Ready to go, ''Player''?}}
+
+*''Let's go!'' (No unique dialogue)
+*''I want to look around a bit...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set leave to 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 32 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Logan
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 4375_0 starts:
+{{dialogue|Logan|Alright, suit yerself. Ready to go, ''Player''?}}
+
+*''Let's go!'' (No unique dialogue)
+*''I want to look around a bit...''
+
+{{dialogue|Logan|indent=true|answer=I want to look around a bit...
+|Okay, but don't be long.}}
+{{dialogue|Nia|indent=true|We'll wait for you here!}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 36 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 173344
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 14718, 14718, 14718, 14719 starts:
+{{dialogue||Jimmy - asymptomatic}}
+{{dialogue||Jimmy - asymptomatic}}
+{{dialogue||Jimmy - asymptomatic}}
+{{dialogue||(Flipping through the pages, each one is exactly the same. This "Jimmy" person clocked in at this lab every single night, without fail.)}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 37 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 173347
+CONDITIONS
+Check if Code is < 2
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 173344 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 38 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 14732:
+{{dialogue||Please enter the Administrator Code.}}
+
+*''(Mash the keys and scream)'' (No unique dialogue)
+*''Leave.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 14734, 14735, 14736, 14737, 14738, 14739, 14740, 14741, 14742, 14743, 14744 starts:
+{{dialogue|Nia|Everything... okay over there, ''Player''? We need both keys to progress, remember?}}
+{{dialogue|Logan|Hey, listen, I'm right there with ya, ''Player''. Can't hardly stand all these dumb keys and locks while divin'. Most of the time, when I see one of these, I'd just as well shoot it and be done with it. In fact... Stand back, ''Player''...}}
+{{dialogue|Nia|Wai wai wai wait...!}}
+{{dialogue|Logan|...?}}
+{{dialogue|Nia|I mean, c'mon, what are the odds that actually works?!}}
+{{dialogue|Logan|From where I'm standin', I'd say it's fifty fifty. Either it do or it don't.}}
+{{dialogue|Nia|Wait!}}
+{{dialogue|Logan|...?}}
+{{dialogue|Nia|Can we just... try to find the codes first? That would have a one hundred percent chance of opening this door!}}
+{{dialogue|Logan|Yeah, reckon that's fair.}}
+{{dialogue|Nia|Whew...}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 39 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 173342
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 14721 starts:
+{{dialogue||The lizard spawn from batch 0415 have hatched successfully. Our latest batch of junior scientists, however... I have assigned some of them to conduct basic inspections from here on out. Already they have begun displaying incompetence: they defy protocols and have even given these lizards names. Kiki, Koko, Bob... asinine. And furthermore dangerous. Establishing personal connections to our experiments is a disaster waiting to happen...
+Jimmy}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 40 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 173346
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 14722 starts:
+{{dialogue||Today Kiki drew a picture for us! Truly fascinating. I think I will remove Kiki from mutation trials and just see how her development progresses naturally. Her mental capacities are accelerating rapidly; she reminds me of little Acacia... if only she had survived...
+Jimmy}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 41 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 1733410
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 14745 starts:
+{{dialogue||Today is the day I implemented Kiki with a Bio-chip. I must admit, I felt a touch of anguish, seeing the curiosity in her eyes as I turned her into just another experimentation. 
+
+I see I myself have fallen victim to the mindset I have criticized. I mustn't allow myself to get attached to these creatures again; the betterment of humanity depends on my levelheadedness.
+
+From now on, I will refer to her by her experimentation number, as every other sane scientist does in this lab. Experimentation number: 20****48.
+
+Jimmy}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 42 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 173343
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 14720 starts:
+{{dialogue||A child-like drawing that appears to depict some kind of lizard creature standing upright. Even from the simplistic image, you notice this figure isn't exactly like one of the modern Geeglers. There's a signature at the bottom, just one letter: K.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 43 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 173345
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 14746 starts:
+{{dialogue||A device that can resist interference from infrasound waves and is worn on the ear. Has been inoperable for a long time.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 44 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 173348
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 14723 starts:
+{{dialogue||The elephant. One of nature's largest and most resilient animals. Its average lifespan of 40-60 years makes it especially interesting considering similarly large land mammals often reach senility before 20 years. Elephants are resistant to various genetic diseases; so understanding their genetic code was one of the first endeavors Geegle Co. sought to conquer, paving the way for numerous.}}
+
+*''Turn on holograms.'' (No unique dialogue)
+*''Turn off holograms.'' (No unique dialogue)
+
+
+TRIGGER Procedure 0.0 Step 0.0 Order 45 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 14723:
+{{dialogue||The elephant. One of nature's largest and most resilient animals. Its average lifespan of 40-60 years makes it especially interesting considering similarly large land mammals often reach senility before 20 years. Elephants are resistant to various genetic diseases; so understanding their genetic code was one of the first endeavors Geegle Co. sought to conquer, paving the way for numerous.}}
+
+*''Turn on holograms.'' (No unique dialogue)
+*''Turn off holograms.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+GEAR TRIGGER TRIGGER || id: 301 | scene: BiologicalLaboratory_Dungeon
+
+TRIGGER Procedure 0.0 Step 0.0 Order 46 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 14723:
+{{dialogue||The elephant. One of nature's largest and most resilient animals. Its average lifespan of 40-60 years makes it especially interesting considering similarly large land mammals often reach senility before 20 years. Elephants are resistant to various genetic diseases; so understanding their genetic code was one of the first endeavors Geegle Co. sought to conquer, paving the way for numerous.}}
+
+*''Turn on holograms.'' (No unique dialogue)
+*''Turn off holograms.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+GEAR TRIGGER TRIGGER || scene: BiologicalLaboratory_Dungeon | id: 302
+
+TRIGGER Procedure 0.0 Step 0.0 Order 47 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 173349
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 14724, 14725, 14726 starts:
+{{dialogue||......
+0415F001：Chip Implantation Complete
+0415M002：Chip Implantation Complete
+0415M003：Chip Implantation Complete
+0415F004：Chip Implantation Incomplete
+......}}
+{{dialogue||(Suddenly a text box pops up on the screen...)}}
+{{dialogue||System: The Bio-chip and You:
+
+The Geegle Co. Bio-chip has been implanted into all experimental bodies. What does this mean to you, as a lab worker? Well, guess what? Lab work is now easier than ever, as you'll be able to monitor your specimen's vitals, location, and more, all from your computer screen! By reading this you hereby volunteer to allow us to install chips into your brains as well.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 48 Repeat 1
+------------------------------------------------------------
+EVENTS
+ENTER GAMING STATE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 4331_0 starts:
+{{dialogue|Nia|Ugh... Hybrid organisms... that basically covers everything! I've never really put much thought into all that Church of Light doctrine about how the people of the Old World tried to play God. But seeing is believing... geez, I'm getting goosebumps.}}
+{{dialogue|Logan|I've heard people talkin' 'bout it before... but yer sayin' the Geeglers, the rat folks, the mole people... They're all made here?}}
+{{dialogue|Nia|Maybe not here here, but yeah, definitely from some Old World lab out there...}}
+
+*''Their research also gave us the algae.''
+*''Some of the hybrids are our friends!''
+*''The Church was right!''
+
+{{dialogue|Nia|indent=true|answer=Their research also gave us the algae.
+|That's true. It's only because of their studies that we've been able to get where we are now.}}
+{{dialogue|Nia|indent=true|answer=Some of the hybrids are our friends!
+|Yeah, I guess it's not all bad.}}
+{{dialogue|Logan|indent=true|I always thought the mutant animals were due to the pollution and what not from the Old World, guess I knew nothin'.}}
+{{dialogue|Nia|indent=true|answer=The Church was right!
+|Well, it's only because of their studies that we've been able to get where we are now with the algae, so it's not all bad.}}
+{{dialogue|Logan|Well, anyhow, we got the codes. Let's go.}}
+{{dialogue|Nia|I hope Larry is okay...}}
+The conversation ends.
+===Go to the Algae Cultivation Room===
+
+{{mission_details
+|desc = Read the administrator logs to get both codes, then you can open the door to the algae cultivation room.
+|details = Go to the Algae Cultivation Room
+}}
+SCENEITEM INTERACT SET || canInteract: 1 | id: 173347 | itemType: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 49 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 173335
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Nia|A dormitory? So these scientists lived like students...?}}
+STOPWATCH REAL TIME SET || id: 1733411 | sec: 7
+
+TRIGGER Procedure 0.0 Step 0.0 Order 50 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 1733411
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Logan|Cables on the ground. Could lead to somethin'.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 51 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON TRIGGER TRIGGER || order: 0 | id: 1 | scene: BiologicalLaboratory_Dungeon
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 1733401 | sec: 8
+
+TRIGGER Procedure 0.0 Step 0.0 Order 52 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 1733401
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 14262, 14263 starts:
+{{dialogue|Nia|That did the trick! Some of the lights just went on!}}
+{{dialogue|Logan|Another door lit up, too. Reckon that's our cue.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 53 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON TRIGGER TRIGGER || order: 0 | id: 3 | scene: BiologicalLaboratory_Dungeon
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 1733403 | sec: 8
+
+TRIGGER Procedure 0.0 Step 0.0 Order 54 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 1733403
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Logan|If my math's right, only one to go.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 55 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON TRIGGER TRIGGER || order: 0 | id: 2 | scene: BiologicalLaboratory_Dungeon
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 1733402 | sec: 8
+
+TRIGGER Procedure 0.0 Step 0.0 Order 56 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 1733402
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Nia|Halfway there!}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 57 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON TRIGGER TRIGGER || order: 0 | id: 6 | scene: BiologicalLaboratory_Dungeon
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 1733406 | sec: 5.8
+
+TRIGGER Procedure 0.0 Step 0.0 Order 58 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 1733406
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 14264, 14265, 14266, 14267 starts:
+{{dialogue|Nia|Lotta plants, eh, ''Player''...?}}
+{{dialogue|Nia|This kind of life couldn't exist like this without something special going on...}}
+{{dialogue|Logan|So this has got to be the right place.}}
+{{dialogue|Nia|Exactly!}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 59 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON TRIGGER TRIGGER || order: 0 | id: 7 | scene: BiologicalLaboratory_Dungeon
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 1733407 | sec: 6.5
+
+TRIGGER Procedure 0.0 Step 0.0 Order 60 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 1733407
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 14268, 14269, 14270, 14271 starts:
+{{dialogue|Nia|Woah... awesome!}}
+{{dialogue|Logan|Heh, is this your first time down in one of these? Show's only just getting started.}}
+{{dialogue|Nia|Is that so? Well, I'm looking forward to the next act, then!}}
+{{dialogue|Logan|Yeah, well... path's clear. That's what you're gonna get.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 61 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 173347
+CONDITIONS
+Check if Code is == 2
+ACTIONS
+(cId -1) A conversation 4336_0 starts:
+{{dialogue||Please enter the Administrator Code.}}
+
+*''0415F004''
+*''20162023''
+*''20772048''
+
+{{dialogue||indent=true|answer=20772048
+|Code accepted! Opening...}}
+{{dialogue||Code incorrect!}}
+
+*''0415F004'' (No unique dialogue)
+*''20162023'' (No unique dialogue)
+*''20772048''
+
+{{dialogue||indent=true|answer=20772048
+|Code accepted! Opening...}}
+SCENEITEM INTERACT SET || itemType: 0 | id: 173347 | canInteract: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 62 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the third option in conversation segment 14303:
+{{dialogue||Please enter the Administrator Code.}}
+
+*''0415F004'' (No unique dialogue)
+*''20162023'' (No unique dialogue)
+*''20772048'' (No unique dialogue)
+
+(cId -1) The player picks the third option in conversation segment 14304:
+{{dialogue||Code incorrect!}}
+
+*''0415F004'' (No unique dialogue)
+*''20162023'' (No unique dialogue)
+*''20772048'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+GEAR TRIGGER TRIGGER || scene: BiologicalLaboratory_Dungeon | id: 150
+
+TRIGGER Procedure 0.0 Step 0.0 Order 63 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON TRIGGER TRIGGER || order: 0 | id: 20 | scene: BiologicalLaboratory_Dungeon
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 1733420 | sec: 4
+
+TRIGGER Procedure 0.0 Step 0.0 Order 66 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1700333 | targetId: 7 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+NPC SET CAN INTERACT || npc: 8059 | canInteract: 0
+NPC SET CAN INTERACT || npc: 8011 | canInteract: 1
+Add 1 Super Filtration Core of Outstanding quality (Notify player)
+AREA TRIGGER DELETE || id: 17334100
+
+TRIGGER Procedure 0.0 Step 0.0 Order 67 Repeat 3
+------------------------------------------------------------
+EVENTS
+ON RESOURCE PICK UP || order: 0 | npc: 8000 | id: 101
+ON RESOURCE PICK UP || order: 0 | npc: 8000 | id: 102
+ON RESOURCE PICK UP || order: 0 | id: 103 | npc: 8000
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1700333 | targetId: -1 | transId: 80022188 | isAdd: 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 68 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from BiologicalLaboratory_Dungeon to the Guildhall:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 1733401 | delayTime: 0 | durationTime: 2 | changeType: 2 | curveIndex: 0
+Larry stops standing still
+Xena stops standing still
+Remove behavior CommanderDrama (idName: 173341) from Larry
+Remove behavior CommanderDrama (idName: 173341) from Xena
+
+TRIGGER Procedure 0.0 Step 0.0 Order 69 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 1733401 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 14345, 14346, 14347, 14348, 14349, 14350, 14351 starts:
+{{dialogue|Trudy|...That is quite some adventure! I'm glad Larry found his wife, is he all right?}}
+{{dialogue|Nia|Yeah, he said he'll be back soon. On the other hand, we got a pretty big payday! We found several types of algae!}}
+{{dialogue|Trudy|This is wonderful. I hope it wasn't too much trouble for you.}}
+{{dialogue|Logan|It was fine. Nothin' too stressful, we all got out pretty unscathed.}}
+{{dialogue|Trudy|Even better! I take it you'll need to experiment a bit on the new algae?}}
+{{dialogue|Professor Luo|That's right, time to prove our hypothesis. This is so exciting! We'll let you know when we get the results! Good or bad!}}
+{{dialogue|Trudy|I look forward to it. Thank you for your hard work!}}
+NPC SET CAN INTERACT || npc: 8059 | canInteract: 1
+ACTOR SET FACTION || isAdd: 0 | npc: 8059 | id: 8
+NPC SET CAN INTERACT || npc: 8097 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8099 | canInteract: 1
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8011
+ACTION ACTOR REMOVE FOLLOWER || tActor: 8059 | mActor: 8000
+
+TRIGGER Procedure 0.0 Step 0.0 Order 71 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 1733402 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Nia stops standing still
+NPC RESET LEVEL || npc: 8011
+NPC RESET LEVEL || npc: 8059
+Trudy stops standing still
+Logan stops standing still
+Professor Luo stops standing still
+Nia stops standing still
+DELAY MASK SET || curveIndex: 0 | maskId: 1733402 | delayTime: 0 | durationTime: -2 | changeType: 1
+NPC SET CAN INTERACT || npc: 8059 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8011 | canInteract: 1
+SUBMIT MISSION 1700333
+END MISSION 1700334
+
+TRIGGER Procedure 0.0 Step 0.0 Order 76 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 0 | tag: Aviation_Gecko_VicePresident_1_1
+CONDITIONS
+Check if monster is == 0
+ACTIONS
+{{cutscene|id = 1394}}
+A cutscene CG_LARRYSAVED (duration: 0.0) starts playing
+Super Gary - Gary pulled out all the stops to try to defeat us. He even consumed some algae to turn into a more monstrous version of himself.
+ACTOR BLIND SET || set: 1
+Larry stands still in BiologicalLaboratory_Dungeon
+Add behavior CommanderNPCActionLoop (idName: 173341) to Larry
+(param: CMDAction:KnockOut)
+Set monster to 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 77 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 14287:
+{{dialogue||Please choose a climate setting to simulate.}}
+
+*''Rain.'' (No unique dialogue)
+*''Clear day.'' (No unique dialogue)
+*''Evening.'' (No unique dialogue)
+*''Night.'' (No unique dialogue)
+*''(Leave.)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 14288 starts:
+{{dialogue||Rain simulation: active. Expected air humidity: 60%. Sunlight intensity: medium.}}
+GEAR TRIGGER TRIGGER || id: 304 | scene: BiologicalLaboratory_Dungeon
+
+TRIGGER Procedure 0.0 Step 0.0 Order 78 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 14287:
+{{dialogue||Please choose a climate setting to simulate.}}
+
+*''Rain.'' (No unique dialogue)
+*''Clear day.'' (No unique dialogue)
+*''Evening.'' (No unique dialogue)
+*''Night.'' (No unique dialogue)
+*''(Leave.)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 14289 starts:
+{{dialogue||Warm weather simulation: active. Expected air humidity: 30%. Sunlight intensity: strong.}}
+GEAR TRIGGER TRIGGER || id: 305 | scene: BiologicalLaboratory_Dungeon
+
+TRIGGER Procedure 0.0 Step 0.0 Order 79 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the third option in conversation segment 14287:
+{{dialogue||Please choose a climate setting to simulate.}}
+
+*''Rain.'' (No unique dialogue)
+*''Clear day.'' (No unique dialogue)
+*''Evening.'' (No unique dialogue)
+*''Night.'' (No unique dialogue)
+*''(Leave.)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 14290 starts:
+{{dialogue||Evening simulation: active. Expected air humidity: 40%. Sunlight intensity: medium.}}
+GEAR TRIGGER TRIGGER || id: 306 | scene: BiologicalLaboratory_Dungeon
+
+TRIGGER Procedure 0.0 Step 0.0 Order 80 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the fourth option in conversation segment 14287:
+{{dialogue||Please choose a climate setting to simulate.}}
+
+*''Rain.'' (No unique dialogue)
+*''Clear day.'' (No unique dialogue)
+*''Evening.'' (No unique dialogue)
+*''Night.'' (No unique dialogue)
+*''(Leave.)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 14291 starts:
+{{dialogue||Night simulation: active. Expected air humidity: 50%. Sunlight intensity: low.}}
+GEAR TRIGGER TRIGGER || id: 307 | scene: BiologicalLaboratory_Dungeon
+
+TRIGGER Procedure 0.0 Step 0.0 Order 81 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 1733420
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 14284, 14285, 14286 starts:
+{{dialogue|Logan|Check it out...}}
+{{dialogue|Nia|Woah. That's a lot of... test tube... things... Are we getting closer to the algae...?}}
+{{dialogue|Logan|Only one way to find out.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 82 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 1733420
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 14287 starts:
+{{dialogue||Please choose a climate setting to simulate.}}
+
+*''Rain.'' (No unique dialogue)
+*''Clear day.'' (No unique dialogue)
+*''Evening.'' (No unique dialogue)
+*''Night.'' (No unique dialogue)
+*''(Leave.)'' (No unique dialogue)
+
+
+TRIGGER Procedure 0.0 Step 0.0 Order 83 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON TRIGGER TRIGGER || order: 0 | id: 304 | scene: BiologicalLaboratory_Dungeon
+ON TRIGGER TRIGGER || order: 0 | id: 305 | scene: BiologicalLaboratory_Dungeon
+ON TRIGGER TRIGGER || order: 0 | id: 306 | scene: BiologicalLaboratory_Dungeon
+ON TRIGGER TRIGGER || order: 0 | id: 307 | scene: BiologicalLaboratory_Dungeon
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 14292, 14293 starts:
+{{dialogue|Nia|Woah! Did you do that, ''Player''? You changed the weather!}}
+{{dialogue|Nia|Imagine that! No such thing as a drought when you can push a button to make it rain... Pretty nifty! This isn't what we came here for, but let's definitely make a note for Director Qi that this technology exists...}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 84 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1700333 | targetId: 3 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Read the Administrator's Notes===
+
+{{mission_details
+|desc = You have both books with the codes you need; read them carefully to find the code to the door.
+|details = Read the Administrator's Notes
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 86 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173343 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Logan stands still in BiologicalLaboratory_Dungeon
+Nia stands still in BiologicalLaboratory_Dungeon
+PLAYER SET POS ROT FLAG || sceneName: BiologicalLaboratory_Dungeon | flagName: FirstRoom_Player
+DELAY MASK SET || curveIndex: 0 | changeType: 1 | durationTime: -2 | delayTime: 0 | maskId: 173343
+
+TRIGGER Procedure 0.0 Step 0.0 Order 87 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173343 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 14256, 14257, 14260, 14261 starts:
+{{dialogue|Nia|Woah, this thing's huge!}}
+{{dialogue|Logan|It's got a switch on it. My experience divin' has taught me to just flip any switches I see and hope for the best. What's your take, ''Player''?}}
+
+*''Looks like it turns the power on somewhere.'' (No unique dialogue)
+*''I agree, just flip it.'' (No unique dialogue)
+
+{{dialogue|Nia|Hm... you don't suppose it could also have something to do with that weather simulation thing do you...?}}
+{{dialogue|Nia|Well, ''Player''. Only one way to find out!}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 90 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173344 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Logan stands still in BiologicalLaboratory_Dungeon
+Nia stands still in BiologicalLaboratory_Dungeon
+PLAYER SET POS ROT FLAG || sceneName: BiologicalLaboratory_Dungeon | flagName: Gate_Player
+DELAY MASK SET || maskId: 173344 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 91 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173344 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 14732, 14733 starts:
+{{dialogue||Please enter the Administrator Code.}}
+
+*''(Mash the keys and scream)'' (No unique dialogue)
+*''Leave.'' (No unique dialogue)
+
+{{dialogue||Code incorrect!}}
+SCENEITEM INTERACT SET || canInteract: 0 | itemType: 0 | id: 173347
+
+TRIGGER Procedure 0.0 Step 0.0 Order 126 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON RESOURCE PICK UP || order: 0 | npc: 8000 | id: 201
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Administrator's Note: Algae Cultivation of Ordinary quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 127 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON RESOURCE PICK UP || order: 0 | npc: 8000 | id: 202
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Administrator's Note: Mutant Creatures of Ordinary quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 128 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON BAG CHANGE || order: 0 | itemGrade: 2 | changeType: 0 | item: 19810073
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Logan===
+
+{{mission_details
+|desc = Take a look around. When you've seen enough, talk to Logan to leave.
+|details = Talk to Logan
+}}
+(cId -1) A conversation 14338, 14339, 14340, 14341, 4375_0 starts:
+{{dialogue|Nia|Have you finished?}}
+{{dialogue|Nia|Great! Lets get back and show this to the professor and Mr. Zeke. Hopefully this is what we're looking for!}}
+{{dialogue|Logan|Hey Larry, you comin'?}}
+{{dialogue|Larry|Huh? Oh! Hmm, I think I'll stay a while, yakboy human. I have to settle things with Gary and the company anyway. I'll come back when I'm done.}}
+{{dialogue|Logan|Alright, suit yerself. Ready to go, ''Player''?}}
+
+*''Let's go!'' (No unique dialogue)
+*''I want to look around a bit...''
+
+{{dialogue|Logan|indent=true|answer=I want to look around a bit...
+|Okay, but don't be long.}}
+{{dialogue|Nia|indent=true|We'll wait for you here!}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 129 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+NPC SET CAN INTERACT || npc: 8011 | canInteract: 1
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the BiologicalLaboratory_Dungeon:
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 4226_0 starts:
+{{dialogue|Logan|Everyone, careful now... nice and slow...}}
+{{dialogue|Nia|Larrry? Larry!}}
+
+*''I don't think that's gonna work...''
+*''LARRY!''
+*''Do nothing.''
+
+{{dialogue|Nia|indent=true|answer=I don't think that's gonna work...
+|We've got to try something...}}
+{{dialogue|Nia|indent=true|answer=LARRY!
+|Come on ''Player'', we've got to try something...}}
+{{dialogue|Nia|indent=true|answer=Do nothing.
+|Come on ''Player'', we've got to try something...}}
+AREA TRIGGER ONCE CREATE || missionId: 1700333 | id: 173331 | sceneName: BiologicalLaboratory_Dungeon | flagName: MisterySound | showOnMap: 0 | mapIcon: MissionArea | transId: -1
+AREA TRIGGER ONCE CREATE || missionId: 1700333 | id: 173332 | sceneName: BiologicalLaboratory_Dungeon | flagName: EnterHall | showOnMap: 0 | mapIcon: MissionArea | transId: -1
+AREA TRIGGER ONCE CREATE || missionId: 1700333 | id: 173333 | sceneName: BiologicalLaboratory_Dungeon | flagName: FirstRoom | showOnMap: 0 | mapIcon: MissionArea | transId: -1
+AREA TRIGGER ONCE CREATE || missionId: 1700333 | id: 173334 | sceneName: BiologicalLaboratory_Dungeon | flagName: HoloRoom_start | showOnMap: 0 | mapIcon: MissionArea | transId: -1
+AREA TRIGGER ONCE CREATE || missionId: 1700333 | id: 173335 | sceneName: BiologicalLaboratory_Dungeon | flagName: SecRoom | showOnMap: 0 | mapIcon: -1 | transId: -1
+AREA TRIGGER ONCE CREATE || missionId: 1700333 | id: 173336 | sceneName: BiologicalLaboratory_Dungeon | flagName: FinTrigger | showOnMap: 0 | mapIcon: MissionArea | transId: -1
+AREA TRIGGER ONCE CREATE || missionId: 1700333 | id: 173337 | sceneName: BiologicalLaboratory_Dungeon | flagName: FinTrigger2 | showOnMap: 0 | mapIcon: MissionArea | transId: -1
+Add behavior CommanderDrama (idName: 173341) to Larry
+(param: DramaType:Bio_Sit|DramaName:BioLabSeat_1733499|TargetScene:BiologicalLaboratory_Dungeon)
+Add behavior CommanderDrama (idName: 173341) to Xena
+(param: DramaType:Bio_Sit2|DramaName:BioLabSeat_1733498|TargetScene:BiologicalLaboratory_Dungeon)
+NPC SET CAN INTERACT || npc: 8059 | canInteract: 0
+NPC SET CAN INTERACT || npc: 8011 | canInteract: 0
+
+TRIGGER Procedure 7.0 Step 12.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 0 | tag: Aviation_Gecko_VicePresident_1_2
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 1395}}
+A cutscene CG_GARYBEAT (duration: 1.0) starts playing
+Gary Defeated - The battle done, Gary lay dispatched. Larry and Xena were finally reunited.

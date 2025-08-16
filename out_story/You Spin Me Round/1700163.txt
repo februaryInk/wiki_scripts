@@ -1,0 +1,213 @@
+Reading Mission 1700163: You Spin Me Round
+
+<onlyinclude>{{Infobox mission
+|name = You Spin Me Round
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from You Spin Me Round:
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 4010) that ends:
+{{dialogue|Mi-an|I'm headed back to my workshop to grab some materials, I'll start working on it when I can. Why don't you take a look and see if there's anything you can do?}}
+(cId: -1) There is a conversation segment (id 4007) that ends:
+{{dialogue|Mi-an|Well, let's just make it a little ongoing project between us Builders. It's done when it's done! Catch ya later!}}
+CONDITIONS
+Always:
+ACTIONS
+Mi-an stops standing still
+START MISSION 1700162
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700162
+CONDITIONS
+Always:
+ACTIONS
+Run mission You Spin Me Round
+END MISSION 1700162
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700163
+CONDITIONS
+Always:
+ACTIONS
+===Inspect Windmill===
+
+{{mission_details
+|desc = Mi-an has made up her mind, and wants to repair the windmill. Inspect the windmill and see what materials are needed.
+|details = Inspect Windmill
+}}
+SCENEITEM CREATE FLAG || itemType: 0 | id: 171632 | path: Mission_windmill_mark | sceneName: Main | flagName: Fengche_13029 | extraParams: 0
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 171632 | missionId: 1700162 | iconType: 2
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 171632
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 4027 starts:
+{{dialogue|Player|I think I could fix this if I had {{textcolor|green|Copper Plates}}, {{textcolor|green|Bronze Sticks}}, and {{textcolor|green|Bearings}}.}}
+===Repair Windmill===
+
+{{mission_details
+|desc = Collect Bronze Sticks, Bearings, and Copper Plates to complete the repairs of the Windmill.
+|details = Repair Windmill
+*{{i2|Bronze Stick|0/4}}
+*{{i2|Bearing|0/2}}
+*{{i2|Copper Plate|0/6}}
+}}
+SCENEITEM DELETE || itemType: 0 | id: 171632
+SCENEITEM INTERACT SET || itemType: 11 | canInteract: 1 | id: 171631
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 171631 | missionId: 1700162 | iconType: 2
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 171631
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 171631 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 171631
+CONDITIONS
+Always:
+ACTIONS
+Mi-an stands still in Main
+Cooper stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: YSMR_player2
+DELAY MASK SET || curveIndex: 0 | changeType: 1 | durationTime: 1 | delayTime: 0 | maskId: 171631
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 1.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 171631
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 171638003) to Cooper
+(param: TargetScene:Main|FlagName:YSMR_cooper3)
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 171638003) from Cooper
+Cooper stops standing still
+Cooper stands still in Main
+(cId 2) A conversation 1145_0 starts:
+{{dialogue|Cooper|Ahahaha... Ehehehh...! Y'all have played into my hand like a couple of cheap yo-yos... I done went and played y'all for the fiddles you are! Feast your eyes on the machinator of yer endeavours, gaze upon the sour visage of yer puppetmaster!}}
+{{dialogue|Mi-an|Oh, hi there, Mr. Cooper! Are you... rehearsing for a play or something? It sounds good! Say, what do you think of the new Windmill? Good as new, huh?}}
+{{dialogue|Cooper|Play? What? No! I fooled y'all into fixin' this here Windmill so I didn't have to pay for a commission! Knew one of you tryhards would get to it sooner or later...}}
+{{dialogue|Mi-an|Uh oh... that wasn't very "telesis" of you, Mr. Cooper...}}
+{{dialogue|Cooper|Hey, cut me a break, I ain't made of Gols!}}
+{{dialogue|Cooper|And fer my next trick, I'll be regularly placing grindable foodstuffs into this here Windmill, for all to partake of!}}
+{{dialogue|Mi-an|Oh. You're going to put stuff in this Windmill and grind it up for everyone, free of charge?}}
+{{dialogue|Cooper|Yeah, reckon it'll help out any who need some cheap eats, maybe some animal feed. Plus, I got more junk than I know what to do with over at the ranch, best be givin' it away.}}
+{{dialogue|Mi-an|Well, that's pretty telesis-y so... I think it all evens out...}}
+{{dialogue|Mi-an|You didn't have to trick us though, Mr. Cooper! I think if you'd just told our boss at the Commerce Guild you had a commission that'd benefit the public good, at the very least you'd have gotten a discount...!}}
+{{dialogue|Cooper|Now where do you get off, goin' around, criticizin' fine salt of the earth folk such as myself-}}
+{{dialogue|Mi-an|Oh no, ''Player''! Run for it! I'll take this one, you fixed the Windmill. Thanks! And if I don't make it, bury me with my Pickhammer!}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Cooper stops standing still
+Mi-an stops standing still
+NPC ADD TAG || tag: 17001620
+Add behavior Story1700162_8003 (idName: 17001631) to Cooper
+(param: -1)
+Add behavior Story1700162_8017 (idName: 17001631) to Mi-an
+(param: -1)
+STOPWATCH GAME TIME SET || id: 1700163 | minute: 120
+
+TRIGGER Procedure 1.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 171633
+CONDITIONS
+Always:
+ACTIONS
+Mi-an stops standing still
+Mi-an stands still in Main and looks at Cooper
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: YSMR_player3
+
+TRIGGER Procedure 1.0 Step 4.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 171631
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 1144_0 starts:
+{{dialogue|Mi-an|Hey, look at that! Good as new! I was gonna... ahem... heh, yeah, you did a great job!}}
+{{dialogue|Mi-an|Look at those sails turn... and just look how perpendicular it is with the ground! It's enough to make a grown Builder cry...}}
+{{dialogue|Mi-an|And over here, I guess this thing was meant to be an automatic grinder of sorts... If we put something like grain or wheat in here, we could process it into a more usable material.}}
+{{dialogue|Mi-an|So we did end up getting something out of this! Looks like my compulsiveness paid off for once! Maybe it's my super power and less so an endless source of discomfort...}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH STOP END || order: 0 | id: 171635
+ON CAMERA PATH STOP END || order: 0 | id: 171634
+ON CAMERA PATH STOP END || order: 0 | id: 171633
+ON CAMERA PATH STOP END || order: 0 | id: 171632
+ON CAMERA PATH STOP END || order: 0 | id: 171631
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1700162
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH GAME TIME END || order: 0 | id: 1700163
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior Story1700162_8003 (idName: 17001631) from Cooper
+Remove behavior Story1700162_8017 (idName: 17001631) from Mi-an
+NPC REMOVE TAG || tag: 17001620
+NPC REMOVE TAG || tag: 17001621
+NPC REMOVE TAG || tag: 17001622
+NPC REMOVE TAG || tag: 17001623
+NPC REMOVE TAG || tag: 17001624
+NPC REMOVE TAG || tag: 17001625
+NPC REMOVE TAG || tag: 17001626
+END MISSION 1700163

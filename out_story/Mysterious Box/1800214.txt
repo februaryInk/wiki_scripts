@@ -1,0 +1,639 @@
+Reading Mission 1800214: Mysterious Box
+
+<onlyinclude>{{Infobox mission
+|name = Mysterious Box
+|image =
+|description = Mi-an found a mysterious black box while ruin diving... what's inside?
+|type = Side
+|time =
+|location =
+|characters = [[Mi-an]]
+|condition =
+|details =
+|exp = 1150
+|reputation = 15
+|gols = 800
+|npc1 = Mi-an
+|rp1 = 15
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200030
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Check if Mi-an has favor >= 100
+Builder Cruise is successfully completed
+Duvos Attacks! is in state 2 with flag 0
+
+GROUP 10:
+Check if Mi-an has favor >= 100
+Builder Cruise has failed
+Duvos Attacks! is in state 2 with flag 0
+
+ACTIONS
+Run mission License for Ransom
+
+TRIGGER Procedure 0.0 Step 2.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if Mi-an has favor >= 200
+Check if mission Shonash Canyon Bridge Opening Ceremony is result 1 flag 1
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+Run mission Mysterious Box
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800214
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER ONCE CREATE || flagName: S8214_Trigger1 | sceneName: Main | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80009191 | id: 82140 | missionId: 1800214
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 82140
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 82140 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82140 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Mi-an stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8214_Player_1
+DELAY MASK SET || maskId: 82140 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 82141 | sceneName: Main | extraParams: -1 | path: SceneItem_MysticBox_Closed | flagName: S8214_Box_1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82140 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 1706_0 starts:
+{{dialogue|Mi-an|Oh, hey ''Player''! You're diving today, too, huh?}}
+{{dialogue|Mi-an|Hey, check this out! A mysterious black box! It doesn't have a latch or anything, and I can't break it open either! Believe me, I tried! I have to know what's inside, it's driving me crazy!}}
+{{dialogue|Mi-an|The box must be holding something inside... what do you think I should do?}}
+
+*''Take it to Qi?''
+*''Could be dangerous...''
+
+{{dialogue|Mi-an|indent=true|answer=Take it to Qi?
+|Sure! Director Qi knows all kinds of stuff, maybe he's even encountered one of these things before! I'll stop by the research center tomorrow around 18:00. You should join me if you have time!}}
+{{dialogue|Mi-an|indent=true|Well, I've got enough ores for today I reckon. Be seeing you!}}
+{{dialogue|Mi-an|indent=true|answer=Could be dangerous...
+|Huh? You make a good point... but it's dark sheen is mesmerizing, like a deep dark night, pulling me closer. Oh, come on, what's the worst thing it could be? A relic bomb? What are the chances of that?}}
+{{dialogue|Mi-an|indent=true|Tell you what: let's meet up at Director Qi's Research center tomorrow at 18:00 and have him do an analysis; if you're right and it turns out to be a bomb or something, I owe you a Yakmel Milk. Catch you there!}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Mi-an stops standing still
+CUTSCENE UI STATE EXIT || 
+Set 8214DAY to 0
+SCENEITEM DELETE || itemType: 0 | id: 82141
+CALENDAR SET REMINDER || addDays: 1 | hour: 17 | transId: 80009852
+ACTION SHOW CUSTOM IMAGE TIPS || preset: Mission | content: 80010644
+
+TRIGGER Procedure 0.0 Step 4.1 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment 8214DAY by 1
+
+TRIGGER Procedure 0.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 18:00 (order: 0):
+CONDITIONS
+Check if 8214DAY is >= 1
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1800214 | id: 82142 | sceneName: Main | flagName: S8214_Trigger_2 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 0.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Science:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Science | flagName: S8214_Player_2
+Mi-an stands still in Science and looks at Player
+Qi stands still in Science
+SCENEITEM CREATE FLAG || itemType: 0 | id: 82142 | path: SceneItem_MysticBox_Closed | flagName: S8214_Box_2 | sceneName: Science | extraParams: -1
+SCENEITEM CREATE FLAG || itemType: 0 | id: 82143 | path: SceneItem_MysticBox_Letter | sceneName: Science | flagName: S8214_Box_2 | extraParams: -1
+SCENEITEM INTERACT SET || canInteract: 0 | itemType: 0 | id: 2059123
+
+TRIGGER Procedure 0.0 Step 6.0 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Science:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_science
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_science
+Set global blackboard key NoCutSceneObstacle with info 1.
+
+TRIGGER Procedure 0.0 Step 7.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Science:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 5771 starts:
+{{dialogue|Mi-an|Hey! We got started without you, hope you don't mind!}}
+AREA TRIGGER DELETE || id: 82142
+
+TRIGGER Procedure 0.0 Step 7.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8214002) to Player
+(param: TargetScene:Science|MoveMode:Run|FlagName:S8214_Player_2_1|LookAtActor:8017)
+
+TRIGGER Procedure 0.0 Step 8.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 1709_0 starts:
+{{dialogue|Mi-an|So, yeah, like I was sayin', I've tried everything! Drilling, heat, dropping it off the Crane Lift...}}
+{{dialogue|Qi|Hm. Yes. I don't suppose you have a Steel Bar on you, do you?}}
+{{dialogue|Mi-an|Oh. Sure, but-}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 10.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8214173) to Mi-an
+(param: TargetScene:Science|MoveMode:Walk|FlagName:S8214_Mian_2|Action:GiveItem)
+Add behavior CommanderMoveToFlagAndAction (idName: 8214072) to Qi
+(param: TargetScene:Science|MoveMode:Walk|FlagName:S8214_Qi_2|Action:GetItem|Delay:1)
+
+TRIGGER Procedure 0.0 Step 11.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8007 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+GROUP 0:
+STOPWATCH REAL TIME SET || id: 82142 | sec: 0.8
+Remove behavior CommanderMoveToFlagAndAction (idName: 8214072) from Qi
+
+GROUP 1:
+Add behavior CommanderMoveToFlagAndAction (idName: 8214073) to Qi
+(param: TargetScene:Science|MoveMode:Walk|FlagName:S8214_Qi_2_2|Action:KnockOnTheBox)
+
+
+TRIGGER Procedure 0.0 Step 11.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8007 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+GROUP 2:
+(cId 33) A conversation 5775, 5776, 5777 starts:
+{{dialogue|Mi-an|What the-! You-! I-! We-!}}
+{{dialogue|Qi|Here's your bar back.}}
+{{dialogue|Mi-an|...Thank you, Director.}}
+
+GROUP 0:
+Remove behavior CommanderMoveToFlagAndAction (idName: 8214073) from Qi
+Remove behavior CommanderMoveToFlagAndAction (idName: 8214173) from Mi-an
+SCENEITEM DELETE || itemType: 0 | id: 82142
+SCENEITEM CREATE FLAG || itemType: 0 | id: 82144 | path: SceneItem_MysticBox_Open | sceneName: Science | flagName: S8214_Box_2 | extraParams: -1
+
+
+TRIGGER Procedure 0.0 Step 12.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 33) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+GROUP 2:
+(cId 3) A conversation 5778 starts:
+{{dialogue|Mi-an|Woah, look at all this old stuff! And there's a letter!}}
+
+GROUP 0:
+
+
+TRIGGER Procedure 0.0 Step 11.0 Order 26 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 82142
+CONDITIONS
+Always:
+ACTIONS
+SOUND PLAY 2D || idStr: Play_MysteriousBox_open
+
+TRIGGER Procedure 0.0 Step 13.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8017 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 1710_0 starts:
+{{dialogue|Mi-an|I hope you're reading this under the light of the sun again, and not still from the darkness. It's been 60 years since that event which some people are starting to call the Day of Calamity...}}
+{{dialogue|Mi-an|I hope this capsule can travel through time and show that whatever happened, there was some warmth in these dark times.}}
+{{dialogue|Mi-an|Wishing you luck and a bright sun, Hicks.}}
+{{dialogue|Mi-an|By Peach! It's a time capsule from the Age of Darkness! From right around the time of the first Builder, Victor! What are the odds of us finding this? Wow, and everything here is preserved perfectly.}}
+{{dialogue|Mi-an|What do you want to look at, ''Player''?}}
+
+*''A Power Stone with a note''
+*''A pickaxe''
+*''A handbook''
+
+{{dialogue||indent=true|answer=A Power Stone with a note
+|A Power Stone like any other. Probably still usable.}}
+{{dialogue||indent=true|The note reads: "Use this to generate energy!" Perhaps Hicks was worried people might lose track of how to use Power Stones in the future.}}
+{{dialogue||indent=true|answer=A pickaxe
+|It's a standard enough looking pickaxe, made of stone. Perhaps Hicks never learned to make anything sturdier than this. Or perhaps he didn't want to part with one of his better tools.}}
+{{dialogue||indent=true|This wooden handle is a bit flimsy, but is doing pretty well, considering its age. Shows no sign of rot, suggesting that the box was air tight.}}
+{{dialogue||indent=true|answer=A handbook
+|The title reads: Reclamation of Past Technology, By Victor.}}
+{{dialogue||indent=true|This is probably a copy of one of the original documents from the First Builder. It's the same book that most Builders read when they're first studying to learn the trade.}}
+{{dialogue||indent=true|"...Look around you, it's a scene from the apocalypse, but it is also a treasure trove of wonders! If the human race is to survive this dark winter, we will need to make full use of the technology leftover from before the war..."}}
+{{dialogue||indent=true|Victor really knew how to look on the bright side. Even without a sun.}}
+{{dialogue||indent=true|It's one of the diagrams used by the first Builders. It looks like a simple furnace, not that much different from one of yours.}}
+{{dialogue||(What should I say?)}}
+
+*''A Power Stone with a note''
+*''A pickaxe''
+*''A handbook''
+*''I've seen enough. [END]'' (No unique dialogue)
+
+{{dialogue||indent=true|answer=A Power Stone with a note
+|A Power Stone like any other. Probably still usable.}}
+{{dialogue||indent=true|The note reads: "Use this to generate energy!" Perhaps Hicks was worried people might lose track of how to use Power Stones in the future.}}
+{{dialogue||indent=true|answer=A pickaxe
+|It's a standard enough looking pickaxe, made of stone. Perhaps Hicks never learned to make anything sturdier than this. Or perhaps he didn't want to part with one of his better tools.}}
+{{dialogue||indent=true|This wooden handle is a bit flimsy, but is doing pretty well, considering its age. Shows no sign of rot, suggesting that the box was air tight.}}
+{{dialogue||indent=true|answer=A handbook
+|The title reads: Reclamation of Past Technology, By Victor.}}
+{{dialogue||indent=true|This is probably a copy of one of the original documents from the First Builder. It's the same book that most Builders read when they're first studying to learn the trade.}}
+{{dialogue||indent=true|"...Look around you, it's a scene from the apocalypse, but it is also a treasure trove of wonders! If the human race is to survive this dark winter, we will need to make full use of the technology leftover from before the war..."}}
+{{dialogue||indent=true|Victor really knew how to look on the bright side. Even without a sun.}}
+{{dialogue||indent=true|It's one of the diagrams used by the first Builders. It looks like a simple furnace, not that much different from one of yours.}}
+{{dialogue||(What should I say?)}}
+
+*''A Power Stone with a note''
+*''A pickaxe''
+*''A handbook''
+*''I've seen enough. [END]'' (No unique dialogue)
+
+{{dialogue||indent=true|answer=A Power Stone with a note
+|A Power Stone like any other. Probably still usable.}}
+{{dialogue||indent=true|The note reads: "Use this to generate energy!" Perhaps Hicks was worried people might lose track of how to use Power Stones in the future.}}
+{{dialogue||indent=true|(What should I say?)}}
+
+:*''A pickaxe''
+:*''A handbook''
+:*''I've seen enough. [END]'' (No unique dialogue)
+
+{{dialogue||indent=double|answer=A pickaxe
+|It's a standard enough looking pickaxe, made of stone. Perhaps Hicks never learned to make anything sturdier than this. Or perhaps he didn't want to part with one of his better tools.}}
+{{dialogue||indent=double|This wooden handle is a bit flimsy, but is doing pretty well, considering its age. Shows no sign of rot, suggesting that the box was air tight.}}
+{{dialogue||indent=double|(What should I say?)}}
+
+::*''A handbook''
+::*''I've seen enough. [END]'' (No unique dialogue)
+
+{{dialogue||indent=3|answer=A handbook
+|The title reads: Reclamation of Past Technology, By Victor.}}
+{{dialogue||indent=3|This is probably a copy of one of the original documents from the First Builder. It's the same book that most Builders read when they're first studying to learn the trade.}}
+{{dialogue||indent=3|"...Look around you, it's a scene from the apocalypse, but it is also a treasure trove of wonders! If the human race is to survive this dark winter, we will need to make full use of the technology leftover from before the war..."}}
+{{dialogue||indent=3|Victor really knew how to look on the bright side. Even without a sun.}}
+{{dialogue||indent=3|It's one of the diagrams used by the first Builders. It looks like a simple furnace, not that much different from one of yours.}}
+{{dialogue||indent=3|(What should I say?)}}
+
+:::*''I've seen enough. [END]'' (No unique dialogue)
+
+{{dialogue||indent=double|answer=A handbook
+|The title reads: Reclamation of Past Technology, By Victor.}}
+{{dialogue||indent=double|This is probably a copy of one of the original documents from the First Builder. It's the same book that most Builders read when they're first studying to learn the trade.}}
+{{dialogue||indent=double|"...Look around you, it's a scene from the apocalypse, but it is also a treasure trove of wonders! If the human race is to survive this dark winter, we will need to make full use of the technology leftover from before the war..."}}
+{{dialogue||indent=double|Victor really knew how to look on the bright side. Even without a sun.}}
+{{dialogue||indent=double|It's one of the diagrams used by the first Builders. It looks like a simple furnace, not that much different from one of yours.}}
+{{dialogue||indent=double|(What should I say?)}}
+
+::*''A pickaxe''
+::*''I've seen enough. [END]'' (No unique dialogue)
+
+{{dialogue||indent=3|answer=A pickaxe
+|It's a standard enough looking pickaxe, made of stone. Perhaps Hicks never learned to make anything sturdier than this. Or perhaps he didn't want to part with one of his better tools.}}
+{{dialogue||indent=3|This wooden handle is a bit flimsy, but is doing pretty well, considering its age. Shows no sign of rot, suggesting that the box was air tight.}}
+{{dialogue||indent=3|(What should I say?)}}
+
+:::*''I've seen enough. [END]'' (No unique dialogue)
+
+{{dialogue||indent=true|answer=A pickaxe
+|It's a standard enough looking pickaxe, made of stone. Perhaps Hicks never learned to make anything sturdier than this. Or perhaps he didn't want to part with one of his better tools.}}
+{{dialogue||indent=true|This wooden handle is a bit flimsy, but is doing pretty well, considering its age. Shows no sign of rot, suggesting that the box was air tight.}}
+{{dialogue||indent=true|(What should I say?)}}
+
+:*''A Power Stone with a note''
+:*''A handbook''
+:*''I've seen enough. [END]'' (No unique dialogue)
+
+{{dialogue||indent=double|answer=A Power Stone with a note
+|A Power Stone like any other. Probably still usable.}}
+{{dialogue||indent=double|The note reads: "Use this to generate energy!" Perhaps Hicks was worried people might lose track of how to use Power Stones in the future.}}
+{{dialogue||indent=double|(What should I say?)}}
+
+::*''A handbook''
+::*''I've seen enough. [END]'' (No unique dialogue)
+
+{{dialogue||indent=3|answer=A handbook
+|The title reads: Reclamation of Past Technology, By Victor.}}
+{{dialogue||indent=3|This is probably a copy of one of the original documents from the First Builder. It's the same book that most Builders read when they're first studying to learn the trade.}}
+{{dialogue||indent=3|"...Look around you, it's a scene from the apocalypse, but it is also a treasure trove of wonders! If the human race is to survive this dark winter, we will need to make full use of the technology leftover from before the war..."}}
+{{dialogue||indent=3|Victor really knew how to look on the bright side. Even without a sun.}}
+{{dialogue||indent=3|It's one of the diagrams used by the first Builders. It looks like a simple furnace, not that much different from one of yours.}}
+{{dialogue||indent=3|(What should I say?)}}
+
+:::*''I've seen enough. [END]'' (No unique dialogue)
+
+{{dialogue||indent=double|answer=A handbook
+|The title reads: Reclamation of Past Technology, By Victor.}}
+{{dialogue||indent=double|This is probably a copy of one of the original documents from the First Builder. It's the same book that most Builders read when they're first studying to learn the trade.}}
+{{dialogue||indent=double|"...Look around you, it's a scene from the apocalypse, but it is also a treasure trove of wonders! If the human race is to survive this dark winter, we will need to make full use of the technology leftover from before the war..."}}
+{{dialogue||indent=double|Victor really knew how to look on the bright side. Even without a sun.}}
+{{dialogue||indent=double|It's one of the diagrams used by the first Builders. It looks like a simple furnace, not that much different from one of yours.}}
+{{dialogue||indent=double|(What should I say?)}}
+
+::*''A Power Stone with a note''
+::*''I've seen enough. [END]'' (No unique dialogue)
+
+{{dialogue||indent=3|answer=A Power Stone with a note
+|A Power Stone like any other. Probably still usable.}}
+{{dialogue||indent=3|The note reads: "Use this to generate energy!" Perhaps Hicks was worried people might lose track of how to use Power Stones in the future.}}
+{{dialogue||indent=3|(What should I say?)}}
+
+:::*''I've seen enough. [END]'' (No unique dialogue)
+
+{{dialogue||indent=true|answer=A handbook
+|The title reads: Reclamation of Past Technology, By Victor.}}
+{{dialogue||indent=true|This is probably a copy of one of the original documents from the First Builder. It's the same book that most Builders read when they're first studying to learn the trade.}}
+{{dialogue||indent=true|"...Look around you, it's a scene from the apocalypse, but it is also a treasure trove of wonders! If the human race is to survive this dark winter, we will need to make full use of the technology leftover from before the war..."}}
+{{dialogue||indent=true|Victor really knew how to look on the bright side. Even without a sun.}}
+{{dialogue||indent=true|It's one of the diagrams used by the first Builders. It looks like a simple furnace, not that much different from one of yours.}}
+{{dialogue||indent=true|(What should I say?)}}
+
+:*''A Power Stone with a note''
+:*''A pickaxe''
+:*''I've seen enough. [END]'' (No unique dialogue)
+
+{{dialogue||indent=double|answer=A Power Stone with a note
+|A Power Stone like any other. Probably still usable.}}
+{{dialogue||indent=double|The note reads: "Use this to generate energy!" Perhaps Hicks was worried people might lose track of how to use Power Stones in the future.}}
+{{dialogue||indent=double|(What should I say?)}}
+
+::*''A pickaxe''
+::*''I've seen enough. [END]'' (No unique dialogue)
+
+{{dialogue||indent=3|answer=A pickaxe
+|It's a standard enough looking pickaxe, made of stone. Perhaps Hicks never learned to make anything sturdier than this. Or perhaps he didn't want to part with one of his better tools.}}
+{{dialogue||indent=3|This wooden handle is a bit flimsy, but is doing pretty well, considering its age. Shows no sign of rot, suggesting that the box was air tight.}}
+{{dialogue||indent=3|(What should I say?)}}
+
+:::*''I've seen enough. [END]'' (No unique dialogue)
+
+{{dialogue||indent=double|answer=A pickaxe
+|It's a standard enough looking pickaxe, made of stone. Perhaps Hicks never learned to make anything sturdier than this. Or perhaps he didn't want to part with one of his better tools.}}
+{{dialogue||indent=double|This wooden handle is a bit flimsy, but is doing pretty well, considering its age. Shows no sign of rot, suggesting that the box was air tight.}}
+{{dialogue||indent=double|(What should I say?)}}
+
+::*''A Power Stone with a note''
+::*''I've seen enough. [END]'' (No unique dialogue)
+
+{{dialogue||indent=3|answer=A Power Stone with a note
+|A Power Stone like any other. Probably still usable.}}
+{{dialogue||indent=3|The note reads: "Use this to generate energy!" Perhaps Hicks was worried people might lose track of how to use Power Stones in the future.}}
+{{dialogue||indent=3|(What should I say?)}}
+
+:::*''I've seen enough. [END]'' (No unique dialogue)
+
+Remove behavior CommanderMoveToFlagAndAction (idName: 8214175) from Mi-an
+
+TRIGGER Procedure 0.0 Step 13.0 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8214175) to Mi-an
+(param: TargetScene:Science|MoveMode:Walk|FlagName:S8214_Mian_2_1|Action:TakeTheLetter)
+STOPWATCH REAL TIME SET || id: 82141 | sec: 1
+
+TRIGGER Procedure 0.0 Step 14.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) The player picks the fourth option in conversation segment 5784:
+{{dialogue||(What should I say?)}}
+
+*''A Power Stone with a note'' (No unique dialogue)
+*''A pickaxe'' (No unique dialogue)
+*''A handbook'' (No unique dialogue)
+*''I've seen enough. [END]'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 10) A conversation 1712_0 starts:
+{{dialogue|Qi|Hm. Unfortunate. Based on the approximate age of the box, I was hoping we'd find something undiscovered. These are all objects of interest, but I'm afraid none are particularly unique.}}
+{{dialogue|Mi-an|This letter has a bunch of stuff about gangs and hurting people...? Director, was the Age of Darkness really that bad?}}
+{{dialogue|Qi|Ah, I hadn't realized you had failed your history classes, how surprising. Allow me to enlighten you:}}
+{{dialogue|Qi|Yes, in fact, this letter is rather tame in its descriptions. In the first 50 years after the Day of Calamity, the surviving population were lucky to locate even one proper meal per day, resulting in desperate panic and constant tribe-like warfare over resources.}}
+{{dialogue|Qi|In combination with the poor nutrition, poor hygiene, and lack of sunlight which led to various physical ailments and illnesses, the result was the lowest average life expectancy in human history...}}
+{{dialogue|Qi|All in all, the era was quite suboptimal for research, and I for one am rather glad to exist currently.}}
+{{dialogue|Mi-an|Gosh! That sounds so horrible! But... at the same time, it really is amazing there were people back then like Hicks here who never lost hope!}}
+{{dialogue|Mi-an|''Player'', can you imagine? If it wasn't for heroes like Hicks and Peach, we might still be underground and worrying about where our next meal might come from! Director-}}
+{{dialogue|Qi|Ahem. Social history is not exactly an interest of mine, I suggest if you have more questions you do your own research or ask someone who... cares.}}
+The conversation ends.
+Add 1 Hicks' Letter of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 15.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8214074) to Qi
+(param: TargetScene:Science|MoveMode:Walk|FlagName:S8214_Qi_2_1|Action:StandWrite)
+Remove behavior CommanderMoveToFlagAndAction (idName: 8214002) from Player
+Add behavior CommanderMoveToFlagAndAction (idName: 8214003) to Player
+(param: TargetScene:Science|MoveMode:Walk|FlagName:S8214_Player_2_2|LookAtActor:8017)
+
+TRIGGER Procedure 0.0 Step 15.5 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 11) A conversation 1713_0 starts:
+{{dialogue|Mi-an|Erm, sure, Director! Thanks for all your help!}}
+{{dialogue|Mi-an|Wow, what a find! I knew a bit about the Age of Darkness, but this is my first time getting such a hands-on experience with history!}}
+{{dialogue|Mi-an|We need to try hard to carry on the legacy of these people from the past!}}
+{{dialogue|Mi-an|That gives me an idea! Say, ''Player'', why don't we make our own time capsule?}}
+{{dialogue|Mi-an|It could be our chance to contribute our knowledge and experiences to the people of the future! Director, could you draw us out a-}}
+{{dialogue|Qi|No.}}
+{{dialogue|Mi-an|...Eh, fine, I mean, it's just a box, how hard could it be to come up with a design? ''Player'', why don't you let me figure out what it's made of and I'll send you a diagram as soon as possible.}}
+
+*''Sounds great!''
+*''Sounds kinda boring...''
+
+{{dialogue|Mi-an|indent=true|answer=Sounds great!
+|I knew you'd be into it!}}
+{{dialogue|Mi-an|indent=true|answer=Sounds kinda boring...
+|Ah... sorry, I really thought you'd be into it.}}
+DELIVER MISSION 1800214
+
+TRIGGER Procedure 0.0 Step 16.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) After the conversation ends:
+CONDITIONS
+Mysterious Box is in state 2 with flag 0
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8214003) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8214002) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8214174) from Mi-an
+Remove behavior CommanderMoveToFlagAndAction (idName: 8214175) from Mi-an
+Mi-an stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8214074) from Qi
+Remove behavior CommanderMoveToFlagAndAction (idName: 8214173) from Mi-an
+Remove behavior CommanderMoveToFlagAndAction (idName: 8214072) from Qi
+Qi stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8214002) from Player
+CUTSCENE UI STATE EXIT || 
+GLOBAL BLACK BOARD REMOVE || key: NoCutSceneObstacle
+
+TRIGGER Procedure 0.0 Step 16.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) The player picks the first option in conversation segment 5809:
+{{dialogue|Mi-an|...Eh, fine, I mean, it's just a box, how hard could it be to come up with a design? ''Player'', why don't you let me figure out what it's made of and I'll send you a diagram as soon as possible.}}
+
+*''Sounds great!'' (No unique dialogue)
+*''Sounds kinda boring...'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 5812:
+{{dialogue|Mi-an|I haven't finished the design yet, have you changed your mind?}}
+
+*''Sounds great!'' (No unique dialogue)
+*''Sounds kinda boring...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 12) A conversation 1717_0 starts:
+{{dialogue|Mi-an|While you're working on it, I'll gather up some historical stuff we can put in there; maybe we can provide the people of the future with something more substantial than our old pal Hicks.}}
+{{dialogue|Mi-an|Anyway, once you're done, bring the box to me! Then we'll go bury it! Oh, and let's each also bring one personal item that we want to send to the future! Make sure it's something that... doesn't expire.}}
+{{dialogue|Mi-an|Okay! It's a plan! Catch up with you soon!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 17.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 12) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1800214
+
+TRIGGER Procedure 0.0 Step 20.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800214
+CONDITIONS
+Always:
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: NoCutSceneObstacle
+Remove behavior CommanderMoveToFlagAndAction (idName: 8214003) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8214002) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8214175) from Mi-an
+Remove behavior CommanderMoveToFlagAndAction (idName: 8214174) from Mi-an
+Mi-an stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8214074) from Qi
+Remove behavior CommanderMoveToFlagAndAction (idName: 8214173) from Mi-an
+Remove behavior CommanderMoveToFlagAndAction (idName: 8214072) from Qi
+Qi stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8214002) from Player
+CUTSCENE UI STATE EXIT || 
+Run mission Mysterious Box
+END MISSION 1800214
+
+TRIGGER Procedure 0.0 Step 20.3 Order 25 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 82141
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 82143
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Mi-an|I haven't finished the design yet, have you changed your mind?}}
+
+*''Sounds great!''
+*''Sounds kinda boring...''
+
+{{dialogue|Mi-an|indent=true|answer=Sounds great!
+|I knew you'd be into it!}}
+{{dialogue|Mi-an|indent=true|answer=Sounds kinda boring...
+|Ah... sorry, I really thought you'd be into it.}}
+
+==Rewards==
+{{mission reward
+|npc1 = Mi-an
+|rp1 = 15
+|exp = 1150
+|reputation = 15
+|gols = 800
+}}

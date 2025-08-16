@@ -1,0 +1,143 @@
+Reading Mission 1500398: Starry, Starry Nights
+
+<onlyinclude>{{Infobox mission
+|name = Starry, Starry Nights
+|image =
+|description = Take a hard earned day with Nia to relax and look out at the stars.
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 2100
+|reputation = None
+|gols = None
+|npc1 = Nia
+|rp1 = 30
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200192
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Nia
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: niaday3 | info: 1 | exist: 1
+ACTIONS
+(cId 1) A conversation 31197 starts:
+{{dialogue|Nia|Urgh, the time has gone way too fast. You're kind of lucky being in Sandrock!}}
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1200331 is result 1 flag 1
+Check relationship with Nia is Lover
+ACTIONS
+Run mission Starry, Starry Nights
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DAY START FOR WEATHER || order: 0 | weather: 0
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON ADD || missionId: 1500398 | npc: 8059 | missionIcon: 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Nia
+CONDITIONS
+Always:
+ACTIONS
+(cId 539801) A conversation 20137, 20138, 20139, 6397_0 starts:
+{{dialogue|Nia|Heya, ''Player''! I hardly recognized ya without your nose buried in that Worktable of yours, heh heh...}}
+{{dialogue|Nia|So... does that mean you have time... for a date?}}
+{{dialogue|Nia|The weather should be clear tonight, we could go stargazing! Stars sparkling above, cool breeze in the air carrying those unique scents and smells... hum...}}
+{{dialogue|Nia|Now that I think about it, I've hardly taken the time to look at the stars here at all... So... let's do it!}}
+
+*''Yeah!''
+*''Ah, I really can't today, sorry...''
+
+{{dialogue|Nia|indent=true|answer=Yeah!
+|Let's meet at the {{textcolor|green|Shipwreck Ruins around 22:00PM}}. Sure, we could try to use Qi's telescope, but I prefer au naturel. Besides, I don't want him hassling us anyway. Best to be just us. See you soon!}}
+{{dialogue|Nia|indent=true|answer=Ah, I really can't today, sorry...
+|I seeee... I was mistaken. Alright! No problem. Let me know if you do end up getting time.}}
+Set notaccept to 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 20148) that ends:
+{{dialogue|Nia|Let's meet at the {{textcolor|green|Shipwreck Ruins around 22:00PM}}. Sure, we could try to use Qi's telescope, but I prefer au naturel. Besides, I don't want him hassling us anyway. Best to be just us. See you soon!}}
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1500398
+START MISSION 1500398
+===Go to Shipwreck Ruins at 22:00===
+
+{{mission_details
+|desc = The weather is clear today, head towards the Shipwreck Ruins at 22:00PM.
+|details = Go to Shipwreck Ruins at 22:00
+}}
+NPC ICON REMOVE || missionId: 1500398 | npc: 8059 | missionIcon: 0
+Run mission Starry, Starry Nights
+END MISSION 1500398
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 20143) that ends:
+{{dialogue|Nia|I seeee... I was mistaken. Alright! No problem. Let me know if you do end up getting time.}}
+CONDITIONS
+Always:
+ACTIONS
+Set notaccept to 1
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Nia
+CONDITIONS
+Check if notaccept is == 1
+CHECK WEATHER STATE || weather: 0 | flag: 1
+ACTIONS
+(cId 539802) A conversation 6400_0 starts:
+{{dialogue|Nia|Oh, hey. Did things clear up? Stargazing date?}}
+
+*''Yeah, I do have time after all.''
+*''Same as it ever was, I'm afraid.''
+
+{{dialogue|Nia|indent=true|answer=Yeah, I do have time after all.
+|Let's meet at the {{textcolor|green|Shipwreck Ruins around 22:00PM}}. Sure, we could try to use Qi's telescope, but I prefer au naturel. Besides, I don't want him hassling us anyway. Best to be just us. See you soon!}}
+{{dialogue|Nia|indent=true|answer=Same as it ever was, I'm afraid.
+|I seeee... I was mistaken. Alright! No problem. Let me know if you do end up getting time.}}
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Nia
+CONDITIONS
+Check if notaccept is == 1
+CHECK WEATHER STATE || weather: 0 | flag: 0
+ACTIONS
+(cId 539803) A conversation 20144 starts:
+{{dialogue|Nia|Hm... not really sure stargazing is still on the table for today. Let's find another time?}}
+
+==Rewards==
+{{mission reward
+|npc1 = Nia
+|rp1 = 30
+|exp = 2100
+|reputation = None
+|gols = None
+}}

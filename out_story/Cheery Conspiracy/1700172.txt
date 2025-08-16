@@ -1,0 +1,905 @@
+Reading Mission 1700172: Cheery Conspiracy
+
+<onlyinclude>{{Infobox mission
+|name = Cheery Conspiracy
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Cheery Conspiracy:
+
+TRIGGER Procedure 0.0 Step 4.5 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if accept is == 1
+ACTIONS
+START MISSION 1700171
+
+TRIGGER Procedure 0.0 Step 5.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700171
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Arvio stops standing still
+X stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 171718042) from X
+Fang stops standing still
+Run mission Cheery Conspiracy
+END MISSION 1700171
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700172
+CONDITIONS
+Always:
+ACTIONS
+===Wait Until Tomorrow===
+
+{{mission_details
+|desc = Arvio's plan will take place tomorrow. Wait until he's ready.
+|details = Wait Until Tomorrow
+}}
+Set DL to 2
+Set meetFang to 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment DL by 1
+
+TRIGGER Procedure 0.0 Step 0.5 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 4274:
+{{dialogue|X|Uh oh! Uh oh! Ah oh!}}
+
+*''(Tell the truth)'' (No unique dialogue)
+*''(Try to lie)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set Lie to 1
+
+TRIGGER Procedure 0.0 Step 1.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 4274:
+{{dialogue|X|Uh oh! Uh oh! Ah oh!}}
+
+*''(Tell the truth)'' (No unique dialogue)
+*''(Try to lie)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set Lie to 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Fang===
+
+{{mission_details
+|desc = Arvio has already got X. Now you need to talk to Fang, and make sure he knows X was "kidnapped."
+|details = Talk to Fang
+}}
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1717201 | path: Mission_CC_Cage | sceneName: Main | flagName: CheeryConspiracy_Cage | extraParams: 0
+Kidnapper stands still in Main
+X stands still in Main
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1717203 | path: Mission_feathers | sceneName: Main | flagName: default | extraParams: -1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+Check if meetFang is == 1
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+Where's Mi-an is in state 1 with flag 0
+The Childhood Friend is in state 1 with flag 0
+Goodbye, Nia is in state 1 with flag 0
+The Kidnapping is in state 1 with flag 0
+CHECK GLOBAL BLACKBOARD || key: triallogan | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+Fang stands still in Main
+
+TRIGGER Procedure 0.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Find the "Kidnapped" X===
+
+{{mission_details
+|desc = Follow the feathers, help Fang find X
+|details = Find the "Kidnapped" X
+}}
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8016 | state: Defense
+AREA TRIGGER ONCE CREATE || missionId: 1700171 | id: 17001712 | sceneName: Main | showOnMap: 1 | flagName: CheeryConspiracy_Cage | mapIcon: MissionAreaBranch | transId: 80006915
+
+TRIGGER Procedure 0.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 17001712
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key NoCutSceneObstacle with info 1.
+DELAY MASK SET || maskId: 1717201 | delayTime: 0 | durationTime: 1.5 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+Set pkend to 0
+
+TRIGGER Procedure 0.0 Step 6.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 20:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Fang stops standing still
+
+TRIGGER Procedure 0.0 Step 7.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 1717201 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8016
+DELAY MASK SET || maskId: 1717201 | delayTime: 0 | durationTime: 1.5 | changeType: 1 | curveIndex: 0
+Fang stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: CheeryConspiracy_Player2
+
+TRIGGER Procedure 0.0 Step 8.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 1717201 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 1200_0 starts:
+{{dialogue|X|Help! Help!}}
+{{dialogue|Kidnapper|Mwahahaha! Wail all you want little bird, your tears only serve as seasoning for the delectable dish you're about to be!}}
+{{dialogue|X|Fang! Fang!}}
+{{dialogue|Kidnapper|What the-?}}
+{{dialogue|Kidnapper|Your knights in shining armor? Well, get ready to say "nighty-night," knights!}}
+{{dialogue|Fang|Who... sent you?}}
+{{dialogue|Kidnapper|Guffaw! As if someone could ever hope to control the great A- Birdnappicus! I must taste all the birds of this world! ...And I'll destroy anyone who stands in my way!}}
+{{dialogue|Kidnapper|Let's dance!}}
+
+*''(Duel)''
+*''(Persuade the kidnapper)''
+
+{{dialogue|Kidnapper|indent=true|answer=(Persuade the kidnapper)
+|Do not try to use your dashing looks and tantalizing words to weasel out of this! If you want your feathered friend back, then you'll have to resort to old fashioned fisti-cuffs!}}
+
+:*''(Duel)''
+
+{{dialogue|Fang|S-stop... no fighting...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 9.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 1717203 | delayTime: 0 | durationTime: 1 | changeType: 0 | curveIndex: 0
+Add behavior NPC_Conversation (idName: 80781) to Kidnapper
+(param: DialogTarget:8000)
+TIME SET ENABLE || bool: 0
+
+TRIGGER Procedure 0.0 Step 8.5 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 1717203 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+STORY ADD ACTOR LOCKER || actorId: 8078 | lockerId: 71721 | lockerType: Rescue
+Remove behavior NPC_Conversation (idName: 80781) from Kidnapper
+Kidnapper stops standing still
+===Defeat the Masked Man===
+
+{{mission_details
+|desc = Defeat the masked man, and save the "kidnapped" X.
+|details = Defeat the Masked Man
+}}
+ACTOR SET FACTION || isAdd: 1 | npc: 8078 | id: 6
+ACTOR SET FACTION || isAdd: 1 | npc: 8000 | id: 7
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1717202 | sceneName: Main | extraParams: 0 | path: Mission_CCBattlefeild | flagName: CheeryConspiracy_Cage
+DELAY MASK SET || maskId: 1717203 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: 0
+Fang stands still in Main
+STOPWATCH REAL TIME SET || id: 1717210 | sec: 30
+Add behavior Story1700171_8016 (idName: 1717280167) to Fang
+(param: -1)
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 10.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC DEAD || order: 0 | id: 8078
+CONDITIONS
+Check if pkend is == 0
+ACTIONS
+STOPWATCH REAL TIME UNSET || id: 1717210
+DELAY MASK SET || maskId: 1717204 | delayTime: 0 | durationTime: 1 | changeType: 0 | curveIndex: 0
+TIME SET ENABLE || bool: 1
+
+TRIGGER Procedure 0.0 Step 10.5 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 1717210
+CONDITIONS
+Check if pkend is == 0
+ACTIONS
+DELAY MASK SET || maskId: 1717204 | delayTime: 0 | durationTime: 1 | changeType: 0 | curveIndex: 0
+TIME SET ENABLE || bool: 1
+Set pkend to 1
+
+TRIGGER Procedure 0.0 Step 11.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 17172001) to Kidnapper
+(param: TargetScene:Main|FlagName:CheeryConspiracy_Escape1|MoveMode:RunFast)
+
+TRIGGER Procedure 0.0 Step 12.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8078 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 17172001) from Kidnapper
+Add behavior CommanderMoveToFlagAndAction (idName: 17172002) to Kidnapper
+(param: TargetScene:Main|FlagName:CheeryConspiracy_Escape2|MoveMode:RunFast)
+
+TRIGGER Procedure 0.0 Step 13.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8078 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+NPC LEAVE || npc: 8078
+Remove behavior CommanderMoveToFlagAndAction (idName: 17172002) from Kidnapper
+(cId 4) A conversation 4260 starts:
+{{dialogue|X|Help! Help!}}
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 1717280161) to Fang
+(param: Action:Give|TargetScene:Main|FlagName:CheeryConspiracy_Arvio2|MoveMode:Run)
+
+TRIGGER Procedure 0.0 Step 15.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 1717204 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Fang stops standing still
+Set global blackboard key NoCutSceneObstacle with info 1.
+CUTSCENE UI STATE ENTER || 
+ACTOR SET FACTION || isAdd: 0 | npc: 8000 | id: 7
+ACTOR SET FACTION || isAdd: 0 | npc: 8078 | id: 6
+Kidnapper stands still in Main and looks at Player
+SCENEITEM DELETE || itemType: 0 | id: 1717202
+Remove behavior Story1700171_8016 (idName: 1717280167) from Fang
+Fang stops standing still
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: CheeryConspiracy_Player2
+DELAY MASK SET || maskId: 1717204 | delayTime: 0 | durationTime: 2 | changeType: 1 | curveIndex: 0
+Fang stands still in Main
+
+TRIGGER Procedure 0.0 Step 15.0 Order 35 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 1717204 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 1203_0 starts:
+{{dialogue|Kidnapper|Hya! Hark! Egad! Forsooth... Et cetera... I am beaten! I surrender!}}
+{{dialogue|Kidnapper|You! How... you devilish dervish, how are you so potently powerful!?}}
+
+*''I fight for my friends!''
+*''There's no stopping me!''
+*''I dunno. Diet, maybe!''
+
+{{dialogue|Kidnapper|indent=true|answer=I fight for my friends!
+|Ha! How admirable! Well, you'll not get away with this! I'll be back!}}
+{{dialogue|Kidnapper|indent=true|answer=There's no stopping me!
+|Fine! Well, we'll meet again!}}
+{{dialogue|Kidnapper|indent=true|answer=I dunno. Diet, maybe!
+|Fine! Well, we'll meet again!}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Fang
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 1191_0 starts:
+{{dialogue|Fang|Have you seen X?}}
+
+*''Why are you asking me?''
+*''I saw the kidnapping...''
+
+{{dialogue|Fang|indent=true|answer=Why are you asking me?
+|I... know you.}}
+{{dialogue|Fang|indent=true|Do you... know anything?}}
+{{dialogue|Fang|X... taken? By who?}}
+
+*''A stranger.''
+*''A tourist.''
+*''Arvio.''
+
+{{dialogue|Fang|indent=true|answer=Arvio.
+|Not possible. Shopkeep... a good man.}}
+{{dialogue|Fang|indent=true|Someone else...}}
+{{dialogue|Fang|X can... fly away...}}
+{{dialogue|Fang|Must be someone... he knows.}}
+{{dialogue|Fang|...}}
+{{dialogue|Fang|...}}
+{{dialogue|Fang|Im-impossible...}}
+{{dialogue|Fang|No, no, no...}}
+{{dialogue|Fang|How... how could they find us!?}}
+{{dialogue|Fang|If it's them... What do I... do?}}
+{{dialogue|Fang|Have... have "they..." found us?}}
+
+*''Do you need my help?''
+*''Who is "they?"''
+*''Uh. Civil Corps time?''
+
+{{dialogue|Fang|indent=true|answer=Do you need my help?
+|...}}
+{{dialogue|Fang|indent=true|X, we're coming.}}
+{{dialogue|Fang|indent=true|answer=Who is "they?"
+|Can't let "them" take X.}}
+{{dialogue|Fang|indent=true|Go now. You lead.}}
+{{dialogue|Fang|indent=true|answer=Uh. Civil Corps time?
+|No.}}
+{{dialogue|Fang|indent=true|Can't let "them" take X.}}
+{{dialogue|Fang|indent=true|Go now. You lead.}}
+Fang stops standing still
+Set meetFang to 2
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8016 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 1717202 | delayTime: 0.5 | durationTime: 2 | changeType: 0 | curveIndex: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 1717280161) from Fang
+Fang stands still in Main
+NPC LEAVE || npc: 8078
+
+TRIGGER Procedure 1.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 1717202 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 1717201
+DELAY MASK SET || maskId: 1717202 | delayTime: 0 | durationTime: 1.5 | changeType: 1 | curveIndex: 0
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: CheeryConspiracy_Player3
+Arvio stands still in Main
+
+TRIGGER Procedure 1.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 1717202 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 1206_0 starts:
+{{dialogue|X|Free! Free at last!}}
+{{dialogue|Fang|''Player''... thank you.}}
+{{dialogue|X|Whatcha talkin' 'bout, bird!? That's all? C'mon, be nice!}}
+{{dialogue|Fang|Hm?}}
+{{dialogue|X|Sometimes a thank you just ain't enough!}}
+{{dialogue|Fang|Then... Come. Eat with us. Tonight. Bring a friend-}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+X stands still in Main
+STOPWATCH REAL TIME SET || id: 171721 | sec: 2
+Fang stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: CheeryConspiracy_Player4
+(cId 6) A conversation 4267 starts:
+{{dialogue|Arvio|Where's the villain! Let me at him! Curses! How could someone abduct our adorable X!}}
+
+TRIGGER Procedure 1.0 Step 9.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior BirdFly (idName: 1717280421) to X
+(param: Fly_TargetID:8016)
+Fang stops standing still
+Fang stops standing still
+X stops standing still
+X stops standing still
+Fang stops standing still
+Add behavior Story1700171_8014 (idName: 1717280145) to Arvio
+(param: -1)
+Add behavior CommanderMoveToFlag (idName: 1717280163) to Fang
+(param: TargetScene:Main|FlagName:CheeryConspiracy_Fang_leave)
+STOPWATCH REAL TIME SET || sec: 6 | id: 171723
+STOPWATCH REAL TIME SET || id: 171724 | sec: 6.4
+
+TRIGGER Procedure 1.0 Step 9.5 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 171724
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 1717280161) to Fang
+(param: CMDAction:ShakeHead)
+In a speech bubble:
+{{dialogue|Fang|Enough!}}
+STOPWATCH REAL TIME SET || id: 171725 | sec: 3
+STOPWATCH REAL TIME SET || id: 171726 | sec: 0.2
+
+TRIGGER Procedure 1.0 Step 9.6 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 171726
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 1717280161) from Fang
+
+TRIGGER Procedure 1.0 Step 10.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 17172003) to Arvio
+(param: TargetScene:Main|FlagName:CheeryConspiracy_Arvio4|MoveMode:RunFast|Action:Attack1)
+
+TRIGGER Procedure 1.0 Step 10.5 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8014 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 9) A conversation 1207_0 starts:
+{{dialogue|Arvio|If I find the treacherous fiend who took him, I promise, I will slay him by this hand! For as my father once cried, "by thee who take my mortal bird, to the skies I must fly to avenge!"}}
+{{dialogue|Arvio|Ah...!}}
+{{dialogue|Fang|...!}}
+{{dialogue|Fang|You... just now...}}
+{{dialogue|Fang|Your injury... same as... the birdnapper.}}
+{{dialogue|Fang|Explain.}}
+{{dialogue|X|Uh oh! Uh oh! Ah oh!}}
+
+*''(Tell the truth)''
+*''(Try to lie)''
+
+{{dialogue|Fang|indent=true|answer=(Tell the truth)
+|...}}
+{{dialogue|Fang|indent=true|This was... your idea?}}
+{{dialogue|Arvio|indent=true|Fang... now you know... uh... ha... ha....}}
+{{dialogue|Arvio|indent=true|Ah, Fang, I knew you were perceptive but... how did you know it was me already? Er, I don't suppose you've also surmised why I wanted to pull such a scheme...?}}
+{{dialogue|X|indent=true|Friends! Kiss 'n make up? Kiss kiss! It's okay...}}
+{{dialogue|Fang|indent=true|I won't forgive... shysters...}}
+{{dialogue|Arvio|indent=true|Fang, please, let me explain! I never wanted to cause you worry, or scare you, I simply wanted to be your friend... but if you're angry, I understand.}}
+{{dialogue|X|indent=true|answer=(Try to lie)
+|He knows! He knows! Ahhh!}}
+{{dialogue|Arvio|indent=true|Fine, come on ''Player'', let's just come clean. X is right. I guess the plan was fool-proof, but not necessarily Arvio-proof...}}
+{{dialogue|Arvio|indent=true|If you were scared just now, please know, it was absolutely not our intention! Please, forgive us! All we wanted was to-}}
+{{dialogue|X|We're sorry! We're sorry! That's all, folks!}}
+{{dialogue|Fang|... X, you... too?}}
+{{dialogue|X|X friend CoCo! Fang, no friend...}}
+{{dialogue|Fang|X... go home. Now.}}
+{{dialogue|X|Squark! Buh-bye! Aaaaaaaaaaaa!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 18.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) After the conversation ends:
+CONDITIONS
+Check if Lie is == 0
+ACTIONS
+Fang gains 5 favor
+
+TRIGGER Procedure 1.0 Step 11.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 17172002 | delayTime: 0 | durationTime: 1 | changeType: 0 | curveIndex: 0
+Arvio stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 17172003) from Arvio
+Remove behavior CommanderMoveToFlag (idName: 1717280163) from Fang
+Remove behavior CommanderMoveToFlagAndAction (idName: 17172002) from Arvio
+Arvio stops standing still
+NPC REMOVE TAG || tag: 1700171Fang
+Remove behavior BirdFly (idName: 1717280421) from X
+Set FangAngry to 1
+Remove behavior CommanderNPCAction (idName: 1717280161) from Fang
+Remove behavior CommanderNPCAction (idName: 1717280141) from Arvio
+Remove behavior Story1700171_8014 (idName: 1717280145) from Arvio
+===Give Fang Some Time===
+
+{{mission_details
+|desc = The plan was foiled, and Fang found out everything. He seemed quite upset, it's probably best to give him a bit of time.
+|details = Give Fang Some Time
+}}
+Increment DL by 10
+
+TRIGGER Procedure 1.0 Step 12.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 17172002 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 17172002 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: 0
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 13.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 171723
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Arvio|Fang! Wait! Please, let us explain!}}
+Add behavior CommanderNPCAction (idName: 1717280141) to Arvio
+(param: CMDAction:Give|Delay:0.2|LookAtActor:8016)
+
+TRIGGER Procedure 1.0 Step 14.0 Order 13 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Fang
+CONDITIONS
+Check if FangAngry is == 1
+ACTIONS
+(cId 10) A conversation 4239 starts:
+{{dialogue|Fang|...}}
+
+TRIGGER Procedure 1.0 Step 17.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 171725
+CONDITIONS
+Always:
+ACTIONS
+(cId 8) A conversation 1211_0, 4820, 4298 starts:
+{{dialogue|Arvio|''Player'' this... don't worry, he's got to this point with me a few times, and he's uh, usually... fine the next day. But... wow, no, he was really, really upset this time...}}
+
+*''Let's give him some space.''
+*''He hates us now...''
+*''This is all your fault!''
+
+{{dialogue|Arvio|indent=true|answer=Let's give him some space.
+|Yes, yes. I think that's the best thing we can do. Let's give him some time to cool down, we can apologize when he's in a better mood.}}
+{{dialogue|Arvio|indent=true|answer=He hates us now...
+|Ah... I don't think he hates us. Even if so, what's the worst thing that could happen? Things just going back to the way they were before? We tried our best, ''Player''. I don't think we should feel bad about that.}}
+{{dialogue|Arvio|indent=true|answer=This is all your fault!
+|Huh?! Well, maybe if you hadn't hit me so hard, I-!}}
+{{dialogue|Arvio|indent=true|No, no, ''Player''! Look at us! We can't turn on each other over this! We both tried our hardest to reach out to Fang, and he saw right through our ruse...}}
+{{dialogue|Arvio|Okay, I'll also admit, my plan was pretty crazy...}}
+The conversation ends.
+{{dialogue|Arvio|''Player'', do you think... do you think Fang will ever forgive us? I... I think I'll have to apologize. Perhaps a gift...}}
+{{dialogue|Arvio|In any case, thanks for your support, ''Player''. I hope, in the end, we are able to make a difference. Stay in touch.}}
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 2
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Decrement DL by 1
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if DL is == 0
+ACTIONS
+Kidnapper stops standing still
+X stops standing still
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8016
+SCENEITEM DELETE || itemType: 0 | id: 1717201
+AREA TRIGGER DELETE || id: 17001712
+SCENEITEM DELETE || itemType: 0 | id: 1717203
+The player receives a letter:
+{{mail|301}}
+FAIL MISSION || missionId: 1700171
+END MISSION 1700172
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+Where's Mi-an is in state 1 with flag 0
+The Childhood Friend is in state 1 with flag 0
+Goodbye, Nia is in state 1 with flag 0
+The Kidnapping is in state 1 with flag 0
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 1717203
+UNIQUE ACTION RUN || idStr: leave_home
+X stands still in Main
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+(cId 11) A conversation 1215_0 starts:
+{{dialogue|X|Here's a little something, sweetie.}}
+
+*''A present for me?''
+*''Fang's not angry?''
+
+{{dialogue|X|indent=true|answer=A present for me?
+|No, silly! Give Fang! Go, go!}}
+{{dialogue|X|indent=true|answer=Fang's not angry?
+|Not angry! Fang!}}
+{{dialogue|X|indent=true|Go! Give Fang!}}
+{{dialogue|X|Gift! Gift! Fang wants! Make medicine!}}
+{{dialogue|Player|(Maybe now would be a good time to apologize to Fang.)}}
+The conversation ends.
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Apologize to Fang===
+
+{{mission_details
+|desc = X wants to make things better again. He brought Cistanche for you to give to Fang as an apology. Go and give it to him.
+|details = Apologize to Fang
+*{{i2|Cistanche|0/1}}
+*{{i2|Fang|0/1}}
+}}
+Add 1 Cistanche of Rare quality (Notify player)
+X stops standing still
+CUTSCENE UI STATE EXIT || 
+Set FangAngry to 0
+
+TRIGGER Procedure 3.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Fang
+CONDITIONS
+Always:
+ACTIONS
+(cId 12) A conversation 1218_0 starts:
+{{dialogue|Fang|...}}
+
+*''I'm sorry.''
+*''I got you a gift...''
+
+{{dialogue|Fang|indent=true|answer=I'm sorry.
+|Already, forgotten.}}
+{{dialogue|Fang|indent=true|answer=I got you a gift...
+|Useful gift.}}
+{{dialogue|Fang|indent=true|Thank you.}}
+{{dialogue|Fang|Before, stupid.}}
+{{dialogue|Fang|...Quite stupid.}}
+{{dialogue|Fang|Arvio usually... But... not you...}}
+{{dialogue|Fang|Why... do this?}}
+
+*''Seemed like a good plan.''
+*''I'm sorry. It was a bad idea.''
+*{{flirt}}''I wanted to get closer to you.''
+
+{{dialogue|Fang|indent=true|answer=Seemed like a good plan.
+|Yes. It was.}}
+{{dialogue|Fang|indent=true|answer=I'm sorry. It was a bad idea.
+|I see...}}
+{{dialogue|Fang|indent=true|answer=I wanted to get closer to you.
+|...Closer?}}
+{{dialogue|Fang|I accept... your apology.}}
+{{dialogue|Fang|You can... visit...}}
+{{dialogue|Fang|...Sometimes...}}
+{{dialogue|Fang|But...}}
+{{dialogue|Fang|Don't lie...}}
+{{dialogue|Fang|Again...}}
+
+*''Never again!''
+*''Well, I'll try...''
+
+{{dialogue|Fang|Hm.}}
+{{dialogue|Fang|Goodbye.}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 12) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Fang gains 10 favor
+SUBMIT MISSION 1700171
+ACTION NPC REMOVE FLAG || npc: 8016 | flag: 32
+ACTION SHOW CUSTOM IMAGE TIPS || preset: Mission | content: 80008581
+
+TRIGGER Procedure 3.0 Step 3.5 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 12) The player picks the -1 option in conversation segment 4305:
+{{dialogue|Fang|...}}
+
+*''I'm sorry.'' (No unique dialogue)
+*''I got you a gift...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+BAG MODIFY BY TARGET || missionId: 1700171 | targetId: 5
+
+TRIGGER Procedure 3.0 Step 3.6 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 12) The player picks the first option in conversation segment 4319:
+{{dialogue|Fang|Again...}}
+
+*''Never again!'' (No unique dialogue)
+*''Well, I'll try...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Fang gains 5 favor
+
+TRIGGER Procedure 3.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1700171 | id: 17001710 | sceneName: Main | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: -1 | flagName: CheeryConspiracy_Trigger1
+
+TRIGGER Procedure 3.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 17001710
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 1717200 | delayTime: 0 | durationTime: 1.5 | changeType: 0 | curveIndex: -2
+AREA TRIGGER DELETE || id: 17001710
+
+TRIGGER Procedure 3.0 Step 7.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 1717200 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Arvio stands still in Main and looks at Fang
+Fang stands still in Main and looks at Arvio
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 1717200 | delayTime: 0 | durationTime: 1.5 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 8.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 1717200 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 4823, 4824, 4825, 4826, 4827, 4828, 4829, 4830 starts:
+{{dialogue|Fang|''Player'', they told me.}}
+{{dialogue|Arvio|Fang, I'm so, so sorry...}}
+{{dialogue|Arvio|Can you forgive me? I just... oh, it was such a stupid idea! Stupid Arvio!}}
+{{dialogue|Fang|...Forgive you.}}
+{{dialogue|Fang|''Player'', explained.}}
+{{dialogue|Arvio|Fang, thank you so much for forgiving me. I truly am, with all my heart, sorry.}}
+{{dialogue|Fang|Apology... accepted.}}
+{{dialogue|Arvio|I promise you... I will never make such poor judgements again...}}
+
+TRIGGER Procedure 3.0 Step 9.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 4830) that ends:
+{{dialogue|Arvio|I promise you... I will never make such poor judgements again...}}
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 17172000 | delayTime: 0 | durationTime: 1.5 | changeType: 0 | curveIndex: -2
+
+TRIGGER Procedure 3.0 Step 10.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 17172000 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Arvio stops standing still
+Fang stops standing still
+CUTSCENE UI STATE EXIT || 
+DELAY MASK SET || maskId: 17172000 | delayTime: 0 | durationTime: 1.5 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 11.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Arvio
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 4202 starts:
+{{dialogue|Arvio|Hey, ''Player''! Have you talked to Fang yet? He's still kinda mad, but he doesn't hate us! Which means our plan worked! All it took was for it to backfire completely. See? I knew it was a good plan!}}
+STORY REMOVE ACTOR LOCKER || actorId: 8078 | lockerId: 71721 | lockerType: Rescue
+END MISSION 1700172

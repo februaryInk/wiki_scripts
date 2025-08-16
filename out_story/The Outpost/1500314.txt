@@ -1,0 +1,419 @@
+Reading Mission 1500314: The Outpost
+
+<onlyinclude>{{Infobox mission
+|name = The Outpost
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from The Outpost:
+
+TRIGGER Procedure 0.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if Logan_Mission is == 1
+ACTIONS
+The player receives a letter:
+{{mail|599}}
+DELIVER MISSION 1500313
+
+TRIGGER Procedure 0.0 Step 5.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1500313
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Outpost
+END MISSION 1500313
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if SentryTower_Mail is == 1
+ACTIONS
+The player receives a letter:
+{{mail|600}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 600
+CONDITIONS
+Always:
+ACTIONS
+===Go to Outpost===
+
+{{mission_details
+|desc = Logan invited you to check out the finished Outpost. Go check it out.
+|details = Go to Outpost
+}}
+AREA TRIGGER CREATE || missionId: 1500313 | id: 531401 | sceneName: Main | flagName: Story_5314_SentryTower | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80019825
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1500314
+CONDITIONS
+Always:
+ACTIONS
+===Collect Materials===
+
+{{mission_details
+|desc = Without Howlett, the outpost fell into disrepair. Gather the materials that are needed to make repairs.
+|details = Collect Materials
+*{{i2|Granite Tiles|0/8}}
+*{{i2|Acacia Wood Planks|0/4}}
+*{{i2|Magnesium Aluminum Alloy|0/4}}
+}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1500313 | targetId: 0 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Repair Outpost===
+
+{{mission_details
+|desc = You have everything you need, go to the Outpost and fix it up.
+|details = Repair Outpost
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 5313001 | path: Mission_SentryTower1 | sceneName: Main | flagName: Story_5313_SentryTower | extraParams: Mission_SentryTower|CreatorItem|19112019_8,19800016_4,19112020_4|1547|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 5313001 | missionId: 1500313 | iconType: 2
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 5313001
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 531301 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 531301 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Logan stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: Story_5313_Player
+DELAY MASK SET || maskId: 531301 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 531301 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 12852, 12853 starts:
+{{dialogue|Logan|I knew we could count on ya.}}
+{{dialogue|Logan|Well, I'm gonna get everythin' in order. Once the place is rockin' again, I'll have you over for a little house warmin' party, alright?}}
+
+TRIGGER Procedure 1.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Set SentryTower_Mail to 1
+CUTSCENE UI STATE EXIT || 
+Logan stops standing still
+===Wait for Logan===
+
+{{mission_details
+|desc = Logan still needs a bit of time to get things in order at the Outpost. He'll contact you once he's finished.
+|details = Wait for Logan
+}}
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 531401
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 531402 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 531402 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 531402 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+AREA TRIGGER DELETE || id: 531401
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: Story_5314_Player
+Logan stands still in Main
+MONSTER ADD TAG || tag: Monster_SentryTower | isAdd: 1
+Set KillNumber to 0
+ACTOR BLIND SET || set: 1
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 531402 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Logan stops standing still
+===Defeat Monsters===
+
+{{mission_details
+|desc = Monsters have appeared near the Outpost. Assist Logan in defeating them.
+|details = Defeat Monsters
+}}
+(cId 150031401) A conversation 12882 starts:
+{{dialogue|Logan|''Player'', got some company, care to join me?}}
+
+TRIGGER Procedure 2.0 Step 2.5 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 150031401) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTOR BLIND SET || set: 0
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 0 | tag: Monster_SentryTower
+CONDITIONS
+Always:
+ACTIONS
+Increment KillNumber by 1
+
+TRIGGER Procedure 2.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 0 | tag: Monster_SentryTower
+CONDITIONS
+Check if KillNumber is == 4
+ACTIONS
+===Go to Outpost===
+
+{{mission_details
+|desc = Logan invited you to check out the finished Outpost. Go check it out.
+|details = Go to Outpost
+}}
+AREA TRIGGER CREATE || missionId: 1500313 | sceneName: Main | id: 531402 | flagName: Story_5314_SentryTower | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80019129
+
+TRIGGER Procedure 2.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 531402
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 531403 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 2.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 531403 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 531403 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: Story_5314_Player_Door
+Logan stands still in Main
+
+TRIGGER Procedure 2.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 531403 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 12854, 12856
+ starts:
+{{dialogue|Logan|Thanks, Builder. Elsie smoked out a couple of beasties this mornin'. Most ran away, but a few tough ones decided to stick around.}}
+{{dialogue|Logan|Glad you came when you did. Should be safe now, though. Let's head in for a spell.}}
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Logan stops standing still
+PLAYER SET POS ROT FLAG || sceneName: HunterBase | flagName: HunterBase_Player
+Logan stands still in HunterBase
+AREA TRIGGER DELETE || id: 531402
+DELAY MASK SET || maskId: 53140000 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 0.5 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the HunterBase:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_hunterbase
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_hunterbase
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the HunterBase:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 53140000 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+STOPWATCH REAL TIME SET || id: 5314001 | sec: 3
+
+TRIGGER Procedure 3.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 5314001
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 5314002 | sec: 3
+STOPWATCH REAL TIME UNSET || id: 5314001
+
+TRIGGER Procedure 3.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 5314002
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME UNSET || id: 5314002
+(cId 3) A conversation 3946_0 starts:
+{{dialogue|Logan|Whaddya think? Tried to make it somewhat comfy.}}
+
+*''You've got so many weapons!''
+*''You cook?''
+*{{flirt}}''I can keep you company!''
+
+{{dialogue|Logan|indent=true|answer=You've got so many weapons!
+|Yeah, gotta be prepared for anythin' over here. Advantage of the outpost is I can keep any weapon handy, for any situation, on short notice.}}
+{{dialogue|Logan|indent=true|answer=You cook?
+|You surprised? Haha, nah, I jus' make enough to get by. Besides, a Cookin' Station's great for makin' monster bait.}}
+{{dialogue|Logan|indent=true|answer=I can keep you company!
+|reward={{NPC2|Logan|rp=1}}|I 'preciate the sentiment, but this place ain't suitable for you to be around. Even Elsie only comes around once in a while.}}
+{{dialogue|Logan|It's been a wild ride lately, I've been through a lot... but hey, it's good to finally stand on familiar ground.}}
+{{dialogue|Logan|Now I jus' gotta get my own name out there as the monster hunter instead of the bandit, heh.}}
+{{dialogue|Logan|I wanna put together a proper hunter team eventually, one that's able to keep people from harm's way. Make it somethin' Pa would be proud of. 'Course, gotta take it one step at a time...}}
+{{dialogue|Logan|At least Else's around to help. She's really grown up, huh? Ain't like the kid I used to know.}}
+
+*''She's changed a lot. Watching her work with animals is incredible!''
+*''She's still kind of impetuous, though.''
+*''She's cute, she's like your number one fan.''
+
+{{dialogue|Logan|indent=true|answer=She's changed a lot. Watching her work with animals is incredible!
+|reward={{NPC2|Elsie|rp=1}}|reward={{NPC2|Logan|rp=1}}|Yeah, when we were clearin' that tunnel, she really impressed me.}}
+{{dialogue|Logan|indent=true|But she's still green, to be a monster hunter, she's gotta toughen up a little.}}
+{{dialogue|Logan|indent=true|answer=She's still kind of impetuous, though.
+|reward={{NPC2|Logan|rp=1}}|Haha, she's been like that since the day she was born! Got a little bit of Cooper in her. But I was like her back in the day as well.}}
+{{dialogue|Logan|indent=true|Still, she really impressed me when we were clearin' that tunnel. She seems real focused now, wasn't like that before.}}
+{{dialogue|Logan|indent=true|answer=She's cute, she's like your number one fan.
+|Haha, I know people think it, but it ain't like that. We jus' grew up together, that's all.}}
+{{dialogue|Logan|indent=true|Still, she really impressed me when we were clearin' that tunnel. She seems real focused now, wasn't like that before.}}
+{{dialogue|Logan|We've got different attributes and skills, so she'll do her job differently from mine. But in this strange world of ours, we need different keys for different doors. That's what my Pa used to say. Heck, just look at her an' that duck.}}
+{{dialogue|Logan|I think through Else, I'm finally startin' to get what my Pa was all about, though. He not only understood the monsters, he understood the relationship between man an' beast.}}
+{{dialogue|Logan|Elsie said she lost one of my Pa's old books, right? I was thinkin' maybe I should start a new one. Maybe you could even help out, huh? Just a thought.}}
+{{dialogue|Logan|Nice talkin' with you, ''Player''. It's gettin' late, I still gotta do a few more patrols. I'll catch ya later.}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 10.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Logan stops standing still
+CUTSCENE UI STATE EXIT || 
+SCENEITEM INTERACT SET || itemType: 9 | id: 29 | canInteract: 1
+SUBMIT MISSION 1500313
+END MISSION 1500314
+
+TRIGGER Procedure 3.0 Step 7.0 Order 5 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the third option in conversation segment 12857:
+{{dialogue|Logan|Whaddya think? Tried to make it somewhat comfy.}}
+
+*''You've got so many weapons!'' (No unique dialogue)
+*''You cook?'' (No unique dialogue)
+*{{flirt}}''I can keep you company!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Logan gains 1 favor
+
+TRIGGER Procedure 3.0 Step 8.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 12867:
+{{dialogue|Logan|At least Else's around to help. She's really grown up, huh? Ain't like the kid I used to know.}}
+
+*''She's changed a lot. Watching her work with animals is incredible!'' (No unique dialogue)
+*''She's still kind of impetuous, though.'' (No unique dialogue)
+*''She's cute, she's like your number one fan.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Logan gains 1 favor
+Elsie gains 1 favor
+
+TRIGGER Procedure 3.0 Step 9.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 12867:
+{{dialogue|Logan|At least Else's around to help. She's really grown up, huh? Ain't like the kid I used to know.}}
+
+*''She's changed a lot. Watching her work with animals is incredible!'' (No unique dialogue)
+*''She's still kind of impetuous, though.'' (No unique dialogue)
+*''She's cute, she's like your number one fan.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Logan gains 1 favor
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if KillNumber is <= (maybe?) 4
+ACTIONS
+The player receives a letter:
+{{mail|606}}
+MONSTER KILL TAG || tag: Monster_SentryTower
+SUBMIT MISSION 1500313
+SCENEITEM INTERACT SET || itemType: 9 | id: 29 | canInteract: 1
+MONSTER ADD TAG || tag: Monster_SentryTower | isAdd: 0
+END MISSION 1500314

@@ -1,0 +1,119 @@
+Reading Mission 1100084: The Old Man and the Tree
+
+<onlyinclude>{{Infobox mission
+|name = The Old Man and the Tree
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from The Old Man and the Tree:
+
+TRIGGER Procedure 1.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1100083
+CUTSCENE UI STATE EXIT || 
+Matilda stops standing still
+Add behavior Story1100083_8018_2 (idName: 20831) to Matilda
+(param: -1)
+Add behavior Story1100083_8003_1 (idName: 20831) to Cooper
+(param: -1)
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1100083
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Old Man and the Tree
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100084
+CONDITIONS
+Always:
+ACTIONS
+===Go to the Moisture Farm===
+
+{{mission_details
+|desc = The Moisture Farm is a bit far
+from your Workshop, feel free to travel from a  {{textcolor|green|Yakmel Station}}.
+|details = Go to the Moisture Farm
+}}
+Set ENTER to 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 20841 | sceneName: Main | flagName: gh_fight | extraParams: 0 | path: Lable_GreenHouse
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100084
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 100312
+SCENEITEM DELETE || itemType: 0 | id: 10041
+SCENEITEM CREATE FLAG || itemType: 0 | id: 10591 | path: Interact_Greenhouse | sceneName: Main | flagName: door_greenhouse | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 105999 | path: Mission_Greenhouse_Smokeout | sceneName: Main | flagName: gh_smoke | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 105998 | path: Mission_Greenhouse_Smokein | sceneName: Greenhouse | flagName: gh_smokein | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 10031299 | path: Mission_WenShiFengChe_Broken | sceneName: Main | flagName: wenshi_fengche | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 105997 | path: Mission_Greenhouse_Fireout | sceneName: Main | flagName: gh_smoke | extraParams: 0
+AREA TRIGGER CREATE || id: 10591 | sceneName: Main | flagName: trigger_greenhouse | showOnMap: 1 | mapIcon: MissionArea | transId: 80000530 | missionId: 1100083
+MONSTER ADD TAG || tag: ArsonGreenHouse2 | isAdd: 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 10591
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 200 starts:
+{{dialogue||(It sounds like there's {{textcolor|red|fighting}} inside, you should have a {{textcolor|green|weapon}} equipped. Are you ready to go in?)}}
+
+*''Confirm'' (No unique dialogue)
+*''Cancel'' (No unique dialogue)
+
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION CHOICE MADE END || order: 0 | npc: 8000 | id: 200 | selectIndex: 0 | cId: 0 | missionId: 1100084
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Set ENTER to 1
+AREA TRIGGER DELETE || id: 10591
+SCENEITEM DELETE || itemType: 0 | id: 10591
+PLAYER SET POS ROT FLAG || sceneName: Greenhouse | flagName: gh_playerin
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Greenhouse:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || id: 10591 | itemType: 0
+AREA TRIGGER DELETE || id: 10591
+ACTION BATTLE SET STATE || set: 1
+Run mission Moisture Farm Blues
+ACTION MISSION TRACE 1100081

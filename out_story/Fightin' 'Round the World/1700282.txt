@@ -1,0 +1,371 @@
+Reading Mission 1700282: Fightin' 'Round the World
+
+<onlyinclude>{{Infobox mission
+|name = Fightin' 'Round the World
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Fightin' 'Round the World:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 1728100 | delayTime: 0 | durationTime: 1 | changeType: 2 | curveIndex: -2
+Bogan Jack stops standing still
+
+TRIGGER Procedure 0.0 Step 0.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700281
+CONDITIONS
+Always:
+ACTIONS
+Run mission Fightin' 'Round the World
+END MISSION 1700281
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700282
+CONDITIONS
+Always:
+ACTIONS
+===Wait for Bogan Jack to reappear.===
+
+{{mission_details
+|desc = Bogan Jack has run off into the desert to prepare for our next fight. I have a feeling we'll meet again soon...
+|details = Wait for Bogan Jack to reappear.
+}}
+ACTION DATE SET FLAG || flag: DATE:BoxingJackFirstQuest1
+Set Times to 1
+Set HP to 0
+Set defeat to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE FLAG || flag: DATE:BoxingJackFirstQuest1 | compare: 2 | days: 2
+ACTIONS
+Bogan Jack stands still in Main
+ACTION DATE REMOVE FLAG || flag: DATE:BoxingJackFirstQuest
+===Find and Defeat Bogan Jack===
+
+{{mission_details
+|desc = Bogan Jack has had enough time to rest. Look for him near the Shipwreck Ruins.
+|details = Find and Defeat Bogan Jack
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Bogan Jack
+CONDITIONS
+Check if defeat is == 1
+ACTIONS
+(cId -1) A conversation 10233 starts:
+{{dialogue|Bogan Jack|Back for more, eh? Your funeral, mate.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Bogan Jack
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 3181_0 starts:
+{{dialogue|Bogan Jack|Well, well, well. If it ain't ol' Fighty McFightin' words. Here no doubt lookin' for another fight. Got any last words? Perhaps some of the non-fightin' variety for a change?}}
+
+*''I think we got off on the wrong foot.''
+*''I don't want to fight you!''
+*''I want to... hug you?''
+*''Let's fight!''
+
+{{dialogue|Bogan Jack|indent=true|answer=I think we got off on the wrong foot.
+|Footy? You think I like footy just 'cause I'm a Roo? Well, as it so happens, I do; but I take offence with the way by which you arrived at such a conclusion. Plus, everything you just said: fightin' words.}}
+{{dialogue|Bogan Jack|indent=true|answer=I don't want to fight you!
+|Ah hah! Reverse psychology! What's more: encoded fightin' words. Very clever. I underestimated you once, but that won't happen again!}}
+{{dialogue|Bogan Jack|indent=true|answer=I want to... hug you?
+|Very cute. Still fightin' words!}}
+{{dialogue|Bogan Jack|Your demise, mate!}}
+
+*''I just want to be friends!''
+*''I'm here for my reward!''
+
+{{dialogue|Bogan Jack|indent=true|answer=I just want to be friends!
+|Yeah, well. Shoulda thought of that before yellin' all them fightin' words at me, shouldn't ya've?}}
+{{dialogue|Bogan Jack|indent=true|answer=I'm here for my reward!
+|Yeah, I got your reward right here, mate: gettin' bashed!}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+(cId: -1) There is a conversation segment (id 10233) that ends:
+{{dialogue|Bogan Jack|Back for more, eh? Your funeral, mate.}}
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+TIME SET ENABLE || bool: 0
+DELAY MASK SET || maskId: 172811 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172811 | eventType: 2
+CONDITIONS
+Check if Times is == 1
+ACTIONS
+ACTOR SET LEVEL || npc: 8092 | level: 30
+ACTOR IGNORE SHOW DISTANCE || npc: 8092 | ignore: 1
+NPC SET CAN INTERACT || npc: 8092 | canInteract: 0
+Bogan Jack stops standing still
+SCENEITEM CREATE FLAG || sceneName: Main | path: Mission_BoxingJack1 | flagName: BoxJackBattleField2 | itemType: 0 | id: 172821 | extraParams: -1
+ACTOR SET FACTION || isAdd: 1 | npc: 8000 | id: 7
+ACTOR SET FACTION || isAdd: 1 | npc: 8092 | id: 6
+DELAY MASK SET || maskId: 172811 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: -2
+ACTOR BUFF ADD || npc: 8000 | buffId: 11 | instanceId: 172811
+CUTSCENE UI STATE EXIT || 
+Set HP to 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 6 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON PLAYER HP CHANGE || order: 0 | compare: 6 | percent: 0.01
+CONDITIONS
+Check if HP is == 1
+ACTIONS
+Set defeat to 1
+ACTOR BUFF ADD || npc: 8092 | buffId: 4 | instanceId: 172824
+DELAY MASK SET || maskId: 172812 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: -2
+Set HP to 0
+ACTOR BUFF ADD || npc: 8000 | buffId: 20 | instanceId: 172822
+
+TRIGGER Procedure 0.0 Step 0.0 Order 7 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172812 | eventType: 2
+CONDITIONS
+Check if Times is == 1
+ACTIONS
+Set HP to 0
+ACTOR IGNORE SHOW DISTANCE || npc: 8092 | ignore: 0
+TIME SET ENABLE || bool: 1
+NPC SET CAN INTERACT || npc: 8092 | canInteract: 1
+ACTOR SET FACTION || isAdd: 0 | npc: 8000 | id: 7
+ACTOR SET FACTION || isAdd: 0 | npc: 8092 | id: 6
+ACTOR BUFF REMOVE || npc: 8000 | instanceId: 172811
+SCENEITEM DELETE || itemType: 0 | id: 172821
+Bogan Jack stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: BoxingJack_SecPlayer
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 172812 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 8 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON NPC DEAD || order: 0 | id: 8092
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 172812 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: -2
+Set defeat to 0
+ACTOR BUFF ADD || npc: 8000 | buffId: 4 | instanceId: 172823
+
+TRIGGER Procedure 0.0 Step 0.0 Order 9 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172812 | eventType: 2
+CONDITIONS
+Check if Times is == 2
+ACTIONS
+Set HP to 0
+ACTOR IGNORE SHOW DISTANCE || npc: 8092 | ignore: 0
+NPC SET CAN INTERACT || npc: 8092 | canInteract: 1
+ACTOR SET FACTION || isAdd: 0 | npc: 8000 | id: 7
+ACTOR SET FACTION || isAdd: 0 | npc: 8092 | id: 6
+ACTOR BUFF REMOVE || npc: 8000 | instanceId: 172811
+SCENEITEM DELETE || itemType: 0 | id: 172821
+DELAY MASK SET || maskId: 172812 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: -2
+Bogan Jack stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: BoxingJack_TrdPlayer
+CUTSCENE UI STATE ENTER || 
+TIME SET ENABLE || bool: 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 10 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172811 | eventType: 2
+CONDITIONS
+Check if Times is == 2
+ACTIONS
+ACTOR SET LEVEL || npc: 8092 | level: 40
+ACTOR IGNORE SHOW DISTANCE || npc: 8092 | ignore: 1
+NPC SET CAN INTERACT || npc: 8092 | canInteract: 0
+Bogan Jack stops standing still
+SCENEITEM CREATE FLAG || sceneName: Main | path: Mission_BoxingJack1 | flagName: BoxJackBattleField3 | itemType: 0 | id: 172821 | extraParams: -1
+ACTOR SET FACTION || isAdd: 1 | npc: 8000 | id: 7
+ACTOR SET FACTION || isAdd: 1 | npc: 8092 | id: 6
+DELAY MASK SET || maskId: 172811 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: -2
+ACTOR BUFF ADD || npc: 8000 | buffId: 11 | instanceId: 172811
+CUTSCENE UI STATE EXIT || 
+Set HP to 1
+STOPWATCH REAL TIME SET || id: 172820 | sec: 5
+
+TRIGGER Procedure 0.0 Step 0.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172812 | eventType: 5
+CONDITIONS
+Check if defeat is == 0
+Check if Times is == 1
+ACTIONS
+(cId 5) A conversation 10244, 10245 starts:
+{{dialogue|Bogan Jack|Ah, nuts. You got lucky, mate. Forgot to move my face out of the way of that move you do. Pretty good move, yeah, but wouldn't've been so good if my face wasn't where it was, was it? Lucked out again, didn't I?}}
+{{dialogue|Bogan Jack|Seek me out one more time for a sick reward. Sick as. Like I said.}}
+ACTOR BUFF REMOVE || npc: 8000 | instanceId: 172823
+ACTION DATE SET FLAG || flag: DATE:BoxingJackFirstQuest2
+===Wait for Bogan Jack to reappear.===
+
+{{mission_details
+|desc = If you can defeat Bogan Jack one more time, he says he'll give you a gift. Where is he now...?
+|details = Wait for Bogan Jack to reappear.
+}}
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 1728200 | delayTime: 0 | durationTime: 1 | changeType: 2 | curveIndex: -2
+Bogan Jack stops standing still
+
+TRIGGER Procedure 0.0 Step 0.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE FLAG || flag: DATE:BoxingJackFirstQuest2 | compare: 2 | days: 3
+ACTIONS
+===Find and Defeat Bogan Jack===
+
+{{mission_details
+|desc = Bogan Jack has had enough time to rest. Look for him deep in the desert, beyond Eufaula North.
+|details = Find and Defeat Bogan Jack
+}}
+Bogan Jack stands still in Main
+ACTION DATE REMOVE FLAG || flag: DATE:BoxingJackFirstQuest2
+Set Times to 2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Bogan Jack
+CONDITIONS
+Check if Times is == 2
+ACTIONS
+(cId 2) A conversation 10246, 10247, 10248, 10249, 3185_0 starts:
+{{dialogue|Bogan Jack|So... you've come...}}
+{{dialogue|Bogan Jack|The final battle...}}
+{{dialogue|Bogan Jack|A black wind blows...}}
+{{dialogue|Bogan Jack|It calls for...}}
+{{dialogue|Bogan Jack|Your demise, mate!}}
+
+*''I just want to be friends!''
+*''I'm here for my reward!''
+
+{{dialogue|Bogan Jack|indent=true|answer=I just want to be friends!
+|Yeah, well. Shoulda thought of that before yellin' all them fightin' words at me, shouldn't ya've?}}
+{{dialogue|Bogan Jack|indent=true|answer=I'm here for my reward!
+|Yeah, I got your reward right here, mate: gettin' bashed!}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172812 | eventType: 5
+CONDITIONS
+Check if defeat is == 0
+Check if Times is == 2
+ACTIONS
+(cId 10) A conversation 10254, 10255, 10256, 10257 starts:
+{{dialogue|Bogan Jack|Lucky, mate. Real lucky. I dunno if you noticed, but right when I was about to win that fight, I suddenly lost somehow. Things'd be heaps different if not for that, wouldn't they?}}
+{{dialogue|Bogan Jack|Well, as they say, third time's the charm. I'm a Roo of my word, here's your sick as reward.}}
+{{dialogue|Bogan Jack|This belt means you're the new champion fighter of this general area. Anyone who doesn't respect the authority of the belt? Well, you just bash 'em the way you bashed me.}}
+{{dialogue|Bogan Jack|Catch ya, mate. Ya may be a bit uncouth with the use of them fightin' words but... well, you fight a mean fight.}}
+ACTOR BUFF REMOVE || npc: 8000 | instanceId: 172823
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1700281
+
+TRIGGER Procedure 0.0 Step 0.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 1728200 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+NPC LEAVE || npc: 8092
+
+TRIGGER Procedure 0.0 Step 0.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+STORY REMOVE ACTOR LOCKER || actorId: 8092 | lockerId: 72811 | lockerType: Rescue
+NPC LEAVE || npc: 8092
+END MISSION 1700282
+
+TRIGGER Procedure 0.0 Step 0.0 Order 19 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 10 | maskId: 172812 | eventType: 5
+CONDITIONS
+Check if defeat is == 1
+ACTIONS
+(cId 15) A conversation 10956 starts:
+{{dialogue|Bogan Jack|Aw, shucks. You alright there, mate? Yeah, might've gone a bit overboard there. Well. If you ever want to regain your lost honor, cuz I know I would: you know where I'll be.}}
+ACTOR BUFF REMOVE || npc: 8092 | instanceId: 172824
+CUTSCENE UI STATE EXIT || 
+ACTOR BUFF REMOVE || npc: 8000 | instanceId: 172822
+
+TRIGGER Procedure 1.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+The Jewel of the Eufaula is successfully completed
+ACTIONS
+Bogan Jack stands still in Main
+Bogan Jack stops standing still

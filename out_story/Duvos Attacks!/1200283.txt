@@ -1,0 +1,307 @@
+Reading Mission 1200283: Duvos Attacks!
+
+<onlyinclude>{{Infobox mission
+|name = Duvos Attacks!
+|image =
+|description = The Duvos army is here! Defeat them with the Air Cannon and save Sandrock!
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 2200
+|reputation = None
+|gols = 500
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200135
+
+TRIGGER Procedure 8.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END || order: 0 | result: 1 | missionId: 1700285
+CONDITIONS
+Always:
+ACTIONS
+Run mission We'll Be Ready For 'Em
+
+TRIGGER Procedure 9.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+We'll Be Ready For 'Em is successfully completed
+ACTIONS
+Run mission Duvos Attacks!
+NPC ADD TAG || tag: NOPLAY
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+CHECK WEATHER STATE || weather: 2 | flag: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+CUTSCENE UI STATE ENTER || 
+GLOBAL BLACK BOARD REMOVE || key: con41700285
+ACTION FESTIVAL ADD STOP || requestID: 22841
+END WINTER FESTIVAL || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200283
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1200283
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: fightvsarmy_nextday_player
+Trudy stands still in Main and looks at Justice
+Heidi stands still in Main and looks at Justice
+Justice stands still in Main and looks at Player
+Hugo stands still in Main and looks at Justice
+Unsuur stands still in Main and looks at Justice
+Fang stands still in Main and looks at Justice
+SCENEITEM CREATE FLAG || path: AviationStory_music_zone_main | sceneName: Main | itemType: 0 | id: 22833 | flagName: bridge_kaimu | extraParams: 0
+SCENEITEM CREATE FLAG || path: AviationStory_music_zone_apartment | sceneName: Apartment | id: 22834 | itemType: 0 | flagName: S8288_Apartment | extraParams: 0
+SCENEITEM CREATE FLAG || path: AviationStory_music_zone_matildahome | sceneName: MatildaHome | id: 22835 | itemType: 0 | flagName: fightvsarmy_matildahome | extraParams: 0
+SCENEITEM CREATE FLAG || path: AviationStory_music_zone_saloon | sceneName: Saloon | id: 22836 | itemType: 0 | flagName: owen_food | extraParams: 0
+SCENEITEM CREATE FLAG || path: AviationStory_music_zone_civilcorp | sceneName: CivilCorp | id: 22837 | itemType: 0 | flagName: Interactitem_civilcorp | extraParams: 0
+SCENEITEM CREATE FLAG || path: AviationStory_music_zone_temple | sceneName: Temple | id: 22838 | itemType: 0 | flagName: interactitem_temple | extraParams: 0
+STOP PARTY || 
+SCENEITEM CREATE FLAG || id: 22839 | itemType: 0 | path: Mission_SealabBuild_HugeSubmarine_Out | sceneName: Main | flagName: bridge_kaimu | extraParams: 0
+SCENEITEM DELETE || id: 218726 | itemType: 0
+SCENEITEM CREATE FLAG || path: Mission_Group_Beibu_4 | itemType: 0 | id: 228310 | sceneName: Main | flagName: bridge_kaimu | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+ACTION CUTSCENE START AUDIO TYPE || id: CG_FIGHTDAY | duration: 0 | audioType: NoTransitionOff
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 9 | name: CG_FIGHTDAY
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 3369_0 starts:
+{{dialogue|Justice|Everyone that can't fight's already evacuated to the Temple. Rocky, Zeke, and Elsie are there guarding that place. Cooper and Owen are covering the rooftops.}}
+{{dialogue|Justice|But I keep thinkin' I forgot somethin'!}}
+{{dialogue|Unsuur|Must be nerves sir, you've gotta to learn to be like a rock.}}
+{{dialogue|Trudy|Good, good. Doctor Fang, what of the Minister?}}
+{{dialogue|Fang|I left her at the Temple... Sheriff said you needed a field doctor.}}
+{{dialogue|Trudy|We do, thank you.}}
+{{dialogue|Trudy|''Player'', you gonna be okay with that?}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DAY START FOR WEATHER || order: 0 | weather: 2
+CONDITIONS
+Always:
+ACTIONS
+WEATHER SET STATE || WeatherState: 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 0) There is a conversation segment (id 10833) that ends:
+{{dialogue|Trudy|''Player'', you gonna be okay with that?}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 22832) to Player
+(param: CMDAction:ThumbsUp)
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderPlayerAction (idName: 22832) from Player
+(cId 0) A conversation 10834, 10835, 10836, 10837 starts:
+{{dialogue|Heidi|You think we'll all be okay, Trudy...?}}
+{{dialogue|Trudy|They tried to destroy us from within, and they failed. Now they think they can take us by force. Well, to that I say...}}
+{{dialogue|Trudy|Let. Them. Come! We're stronger than they think!}}
+{{dialogue|Justice|Yeehaw to that!}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 22831 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 22831 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 12 | id: 22821
+SCENEITEM CREATE FLAG || itemType: 0 | id: 22831 | path: Mission_AirCannon_Main | sceneName: Main | flagName: turret_turretempty | extraParams: 0
+DELAY MASK SET || maskId: 22831 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+{{cutscene|id = 1364}}
+A cutscene CG_ENCOUNTER (duration: 0.0) starts playing
+Duvos Attack - There was a sudden explosion, and in the wake, Duvos soldiers started swarming in from the train station! Now we have to fight back.
+AREA TRIGGER CREATE || missionId: 1200283 | id: 22831 | sceneName: Main | flagName: fightvsarmy_battlefield | showOnMap: 0 | mapIcon: 0 | transId: 0
+
+TRIGGER Procedure 2.0 Step 0.5 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_ENCOUNTER | state: 8
+CONDITIONS
+Always:
+ACTIONS
+NPC ADD TAG || tag: ProtectSandRock
+MONSTER ADD TAG || tag: ProtectSandRock_1 | isAdd: 1
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 9 | name: CG_ENCOUNTER
+CONDITIONS
+Always:
+ACTIONS
+Add behavior Npc_Idle (idName: 22832) to Trudy
+(param: -1)
+Add behavior Npc_Idle (idName: 22832) to Heidi
+(param: -1)
+Add behavior Npc_Idle (idName: 22832) to Hugo
+(param: -1)
+Add behavior Npc_Idle (idName: 22832) to Justice
+(param: -1)
+Add behavior Npc_Idle (idName: 22832) to Unsuur
+(param: -1)
+Add behavior Npc_Idle (idName: 22832) to Grace
+(param: -1)
+Grace stands still in Main
+Grace stops standing still
+Fang stands still in Temple
+Trudy stops standing still
+Heidi stops standing still
+Justice stops standing still
+Hugo stops standing still
+Unsuur stops standing still
+Fang stops standing still
+CUTSCENE UI STATE EXIT || 
+START MISSION 1200283
+ACTOR SET FACTION || isAdd: 1 | npc: 8006 | id: 8
+ACTOR SET FACTION || isAdd: 1 | npc: 8009 | id: 8
+ACTOR SET FACTION || isAdd: 1 | npc: 8008 | id: 8
+ACTOR SET FACTION || isAdd: 1 | npc: 8010 | id: 8
+ACTOR SET FACTION || isAdd: 1 | npc: 8026 | id: 8
+ACTOR SET FACTION || isAdd: 1 | npc: 8002 | id: 8
+NPC SET CAN INTERACT || npc: 8006 | canInteract: 0
+NPC SET CAN INTERACT || npc: 8009 | canInteract: 0
+NPC SET CAN INTERACT || npc: 8010 | canInteract: 0
+NPC SET CAN INTERACT || npc: 8008 | canInteract: 0
+NPC SET CAN INTERACT || npc: 8026 | canInteract: 0
+NPC SET CAN INTERACT || npc: 8002 | canInteract: 0
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200283
+CONDITIONS
+Always:
+ACTIONS
+Run mission Duvos Attacks!
+END MISSION 1200283
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_FIGHTDAY | state: 9
+CONDITIONS
+Always:
+ACTIONS
+Arvio stands still in Temple
+Amirah stands still in Temple
+Mi-an stands still in Temple
+Vivi stands still in Temple
+Jasmine stands still in Temple
+Zeke stands still in Temple
+Sandy stands still in Temple
+Mort stands still in Temple
+Mabel stands still in Temple
+Elsie stands still in Temple
+Rocky stands still in Temple
+Krystal stands still in Temple
+Pebbles stands still in Temple
+Peck stands still in Temple
+Fei stands still in Temple
+Venti stands still in Temple
+X stands still in Temple
+Jensen stands still in Temple
+
+TRIGGER Procedure 3.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player wakes up:
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 18360 starts:
+{{dialogue|Player|(How are the preparations for the Duvos invasion going? I should go and check.)}}
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_FIGHTDAY | state: 9
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 82692
+Andy stops standing still
+Burgess stands still in Apartment
+Ernest stands still in Apartment
+Pablo stands still in Apartment
+Dan-bi stands still in Apartment
+Qi stands still in Apartment
+Catori stands still in Apartment
+Andy stands still in Apartment
+Owen stands still in Saloon
+Cooper stands still in CivilCorp
+NPC ADD TAG || tag: PetsInBlueMoon
+
+TRIGGER Procedure 3.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 22831 | eventType: 2
+CONDITIONS
+Check if Mysterious Man is in town
+ACTIONS
+Mysterious Man stands still in Saloon
+
+==Rewards==
+{{mission reward
+|exp = 2200
+|reputation = None
+|gols = 500
+}}

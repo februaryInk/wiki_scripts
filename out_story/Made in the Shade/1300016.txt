@@ -1,0 +1,75 @@
+Reading Mission 1300016: Made in the Shade
+
+<onlyinclude>{{Infobox mission
+|name = Made in the Shade
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Made in the Shade:
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 130015 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 598 starts:
+{{dialogue|Arvio|I can finally enjoy the oasis view in the shade! I've been bugging ol' Mason to help me forever, but he was always "busy this," "busy that." I'm so glad you're here!}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Arvio stops standing still
+Run mission Made in the Shade
+SUBMIT MISSION 1300014
+END MISSION 1300015
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1300016
+CONDITIONS
+Always:
+ACTIONS
+Set DAY to 0
+Set STEP to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if DAY is != (maybe?) 0
+ACTIONS
+SCENEITEM DELETE || itemType: 12 | id: 130015
+SCENEITEM CREATE FLAG || itemType: 0 | id: 13016 | path: mission_shatanyi | sceneName: Main | flagName: SHATANYI_NEW | extraParams: 0
+Set STEP to 1
+END MISSION 1300016
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment DAY by 1

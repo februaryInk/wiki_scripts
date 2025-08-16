@@ -1,0 +1,228 @@
+Reading Mission 1200148: A Window to the Cosmos
+
+<onlyinclude>{{Infobox mission
+|name = A Window to the Cosmos
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from A Window to the Cosmos:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200147
+CONDITIONS
+Excavating the Sky is successfully completed
+ACTIONS
+DELIVER MISSION 1200147
+The player receives a letter:
+{{mail|258}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200147
+CONDITIONS
+Always:
+ACTIONS
+Run mission A Window to the Cosmos
+END MISSION 1200147
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200148
+CONDITIONS
+CHECK PLAYER ITEM || item: 19200020 | itemGrade: -1 | set: 6 | count: 1
+ACTIONS
+===Look for Telescope Pieces===
+
+{{mission_details
+|desc = Go to the Gecko Station Abandoned Ruins to collect Telescope Pieces. According to Qi, they are buried in a deep location.
+|details = Look for Telescope Pieces
+*{{i2|Astronomical Telescope Piece 1|0/1}}
+*{{i2|Astronomical Telescope Piece 2|0/1}}
+*{{i2|Astronomical Telescope Piece 3|0/1}}
+}}
+Set FIX to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200147 | canSubmit: 1 | targetId: 1
+ON BAG CHANGE || order: 0 | item: 19200020 | changeType: 0 | itemGrade: -1
+CONDITIONS
+Always:
+ACTIONS
+===Repair Telescope===
+
+{{mission_details
+|desc = After collecting the pieces of the Telescope, go to the Restoration Machine in the Sandrock Museum to repair the Telescope.
+|details = Repair Telescope
+*{{i2|Astronomical Telescope|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200147 | canSubmit: 1 | targetId: 2
+CONDITIONS
+Always:
+ACTIONS
+===Install Telescope===
+
+{{mission_details
+|desc = After the Telescope has been repaired, go to the roof of Qi's Research Center and install it. In order for Qi to use it straight away, install it after 20:00.
+|details = Install Telescope
+}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200148
+CONDITIONS
+CHECK PLAYER ITEM || item: 19200020 | itemGrade: -1 | set: 2 | count: 1
+ACTIONS
+===Install Telescope===
+
+{{mission_details
+|desc = After the Telescope has been repaired, go to the roof of Qi's Research Center and install it. In order for Qi to use it straight away, install it after 20:00.
+|details = Install Telescope
+}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200147 | canSubmit: 1 | targetId: 2
+MISSION BEGIN 1200148
+CONDITIONS
+CHECK TIME || compare: 6 | hour: 20 | minute: 0
+CHECK PLAYER ITEM || item: 19200020 | itemGrade: -1 | set: 2 | count: 1
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 21481 | path: Mission_telescope1 | sceneName: Main | flagName: telescope_telescope2 | extraParams: 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 21481 | path: Mission_telescope1 | sceneName: Main | flagName: telescope_telescope2 | extraParams: 0
+SCENEITEM DELETE || itemType: 11 | id: 21482
+Set FIX to 0
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 21481
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 3690 starts:
+{{dialogue|Player|(I'll wait until night time to install this so Qi can enjoy it right away.)}}
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200147 | canSubmit: 1 | targetId: 2
+MISSION BEGIN 1200148
+CONDITIONS
+CHECK TIME || compare: 2 | hour: 20 | minute: 0
+CHECK PLAYER ITEM || item: 19200020 | itemGrade: -1 | set: 2 | count: 1
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 11 | id: 21482 | path: Mission_telescopeempty | sceneName: Main | flagName: telescope_telescope2 | extraParams: Mission_telescope2|CreatorItem|19200020_1|1547|Fix|1.4
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+When the time is 20:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || id: 21481 | itemType: 0
+SCENEITEM CREATE FLAG || itemType: 11 | id: 21482 | path: Mission_telescopeempty | sceneName: Main | flagName: telescope_telescope2 | extraParams: Mission_telescope2|CreatorItem|19200020_1|1547|Fix|1.4
+Set FIX to 1
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 21482
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 21481 | delayTime: 0 | durationTime: -3 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 21481 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: telescope_player1
+Qi stands still in Main
+DELAY MASK SET || maskId: 21481 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+{{cutscene|id = 6512}}
+A cutscene CG_TELESCOPE (duration: 0.0) starts playing
+Telescope - I collected all the fragments of the telescope and installed in on the Research Center's roof. Qi came up even though it's hard to read him, I know he was pleasantly surprised!
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_TELESCOPE | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 1240_0 starts:
+{{dialogue|Qi|Thank you, ''Player''. Your assistance has been most acceptable. You may go now. I-}}
+
+*''Can I use the telescope too?''
+*''See you later!''
+
+{{dialogue|Qi|indent=true|answer=Can I use the telescope too?
+|Hm? You want to use the telescope? Hm. Yes. I was afraid of this.}}
+{{dialogue|Qi|indent=true|I've spoken with City Hall pre-emptively and made a formal request barring non-research personnel from using the telescope. Unfortunately, my request has been denied. I have been told, regrettably, I must "be nice and share."}}
+{{dialogue|Qi|indent=true|You may use the telescope starting tomorrow. When I don't need it. I have prepared this as compensation for your efforts. Now, if you don't mind...}}
+{{dialogue|Qi|indent=true|answer=See you later!
+|Hm.}}
+{{dialogue|Qi|indent=true|I have been told by the City Hall, regrettably, I must "be nice and share." So you may use the telescope starting tomorrow. I have prepared this as compensation for your efforts. Now, if you don't mind...}}
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Qi stops standing still
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1200147
+END MISSION 1200148
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1200148
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 21481
+SCENEITEM DELETE || itemType: 11 | id: 21482
+SCENEITEM CREATE FLAG || itemType: 12 | id: 221482 | path: Mission_telescope2 | sceneName: Main | flagName: telescope_telescope2 | extraParams: -1
+The player receives a letter:
+{{mail|261}}

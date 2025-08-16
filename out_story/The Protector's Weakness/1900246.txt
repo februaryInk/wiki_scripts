@@ -1,0 +1,213 @@
+Reading Mission 1900246: The Protector's Weakness
+
+<onlyinclude>{{Infobox mission
+|name = The Protector's Weakness
+|image =
+|description = Seems like Pen has got stuck in front of the mirror! You need to destroy it!
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 1350
+|reputation = None
+|gols = None
+|npc1 = Pen
+|rp1 = 20
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Who's the Muscliest of Them All:
+
+TRIGGER Procedure 1.0 Step 6.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8020 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 2272_0 starts:
+{{dialogue|Pen|Skinny... this is glorious. The precision... the craftsmanship... the definition... I mean, just look at that veiny vascularity!}}
+{{dialogue|Pen|You can't possibly know what it's like. To have something you've worked so hard to create, finally be right in front of you. Something made by your own blood, sweat, and tears. To be a creator.}}
+{{dialogue|Pen|...}}
+{{dialogue|Pen|Leave me, Skinny. I... need some time to bask in my glory.}}
+{{dialogue|Pen|You'll get your check... in the... mail...}}
+The conversation ends.
+Set eco to 1
+
+TRIGGER Procedure 1.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if eco is == 1
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 92439
+Run mission The Protector's Weakness
+Run mission Trouble at the Old Dorm
+Remove behavior CommanderBubbleTag (idName: 192430) from Pen
+Pen stops standing still
+END MISSION 1900243
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1900246
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER ONCE CREATE || flagName: T92460 | sceneName: Main | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0 | id: 9246 | missionId: 1900246
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1924601 | path: Ph9246_Mirror | sceneName: TempleDorm | flagName: Mirror | extraParams: 0
+Pen stands still in TempleDorm
+SCENEITEM INTERACT SET LOCKER || itemType: 0 | id: 1924601 | isAdd: 1
+Add tag "PenMirror" to Pen
+Set Zero to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment Zero by 1
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 9246
+CONDITIONS
+Always:
+ACTIONS
+ACTION NPC REMOVE TAG || npc: 8020 | tag: PenMirror
+Add behavior CommanderNPCAction (idName: 92464) to Pen
+(param: CMDAction:PenPose01)
+DELAY MASK SET || maskId: 292460 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+DELIVER MISSION 1900246
+END MISSION 1900242
+END MISSION 1900255
+END MISSION 1900243
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1900246
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|440}}
+NPC SET CAN INTERACT || npc: 8020 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8021 | canInteract: 1
+Pen stops standing still
+Burgess stops standing still
+SCENEITEM DELETE || itemType: 0 | id: 1924601
+ACTION NPC REMOVE TAG || npc: 8020 | tag: PenMirror
+Remove behavior CommanderNPCAction (idName: 92464) from Pen
+Remove behavior CommanderNPCAction (idName: 92469) from Pen
+AREA TRIGGER DELETE || id: 9246
+
+TRIGGER Procedure 1.0 Step 0.3 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 292460 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: P9246 | sceneName: TempleDorm
+Burgess stands still in TempleDorm and looks at Pen
+DELAY MASK SET || maskId: 292460 | delayTime: 1.5 | durationTime: -2 | changeType: 1 | curveIndex: 0
+(cId 0) A conversation 2278_0 starts:
+{{dialogue|Pen|Huff... huff...}}
+{{dialogue|Burgess|Pen! Do. You. Hear. Me.}}
+{{dialogue|Pen|Release... me...}}
+{{dialogue|Burgess|Can. You. Hear. My. Voice.}}
+{{dialogue|Pen|Told you... twenty times... I can... hear you...! Now... release... me... stuck... Skinny...}}
+{{dialogue|Burgess|I'm not sure we're getting through to him!}}
+
+*''What happened?''
+*''What are you doing?''
+*''This is ridiculous!''
+*''He's faking.''
+
+{{dialogue|Pen|indent=true|answer=What happened?
+|Stuck... so... captivating...}}
+{{dialogue|Pen|indent=true|Could... grate cheese... on those... abs...}}
+{{dialogue|Burgess|indent=true|He... he told me not to get anyone's help but... he's been like this for days!}}
+{{dialogue|Burgess|indent=true|We'll. Save. You!}}
+{{dialogue|Pen|indent=true|answer=What are you doing?
+|Stuck... so... captivating...}}
+{{dialogue|Pen|indent=true|Could... grate cheese... on those... abs...}}
+{{dialogue|Burgess|indent=true|He... he told me not to get anyone's help but... he's been like this for days!}}
+{{dialogue|Burgess|indent=true|We'll. Save. You!}}
+{{dialogue|Pen|indent=true|answer=This is ridiculous!
+|Skinny... help...}}
+{{dialogue|Burgess|indent=true|He's stuck! We'll. Save. You.}}
+{{dialogue|Pen|indent=true|Keep... talking... like that... and... I'll... space punch... you...}}
+{{dialogue|Pen|indent=true|answer=He's faking.
+|I'm afraid... it's real... Skinny!}}
+{{dialogue|Pen|indent=true|I'm literally... too hot!}}
+{{dialogue|Pen|Destroy... the... mirror... too... powerful...}}
+{{dialogue|Burgess|You built this thing, right? Quickly, ''Player''! You have to... turn it off or something! He hasn't eaten in days! Even my secret recipe Mush with eleven invisible herbs and spices couldn't snap him out of it!}}
+{{dialogue|Pen|No! Not... turn it off... Skinny! Destroy it...!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM INTERACT SET LOCKER || itemType: 0 | id: 1924601 | isAdd: 0
+CUTSCENE UI STATE EXIT || 
+NPC SET CAN INTERACT || npc: 8020 | canInteract: 0
+NPC SET CAN INTERACT || npc: 8021 | canInteract: 0
+START MISSION 1900246
+Add behavior CommanderNPCAction (idName: 92469) to Pen
+(param: CMDAction:PenPose02)
+CLOSE MISSION || missionId: 1900255
+
+TRIGGER Procedure 1.0 Step 2.5 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1900246
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Protector's Weakness
+END MISSION 1900246
+
+TRIGGER Procedure 3.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200163
+MISSION BEGIN 1800248
+MISSION END || order: 0 | result: 1 | missionId: 1200265
+CONDITIONS
+Always:
+ACTIONS
+NPC SET CAN INTERACT || npc: 8020 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8021 | canInteract: 1
+Pen stops standing still
+Burgess stops standing still
+SCENEITEM DELETE || itemType: 0 | id: 1924601
+Remove behavior CommanderNPCAction (idName: 92464) from Pen
+Remove behavior CommanderNPCAction (idName: 92469) from Pen
+ACTION NPC REMOVE TAG || npc: 8020 | tag: PenMirror
+AREA TRIGGER DELETE || id: 9246
+CLOSE MISSION || missionId: 1900246
+END MISSION 1900246
+
+==Rewards==
+{{mission reward
+|npc1 = Pen
+|rp1 = 20
+|exp = 1350
+|reputation = None
+|gols = None
+}}

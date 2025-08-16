@@ -1,0 +1,629 @@
+Reading Mission 1800266: Rager at Unsuur's
+
+<onlyinclude>{{Infobox mission
+|name = Rager at Unsuur's
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Rager at Unsuur's:
+
+TRIGGER Procedure 0.0 Step 12.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+(cId -1) The player picks the first option in conversation segment 8848:
+{{dialogue|Unsuur|Hey, soup there it is, am I right?}}
+
+*''Yeah, I'm free now.'' (No unique dialogue)
+*''I'm still really busy.'' (No unique dialogue)
+
+CONDITIONS
+Check if 8265A is == 1
+ACTIONS
+START MISSION 1800265
+
+TRIGGER Procedure 0.0 Step 13.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800265
+CONDITIONS
+Always:
+ACTIONS
+Run mission Rager at Unsuur's
+END MISSION 1800265
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800266
+CONDITIONS
+Always:
+ACTIONS
+===Wait Until Tomorrow===
+
+{{mission_details
+|desc = Tomorrow at 19:00 go to Unsuur's house for dinner.
+|details = Wait Until Tomorrow
+}}
+Set 8266A to 0
+Set 8266B to 0
+Set 8266C to 0
+
+TRIGGER Procedure 0.0 Step 0.1 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+===Go to Unsuur's house at 19:00PM===
+
+{{mission_details
+|desc = Meet your Civil Corps pals at Unsuur's house tonight at 19:00.
+|details = Go to Unsuur's house at 19:00PM
+}}
+
+TRIGGER Procedure 0.0 Step 0.2 Order 31 Repeat -1
+------------------------------------------------------------
+EVENTS
+When the time is 19:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1800266 | id: 82661 | sceneName: Main | flagName: Trigger_UnsuurHome | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80014156
+
+TRIGGER Procedure 0.0 Step 0.3 Order 34 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 82661
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the UnsuurHome:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_unsuurhome
+CHECK TIME || compare: 1 | hour: 19 | minute: 0
+ACTIONS
+AREA TRIGGER DELETE || id: 82661
+UNIQUE ACTION RUN || idStr: enter_unsuurhome
+
+TRIGGER Procedure 0.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the UnsuurHome:
+CONDITIONS
+Always:
+ACTIONS
+Justice stands still in UnsuurHome
+PLAYER SET POS ROT FLAG || sceneName: UnsuurHome | flagName: S8266_0_1
+Unsuur stands still in UnsuurHome and looks at Player
+ACTION NPC PUT EQUIP || npc: 8026 | itemId: 12401012
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the UnsuurHome:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 8851 starts:
+{{dialogue|Unsuur|Hey, you're here. Justice is at the dining table already. You two can talk a while. Maybe avoid the subject of soup ingredients. I may have worn him out on the topic already.}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8266262) to Unsuur
+(param: TargetScene:UnsuurHome|MoveMode:Walk|FlagName:S8266_26_2)
+
+TRIGGER Procedure 0.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 8852, 8853 starts:
+{{dialogue|Justice|Hey, ''Player''. Glad you're here. He introduced me to his "friend' Wilson, it's kinda freakin' me out.}}
+{{dialogue|Justice|I swear he's givin' me the stink eye.}}
+
+TRIGGER Procedure 0.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 82662 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82662 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderSit (idName: 8266083) to Justice
+(param: SeatDramaName:UnsuurHomeSeat03|TargetScene:UnsuurHome)
+Add behavior CommanderSit (idName: 8266263) to Unsuur
+(param: SeatDramaName:UnsuurHomeSeat02|TargetScene:UnsuurHome)
+Add behavior CommanderPlayerSitLookAtManually (idName: 8266003) to Player
+(param: SeatDramaName:UnsuurHomeSeat01|TargetScene:UnsuurHome|LookAtActor:8008)
+Remove behavior CommanderMoveToFlagAndAction (idName: 8266262) from Unsuur
+Remove behavior CommanderMoveToFlagAndAction (idName: 8266001) from Player
+DELAY MASK SET || maskId: 82662 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 82661 | path: S8266_Item1 | sceneName: UnsuurHome | flagName: S8266_Item1 | extraParams: 0
+ACTION NPC PUT UNEQUIP || itemId: 12401012 | npc: 8026
+
+TRIGGER Procedure 0.0 Step 8.1 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: SitDownFinished | behaviourName: CommanderSit | npc: 8008
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: SitDownFinished | behaviourName: CommanderSit | npc: 8026
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 2564_0 starts:
+{{dialogue|Unsuur|Food's ready.}}
+{{dialogue|Justice|Thanks, Unsuur. Hey, er, this looks really good!}}
+{{dialogue|Unsuur|Thanks. I made it. From stuff.}}
+{{dialogue|Justice|...}}
+{{dialogue|Unsuur|...Made it from the stuff.}}
+{{dialogue|Player|What should I say?}}
+
+*''Wow, I didn't know you were a chef!''
+*''Mmmm, tasty!''
+*''Soooo...''
+
+{{dialogue|Unsuur|indent=true|answer=Wow, I didn't know you were a chef!
+|Thank you.}}
+{{dialogue|Justice|indent=true|Yeah, I didn't know you could cook so well. When did you learn that?}}
+{{dialogue|Unsuur|indent=true|I dunno, I just read what's on the page.}}
+{{dialogue|Justice|indent=true|Huh, yeah I guess that is pretty... simple.}}
+{{dialogue|Unsuur|indent=true|Yeah.}}
+{{dialogue|Justice|indent=true|Well, er... you follow instructions well!}}
+{{dialogue|Unsuur|indent=true|Thanks, boss. That means a lot.}}
+{{dialogue|Unsuur|indent=true|answer=Mmmm, tasty!
+|Thank you.}}
+{{dialogue|Justice|indent=true|Yeah, I didn't know you could cook so well. When did you learn that?}}
+{{dialogue|Unsuur|indent=true|I dunno, I just read what's on the page.}}
+{{dialogue|Justice|indent=true|Huh, yeah I guess that is pretty... simple.}}
+{{dialogue|Unsuur|indent=true|Yeah.}}
+{{dialogue|Justice|indent=true|Well, er... you follow instructions well!}}
+{{dialogue|Unsuur|indent=true|Thanks, boss. That means a lot.}}
+{{dialogue|Justice|Mmhmmm.}}
+{{dialogue|Justice|Yeah.}}
+{{dialogue|Justice|...}}
+{{dialogue|Justice|So...}}
+{{dialogue|Justice|Seen any... nice rocks lately?}}
+{{dialogue|Unsuur|Yeah I saw a great one the other day.}}
+{{dialogue|Justice|Can... can I see it?}}
+{{dialogue|Unsuur|It looked pretty comfortable where it was, so I left it.}}
+{{dialogue|Justice|Ah... ahem.}}
+{{dialogue|Player|What should I say?}}
+
+*''When did you join the Civil Corps, Unsuur?''
+*''What were you like when you were young, Justice?''
+*''(Whistle)''
+
+{{dialogue|Unsuur|indent=true|answer=When did you join the Civil Corps, Unsuur?
+|I was lost in the desert for a while. I was trying to get to Atara.}}
+{{dialogue|Justice|indent=true|You were... walkin' there?}}
+{{dialogue|Unsuur|indent=true|Yeah, it didn't seem too far at the time. On the map, it looks like the length of your finger, but then in real life... hoo boy. That's how they get ya.}}
+{{dialogue|Justice|indent=true|But...}}
+{{dialogue|Unsuur|indent=true|After a bit of a wander, I found myself at Sandrock, and saw that the sheriff was hiring.}}
+{{dialogue|Justice|indent=true|Yeah, we were kinda short staffed then. Turnover in Sandrock was uh... pretty high back in those days.}}
+{{dialogue|Unsuur|indent=true|Yeah, you hired me on the spot. You said "if you work hard, maybe one day you'll make deputy."}}
+{{dialogue|Justice|indent=true|So that's why...}}
+{{dialogue|Unsuur|indent=true|Yeah. Seemed like as good a dream as any.}}
+{{dialogue|Justice|indent=true|Huh, go figure...}}
+{{dialogue|Justice|indent=true|answer=What were you like when you were young, Justice?
+|Aw heck, gettin' nostalgic, are we? I guess... I played around a lot, used to follow around my old boss, thought he was the meanest yakhand I'd ever seen...}}
+{{dialogue|Unsuur|indent=true|You used to be young, sheriff?}}
+{{dialogue|Justice|indent=true|I'll take that as a compliment. Me an' Owen used to play sheriff an' sand bandit. I guess I always had it in me, huh?}}
+{{dialogue|Unsuur|indent=true|Wow, sheriff. That was a great story.}}
+{{dialogue|Justice|indent=true|Less of a story, more of a statement but, uh... What about you, Unsuur? When I picture you when you were little, well, I jus' imagine a tiny you.}}
+{{dialogue|Unsuur|indent=true|Right on the money, boss. Especially when I was a baby. Real tiny. I used to collect pebbles, too. How things change, huh?}}
+{{dialogue|Justice|indent=true|Yeah... that's right.}}
+{{dialogue|Unsuur|indent=true|I'm not a baby anymore.}}
+{{dialogue|Justice|indent=true|I can see that...}}
+{{dialogue|Justice|indent=true|answer=(Whistle)
+|Nice uh... nice tune.}}
+{{dialogue|Unsuur|indent=true|That's cool. I've never been able to whistle.}}
+{{dialogue|Justice|indent=true|...}}
+{{dialogue|Unsuur|indent=true|Mm.}}
+{{dialogue|Justice|So...}}
+{{dialogue|Unsuur|Yeah?}}
+{{dialogue|Justice|Uh... nothin', nothin'.}}
+{{dialogue|Unsuur|Shoot anything recently, sir?}}
+{{dialogue|Justice|Well, I mean, you've been with me recently...}}
+{{dialogue|Unsuur|Yeah, of course. That's right. Saw the whole thing...}}
+{{dialogue|Justice|...}}
+{{dialogue|Unsuur|Ahem.}}
+{{dialogue|Player|What should I say?}}
+
+*''Did you ever meet the old sheriff, Unsuur?''
+*''So what was the old sheriff like, Justice?''
+
+{{dialogue|Unsuur|indent=true|answer=Did you ever meet the old sheriff, Unsuur?
+|No, I never met him. Sounds like a cool guy, though.}}
+{{dialogue|Justice|Ah, man, you don't even know. Things that guy could do...}}
+{{dialogue|Unsuur|Sounds like you really respect him, boss.}}
+{{dialogue|Justice|Respect him? I woulda given my life for him, and he woulda given his right back. He was always there to support us.}}
+{{dialogue|Unsuur|Sounds a lot like you, sheriff.}}
+{{dialogue|Justice|Aw shucks, Unsuur. Thanks, but... if Ol' B3 was still around, he'd make guys like us look like oblong rutabagas in week old tater salad.}}
+{{dialogue|Unsuur|Harsh words. Don't sell yourself short, sir.}}
+{{dialogue|Justice|I ever tell you about the Sandrock Hotel Standoff?}}
+{{dialogue|Unsuur|The Sandrock Hotel Standoff? No.}}
+{{dialogue|Justice|Alright, so picture this: guy had gone into the Blue Moon, this is way back, mind, before Owen's day. Was called the Sandrock Hotel.}}
+{{dialogue|Justice|Guy was a mean piece of work. Kinda eyes that you know were lookin' for trouble. Covered his face with a mask, but you could still see that scowl underneath. Kinda face that brought fear to the eyes of regular folk.}}
+{{dialogue|Justice|Got a six shooter, carryin' a sack to put the Gols in. He walks in an' jus' starts blastin'.}}
+
+*''Was everyone okay?''
+*''That's crazy!''
+*''(Yawn)''
+
+{{dialogue|Justice|indent=true|answer=Was everyone okay?
+|Yeah, lucky no one was killed, but dang...}}
+{{dialogue|Justice|indent=true|So, he starts blastin' and looks Owen's Pa in the eye, says "gimme all your money!" Now, Owen's Pa was a smart man, he ain't about to throw down his life for some Gols.}}
+{{dialogue|Justice|indent=true|So guy leaves, heads outside, an' comes face to face with B3.}}
+{{dialogue|Unsuur|indent=true|Woah!}}
+{{dialogue|Justice|indent=true|answer=That's crazy!
+|Right? Lucky no one was killed, but dang...}}
+{{dialogue|Justice|indent=true|So, he starts blastin' and looks Owen's Pa in the eye, says "gimme all your money!" Now, Owen's Pa was a smart man, he ain't about to throw down his life for some Gols.}}
+{{dialogue|Justice|indent=true|So guy leaves, heads outside, an' comes face to face with B3.}}
+{{dialogue|Unsuur|indent=true|Woah!}}
+{{dialogue|Justice|indent=true|answer=(Yawn)
+|Uh... sorry if I'm borin' ya, I guess I'll just skip to the end.}}
+{{dialogue|Justice|indent=true|Short version: guy comes out, B3 shoots that there gun outta his hand, throws down his own, an' tackles the guy.}}
+{{dialogue|Unsuur|indent=true|That's cool.}}
+{{dialogue|Justice|indent=true|The uh... long version is a bit more excitin'...}}
+{{dialogue|Unsuur|indent=true|Yeah. Way more character development.}}
+{{dialogue|Justice|indent=true|...}}
+{{dialogue|Unsuur|indent=true|...}}
+
+TRIGGER Procedure 0.0 Step 8.9 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 3) There is a conversation segment (id 8922) that ends:
+{{dialogue|Unsuur|Woah!}}
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 826621 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 10.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 826621 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderSit (idName: 8266083) from Justice
+Add behavior CommanderMoveToFlagAndAction (idName: 8266084) to Justice
+(param: TargetScene:UnsuurHome|MoveMode:Walk|FlagName:S8266_8_4)
+DELAY MASK SET || maskId: 826621 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 10.1 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8008 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 2574_0 starts:
+{{dialogue|Justice|Woah's right! B3's standin' there, facin' down this devil. Ain't a drop of fear in them eyes. B3 jus' says "that ain't right of you, friend. We treat each other good in this here town." An' this robber jus' lets out this cackle. Like some maniac.}}
+{{dialogue|Unsuur|What happened next, boss?}}
+{{dialogue|Justice|Well, quick as lightnin', B3 shoots that there gun right outta his hand, throws down his own, an' tackles the guy.}}
+
+*''He threw down his gun?''
+*''He tackled him?''
+*''No way, he shot the gun out of his hand?''
+
+{{dialogue|Justice|indent=true|answer=He threw down his gun?
+|That's right. B3 ain't a man for killin'. He didn't wanna shed no blood, an' he had an eagle eye.}}
+{{dialogue|Justice|indent=true|answer=He tackled him?
+|Yeah, jus' tackled him. B3 wasn't about killin'. Didn't wanna shed no blood, y'see?}}
+{{dialogue|Justice|indent=true|answer=No way, he shot the gun out of his hand?
+|I swear, sheriff's honor. B3 had an eagle eye shot, an' ain't one for killin'. Didn't wanna draw no blood.}}
+
+TRIGGER Procedure 0.0 Step 10.5 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderSit (idName: 8266085) to Justice
+(param: SeatDramaName:UnsuurHomeSeat03|TargetScene:UnsuurHome)
+
+TRIGGER Procedure 0.0 Step 11.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8008 | behaviourName: CommanderSit | eventName: SitDownFinished
+CONDITIONS
+Always:
+ACTIONS
+(cId 9) A conversation 2578_0 starts:
+{{dialogue|Justice|So guy gets thrown in jail, locked up, an' shipped off to Atara. Ain't ever heard from again.}}
+{{dialogue|Unsuur|That's really cool, boss.}}
+{{dialogue|Justice|Yeah, I ain't seen a shot like that ever since.}}
+{{dialogue|Unsuur|I wish I could have met him.}}
+{{dialogue|Justice|Yeah, me too buddy. I reckon he coulda taught you a lot.}}
+{{dialogue|Unsuur|You've taught me a lot, too, sheriff.}}
+{{dialogue|Justice|Huh?}}
+{{dialogue|Unsuur|Yeah, pretty much everything other than like, walking, talking... a couple other things... I know I learned from you.}}
+{{dialogue|Justice|I... Well, thank you Unsuur. I didn't know that.}}
+{{dialogue|Unsuur|Well, I guess I taught you something too then, boss.}}
+{{dialogue|Justice|Haha, I guess you did! Ain't that somethin'?}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 11.2 Order 27 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) After the conversation ends:
+(cId: 3) There is a conversation segment (id 8946) that ends:
+{{dialogue|Unsuur|...}}
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 82666 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 12.0 Order 26 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82666 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderPlayerSitLookAtManually (idName: 8266003) from Player
+Remove behavior CommanderSit (idName: 8266263) from Unsuur
+Remove behavior CommanderSit (idName: 8266083) from Justice
+Remove behavior CommanderSit (idName: 8266085) from Justice
+Justice stands still in UnsuurHome and looks at Unsuur
+Unsuur stands still in UnsuurHome and looks at Justice
+DELAY MASK SET || maskId: 82666 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Add behavior CommanderMoveToFlagAndAction (idName: 8266006) to Player
+(param: TargetScene:UnsuurHome|MoveMode:Walk|FlagName:S8266_0_2|LookAtActor:8026)
+
+TRIGGER Procedure 0.0 Step 15.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+GROUP 0:
+Check if 8266A is == 0
+
+GROUP 1:
+Check if 8266B is == 0
+
+GROUP 2:
+Check if 8266C is == 0
+
+ACTIONS
+(cId 10) A conversation 2580_0 starts:
+{{dialogue|Justice|Well, it's gettin' kinda late.}}
+{{dialogue|Unsuur|Right.}}
+{{dialogue|Justice|Y'know, I had a lot of fun tonight.}}
+{{dialogue|Unsuur|That's cool. You didn't have to.}}
+{{dialogue|Justice|Yeah, if I'm honest, I was a little apprehensive.}}
+{{dialogue|Unsuur|Why, boss?}}
+{{dialogue|Justice|Well, I usually find your unique brand of weirdness to be abrasive rather than endearing.}}
+{{dialogue|Unsuur|Understandable, sir.}}
+{{dialogue|Justice|But I reckon I midjudged you. You're a good cop, an' a great guy. Let alone chef! Whaddya call this here yellow soup, anyhow?}}
+{{dialogue|Unsuur|Thank you...}}
+{{dialogue|Justice|Ah, don't worry about it. Anyway, I reckon we gotta head now. I'll see ya tomorrow, Unsuur.}}
+{{dialogue|Unsuur|See you tomorrow, sheriff. Bye, ''Player''.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 15.2 Order 25 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 82663 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 16.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 82663 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 8266006) from Player
+
+TRIGGER Procedure 0.0 Step 15.1 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: MoveToFlagOver | behaviourName: CommanderMoveToFlagAndAction | npc: 8000
+CONDITIONS
+Check if 8266A is == 1
+Check if 8266B is == 1
+Check if 8266C is == 1
+ACTIONS
+(cId 10) A conversation 2582_0 starts:
+{{dialogue|Justice|Well, uh... I guess I'm gonna go...}}
+{{dialogue|Justice|This has been... a night. Maybe we can keep it professional from here on?}}
+{{dialogue|Justice|Y'know, Unsuur, I usually find your unique brand of weirdness to be abrasive rather than adorable.}}
+{{dialogue|Unsuur|Understandable, sir.}}
+{{dialogue|Justice|Well, goodnight.}}
+{{dialogue|Unsuur|Goodnight, boss.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 16.1 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82663 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Justice stops standing still
+Player stops standing still
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8266_0_5
+
+TRIGGER Procedure 0.0 Step 16.2 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82663 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 82663 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8266_0_5
+Justice stands still in Main and looks at Player
+Justice stops standing still
+
+TRIGGER Procedure 0.0 Step 17.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82663 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 15) A conversation 2583_0 starts:
+{{dialogue|Justice|Man, that was a bust. I know he means well but... I just can't get a read on the guy. Thanks for comin' with me, though. I reckon it'd be way worse without ya.}}
+{{dialogue|Justice|Sorry about that story, though... I know I can go on a little...}}
+{{dialogue|Justice|Anyway, I'll see you later.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 40.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 15) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 82661
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 8266084) from Justice
+Remove behavior CommanderSit (idName: 8266085) from Justice
+Justice stops standing still
+Unsuur stops standing still
+Unsuur stops standing still
+SUBMIT MISSION 1800265
+END MISSION 1800266
+
+TRIGGER Procedure 0.0 Step 17.1 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82663 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 15) A conversation 2581_0 starts:
+{{dialogue|Justice|Hey, thanks for comin' with me tonight. I really think I got the guy all wrong. I guess you just gotta break that surface. That weird, rock obsessed surface.}}
+{{dialogue|Justice|Well, I'mma head. See you later, ''Player''.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 27.0 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from UnsuurHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Justice stops standing still
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8266_0_5
+Justice stands still in Main and looks at Player
+DELAY MASK SET || maskId: 82663 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 8266006) from Player
+
+TRIGGER Procedure 0.0 Step 31.0 Order 32 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1800266
+CONDITIONS
+Check if 8266A is == 1
+Check if 8266B is == 1
+Check if 8266C is == 1
+ACTIONS
+Justice gains 5 favor
+Unsuur gains 5 favor
+
+TRIGGER Procedure 0.0 Step 31.1 Order 33 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1800266
+CONDITIONS
+GROUP 0:
+Check if 8266A is == 0
+
+GROUP 1:
+Check if 8266B is == 0
+
+GROUP 2:
+Check if 8266C is == 0
+
+ACTIONS
+Justice gains 10 favor
+Unsuur gains 10 favor
+
+TRIGGER Procedure 1.0 Step 10.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the third option in conversation segment 8859:
+{{dialogue|Player|What should I say?}}
+
+*''Wow, I didn't know you were a chef!'' (No unique dialogue)
+*''Mmmm, tasty!'' (No unique dialogue)
+*''Soooo...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8266A to 1
+
+TRIGGER Procedure 1.0 Step 11.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the third option in conversation segment 8876:
+{{dialogue|Player|What should I say?}}
+
+*''When did you join the Civil Corps, Unsuur?'' (No unique dialogue)
+*''What were you like when you were young, Justice?'' (No unique dialogue)
+*''(Whistle)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8266B to 1
+
+TRIGGER Procedure 1.0 Step 12.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the third option in conversation segment 8917:
+{{dialogue|Justice|Got a six shooter, carryin' a sack to put the Gols in. He walks in an' jus' starts blastin'.}}
+
+*''Was everyone okay?'' (No unique dialogue)
+*''That's crazy!'' (No unique dialogue)
+*''(Yawn)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8266C to 1

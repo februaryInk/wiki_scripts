@@ -1,0 +1,244 @@
+Reading Mission 1800514: Secret Garden
+
+<onlyinclude>{{Infobox mission
+|name = Secret Garden
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Secret Garden:
+
+TRIGGER Procedure 0.0 Step 9.4 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if 8513A is == 1
+ACTIONS
+START MISSION 1800513
+
+TRIGGER Procedure 0.0 Step 16.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800513
+CONDITIONS
+Always:
+ACTIONS
+Run mission Secret Garden
+END MISSION 1800513
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800514
+CONDITIONS
+Always:
+ACTIONS
+===Wait for a Letter===
+
+{{mission_details
+|desc = Zeke suggested that you could help build a special greenhouse to increase Fang's herb production. Wait for Zeke's letter with the details.
+|details = Wait for a Letter
+}}
+Set 8514A to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|826}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 826
+CONDITIONS
+GROUP 0:
+CHECK PLAYER ITEM || item: 13100009 | itemGrade: -1 | set: 6 | count: 4
+
+GROUP 1:
+CHECK PLAYER ITEM || item: 19110006 | count: 6 | set: 6 | itemGrade: -1
+
+GROUP 2:
+CHECK PLAYER ITEM || item: 19112019 | itemGrade: -1 | set: 6 | count: 10
+
+ACTIONS
+===Gather Materials===
+
+{{mission_details
+|desc = Building the Herb Garden requires some materials. Once you're ready, go to the selected location to submit them.
+|details = Gather Materials
+*{{i2|Drying Rack|0/4}}
+*{{i2|Tempered Glass|0/6}}
+*{{i2|Granite Tiles|0/10}}
+}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 826
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1800513 | targetId: 2 | canSubmit: 1
+CONDITIONS
+CHECK PLAYER ITEM || item: 13100009 | itemGrade: -1 | set: 2 | count: 4
+CHECK PLAYER ITEM || item: 19110006 | count: 6 | set: 2 | itemGrade: -1
+CHECK PLAYER ITEM || item: 19112019 | itemGrade: -1 | set: 2 | count: 10
+ACTIONS
+===Go to Near the Clinic===
+
+{{mission_details
+|desc = With the materials prepared, head to the area {{textcolor|green|near Fang's clinic}} to submit them for the construction of the Herb Garden.
+|details = Go to Near the Clinic
+*{{i2|Drying Rack|0/4}}
+*{{i2|Tempered Glass|0/6}}
+*{{i2|Granite Tiles|0/10}}
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 85141 | path: S8514_Item1_Mark | sceneName: Main | flagName: S8514_Item1 | extraParams: S8514_Item1|CreatorItem|13100009_4,19110006_6,19112019_10|1547|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 85141 | missionId: 1800513 | iconType: 2
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 85141
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85141 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85141 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Fang stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8514_0_1
+DELAY MASK SET || maskId: 85141 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85141 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 23060, 23061 starts:
+{{dialogue|Fang|''Pet Name''... again you show us that nothing is beyond your grasp. I believe Heidi's workers will fill in the details. I can begin planting soon after.}}
+{{dialogue|Fang|This is a wonderful thing you have done; not for me, but for the patients. Be sure to rest fully before returning to work.}}
+
+TRIGGER Procedure 0.0 Step 9.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Fang stops standing still
+CUTSCENE UI STATE EXIT || 
+CAMERA PATH STOP ALL || 
+SUBMIT MISSION 1800513
+Set 8514A to 1
+
+TRIGGER Procedure 0.0 Step 10.0 Order 8 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment 8514A by 1
+
+TRIGGER Procedure 0.0 Step 12.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 8514A is >= 5
+ACTIONS
+PICK UP RESOURCE REFRESH || id: 1800513
+Add tag "Watering" to Fang
+SCENEITEM CREATE FLAG || itemType: 0 | id: 85142 | path: S8514_Item2 | sceneName: Main | flagName: S8514_Item2 | extraParams: -1
+SCENEITEM DELETE || itemType: 12 | id: 85141
+END MISSION 1800514
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Zeke
+CONDITIONS
+Check if 8514A is == 0
+ACTIONS
+(cId 1) A conversation 23042, 23043 starts:
+{{dialogue|Zeke|That alternate greenhouse design... uh... emphasis on "house." It's not a mansion, but... it'll do the trick.}}
+{{dialogue|Zeke|Just... let me know if there are any problems.}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to X
+CONDITIONS
+Check if 8514A is == 0
+ACTIONS
+(cId 2) A conversation 23044 starts:
+{{dialogue|X|Where da herbs at? Gimme that green, baby!}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Fang
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 8095_0 starts:
+{{dialogue|Fang|''Pet Name''... The number of patients I've had lately... It's overwhelming.}}
+
+*''Maybe it has to do with the Seesai newspaper article.''
+*''You're a great doctor, this was only a matter of time.''
+*''Is there a nasty bug going around?''
+
+{{dialogue|Fang|indent=true|answer=Maybe it has to do with the Seesai newspaper article.
+|Article? Ah... you mean...}}
+{{dialogue|Fang|indent=true|answer=You're a great doctor, this was only a matter of time.
+|Nice of you to say... But this... this is too much.}}
+{{dialogue|Fang|indent=true|It must be...}}
+{{dialogue|Fang|indent=true|answer=Is there a nasty bug going around?
+|No... Nothing like that....}}
+{{dialogue|Fang|indent=true|It must be...}}
+{{dialogue|Fang|My father. Patients are coming from other cities. It must be him... spreading my name around.}}
+{{dialogue|Fang|...}}
+
+*''Wouldn't he have sent us a letter or something first?''
+*''Too little, too late! You might've needed this starting out, but not now.''
+*''I guess he thinks he's helping you.''
+*''He's overcompensating.''
+
+{{dialogue|Fang|indent=true|answer=Wouldn't he have sent us a letter or something first?
+|He wouldn't be so kind as to let us refuse.}}
+{{dialogue|Fang|indent=true|He thinks he knows best. That much will never change.}}
+{{dialogue|Fang|indent=true|answer=Too little, too late! You might've needed this starting out, but not now.
+|No need to be upset.}}
+{{dialogue|Fang|indent=true|The past is the past.}}
+{{dialogue|Fang|indent=true|answer=I guess he thinks he's helping you.
+|Yes... I'm sure you're right.}}
+{{dialogue|Fang|indent=true|answer=He's overcompensating.
+|Maybe so...}}
+{{dialogue|Fang|Nevermind. I shouldn't have brought this up. He is him, and we are us. All we can be is us.That is enough.}}
+{{dialogue|Fang|I will help these people. I won't complain. When the herb garden is ready, we will have a chance to relax.}}
+The conversation ends.

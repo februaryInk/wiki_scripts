@@ -1,0 +1,208 @@
+Reading Mission 1800316: Anyone Can Cook
+
+<onlyinclude>{{Infobox mission
+|name = Anyone Can Cook
+|image =
+|description = Larry is afraid he might scare the tourists, help him take the food to the table.
+|type = Main
+|time =
+|location =
+|characters = [[Larry]]
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200310
+
+TRIGGER Procedure 5.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1800314 is result 1 flag 1
+ACTIONS
+Run mission #1800315
+
+TRIGGER Procedure 5.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission Anyone Can Cook
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800316
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || flagName: Trigger_Saloon | id: 83161 | transId: 0 | missionId: 1800316 | sceneName: Main | showOnMap: 1 | mapIcon: MissionArea
+Set 8316Task to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_saloon
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+Check if Owen is in town
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_saloon
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+Owen stands still in Main
+Larry stands still in Saloon and looks at Player
+AREA TRIGGER DELETE || id: 83161
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: S8316_0_1
+NPC RANDOM ADD || id: 1 | instId: 83161 | scene: Saloon | flagName: S8316_RNPC1_1 | dailyBehavior: RandomNPC
+NPC RANDOM ADD || dailyBehavior: RandomNPC | flagName: S8316_RNPC2_1 | id: 1 | instId: 83162 | scene: Saloon
+NPC RANDOM ADD || dailyBehavior: RandomNPC | flagName: S8316_RNPC3_1 | instId: 83163 | scene: Saloon | id: 2
+Add behavior CommanderSit (idName: 831611) to 83161
+(param: SeatDramaName:SaloonSeat04|DelayTime:1.0|TargetScene:Saloon|Delay:0.0)
+Add behavior CommanderSit (idName: 831621) to 83162
+(param: SeatDramaName:SaloonSeat07|DelayTime:1.0|TargetScene:Saloon|Delay:0.0)
+Add behavior CommanderSit (idName: 831631) to 83163
+(param: SeatDramaName:SaloonSeat12|DelayTime:1.0|TargetScene:Saloon|Delay:0.0)
+ACTION NPC RENAME || nameTransId: 30200025 | npc: 83161
+ACTION NPC RENAME || npc: 83162 | nameTransId: 30200026
+ACTION NPC RENAME || npc: 83163 | nameTransId: 30200027
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8316001) to Player
+(param: TargetScene:Saloon|MoveMode:Run|FlagName:S8316_0_2|Delay:2.0)
+
+TRIGGER Procedure 0.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 3768_0 starts:
+{{dialogue|Larry|Ah, ''Player''. Cooking Boss is not here today, so I am doing the cooking and serving...}}
+{{dialogue|Larry|But they have been looking at me strangely... I am worried that I will offend them somehow. Could you give these dishes to them?}}
+
+*''Yeah no problem, give them to me.''
+*''Good luck with that.''
+
+{{dialogue|Larry|indent=true|answer=Yeah no problem, give them to me.
+|Thank you, strong human.}}
+{{dialogue|Larry|indent=true|Here are three dishes, they were ordered by those three tables over there.}}
+{{dialogue|Larry|indent=true|answer=Good luck with that.
+|Urgh... I suppose I shall await Cooking Boss' return. Sssss...}}
+DELIVER MISSION 1800316
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 8316972) from Larry
+CUTSCENE UI STATE EXIT || 
+Larry stands still in Saloon and looks at Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8316001) from Player
+
+TRIGGER Procedure 0.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+(cId -1) The player picks the first option in conversation segment 12594:
+{{dialogue|Larry|Do you want to help serve food?}}
+
+*''Yeah no problem, give them to me.'' (No unique dialogue)
+*''Good luck with that.'' (No unique dialogue)
+
+CONDITIONS
+Check if 8316Task is == 1
+ACTIONS
+START MISSION 1800316
+
+TRIGGER Procedure 0.0 Step 4.5 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 12446:
+{{dialogue|Larry|But they have been looking at me strangely... I am worried that I will offend them somehow. Could you give these dishes to them?}}
+
+*''Yeah no problem, give them to me.'' (No unique dialogue)
+*''Good luck with that.'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 12594:
+{{dialogue|Larry|Do you want to help serve food?}}
+
+*''Yeah no problem, give them to me.'' (No unique dialogue)
+*''Good luck with that.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8316Task to 1
+
+TRIGGER Procedure 0.0 Step 12.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Saloon to the -1:
+CONDITIONS
+Always:
+ACTIONS
+Owen stops standing still
+Remove behavior CommanderSit (idName: 831611) from 83161
+Remove behavior CommanderSit (idName: 831621) from 83162
+Remove behavior CommanderSit (idName: 831631) from 83163
+Larry stops standing still
+
+TRIGGER Procedure 1.0 Step 14.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800316
+CONDITIONS
+Always:
+ACTIONS
+Run mission Give me a Sign
+END MISSION 1800316
+
+TRIGGER Procedure 1.0 Step 14.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 83161
+Owen stops standing still
+NPC RANDOM REMOVE || id: 83161
+NPC RANDOM REMOVE || id: 83162
+NPC RANDOM REMOVE || id: 83163
+END MISSION 1800316
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Larry|Do you want to help serve food?}}
+
+*''Yeah no problem, give them to me.'' (No unique dialogue)
+*''Good luck with that.'' (No unique dialogue)
+

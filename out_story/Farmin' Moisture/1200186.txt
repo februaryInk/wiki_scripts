@@ -1,0 +1,505 @@
+Reading Mission 1200186: Farmin' Moisture
+
+<onlyinclude>{{Infobox mission
+|name = Farmin' Moisture
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Farmin' Moisture:
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Nia stops standing still
+DELIVER MISSION 1200185
+START MISSION 1200185
+
+TRIGGER Procedure 1.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200185
+CONDITIONS
+Always:
+ACTIONS
+Run mission Farmin' Moisture
+END MISSION 1200186
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200186
+CONDITIONS
+Always:
+ACTIONS
+===Go to the Moisture Farm===
+
+{{mission_details
+|desc = Nia isn't really familiar with Sandrock. It's probably best if you go with her to the Moisture Farm.
+|details = Go to the Moisture Farm
+}}
+Set POINT to 0
+ACTION ACTOR START FADE IN || id: 21861 | npc: 8059 | time: 2
+STOPWATCH REAL TIME SET || id: 21861 | sec: 2
+NPC SET CAN INTERACT || canInteract: 0 | npc: 8059
+Set QUESTION to 0
+
+TRIGGER Procedure 0.0 Step 0.1 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 21861
+CONDITIONS
+Always:
+ACTIONS
+ACTION ACTOR END FADE IN || id: 21861 | time: 0
+Nia stands still in Greenhouse
+NPC SET CAN INTERACT || canInteract: 1 | npc: 8059
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Greenhouse:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_greenhouse
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_greenhouse
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Greenhouse:
+CONDITIONS
+Always:
+ACTIONS
+Nia stops standing still
+Nia stands still in Greenhouse and looks at Zeke
+Zeke stands still in Greenhouse
+PLAYER SET POS ROT FLAG || sceneName: Greenhouse | flagName: niafarm_greenhouse_player1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Greenhouse:
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 4560, 4561 starts:
+{{dialogue|Zeke|Besides Wheat, we also have Pomato. Look, they're over there. In the beginning, we really struggled with Sandhoppers. It took a few generations to breed something that could withstand them.}}
+{{dialogue|Nia|That really is a long process... we were also cultivating Pomatos in one of our experimental greenhouses last semester. I had the highest yield of Tomatoes. But the Potatoes it produced... it must have had something to do with the soil.}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 21861) to Player
+(param: TargetScene:Greenhouse|MoveMode:Run|FlagName:niafarm_greenhouse_player2)
+Nia stops standing still
+Zeke stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 21861) to Zeke
+(param: TargetScene:Greenhouse|MoveMode:Walk|FlagName:niafarm_greenhouse_zeke1)
+Add behavior CommanderMoveToFlagAndAction (idName: 21861) to Nia
+(param: TargetScene:Greenhouse|MoveMode:Walk|FlagName:niafarm_greenhouse_nia1)
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 1329_0 starts:
+{{dialogue|Zeke|Hello, ''Player''. I was just talking to your friend here.}}
+{{dialogue|Nia|Ah, you're here, ''Player''! Mister Zeke was just showing me around the Moisture Farm. He said you repaired the Hydrogel!}}
+{{dialogue|Nia|Oh, by the way, Mister Zeke, Professor Luo said that if you want to grow bigger and juicier Tomatoes, you need to control the irrigation temperature. If the temperature gets too low, it's not conducive to proper absorption of nutrients.}}
+{{dialogue|Zeke|Interesting... I didn't know that. Oh, and just call me Zeke.}}
+{{dialogue|Nia|''Player'', I just remembered the little greenhouses you used to make me! I planted some Bananaberries there. They turned out delicious! So, so sweet!}}
+{{dialogue|Nia|Ah, I'm sorry. My mind likes to jump around a lot. I just say what pops into my head. ''Player'' used to call me "goldfish" because of it...}}
+{{dialogue|Zeke|I understand. It's nice to find someone with a similar love of botany.}}
+{{dialogue|Nia|''Player'', what about you? Do you like planting here?}}
+
+*''I'm the best farmer in town!''
+*''I haven't tried it yet...''
+
+{{dialogue|Nia|indent=true|answer=I haven't tried it yet...
+|That's too bad... why don't you give it a shot? When you grow your own food, it really is an amazing feeling.}}
+{{dialogue|Nia|Alright, "expert." Since you're so high and mighty, let's do a little test.}}
+{{dialogue|Nia|First question... which tool is necessary for planting in the desert?}}
+
+*''A Hoe.''
+*''A Grid Shovel.''
+*''A Pickhammer.''
+*''Erm... your hands?''
+
+{{dialogue|Nia|indent=true|answer=A Hoe.
+|Erm... that's not right. You use a Grid Shovel to lay the Straw in the field to form a Straw Grid. Then you can sow the seeds.}}
+{{dialogue|Nia|indent=true|answer=A Grid Shovel.
+|reward={{NPC2|Nia|rp=2}}|reward={{NPC2|Zeke|rp=2}}|Hmmm, that's right.}}
+{{dialogue|Nia|indent=true|answer=A Pickhammer.
+|Erm... that's not right. You use a Grid Shovel to lay the Straw in the field to form a Straw Grid. Then you can sow the seeds.}}
+{{dialogue|Nia|indent=true|answer=Erm... your hands?
+|Erm... that's not right. You use a Grid Shovel to lay the Straw in the field to form a Straw Grid. Then you can sow the seeds.}}
+{{dialogue|Nia|Next! What kind of produce can't be grown in the desert?}}
+
+*''Sandrice.''
+*''Coffee Tea.''
+*''Lettuce.''
+*''Sand?''
+
+{{dialogue|Nia|indent=true|answer=Sandrice.
+|Wrong! Actually, these are pretty easy to grow here. They're really good for beginners. You can give 'em a shot.}}
+{{dialogue|Nia|indent=true|answer=Coffee Tea.
+|Wrong! Actually, these are pretty easy to grow here. They're really good for beginners. You can give 'em a shot.}}
+{{dialogue|Zeke|indent=true|answer=Lettuce.
+|reward={{NPC2|Nia|rp=2}}|reward={{NPC2|Zeke|rp=2}}|That's right. It's really hard to grow Lettuce in Sandrock.}}
+{{dialogue|Nia|indent=true|Lettuce and many other crops need sticky and moist soil. Although most of the Free Cities can grow them, it's a real struggle in Sandrock. But don't give up. I'm sure in the future, breakthroughs will be made, and we'll be enjoying Sandrock Lettuce!}}
+{{dialogue|Nia|indent=true|answer=Sand?
+|Sand... I mean... sand doesn't "grow" anywhere... but... Argh! Let's move on.}}
+Remove behavior CommanderMoveToFlag (idName: 21861) from Player
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the second option in conversation segment 4572:
+{{dialogue|Nia|First question... which tool is necessary for planting in the desert?}}
+
+*''A Hoe.'' (No unique dialogue)
+*''A Grid Shovel.'' (No unique dialogue)
+*''A Pickhammer.'' (No unique dialogue)
+*''Erm... your hands?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Nia gains 2 favor
+Zeke gains 2 favor
+Increment POINT by 1
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the third option in conversation segment 4575:
+{{dialogue|Nia|Next! What kind of produce can't be grown in the desert?}}
+
+*''Sandrice.'' (No unique dialogue)
+*''Coffee Tea.'' (No unique dialogue)
+*''Lettuce.'' (No unique dialogue)
+*''Sand?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Nia gains 2 favor
+Zeke gains 2 favor
+Increment POINT by 1
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8059 | cId: 1 | missionId: 1200186
+CONDITIONS
+Check if POINT is < 2
+Check if QUESTION is == 1
+ACTIONS
+(cId 2) A conversation 4579, 4582 starts:
+{{dialogue|Nia|''Player'', didn't you say you were the "best farmer in town?" Don't worry, just keep at it. "Practice makes perfect," eh?}}
+{{dialogue|Nia|Planting is actually a super interesting and deep study. Different plants need to be cared for in different ways. I still have a lot to learn myself.}}
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 21862) to Player
+(param: TargetScene:Greenhouse|MoveMode:Walk|FlagName:niafarm_greenhouse_player2|Action:Nod_Story)
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8059 | cId: 1 | missionId: 1200186
+CONDITIONS
+Check if POINT is >= 2
+Check if QUESTION is == 1
+ACTIONS
+(cId 2) A conversation 4580, 4581, 4582 starts:
+{{dialogue|Nia|Oh, I didn't trip you up at all. If I had known, I'd have prepared more difficult questions... You should see the questions on our tests!}}
+{{dialogue|Nia|But if I'm honest, your answers kinda show that you really do care for your crops. I'm proud of you.}}
+{{dialogue|Nia|Planting is actually a super interesting and deep study. Different plants need to be cared for in different ways. I still have a lot to learn myself.}}
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 21862) from Player
+(cId 3) A conversation 4583, 4584, 4585, 4586 starts:
+{{dialogue|Nia|Oh by the way Mis- er... Zeke. I have something I have to ask you. These are the Raspberry Seeds cultivated by our school. The school heard I was coming to Sandrock, and asked me to give these seeds to you.}}
+{{dialogue|Nia|The teachers are curious about how these seeds will grow in a desert greenhouse. If it all goes well, maybe you'll be eating Raspberries soon!}}
+{{dialogue|Zeke|Thank you. I'll accept this on behalf of Sandrock.}}
+{{dialogue|Zeke|''Player'', let's grow this together.}}
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add 5 Raspberry Seeds of Default quality (Notify player)
+Zeke stops standing still
+Nia stops standing still
+CUTSCENE UI STATE EXIT || 
+===Plant the Raspberry Seeds===
+
+{{mission_details
+|desc = Nia brought Raspberry seeds with her to Sandrock. Help her grow them in the Moisture Farm.
+|details = Plant the Raspberry Seeds
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 21861 | path: Mission_niafarmempty | sceneName: Greenhouse | flagName: niafarm_greenhouse_seed1 | extraParams: Mission_niafarm|CreatorItem|16100034_1|80007357|Pave|1
+SCENEITEM CREATE FLAG || itemType: 11 | id: 21862 | path: Mission_niafarmempty | sceneName: Greenhouse | flagName: niafarm_greenhouse_seed2 | extraParams: Mission_niafarm|CreatorItem|16100034_1|80007357|Pave|1
+SCENEITEM CREATE FLAG || itemType: 11 | id: 21863 | path: Mission_niafarmempty | sceneName: Greenhouse | flagName: niafarm_greenhouse_seed3 | extraParams: Mission_niafarm|CreatorItem|16100034_1|80007357|Pave|1
+SCENEITEM CREATE FLAG || itemType: 11 | id: 21864 | path: Mission_niafarmempty | sceneName: Greenhouse | flagName: niafarm_greenhouse_seed4 | extraParams: Mission_niafarm|CreatorItem|16100034_1|80007357|Pave|1
+SCENEITEM CREATE FLAG || itemType: 11 | id: 21865 | path: Mission_niafarmempty | sceneName: Greenhouse | flagName: niafarm_greenhouse_seed5 | extraParams: Mission_niafarm|CreatorItem|16100034_1|80007357|Pave|1
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 21861 | iconType: 2 | missionId: 1200185
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 21862 | missionId: 1200185 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 21863 | missionId: 1200185 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 21864 | missionId: 1200185 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 21865 | missionId: 1200185 | iconType: 2
+Remove behavior CommanderMoveToFlagAndAction (idName: 21861) from Zeke
+Remove behavior CommanderMoveToFlagAndAction (idName: 21861) from Nia
+
+TRIGGER Procedure 1.0 Step 5.1 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 4569:
+{{dialogue|Nia|''Player'', what about you? Do you like planting here?}}
+
+*''I'm the best farmer in town!'' (No unique dialogue)
+*''I haven't tried it yet...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set QUESTION to 1
+
+TRIGGER Procedure 1.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8059 | cId: 1 | missionId: 1200186
+CONDITIONS
+Check if QUESTION is == 0
+ACTIONS
+(cId 3) A conversation 4583, 4584, 4585, 4586 starts:
+{{dialogue|Nia|Oh by the way Mis- er... Zeke. I have something I have to ask you. These are the Raspberry Seeds cultivated by our school. The school heard I was coming to Sandrock, and asked me to give these seeds to you.}}
+{{dialogue|Nia|The teachers are curious about how these seeds will grow in a desert greenhouse. If it all goes well, maybe you'll be eating Raspberries soon!}}
+{{dialogue|Zeke|Thank you. I'll accept this on behalf of Sandrock.}}
+{{dialogue|Zeke|''Player'', let's grow this together.}}
+
+TRIGGER Procedure 1.0 Step 7.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) The player picks the second option in conversation segment 4593:
+{{dialogue|Nia|If I'm honest, I kind of want to stay a little longer...}}
+
+*''You're welcome here any time.'' (No unique dialogue)
+*{{flirt}}''Because you'll miss me too much?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key missnia with info 1.
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 5
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 21861
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 21862
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 21863
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 21864
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 21865
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1200185 | targetId: 2 | transId: 80007357 | isAdd: 1
+
+TRIGGER Procedure 2.0 Step 2.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 10 | actorId: 8000 | itemType: 12 | id: 21861
+ON SCENEITEM CREATE || order: 10 | actorId: 8000 | itemType: 12 | id: 21862
+ON SCENEITEM CREATE || order: 10 | actorId: 8000 | itemType: 12 | id: 21863
+ON SCENEITEM CREATE || order: 10 | actorId: 8000 | itemType: 12 | id: 21864
+ON SCENEITEM CREATE || order: 10 | actorId: 8000 | itemType: 12 | id: 21865
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1200185 | targetId: 2 | canSubmit: 1
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 21861 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 21861
+CONDITIONS
+Always:
+ACTIONS
+Nia stands still in Greenhouse
+Zeke stands still in Greenhouse
+PLAYER SET POS ROT FLAG || sceneName: Greenhouse | flagName: niafarm_greenhouse_player2
+DELAY MASK SET || maskId: 21861 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 21861 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 4588, 4589, 4590 starts:
+{{dialogue|Zeke|Alright, that's all of them. Thank you for your seeds, Nia.}}
+{{dialogue|Nia|Thank you too, Zeke. I learned a lot today!}}
+{{dialogue|Zeke|Now, you two take care. I need to go take care of some crops.}}
+
+TRIGGER Procedure 2.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Zeke stops standing still
+(cId 5) A conversation 1338_0 starts:
+{{dialogue|Nia|That was really great, I learned a lot. I need to go and write a report for school. Gosh, I have so many ideas right now...}}
+{{dialogue|Nia|When I was hanging out with you, it really felt like I'd been here for years.}}
+{{dialogue|Nia|If I'm honest, I kind of want to stay a little longer...}}
+
+*''You're welcome here any time.''
+*{{flirt}}''Because you'll miss me too much?''
+
+{{dialogue|Nia|indent=true|answer=You're welcome here any time.
+|Well, yeah... I wish I knew when I could come back...}}
+{{dialogue|Nia|indent=true|answer=Because you'll miss me too much?
+|No, of course not! Well... maybe a little.}}
+{{dialogue|Nia|Well. Thanks for coming with me today. I'm not gonna hold you up any longer. I'll see myself around town. I kind of want to see the sights! I'm leaving early tomorrow morning afterall.}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Nia stops standing still
+CUTSCENE UI STATE EXIT || 
+Mort stands still in Cemetery
+Add behavior CommanderMoveToFlagAndAction (idName: 21863) to Nia
+(param: TargetScene:Cemetery|MoveMode:Run|FlagName:niafarm_cemetery_nia3)
+AREA TRIGGER CREATE || missionId: 1200186 | id: 21862 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80007354 | sceneName: Main | flagName: niafarm_trigger1
+SUBMIT MISSION 1200185
+
+TRIGGER Procedure 2.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+END MISSION 1200186
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Cemetery:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_cemetery
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_cemetery
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Cemetery:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 21863) from Nia
+Nia stands still in Cemetery
+Mort stops standing still
+Mort stands still in Cemetery
+PLAYER SET POS ROT FLAG || flagName: niafarm_cemetery_player3 | sceneName: Cemetery
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Cemetery:
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 1342_0 starts:
+{{dialogue|Nia|Excuse me, are you Mister Mort?}}
+{{dialogue|Mort|Ha! "Mister Mort" was my father, please, just call me Mort.}}
+{{dialogue|Nia|Ermm... Mort, it's nice to meet you. Before I came here, I'd learned so much about you and Martle. You two are inspiring!}}
+{{dialogue|Nia|Not only did you build a town in the desert, but you expanded the boundaries of human civilization! Even now, you're still fighting the sandstorms.}}
+{{dialogue|Mort|You sing my praises too highly, I fear. We were simply young, and stumbled on a beautiful oasis... but times have changed since then. I fear it is no longer the town we once found...}}
+{{dialogue|Nia|Don't you worry, Mort! ''Player'' will help rebuild this town, and in the future loads of people are going to come!}}
+{{dialogue|Mort|Hah, I hope to see that day...}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 21862
+Nia stops standing still
+Mort stops standing still
+CUTSCENE UI STATE EXIT || 
+Nia gains 5 favor
+Mort gains 5 favor
+END MISSION 1200186
+
+TRIGGER Procedure 3.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1200186
+CONDITIONS
+Always:
+ACTIONS
+Nia stops standing still
+AREA TRIGGER DELETE || id: 21861
+Mort stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 21863) from Nia
+AREA TRIGGER DELETE || id: 21862
+SCENEITEM DELETE || id: 21861 | itemType: 11
+SCENEITEM DELETE || itemType: 11 | id: 21862
+SCENEITEM DELETE || itemType: 11 | id: 21863
+SCENEITEM DELETE || itemType: 11 | id: 21864
+SCENEITEM DELETE || id: 21865 | itemType: 11

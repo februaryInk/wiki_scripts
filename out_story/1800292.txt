@@ -1,0 +1,405 @@
+Reading Mission 1800292: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200135
+
+TRIGGER Procedure 9.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+We'll Be Ready For 'Em is successfully completed
+The Battle of Sandrock is in state 3 with flag 0
+ACTIONS
+NPC ADD TAG || tag: NoRandomNPCInTown
+
+TRIGGER Procedure 9.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 12) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1800290
+Run mission #1800291
+Run mission #1800292
+Run mission #1800302
+Run mission #1800303
+Run mission #1800304
+Run mission #1800299
+Run mission #1800301
+Run mission #1800300
+Run mission #1800293
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800292
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1800292 | id: 82921 | sceneName: Main | flagName: Trigger_8292 | showOnMap: 1 | mapIcon: MissionArea | transId: 0
+Set Battle to 0
+Set Lose to 0
+Set 8292Move to 0
+Set 8292Move1 to 0
+Set 8292Kill to 0
+
+TRIGGER Procedure 0.0 Step 0.1 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 82921
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 82921 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 82921
+
+TRIGGER Procedure 0.0 Step 0.2 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82921 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8292_0_1
+Stev stands still in Main
+DELAY MASK SET || maskId: 82921 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 0.2 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800292
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM ADD || id: 10 | instId: 82921 | scene: Main | flagName: S8292_01_1 | dailyBehavior: RandomNPC
+NPC RANDOM ADD || id: 10 | instId: 82922 | scene: Main | flagName: S8292_02_1 | dailyBehavior: RandomNPC
+82921 stands still in Main
+82922 stands still in Main
+
+TRIGGER Procedure 0.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82921 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 11014, 11015, 11016, 11017, 11018 starts:
+{{dialogue|82921|I've heard some things about the knight called Pen...}}
+{{dialogue|82922|If nothing else, he sure was arrogant.}}
+{{dialogue|82921|I heard from someone in the capital that they experimented on him to make him stronger.}}
+{{dialogue|82922|Woaaaah, seriously!?}}
+{{dialogue|82921|Sh, sh, shhh! Someone's coming!}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 0) There is a conversation segment (id 11017) that ends:
+{{dialogue|82922|Woaaaah, seriously!?}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8292002) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8292_0_2)
+Add behavior CommanderMoveToFlagAndAction (idName: 8292942) to Stev
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8292_94_2)
+
+TRIGGER Procedure 0.0 Step 3.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8292640) to 82921
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8292_01_2)
+Add behavior CommanderMoveToFlagAndAction (idName: 8292650) to 82922
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8292_02_2)
+
+TRIGGER Procedure 0.0 Step 4.0 Order 9 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 82921 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 82922 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Increment 8292Move1 by 1
+
+TRIGGER Procedure 0.0 Step 4.2 Order 13 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 0 | tag: DuvosSoldierEggs_3
+CONDITIONS
+Always:
+ACTIONS
+Increment 8292Kill by 1
+
+TRIGGER Procedure 0.0 Step 6.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 82921 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 82922 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Check if 8292Move1 is >= 2
+ACTIONS
+(cId 1) A conversation 3424_0 starts:
+{{dialogue|82922|How much did you hear?}}
+
+*''Everything!''
+*''Nothing...''
+*''(Attack them.)'' (No unique dialogue)
+
+{{dialogue|82921|indent=true|answer=Everything!
+|Oh...}}
+{{dialogue|82922|indent=true|We'll need to make sure you won't talk then! Attack!}}
+{{dialogue|Stev|indent=true|Wait...!}}
+{{dialogue|82921|indent=true|answer=Nothing...
+|Good! You're not suppose to be out and about anyway...}}
+{{dialogue|Stev|indent=true|The Commander gave this Builder permission.}}
+{{dialogue|82922|indent=true|Then keep moving... We've got stuff... to do...}}
+
+TRIGGER Procedure 0.0 Step 8.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Check if Battle is <= (maybe?) 1
+ACTIONS
+Stev stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8292002) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8292942) from Stev
+Add behavior CommanderTeleport (idName: 8292642) to 82921
+(param: TargetFlag:S8292_01_3|TargetScene:Main|Delay:5.0)
+Add behavior CommanderTeleport (idName: 8292652) to 82922
+(param: TargetFlag:S8292_02_3|TargetScene:Main|Delay:5.0)
+Remove behavior CommanderMoveToFlagAndAction (idName: 8292640) from 82921
+Remove behavior CommanderMoveToFlagAndAction (idName: 8292650) from 82922
+CUTSCENE UI STATE EXIT || 
+82922 stops standing still
+82921 stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8292642) from 82921
+Remove behavior CommanderMoveToFlagAndAction (idName: 8292652) from 82922
+
+TRIGGER Procedure 1.0 Step 7.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Check if Battle is == 1
+ACTIONS
+DELAY MASK SET || maskId: 82922 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 10.0 Order 6 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 82921 | behaviourName: CommanderTeleport | eventName: Teleported
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 82922 | behaviourName: CommanderTeleport | eventName: Teleported
+CONDITIONS
+Always:
+ACTIONS
+Increment 8292Move by 1
+
+TRIGGER Procedure 0.0 Step 13.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 82921 | behaviourName: CommanderTeleport | eventName: Teleported
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 82922 | behaviourName: CommanderTeleport | eventName: Teleported
+CONDITIONS
+Check if 8292Move is >= 2
+ACTIONS
+Remove behavior CommanderTeleport (idName: 8292642) from 82921
+Remove behavior CommanderTeleport (idName: 8292652) from 82922
+
+TRIGGER Procedure 0.0 Step 40.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 22841
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 82921
+NPC RANDOM REMOVE || id: 82921
+NPC RANDOM REMOVE || id: 82922
+END MISSION 1800292
+
+TRIGGER Procedure 1.0 Step 6.5 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 11019:
+{{dialogue|82922|How much did you hear?}}
+
+*''Everything!'' (No unique dialogue)
+*''Nothing...'' (No unique dialogue)
+*''(Attack them.)'' (No unique dialogue)
+
+(cId 1) The player picks the third option in conversation segment 11019:
+{{dialogue|82922|How much did you hear?}}
+
+*''Everything!'' (No unique dialogue)
+*''Nothing...'' (No unique dialogue)
+*''(Attack them.)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set Battle to 1
+
+TRIGGER Procedure 1.0 Step 8.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82922 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+MONSTER ADD TAG || isAdd: 1 | tag: DuvosSoldierEggs_3
+Remove behavior CommanderMoveToFlagAndAction (idName: 8292640) from 82921
+Remove behavior CommanderMoveToFlagAndAction (idName: 8292650) from 82922
+Stev stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8292002) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8292942) from Stev
+Remove behavior CommanderMoveToFlagAndAction (idName: 8292642) from 82921
+Remove behavior CommanderMoveToFlagAndAction (idName: 8292652) from 82922
+82921 stops standing still
+82922 stops standing still
+CUTSCENE UI STATE EXIT || 
+NPC LEAVE || npc: 82921
+NPC LEAVE || npc: 82922
+ACTOR BUFF ADD || npc: 8000 | buffId: 11 | instanceId: 82921
+ACTOR BLIND SET || set: 1
+TIME SET ENABLE || bool: 0
+NPC LEAVE || npc: 8094
+SCENEITEM CREATE FLAG || itemType: 0 | id: 82921 | path: S8292_Item1 | sceneName: Main | flagName: S8292_Item1 | extraParams: -1
+DELAY MASK SET || maskId: 82922 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 9.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82922 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+ACTOR BLIND SET || set: 0
+
+TRIGGER Procedure 1.0 Step 10.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PLAYER HP CHANGE || order: 0 | compare: 6 | percent: 0.3
+CONDITIONS
+Check if 8292Kill is <= (maybe?) 2
+ACTIONS
+Set Lose to 1
+DELAY MASK SET || maskId: 82923 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: -2
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 1.0 Step 11.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82923 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8292_0_2
+Stev stands still in Main
+82921 stands still in Main
+82922 stands still in Main
+SCENEITEM DELETE || itemType: 0 | id: 82921
+ACTOR BUFF REMOVE || instanceId: 82921 | npc: 8000
+MONSTER ADD TAG || isAdd: 0 | tag: DuvosSoldierEggs_3
+DELAY MASK SET || maskId: 82923 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+TIME SET ENABLE || bool: 1
+
+TRIGGER Procedure 1.0 Step 12.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82923 | eventType: 5
+CONDITIONS
+Check if Lose is == 1
+ACTIONS
+(cId 2) A conversation 3427_0 starts:
+{{dialogue|Stev|Wait a minute, this person works for the Commander!}}
+{{dialogue|82921|You could've mentioned that sooner!}}
+{{dialogue|82922|You're free to go, but we'll be watching you...!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 13.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 82924 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 14.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82924 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Stev stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8292001) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8292941) from Stev
+Remove behavior CommanderMoveToFlagAndAction (idName: 8292642) from 82921
+Remove behavior CommanderMoveToFlagAndAction (idName: 8292652) from 82922
+82921 stops standing still
+82922 stops standing still
+DELAY MASK SET || maskId: 82924 | delayTime: 0 | changeType: 1 | curveIndex: 0 | durationTime: -2
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 40.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM REMOVE || id: 82921
+NPC RANDOM REMOVE || id: 82922
+NPC LEAVE || npc: 82921
+NPC LEAVE || npc: 82922
+END MISSION 1800292
+
+TRIGGER Procedure 2.0 Step 10.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 10 | tag: DuvosSoldierEggs_3
+CONDITIONS
+Check if 8292Kill is >= 2
+ACTIONS
+DELAY MASK SET || maskId: 82923 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 2.0 Step 12.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82923 | eventType: 5
+CONDITIONS
+Check if Lose is == 0
+ACTIONS
+(cId 2) A conversation 3428_0 starts:
+{{dialogue|Stev|Hang on, don't just attack random people randomly!}}
+{{dialogue|Stev|Sorry, sorry, but the Builder is working for the Commander...}}
+{{dialogue|82921|Well, you'd better put 'em on a leash then!}}
+{{dialogue|82922|You'd better watch yourself! I've got my eyes on you...!}}
+The conversation ends.

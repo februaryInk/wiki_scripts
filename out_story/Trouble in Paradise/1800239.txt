@@ -1,0 +1,640 @@
+Reading Mission 1800239: Trouble in Paradise
+
+<onlyinclude>{{Infobox mission
+|name = Trouble in Paradise
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Trouble in Paradise:
+
+TRIGGER Procedure 0.0 Step 12.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if 8238Task is == 2
+ACTIONS
+START MISSION 1800238
+Add 1 Exquisite Frame of Default quality (Notify player)
+MONEY PLAYER ADD || money: 1000
+
+TRIGGER Procedure 0.0 Step 15.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800238
+CONDITIONS
+Always:
+ACTIONS
+Run mission Trouble in Paradise
+END MISSION 1800238
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800239
+CONDITIONS
+Always:
+ACTIONS
+===Build a Frame===
+
+{{mission_details
+|desc = The mural is going to be large, so a custom frame is needed. Make a frame according to Miguel's diagram.
+|details = Build a Frame
+*{{i2|Exquisite Frame|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderNPCAction (idName: 8239401) to Jasmine
+(param: CMDAction:Draw_Story)
+In a speech bubble:
+{{dialogue|Jasmine|No! Use red there.... Now blue! What color is Peach's hair? How about... purple!}}
+STOPWATCH REAL TIME SET || id: 82391 | sec: 3
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1800238 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Pablo===
+
+{{mission_details
+|desc = As Sandrock's resident stylist and artist, Pablo may be able to paint an eye-catching mural.
+|details = Talk to Pablo
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 26 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Temple:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_temple
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_temple
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Pablo
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 2058_0 starts:
+{{dialogue|Pablo|A painting? For the Church? ''Player'', darling, I'm afraid I must respectfully decline. My art is suitable for museums, gallerias, and... possibly poetry jam coffee shops. If they're chic enough. I can hardly think of a place less hip than the Church, I'm afraid...}}
+{{dialogue|Pablo|Perhaps the lovely Amirah would be up to your task?}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Amirah===
+
+{{mission_details
+|desc = As Sandrock's leading potter and artisan, Amirah may be able to make a beautiful mural.
+|details = Talk to Amirah
+}}
+Set 8239A to 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Amirah
+CONDITIONS
+Check if 8239A is == 0
+ACTIONS
+(cId 2) A conversation 2059_0 starts:
+{{dialogue|Amirah|Welcome, ''Player''. Is there something I can help you with?}}
+{{dialogue|Amirah|A mural for the temple? It's a wonderful idea!}}
+{{dialogue|Amirah|But a mural that size will take some time, and that's not something I have a lot of... Still, since you'll be putting aside your work to make the frame... perhaps I can do the same.}}
+{{dialogue|Amirah|It's a tough job though. And with things being tight lately... I'm afraid I can't offer a sizable discount.}}
+{{dialogue|Amirah|So it will be 1000 Gols for the mural. Would that work for your budget?}}
+
+*''That sounds reasonable. It's a big job.'' (No unique dialogue)
+*''I'm sorry, I don't have enough for that.''
+*''Woah, that's much more expensive than I expected!''
+
+{{dialogue|Amirah|indent=true|answer=I'm sorry, I don't have enough for that.
+|I completely understand. Please feel free to come back if your budget allows.}}
+{{dialogue|Player|indent=true|(Miguel said I could save some money by asking Jasmine to help with the new mural. Should I ask her?)}}
+
+:*''Ask Jasmine.'' (No unique dialogue)
+:*''I should stick with Amirah.'' (No unique dialogue)
+
+{{dialogue|Amirah|Well, it's really not unreasonable. For the size, and the cost of materials and labor... I... I really don't want to undervalue my work. But if it's out of budget, I understand.}}
+
+*''Alright, 1000 is fine.'' (No unique dialogue)
+*''I've got someone else who can handle the mural...''
+
+{{dialogue|Amirah|Ah? Really? Pablo doesn't do commissions for the Church. Heidi's really busy lately as well. Who did you get?}}
+{{dialogue|Amirah|The only other person I know in town who paints is... Jasmine.}}
+{{dialogue|Amirah|...It's not Jasmine, is it? I mean, she's pretty good though. Might not be a bad choice.}}
+
+*''Hah! Got you. 1000 will be fine.'' (No unique dialogue)
+*''Right... I gotta... go...''
+
+{{dialogue|Amirah|indent=true|answer=Right... I gotta... go...
+|...}}
+Set 8239A to 1
+
+TRIGGER Procedure 0.0 Step 4.0 Order 10 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Amirah
+CONDITIONS
+Check if 8239A is == 1
+Trouble in Paradise is in state 2 with flag 1
+ACTIONS
+(cId 20) A conversation 2065_0 starts:
+{{dialogue|Amirah|I'm happy to work on the mural right away, if you'd like me to. Does the price seem suitable now?}}
+
+*''That sounds reasonable. It's a big job.'' (No unique dialogue)
+*''I'm sorry, I don't have enough for that.''
+*''Woah, that's much more expensive than I expected!''
+
+{{dialogue|Amirah|indent=true|answer=I'm sorry, I don't have enough for that.
+|I completely understand. Please feel free to come back if your budget allows.}}
+{{dialogue|Player|indent=true|(Miguel said I could save some money by asking Jasmine to help with the new mural. Should I ask her?)}}
+
+:*''Ask Jasmine.'' (No unique dialogue)
+:*''I should stick with Amirah.'' (No unique dialogue)
+
+{{dialogue|Amirah|Well, it's really not unreasonable. For the size, and the cost of materials and labor... I... I really don't want to undervalue my work. But if it's out of budget, I understand.}}
+
+*''Alright, 1000 is fine.'' (No unique dialogue)
+*''I've got someone else who can handle the mural...''
+
+{{dialogue|Amirah|Ah? Really? Pablo doesn't do commissions for the Church. Heidi's really busy lately as well. Who did you get?}}
+{{dialogue|Amirah|The only other person I know in town who paints is... Jasmine.}}
+{{dialogue|Amirah|...It's not Jasmine, is it? I mean, she's pretty good though. Might not be a bad choice.}}
+
+*''Hah! Got you. 1000 will be fine.'' (No unique dialogue)
+*''Right... I gotta... go...''
+
+{{dialogue|Amirah|indent=true|answer=Right... I gotta... go...
+|...}}
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 6909:
+{{dialogue|Amirah|So it will be 1000 Gols for the mural. Would that work for your budget?}}
+
+*''That sounds reasonable. It's a big job.'' (No unique dialogue)
+*''I'm sorry, I don't have enough for that.'' (No unique dialogue)
+*''Woah, that's much more expensive than I expected!'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 6910:
+{{dialogue|Amirah|Well, it's really not unreasonable. For the size, and the cost of materials and labor... I... I really don't want to undervalue my work. But if it's out of budget, I understand.}}
+
+*''Alright, 1000 is fine.'' (No unique dialogue)
+*''I've got someone else who can handle the mural...'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 6913:
+{{dialogue|Amirah|...It's not Jasmine, is it? I mean, she's pretty good though. Might not be a bad choice.}}
+
+*''Hah! Got you. 1000 will be fine.'' (No unique dialogue)
+*''Right... I gotta... go...'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 6917:
+{{dialogue|Amirah|I'm happy to work on the mural right away, if you'd like me to. Does the price seem suitable now?}}
+
+*''That sounds reasonable. It's a big job.'' (No unique dialogue)
+*''I'm sorry, I don't have enough for that.'' (No unique dialogue)
+*''Woah, that's much more expensive than I expected!'' (No unique dialogue)
+
+CONDITIONS
+CHECK PLAYER MONEY || set: 6 | count: 1000
+ACTIONS
+(cId 99) A conversation 6988 starts:
+{{dialogue|Amirah|I can't part with that for such a price...}}
+
+TRIGGER Procedure 0.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 6909:
+{{dialogue|Amirah|So it will be 1000 Gols for the mural. Would that work for your budget?}}
+
+*''That sounds reasonable. It's a big job.'' (No unique dialogue)
+*''I'm sorry, I don't have enough for that.'' (No unique dialogue)
+*''Woah, that's much more expensive than I expected!'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 6910:
+{{dialogue|Amirah|Well, it's really not unreasonable. For the size, and the cost of materials and labor... I... I really don't want to undervalue my work. But if it's out of budget, I understand.}}
+
+*''Alright, 1000 is fine.'' (No unique dialogue)
+*''I've got someone else who can handle the mural...'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 6913:
+{{dialogue|Amirah|...It's not Jasmine, is it? I mean, she's pretty good though. Might not be a bad choice.}}
+
+*''Hah! Got you. 1000 will be fine.'' (No unique dialogue)
+*''Right... I gotta... go...'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 6917:
+{{dialogue|Amirah|I'm happy to work on the mural right away, if you'd like me to. Does the price seem suitable now?}}
+
+*''That sounds reasonable. It's a big job.'' (No unique dialogue)
+*''I'm sorry, I don't have enough for that.'' (No unique dialogue)
+*''Woah, that's much more expensive than I expected!'' (No unique dialogue)
+
+CONDITIONS
+CHECK PLAYER MONEY || set: 2 | count: 1000
+ACTIONS
+(cId 3) A conversation 2060_0 starts:
+{{dialogue|Amirah|Wonderful. I'll get started right away. I'll send it to you when I'm done.}}
+The conversation ends.
+MONEY PLAYER ADD || money: -1000
+Set 8239A to 3
+
+TRIGGER Procedure 0.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Wait for Amirah to Finish===
+
+{{mission_details
+|desc = Amirah will be finished with the mural soon, wait for her to send it.
+|details = Wait for Amirah to Finish
+}}
+
+TRIGGER Procedure 0.0 Step 6.0 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 6916:
+{{dialogue|Player|(Miguel said I could save some money by asking Jasmine to help with the new mural. Should I ask her?)}}
+
+*''Ask Jasmine.'' (No unique dialogue)
+*''I should stick with Amirah.'' (No unique dialogue)
+
+(cId: -1) There is a conversation segment (id 6914) that ends:
+{{dialogue|Amirah|...}}
+CONDITIONS
+Always:
+ACTIONS
+Set 8239A to 2
+===Talk to Jasmine===
+
+{{mission_details
+|desc = Amirah's quote is a little pricey. Jasmine could probably do it for much less.
+|details = Talk to Jasmine
+}}
+
+TRIGGER Procedure 0.0 Step 7.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|430}}
+
+TRIGGER Procedure 0.0 Step 7.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Jasmine
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 2066_0 starts:
+{{dialogue|Jasmine|Wow! Me? I've never gotten such a big job before! This'll be real good for my resume! Ok, let's do it together!}}
+{{dialogue|Jasmine|Oh, don't worry about the price. I make crazy money delivering papers. I see this as a chance for me to give back to the community!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 7.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Miguel
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1800238 | targetId: 5 | canSubmit: 1
+ACTIONS
+(cId 10) A conversation 2068_0 starts:
+{{dialogue|Miguel|Good work, Builder. I knew the Church could rely on you.}}
+{{dialogue|Miguel|I do appreciate the effort, make no mistake, but were I Minister, we would not have spent our scant resources on such a project.}}
+{{dialogue|Miguel|But I am not.}}
+
+*''You seem suited to Minister.''
+*''Uh huh...''
+
+{{dialogue|Miguel|indent=true|answer=You seem suited to Minister.
+|reward={{NPC2|Miguel|rp=2}}|Thank you, Builder. I'm glad you see my vision of the Light.}}
+{{dialogue|Miguel|We both studied in Meidi. We've known each other for a long time. She's always been bright eyed and idealistic, seeing the good in everyone. The Ministry adores students such as her.}}
+{{dialogue|Miguel|I, on the other hand, have held tightly to the texts, and the studies into the Age of Corruption. We need to learn well from the demise of the Old World.}}
+{{dialogue|Miguel|When I was sent to Sandrock, the Temple was just another building. The citizens paid no real heed to the teachings, and had lost their way. They watched my sermons skeptically, unaware they were repeating the sins of their forefathers.}}
+{{dialogue|Miguel|Others believe they are devout, but I can see the corruption inside them. They always did everything the way they wanted, not the right way.}}
+{{dialogue|Miguel|Do they not see by flaunting the rules left and right, we're blindly stumbling into another armageddon?}}
+{{dialogue|Miguel|Ahem. I tried to warn them. To open their eyes.}}
+
+*''It sounds like you wanted what was best for them.''
+*''I think the people here really mean well.''
+
+{{dialogue|Miguel|indent=true|answer=It sounds like you wanted what was best for them.
+|reward={{NPC2|Miguel|rp=1}}|I only aim to do what's best for my flock. The spirits of the people need guidance away from their disorderly ways.}}
+{{dialogue|Miguel|indent=true|answer=I think the people here really mean well.
+|The matter of the heart and the soul oft stand opposed. Those with the best intentions can inflict the most damage. The Age of Corruption was full of well intentioned people with no sight of the Light.}}
+{{dialogue|Miguel|Let us place this work upon the temple walls.}}
+The conversation ends.
+Remove 1 Exquisite Frame of Default quality (Notify player)
+Remove 1 Jasmine's Mural of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 7.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 82393 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 7.0 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Miguel
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1800238 | targetId: 5 | canSubmit: 1
+ACTIONS
+(cId 10) A conversation 2068_0 starts:
+{{dialogue|Miguel|Good work, Builder. I knew the Church could rely on you.}}
+{{dialogue|Miguel|I do appreciate the effort, make no mistake, but were I Minister, we would not have spent our scant resources on such a project.}}
+{{dialogue|Miguel|But I am not.}}
+
+*''You seem suited to Minister.''
+*''Uh huh...''
+
+{{dialogue|Miguel|indent=true|answer=You seem suited to Minister.
+|reward={{NPC2|Miguel|rp=2}}|Thank you, Builder. I'm glad you see my vision of the Light.}}
+{{dialogue|Miguel|We both studied in Meidi. We've known each other for a long time. She's always been bright eyed and idealistic, seeing the good in everyone. The Ministry adores students such as her.}}
+{{dialogue|Miguel|I, on the other hand, have held tightly to the texts, and the studies into the Age of Corruption. We need to learn well from the demise of the Old World.}}
+{{dialogue|Miguel|When I was sent to Sandrock, the Temple was just another building. The citizens paid no real heed to the teachings, and had lost their way. They watched my sermons skeptically, unaware they were repeating the sins of their forefathers.}}
+{{dialogue|Miguel|Others believe they are devout, but I can see the corruption inside them. They always did everything the way they wanted, not the right way.}}
+{{dialogue|Miguel|Do they not see by flaunting the rules left and right, we're blindly stumbling into another armageddon?}}
+{{dialogue|Miguel|Ahem. I tried to warn them. To open their eyes.}}
+
+*''It sounds like you wanted what was best for them.''
+*''I think the people here really mean well.''
+
+{{dialogue|Miguel|indent=true|answer=It sounds like you wanted what was best for them.
+|reward={{NPC2|Miguel|rp=1}}|I only aim to do what's best for my flock. The spirits of the people need guidance away from their disorderly ways.}}
+{{dialogue|Miguel|indent=true|answer=I think the people here really mean well.
+|The matter of the heart and the soul oft stand opposed. Those with the best intentions can inflict the most damage. The Age of Corruption was full of well intentioned people with no sight of the Light.}}
+{{dialogue|Miguel|Let us place this work upon the temple walls.}}
+The conversation ends.
+Remove 1 Exquisite Frame of Default quality (Notify player)
+Remove 1 Amirah's Mural of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 8.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Miguel===
+
+{{mission_details
+|desc = The mural is finished. Take it to Miguel.
+|details = Talk to Miguel
+*{{i2|Exquisite Frame|0/1}}
+*{{i2|Jasmine's Mural|0/1}}
+*{{i2|Miguel|0/1}}
+}}
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 8.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8040 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 6923 starts:
+{{dialogue|Jasmine|All done! I think we, um... pretty much drew what Church stuff is all about! Plus, I drew a kitty delivering newspapers in there. I hope they like it!}}
+Add 1 Jasmine's Mural of Default quality (Notify player)
+Remove behavior CommanderNPCAction (idName: 8239401) from Jasmine
+
+TRIGGER Procedure 0.0 Step 8.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 82391
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Jasmine|Oh no! A smudge! Uh oh... I still had paint on my fingers!}}
+
+TRIGGER Procedure 0.0 Step 8.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 430
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Miguel===
+
+{{mission_details
+|desc = The mural is finished. Take it to Miguel.
+|details = Talk to Miguel
+*{{i2|Exquisite Frame|0/1}}
+*{{i2|Amirah's Mural|0/1}}
+*{{i2|Miguel|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 8.1 Order 27 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82393 | eventType: 2
+CONDITIONS
+CHECK CURRENT SCENE || name: Temple | flag: 0
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: S8239_Player_1 | sceneName: Temple
+DELAY MASK SET || maskId: 82393 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 8.1 Order 28 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82393 | eventType: 2
+CONDITIONS
+CHECK CURRENT SCENE || name: Temple | flag: 1
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: S8239_Player_1 | sceneName: Temple
+STOPWATCH REAL TIME SET || id: 82399 | sec: 0.3
+
+TRIGGER Procedure 0.0 Step 10.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Miguel stops standing still
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1800238
+END MISSION 1800239
+
+TRIGGER Procedure 0.0 Step 14.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Temple:
+ON STOPWATCH REAL TIME END || order: 0 | id: 82399
+CONDITIONS
+Check if 8239A is == 3
+ACTIONS
+SCENEITEM DELETE || id: 205925 | itemType: 0
+Miguel stands still in Temple
+PLAYER SET POS ROT FLAG || sceneName: Temple | flagName: S8239_Player_1
+DELAY MASK SET || maskId: 82393 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+SCENEITEM CREATE FLAG || extraParams: -1 | itemType: 0 | id: 82391 | path: SceneItem8239_PaintingA | sceneName: Temple | flagName: S8239_Item_1
+Set global blackboard key 8239Paint with info Amirah.
+
+TRIGGER Procedure 0.0 Step 14.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Temple:
+ON STOPWATCH REAL TIME END || order: 0 | id: 82399
+CONDITIONS
+Check if 8239A is == 2
+ACTIONS
+SCENEITEM DELETE || id: 205925 | itemType: 0
+Miguel stands still in Temple
+PLAYER SET POS ROT FLAG || sceneName: Temple | flagName: S8239_Player_1
+DELAY MASK SET || maskId: 82393 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+SCENEITEM CREATE FLAG || extraParams: -1 | itemType: 0 | id: 82391 | path: SceneItem8239_PaintingB | sceneName: Temple | flagName: S8239_Item_1
+Set global blackboard key 8239Paint with info Jasmine.
+
+TRIGGER Procedure 0.0 Step 15.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82393 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 11) A conversation 2073_0 starts:
+{{dialogue|Miguel|A spectacular piece of art; if only its purpose were not so incompatible with my beliefs...}}
+{{dialogue|Miguel|To cover up the Day of Calamity... are we to forget our history? Sandrock has its problems, but is not the most core of our beliefs to never forget the Day of Calamity?}}
+{{dialogue|Miguel|Nevertheless, these decisions are not mine to make anymore.}}
+{{dialogue|Miguel|I was here for a short while before Meidi sent Matilda. As soon as she arrived, we received word that she would be taking the role of Minister.}}
+{{dialogue|Miguel|I presume her interpretation of the Light's scripture was more... fitting... for the people of this town. I'm not one to question the Church's orders, so I graciously accepted my subservient role.}}
+
+*''I think people here need a stricter hand.''
+*''I think she's a good Minister.''
+*''Eh. Who wants to think about the Day of Calamity?''
+
+{{dialogue|Miguel|indent=true|answer=I think people here need a stricter hand.
+|So you see it the same as me. The people here need... guidance. It was the lack of guidance that let the population go astray during the Age of Corruption.}}
+{{dialogue|Miguel|indent=true|answer=I think she's a good Minister.
+|As do the citizens here, evidently.}}
+{{dialogue|Miguel|indent=true|answer=Eh. Who wants to think about the Day of Calamity?
+|The Day of Calamity is the darkest day in human history! Never forget the past, or we're bound to repeat it in the future!}}
+{{dialogue|Miguel|I worry the Minister is too... lenient with the citizens of this town. She seems to believe the people here want to follow the Light, but only a select few profess and show their belief in an appropriately... fundamental manner.}}
+{{dialogue|Miguel|Regardless, things are as they are for a reason... And I must accept it.}}
+{{dialogue|Miguel|Anyway, thank you, Builder. I appreciate your dedication. Every act you perform for our city helps to spread Telesis in these lands and beyond.}}
+The conversation ends.
+ACTION UNLOCK ILLUSTRATION || id: 10008
+
+TRIGGER Procedure 0.0 Step 15.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82393 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 11) A conversation 2074_0 starts:
+{{dialogue|Miguel|I had suggested using the child in jest... no matter. I'm sure Matilda will appreciate it. She has a penchant for the... sentimental.}}
+{{dialogue|Miguel|Nevertheless, these decisions are not mine to make anymore.}}
+{{dialogue|Miguel|I was here for a short while before Meidi sent Matilda. As soon as she arrived, we received word that she would be taking the role of Minister.}}
+{{dialogue|Miguel|I presume her interpretation of the Light's scripture was more... fitting... for the people of this town. I'm not one to question the Church's orders, so I graciously accepted my subservient role.}}
+
+*''I think people here need a stricter hand.''
+*''I think she's a good Minister.''
+*''Eh. Who wants to think about the Day of Calamity?''
+
+{{dialogue|Miguel|indent=true|answer=I think people here need a stricter hand.
+|So you see it the same as me. The people here need... guidance. It was the lack of guidance that let the population go astray during the Age of Corruption.}}
+{{dialogue|Miguel|indent=true|answer=I think she's a good Minister.
+|As do the citizens here, evidently.}}
+{{dialogue|Miguel|indent=true|answer=Eh. Who wants to think about the Day of Calamity?
+|The Day of Calamity is the darkest day in human history! Never forget the past, or we're bound to repeat it in the future!}}
+{{dialogue|Miguel|I worry the Minister is too... lenient with the citizens of this town. She seems to believe the people here want to follow the Light, but only a select few profess and show their belief in an appropriately... fundamental manner.}}
+{{dialogue|Miguel|Regardless, things are as they are for a reason... And I must accept it.}}
+{{dialogue|Miguel|Anyway, thank you, Builder. I appreciate your dedication. Every act you perform for our city helps to spread Telesis in these lands and beyond.}}
+The conversation ends.
+ACTION UNLOCK ILLUSTRATION || id: 10008
+
+TRIGGER Procedure 1.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END || order: 0 | result: 1 | missionId: 1200265
+CONDITIONS
+Always:
+ACTIONS
+FAIL MISSION || missionId: 1800238
+
+TRIGGER Procedure 1.0 Step 3.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) The player picks the first option in conversation segment 6926:
+{{dialogue|Miguel|But I am not.}}
+
+*''You seem suited to Minister.'' (No unique dialogue)
+*''Uh huh...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Miguel gains 2 favor
+
+TRIGGER Procedure 1.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) The player picks the first option in conversation segment 6933:
+{{dialogue|Miguel|Ahem. I tried to warn them. To open their eyes.}}
+
+*''It sounds like you wanted what was best for them.'' (No unique dialogue)
+*''I think the people here really mean well.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Miguel gains 1 favor
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) The player picks the first option in conversation segment 6933:
+{{dialogue|Miguel|Ahem. I tried to warn them. To open their eyes.}}
+
+*''It sounds like you wanted what was best for them.'' (No unique dialogue)
+*''I think the people here really mean well.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Miguel gains 1 favor

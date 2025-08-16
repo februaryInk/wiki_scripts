@@ -1,0 +1,348 @@
+Reading Mission 1400310: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = [[Mint]]
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200310
+
+TRIGGER Procedure 4.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1800307 is result 1 flag 1
+ACTIONS
+Run mission Just Give a Whistle
+
+TRIGGER Procedure 4.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Just Give a Whistle is successfully completed
+ACTIONS
+Run mission #1400310
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1400310
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1400310 | id: 1431001 | sceneName: Main | flagName: 1400310_Trigger | showOnMap: 1 | mapIcon: MissionArea | transId: 0
+The player receives a letter:
+{{mail|594}}
+Set checkUnique to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 1431001
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 1431002 | delayTime: 0 | durationTime: 2 | changeType: 2 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 1431001
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 1431002 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Mint stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: 1400310_Main_Max_01
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 1431002 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 1431090 | sec: 3
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 1431090
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 1431053) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:1400310_Main_Max_0)
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1431080) A conversation 3793_0 starts:
+{{dialogue|Mint|Ah, hey ''Player''. Nice to see you again!}}
+{{dialogue|Mint|Going to the meeting as well? Mr. Musa asked me to come coordinate with Heidi on the final stage of the Sandrock-Portia road, and who am I to turn down a long train ride.}}
+{{dialogue|Mint|The rumbling of the train really helps me drift off...}}
+
+*''It's good to see you again!''
+*''How was Portia?''
+
+{{dialogue|Mint|indent=true|answer=It's good to see you again!
+|Thanks. Yeah, it's been a while.}}
+{{dialogue|Mint|indent=true|answer=How was Portia?
+|I actually got injured there building the tunnel. Some AI machine caused a tunnel collapse.}}
+{{dialogue|Mint|indent=true|Luckily the local Builder and the Civil Corps saved me. It was quite scary.}}
+{{dialogue|Mint|indent=true|Other than that, it was nice. My family lives there. You'd like it there.}}
+{{dialogue|Mint|It's nice to be back in Sandrock, though. I've got a lot to talk to Space-case about.}}
+{{dialogue|Mint|Anyway, we've got a meeting, let's not keep them waiting.}}
+The conversation ends.
+Remove behavior CommanderMoveToFlag (idName: 1431053) from Player
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1431080) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Mint stops standing still
+Add behavior CommanderMoveToFlag (idName: 1431051) to Mint
+(param: TargetScene:Main|MoveMode:Walk|FlagName:1400310_Main_Mint_1)
+Add behavior CommanderMoveToFlag (idName: 1431052) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:1400310_Main_Max_1)
+DELAY MASK SET || maskId: 1431003 | delayTime: 1.5 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER CREATE || missionId: 1400310 | id: 1431004 | sceneName: Main | flagName: 1400310_Trigger_temp | showOnMap: 1 | mapIcon: MissionArea | transId: 0
+
+TRIGGER Procedure 1.0 Step 0.5 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 1431003 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SWITCH SCENE || scene: Guildhall
+Remove behavior CommanderMoveToFlag (idName: 1431051) from Mint
+Remove behavior CommanderMoveToFlag (idName: 1431052) from Player
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 1431003 | delayTime: 2 | durationTime: 2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_guildhall
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+UNIQUE ACTION RUN || idStr: enter_guildhall
+AREA TRIGGER DELETE || id: 1431004
+PLAYER SET POS ROT FLAG || sceneName: Guildhall | flagName: 1400310_Max_01
+Wei stands still in Guildhall
+Trudy stands still in Guildhall
+Heidi stands still in Guildhall
+Mint stands still in Guildhall
+Mi-an stands still in Guildhall
+Set checkUnique to 1
+
+TRIGGER Procedure 1.0 Step 2.6 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 1431092
+CONDITIONS
+Check if checkUnique is == 1
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 1431054) to Mint
+(param: TargetScene:Guildhall|MoveMode:Walk|FlagName:1400310_Mint_02)
+Add behavior CommanderMoveToFlag (idName: 1431055) to Player
+(param: TargetScene:Guildhall|MoveMode:Walk|FlagName:1400310_Max_02)
+STOPWATCH REAL TIME SET || id: 1431091 | sec: 3
+
+TRIGGER Procedure 1.0 Step 2.6 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+Check if checkUnique is == 1
+ACTIONS
+STOPWATCH REAL TIME SET || id: 1431092 | sec: 2
+
+TRIGGER Procedure 1.0 Step 2.7 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 1431091
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 1431054) from Mint
+Remove behavior CommanderMoveToFlag (idName: 1431055) from Player
+Add behavior CommanderMoveToFlag (idName: 1431056) to Mint
+(param: TargetScene:Guildhall|MoveMode:Run|FlagName:1400310_Mint_0)
+Add behavior CommanderMoveToFlag (idName: 1431057) to Player
+(param: TargetScene:Guildhall|MoveMode:Run|FlagName:1400310_Max_0)
+
+TRIGGER Procedure 1.0 Step 2.7 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8045 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1431089) A conversation 4073_0 starts:
+{{dialogue|Trudy|Thank you for coming everyone, and welcome back, Mint. This meeting is for us to get an update on the current situation of the Sandrock-Portia road project, as well as what needs to be done next.}}
+{{dialogue|Trudy|With that said, I'll turn it over to you, Heidi, Mint?}}
+{{dialogue|Mint|Thank you Mayor Trudy. I'm happy to be back as well.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 3.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1431089) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1431081) A conversation 4074_0 starts:
+{{dialogue|Mint|Things are finishing up on the Portian side, the tunnel through the Southern Eufaula Range has been completed and Mayor Gale is currently setting up a trading hub.}}
+{{dialogue|Mint|I understand the tunnel is also done here in Sandrock?}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 2.8 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8045 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 1431056) from Mint
+Mint stands still in Guildhall
+
+TRIGGER Procedure 1.0 Step 3.5 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1431081) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1431082) A conversation 4075_0 starts:
+{{dialogue|Heidi|Yep! Just certified it!}}
+{{dialogue|Wei|Ah, that's good!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1431082) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1431083) A conversation 3798_0 starts:
+{{dialogue|Mint|...}}
+{{dialogue|Mint|D-did President Yan get... rid of his mustache?}}
+{{dialogue|Wei|No, no, my boy. I'm Wei, the new Commissioner here. Nice to meet you.}}
+{{dialogue|Mint|It's so confusing...}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1431083) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1431084) A conversation 4076_0 starts:
+{{dialogue|Heidi|Yeah... anyway. That means we're right on schedule! All that's left is to lay the road and build the station.}}
+{{dialogue|Heidi|I assume Mr. Musa will be running the bus route, right? Does he need buses?}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 5.1 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1431084) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1431085) A conversation 4077_0 starts:
+{{dialogue|Mint|Portia has started working on a Long-Haul Bus, Mayor Gale wants to make sure that when the road is done we can start the routes as quickly as possible.}}
+{{dialogue|Trudy|That's a good idea. Maybe we can help out in some way?}}
+{{dialogue|Mint|Well, I brought over an updated copy of the diagram for the Long-Haul Bus. Mr. Musa wanted to commission you guys to build the watertank bus version while Portia builds the people ferry version.}}
+{{dialogue|Trudy|Oh that's wonderful! Our Commerce Guild is up for the challenge!}}
+{{dialogue|Wei|That we are! So if I'm getting this right, we'll be handling the Bus Station and the Water Tank Bus?}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 5.2 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1431085) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1431086) A conversation 4078_0 starts:
+{{dialogue|Heidi|That's right! Mint, let's talk about how we can finish the road after this meeting. No need to hold everyone up.}}
+{{dialogue|Mint|Sure.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1431086) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1431087) A conversation 3800_0 starts:
+{{dialogue|Wei|I'll be sure to distribute the work through the mail tomorrow, so look for that Builders.}}
+{{dialogue|Mi-an|Got it.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1431088) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 1431057) from Player
+Remove behavior CommanderMoveToFlag (idName: 1431058) from Mint
+Wei stops standing still
+Trudy stops standing still
+Heidi stops standing still
+Mint stops standing still
+Mint stops standing still
+Mi-an stops standing still
+CUTSCENE UI STATE EXIT || 
+END MISSION 1400310
+
+TRIGGER Procedure 1.0 Step 15.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1431087) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1431088) A conversation 3801_0 starts:
+{{dialogue|Trudy|Then okay, everything's settled. Meeting adjoured! Thanks for coming everyone!}}
+The conversation ends.

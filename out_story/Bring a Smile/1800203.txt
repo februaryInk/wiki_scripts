@@ -1,0 +1,327 @@
+Reading Mission 1800203: Bring a Smile
+
+<onlyinclude>{{Infobox mission
+|name = Bring a Smile
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Bring a Smile:
+
+TRIGGER Procedure 0.0 Step 2.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1800202
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800202
+CONDITIONS
+Always:
+ACTIONS
+Run mission Bring a Smile
+END MISSION 1800202
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800203
+CONDITIONS
+Always:
+ACTIONS
+===Make Sandrice Cake and Dessert Stall===
+
+{{mission_details
+|desc = Mabel needs a striking stall and some snacks to start her campaign. You can get the recipe for the snacks from Owen, and build the stall on the Assembly Station. You need an Apprentice Cooking Station to make Sandrice Cakes. If you don't have one, go to Qi for the diagram.
+|details = Make Sandrice Cake and Dessert Stall
+*{{i2|Sandrice Cake|0/1}}
+*{{i2|Dessert Stall|0/1}}
+}}
+Unlock blueprint for Dessert Stall
+Add 1 Sandrice Cake of Default quality (Notify player)
+Add 2 Sandrice of Unknown quality (Notify player)
+Add 2 Yakmel Milk of Unknown quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1800202 | targetId: 0 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Install Yakmel Dessert Stall===
+
+{{mission_details
+|desc = The stall is complete. Go and install it at the designated location.
+|details = Install Yakmel Dessert Stall
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 82031 | path: Label_82031_ZhaoPai | sceneName: Main | flagName: Story_82031_Zhaopai | extraParams: Preload_Story_82031_Zhaopai|CreatorItem|19810021_1|1547|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 82031 | missionId: 1800202 | iconType: 2
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 82031
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Mabel===
+
+{{mission_details
+|desc = The stall and snacks are ready. Tell Mabel the good news.
+|details = Talk to Mabel
+*{{i2|Sandrice Cake|0/1}}
+*{{i2|Mabel|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Mabel
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1800202 | targetId: 3 | canSubmit: 1
+ACTIONS
+(cId 3) A conversation 1619_0 starts:
+{{dialogue|Mabel|Well! I'll be, this looks delicious! Looks like Owen and I got a new competitor in town! Thank you, tomorrow we can get set up so we can start our little "Bring a Smile" campaign. How about meeting me {{textcolor|green|tomorrow afternoon, at 14:00PM}}?}}
+The conversation ends.
+Remove 1 Sandrice Cake of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 6.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Wait Until Tomorrow===
+
+{{mission_details
+|desc = The stall is all set up, and the campaign will start at 14:00 tomorrow afternoon. Remember to attend.
+|details = Wait Until Tomorrow
+}}
+Set IsToday to 0
+Mabel stops standing still
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 6.1 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment IsToday by 1
+===Go to the Stall===
+
+{{mission_details
+|desc = At 14:00 this afternoon, Mabel will start giving out her Yakmel Milk Cookies. Remember to attend on time to give her a hand.
+|details = Go to the Stall
+}}
+
+TRIGGER Procedure 0.0 Step 9.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 82031
+CONDITIONS
+Check if IsToday is == 1
+CHECK TIME || compare: 1 | hour: 14 | minute: 0
+Check if Owen is in town
+ACTIONS
+Set global blackboard key NoCutSceneObstacle with info 1.
+DELAY MASK SET || maskId: 82032 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 9.1 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 14:00 (order: 0):
+CONDITIONS
+Check if IsToday is == 1
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1800203 | id: 82031 | sceneName: Main | flagName: Story_82031_Trigger | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80008753
+
+TRIGGER Procedure 0.0 Step 10.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82032 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: Story_82031_Player_StandByTable | sceneName: Main
+DELAY MASK SET || maskId: 0 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Owen stands still in Main and looks at Mi-an
+Heidi stands still in Main and looks at Hugo
+Hugo stands still in Main and looks at Heidi
+Mi-an stands still in Main and looks at Owen
+Mabel stands still in Main and looks at Burgess
+Burgess stands still in Main and looks at Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 2033 | sceneName: Main | path: Preload_82031_Table | flagName: Story_82031_Table | extraParams: -1
+
+TRIGGER Procedure 0.0 Step 10.1 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82032 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Mi-an|Wow, it's so tasty.}}
+Add behavior CommanderMoveToFlagAndAction (idName: 203212) to Burgess
+(param: TargetScene:Main|MoveMode:Walk|FlagName:Story_82031_Bojisi_StandByTable|Action:Party_StandEat)
+Add behavior CommanderMoveToFlagAndAction (idName: 8203173) to Mi-an
+(param: TargetScene:Main|MoveMode:Run|FlagName:Story_82031_MiAn_StandByTable|Action:Story_StandEat)
+Add behavior CommanderMoveToFlagAndAction (idName: 8203103) to Hugo
+(param: TargetScene:Main|MoveMode:Run|FlagName:Story_82031_Huguo_StandByTable|Action:StandEat)
+
+TRIGGER Procedure 0.0 Step 10.2 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 820323
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Heidi|Hm, tastes better than I had predicted.}}
+
+TRIGGER Procedure 0.0 Step 10.6 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 82033
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8203103) from Hugo
+Remove behavior CommanderMoveToFlagAndAction (idName: 8203173) from Mi-an
+Add behavior CommanderMoveToFlagAndAction (idName: 203102) to Hugo
+(param: TargetScene:Main|MoveMode:Run|FlagName:Story_82031_Huguo_StandByTable_Trans|LookAtActor:8021)
+Add behavior CommanderMoveToFlagAndAction (idName: 203172) to Mi-an
+(param: TargetScene:Main|MoveMode:Run|FlagName:Story_82031_MiAn_StandByTable_Trans|LookAtActor:8021)
+
+TRIGGER Procedure 0.0 Step 11.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 82033
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 1620_0 starts:
+{{dialogue|Burgess|Wowee, free food! And you cooked this one, ''Player''?! Well aren't you just a bag of wonderful treats! I didn't know you could cook! Here, I want to share something with you as well. It's a cooking recipe from my Ma.}}
+{{dialogue|Burgess|My Ma made it for me when I was just a little boy. Yup, with just Salt and Sandrice, and you got yourself a delicious bowl of {{textcolor|green|Mush}}! Soft, gooey, delicious bowl of Mush! I love it!}}
+The conversation ends.
+AREA TRIGGER DELETE || id: 82031
+GLOBAL BLACK BOARD REMOVE || key: NoCutSceneObstacle
+
+TRIGGER Procedure 1.0 Step 11.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Mush of Default quality (Notify player)
+Burgess stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 203212) from Burgess
+Add behavior CommanderMoveToFlagAndAction (idName: 203002) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:Story_82031_Player_StandByTable_Trans|LookAtActor:8004)
+Add behavior CommanderMoveToFlagAndAction (idName: 203043) to Mabel
+(param: TargetScene:Main|MoveMode:Run|FlagName:Story_82031_Mabel_StandByTable_Trans|LookAtActor:8000)
+Heidi stops standing still
+Mi-an stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 203172) from Mi-an
+
+TRIGGER Procedure 1.0 Step 11.5 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 1677_0 starts:
+{{dialogue|Mabel|Well that just went smashingly! I reckon' we done given that little bit of joy to some of the folks round here. Put a small skip in their step.}}
+{{dialogue|Mabel|Thanks for helpin' today, ''Player''. An' I figure I'll be runnin' this campaign here once a season, if you're ever in need of a little pick-me-up, feel free to drop by.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 15.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Mabel stops standing still
+Mabel stops standing still
+Owen stops standing still
+Heidi stops standing still
+Hugo stops standing still
+Mi-an stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 203043) from Mabel
+Remove behavior CommanderMoveToFlagAndAction (idName: 203172) from Mi-an
+Remove behavior CommanderMoveToFlagAndAction (idName: 203102) from Hugo
+Remove behavior CommanderMoveToFlagAndAction (idName: 203002) from Player
+Set IsToday to 0
+SUBMIT MISSION 1800202
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 15.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 2033
+SCENEITEM DELETE || itemType: 12 | id: 82031
+END MISSION 1800203
+
+TRIGGER Procedure 0.0 Step 20.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 12 | id: 82031
+AREA TRIGGER DELETE || id: 82031
+The player receives a letter:
+{{mail|362}}
+FAIL MISSION || missionId: 1800202
+END MISSION 1800203
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Owen
+CONDITIONS
+Bring a Smile is in state 2 with flag 1
+ACTIONS
+(cId 8) A conversation 1618_0 starts:
+{{dialogue|Owen|Hey there! Helping out Mabel? She gave me a heads up that you'd be heading my way to help with her "Bring a Smile" campaign, that's what she's calling it. She seems real excited. I'm glad you're onboard as well.}}
+{{dialogue|Owen|So here's what I've got for ya. Something easy to get you started. You can make Sandrice Cakes just by using Sandrice and a little sugar.}}
+{{dialogue|Owen|I'm looking forward to the campaign! Don't tell her I said this, but Mabel just might be the best chef in town. I don't wanna fill her head up too much! Haha, our friendly competition keeps us both striving to be better.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Meat Stuffed Mushroom of Default quality (Notify player)

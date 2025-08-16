@@ -1,0 +1,153 @@
+Reading Mission 1200211: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200135
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1200207
+Run mission #1200208
+Run mission #1200209
+
+TRIGGER Procedure 4.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1200211
+Run mission #1200212
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200211
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER ONCE CREATE || missionId: 1200211 | id: 22111 | sceneName: Main | flagName: kidintown8_trigger1 | showOnMap: 1 | mapIcon: MissionArea | transId: 80008804
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22111
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 22111 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 22111 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Bronco the Kid stands still in Main and looks at Jensen
+Jensen stands still in Main and looks at Bronco the Kid
+PLAYER SET POS ROT FLAG || flagName: kidintown8_player1 | sceneName: Main
+DELAY MASK SET || maskId: 22111 | delayTime: 1 | durationTime: -2 | curveIndex: 0 | changeType: 1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22111
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderBubbleTag (idName: 22061) from Bronco the Kid
+Remove behavior CommanderBubbleTag (idName: 22061) from Rian
+Remove behavior CommanderBubbleTag (idName: 22061) from Dan-bi
+Remove behavior CommanderBubbleTag (idName: 22091) from Bronco the Kid
+Remove behavior CommanderBubbleTag (idName: 22091) from Ernest
+Remove behavior CommanderBubbleTag (idName: 22081) from Bronco the Kid
+Remove behavior CommanderBubbleTag (idName: 22081) from Burgess
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 22111
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 1630_0 starts:
+{{dialogue|Bronco the Kid|So, you've had bandits on your train before. Had any bandits on lately?}}
+{{dialogue|Jensen|Er, gosh, I don't really know...!}}
+{{dialogue|Bronco the Kid|Whaddya mean, pal? And might I recommend you choose your next words very carefully...}}
+{{dialogue|Jensen|Well, everything's been going smoothly as of late; if there were any bandits on our trains, they sure didn't make it obvious!}}
+{{dialogue|Bronco the Kid|Oh, you don't know when to shut up, do ya? Tell me about the bandits! You better start singin' right now, or Light help me...!}}
+{{dialogue|Jensen|No, I mean, I honestly couldn't tell you if any bandits have been on my trains!}}
+{{dialogue|Bronco the Kid|A wise guy, huh?}}
+
+*''Logan's harmed Jensen as much as anybody. Back off.''
+*''You heard the man, Jensen. Confess!''
+*''Leave'' (No unique dialogue)
+
+{{dialogue|Jensen|indent=true|answer=Logan's harmed Jensen as much as anybody. Back off.
+|reward={{NPC2|Jensen|rp=7}}|It's true! I've worked at the train station my whole life and we've never had so few passengers...}}
+{{dialogue|Bronco the Kid|indent=true|Hm... he clocks in to his nine to five for fifty years... always shows up on time... treats his colleagues with respect... then! He turns on them all! To... join... a... gang?}}
+{{dialogue|Bronco the Kid|indent=true|Alright, fair point, ''Player''. You're lucky you've got a deductive friend like this to help you out, train man. Perhaps consider speaking a bit less criminal-y in the future.}}
+{{dialogue|Jensen|indent=true|Th... thanks, ''Player''! I love our trains more than anyone... I'd never do anything to hurt them!}}
+{{dialogue|Jensen|indent=true|answer=You heard the man, Jensen. Confess!
+|Oh... oh no!}}
+{{dialogue|Bronco the Kid|indent=true|Ooh, he's starting to crack! Thanks for the back up, ''Player''. I can take it from here!}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the first option in conversation segment 5425:
+{{dialogue|Bronco the Kid|A wise guy, huh?}}
+
+*''Logan's harmed Jensen as much as anybody. Back off.'' (No unique dialogue)
+*''You heard the man, Jensen. Confess!'' (No unique dialogue)
+*''Leave'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Jensen gains 7 favor
+
+TRIGGER Procedure 1.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Jensen stops standing still
+Bronco the Kid stops standing still
+CUTSCENE UI STATE EXIT || 
+END MISSION 1200211
+
+TRIGGER Procedure 1.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1200211
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 22111

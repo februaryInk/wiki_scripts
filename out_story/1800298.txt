@@ -1,0 +1,106 @@
+Reading Mission 1800298: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Parent not found; run conditions not available.
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800298
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1800298 | id: 82881 | sceneName: Main | flagName: Trigger_CivilCorp | showOnMap: 1 | mapIcon: MissionArea | transId: 0
+
+TRIGGER Procedure 0.0 Step 0.1 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the CivilCorp:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_civilcorp
+ACTIONS
+AREA TRIGGER DELETE || id: 82881
+UNIQUE ACTION RUN || idStr: enter_civilcorp
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the CivilCorp:
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM ADD || flagName: S8288_C_s1 | id: 10 | instId: 82981 | scene: CivilCorp | dailyBehavior: RandomNPC
+NPC RANDOM ADD || flagName: S8288_C_s2 | scene: CivilCorp | instId: 82982 | dailyBehavior: RandomNPC | id: 10
+Justice stands still in CivilCorp
+Cooper stands still in CivilCorp
+Unsuur stands still in CivilCorp
+Miguel stands still in CivilCorp
+Captain stands still in CivilCorp
+82981 stands still in CivilCorp
+82982 stands still in CivilCorp
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 828812
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 82981 | delayTime: 2 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 10.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82981 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Justice stops standing still
+Cooper stops standing still
+Unsuur stops standing still
+Miguel stops standing still
+Captain stops standing still
+82981 stops standing still
+82982 stops standing still
+CUTSCENE UI STATE EXIT || 
+DELAY MASK SET || maskId: 82891 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 40.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM REMOVE || id: 82981
+NPC RANDOM REMOVE || id: 82982
+END MISSION 1800298
+
+TRIGGER Procedure 0.0 Step 40.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 22841
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM REMOVE || id: 82981
+NPC RANDOM REMOVE || id: 82982
+AREA TRIGGER DELETE || id: 82881
+END MISSION 1800298

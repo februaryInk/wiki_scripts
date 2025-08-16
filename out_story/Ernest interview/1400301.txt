@@ -1,0 +1,529 @@
+Reading Mission 1400301: Ernest interview
+
+<onlyinclude>{{Infobox mission
+|name = Ernest interview
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = [[Ernest]]
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200310
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE FLAG || days: 6 | flag: DATE:loganinprision | compare: 2
+ACTIONS
+Run mission Community Service
+ACTION DATE REMOVE FLAG || flag: DATE:loganinprision
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE FLAG || days: 5 | flag: DATE:loganinprision | compare: 2
+ACTIONS
+Run mission Ernest interview
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1400301
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER ONCE CREATE || missionId: 1400301 | id: 24002 | sceneName: Main | flagName: 1400301_Trigger | showOnMap: 1 | mapIcon: MissionArea | transId: 80018268
+Set change to 0
+Set choice to -1
+Set dayCNT to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 24002
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 2400202 | delayTime: 0 | durationTime: -2 | changeType: 2 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 2400202 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Ernest stands still in Main and looks at Logan
+Logan stands still in Main and looks at Ernest
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: 1400301_8000_0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 2400202 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1234) A conversation 3621_0 starts:
+{{dialogue|Ernest|Mr. Logan... thank you again for agreeing to do this interview. It really means the world to me.}}
+{{dialogue|Logan|Just "Logan" is fine. So what's this all about? What went down up north? I'm not much of a storyteller, maybe Justice is your man for that...}}
+{{dialogue|Ernest|Oh, no... No, actually, I was hoping to learn a bit more about you as a person. Your life on the run. What inspires you. You see, I've been working on this novel...}}
+{{dialogue|Logan|Uh huh...?}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 4.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1234) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 1400301) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:1400301_8000_1)
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 1400301) from Player
+(cId 2234) A conversation 3622_0 starts:
+{{dialogue|Ernest|Ah, ''Player''! What a pleasant surprise! I don't suppose you could join us? I had some questions for you as well, if you have time.}}
+
+*''Sure!''
+*''Too much on the ol' plate, I'm afraid...''
+
+{{dialogue|Logan|indent=true|answer=Sure!
+|Alright, then. Well, the more the merrier.}}
+{{dialogue|Ernest|indent=true|Fantastic! Let's move to a more suitable location...!}}
+{{dialogue|Ernest|indent=true|answer=Too much on the ol' plate, I'm afraid...
+|Ah, of course. Sorry to bother you. Another time. Logan, now that I think about it, it'd be nice to have you around when I interview our mutual friend, ''Player'', as well. Would that work for you?}}
+{{dialogue|Logan|indent=true|Reckon so.}}
+
+TRIGGER Procedure 0.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2234) After the conversation ends:
+CONDITIONS
+Check if choice is == 1
+ACTIONS
+DELIVER MISSION 1400301
+
+TRIGGER Procedure 0.0 Step 6.1 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2234) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+AREA TRIGGER DELETE || id: 24002
+Ernest stops standing still
+Logan stops standing still
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2234) After the conversation ends:
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if choice is == 0
+ACTIONS
+DELAY MASK SET || maskId: 2400203 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+STOP ENGAGEMENT || stopType: 2
+
+TRIGGER Procedure 0.0 Step 5.1 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2234) The player picks the second option in conversation segment 11929:
+{{dialogue|Ernest|Ah, ''Player''! What a pleasant surprise! I don't suppose you could join us? I had some questions for you as well, if you have time.}}
+
+*''Sure!'' (No unique dialogue)
+*''Too much on the ol' plate, I'm afraid...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set choice to 1
+
+TRIGGER Procedure 0.0 Step 5.2 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2234) The player picks the first option in conversation segment 11929:
+{{dialogue|Ernest|Ah, ''Player''! What a pleasant surprise! I don't suppose you could join us? I had some questions for you as well, if you have time.}}
+
+*''Sure!'' (No unique dialogue)
+*''Too much on the ol' plate, I'm afraid...'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 11932:
+{{dialogue|Ernest|Ah, ''Player''. Do you have time to do that interview? If so I can go grab Logan...}}
+
+*''Sure!'' (No unique dialogue)
+*''Too much on the ol' plate, I'm afraid...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set choice to 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 2400203 | eventType: 2
+CONDITIONS
+CHECK CURRENT SCENE || name: Saloon | flag: 1
+Check if change is == 0
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+SCENEITEM CREATE FLAG || itemType: 0 | id: 2400290 | path: Mission_1400301_Note | sceneName: Saloon | flagName: 1400301_NoteB | extraParams: 0
+Ernest stands still in Saloon
+Logan stands still in Saloon
+Ernest stops standing still
+Logan stops standing still
+Add behavior CommanderSit (idName: 2400211) to Ernest
+(param: SeatDramaName:SaloonSeat01-1|TargetScene:Saloon)
+Add behavior CommanderSit (idName: 2400212) to Logan
+(param: SeatDramaName:SaloonSeat02-2|TargetScene:Saloon)
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: 1400301_8000B
+Add behavior CommanderPlayerSit (idName: 2400213) to Player
+(param: SeatDramaName:SaloonSeat02-1|TargetScene:Saloon)
+DELAY MASK SET || maskId: 2400203 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8069 | behaviourName: CommanderSit | eventName: SitDownFinished
+ON DELAY MASK EVENT || order: 0 | maskId: 2400203 | eventType: 5
+CONDITIONS
+Check relationship with Ernest is 6 Lover
+ACTIONS
+(cId 2400210) A conversation 3628_0 starts:
+{{dialogue|Ernest|So! "The Battle of the Northern Ruins!" Working title. You all were just so heroic over there! Really inspiring. I've spoken with Justice already... and he mentioned a few details I thought were a bit... odd.}}
+{{dialogue|Ernest|Was hoping to cross-check them with you two if that's alright.}}
+{{dialogue|Ernest|So according to Justice's reports, Grace, the town cook boarded the Duvos airship alone, where she then managed to take out a propeller engine, making the ship an easy target for the Alliance...?}}
+{{dialogue|Ernest|I mean, we all know her university is known for its martial arts team but... I mean, come on, what's the story there? Is it possible I've missed something big that everyone else knows already...? In any case, spill the tea!}}
+
+*''There weren't that many people on the airship...''
+*''Logan taught Grace some moves!''
+*''I think Unsuur was up there, too...''
+*''Grace is a secret agent!''
+*''She wasn't in martial arts club, she was on the debate team...''
+
+{{dialogue|Ernest|indent=true|answer=There weren't that many people on the airship...
+|That's it, then...?}}
+{{dialogue|Logan|indent=true|Yeah, they had everyone down in the ruins moving that rocket engine. She slipped into what was essentially a ghost ship. She was hardly ever in any danger at all.}}
+{{dialogue|Ernest|indent=true|answer=Logan taught Grace some moves!
+|Ah, that explains it. Well. Care to shed a little light on the subject? What kind of moves? Do they have cool names, like "flying death kick?" ''Player'', did he teach you any of these moves?}}
+{{dialogue|Logan|indent=true|We don't have any... cool moves... We just train close combat as well as handguns out in the desert. Nothin' to write home about. Tell 'em, ''Player''. Do we have any names for our "moves"?}}
+
+:*''Dagger technique: Dancing Sand Dragon Flurry...''
+:*''Firearm technique: Rolling Thunder Overturns the Sky...''
+:*''Martial technique: Divine Crane Sweeps the Leg...''
+:*''Martial technique: Devil Goat Strikes the Peach...''
+:*''None I can think of...''
+
+{{dialogue|Ernest|indent=double|answer=Dagger technique: Dancing Sand Dragon Flurry...
+|Awesome! Wow, cool! Thanks, ''Player''! This is literary gold!}}
+{{dialogue|Logan|indent=double|Er... right... how did that one... slip my mind...}}
+{{dialogue|Ernest|indent=double|answer=Firearm technique: Rolling Thunder Overturns the Sky...
+|Awesome! Wow, cool! Thanks, ''Player''! This is literary gold!}}
+{{dialogue|Logan|indent=double|Er... right... how did that one... slip my mind...}}
+{{dialogue|Ernest|indent=double|answer=Martial technique: Divine Crane Sweeps the Leg...
+|Awesome! Wow, cool! Thanks, ''Player''! This is literary gold!}}
+{{dialogue|Logan|indent=double|Er... right... how did that one... slip my mind...}}
+{{dialogue|Ernest|indent=double|answer=Martial technique: Devil Goat Strikes the Peach...
+|Devil goat! Perhaps inspired by your loyal mount, Rambo! ...Striking the peach... whatever could that mean? Ah well. Say, Logan, I was thinking about giving the protagonist in my novel a goat mount as well, you don't think that's weird, do you?}}
+{{dialogue|Logan|indent=double|Eh, no. Plenty of respectable folk ride goats.}}
+{{dialogue|Ernest|indent=double|answer=None I can think of...
+|I see. Well. I apologize if I'm unable to mask my disappointment...}}
+{{dialogue|Ernest|indent=true|answer=I think Unsuur was up there, too...
+|Ah? Really? Unsuur never mentioned that himself. And even still, two people against an army! That's really something, isn't it?}}
+{{dialogue|Logan|indent=true|Eh... yeah... I mean, he's a humble guy. But, yeah, that's right. He climbed up there and said, uh... "I like rocks...!" Or somethin' along those lines... and... the rest is... history. As they say.}}
+{{dialogue|Ernest|indent=true|Fascinating, fascinating...}}
+{{dialogue|Logan|indent=true|answer=Grace is a secret agent!
+|...!?}}
+{{dialogue|Logan|indent=true|Who, uh... who told you that, ''Player''? That's... news to me...!}}
+{{dialogue|Ernest|indent=true|You know, actually, I like that. I can use that. Not in this interview, obviously, but... why didn't I make my hero, Diego Quixote, a quadruple agent? I knew talking to you guys was going to fill me with inspiration...!}}
+{{dialogue|Ernest|indent=true|answer=She wasn't in martial arts club, she was on the debate team...
+|Ah... so she used guile and wits to talk her way into the belly of the beast! How impressive! You know, I've always myself said that there is no weapon greater than the written word...! Spoken in this case...}}
+{{dialogue|Ernest|indent=true|Yes, that checks out, actually. Grace always gave me debate team energy. And what other time is more likely that we'd be shook to our core other than in time of war? She must've scared them all off with a clever bluff.}}
+{{dialogue|Ernest|Logan... can I ask you something personal?}}
+{{dialogue|Logan|Shoot.}}
+{{dialogue|Ernest|Are you... seeing anyone? Did you ever have any chance romantic encounters on the run as an outlaw?}}
+{{dialogue|Logan|...}}
+{{dialogue|Ernest|Right, right... I realize I'm kind of crossing a line here but... can you at least give me something? Something to help me get the romance right in this novel I'm working on...}}
+{{dialogue|Logan|I... am afraid nothing comes to mind...}}
+
+*''He never had time for romance.''
+*''I'll tell all his secrets... for a price!''
+*''He pushed would-be lovers away...''
+
+{{dialogue|Ernest|indent=true|answer=He never had time for romance.
+|Indeed... driven by rage, his eyes focused only straight ahead, his vision tunneled, he was unable to see the love no doubt chasing after him...}}
+{{dialogue|Ernest|indent=true|A true anti-hero... tragic...}}
+{{dialogue|Logan|indent=true|...}}
+{{dialogue|Ernest|indent=true|Sorry...! I was kind of... putting words in your mouth. Don't worry, I won't print that. Just doing a bit of thinking out loud for my novel...}}
+{{dialogue|Ernest|indent=true|answer=I'll tell all his secrets... for a price!
+|Ooh, so it's like that now, is it? Well, I do always appreciate a bit of suspense... I admit, I am curious, but it is hardly fair to our friend here. I've been a good sport, Logan, can you please just give me a little something in exchange? What was going on... in your heart?}}
+{{dialogue|Logan|indent=true|Well... Up there in the ruins...}}
+{{dialogue|Ernest|indent=true|Go on...}}
+{{dialogue|Logan|indent=true|I felt like my heart was going to jump out of my chest...}}
+{{dialogue|Ernest|indent=true|Do tell...!}}
+{{dialogue|Logan|indent=true|There were bullets whizzin' right past our heads. Every second seemed like it could've been our last....}}
+{{dialogue|Ernest|indent=true|Oh. I see. We're... not exactly on the same page here...}}
+{{dialogue|Ernest|indent=true|answer=He pushed would-be lovers away...
+|Really now? How... how many would-be lovers exactly?}}
+
+:*''Princess Lumi''
+:*{{flirt}}''Just one... me.''
+:*''Er, that was just a joke...''
+
+{{dialogue|Ernest|indent=double|answer=Princess Lumi
+|reward={{NPC2|Logan|rp=5}}|Ah! Right! Right... the... mouse... princess?}}
+{{dialogue|Logan|indent=double|Lumi...? That's news to me, ''Player''...}}
+{{dialogue|Ernest|indent=double|Ah hah, she never confessed. Likely impeded by the shame of royalty falling for the likes of the brutish bandit of common blood... Fun! But... I can't really use this in my book. The whole different species thing... eh... it's been done.}}
+{{dialogue|Logan|indent=double|answer=Just one... me.
+|Wh... You mean... back in the cave? Well, er, I mean we'd just met then. And I mean now, we've faced life and death together...}}
+{{dialogue|Logan|indent=double|answer=Er, that was just a joke...
+|Uh...}}
+{{dialogue|Ernest|indent=double|Hm... you really shouldn't set up such a suspenseful moment and then allow it to fall so flat... Well. Don't trouble yourself, ''Player''...}}
+{{dialogue|Ernest|Ah, well, I think we can about call it here. I've got enough. I'm going to get back to my desk while these ideas are fresh in my mind... Bye! Thanks! And farewell!}}
+{{dialogue|Logan|Well... you heard the man.}}
+The conversation ends.
+Set change to 10
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2400210) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderSit (idName: 2400211) from Ernest
+Remove behavior CommanderSit (idName: 2400212) from Logan
+Remove behavior CommanderPlayerSit (idName: 2400213) from Player
+Logan gains 5 favor
+Ernest gains 5 favor
+SCENEITEM DELETE || itemType: 0 | id: 2400290
+CUTSCENE UI STATE EXIT || 
+In a speech bubble:
+{{dialogue|Logan|Be seein' ya.}}
+CLOSE MISSION || missionId: 1400301
+END MISSION 1400301
+
+TRIGGER Procedure 1.0 Step 2.1 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2400210) The player picks the first option in conversation segment 11973:
+{{dialogue|Ernest|Really now? How... how many would-be lovers exactly?}}
+
+*''Princess Lumi'' (No unique dialogue)
+*{{flirt}}''Just one... me.'' (No unique dialogue)
+*''Er, that was just a joke...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Logan gains 5 favor
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 2400203 | eventType: 2
+CONDITIONS
+CHECK CURRENT SCENE || name: Saloon | flag: 0
+ACTIONS
+PLAYER SWITCH SCENE || scene: Saloon
+Set change to 1
+AREA TRIGGER CREATE || missionId: 1400301 | id: 2400202 | sceneName: Main | flagName: 1400301_Trigger_Saloon | showOnMap: 1 | mapIcon: MissionArea | transId: 80018268
+
+TRIGGER Procedure 2.0 Step 1.1 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 2400290 | delayTime: 2 | durationTime: 2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 2.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Saloon:
+CONDITIONS
+Check if change is == 1
+CHECK UNIQUE ACTION RUN || idStr: enter_saloon
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_saloon
+AREA TRIGGER DELETE || id: 2400202
+Ernest stands still in Saloon
+Logan stands still in Saloon
+SCENEITEM CREATE FLAG || itemType: 0 | id: 2400290 | path: Mission_1400301_Note | sceneName: Saloon | flagName: 1400301_NoteB | extraParams: 0
+Set change to 2
+
+TRIGGER Procedure 2.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Saloon:
+CONDITIONS
+Check if change is == 2
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: SaloonSeat02-1
+Logan stops standing still
+Ernest stops standing still
+Add behavior CommanderSit (idName: 2400212) to Logan
+(param: SeatDramaName:SaloonSeat02-2|TargetScene:Saloon)
+Add behavior CommanderSit (idName: 2400211) to Ernest
+(param: SeatDramaName:SaloonSeat01-1|TargetScene:Saloon)
+Add behavior CommanderPlayerSit (idName: 2400213) to Player
+(param: SeatDramaName:SaloonSeat02-1|TargetScene:Saloon)
+
+TRIGGER Procedure 2.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8069 | behaviourName: CommanderSit | eventName: SitDownFinished
+CONDITIONS
+Check relationship with Ernest is Lover
+ACTIONS
+(cId 2400210) A conversation 3666_0 starts:
+{{dialogue|Ernest|So! "The Battle of the Northern Ruins!" Working title. You all were just so heroic over there! Really inspiring. I've spoken with Justice already... and he mentioned a few details I thought were a bit... odd.}}
+{{dialogue|Ernest|Was hoping to cross-check them with you two if that's alright.}}
+{{dialogue|Ernest|So according to Justice's reports, Grace, the town cook boarded the Duvos airship alone, where she then managed to take out a propeller engine, making the ship an easy target for the Alliance...?}}
+{{dialogue|Ernest|I mean, we all know her university is known for its martial arts team but... I mean, come on, what's the story there? Is it possible I've missed something big that everyone else knows already...? In any case, spill the tea!}}
+
+*''There weren't that many people on the airship...''
+*''Logan taught Grace some moves!''
+*''I think Unsuur was up there, too...''
+*''Grace is a secret agent!''
+*''She wasn't in martial arts club, she was on the debate team...''
+
+{{dialogue|Ernest|indent=true|answer=There weren't that many people on the airship...
+|That's it, then...?}}
+{{dialogue|Logan|indent=true|Yeah, they had everyone down in the ruins moving that rocket engine. She slipped into what was essentially a ghost ship. She was hardly ever in any danger at all.}}
+{{dialogue|Ernest|indent=true|answer=Logan taught Grace some moves!
+|Ah, that explains it. Well. Care to shed a little light on the subject? What kind of moves? Do they have cool names, like "flying death kick?" ''Player'', did he teach you any of these moves?}}
+{{dialogue|Logan|indent=true|We don't have any... cool moves... We just train close combat as well as handguns out in the desert. Nothin' to write home about. Tell 'em, ''Player''. Do we have any names for our "moves"?}}
+
+:*''Dagger technique: Dancing Sand Dragon Flurry...''
+:*''Firearm technique: Rolling Thunder Overturns the Sky...''
+:*''Martial technique: Divine Crane Sweeps the Leg...''
+:*''Martial technique: Devil Goat Strikes the Peach...''
+:*''None I can think of...''
+
+{{dialogue|Ernest|indent=double|answer=Dagger technique: Dancing Sand Dragon Flurry...
+|Awesome! Wow, cool! Thanks, ''Player''! This is literary gold!}}
+{{dialogue|Logan|indent=double|Er... right... how did that one... slip my mind...}}
+{{dialogue|Ernest|indent=double|answer=Firearm technique: Rolling Thunder Overturns the Sky...
+|Awesome! Wow, cool! Thanks, ''Player''! This is literary gold!}}
+{{dialogue|Logan|indent=double|Er... right... how did that one... slip my mind...}}
+{{dialogue|Ernest|indent=double|answer=Martial technique: Divine Crane Sweeps the Leg...
+|Awesome! Wow, cool! Thanks, ''Player''! This is literary gold!}}
+{{dialogue|Logan|indent=double|Er... right... how did that one... slip my mind...}}
+{{dialogue|Ernest|indent=double|answer=Martial technique: Devil Goat Strikes the Peach...
+|Devil goat! Perhaps inspired by your loyal mount, Rambo! ...Striking the peach... whatever could that mean? Ah well. Say, Logan, I was thinking about giving the protagonist in my novel a goat mount as well, you don't think that's weird, do you?}}
+{{dialogue|Logan|indent=double|Eh, no. Plenty of respectable folk ride goats.}}
+{{dialogue|Ernest|indent=double|answer=None I can think of...
+|I see. Well. I apologize if I'm unable to mask my disappointment...}}
+{{dialogue|Ernest|indent=true|answer=I think Unsuur was up there, too...
+|Ah? Really? Unsuur never mentioned that himself. And even still, two people against an army! That's really something, isn't it?}}
+{{dialogue|Logan|indent=true|Eh... yeah... I mean, he's a humble guy. But, yeah, that's right. He climbed up there and said, uh... "I like rocks...!" Or somethin' along those lines... and... the rest is... history. As they say.}}
+{{dialogue|Ernest|indent=true|Fascinating, fascinating...}}
+{{dialogue|Logan|indent=true|answer=Grace is a secret agent!
+|...!?}}
+{{dialogue|Logan|indent=true|Who, uh... who told you that, ''Player''? That's... news to me...!}}
+{{dialogue|Ernest|indent=true|You know, actually, I like that. I can use that. Not in this interview, obviously, but... why didn't I make my hero, Diego Quixote, a quadruple agent? I knew talking to you guys was going to fill me with inspiration...!}}
+{{dialogue|Ernest|indent=true|answer=She wasn't in martial arts club, she was on the debate team...
+|Ah... so she used guile and wits to talk her way into the belly of the beast! How impressive! You know, I've always myself said that there is no weapon greater than the written word...! Spoken in this case...}}
+{{dialogue|Ernest|indent=true|Yes, that checks out, actually. Grace always gave me debate team energy. And what other time is more likely that we'd be shook to our core other than in time of war? She must've scared them all off with a clever bluff.}}
+{{dialogue|Ernest|Logan... can I ask you something personal?}}
+{{dialogue|Logan|Shoot.}}
+{{dialogue|Ernest|Are you... seeing anyone? Did you ever have any chance romantic encounters on the run as an outlaw?}}
+{{dialogue|Logan|...}}
+{{dialogue|Ernest|Right, right... I realize I'm kind of crossing a line here but... can you at least give me something? Something to help me get the romance right in this novel I'm working on...}}
+{{dialogue|Logan|I... am afraid nothing comes to mind...}}
+
+*''He never had time for romance.''
+*''I'll tell all his secrets... for a price!''
+*''He pushed would-be lovers away...''
+
+{{dialogue|Ernest|indent=true|answer=He never had time for romance.
+|Indeed... driven by rage, his eyes focused only straight ahead, his vision tunneled, he was unable to see the love no doubt chasing after him...}}
+{{dialogue|Ernest|indent=true|A true anti-hero... tragic...}}
+{{dialogue|Logan|indent=true|...}}
+{{dialogue|Ernest|indent=true|Sorry...! I was kind of... putting words in your mouth. Don't worry, I won't print that. Just doing a bit of thinking out loud for my novel...}}
+{{dialogue|Ernest|indent=true|answer=I'll tell all his secrets... for a price!
+|Ooh, so it's like that now, is it? Well, I do always appreciate a bit of suspense... I admit, I am curious, but it is hardly fair to our friend here. I've been a good sport, Logan, can you please just give me a little something in exchange? What was going on... in your heart?}}
+{{dialogue|Logan|indent=true|Well... Up there in the ruins...}}
+{{dialogue|Ernest|indent=true|Go on...}}
+{{dialogue|Logan|indent=true|I felt like my heart was going to jump out of my chest...}}
+{{dialogue|Ernest|indent=true|Do tell...!}}
+{{dialogue|Logan|indent=true|There were bullets whizzin' right past our heads. Every second seemed like it could've been our last....}}
+{{dialogue|Ernest|indent=true|Oh. I see. We're... not exactly on the same page here...}}
+{{dialogue|Ernest|indent=true|answer=He pushed would-be lovers away...
+|Really now? How... how many would-be lovers exactly?}}
+
+:*''Princess Lumi''
+:*''Er, that was just a joke...''
+
+{{dialogue|Ernest|indent=double|answer=Princess Lumi
+|Ah! Right! Right... the... mouse... princess?}}
+{{dialogue|Logan|indent=double|Lumi...? That's news to me, ''Player''...}}
+{{dialogue|Ernest|indent=double|Ah hah, she never confessed. Likely impeded by the shame of royalty falling for the likes of the brutish bandit of common blood... Fun! But... I can't really use this in my book. The whole different species thing... eh... it's been done.}}
+{{dialogue|Logan|indent=double|answer=Er, that was just a joke...
+|Uh...}}
+{{dialogue|Ernest|indent=double|Hm... you really shouldn't set up such a suspenseful moment and then allow it to fall so flat... Well. Don't trouble yourself, ''Player''...}}
+{{dialogue|Ernest|Ah, well, I think we can about call it here. I've got enough. I'm going to get back to my desk while these ideas are fresh in my mind... Bye! Thanks! And farewell!}}
+{{dialogue|Logan|Well... you heard the man.}}
+The conversation ends.
+Set change to 10
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment dayCNT by 1
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if dayCNT is != (maybe?) 6
+ACTIONS
+AREA TRIGGER DELETE || id: 24002
+AREA TRIGGER DELETE || id: 2400202
+CLOSE MISSION || missionId: 1400301
+END MISSION 1400301
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Ernest|Ah, ''Player''. Do you have time to do that interview? If so I can go grab Logan...}}
+
+*''Sure!''
+*''Too much on the ol' plate, I'm afraid...''
+
+{{dialogue|Ernest|indent=true|answer=Sure!
+|Fantastic! Let's move to a more suitable location...!}}
+{{dialogue|Ernest|indent=true|answer=Too much on the ol' plate, I'm afraid...
+|Ah, of course. Sorry to bother you. Another time. Logan, now that I think about it, it'd be nice to have you around when I interview our mutual friend, ''Player'', as well. Would that work for you?}}

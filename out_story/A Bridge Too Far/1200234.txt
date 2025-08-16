@@ -1,0 +1,140 @@
+Reading Mission 1200234: A Bridge Too Far
+
+<onlyinclude>{{Infobox mission
+|name = A Bridge Too Far
+|image =
+|description = The "bridge" that connects the mountain near the tunnel is a collapsed Old World building. It needs to be reinforced in some way to be safe to cross.
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 3800
+|reputation = 45
+|gols = 8000
+|npc1 = Heidi
+|rp1 = 20
+|rewards = {{i2|Light Adventurer Bottoms}|1}
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200135
+
+TRIGGER Procedure 6.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Clear the Air is successfully completed
+ACTIONS
+Run mission #1700235
+NPC CHANGE SKIN COLOR REMOVE || npc: 8021 | requestID: 22221
+NPC CHANGE SKIN COLOR REMOVE || npc: 8020 | requestID: 22221
+NPC CHANGE SKIN COLOR REMOVE || npc: 8058 | requestID: 22221
+NPC CHANGE SKIN COLOR REMOVE || npc: 8043 | requestID: 22221
+NPC CHANGE SKIN COLOR REMOVE || npc: 8007 | requestID: 22331
+The player receives a letter:
+{{mail|446}}
+The player receives a letter:
+{{mail|451}}
+GLOBAL BLACK BOARD REMOVE || key: con4green
+
+TRIGGER Procedure 6.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1700235 is result 1 flag 1
+ACTIONS
+Run mission A Bridge Too Far
+Newspaper adds Article content 1081.
+Title: Gunky Green Gorge Goo Gas Gone! Tunnel Talks Triumphant!
+Once again, ''Player'' has led a successful dive into a new ruins! Well. Let's call them outdoor ruins? Eh, whatever the case, ''Player'' cleaned all the gunk out of the Valley of Whispers! Which has led to a sharp decline in incidents of what Sandrock doctors have labelled "Green-itis." It is expected that Green-itis will be soon completely eradicated.
+
+Impressed with with our ability to greenify and also... de-greenify where need be, Musa has decided to pull the trigger on our road deal! This road to Portia will be one of the most important undertakings in recent Sandrock history, and it marks a turning point in our future as well. Yes, folks, there has never been a better time to believe in Sandrock than right now. Investors take note!
+
+Musa has said that he does intend to stick around as we begin the project, which is nice. I mean. Isn't he the CEO of like five companies? Seems a little odd that he can just take a bunch of time off to watch us pass his little tests or whatever, but who am I to criticize?
+The player receives a letter:
+{{mail|447}}
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Heidi stands still in Main and looks at Player
+Mint stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 2165_0 starts:
+{{dialogue|Heidi|Hey there, ''Player''. We already have something for you.}}
+{{dialogue|Mint|We went to survey the tunnel area real early this morning, but the {{textcolor|green|Old World building that sits across the canyon}} is all sorts of unstable.}}
+{{dialogue|Mint|Heidi and I can still get across to do our survey job, but I think for actual construction to start, we'll need that bridge pass {{textcolor|green|reinforced}} to ensure its structural integrity.}}
+{{dialogue|Heidi|We're hoping you could do that for us.}}
+
+*''Sure.''
+*''I'm kind of busy right now.''
+
+{{dialogue|Heidi|indent=true|answer=Sure.
+|Thanks! I have some basic Worktable recipes and Assembly Station diagrams with me. I think they should be enough to reinforce the bridge pass.}}
+{{dialogue|Heidi|indent=true|answer=I'm kind of busy right now.
+|Mr. Musa said you'd agreed to be the primary Builder for this project, so I'll leave some basic Worktable recipes and Assembly Station diagrams with you. I think they should be enough to reinforce the bridge pass.}}
+{{dialogue|Heidi|While you're installing, {{textcolor|green|please also clear out the boulders on the bridge pass}}. Let me know when you're done! Thanks ''Player''!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Steel Panels of Default quality (Notify player)
+Add 1 Steel Braces of Default quality (Notify player)
+CUTSCENE UI STATE EXIT || 
+Heidi stops standing still
+Mint stops standing still
+DELIVER MISSION 1200234
+START MISSION 1200234
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200234
+CONDITIONS
+Always:
+ACTIONS
+Run mission A Bridge Too Far
+END MISSION 1200234
+
+==Rewards==
+{{mission reward
+|npc1 = Heidi
+|rp1 = 20
+|exp = 3800
+|reputation = 45
+|gols = 8000
+|rewards = {{i2|Light Adventurer Bottoms}|1}
+}}

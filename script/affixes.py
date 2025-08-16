@@ -1,15 +1,13 @@
 '''
-Scratch script for testing ad hoc output.
+Generate item affix tables.
 '''
 
 from __future__ import annotations
 
 from sandrock                     import *
-from sandrock.lib.text            import load_text
-from script.structures.generators import *
+from sandrock.structures.generators import *
 
 from collections import defaultdict
-from pathvalidate import sanitize_filename
 
 # ------------------------------------------------------------------------------
 

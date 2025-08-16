@@ -1,0 +1,392 @@
+Reading Mission 1800197: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200062
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if Elsie has favor < 50
+ACTIONS
+Run mission #1200039
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+The Kidnapping is in state 2 with flag 1
+Check if Elsie has favor >= 100
+
+GROUP 10:
+The Kidnapping is successfully completed
+Check if Elsie has favor >= 100
+
+ACTIONS
+Run mission #1800197
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800197
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1800197 | id: 181970 | sceneName: Main | flagName: Stroy_81971_Trigger | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80008632
+Set DAY to 0
+
+TRIGGER Procedure 0.0 Step 0.5 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 181970
+CONDITIONS
+CHECK TIME || compare: 2 | hour: 20 | minute: 0
+CHECK WEATHER STATE || weather: 0 | flag: 1
+Check if Elsie is in town
+ACTIONS
+DELAY MASK SET || maskId: 819701 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 181970
+
+TRIGGER Procedure 0.0 Step 0.6 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 819701 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: Stroy_81971_Player_Stand_start | sceneName: Main
+Elsie stands still in Main
+DELAY MASK SET || maskId: 819401 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 819701 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8197001) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:Stroy_81971_Player_Stand|LookAtActor:8005)
+Add behavior CommanderMoveToFlagAndAction (idName: 8197052) to Elsie
+(param: TargetScene:Main|MoveMode:Walk|FlagName:Stroy_81971_Elsie_Stand|Action:Talk)
+
+TRIGGER Procedure 0.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 1515_0 starts:
+{{dialogue|Elsie|Logan! What're you thinkin'!?}}
+{{dialogue|Elsie|I jus'... can't believe you did that!}}
+{{dialogue|Elsie|Argh!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8197053) to Elsie
+(param: TargetScene:Main|MoveMode:Run|FlagName:Stroy_81971_Elsie_Stand_2|LookAtActor:8000)
+
+TRIGGER Procedure 0.0 Step 3.5 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8005 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 1516_0 starts:
+{{dialogue|Elsie|Oh, ''Player'', I didn't seen you there! I musta been so worked up, didn't notice nothin'...}}
+{{dialogue|Elsie|What... whaddya doin' here?}}
+
+*''I'm worried about you.''
+*''What are you doing?''
+
+{{dialogue|Elsie|Ahem... I ain't doin' nothin'...}}
+{{dialogue|Elsie|Jus'... came out to look at the stars is all...}}
+
+*''I heard you say "Logan."''
+*''Can't believe who did what?''
+
+{{dialogue|Elsie|indent=true|answer=I heard you say "Logan."
+|Yeah! I can't believe he'd betray us like that! I hate him!}}
+{{dialogue|Elsie|indent=true|answer=Can't believe who did what?
+|Logan! I can't believe he'd betray us like that! I hate him!}}
+{{dialogue|Elsie|I mean... I dunno, I ain't like, hatin' him really, I guess... I'm just so dang mad!}}
+{{dialogue|Elsie|I jus' can't make no heads or tails of it! Why'd he take Matilda? What the heck do you want!? Why can't ya jus' talk about it!?}}
+{{dialogue|Elsie|Where's he now, huh? I wanna jus' go an' ask him. I'm jus'... feelin' stuck is all.}}
+
+*''He's a criminal. You can't understand his mind.''
+*''You still want to support him?''
+
+{{dialogue|Elsie|indent=true|answer=He's a criminal. You can't understand his mind.
+|It ain't like this before... the Logan I knew was a good guy. He ain't good at hidin' nothin', this ain't him! I never thought I'd see 'im doin' these kinda things... I jus', wish I could ask him what's goin' on...}}
+{{dialogue|Elsie|indent=true|answer=You still want to support him?
+|I ain't givin' up yet! Or else I wouldn't be this angry, y'know?}}
+{{dialogue|Elsie|When I was little, I remember I tried to climb this tree... He was jus' standin' there laughin' at me! But then he told me to slow down, an' I wouldn't get hurt. An' then... when I was six, I got attacked by a monster, an' he saved me.}}
+{{dialogue|Elsie|We grew up together for 10 years... I looked up to him. y'know?}}
+{{dialogue|Elsie|Like, how can I describe how I'm feelin' now? It's like... my heart is hurtin' or somethin'. Like, it's like...}}
+{{dialogue|Elsie|I got it, like, you an' Mi-an, right? You known each other real long. What if Burgess came along one day, an' he's sayin' Mi-an's been cuttin' down all the trees, an' he's sent her to tree jail. Whole town's now hatin' 'er. Would you still trust her?}}
+
+*''Mi-an wouldn't do that.''
+*''I'd make a judgement based on facts.''
+*''Some people are just evil, maybe Mi-an is too...''
+
+{{dialogue|Elsie|indent=true|answer=Mi-an wouldn't do that.
+|reward={{NPC2|Elsie|rp=5}}|Right? That's what I'm sayin'! There's no way you'd abandon yer friend!}}
+{{dialogue|Elsie|indent=true|answer=I'd make a judgement based on facts.
+|But nah, like, it looks like it's one way, but... it's different!}}
+{{dialogue|Elsie|indent=true|answer=Some people are just evil, maybe Mi-an is too...
+|reward={{NPC2|Elsie|rp=-3}}|But you know Mi-an! She loves plants an' stuff! No way she'd do that!}}
+{{dialogue|Elsie|indent=true|I'm the same with you, if someone said somethin' bad about you, no way I'd take that!}}
+{{dialogue|Elsie|Argh, I'm jus' so confused! I dunno what to do... He really did somethin' unspeakable, but I wish everyone would just calm down and talk! Not like anyone will ever listen to me...}}
+{{dialogue|Elsie|Hey, ''Player'', why's it when you say somethin', do somethin', everyone's always listenin' to you! Why's it so easy to trust you?}}
+
+*''Because I've worked hard for this town.''
+*''Because I'm a looker!''
+
+{{dialogue|Elsie|indent=true|answer=Because I've worked hard for this town.
+|reward={{NPC2|Elsie|rp=5}}|That's true. You're workin' every day. You're workin' when I get up, when I doze off, when I'm herdin' cattle, catchin' birds... Even when I'm eatin', you're still workin'...}}
+{{dialogue|Elsie|indent=true|answer=Because I'm a looker!
+|reward={{NPC2|Elsie|rp=3}}|Haha... You do look good! Hey, I'm serious! Everyone's seein' your good qualities I guess... so they trust you, huh?}}
+{{dialogue|Elsie|You've done so much good for so many folks 'round here, if they ain't listenin' to you, they ain't listenin' to no one. Alright, I gotta prove myself to everyone, then they'll finally listen to what I hafta say for once!}}
+
+*''What do you plan on doing?''
+*''You have a crush on him, don't you?''
+
+{{dialogue|Elsie|indent=true|answer=What do you plan on doing?
+|Let me see... I dunno, what did we do before? I mean, goin' to his house was my idea anyway...}}
+{{dialogue|Elsie|indent=true|Argh, I really don't know what to do! Think, Elsie, think!}}
+{{dialogue|Elsie|indent=true|answer=You have a crush on him, don't you?
+|What!? Ain't you listenin'! I'm sayin' he's like a big brother to me... Argh, you thought I was like, secretly in love with him or some junk? Aw dang, who do you think I am!?}}
+{{dialogue|Elsie|Well... I ain't givin' up on him! He ain't innocent, but... there must be some reason! But... I dunno. All I know is I still gotta do some growin' on my own.}}
+{{dialogue|Elsie|...I dunno what to do next. Ah! I think I been thinkin' too much today, my brain's all used up!}}
+
+*''Just start at home, try working harder.''
+*''Why don't you try and help people around town?''
+
+{{dialogue|Elsie|indent=true|answer=Just start at home, try working harder.
+|reward={{NPC2|Elsie|rp=3}}|Ah? At the ranch you mean? I mean, I work every day... though sometimes, I guess I kinda slack off a little... I guess I could work harder...}}
+{{dialogue|Elsie|indent=true|answer=Why don't you try and help people around town?
+|The people in town... I don't reckon they want my help no more. When I go near them, they think I'mma do a prank or somethin', they jus' wanna get rid of me.}}
+{{dialogue|Elsie|indent=true|I reckon I'll start with helpin' Ma an' Pa...}}
+{{dialogue|Elsie|Alright, I got it! I'mma learn from you. I'm gonna be someone people can rely on!}}
+{{dialogue|Elsie|I'mma get serious, start small, y'know? I reckon gettin' the old man- I mean, Pa to respect me is my first step, huh?}}
+{{dialogue|Elsie|Alright... I'm feelin' better now. Thanks. Let's head back now, yeah?}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 4.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Elsie stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8197052) from Elsie
+Remove behavior CommanderMoveToFlagAndAction (idName: 8197053) from Elsie
+Remove behavior CommanderMoveToFlagAndAction (idName: 8197001) from Player
+Add behavior CommanderMoveToFlagAndAction (idName: 8197054) to Elsie
+(param: TargetScene:Main|MoveMode:Walk|FlagName:Stroy_81971_Elsie_Stand_3|Action:LookSky)
+Add behavior CommanderMoveToFlagAndAction (idName: 8197002) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:Stroy_81971_Player_Stand_3|Action:LookSky|Delay:1)
+SCENEITEM CREATE FLAG || itemType: 0 | id: 819701 | path: PreLoad_Story8197_Star | sceneName: Main | flagName: Story8197_Star | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 5.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 819705
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 1531_0 starts:
+{{dialogue|Elsie|Look! A shootin' star! ''Player'', didya see it?}}
+{{dialogue|Elsie|Quick, quick! Make a wish!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 6.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8005 | cId: 4 | missionId: 1800197
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 1532_0 starts:
+{{dialogue|Elsie|Shootin' stars are so beautiful! ''Player'', didya make a wish? What you wish for?}}
+
+*''To be rich!''
+*''It doesn't work if you say it.''
+*{{flirt}}''I wished for yours to come true.''
+
+{{dialogue|Elsie|indent=true|answer=To be rich!
+|Hahaha!}}
+{{dialogue|Elsie|indent=true|I reckon that ain't a bad wish! I wanna be rich, too! You know what I wished for?}}
+{{dialogue|Elsie|indent=true|answer=It doesn't work if you say it.
+|Alright, alright! Keep it a secret then! I wanna tell you mine, though.}}
+{{dialogue|Elsie|indent=true|answer=I wished for yours to come true.
+|reward={{NPC2|Elsie|rp=5}}|Wow, then I know mine's gonna come true, no way it's gonna fail!}}
+{{dialogue|Elsie|I wished... that we can be friends forever!}}
+{{dialogue|Elsie|Thanks for stayin' with me. I know I can go on a bit... Alright, I gotta git. See ya later, ''Player''!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 6.3 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 5) There is a conversation segment (id 5262) that ends:
+{{dialogue|Elsie|Shootin' stars are so beautiful! ''Player'', didya make a wish? What you wish for?}}
+
+*''To be rich!'' (No unique dialogue)
+*''It doesn't work if you say it.'' (No unique dialogue)
+*{{flirt}}''I wished for yours to come true.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8197002) from Player
+Add behavior CommanderMoveToFlagAndAction (idName: 8197003) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:Stroy_81971_Player_Stand|LookAtActor:8005)
+
+TRIGGER Procedure 0.0 Step 7.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Elsie gains 20 favor
+SCENEITEM DELETE || itemType: 0 | id: 819701
+Elsie stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8197053) from Elsie
+Remove behavior CommanderMoveToFlagAndAction (idName: 8197052) from Elsie
+Remove behavior CommanderMoveToFlagAndAction (idName: 8197054) from Elsie
+Remove behavior CommanderMoveToFlagAndAction (idName: 8197003) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8197002) from Player
+CUTSCENE UI STATE EXIT || 
+END MISSION 1800197
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the first option in conversation segment 5226:
+{{dialogue|Elsie|What... whaddya doin' here?}}
+
+*''I'm worried about you.'' (No unique dialogue)
+*''What are you doing?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Elsie gains 3 favor
+
+TRIGGER Procedure 1.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the second option in conversation segment 5245:
+{{dialogue|Elsie|Hey, ''Player'', why's it when you say somethin', do somethin', everyone's always listenin' to you! Why's it so easy to trust you?}}
+
+*''Because I've worked hard for this town.'' (No unique dialogue)
+*''Because I'm a looker!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Elsie gains 3 favor
+
+TRIGGER Procedure 1.0 Step 4.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the first option in conversation segment 5239:
+{{dialogue|Elsie|I got it, like, you an' Mi-an, right? You known each other real long. What if Burgess came along one day, an' he's sayin' Mi-an's been cuttin' down all the trees, an' he's sent her to tree jail. Whole town's now hatin' 'er. Would you still trust her?}}
+
+*''Mi-an wouldn't do that.'' (No unique dialogue)
+*''I'd make a judgement based on facts.'' (No unique dialogue)
+*''Some people are just evil, maybe Mi-an is too...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Elsie gains 5 favor
+
+TRIGGER Procedure 1.0 Step 5.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the third option in conversation segment 5239:
+{{dialogue|Elsie|I got it, like, you an' Mi-an, right? You known each other real long. What if Burgess came along one day, an' he's sayin' Mi-an's been cuttin' down all the trees, an' he's sent her to tree jail. Whole town's now hatin' 'er. Would you still trust her?}}
+
+*''Mi-an wouldn't do that.'' (No unique dialogue)
+*''I'd make a judgement based on facts.'' (No unique dialogue)
+*''Some people are just evil, maybe Mi-an is too...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Elsie gains -3 favor
+
+TRIGGER Procedure 1.0 Step 6.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the first option in conversation segment 5245:
+{{dialogue|Elsie|Hey, ''Player'', why's it when you say somethin', do somethin', everyone's always listenin' to you! Why's it so easy to trust you?}}
+
+*''Because I've worked hard for this town.'' (No unique dialogue)
+*''Because I'm a looker!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Elsie gains 5 favor
+
+TRIGGER Procedure 1.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) The player picks the third option in conversation segment 5262:
+{{dialogue|Elsie|Shootin' stars are so beautiful! ''Player'', didya make a wish? What you wish for?}}
+
+*''To be rich!'' (No unique dialogue)
+*''It doesn't work if you say it.'' (No unique dialogue)
+*{{flirt}}''I wished for yours to come true.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Elsie gains 5 favor
+
+TRIGGER Procedure 1.0 Step 8.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the first option in conversation segment 5253:
+{{dialogue|Elsie|...I dunno what to do next. Ah! I think I been thinkin' too much today, my brain's all used up!}}
+
+*''Just start at home, try working harder.'' (No unique dialogue)
+*''Why don't you try and help people around town?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Elsie gains 3 favor

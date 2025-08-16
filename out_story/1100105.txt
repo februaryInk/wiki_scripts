@@ -1,0 +1,146 @@
+Reading Mission 1100105: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100031
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON WATER PLAYER CHANGE || order: 0 | isAdd: 1
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key noaddwater with info 1.
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100031
+When the player moves from -1 to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1100105
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100105
+CONDITIONS
+Always:
+ACTIONS
+MONSTER ADD TAG || tag: BridgeThief | isAdd: 1
+AREA TRIGGER CREATE || id: 11051 | sceneName: Main | flagName: trigger_steelbridge | showOnMap: 0 | mapIcon: MissionArea | transId: -1 | missionId: 1100105
+Set BRIDGE to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 11051
+CONDITIONS
+Check if BRIDGE is == 0
+ACTIONS
+AREA TRIGGER DELETE || id: 11051
+(cId 0) A conversation 676 starts:
+{{dialogue|-2|(I'm not sure what the {{textcolor|red|dangers}} are past the bridge, so I shouldn't cross it.)}}
+Set BRIDGE to 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 11051 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 11051 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_leavebridge
+DELAY MASK SET || maskId: 11051 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 11051 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Set BRIDGE to 0
+AREA TRIGGER CREATE || sceneName: Main | flagName: trigger_steelbridge | showOnMap: 0 | mapIcon: MissionArea | transId: -1 | missionId: 1100105 | id: 11051
+
+TRIGGER Procedure 0.0 Step 4.0 Order 5 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 21051 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Set BRIDGE to 0
+AREA TRIGGER CREATE || missionId: 1100105 | flagName: hengjia_bridgetrigger | sceneName: Main | id: 21051 | showOnMap: 0 | mapIcon: 0 | transId: -1
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION END || order: 0 | missionEndResult: 1 | missionId: 1100106
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || id: 21051 | sceneName: Main | flagName: hengjia_bridgetrigger | showOnMap: 0 | mapIcon: 0 | transId: -1 | missionId: 1100105
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 21051
+CONDITIONS
+Check if BRIDGE is == 0
+ACTIONS
+AREA TRIGGER DELETE || id: 21051
+(cId 1) A conversation 677 starts:
+{{dialogue|-2|(The bridge hasn't passed inspection yet, I'd feel safer not crossing it right now.)}}
+Set BRIDGE to 1
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 21051 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 21051 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_leavebridge
+DELAY MASK SET || maskId: 21051 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0

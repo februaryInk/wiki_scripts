@@ -1,0 +1,270 @@
+Reading Mission 1200177: Relapse
+
+<onlyinclude>{{Infobox mission
+|name = Relapse
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Relapse:
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+X stops standing still
+START MISSION 1200176
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200176
+CONDITIONS
+Always:
+ACTIONS
+Run mission Relapse
+CUTSCENE UI STATE EXIT || 
+END MISSION 1200176
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200177
+CONDITIONS
+Always:
+ACTIONS
+===Check on Fang===
+
+{{mission_details
+|desc = X wants you to find Fang. Go to the Clinic to see him.
+|details = Check on Fang
+*{{i2|Fang|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1200177
+CONDITIONS
+Always:
+ACTIONS
+Fang stops standing still
+X stops standing still
+SCENEITEM DELETE || itemType: 11 | id: 21771
+SCENEITEM DELETE || itemType: 12 | id: 21771
+Remove behavior 1200177_8016 (idName: 21752) from Fang
+AREA TRIGGER DELETE || id: 21771
+The player receives a letter:
+{{mail|290}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON BAG CHANGE || order: 0 | item: 19810020 | changeType: 0 | itemGrade: -1
+CONDITIONS
+Always:
+ACTIONS
+===Give Medicine to Fang===
+
+{{mission_details
+|desc = Now the medicine is ready, give it to Fang.
+|details = Give Medicine to Fang
+*{{i2|Anti-cold Medicine|0/1}}
+}}
+AREA TRIGGER ONCE CREATE || missionId: 1200177 | id: 21771 | sceneName: Clinic | flagName: relapse_trigger1 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80006979
+
+TRIGGER Procedure 0.0 Step 0.0 Order 6 Repeat 2
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior 1200177_8016 (idName: 21752) from Fang
+Add behavior 1200177_8016 (idName: 21752) to Fang
+(param: -1)
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_clinic
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_clinic
+
+TRIGGER Procedure 0.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+X stands still in Clinic
+PLAYER SET POS ROT FLAG || sceneName: Clinic | flagName: relapse_player
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 5552, 4343, 4344, 4345 starts:
+{{dialogue|-3|(Fang's really ill! How can I help him?)}}
+{{dialogue|Fang|... Medicine... medicine...}}
+{{dialogue|Fang|Materials... Table...}}
+{{dialogue|X|No xxx! Go find! Go find!}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+GROUP 0:
+CHECK PLAYER ITEM || item: 19300044 | itemGrade: -1 | set: 6 | count: 1
+
+GROUP 10:
+CHECK PLAYER ITEM || itemGrade: -1 | item: 19300068 | set: 6 | count: 1
+
+GROUP 20:
+CHECK PLAYER ITEM || item: 19300070 | itemGrade: -1 | set: 6 | count: 1
+
+ACTIONS
+===Look for Materials===
+
+{{mission_details
+|desc = Fang needs Heliconia Nail, Cactus Flower, and Hyacinth Orchid to finish his medicine. Go and get him some.
+|details = Look for Materials
+*{{i2|Heliconia Nail|0/1}}
+*{{i2|Hyacinth Orchid|0/1}}
+*{{i2|Cactus Flower|0/1}}
+}}
+CUTSCENE UI STATE EXIT || 
+Add 1 Anti-cold Medicine of Default quality (Notify player)
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+CHECK PLAYER ITEM || item: 19300044 | itemGrade: -1 | set: 2 | count: 1
+CHECK PLAYER ITEM || item: 19300068 | itemGrade: -1 | set: 2 | count: 1
+CHECK PLAYER ITEM || item: 19300070 | itemGrade: -1 | set: 2 | count: 1
+ACTIONS
+===Make Medicine for Fang===
+
+{{mission_details
+|desc = Now that you have all the materials, go to the medicinal table and make Fang some medicine.
+|details = Make Medicine for Fang
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 21771 | sceneName: Clinic | path: Mission_Medicine | flagName: relapse_medicine | extraParams: -1|CreatorItem|19300044_1,19300068_1,19300070_1|80007012|-1|0
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200176 | targetId: 2 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Make Medicine for Fang===
+
+{{mission_details
+|desc = Now that you have all the materials, go to the medicinal table and make Fang some medicine.
+|details = Make Medicine for Fang
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 21771 | path: Mission_Medicine | sceneName: Clinic | flagName: relapse_medicine | extraParams: -1|CreatorItem|19300044_1,19300068_1,19300070_1|80007012|-1|0
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 21771 | missionId: 1200176 | iconType: 2
+SCENEITEM INTERACT SET || itemType: 0 | id: 205970 | canInteract: 0
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 21771
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 12 | id: 21771
+Add 1 Anti-cold Medicine of Default quality (Notify player)
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 21771
+CONDITIONS
+CHECK PLAYER ITEM || item: 19810020 | itemGrade: -1 | set: 2 | count: 1
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 21771 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 21771
+CONDITIONS
+Always:
+ACTIONS
+Fang stops standing still
+Remove behavior 1200177_8016 (idName: 21752) from Fang
+DELAY MASK SET || maskId: 21771 | delayTime: 1.5 | durationTime: 0 | changeType: 1 | curveIndex: 0
+{{cutscene|id = 6030}}
+A cutscene CG_FANGDRUG (duration: 0.0) starts playing
+Bitter Medicine - Fang fell ill again. I fell asleep at his bedside waiting for him to get better. When I woke up, I was covered in a quilt.
+Add behavior CommanderSit (idName: 17177163) to Fang
+(param: SeatDramaName:FangBedSit|TargetScene:Clinic)
+PLAYER SET POS ROT FLAG || sceneName: Clinic | flagName: relapse_player
+
+TRIGGER Procedure 2.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 9 | name: CG_FANGDRUG
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 1236_0 starts:
+{{dialogue|Fang|I'm awake...}}
+
+*''Do you feel better?''
+*{{flirt}}''Can I help take care of you?''
+
+{{dialogue|Fang|indent=true|answer=Do you feel better?
+|I'm okay.}}
+{{dialogue|Fang|indent=true|I'll live.}}
+{{dialogue|Fang|indent=true|answer=Can I help take care of you?
+|No.}}
+{{dialogue|Fang|indent=true|... You can't...}}
+{{dialogue|Fang|But thank you.}}
+The conversation ends.
+BAG MODIFY BY TARGET || missionId: 1200176 | targetId: 4
+
+TRIGGER Procedure 2.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+X stops standing still
+CUTSCENE UI STATE EXIT || 
+Fang stops standing still
+SUBMIT MISSION 1200176
+Remove behavior CommanderSit (idName: 17177163) from Fang
+SCENEITEM INTERACT SET || itemType: 0 | id: 205970 | canInteract: 1
+END MISSION 1200177

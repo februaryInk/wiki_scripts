@@ -1,0 +1,508 @@
+Reading Mission 1800384: Andy's Last Wish
+
+<onlyinclude>{{Infobox mission
+|name = Andy's Last Wish
+|image =
+|description = Logan came to see you saying that Andy is sick and has been calling for you.
+|type = Side
+|time =
+|location =
+|characters = [[Logan]]
+|condition =
+|details =
+|exp = 2000
+|reputation = 5
+|gols = 400
+|npc1 = Logan
+|rp1 = 20
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200332
+
+TRIGGER Procedure 1.0 Step 0.2 Order 4 Repeat 6
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment 1800383 by 1
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+One Flew Over the Bandit Nest is successfully completed
+Check if Logan has favor >= 600
+Bumpy Date is in state 1 with flag 0
+Bumpy Date is in state 2 with flag 0
+The Outpost is successfully completed
+Cornered Beasts is successfully completed
+Science Project is in state 1 with flag 0
+
+GROUP 10:
+One Flew Over the Bandit Nest has failed
+Bumpy Date is in state 1 with flag 0
+Bumpy Date is in state 2 with flag 0
+Check if Logan has favor >= 600
+The Outpost is successfully completed
+Cornered Beasts is successfully completed
+Science Project is in state 1 with flag 0
+
+ACTIONS
+Run mission Andy's Last Wish
+AREA TRIGGER DELETE || id: 83861
+AREA TRIGGER DELETE || id: 83862
+END MISSION 1800386
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800384
+CONDITIONS
+Always:
+ACTIONS
+Set 8384DayA to 0
+Set 8384Day to 0
+Set global blackboard key andysick with info 1.
+
+TRIGGER Procedure 0.0 Step 1.0 Order 35 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 83841
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 17460 starts:
+{{dialogue|Andy|Oh no... is that... the light at the end of the tunnel...!? Oop. False alarm. Thought my eyes were closed.}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Logan stands still in Main and looks at Player
+NPC ICON ADD || missionId: 1800384 | npc: 8011 | missionIcon: 6
+Add behavior Story1800384_8013 (idName: 8384131) to Andy
+(param: -1)
+
+TRIGGER Procedure 0.0 Step 2.2 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+When the time is 13:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Logan stops standing still
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Logan
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 5257_0 starts:
+{{dialogue|Logan|''Player'', hey. Was out and about, wanted to let you know. Andy's feelin' a bit under the weather. Nothin' serious, but... as you know, he looks up to you...}}
+{{dialogue|Logan|Reckon it'd mean a lot to him if you stopped in.}}
+
+*''Sure, I'll visit him.''
+*''Not sure I have time...''
+*''I'm sure he'll be fine soon.''
+
+{{dialogue|Logan|indent=true|answer=Sure, I'll visit him.
+|Thanks, ''Player''. It'll really brighten his day.}}
+{{dialogue|Logan|indent=true|answer=Not sure I have time...
+|Yeah, no worries then.}}
+{{dialogue|Logan|indent=true|I'm gonna mosey, then.}}
+{{dialogue|Logan|indent=true|answer=I'm sure he'll be fine soon.
+|Yeah, like I said, just a part of life. Nevertheless, he surely would appreciate the visit. High spirits lead to a quicker recovery in my experience...}}
+{{dialogue|Logan|indent=true|Well. Just droppin' in. Stop by our place if you get a minute.}}
+NPC ICON REMOVE || missionId: 1800384 | npc: 8011 | missionIcon: 6
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || id: 83841 | sceneName: Main | flagName: Trigger_LoganOldHome | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80027637 | missionId: 1800384
+Logan stops standing still
+
+TRIGGER Procedure 0.0 Step 5.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment 8384Day by 1
+Set 8384DayA to 0
+
+TRIGGER Procedure 0.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 8384Day is != (maybe?) 5
+ACTIONS
+Andy stops standing still
+AREA TRIGGER DELETE || id: 83841
+END MISSION 1800384
+
+TRIGGER Procedure 0.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the LoganOldHome:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_loganoldhome
+Check if 8384Day is > (maybe?) 5
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_loganoldhome
+AREA TRIGGER DELETE || id: 83841
+
+TRIGGER Procedure 0.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the LoganOldHome:
+CONDITIONS
+Always:
+ACTIONS
+Andy stops standing still
+Andy stands still in LoganOldHome
+PLAYER SET POS ROT FLAG || sceneName: LoganOldHome | flagName: S8384_0_1
+Logan stands still in LoganOldHome and looks at Andy
+Andy stops standing still
+Add behavior Story1800384_8013 (idName: 8384131) to Andy
+(param: -1)
+DELAY MASK SET || maskId: 83841 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8013 | behaviourName: Story1800384_8013 | eventName: Sleeping
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 83841 | delayTime: 4 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 10.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 83841
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 8384112) to Logan
+(param: CMDAction:Silence_Story|Delay:0.5|LookAtActor:8000)
+Add behavior CommanderMoveToFlagAndAction (idName: 8384001) to Player
+(param: TargetScene:LoganOldHome|MoveMode:Walk|FlagName:S8384_0_2|LookAtActor:8013)
+
+TRIGGER Procedure 0.0 Step 11.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 5261_0 starts:
+{{dialogue|Andy|Banana-orange jelly... I need... The yellow and orange kind...}}
+{{dialogue|Andy|Haru...! Ya... came back...! And ya brought... the goods... Better... share 'em...}}
+{{dialogue|Logan|''Player'', hey. He's been goin' in and out of it... high fever, but could be worse. And you may have noticed the ramblin'... Jelly, 'n donuts; somethin' about a gumshoe named "Ned...?"}}
+{{dialogue|Andy|Logan...}}
+{{dialogue|Logan|Hey, kid? You awake? If you can hear me, tell me who that is over there.}}
+{{dialogue|Andy|Oh... yeah! It's you, ''Player''...! I... got somethin' for ya...!}}
+{{dialogue|Andy|I was gonna... bring it to ya... but... wouldn't ya know... Came down with the dang plague before I could take 'em over...! Cough...!}}
+{{dialogue|Andy|It's the Super Shield! Mark two! Even more super...! Cough cough... Got me a diagram and everything...}}
+{{dialogue|Logan|Huh...? That's what this about? Thought you needed cheerin' up...}}
+{{dialogue|Andy|reward={{i2|Super Shield Mk. II|1}}|Nothin' would cheer me up more than... a Super Shield! ''Player'', c'mon, just... look at it... I learned a lot since way back... when...}}
+
+*''Diagram looks great!''
+*''Eh, still a ways to go, kid...''
+*''You need to rest, now's not the time for this...''
+*''He's faking it for this shield!''
+
+{{dialogue|Andy|indent=true|answer=Diagram looks great!
+|reward={{NPC2|Andy|rp=2}}|reward={{NPC2|Logan|rp=2}}|Heh... yeah... like I said... I learned a lot. Y'know, that uppity science feller... He knows a lot of stuff, even if you've gotta... cough... wring it out of 'im. Then there's all the late nights I spent writin' it and rewritin' it...}}
+{{dialogue|Logan|indent=true|Kinda the last feller in town I'd ever see you takin' after- Hey, wait a sec, "late nights?" That's why you're sick, kid. What'd I say?}}
+{{dialogue|Andy|indent=true|I regret... nothing...! For science...! Wheeze...!}}
+{{dialogue|Andy|indent=true|answer=Eh, still a ways to go, kid...
+|Well.. yeah... cough... it ain't perfect... But it's a lot further along than the old one! Director Qi said you could make sense of it, ''Player''...}}
+{{dialogue|Andy|indent=true|...Stayed up all night workin' on it, too...}}
+{{dialogue|Logan|indent=true|Up all night, huh? Ain't a great case to be makin' for someone playin' the sympathy card, kid...}}
+{{dialogue|Andy|indent=true|I regret... nothing...! For science...! Wheeze...!}}
+{{dialogue|Logan|indent=true|answer=You need to rest, now's not the time for this...
+|reward={{NPC2|Andy|rp=1}}|reward={{NPC2|Logan|rp=1}}|''Player'' here's makin' a lot of sense...}}
+{{dialogue|Andy|indent=true|Well, too late now, I gone done went and said my piece...! Cough...!}}
+{{dialogue|Logan|indent=true|answer=He's faking it for this shield!
+|Nah, he's got a real fever... Though the case can certainly be made our young compatriot here is weaponizin' his pityable state for personal gain...}}
+{{dialogue|Andy|indent=true|I... ack... resent that accusation...! Cough cough cough...}}
+{{dialogue|Andy|Look... just... take the diagram home, alright? Think on it... I'll be... better soon... Logan needs it... for the Outpost...!}}
+{{dialogue|Andy|It'll absorb... high impact blows... Made it with the Space Punch in mind... Based on that chip I stole... It's like the anti-Space Punch...! You need it out there, pal...!}}
+{{dialogue|Logan|Uh huh... doin' it all for me now, are ya pal?}}
+{{dialogue|Logan|Alright, alright, your offer's been heard. It's time for you to get back to restin' up. I'm gonna let our friend, ''Player'', be on their way, hear me?}}
+{{dialogue|Andy|O-okay...}}
+{{dialogue|Andy|W-wait...!}}
+{{dialogue|Logan|...?}}
+{{dialogue|Andy|I wanna... cough... ask y'all...}}
+{{dialogue|Logan|Make it quick. Sounds like you're gettin' worse.}}
+{{dialogue|Andy|Wanna ask y'all...}}
+{{dialogue|Andy|How's I supposed to know if you two ain't gonna take a page outta Haru's book and quit the gang...!?}}
+{{dialogue|Logan|Easy, pal. Who said anything about any of that?}}
+{{dialogue|Andy|How's I supposed to know you two ain't gonna ditch me, too...?}}
+{{dialogue|Logan|He ain't ditched us. We sent him up there on behalf of the gang. Next time we see him, he'll be the twice the man you knew him as.}}
+{{dialogue|Andy|Y-yeah?}}
+{{dialogue|Logan|Sometimes the pack's gotta split up, kid. Them's the breaks. One day you might have to fly a solo mission yourself. But... I won't let you outta my sight til you're good and ready. That's a promise.}}
+{{dialogue|Andy|Alright. You promised!}}
+{{dialogue|Logan|Have I ever let you down? Now quit blubberin' and get some shut-eye.}}
+{{dialogue|Andy|Sniff... okay...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 11.2 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 2) There is a conversation segment (id 17419) that ends:
+{{dialogue|Andy|Logan...}}
+CONDITIONS
+Always:
+ACTIONS
+NPC ADD TAG || tag: OpenEyes
+
+TRIGGER Procedure 0.0 Step 11.5 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 2) There is a conversation segment (id 17425) that ends:
+{{dialogue|Andy|Nothin' would cheer me up more than... a Super Shield! ''Player'', c'mon, just... look at it... I learned a lot since way back... when...}}
+
+*''Diagram looks great!'' (No unique dialogue)
+*''Eh, still a ways to go, kid...'' (No unique dialogue)
+*''You need to rest, now's not the time for this...'' (No unique dialogue)
+*''He's faking it for this shield!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Super Shield Mk. II of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 13.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 83842 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 14.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 83842
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 8384112) from Logan
+Logan stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8384001) from Player
+PLAYER SET POS ROT FLAG || sceneName: LoganOldHome | flagName: S8384_0_3
+Logan stands still in LoganOldHome and looks at Player
+DELAY MASK SET || maskId: 83842 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 15.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 83842
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 5266_0 starts:
+{{dialogue|Logan|Hey, thanks for comin'. Sorry your well-wishin' got turned into a sales pitch... Reckon I'll step off for a bit and see if I can't track down some of that jelly he's mumblin' about.}}
+{{dialogue|Logan|Oh, uh... what about that {{textcolor|green|shield thing}}, huh? Didn't want to commit you to some fruitless endeavor. Can you actually make somethin' out of those drawings?}}
+
+*''Sure, I think I can!''
+*''Just don't have time right now...''
+
+{{dialogue|Logan|indent=true|answer=Sure, I think I can!
+|Well, that'd be mighty swell, ''Player''. Just, uh, bring it on by if you manage to cook anything up. Hopefully something like that would lift his spirits like I'd originally intended...}}
+{{dialogue|Logan|indent=true|answer=Just don't have time right now...
+|Yeah, don't worry yourself over it. So long.}}
+Set 8384Acc to 0
+DELIVER MISSION 1800384
+
+TRIGGER Procedure 0.0 Step 17.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Logan stops standing still
+SCENEITEM CREATE FLAG || flagName: S8385_InteractAndy | itemType: 0 | id: 83841 | path: S8385_InteractAndy | sceneName: LoganOldHome | extraParams: -1
+
+TRIGGER Procedure 0.0 Step 18.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if 8384Acc is == 1
+ACTIONS
+START MISSION 1800384
+
+TRIGGER Procedure 0.0 Step 16.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the first option in conversation segment 17457:
+{{dialogue|Logan|Oh, uh... what about that {{textcolor|green|shield thing}}, huh? Didn't want to commit you to some fruitless endeavor. Can you actually make somethin' out of those drawings?}}
+
+*''Sure, I think I can!'' (No unique dialogue)
+*''Just don't have time right now...'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 17459:
+{{dialogue|Logan|Oh... So wait, you can make that shield for Andy after all...?}}
+
+*''Sure, I think I can!'' (No unique dialogue)
+*''Just don't have time right now...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8384Acc to 1
+
+TRIGGER Procedure 0.0 Step 24.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800384
+CONDITIONS
+Always:
+ACTIONS
+Run mission Andy's Last Wish
+END MISSION 1800384
+
+TRIGGER Procedure 1.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key andysick with info 1.
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 8384Day is == 0
+ACTIONS
+Increment 8384DayA by 1
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 8384DayA is != (maybe?) 5
+ACTIONS
+Remove behavior Story1800384_8013 (idName: 8384131) from Andy
+Logan stops standing still
+NPC ICON REMOVE || missionId: 1800384 | npc: 8011 | missionIcon: 6
+END MISSION 1800384
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 8384Day is != (maybe?) 9
+ACTIONS
+SCENEITEM DELETE || id: 83841 | itemType: 0
+Remove behavior Story1800384_8013 (idName: 8384131) from Andy
+NPC ICON REMOVE || missionId: 1800384 | npc: 8011 | missionIcon: 6
+END MISSION 1800384
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1800384
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || id: 83841 | itemType: 0
+Remove behavior Story1800384_8013 (idName: 8384131) from Andy
+NPC ICON REMOVE || missionId: 1800384 | npc: 8011 | missionIcon: 6
+Remove behavior Story1800384_8013 (idName: 8384131) from Andy
+
+TRIGGER Procedure 1.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1800384
+CONDITIONS
+Always:
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: andysick
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the first option in conversation segment 17425:
+{{dialogue|Andy|Nothin' would cheer me up more than... a Super Shield! ''Player'', c'mon, just... look at it... I learned a lot since way back... when...}}
+
+*''Diagram looks great!'' (No unique dialogue)
+*''Eh, still a ways to go, kid...'' (No unique dialogue)
+*''You need to rest, now's not the time for this...'' (No unique dialogue)
+*''He's faking it for this shield!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Logan gains 2 favor
+Andy gains 2 favor
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the third option in conversation segment 17425:
+{{dialogue|Andy|Nothin' would cheer me up more than... a Super Shield! ''Player'', c'mon, just... look at it... I learned a lot since way back... when...}}
+
+*''Diagram looks great!'' (No unique dialogue)
+*''Eh, still a ways to go, kid...'' (No unique dialogue)
+*''You need to rest, now's not the time for this...'' (No unique dialogue)
+*''He's faking it for this shield!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Logan gains 1 favor
+Andy gains 1 favor
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Logan|Oh... So wait, you can make that shield for Andy after all...?}}
+
+*''Sure, I think I can!''
+*''Just don't have time right now...''
+
+{{dialogue|Logan|indent=true|answer=Sure, I think I can!
+|Well, that'd be mighty swell, ''Player''. Just, uh, bring it on by if you manage to cook anything up. Hopefully something like that would lift his spirits like I'd originally intended...}}
+{{dialogue|Logan|indent=true|answer=Just don't have time right now...
+|Yeah, don't worry yourself over it. So long.}}
+
+==Rewards==
+{{mission reward
+|npc1 = Logan
+|rp1 = 20
+|exp = 2000
+|reputation = 5
+|gols = 400
+}}

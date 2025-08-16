@@ -1,0 +1,349 @@
+Reading Mission 1200386: Venti Cup of Sadness
+
+<onlyinclude>{{Infobox mission
+|name = Venti Cup of Sadness
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Venti Cup of Sadness:
+
+TRIGGER Procedure 1.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PLAYER MARRIAGE || order: 0 | id: -1
+CONDITIONS
+Always:
+ACTIONS
+CLOSE MISSION || missionId: 1200385
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200385
+CONDITIONS
+Always:
+ACTIONS
+Run mission Venti Cup of Sadness
+END MISSION 1200385
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200386
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Venti===
+
+{{mission_details
+|desc = Rocky said that Venti is somewhere in the desert moping. Go and find her.
+|details = Talk to Venti
+}}
+SCENEITEM CREATE FLAG || itemType: 0 | id: 23861 | path: Mission_garbage | sceneName: Main | extraParams: 0 | flagName: sadness_garbage
+Venti stands still in Main
+AREA TRIGGER ONCE CREATE || id: 23861 | missionId: 1200385 | sceneName: Main | flagName: sadness_trigger | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | enter: 0 | npc: 8000 | id: 23861
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 23861 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23861 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Venti stops standing still
+Venti stands still in Main
+DELAY MASK SET || maskId: 23861 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: sadness_player
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PLAYER MARRIAGE || order: 0 | id: -1
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 23861
+SCENEITEM DELETE || id: 23861 | itemType: 0
+Venti stops standing still
+FAIL MISSION || missionId: 1200385
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 23861
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 6190_0 starts:
+{{dialogue|Venti|...Sigh... Oh, pile of rubber scrap, how could I let down Boss Rocky like this? He must be so disappointed in me...}}
+{{dialogue|Venti|It's all my fault. The situation became so awkward, and now my friend, ''Player'', probably hates me, too...}}
+
+*''(Go talk to her)''
+*{{flirt}}''(Go comfort her)''
+*''(Quietly back away)'' (No unique dialogue)
+
+{{dialogue|Venti|indent=true|answer=(Go comfort her)
+|I shouldn't have fallen for... What a fool you are, Venti. That person is the most popular in Sandrock.}}
+{{dialogue|Venti|indent=true|Venti, you've always known to only chase those who are unattainable, so that when you can't get them, you confirm your own beliefs that you're not good enough. Why couldn't you control yourself this time? What's wrong with you?}}
+{{dialogue|Venti|indent=true|I lost my job now, and that person I like probably hates me too. It looks like I'll return to being the Venti with nothing from my childhood...}}
+{{dialogue|Venti|indent=true|Maybe I should just go back. Back to Baja's junkyard, back to that trash can, the extra-large one that can fit my Venti cup of sadness... sob...}}
+{{dialogue|Venti|Oh, ''Player'', it's you... what brings you here?}}
+{{dialogue|Venti|I'm sorry for dragging you into trouble last time. I should have told Boss Rocky earlier. Because of me, he almost thought you were stealing, too.}}
+{{dialogue|Venti|I just wanted to get closer to you, thought that Boss Rocky wouldn't notice... Bringing you to dig up scrap, it's like what Grande and I used to do, sneaking into Baja's many junkyards to find food...}}
+{{dialogue|Venti|I'm sorry...}}
+
+*''It's fine. I'm not mad.'' (No unique dialogue)
+*''I think your heart was in the right place.'' (No unique dialogue)
+
+{{dialogue|Venti|Well, thank you for saying that... ''Player'', you're really kind!}}
+{{dialogue|Venti|I think I was just feeling down. Everything was so embarrassing; I feel like I'll remember that moment of getting caught every night before I go to sleep for decades...}}
+{{dialogue|Venti|Thank you so much for coming to comfort me. It's okay, though. I'm still optimistic Venti. I've written a report reflecting on my mistakes, and Boss Rocky is willing to accept my apology. Starting tomorrow, I can go back to work again!}}
+{{dialogue|Venti|Oh dear, look at me crying over spilled mysterious liquid like a child. Anyway, ''Player'', thank you so much for being there for me. Let's get back to work now! Bye!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the third option in conversation segment 19834:
+{{dialogue|Venti|It's all my fault. The situation became so awkward, and now my friend, ''Player'', probably hates me, too...}}
+
+*''(Go talk to her)'' (No unique dialogue)
+*{{flirt}}''(Go comfort her)'' (No unique dialogue)
+*''(Quietly back away)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 23863) from Venti
+Add behavior CommanderMoveToFlagAndAction (idName: 23862) to Venti
+(param: TargetScene:Main|MoveMode:Walk|FlagName:sadness_venti|Action:Talk)
+Set global blackboard key 1200385 with info 1.
+Venti stops standing still
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1200385
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 0) There is a conversation segment (id 19843) that ends:
+{{dialogue|Venti|Oh dear, look at me crying over spilled mysterious liquid like a child. Anyway, ''Player'', thank you so much for being there for me. Let's get back to work now! Bye!}}
+(cId: 1) There is a conversation segment (id 19879) that ends:
+{{dialogue|Venti|Oh dear, look at me crying over spilled mysterious liquid like a child. Anyway, ''Player'', thank you so much for being there for me. Let's get back to work now! Bye!}}
+(cId 4) After the conversation ends:
+(cId: -1) There is a conversation segment (id 19869) that ends:
+{{dialogue|Venti|It's okay. I'll be okay in a little while...}}
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 23863) from Venti
+Add behavior CommanderMoveToFlagAndAction (idName: 23862) to Venti
+(param: TargetScene:Main|MoveMode:Walk|FlagName:sadness_venti|Action:Talk)
+Venti stops standing still
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1200385
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8038 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 23862) from Venti
+SCENEITEM DELETE || itemType: 0 | id: 23861
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+END MISSION 1200386
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 0) There is a conversation segment (id 19847) that ends:
+{{dialogue|Venti|Maybe I should just go back. Back to Baja's junkyard, back to that trash can, the extra-large one that can fit my Venti cup of sadness... sob...}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 23861) to Player
+(param: CMDAction:Talk)
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 23863) to Venti
+(param: TargetScene:Main|MoveMode:Walk|FlagName:sadness_venti2)
+
+TRIGGER Procedure 2.0 Step 1.5 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8038 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 6193_0 starts:
+{{dialogue|Venti|Oh, ''Player'', why are you here?}}
+
+*{{flirt}}''You... like someone?''
+*{{flirt}}''You are good enough, Venti.''
+*''(Pretend I didn't hear her)''
+
+{{dialogue|Venti|indent=true|answer=You... like someone?
+|Huh? What did I just say?}}
+{{dialogue|Venti|indent=true|Um, okay, I suppose I said it...}}
+{{dialogue|Venti|indent=true|Actually, recently, I've been looking forward to going to the scrap yard with you more and more. I'm excited to swing a Pickhammer with you, watch the stars with you, gossip with you... I enjoy doing anything with you.}}
+{{dialogue|Venti|indent=true|Eventually, I realized that I've fallen for you...}}
+{{dialogue|Venti|indent=true|Ah, it's okay, it's my own thing. Not your problem. You don't have to respond or take it to heart. Just consider it as me talking nonsense. If you feel annoyed by me, you don't have to talk to me or meet me again...}}
+{{dialogue|Venti|indent=true|However, I still want to look at you from afar. Is that okay? If you mind, I can stop looking, and I would go back to being the old Venti who only mines and doesn't think of anything else...}}
+
+:*{{flirt}}''I like you too, Venti.''
+:*''Why don't we just be friends?''
+
+{{dialogue|Venti|indent=double|answer=I like you too, Venti.
+|Wh-what? Did you just say you like me too? Am I hearing this correctly?}}
+{{dialogue|Venti|indent=double|So... so...!}}
+{{dialogue|Venti|indent=double|So... does that mean we are together now?}}
+{{dialogue|Venti|indent=double|answer=Why don't we just be friends?
+|Sigh...}}
+{{dialogue|Venti|indent=double|Be strong, Venti. Don't cry...}}
+{{dialogue|Venti|indent=double|Sob...}}
+{{dialogue|Venti|indent=double|It's okay. I'll be okay in a little while...}}
+{{dialogue|Venti|indent=true|answer=You are good enough, Venti.
+|I...}}
+{{dialogue|Venti|indent=true|Oh, you heard me...}}
+{{dialogue|Venti|indent=true|Actually, recently, I've been looking forward to going to the scrap yard with you more and more. I'm excited to swing a Pickhammer with you, watch the stars with you, gossip with you... I enjoy doing anything with you.}}
+{{dialogue|Venti|indent=true|Eventually, I realized that I've fallen for you...}}
+{{dialogue|Venti|indent=true|Ah, it's okay, it's my own thing. Not your problem. You don't have to respond or take it to heart. Just consider it as me talking nonsense. If you feel annoyed by me, you don't have to talk to me or meet me again...}}
+{{dialogue|Venti|indent=true|However, I still want to look at you from afar. Is that okay? If you mind, I can stop looking, and I would go back to being the old Venti who only mines and doesn't think of anything else...}}
+
+:*{{flirt}}''I like you too, Venti.''
+:*''Why don't we just be friends?''
+
+{{dialogue|Venti|indent=double|answer=I like you too, Venti.
+|Wh-what? Did you just say you like me too? Am I hearing this correctly?}}
+{{dialogue|Venti|indent=double|So... so...!}}
+{{dialogue|Venti|indent=double|So... does that mean we are together now?}}
+{{dialogue|Venti|indent=double|answer=Why don't we just be friends?
+|Sigh...}}
+{{dialogue|Venti|indent=double|Be strong, Venti. Don't cry...}}
+{{dialogue|Venti|indent=double|Sob...}}
+{{dialogue|Venti|indent=double|It's okay. I'll be okay in a little while...}}
+{{dialogue|Venti|indent=true|answer=(Pretend I didn't hear her)
+|You didn't hear what I said earlier, did you?}}
+{{dialogue|Venti|indent=true|It's okay if you didn't hear it. It's okay...}}
+{{dialogue|Venti|indent=true|I'm sorry for dragging you into trouble last time. I should have told Boss Rocky earlier. Because of me, he almost thought you were stealing, too.}}
+{{dialogue|Venti|indent=true|I just wanted to get closer to you, thought that Boss Rocky wouldn't notice... Bringing you to dig up scrap, it's like what Grande and I used to do, sneaking into Baja's many junkyards to find food...}}
+{{dialogue|Venti|indent=true|I'm sorry...}}
+
+:*''It's fine. I'm not mad.'' (No unique dialogue)
+:*''I think your heart was in the right place.'' (No unique dialogue)
+
+{{dialogue|Venti|indent=true|Well, thank you for saying that... ''Player'', you're really kind!}}
+{{dialogue|Venti|indent=true|I think I was just feeling down. Everything was so embarrassing; I feel like I'll remember that moment of getting caught every night before I go to sleep for decades...}}
+{{dialogue|Venti|indent=true|Thank you so much for coming to comfort me. It's okay, though. I'm still optimistic Venti. I've written a report reflecting on my mistakes, and Boss Rocky is willing to accept my apology. Starting tomorrow, I can go back to work again!}}
+{{dialogue|Venti|indent=true|Oh dear, look at me crying over spilled mysterious liquid like a child. Anyway, ''Player'', thank you so much for being there for me. Let's get back to work now! Bye!}}
+Remove behavior CommanderPlayerAction (idName: 23861) from Player
+
+TRIGGER Procedure 3.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 19859) that ends:
+{{dialogue|Venti|So... does that mean we are together now?}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 23862) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:sadness_player|Action:Nod_Story)
+
+TRIGGER Procedure 3.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 23862) from Player
+(cId 2) A conversation 19860, 19861 starts:
+{{dialogue|Venti|Wow, just a moment ago, I had a Venti cup of sadness, but now I have an Venti cup of surprise and happiness!}}
+{{dialogue|Venti|From now on, I am someone who has a special someone!}}
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8038 | cId: 2 | missionId: 1200386
+CONDITIONS
+Always:
+ACTIONS
+NPC DO CONFESSION || npc: 8038
+(cId 3) A conversation 19862 starts:
+{{dialogue|Venti|''Player'', I like you, and I'm so happy that you like me too! This is by far the most dramatic, yet happiest day of my life!}}
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+The player interacts (type 2, option 0) with Venti
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON INTERACTIVE EXIT || order: 0 | instID: 8038
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 19863 starts:
+{{dialogue|Venti|Please take good care of me from now on!}}
+
+TRIGGER Procedure 4.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Venti
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 19864 starts:
+{{dialogue|Venti|What's up, sweetheart? Hehe...}}
+
+TRIGGER Procedure 4.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Rocky
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 19865 starts:
+{{dialogue|Rocky|Whatever you did worked. Venti is happy to be back at work. So happy that she's... giggling at her Pickhammer, doin' some like... ballroom dances with it, carving hearts into scrap... I wouldn't say everything's back to normal, but... this is an improvement.}}

@@ -1,0 +1,547 @@
+Reading Mission 1800390: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200364
+
+TRIGGER Procedure 3.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission The Wei Forward is result 1 flag 1
+Check if mission Redemption is result 1 flag 1
+ACTIONS
+Run mission #1800389
+
+TRIGGER Procedure 4.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission Builder Cruise x Operation Flowergate is result 1 flag 1
+Check if mission 1800389 is result 1 flag 1
+ACTIONS
+Run mission #1800390
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800390
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || id: 83901 | sceneName: Main | flagName: Trigger_CivilCorp | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0 | missionId: 1800390
+
+TRIGGER Procedure 0.0 Step 0.1 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the CivilCorp:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_civilcorp
+Check if mission 1800389 is result 1 flag 1
+ACTIONS
+AREA TRIGGER DELETE || id: 83901
+UNIQUE ACTION RUN || idStr: enter_civilcorp
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the CivilCorp:
+CONDITIONS
+Always:
+ACTIONS
+Miguel stands still in CivilCorp
+PLAYER SET POS ROT FLAG || sceneName: CivilCorp | flagName: S8390_0_1
+Trudy stands still in CivilCorp and looks at Miguel
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 839011
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 5464_0 starts:
+{{dialogue|Trudy|I've been in contact with the Alliance Council, and I just can't in good faith recommend anything other than the full extent of the law, transfer to the Atara Maximum Security Prison.}}
+{{dialogue|Trudy|You betrayed us, and have shown no sign of remorse. I will contact the authorities and organize the transport.}}
+{{dialogue|Miguel|I accept all punishment, Trudy, and will abide accordingly.}}
+{{dialogue|Trudy|Then I will keep you informed of the date of your departure.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 4.2 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 8390062) to Trudy
+(param: TargetScene:CivilCorp|MoveMode:Walk|FlagName:S8390_6_2)
+
+TRIGGER Procedure 0.0 Step 5.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8006 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8390063) to Trudy
+(param: TargetScene:CivilCorp|MoveMode:Walk|FlagName:S8390_6_3)
+
+TRIGGER Procedure 0.0 Step 6.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8006 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 17959, 17960, 17961, 17962, 17963 starts:
+{{dialogue|Trudy|I just can't understand it... Why?}}
+{{dialogue|Miguel|It's no excuse, but I did what I believed was right...}}
+{{dialogue|Trudy|But this town, everyone living here. After all you did for us... everything you said in your sermons, you kept us safe, your guidance... I even trusted you to teach my daughter...!}}
+{{dialogue|Miguel|...}}
+{{dialogue|Trudy|...I thought you cared.}}
+Set 8390A to 0
+
+TRIGGER Procedure 0.0 Step 7.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8390001) to Player
+(param: TargetScene:CivilCorp|MoveMode:Walk|FlagName:S8390_0_2|LookAtActor:8019)
+
+TRIGGER Procedure 0.0 Step 8.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 5465_0 starts:
+{{dialogue|Miguel|I truly do...}}
+{{dialogue|Trudy|Please. Don't give me that.}}
+
+*''He was used, Trudy...''
+*''He's a criminal.''
+*''He's right. Duvos for life.''
+
+{{dialogue|Miguel|indent=true|answer=He was used, Trudy...
+|No, ''Player''. I was not used, I was betrayed. My actions were my own, and I am no one's puppet. I will face all the consequences with dignity.}}
+{{dialogue|Trudy|indent=true|...Well, thank you for your co-operation.}}
+{{dialogue|Trudy|indent=true|answer=He's a criminal.
+|You see, Miguel? You betrayed us all.}}
+{{dialogue|Miguel|indent=true|...}}
+{{dialogue|-2|indent=true|answer=He's right. Duvos for life.
+|reward={{NPC2|Trudy|rp=-4}}|reward={{NPC2|Miguel|rp=-2}}|...}}
+
+TRIGGER Procedure 0.0 Step 12.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+GROUP 0:
+Check if 8390A is == 1
+
+GROUP 1:
+Check if 8390A is == 3
+
+ACTIONS
+Trudy stops standing still
+Remove behavior CommanderMoveToFlag (idName: 8390062) from Trudy
+Remove behavior CommanderMoveToFlagAndAction (idName: 8390063) from Trudy
+STOPWATCH REAL TIME SET || id: 83901 | sec: 1
+
+TRIGGER Procedure 0.0 Step 13.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Check if 8390A is == 2
+ACTIONS
+Trudy stops standing still
+Remove behavior CommanderMoveToFlag (idName: 8390062) from Trudy
+Remove behavior CommanderMoveToFlagAndAction (idName: 8390063) from Trudy
+Add behavior CommanderMoveToFlag (idName: 8390064) to Trudy
+(param: TargetScene:CivilCorp|MoveMode:Walk|FlagName:S8390_6_4|LookAtActor:8000)
+
+TRIGGER Procedure 0.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the first option in conversation segment 17965:
+{{dialogue|Trudy|Please. Don't give me that.}}
+
+*''He was used, Trudy...'' (No unique dialogue)
+*''He's a criminal.'' (No unique dialogue)
+*''He's right. Duvos for life.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8390A to 1
+
+TRIGGER Procedure 0.0 Step 10.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the second option in conversation segment 17965:
+{{dialogue|Trudy|Please. Don't give me that.}}
+
+*''He was used, Trudy...'' (No unique dialogue)
+*''He's a criminal.'' (No unique dialogue)
+*''He's right. Duvos for life.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8390A to 2
+
+TRIGGER Procedure 0.0 Step 11.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the third option in conversation segment 17965:
+{{dialogue|Trudy|Please. Don't give me that.}}
+
+*''He was used, Trudy...'' (No unique dialogue)
+*''He's a criminal.'' (No unique dialogue)
+*''He's right. Duvos for life.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8390A to 3
+Miguel gains -2 favor
+Trudy gains -4 favor
+
+TRIGGER Procedure 0.0 Step 15.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8006 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8390065) to Trudy
+(param: TargetScene:CivilCorp|MoveMode:Walk|FlagName:S8390_6_5)
+
+TRIGGER Procedure 0.0 Step 16.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8006 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 17971 starts:
+{{dialogue|Trudy|''Player'', you have such a big heart and always see the good in everyone. I really admire that... but you have to realize he's a lost cause. Don't let him get inside your head.}}
+
+TRIGGER Procedure 0.0 Step 17.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 8390064) from Trudy
+Remove behavior CommanderMoveToFlagAndAction (idName: 8390065) from Trudy
+STOPWATCH REAL TIME SET || id: 83901 | sec: 2
+
+TRIGGER Procedure 0.0 Step 20.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 83901
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: Migel2 | info: 1 | exist: 1
+ACTIONS
+(cId 5) A conversation 5469_0 starts:
+{{dialogue|Miguel|You said that the water was a cover for their true intentions.}}
+{{dialogue|Miguel|I have been taken for a fool. This I realize now more than ever. I truly thought Duvos wanted the same thing as me... That they were on the right side of history. But their actions do not correlate to the proclamations they gave me.}}
+{{dialogue|Miguel|Recently, I have been grasping at something, anything, that would validate my actions since I have been in Sandrock.... the more I searched, the more I came to only one truth.}}
+{{dialogue|Miguel|There was nothing...}}
+{{dialogue|Miguel|My handlers were simply telling me what they wanted me to believe. I must have been simply a diversion... if I could have pushed everyone out of Sandrock, then Duvos could excavate the ruins in secrecy.}}
+{{dialogue|Miguel|My arrest threw a proverbial wrench into the works, and it appears to have pushed their hand.}}
+{{dialogue|Miguel|I was then left to rot. They never cared about me. They never cared about my ideals... Sigh. I was a fool.}}
+
+*''How did you fall for all of this?''
+*''They must have cared, somewhat...''
+
+{{dialogue|Miguel|indent=true|answer=They must have cared, somewhat...
+|No. They did not. I have thought about this repeatedly since our last meeting, and if they truly believed in me, then things would not have happened like this. I fell for their lies...}}
+{{dialogue|Miguel|When I was of age, I left to study in Meidi. My family were believers in the Light, and I dreamed of spreading the word. I always feared the Day of Calamity, feared the Light being extinguished once more.}}
+{{dialogue|Miguel|I quickly befriended Matilda. She was older than me, working as a tutor in the guided study sessions. I remember when I first met her when I attended her session the first time. She was helping a group of students with their questions on faith.}}
+{{dialogue|Miguel|She was kind, understanding. Whenever I disagreed with the doctrine of the Church, she listened. Later, I started to feel that the teachings were not enough.}}
+
+*''What did you disagree with?''
+*''You didn't suspect Matilda at all?''
+
+{{dialogue|Miguel|indent=true|answer=What did you disagree with?
+|The Church of the Light has an unwavering trust in people above all else. It's the individual people that got the human race through the Age of Darkness. This is why you see Sandrock being... somewhat loose with Age of Corruption technology.}}
+{{dialogue|Miguel|indent=true|answer=You didn't suspect Matilda at all?
+|I did not suspect Matilda to be anything other than a devout follower of the Light. Her alliegance was as much of a surprise to me as to you.}}
+{{dialogue|Miguel|indent=true|Her study group set her apart from the other tutors. She was loved, particularly by the staff. Somewhat of a teacher's pet.}}
+{{dialogue|Miguel|indent=true|She was bright eyed and optimistic, a perfect cover, in retrospect. Her views stood opposed to mine.}}
+{{dialogue|Miguel|I am somewhat more pessimistic about human nature. Allowing humans freedom to pursue their vanities is what led to the Day of Calamity...}}
+{{dialogue|Miguel|Those around me in the Church did not take the teachings seriously... even the Deacon, it was as if they had forgotten the sins of our forefathers.}}
+{{dialogue|Miguel|During my studies, I became depressed. I drifted further from the teachings, became isolated, and found myself more radical. Then an agent from Duvos made contact. The things they told me... that Duvos would regulate technology.}}
+{{dialogue|Miguel|Everything I heard aligned with my beliefs, they wanted structure, they wanted to ensure no one else ever lost their lives... they wanted to ensure the safety of humanity.}}
+{{dialogue|Miguel|I see now in retrospect, Matilda used my grief against me. She was conditioning me... She must have told an agent of my wavering faith, and guided their hand from the background.}}
+
+*''Did something happen to you?'' (No unique dialogue)
+*''How did Matilda use your grief against you?'' (No unique dialogue)
+
+{{dialogue|Miguel|...Sigh...}}
+{{dialogue|Miguel|While I was studying at Meidi, my town was destroyed. I'm from...}}
+{{dialogue|Miguel|Doss. I am a child of the lost city.}}
+
+*''What happened at Doss?''
+*''I know how you feel, I lost a cat once.''
+*''I'm so sorry...''
+
+{{dialogue|Miguel|indent=true|answer=I know how you feel, I lost a cat once.
+|...I understand that some use comedy to punctuate uncomfortable moments.}}
+{{dialogue|Miguel|Our existence was always a delicate balance. Being a town skirting the border of the Peripheries, we were aware of the dangers, but largely went unbothered.}}
+{{dialogue|Miguel|As I went to study in Meidi, I bid my hometown farewell, though kept in regular contact. It may surprise you, but I took part in many of the onboarding activities, and was a strong advocate for the Church school.}}
+{{dialogue|Miguel|It seems strange to reflect on that now.}}
+{{dialogue|Miguel|During my studies, Doss was attacked by a creature from the Peripheries. It happened overnight, without warning. Everyone in town was killed. My parents... my brother...}}
+{{dialogue|Miguel|You cannot imagine it. My entire town destroyed by a monster in the blink of an eye. Just thinking about what my people went through... it is truly harrowing. The depths of despair cannot comprehend what my family endured. I pray that it was quick.}}
+
+*''I'm so sorry that happened.''
+*''Just listen.''
+
+{{dialogue|Miguel|When the news was announced at school, I felt everyone's eyes on me. They were fixed, filled with an empty pity. I fell into a trance, simply glided through the halls, unable to process what had happened. I needed to talk, to confront it.}}
+{{dialogue|Miguel|Where were the Rangers or the Civil Corps? How did we not see it coming? How... how could the Alliance let this happen? The questions burned into my mind. I sought answers, but people avoided me, said I was, "too intense."}}
+{{dialogue|Miguel|Within a week, people were laughing again, enjoying themselves, they had all forgotten already. Countless lives lost, yet they returned to their lives again, as if nothing had happened.}}
+{{dialogue|Miguel|Everyone simply avoided me further, except for Matilda. She listened.}}
+{{dialogue|Miguel|I fell into the darkness. I sunk into the questions that were burning on my tongue. How could the Alliance let this happen? How are we allowing the sins of our forefathers leave us in ruin? How could the Free Cities simply abandon us...}}
+{{dialogue|Miguel|I expected a rescue, I expected the Rangers to search and destroy that monster from the Peripheries, but... no. They saw it as a lost cause and moved on. My family were not even buried. They were left there for the wilds to consume...}}
+{{dialogue|Miguel|It was then that my heart was blackened to the Alliance... that my thoughts started to drift. I was vulnerable, I was lost. I was found by Matilda and led astray.}}
+{{dialogue|Miguel|She would encourage me to think independently, to question myself. She said my fears were valid, and that I was a fiercly independent thinker, and while she "did not agree with me," she valued my beliefs.}}
+{{dialogue|Miguel|I now believe she was taking note of my doubts, and behind closed doors crafting a narrative that reciprocated my beliefs, a narrative she then passed onto handlers. It was no mere coincidence that I was sold a beautiful vision of Duvos.}}
+{{dialogue|Miguel|Sigh... I should have seen this sooner, but I was blinded by their words. It answered all of my questions.}}
+
+*''So everything you believed about Duvos turned out to be lies.''
+*''Sounds like you were a bit of an idiot. You fell for their lies.''
+*''So she spread lies in Meidi, tried to trick people to convert...''
+
+{{dialogue|Miguel|indent=true|answer=So everything you believed about Duvos turned out to be lies.
+|...It appears so. All that I took for Duvos ideals, were simply my own being reflected back to me... In that light... what I have done to Sandrock is unforgivable...}}
+{{dialogue|Miguel|indent=true|answer=Sounds like you were a bit of an idiot. You fell for their lies.
+|Ha, quite. I think of myself as a rather well put together man, but it seems that even those with grand designs may act the fool. Everything they told me, I believed. My "Duvos ideals" were simply my own being reflected back to me.}}
+{{dialogue|Miguel|indent=true|In that light... what I have done to Sandrock is unforgivable...}}
+{{dialogue|Miguel|indent=true|answer=So she spread lies in Meidi, tried to trick people to convert...
+|Quite. It is no surprise she managed to operate under our noses this whole time. All that I believed was Duvos ideals, were simply my own being reflected back to me. In that light... what I have done to Sandrock is unforgivable...}}
+{{dialogue|Miguel|It is only now that the blinds have been pulled back. I must face my actions head on.}}
+{{dialogue|Miguel|I still believe that we as a species needs to control our desire to pursue unfettered technology. Doss must not happen again.}}
+{{dialogue|Miguel|However, that does not excuse what I did. I have wronged the people of this town, and the Free Cities. I must accept pennance for my actions; I must take this as a time for personal growth.}}
+{{dialogue|Miguel|Thank you for coming to see me all this time.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 41.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Miguel stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8390001) from Player
+GLOBAL BLACK BOARD REMOVE || key: Migel2
+END MISSION 1800390
+
+TRIGGER Procedure 0.0 Step 20.2 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 83901
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: Migel2 | info: 2 | exist: 1
+ACTIONS
+(cId 5) A conversation 5470_0 starts:
+{{dialogue|Miguel|"You were a patsy..." these words rung in my head...}}
+{{dialogue|Miguel|I have been taken for a fool. This I realize now more than ever. I truly thought Duvos wanted the same thing as me... That they were on the right side of history. But their actions do not correlate to the proclamations they gave me.}}
+{{dialogue|Miguel|Recently, I have been grasping at something, anything, that would validate my actions since I have been in Sandrock.... the more I searched, the more I came to only one truth.}}
+{{dialogue|Miguel|There was nothing...}}
+{{dialogue|Miguel|My handlers were simply telling me what they wanted me to believe. I must have been simply a diversion... if I could have pushed everyone out of Sandrock, then Duvos could excavate the ruins in secrecy.}}
+{{dialogue|Miguel|My arrest threw a proverbial wrench into the works, and it appears to have pushed their hand.}}
+{{dialogue|Miguel|I was then left to rot. They never cared about me. They never cared about my ideals... Sigh. I was a fool.}}
+
+*''How did you fall for all of this?''
+*''They must have cared, somewhat...''
+
+{{dialogue|Miguel|indent=true|answer=They must have cared, somewhat...
+|No. They did not. I have thought about this repeatedly since our last meeting, and if they truly believed in me, then things would not have happened like this. I fell for their lies...}}
+{{dialogue|Miguel|When I was of age, I left to study in Meidi. My family were believers in the Light, and I dreamed of spreading the word. I always feared the Day of Calamity, feared the Light being extinguished once more.}}
+{{dialogue|Miguel|I quickly befriended Matilda. She was older than me, working as a tutor in the guided study sessions. I remember when I first met her when I attended her session the first time. She was helping a group of students with their questions on faith.}}
+{{dialogue|Miguel|She was kind, understanding. Whenever I disagreed with the doctrine of the Church, she listened. Later, I started to feel that the teachings were not enough.}}
+
+*''What did you disagree with?''
+*''You didn't suspect Matilda at all?''
+
+{{dialogue|Miguel|indent=true|answer=What did you disagree with?
+|The Church of the Light has an unwavering trust in people above all else. It's the individual people that got the human race through the Age of Darkness. This is why you see Sandrock being... somewhat loose with Age of Corruption technology.}}
+{{dialogue|Miguel|indent=true|answer=You didn't suspect Matilda at all?
+|I did not suspect Matilda to be anything other than a devout follower of the Light. Her alliegance was as much of a surprise to me as to you.}}
+{{dialogue|Miguel|indent=true|Her study group set her apart from the other tutors. She was loved, particularly by the staff. Somewhat of a teacher's pet.}}
+{{dialogue|Miguel|indent=true|She was bright eyed and optimistic, a perfect cover, in retrospect. Her views stood opposed to mine.}}
+{{dialogue|Miguel|I am somewhat more pessimistic about human nature. Allowing humans freedom to pursue their vanities is what led to the Day of Calamity...}}
+{{dialogue|Miguel|Those around me in the Church did not take the teachings seriously... even the Deacon, it was as if they had forgotten the sins of our forefathers.}}
+{{dialogue|Miguel|During my studies, I became depressed. I drifted further from the teachings, became isolated, and found myself more radical. Then an agent from Duvos made contact. The things they told me... that Duvos would regulate technology.}}
+{{dialogue|Miguel|Everything I heard aligned with my beliefs, they wanted structure, they wanted to ensure no one else ever lost their lives... they wanted to ensure the safety of humanity.}}
+{{dialogue|Miguel|I see now in retrospect, Matilda used my grief against me. She was conditioning me... She must have told an agent of my wavering faith, and guided their hand from the background.}}
+
+*''Did something happen to you?'' (No unique dialogue)
+*''How did Matilda use your grief against you?'' (No unique dialogue)
+
+{{dialogue|Miguel|...Sigh...}}
+{{dialogue|Miguel|While I was studying at Meidi, my town was destroyed. I'm from...}}
+{{dialogue|Miguel|Doss. I am a child of the lost city.}}
+
+*''What happened at Doss?''
+*''I know how you feel, I lost a cat once.''
+*''I'm so sorry...''
+
+{{dialogue|Miguel|indent=true|answer=I know how you feel, I lost a cat once.
+|...I understand that some use comedy to punctuate uncomfortable moments.}}
+{{dialogue|Miguel|Our existence was always a delicate balance. Being a town skirting the border of the Peripheries, we were aware of the dangers, but largely went unbothered.}}
+{{dialogue|Miguel|As I went to study in Meidi, I bid my hometown farewell, though kept in regular contact. It may surprise you, but I took part in many of the onboarding activities, and was a strong advocate for the Church school.}}
+{{dialogue|Miguel|It seems strange to reflect on that now.}}
+{{dialogue|Miguel|During my studies, Doss was attacked by a creature from the Peripheries. It happened overnight, without warning. Everyone in town was killed. My parents... my brother...}}
+{{dialogue|Miguel|You cannot imagine it. My entire town destroyed by a monster in the blink of an eye. Just thinking about what my people went through... it is truly harrowing. The depths of despair cannot comprehend what my family endured. I pray that it was quick.}}
+
+*''I'm so sorry that happened.''
+*''Just listen.''
+
+{{dialogue|Miguel|When the news was announced at school, I felt everyone's eyes on me. They were fixed, filled with an empty pity. I fell into a trance, simply glided through the halls, unable to process what had happened. I needed to talk, to confront it.}}
+{{dialogue|Miguel|Where were the Rangers or the Civil Corps? How did we not see it coming? How... how could the Alliance let this happen? The questions burned into my mind. I sought answers, but people avoided me, said I was, "too intense."}}
+{{dialogue|Miguel|Within a week, people were laughing again, enjoying themselves, they had all forgotten already. Countless lives lost, yet they returned to their lives again, as if nothing had happened.}}
+{{dialogue|Miguel|Everyone simply avoided me further, except for Matilda. She listened.}}
+{{dialogue|Miguel|I fell into the darkness. I sunk into the questions that were burning on my tongue. How could the Alliance let this happen? How are we allowing the sins of our forefathers leave us in ruin? How could the Free Cities simply abandon us...}}
+{{dialogue|Miguel|I expected a rescue, I expected the Rangers to search and destroy that monster from the Peripheries, but... no. They saw it as a lost cause and moved on. My family were not even buried. They were left there for the wilds to consume...}}
+{{dialogue|Miguel|It was then that my heart was blackened to the Alliance... that my thoughts started to drift. I was vulnerable, I was lost. I was found by Matilda and led astray.}}
+{{dialogue|Miguel|She would encourage me to think independently, to question myself. She said my fears were valid, and that I was a fiercly independent thinker, and while she "did not agree with me," she valued my beliefs.}}
+{{dialogue|Miguel|I now believe she was taking note of my doubts, and behind closed doors crafting a narrative that reciprocated my beliefs, a narrative she then passed onto handlers. It was no mere coincidence that I was sold a beautiful vision of Duvos.}}
+{{dialogue|Miguel|Sigh... I should have seen this sooner, but I was blinded by their words. It answered all of my questions.}}
+
+*''So everything you believed about Duvos turned out to be lies.''
+*''Sounds like you were a bit of an idiot. You fell for their lies.''
+*''So she spread lies in Meidi, tried to trick people to convert...''
+
+{{dialogue|Miguel|indent=true|answer=So everything you believed about Duvos turned out to be lies.
+|...It appears so. All that I took for Duvos ideals, were simply my own being reflected back to me... In that light... what I have done to Sandrock is unforgivable...}}
+{{dialogue|Miguel|indent=true|answer=Sounds like you were a bit of an idiot. You fell for their lies.
+|Ha, quite. I think of myself as a rather well put together man, but it seems that even those with grand designs may act the fool. Everything they told me, I believed. My "Duvos ideals" were simply my own being reflected back to me.}}
+{{dialogue|Miguel|indent=true|In that light... what I have done to Sandrock is unforgivable...}}
+{{dialogue|Miguel|indent=true|answer=So she spread lies in Meidi, tried to trick people to convert...
+|Quite. It is no surprise she managed to operate under our noses this whole time. All that I believed was Duvos ideals, were simply my own being reflected back to me. In that light... what I have done to Sandrock is unforgivable...}}
+{{dialogue|Miguel|It is only now that the blinds have been pulled back. I must face my actions head on.}}
+{{dialogue|Miguel|I still believe that we as a species needs to control our desire to pursue unfettered technology. Doss must not happen again.}}
+{{dialogue|Miguel|However, that does not excuse what I did. I have wronged the people of this town, and the Free Cities. I must accept pennance for my actions; I must take this as a time for personal growth.}}
+{{dialogue|Miguel|Thank you for coming to see me all this time.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 20.4 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 83901
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: Migel2 | info: 3 | exist: 1
+ACTIONS
+(cId 5) A conversation 5471_0 starts:
+{{dialogue|Miguel|''Player''. You're back. I wish to discuss something with you.}}
+{{dialogue|Miguel|I have been taken for a fool. This I realize now more than ever. I truly thought Duvos wanted the same thing as me... That they were on the right side of history. But their actions do not correlate to the proclamations they gave me.}}
+{{dialogue|Miguel|Recently, I have been grasping at something, anything, that would validate my actions since I have been in Sandrock.... the more I searched, the more I came to only one truth.}}
+{{dialogue|Miguel|There was nothing...}}
+{{dialogue|Miguel|My handlers were simply telling me what they wanted me to believe. I must have been simply a diversion... if I could have pushed everyone out of Sandrock, then Duvos could excavate the ruins in secrecy.}}
+{{dialogue|Miguel|My arrest threw a proverbial wrench into the works, and it appears to have pushed their hand.}}
+{{dialogue|Miguel|I was then left to rot. They never cared about me. They never cared about my ideals... Sigh. I was a fool.}}
+
+*''How did you fall for all of this?''
+*''They must have cared, somewhat...''
+
+{{dialogue|Miguel|indent=true|answer=They must have cared, somewhat...
+|No. They did not. I have thought about this repeatedly since our last meeting, and if they truly believed in me, then things would not have happened like this. I fell for their lies...}}
+{{dialogue|Miguel|When I was of age, I left to study in Meidi. My family were believers in the Light, and I dreamed of spreading the word. I always feared the Day of Calamity, feared the Light being extinguished once more.}}
+{{dialogue|Miguel|I quickly befriended Matilda. She was older than me, working as a tutor in the guided study sessions. I remember when I first met her when I attended her session the first time. She was helping a group of students with their questions on faith.}}
+{{dialogue|Miguel|She was kind, understanding. Whenever I disagreed with the doctrine of the Church, she listened. Later, I started to feel that the teachings were not enough.}}
+
+*''What did you disagree with?''
+*''You didn't suspect Matilda at all?''
+
+{{dialogue|Miguel|indent=true|answer=What did you disagree with?
+|The Church of the Light has an unwavering trust in people above all else. It's the individual people that got the human race through the Age of Darkness. This is why you see Sandrock being... somewhat loose with Age of Corruption technology.}}
+{{dialogue|Miguel|indent=true|answer=You didn't suspect Matilda at all?
+|I did not suspect Matilda to be anything other than a devout follower of the Light. Her alliegance was as much of a surprise to me as to you.}}
+{{dialogue|Miguel|indent=true|Her study group set her apart from the other tutors. She was loved, particularly by the staff. Somewhat of a teacher's pet.}}
+{{dialogue|Miguel|indent=true|She was bright eyed and optimistic, a perfect cover, in retrospect. Her views stood opposed to mine.}}
+{{dialogue|Miguel|I am somewhat more pessimistic about human nature. Allowing humans freedom to pursue their vanities is what led to the Day of Calamity...}}
+{{dialogue|Miguel|Those around me in the Church did not take the teachings seriously... even the Deacon, it was as if they had forgotten the sins of our forefathers.}}
+{{dialogue|Miguel|During my studies, I became depressed. I drifted further from the teachings, became isolated, and found myself more radical. Then an agent from Duvos made contact. The things they told me... that Duvos would regulate technology.}}
+{{dialogue|Miguel|Everything I heard aligned with my beliefs, they wanted structure, they wanted to ensure no one else ever lost their lives... they wanted to ensure the safety of humanity.}}
+{{dialogue|Miguel|I see now in retrospect, Matilda used my grief against me. She was conditioning me... She must have told an agent of my wavering faith, and guided their hand from the background.}}
+
+*''Did something happen to you?'' (No unique dialogue)
+*''How did Matilda use your grief against you?'' (No unique dialogue)
+
+{{dialogue|Miguel|...Sigh...}}
+{{dialogue|Miguel|While I was studying at Meidi, my town was destroyed. I'm from...}}
+{{dialogue|Miguel|Doss. I am a child of the lost city.}}
+
+*''What happened at Doss?''
+*''I know how you feel, I lost a cat once.''
+*''I'm so sorry...''
+
+{{dialogue|Miguel|indent=true|answer=I know how you feel, I lost a cat once.
+|...I understand that some use comedy to punctuate uncomfortable moments.}}
+{{dialogue|Miguel|Our existence was always a delicate balance. Being a town skirting the border of the Peripheries, we were aware of the dangers, but largely went unbothered.}}
+{{dialogue|Miguel|As I went to study in Meidi, I bid my hometown farewell, though kept in regular contact. It may surprise you, but I took part in many of the onboarding activities, and was a strong advocate for the Church school.}}
+{{dialogue|Miguel|It seems strange to reflect on that now.}}
+{{dialogue|Miguel|During my studies, Doss was attacked by a creature from the Peripheries. It happened overnight, without warning. Everyone in town was killed. My parents... my brother...}}
+{{dialogue|Miguel|You cannot imagine it. My entire town destroyed by a monster in the blink of an eye. Just thinking about what my people went through... it is truly harrowing. The depths of despair cannot comprehend what my family endured. I pray that it was quick.}}
+
+*''I'm so sorry that happened.''
+*''Just listen.''
+
+{{dialogue|Miguel|When the news was announced at school, I felt everyone's eyes on me. They were fixed, filled with an empty pity. I fell into a trance, simply glided through the halls, unable to process what had happened. I needed to talk, to confront it.}}
+{{dialogue|Miguel|Where were the Rangers or the Civil Corps? How did we not see it coming? How... how could the Alliance let this happen? The questions burned into my mind. I sought answers, but people avoided me, said I was, "too intense."}}
+{{dialogue|Miguel|Within a week, people were laughing again, enjoying themselves, they had all forgotten already. Countless lives lost, yet they returned to their lives again, as if nothing had happened.}}
+{{dialogue|Miguel|Everyone simply avoided me further, except for Matilda. She listened.}}
+{{dialogue|Miguel|I fell into the darkness. I sunk into the questions that were burning on my tongue. How could the Alliance let this happen? How are we allowing the sins of our forefathers leave us in ruin? How could the Free Cities simply abandon us...}}
+{{dialogue|Miguel|I expected a rescue, I expected the Rangers to search and destroy that monster from the Peripheries, but... no. They saw it as a lost cause and moved on. My family were not even buried. They were left there for the wilds to consume...}}
+{{dialogue|Miguel|It was then that my heart was blackened to the Alliance... that my thoughts started to drift. I was vulnerable, I was lost. I was found by Matilda and led astray.}}
+{{dialogue|Miguel|She would encourage me to think independently, to question myself. She said my fears were valid, and that I was a fiercly independent thinker, and while she "did not agree with me," she valued my beliefs.}}
+{{dialogue|Miguel|I now believe she was taking note of my doubts, and behind closed doors crafting a narrative that reciprocated my beliefs, a narrative she then passed onto handlers. It was no mere coincidence that I was sold a beautiful vision of Duvos.}}
+{{dialogue|Miguel|Sigh... I should have seen this sooner, but I was blinded by their words. It answered all of my questions.}}
+
+*''So everything you believed about Duvos turned out to be lies.''
+*''Sounds like you were a bit of an idiot. You fell for their lies.''
+*''So she spread lies in Meidi, tried to trick people to convert...''
+
+{{dialogue|Miguel|indent=true|answer=So everything you believed about Duvos turned out to be lies.
+|...It appears so. All that I took for Duvos ideals, were simply my own being reflected back to me... In that light... what I have done to Sandrock is unforgivable...}}
+{{dialogue|Miguel|indent=true|answer=Sounds like you were a bit of an idiot. You fell for their lies.
+|Ha, quite. I think of myself as a rather well put together man, but it seems that even those with grand designs may act the fool. Everything they told me, I believed. My "Duvos ideals" were simply my own being reflected back to me.}}
+{{dialogue|Miguel|indent=true|In that light... what I have done to Sandrock is unforgivable...}}
+{{dialogue|Miguel|indent=true|answer=So she spread lies in Meidi, tried to trick people to convert...
+|Quite. It is no surprise she managed to operate under our noses this whole time. All that I believed was Duvos ideals, were simply my own being reflected back to me. In that light... what I have done to Sandrock is unforgivable...}}
+{{dialogue|Miguel|It is only now that the blinds have been pulled back. I must face my actions head on.}}
+{{dialogue|Miguel|I still believe that we as a species needs to control our desire to pursue unfettered technology. Doss must not happen again.}}
+{{dialogue|Miguel|However, that does not excuse what I did. I have wronged the people of this town, and the Free Cities. I must accept pennance for my actions; I must take this as a time for personal growth.}}
+{{dialogue|Miguel|Thank you for coming to see me all this time.}}
+The conversation ends.

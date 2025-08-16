@@ -1,0 +1,505 @@
+Reading Mission 1700141: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100019
+
+TRIGGER Procedure 1.0 Step 3.0 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE || compare: 3 | year: -1 | month: 1 | day: 12
+ACTIONS
+Run mission Gift of the Bright Sun
+Run mission Gift of the Bright Sun
+GLOBAL BLACK BOARD REMOVE || key: con41700141
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE || compare: 3 | year: -1 | month: 4 | day: 28
+ACTIONS
+Run mission #1700141
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700141
+CONDITIONS
+Check if Wei has left town
+ACTIONS
+The player receives a letter:
+{{mail|238}}
+Set CD to 1
+CALENDAR SET REMINDER HM || addDays: 1 | hour: 7 | minute: 1 | transId: 80005488
+Set TALK to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700141
+CONDITIONS
+Check if Wei is in town
+ACTIONS
+The player receives a letter:
+{{mail|239}}
+Set CD to 1
+CALENDAR SET REMINDER HM || transId: 80005488 | hour: 7 | minute: 1 | addDays: 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Decrement CD by 1
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 171411 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 171411 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if CD is < 0
+ACTIONS
+END MISSION 1700141
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Chamber:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_chamber
+Check if Wei has left town
+Check if CD is == 0
+CHECK GLOBAL BLACKBOARD || key: yanreveal | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: inprison | info: 1 | exist: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_chamber
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 171411 | delayTime: 0 | durationTime: 0 | changeType: 0 | curveIndex: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 171411 | path: Mission_TAR | sceneName: Chamber | flagName: TAR_Table | extraParams: 0
+Yan stands still in Chamber
+Mi-an stands still in Chamber and looks at Yan
+Slack stands still in Chamber and looks at Yan
+Wang Jr stands still in Chamber and looks at Yan
+NPC RANDOM ADD || scene: Chamber | flagName: TAR_others5 | id: 1 | instId: 171411 | dailyBehavior: CommanderIdle
+NPC RANDOM ADD || id: 2 | instId: 171412 | scene: Chamber | flagName: TAR_others2 | dailyBehavior: CommanderIdle
+NPC RANDOM ADD || id: 3 | instId: 171413 | scene: Chamber | flagName: TAR_others3 | dailyBehavior: CommanderIdle
+171411 stands still in Chamber and looks at Yan
+171412 stands still in Chamber and looks at Yan
+171413 stands still in Chamber and looks at Yan
+NPC RANDOM ADD || id: 1 | instId: 171414 | scene: Chamber | flagName: TAR_others4 | dailyBehavior: CommanderIdle
+NPC RANDOM ADD || id: 1 | instId: 171415 | scene: Chamber | flagName: TAR_others | dailyBehavior: CommanderIdle
+171414 stands still in Chamber and looks at Yan
+171415 stands still in Chamber and looks at Yan
+Set TALK to 1
+Set CD to 1
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 171411 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 933_0 starts:
+{{dialogue|Yan|Greetings, subordinates. Looks like not all of you made it, nevertheless, it is fortuitious some of you are indeed here to witness our prestigious ceremony!}}
+{{dialogue|Yan|Ahem! Let's just cut to the chase...}}
+{{dialogue|Yan|You Builders have all carried out numerous tasks, picked up commissions, done... things. Many of which were menial and unfulfilling. Some of them, I assume, were helpful to our city in some way.}}
+{{dialogue|Yan|But one of you stood out among the rest!}}
+{{dialogue|Yan|One of you went above and beyond the call of duty and built more buildier than any Builder has ever built before! Er. In the last year.}}
+{{dialogue|Yan|It is with great pleasure, I, President Yan, on behalf of the Commerce Guild, hereby present the esteemed award for...}}
+{{dialogue|Yan|Workshop of the Year!}}
+The conversation ends.
+PLAYER SET POS ROT FLAG || sceneName: Chamber | flagName: TAR_player
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+CHECK PLAYER WORKSHOP LY RANKING || set: 3 | value: 1
+ACTIONS
+{{cutscene|id = 1003}}
+A cutscene CG_AWARD_MAX (duration: 2.0) starts playing
+I Won! - I won the Builder Awards! Yan was reluctant to give it up, and came on strong with the dramatics, but it was so exciting to have finally won!
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+CHECK PLAYER WORKSHOP LY RANKING || set: 4 | value: 1
+ACTIONS
+{{cutscene|id = 1002}}
+A cutscene CG_AWARD (duration: 2.0) starts playing
+Yan Wins Again... - It was time for the annual Builder Awards, and to no one's surprise, Yan won. I'm starting to think something fishy is going on...
+
+TRIGGER Procedure 1.0 Step 8.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_AWARD | state: 7
+ON CUTSCENE CHANGE || order: 0 | name: CG_AWARD_MAX | state: 7
+CONDITIONS
+Always:
+ACTIONS
+Mi-an stops standing still
+Yan stops standing still
+Wang Jr stops standing still
+Slack stops standing still
+NPC LEAVE || npc: 171414
+NPC LEAVE || npc: 171415
+Mi-an stands still in Chamber
+Wang Jr stands still in Chamber
+Slack stands still in Chamber
+171411 stands still in Chamber
+171412 stands still in Chamber
+171413 stands still in Chamber
+CUTSCENE UI STATE EXIT || 
+ACTION SEND ANNUAL AWARD || 
+SCENEITEM DELETE || itemType: 0 | id: 171411
+
+TRIGGER Procedure 1.0 Step 8.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_AWARD_WEI | state: 7
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 171411) from Trudy
+Trudy stops standing still
+Mi-an stops standing still
+Wang Jr stops standing still
+Slack stops standing still
+NPC LEAVE || npc: 171414
+NPC LEAVE || npc: 171415
+Mi-an stands still in Chamber
+Wang Jr stands still in Chamber
+Slack stands still in Chamber
+171411 stands still in Chamber
+171412 stands still in Chamber
+171413 stands still in Chamber
+SCENEITEM DELETE || itemType: 0 | id: 171411
+CUTSCENE UI STATE EXIT || 
+ACTION SEND ANNUAL AWARD || 
+Set TALK to 1
+
+TRIGGER Procedure 1.0 Step 9.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_AWARD_MAX | state: 8
+CONDITIONS
+Always:
+ACTIONS
+Yan stands still in Chamber
+
+TRIGGER Procedure 1.0 Step 10.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_AWARD | state: 8
+CONDITIONS
+Always:
+ACTIONS
+Yan stands still in Chamber
+
+TRIGGER Procedure 2.0 Step 0.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Chamber:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_chamber
+Check if Wei is in town
+Check if CD is == 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_chamber
+CUTSCENE UI STATE ENTER || 
+SCENEITEM CREATE FLAG || itemType: 0 | id: 171411 | path: Mission_TAR | sceneName: Chamber | flagName: TAR_Table | extraParams: 0
+Wei stands still in Chamber
+Trudy stands still in Chamber
+Mi-an stands still in Chamber and looks at Wei
+Slack stands still in Chamber and looks at Wei
+Wang Jr stands still in Chamber and looks at Wei
+NPC RANDOM ADD || scene: Chamber | flagName: TAR_others | id: 6 | instId: 171411 | dailyBehavior: CommanderIdle
+NPC RANDOM ADD || id: 4 | instId: 171412 | scene: Chamber | flagName: TAR_others2 | dailyBehavior: CommanderIdle
+NPC RANDOM ADD || id: 3 | instId: 171413 | scene: Chamber | flagName: TAR_others3 | dailyBehavior: CommanderIdle
+171411 stands still in Chamber and looks at Wei
+171412 stands still in Chamber and looks at Wei
+171413 stands still in Chamber and looks at Wei
+NPC RANDOM ADD || id: 1 | instId: 171414 | scene: Chamber | flagName: TAR_others4 | dailyBehavior: CommanderIdle
+NPC RANDOM ADD || id: 2 | instId: 171415 | scene: Chamber | flagName: TAR_others5 | dailyBehavior: CommanderIdle
+171414 stands still in Chamber and looks at Wei
+171415 stands still in Chamber and looks at Wei
+
+TRIGGER Procedure 2.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Chamber:
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 934_0 starts:
+{{dialogue|Wei|Welcome, everyone! I see some familiar faces out there! Some new, some old. Whatever the case, I'm just glad you're here with us today!}}
+{{dialogue|Wei|As most of you know, it's been a long standing tradition to give out awards to the top ranking workshops, and, well...}}
+{{dialogue|Wei|I just want you all to know that no matter the result, everyone here is an important part of the team! Sandrock gets a lot of commissions, and only by working together can we fulfill all the orders in a timely and effective manner.}}
+{{dialogue|Wei|Alright, alright, I hear ya. "Get to the award already!" Haha... Mayor Trudy, if you would be so kind...!}}
+The conversation ends.
+PLAYER SET POS ROT FLAG || sceneName: Chamber | flagName: TAR_player
+
+TRIGGER Procedure 2.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Wang Jr stops standing still
+Slack stops standing still
+NPC LEAVE || npc: 171411
+NPC LEAVE || npc: 171412
+NPC LEAVE || npc: 171413
+NPC LEAVE || npc: 8075
+NPC LEAVE || npc: 8076
+Mi-an stops standing still
+Trudy stops standing still
+Wei stops standing still
+Yan stops standing still
+END MISSION 1700141
+
+TRIGGER Procedure 2.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Check if CD is > (maybe?) 0
+ACTIONS
+ACTION SEND ANNUAL AWARD MAIL || 
+END MISSION 1700141
+
+TRIGGER Procedure 2.0 Step 7.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 1714114
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 171411) to Trudy
+(param: CMDAction:Hi)
+
+TRIGGER Procedure 2.0 Step 8.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8006 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 1008}}
+A cutscene CG_AWARD_WEI (duration: 2.0) starts playing
+Workshop of the Year - Trudy came by the guild to give out awards for first, second and third place.
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Chamber to the Main:
+When the player moves from Chamber to the PlayerHome:
+CONDITIONS
+Always:
+ACTIONS
+Set TALK to 2
+171413 stops standing still
+171412 stops standing still
+171411 stops standing still
+NPC LEAVE || npc: 171411
+NPC LEAVE || npc: 171412
+NPC LEAVE || npc: 171413
+Mi-an stops standing still
+Trudy stops standing still
+Yan stops standing still
+Wei stops standing still
+NPC LEAVE || npc: 8075
+NPC LEAVE || npc: 8076
+END MISSION 1700141
+
+TRIGGER Procedure 5.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Mi-an
+CONDITIONS
+CHECK PLAYER WORKSHOP LY RANKING || set: 4 | value: 1
+Check if TALK is == 1
+ACTIONS
+(cId 80171) A conversation 3448 starts:
+{{dialogue|Mi-an|Hey, we tried our best. There's no shame in that! Better luck next year!}}
+
+TRIGGER Procedure 5.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Mi-an
+CONDITIONS
+CHECK PLAYER WORKSHOP LY RANKING || set: 3 | value: 1
+Check if TALK is == 1
+ACTIONS
+(cId 80172) A conversation 3455 starts:
+{{dialogue|-2|You did it! Incredible! Seems like only yesterday we were learning the ropes, and now you've won Workshop of the Year! The student has become the master!}}
+
+TRIGGER Procedure 5.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Wei
+CONDITIONS
+CHECK PLAYER WORKSHOP LY RANKING || set: 4 | value: 1
+Check if TALK is == 1
+ACTIONS
+(cId 80481) A conversation 3445, 3446 starts:
+{{dialogue|Wei|Great job, ''Player''! You earned it! We're all super proud of you!}}
+{{dialogue|Wei|Now, don't worry. I'm not gonna let this award go to my head! I never could've done it without my amazing team. You guys are the real winners!}}
+
+TRIGGER Procedure 5.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Wei
+CONDITIONS
+CHECK PLAYER WORKSHOP LY RANKING || set: 3 | value: 1
+Check if TALK is == 1
+ACTIONS
+(cId 80481) A conversation 3447 starts:
+{{dialogue|Wei|Even with workshops like ours, we still couldn't pull off a win... and I couldn't be more proud! The joy of being in a Commerce Guild filled with such talented Builders is the best prize I could ever hope for. Let's push each other to be even better this year!}}
+
+TRIGGER Procedure 6.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Wang Jr
+CONDITIONS
+CHECK PLAYER WORKSHOP LY RANKING || set: 4 | value: 1
+ACTIONS
+(cId 80761) A conversation 3449 starts:
+{{dialogue|-2|What's the point of these ceremonies, anyway? Yan always wins. Now, if you'll exqueeze me, I do need to go stop by my neighbor's house before it gets too late...}}
+
+TRIGGER Procedure 6.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Wang Jr
+CONDITIONS
+CHECK PLAYER WORKSHOP LY RANKING || set: 3 | value: 1
+ACTIONS
+(cId 80762) A conversation 3456 starts:
+{{dialogue|-2|Hey, you won! That's amazing! I mean, I would've had a shot this year if I wasn't so busy always checking up on my friends... Hey, don't let things get lonely at the top!}}
+
+TRIGGER Procedure 6.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Yan
+CONDITIONS
+CHECK PLAYER WORKSHOP LY RANKING || set: 4 | value: 1
+Check if TALK is == 1
+ACTIONS
+(cId 80431) A conversation 3451 starts:
+{{dialogue|Yan|Huh? You're still here? You've already witnessed my glorious triumph, there's nothing more to see. Now get back to your workshop and try to at least offer a smidgen of competition this year! Go, go, go!}}
+
+TRIGGER Procedure 6.0 Step 3.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Yan
+CONDITIONS
+CHECK PLAYER WORKSHOP LY RANKING || set: 3 | value: 1
+ACTIONS
+(cId 80432) A conversation 3459 starts:
+{{dialogue|Yan|I... You... Huh...? Where am I...? Mommy?}}
+
+TRIGGER Procedure 7.0 Step 0.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Slack
+CONDITIONS
+CHECK PLAYER WORKSHOP LY RANKING || set: 4 | value: 1
+ACTIONS
+(cId 80751) A conversation 3450 starts:
+{{dialogue|-2|Our president slacks even more than me, and my name's Slack! And yet... he wins every year... He must be some kind of... Master... of slack... He's no hack, he's bringing slack back! I'll have to counter-attack; double back. Pull up the slack I lack. If I crack, well, then m'name's not Slack, Jack!}}
+
+TRIGGER Procedure 7.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Slack
+CONDITIONS
+CHECK PLAYER WORKSHOP LY RANKING || set: 3 | value: 1
+ACTIONS
+(cId 80752) A conversation 3457 starts:
+{{dialogue|-2|Wow, congrats! One... two? How many should I crack? Look, Slack's trying to see how not to get the sack!}}
+
+TRIGGER Procedure 7.0 Step 2.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to 171411
+CONDITIONS
+CHECK PLAYER WORKSHOP LY RANKING || set: 4 | value: 1
+ACTIONS
+(cId 1714111) A conversation 3466 starts:
+{{dialogue|-2|Hey, you got first place! Congratulations! ...Huh? You didn't? Oh, oh my gosh. Oh, no... why do I always embarass myself like this?}}
+
+TRIGGER Procedure 7.0 Step 3.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to 171411
+CONDITIONS
+CHECK PLAYER WORKSHOP LY RANKING || set: 3 | value: 1
+ACTIONS
+(cId 1714112) A conversation 3469 starts:
+{{dialogue|-2|Hey, cheer up! There's always next year. ...Huh? You won? Oh... Oh my gosh. Oh, no... why do I always embarass myself like this...}}
+
+TRIGGER Procedure 7.0 Step 4.0 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to 171412
+CONDITIONS
+CHECK PLAYER WORKSHOP LY RANKING || set: 4 | value: 1
+ACTIONS
+(cId 1714121) A conversation 3468 starts:
+{{dialogue|-2|Does that guy win every year? Wow, he must be great! No wonder he's the president!}}
+
+TRIGGER Procedure 7.0 Step 5.0 Order 5 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to 171412
+CONDITIONS
+CHECK PLAYER WORKSHOP LY RANKING || set: 3 | value: 1
+ACTIONS
+(cId 1714122) A conversation 3458 starts:
+{{dialogue|-2|Wow, you must be pretty good. You out-built the president of the Commerce Guild!}}
+
+TRIGGER Procedure 7.0 Step 6.0 Order 6 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to 171413
+CONDITIONS
+Always:
+ACTIONS
+(cId 1714131) A conversation 3452 starts:
+{{dialogue|-2|I wanted to see Slack! I heard he works hard. Do you think he's compensating for the fact that his name is "slack?" I'm glad my name is normal and hasn't defined my fate in any way.}}

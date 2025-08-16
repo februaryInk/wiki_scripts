@@ -1,0 +1,116 @@
+Reading Mission 1200171: Buckin' Bronco
+
+<onlyinclude>{{Infobox mission
+|name = Buckin' Bronco
+|image =
+|description = The diagrams provided by the "bounty hunter" are extremely suspicious. It's probably better to observe him for a while to be safe.
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Parent not found; run conditions not available.
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+CHECK WEATHER STATE || weather: 2 | flag: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+Kid stands still in Main
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+DELIVER MISSION 1200171
+SCENEITEM CREATE FLAG || itemType: 0 | id: 12171 | path: Saloon_Andy'sRoom | sceneName: Saloon | flagName: andy_clues | extraParams: -1
+SCENEITEM DELETE || itemType: 0 | id: 121710
+Set global blackboard key roomforandy with info 1.
+SCENEITEM CREATE FLAG || itemType: 21 | id: 121711 | sceneName: Saloon | extraParams: -1 | flagName: disguise_saloon_clue1 | path: SceneItem_FindInfo_AndyClue1
+SCENEITEM CREATE FLAG || itemType: 21 | id: 121712 | path: SceneItem_FindInfo_AndyClue2 | sceneName: Saloon | flagName: disguise_saloon_clue2 | extraParams: -1
+SCENEITEM CREATE FLAG || itemType: 21 | id: 121713 | flagName: disguise_saloon_clue3 | extraParams: -1 | sceneName: Saloon | path: SceneItem_FindInfo_AndyClue3
+SCENEITEM CREATE FLAG || itemType: 21 | id: 121715 | flagName: disguise_saloon_clue5 | extraParams: -1 | path: SceneItem_FindInfo_AndyClue5 | sceneName: Saloon
+SCENEITEM CREATE FLAG || itemType: 21 | id: 121716 | sceneName: Saloon | path: SceneItem_FindInfo_AndyClue6 | extraParams: -1 | flagName: disguise_saloon_clue6
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 1147_0 starts:
+{{dialogue|Kid|Howdy there, partner. You the Builder 'round these parts? The name's Bronco. Bronco the Kid. I'm here by the request of your Mayor to track down those handsome devils that are giving y'all such a headache, and I'm gonna need your help to do it.}}
+
+*''Happy to help.''
+*''Handsome devils?''
+*''You look kinda familiar...''
+
+{{dialogue|Kid|indent=true|answer=Happy to help.
+|Glad to hear you're on the side of law and order, partner.}}
+{{dialogue|Kid|indent=true|answer=Handsome devils?
+|Er, well, yes. I couldn't help but notice from the wanted posters I seen that the bandits y'all are goin' up against are particularly good looking. Not that I'm gonna let that get in the way of my work er nothin'...}}
+{{dialogue|Kid|indent=true|answer=You look kinda familiar...
+|Ah hah! Well, as you know, I am pretty darn famous around these parts for uh... you know, all the cool stuff I do! No need to remind you what that is, as I'm sure you are very familiar already. No time for autographs, I got, uh... adult job stuff to do. For big people. Like me.}}
+{{dialogue|Kid|In any case, what I'm gonna need from you is a Super Shock Shield! Or "sss" for short! Which also means 'shield' in the Geegler language. At least, I think of it as meanin' that. It's got like... there's a lot of layers to it...}}
+{{dialogue|Kid|reward={{i2|Super Shock Shield|1}}|What for? To aid me in the capture of these handsome devils, of course. Did you even need to ask? Anyway, I've already gone to the trouble of having that uppity science feller design somethin' for you to work with; so here you go.}}
+{{dialogue|Kid|The sooner you get it done, the sooner I can go after those dashing rogues! Curse them, and their ravishing good looks! So long, workshop ownin'... Builder-type person!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Kid stops standing still
+START MISSION 1200171
+(cId 1) A conversation 4040 starts:
+{{dialogue|Player|(Huh? This diagram... it's so much work for such a normal looking object. Did Qi really draw this?)}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+END MISSION 1200171
+
+TRIGGER Procedure 1.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200171
+CONDITIONS
+Always:
+ACTIONS
+Run mission Buckin' Bronco
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 0) There is a conversation segment (id 4038) that ends:
+{{dialogue|Kid|What for? To aid me in the capture of these handsome devils, of course. Did you even need to ask? Anyway, I've already gone to the trouble of having that uppity science feller design somethin' for you to work with; so here you go.}}
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Super Shock Shield of Default quality (Notify player)

@@ -1,0 +1,427 @@
+Reading Mission 1900262: The Cable Guy
+
+<onlyinclude>{{Infobox mission
+|name = The Cable Guy
+|image =
+|description = Rian and Dan-bi's anniversary is coming up. Help Arvio and Burgess surprise them with a romantic cable car date.
+|type = Side
+|time =
+|location =
+|characters = [[Arvio]]
+|condition =
+|details =
+|exp = 800
+|reputation = 10
+|gols = 600
+|npc1 = Arvio
+|rp1 = 20
+|npc2 = Burgess
+|rp2 = 20
+|npc3 = Rian
+|rp3 = 10
+|npc4 = Dan-bi
+|rp4 = 10
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100068
+
+TRIGGER Procedure 0.0 Step 13.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1300031 is result 1 flag 1
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: finishrobot
+
+TRIGGER Procedure 1.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Belly of the Beast is successfully completed
+ACTIONS
+Run mission The Cable Guy
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1900262
+CONDITIONS
+Always:
+ACTIONS
+Set Done to 0
+Set XDone to 0
+Set Day to 0
+
+TRIGGER Procedure 0.0 Step 0.1 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 17:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1900262 | id: 9262 | sceneName: Main | flagName: T9262 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80017282
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 9262
+CONDITIONS
+CHECK TIME || compare: 2 | hour: 17 | minute: 0
+CHECK TIME || compare: 6 | hour: 23 | minute: 0
+Check if Rian is in town
+ACTIONS
+DELAY MASK SET || maskId: 926201 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 9262
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 926201 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: P9262_0 | sceneName: Main
+Rian stands still in Main and looks at Dan-bi
+Dan-bi stands still in Main and looks at Rian
+Add behavior CommanderSit (idName: 192621) to Rian
+(param: TargetScene:Main|SeatDramaName:NearWaterSeats02|LookAtActor:8074)
+STOPWATCH REAL TIME SET || id: 292623 | sec: 1.2
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 1902623
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 192623) from Dan-bi
+Remove behavior CommanderMoveToFlagAndAction (idName: 192624) from Rian
+Remove behavior CommanderMoveToFlagAndAction (idName: 192625) from Dan-bi
+STOPWATCH GAME TIME SET || id: 292621 | minute: 30
+DELAY MASK SET || maskId: 926202 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 3.5 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 926202 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 926202 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+Where's Mi-an is in state 1 with flag 0
+The Childhood Friend is in state 1 with flag 0
+Goodbye, Nia is in state 1 with flag 0
+The Kidnapping is in state 1 with flag 0
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: triallogan | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+Check if mission Shonash Canyon Bridge Opening Ceremony is result 1 flag 1
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Burgess stands still in Main
+Arvio stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: P9262_2
+DELIVER MISSION 1900262
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderNPCAction (idName: 192628) to Burgess
+(param: CMDAction:Hi)
+(cId 5) A conversation 2531_0 starts:
+{{dialogue|Arvio|''Player''!}}
+{{dialogue|Burgess|Hello!}}
+{{dialogue|Arvio|Hi ''Player'', are you busy? We've got a favor to ask. Do you know Rian and Dan-bi?}}
+{{dialogue|Burgess|They're the best! Dan-bi works with me for the Church, she's dedicated as can be!}}
+{{dialogue|Arvio|Yeah! And Rian always comes and keeps me company at the shop! Well anyway, it's their anniversary coming up, and we wanted to give them a surprise. Do you want to give us a hand?}}
+
+*''Yeah, sure!''
+*''I've got a lot on my plate...''
+
+{{dialogue|Arvio|indent=true|answer=Yeah, sure!
+|Right! So, the Tram System! City Hall has recently put up the budget for it to be reinforced properly so that people can safely use it again... So we thought, what if...}}
+{{dialogue|Burgess|indent=true|We made it beautiful! Just spectacular!}}
+{{dialogue|Arvio|indent=true|You've seen the view around there, right? Perfect dating spot!}}
+{{dialogue|Burgess|indent=true|Mwa!}}
+{{dialogue|Arvio|indent=true|What if we can surprise them for their anniversary with a trip over the canyon!}}
+{{dialogue|Burgess|indent=true|Just Rian and Dan-bi, and that view!}}
+{{dialogue|Arvio|indent=true|Heart warming imagery, right? If you can get that system reinforced we'll take care of the rest.}}
+{{dialogue|Burgess|indent=true|Here's the commission from City Hall, I sorta-kinda pulled rank as the Chief Inspector and called dibs on it, but that's not important. What's important is that we make it look be-a-utiful! And sturdy... we don't want them falling like you and Justice...}}
+{{dialogue|Arvio|indent=true|Right! That'd be a major no-no. We'll go make up a plan. See you at the Tram, ''Player''! And thanks for the help, I'm sure they'll love it!}}
+{{dialogue|Arvio|indent=true|answer=I've got a lot on my plate...
+|Aw really? I was certain you'd help... Well, I guess we can ask another Builder...}}
+{{dialogue|Arvio|indent=true|Uhm, if you change your mind, let me know.}}
+
+TRIGGER Procedure 1.0 Step 9.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if Done is == 1
+ACTIONS
+START MISSION 1900262
+Arvio stops standing still
+Burgess stops standing still
+Remove behavior CommanderNPCAction (idName: 192628) from Burgess
+CUTSCENE UI STATE EXIT || 
+SCENEITEM DELETE || itemType: 0 | id: 21031
+SCENEITEM DELETE || itemType: 0 | id: 21032
+
+TRIGGER Procedure 2.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Arvio stops standing still
+Burgess stops standing still
+Remove behavior CommanderNPCAction (idName: 192628) from Burgess
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 0.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 292623
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 926201 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 926201 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 2530_0 starts:
+{{dialogue|Dan-bi|Ri-ri... are we boring?}}
+{{dialogue|Rian|Like, I don't think so Dan-dan. We do cool stuff together.}}
+{{dialogue|Dan-bi|I don't know... when was the last time we did anything really exciting?}}
+{{dialogue|Rian|That one time we built that dope plant pot for Zeke! Remember? You put those flowers in there! They were super pretty.}}
+{{dialogue|Dan-bi|That was a year ago, Ri-ri. And besides, that was work!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 192623) to Dan-bi
+(param: TargetScene:Main|MoveMode:Walk|FlagName:Pdb9262_1)
+STOPWATCH REAL TIME SET || id: 292620 | sec: 3
+STOPWATCH REAL TIME SET || id: 292322 | sec: 1
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 292620
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 8719 starts:
+{{dialogue|Rian|Well... I dunno... maybe we are boring?}}
+
+TRIGGER Procedure 1.0 Step 3.5 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderSit (idName: 192621) from Rian
+Add behavior CommanderMoveToFlagAndAction (idName: 192624) to Rian
+(param: TargetScene:Main|MoveMode:Walk|FlagName:Ra9262_1|LookAtActor:8074)
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8073 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderSit (idName: 192621) from Rian
+
+TRIGGER Procedure 1.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 192627) to Dan-bi
+(param: TargetScene:Main|MoveMode:Walk|FlagName:Pdb9262_1)
+
+TRIGGER Procedure 1.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8074 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 8723, 8724 starts:
+{{dialogue|Rian|Dan-dan?}}
+{{dialogue|Dan-bi|It's nothing. Let's just watch the sunset.}}
+
+TRIGGER Procedure 1.0 Step 6.5 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 192626) from Rian
+Remove behavior CommanderMoveToFlagAndAction (idName: 192627) from Dan-bi
+Add behavior CommanderMoveToFlagAndAction (idName: 192628) to Rian
+(param: TargetScene:Main|MoveMode:Walk|FlagName:Ra9262_3|LookAtActor:8074)
+Add behavior CommanderMoveToFlagAndAction (idName: 192629) to Dan-bi
+(param: TargetScene:Main|MoveMode:Walk|FlagName:Pdb9262_3|LookAtActor:8073)
+
+TRIGGER Procedure 1.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH GAME TIME END || order: 0 | id: 292621
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 192628) from Rian
+Remove behavior CommanderMoveToFlagAndAction (idName: 192629) from Dan-bi
+Rian stops standing still
+Dan-bi stops standing still
+
+TRIGGER Procedure 1.0 Step 8.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) The player picks the first option in conversation segment 8729:
+{{dialogue|Arvio|Yeah! And Rian always comes and keeps me company at the shop! Well anyway, it's their anniversary coming up, and we wanted to give them a surprise. Do you want to give us a hand?}}
+
+*''Yeah, sure!'' (No unique dialogue)
+*''I've got a lot on my plate...'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 8741:
+{{dialogue|Arvio|So, do you have time to help us with Rian and Dan-bi's anniversary now?}}
+
+*''Yeah, sure!'' (No unique dialogue)
+*''I've got a lot on my plate...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set Done to 1
+
+TRIGGER Procedure 2.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8074 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 192623) from Dan-bi
+Add behavior CommanderMoveToFlagAndAction (idName: 192625) to Dan-bi
+(param: TargetScene:Main|MoveMode:Walk|FlagName:Pdb9262_2)
+
+TRIGGER Procedure 2.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8074 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 8720 starts:
+{{dialogue|Dan-bi|And it's our anniversary again soon...}}
+
+TRIGGER Procedure 2.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 192624) from Rian
+Add behavior CommanderMoveToFlagAndAction (idName: 192626) to Rian
+(param: TargetScene:Main|MoveMode:Run|FlagName:Ra9262_2|LookAtActor:8074)
+
+TRIGGER Procedure 2.0 Step 5.0 Order 3 Repeat 0
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8073 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 8721, 8722 starts:
+{{dialogue|Rian|Aw dang, Dan-dan. I'm sorry. I love you... I guess I keep forgetting to do these romantic kind of stuff.}}
+{{dialogue|Dan-bi|It's fine... I love you too. And I'm happy as we are but...}}
+
+TRIGGER Procedure 2.0 Step 10.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1900262
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Cable Guy
+END MISSION 1900262
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Arvio|So, do you have time to help us with Rian and Dan-bi's anniversary now?}}
+
+*''Yeah, sure!''
+*''I've got a lot on my plate...''
+
+{{dialogue|Arvio|indent=true|answer=Yeah, sure!
+|Right! So, the Tram System! City Hall has recently put up the budget for it to be reinforced properly so that people can safely use it again...}}
+{{dialogue|Arvio|indent=true|So we thought, what if we can surprise them for their anniversary with a trip over the canyon!}}
+{{dialogue|Arvio|indent=true|It's a beautiful location, perfect for a date! Just Rian and Dan-bi, and that view!}}
+{{dialogue|Arvio|indent=true|Heart warming imagery, right? If you can get that system reinforced we'll take care of the rest. Just... make sure it's real sturdy, we don't want them falling like you and Justice... That'd be a major no-no.}}
+{{dialogue|Arvio|indent=true|Here's the commission from City Hall. Burgess used his title as Chief Inspector to call dibs on it. I always thought that title was just for show...}}
+{{dialogue|Arvio|indent=true|Anyway, we'll go make up a plan. See you at the Tram, ''Player''! And thanks for the help, I'm sure they'll love it!}}
+{{dialogue|Arvio|indent=true|answer=I've got a lot on my plate...
+|Aw really? I was certain you'd help... Well, I guess we can ask another Builder...}}
+{{dialogue|Arvio|indent=true|Uhm, if you change your mind, let me know.}}
+
+==Rewards==
+{{mission reward
+|npc1 = Arvio
+|rp1 = 20
+|npc2 = Burgess
+|rp2 = 20
+|npc3 = Rian
+|rp3 = 10
+|npc4 = Dan-bi
+|rp4 = 10
+|exp = 800
+|reputation = 10
+|gols = 600
+}}

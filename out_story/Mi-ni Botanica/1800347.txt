@@ -1,0 +1,309 @@
+Reading Mission 1800347: Mi-ni Botanica
+
+<onlyinclude>{{Infobox mission
+|name = Mi-ni Botanica
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Mi-ni Botanica:
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 2
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment DAY by 1
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+===Head towards Mi-ni Botanica===
+
+{{mission_details
+|desc = Today is Mi-ni Botanica's opening day. Go check out the new shop.
+|details = Head towards Mi-ni Botanica
+}}
+Run mission Mi-ni Botanica
+Run mission Mi-ni Botanica
+SCENEITEM CREATE FLAG || path: Mission_FlowersStore | id: 23841 | itemType: 0 | sceneName: Main | extraParams: 0 | flagName: bridge_kaimu
+SCENEITEM CREATE FLAG || path: SceneItem_Store_MiniGardenShop | itemType: 3 | id: 17 | sceneName: Main | extraParams: 0 | flagName: MiniGardenShop
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800347
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER ONCE CREATE || missionId: 1200383 | id: 83471 | sceneName: Main | flagName: Trigger_83471 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | id: 83471 | enter: 0 | npc: 8000
+CONDITIONS
+Check if Owen is in town
+ACTIONS
+DELAY MASK SET || maskId: 83471 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83471 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Nia stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8347_0_1
+DELAY MASK SET || maskId: 83471 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 83471 | path: S8347_Item1 | flagName: S8347_Item1 | sceneName: Main | extraParams: -1
+Mi-an stands still in Main and looks at Player
+Burgess stands still in Main
+Owen stands still in Main
+Grace stands still in Main
+Jasmine stands still in Main
+Vivi stands still in Main
+Elsie stands still in Main
+Amirah stands still in Main
+Dan-bi stands still in Main
+Ernest stands still in Main
+SCENEITEM CREATE FLAG || itemType: 0 | id: 83471 | path: S8347_Item1 | flagName: S8347_Item1 | sceneName: Main | extraParams: -1
+
+TRIGGER Procedure 0.0 Step 3.2 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83471 | eventType: 2
+CONDITIONS
+Check if Miguel is in town
+Check if mission Crime and Punishment is result 1 flag 1
+ACTIONS
+Miguel stands still in Main
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83471 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 19376, 19377 starts:
+{{dialogue|Nia|Hey, ''Player''!}}
+{{dialogue|Mi-an|Welcome!}}
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8347001) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8347_0_2)
+
+TRIGGER Procedure 0.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8000 | eventName: MoveToFlagOver | behaviourName: CommanderMoveToFlagAndAction
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 6067_0 starts:
+{{dialogue|Nia|Mi-an has been spreading the word about our shop, and the response has been incredible! Everyone seems to want something green or floral for their homes!}}
+{{dialogue|Nia|I didn't expect such a great turnout on our first day!}}
+{{dialogue|Vivi|Haha, I knew your Mi-ni Botanica would be a hit! Who wouldn't love some plants as decorations? It's just that the conditions in Sandrock weren't ideal before.}}
+{{dialogue|Vivi|But now we have the means to keep 'em alive!}}
+{{dialogue|Mi-an|It's so nice of you to visit us on our first day, Grandma Vivi! Here's your order, and we've also included something special as a shop-opening gift!}}
+{{dialogue|Vivi|Oh, a gift? How lovely. Thank you! I wish your business all the success!}}
+{{dialogue|Nia|Bye, Grandma Vivi!}}
+{{dialogue|Vivi|Goodbye!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 8347392) to Vivi
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8347_39_2|Delay:0.0)
+STOPWATCH REAL TIME SET || id: 83471 | sec: 2
+Vivi stops standing still
+
+TRIGGER Procedure 0.0 Step 9.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 83471
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 6068_0 starts:
+{{dialogue|Nia|All customers today will receive a free gift! This one's for you.}}
+{{dialogue|Nia|Take a look – it's a Hydrangea!}}
+{{dialogue|Nia|It's a special breed we got from a florist in Portia. Isn't it beautiful? It's now yours to keep!}}
+{{dialogue|Mi-an|Thank you for being with us from the beginning and for coming by today.}}
+{{dialogue|Nia|Alright, I need to attend to other customers now. But I'll see you at the celebratory dinner at the Blue Moon tonight!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 10.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 8347392) from Vivi
+Remove behavior CommanderMoveToFlagAndAction (idName: 8347001) from Player
+CUTSCENE UI STATE EXIT || 
+STOPWATCH REAL TIME SET || sec: 5 | id: 83472
+NPC ADD TAG || tag: BuyFlower
+Add 1 Potted Purple Hydrangea of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 11.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 83472
+CONDITIONS
+Always:
+ACTIONS
+Amirah stops standing still
+Jasmine stops standing still
+Ernest stops standing still
+Grace stops standing still
+Dan-bi stops standing still
+Elsie stops standing still
+Miguel stops standing still
+Burgess stops standing still
+Owen stops standing still
+Add behavior SomeNPCRandomBubble (idName: 8347012) to Owen
+(param: -1)
+Add behavior SomeNPCRandomBubble (idName: 8347022) to Grace
+(param: -1)
+Add behavior SomeNPCRandomBubble (idName: 8347052) to Elsie
+(param: -1)
+Add behavior SomeNPCRandomBubble (idName: 8347152) to Amirah
+(param: -1)
+Add behavior SomeNPCRandomBubble (idName: 8347212) to Burgess
+(param: -1)
+Add behavior SomeNPCRandomBubble (idName: 8347402) to Jasmine
+(param: -1)
+Add behavior SomeNPCRandomBubble (idName: 8347692) to Ernest
+(param: -1)
+Add behavior SomeNPCRandomBubble (idName: 8347742) to Dan-bi
+(param: -1)
+
+TRIGGER Procedure 0.0 Step 11.2 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 83472
+CONDITIONS
+Check if Miguel is in town
+Check if mission Crime and Punishment is result 1 flag 1
+ACTIONS
+Add behavior SomeNPCRandomBubble (idName: 8347192) to Miguel
+(param: -1)
+
+TRIGGER Procedure 0.0 Step 12.1 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 14:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior SomeNPCRandomBubble (idName: 8347012) from Owen
+Remove behavior SomeNPCRandomBubble (idName: 8347192) from Miguel
+Remove behavior SomeNPCRandomBubble (idName: 8347212) from Burgess
+
+TRIGGER Procedure 0.0 Step 12.1 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 16:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior SomeNPCRandomBubble (idName: 8347012) from Owen
+Remove behavior SomeNPCRandomBubble (idName: 8347022) from Grace
+Remove behavior SomeNPCRandomBubble (idName: 8347052) from Elsie
+Remove behavior SomeNPCRandomBubble (idName: 8347152) from Amirah
+Remove behavior SomeNPCRandomBubble (idName: 8347192) from Miguel
+Remove behavior SomeNPCRandomBubble (idName: 8347212) from Burgess
+Remove behavior SomeNPCRandomBubble (idName: 8347402) from Jasmine
+
+TRIGGER Procedure 0.0 Step 13.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 17:00 (order: 0):
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Mi-an stops standing still
+Nia stops standing still
+Remove behavior SomeNPCRandomBubble (idName: 8347012) from Owen
+Remove behavior SomeNPCRandomBubble (idName: 8347022) from Grace
+Remove behavior SomeNPCRandomBubble (idName: 8347052) from Elsie
+Remove behavior SomeNPCRandomBubble (idName: 8347152) from Amirah
+Remove behavior SomeNPCRandomBubble (idName: 8347192) from Miguel
+Remove behavior SomeNPCRandomBubble (idName: 8347212) from Burgess
+Remove behavior SomeNPCRandomBubble (idName: 8347402) from Jasmine
+Remove behavior SomeNPCRandomBubble (idName: 8347692) from Ernest
+Remove behavior SomeNPCRandomBubble (idName: 8347742) from Dan-bi
+
+TRIGGER Procedure 0.0 Step 15.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 15:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior SomeNPCRandomBubble (idName: 8347012) from Owen
+Remove behavior SomeNPCRandomBubble (idName: 8347052) from Elsie
+Remove behavior SomeNPCRandomBubble (idName: 8347192) from Miguel
+Remove behavior SomeNPCRandomBubble (idName: 8347212) from Burgess
+Remove behavior SomeNPCRandomBubble (idName: 8347402) from Jasmine
+
+TRIGGER Procedure 1.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 18:00 (order: 0):
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 83472
+SCENEITEM DELETE || itemType: 0 | id: 83471
+SCENEITEM CREATE FLAG || itemType: 0 | id: 83471 | path: S8347_Item1 | sceneName: Main | flagName: S8347_Item1 | extraParams: 0
+Mi-an stops standing still
+Nia stops standing still
+Remove behavior SomeNPCRandomBubble (idName: 8347012) from Owen
+Remove behavior SomeNPCRandomBubble (idName: 8347022) from Grace
+Remove behavior SomeNPCRandomBubble (idName: 8347052) from Elsie
+Remove behavior SomeNPCRandomBubble (idName: 8347152) from Amirah
+Remove behavior SomeNPCRandomBubble (idName: 8347192) from Miguel
+Remove behavior SomeNPCRandomBubble (idName: 8347212) from Burgess
+Remove behavior SomeNPCRandomBubble (idName: 8347402) from Jasmine
+Remove behavior SomeNPCRandomBubble (idName: 8347692) from Ernest
+Remove behavior SomeNPCRandomBubble (idName: 8347742) from Dan-bi
+AREA TRIGGER DELETE || id: 83471
+GLOBAL BLACK BOARD REMOVE || key: FlowerShop
+END MISSION 1800347

@@ -1,0 +1,207 @@
+Reading Mission 1700127: Big Game Hunter
+
+<onlyinclude>{{Infobox mission
+|name = Big Game Hunter
+|image =
+|description = Elsie seems to be busy doing something out in the wilderness, what kind of mysterious thing has she discovered?
+|type = Side
+|time =
+|location =
+|characters = [[Elsie]]
+|condition =
+|details =
+|exp = 750
+|reputation = 15
+|gols = 60
+|npc1 = Elsie
+|rp1 = 15
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200062
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+The Kidnapping is in state 2 with flag 1
+Check if Elsie has favor >= 100
+
+GROUP 10:
+The Kidnapping is successfully completed
+Check if Elsie has favor >= 100
+
+ACTIONS
+Run mission #1800197
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if Elsie has favor >= 100
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+Run mission Big Game Hunter
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700127
+CONDITIONS
+Always:
+ACTIONS
+Add behavior Story1700127_8005_1 (idName: 171271) to Elsie
+(param: -1)
+Set CD to 0
+ACTION DATE SET FLAG || flag: DATE:bgh
+NPC ICON ADD || missionId: 1700127 | npc: 8005 | missionIcon: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700127
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior  Story1700127_8005_1 (idName: 171271) from Elsie
+Run mission Big Game Hunter
+END MISSION 1700127
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Elsie
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 732_0 starts:
+{{dialogue|Elsie|Wah! ''Player''! It's you!}}
+{{dialogue|Elsie|Hahaha! Dang, you got me good that time, ''Player''! Say, how'd you like to get in on a little secret?}}
+{{dialogue|Elsie|Here's the scoop: I may or may not be in the possession... of information that may or may not lead to the capture of something big. Real big. Something simply known in the Yakgirl community as "It."}}
+{{dialogue|Elsie|But I'm afraid that's all I can say for now! I'll let you know how it goes, see ya!}}
+The conversation ends.
+Set CD to 1
+ACTION DATE SET FLAG || flag: DATE:bgh2
+ACTION DATE REMOVE FLAG || flag: DATE:bgh
+NPC ICON REMOVE || npc: 8005 | missionIcon: 0 | missionId: 1700127
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Elsie
+CONDITIONS
+Check if CD is < 4
+ACTIONS
+(cId 2) A conversation 2852 starts:
+{{dialogue|Elsie|Huh? You're back? Listen, I wasn't joshin', I said I'll let you know how it goes! Now buzz off and go build somethin', you'll scare off "It!"}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment CD by 1
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if CD is == 4
+ACTIONS
+DELIVER MISSION 1700127
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Elsie
+CONDITIONS
+Check if CD is >= 4
+ACTIONS
+(cId 3) A conversation 733_0 starts:
+{{dialogue|Elsie|Hey, you ain't doin' nothin' are ya? C'mon, help me track down "It!"}}
+
+*''What is "It," anyway?''
+*''You had me at "It."''
+
+{{dialogue|Elsie|indent=true|answer=What is "It," anyway?
+|Look, if you have to ask, you'll never know... Oh. Right, now I remember why I had to ask for your help:}}
+{{dialogue|Elsie|indent=true|answer=You had me at "It."
+|Yeehawww! Let's bag ourselves an "It!"}}
+{{dialogue|Elsie|indent=true|So! Here's the deal:}}
+{{dialogue|Elsie|I need your foragin' skills to help me scrounge up some bait! We need bugs and bird eggs! That's "It's" favorite. Then, we lure it into my trap and even if "It" grew itself a pair o' wings, it'd never escape our clutches! Nyeahahaha!}}
+{{dialogue|Elsie|Ahem. Alrighty, here's a list of stuff for you to get, let me know when you've got the goods! And then... let the hunt begin!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTION DATE REMOVE FLAG || flag: DATE:bgh2
+ACTION DATE REMOVE FLAG || flag: DATE:bgh
+START MISSION 1700127
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+When the time is 20:00 (order: 0):
+CONDITIONS
+GROUP 0:
+CHECK DATE FLAG || flag: DATE:bgh | compare: 6 | days: 7
+
+GROUP 1:
+CHECK DATE FLAG || flag: DATE:bgh2 | compare: 6 | days: 5
+
+ACTIONS
+Remove behavior Story1700127_8005_1 (idName: 171271) from Elsie
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+CHECK DATE FLAG || flag: DATE:bgh | compare: 6 | days: 6
+
+GROUP 1:
+CHECK DATE FLAG || flag: DATE:bgh2 | compare: 6 | days: 4
+
+ACTIONS
+Add behavior Story1700127_8005_1 (idName: 171271) to Elsie
+(param: -1)
+
+TRIGGER Procedure 2.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE FLAG || flag: DATE:bgh2 | compare: 2 | days: 14
+Big Game Hunter is in state 2 with flag 0
+ACTIONS
+Meerkat stands still in Main
+Meerkat stops standing still
+NPC SET CAN INTERACT || npc: 8053 | canInteract: 1
+ACTION DATE REMOVE FLAG || flag: DATE:bgh2
+Remove behavior  Story1700127_8005_1 (idName: 171271) from Elsie
+CLOSE MISSION || missionId: 1700127
+END MISSION 1700127
+
+==Rewards==
+{{mission reward
+|npc1 = Elsie
+|rp1 = 15
+|exp = 750
+|reputation = 15
+|gols = 60
+}}

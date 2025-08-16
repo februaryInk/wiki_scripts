@@ -1,0 +1,176 @@
+Reading Mission 1900376: The Makings of a Park
+
+<onlyinclude>{{Infobox mission
+|name = The Makings of a Park
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from The Makings of a Park:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1900375
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1900375
+START MISSION 1900375
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1900375
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Makings of a Park
+END MISSION 1900375
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1900376
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Qi===
+
+{{mission_details
+|desc = To create a unique roller coaster, you'll need Qi's help. Talk to Qi to get the diagrams.
+|details = Talk to Qi
+}}
+Set letter to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 4797_0 starts:
+{{dialogue|Qi|Rides for an amusement park...? Oh! You have my attention! In fact, I've been interested in riding a Roller Coaster since I read about them when I was three. It should allow me to experience the centrifugal force without the dangers of injury.}}
+{{dialogue|Qi|How intriguing! However, since you're asking for two different research topics at once... I must ask for 10 Data Discs, each. Please carry on.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 2.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+CHECK PLAYER ITEM || item: 19200001 | itemGrade: -1 | set: 6 | count: 20
+ACTIONS
+===Collect Data Discs===
+
+{{mission_details
+|desc = Qi has some ideas about the design, but he'll need Data Discs to finish the diagram. Collect 20 Data Discs.
+|details = Collect Data Discs
+*{{i2|Data Disc|0/20}}
+*{{i2|Qi|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+CHECK PLAYER ITEM || item: 19200001 | itemGrade: -1 | set: 2 | count: 20
+ACTIONS
+===Talk to Qi===
+
+{{mission_details
+|desc = You've collected the Data Discs, talk to Qi to get the diagrams.
+|details = Talk to Qi
+}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1900375 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Qi===
+
+{{mission_details
+|desc = Qi has some ideas about the design, but he'll need Data Discs to finish the diagram. Collect 20 Data Discs.
+|details = Talk to Qi
+}}
+
+TRIGGER Procedure 0.0 Step 6.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+CHECK PLAYER ITEM || item: 19200001 | itemGrade: -1 | set: 2 | count: 20
+ACTIONS
+(cId 1) A conversation 15290 starts:
+{{dialogue|Qi|Hmm, that should be enough Data Discs. I'll get started on the research. I'll reach out to you soon.}}
+
+TRIGGER Procedure 0.0 Step 7.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 15290) that ends:
+{{dialogue|Qi|Hmm, that should be enough Data Discs. I'll get started on the research. I'll reach out to you soon.}}
+CONDITIONS
+Always:
+ACTIONS
+Remove 20 Data Disc of Default quality (Notify player)
+Set letter to 1
+===Wait for Diagram===
+
+{{mission_details
+|desc = Qi has started working on the diagrams. Wait for him to finish. Remember to check your Mailbox.
+|details = Wait for Diagram
+}}
+
+TRIGGER Procedure 0.0 Step 8.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if letter is == 1
+ACTIONS
+The player receives a letter:
+{{mail|636}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 636
+CONDITIONS
+Always:
+ACTIONS
+===Construct Park Parts===
+
+{{mission_details
+|desc = Now that you've got Qi's diagrams, construct the Coaster Cart and the Sand Buggies on the Assembly Station.
+|details = Construct Park Parts
+*{{i2|Sand Buggy|0/1}}
+*{{i2|Coaster Cart|0/4}}
+}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1900375 | targetId: 4 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1900375
+END MISSION 1900375
+END MISSION 1900376

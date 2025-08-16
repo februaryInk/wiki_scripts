@@ -1,0 +1,486 @@
+Reading Mission 1700136: Stand Up For Yourself!
+
+<onlyinclude>{{Infobox mission
+|name = Stand Up For Yourself!
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Product Recall:
+
+TRIGGER Procedure 2.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1700117 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Arvio===
+
+{{mission_details
+|desc = All photos retrieved, tell Arvio!
+|details = Talk to Arvio
+}}
+
+TRIGGER Procedure 2.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1700117
+NPC LEAVE BY TRAIN || npc: 8064 | isOut: 1 | params: 0
+NPC LEAVE BY TRAIN || npc: 8065 | isOut: 1 | params: 0
+NPC LEAVE BY TRAIN || npc: 8066 | isOut: 1 | params: 0
+NPC LEAVE BY TRAIN || npc: 8070 | isOut: 1 | params: 0
+NPC LEAVE BY TRAIN || npc: 8068 | isOut: 1 | params: 0
+NPC LEAVE BY TRAIN || npc: 8067 | isOut: 1 | params: 0
+Run mission Stand Up For Yourself!
+Remove behavior Story1700117_8014_1 (idName: 17001171) from Arvio
+Remove behavior Story1700117_8064_1 (idName: 17001172) from Tourist
+Remove behavior Story1700117_8065_1 (idName: 17001173) from Tourist
+Remove behavior Story1700117_8066_1 (idName: 17001174) from Tourist
+Remove behavior Story1700117_8067_1 (idName: 17001175) from Tourist
+Remove behavior Story1700117_8068_1 (idName: 17001176) from Tourist
+END MISSION 1700118
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700136
+CONDITIONS
+Always:
+ACTIONS
+Set CD to 5
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Decrement CD by 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if CD is > (maybe?) 3
+CHECK WEATHER STATE || weather: 2 | flag: 0
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1700136 | id: 17136 | sceneName: Main | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80005370 | flagName: makeup_trigger
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 17136
+CONDITIONS
+Away from It All is in state 2 with flag 0
+ACTIONS
+DELAY MASK SET || maskId: 171361 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 171361 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Amirah stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: makeup_player
+DELAY MASK SET || maskId: 171361 | delayTime: 0 | durationTime: 2 | changeType: 1 | curveIndex: 0
+STOPWATCH GAME TIME SET || id: 17136 | minute: 120
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH GAME TIME END || order: 0 | id: 17136
+When the time is 18:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Amirah stops standing still
+AREA TRIGGER DELETE || id: 17136
+AREA TRIGGER DELETE || id: 171360
+END MISSION 1700136
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if CD is == 0
+ACTIONS
+AREA TRIGGER DELETE || id: 17136
+END MISSION 1700136
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 171361 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 3368 starts:
+{{dialogue|Amirah|Sigh...}}
+
+*''Are you alright?'' (No unique dialogue)
+*''(Quietly leave)'' (No unique dialogue)
+
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION CHOICE MADE END || order: 0 | npc: 8015 | id: 3368 | selectIndex: 0 | cId: 1 | missionId: 1700136
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 171361) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:makeup_player3)
+(cId 2) A conversation 912_0 starts:
+{{dialogue|Amirah|Oh... ''Player''. I didn't hear the sound of your footsteps. Are you also out for a walk to ease your mood as well?}}
+
+*''Sorry about what happened with the photos.''
+*''You're in a bad mood?''
+
+{{dialogue|Amirah|indent=true|answer=Sorry about what happened with the photos.
+|reward={{NPC2|Amirah|rp=1}}|Hm? There's no need for you to apologize. I don't blame Arvio either. I'm just annoyed at those tourists. How could people act like that?}}
+{{dialogue|Amirah|indent=true|answer=You're in a bad mood?
+|Yes? Don't tell me you've already forgotten about the "Desert Rose?"}}
+{{dialogue|Amirah|In fact, it was a rather nasty situation. I suppose I hadn't properly thanked you for your assistance. Do you regularly make a habit of helping strangers?}}
+{{dialogue|Amirah|In any case, it was... very kind of you. A rather nice contrast to the behavior of those tourists. I've had them bother me with various... propositions before, but that was the worst incident by far.}}
+{{dialogue|Amirah|I try to sort myself out when I take my walks, and try to tell myself to not let these things get to me, but... let's just say, I've been taking a lot of walks lately...}}
+
+*''Let's dance our troubles away!''
+*''I'll teach you how to deal with creeps.''
+*''Nod solemnly''
+
+{{dialogue|Amirah|indent=true|answer=Let's dance our troubles away!
+|reward={{NPC2|Amirah|rp=2}}|Hm? If you want to start dancing out here for everyone to see, just for my amusement, ''Player'', I won't stop you-}}
+{{dialogue|Amirah|indent=true|answer=Nod solemnly
+|Hm. Well, it's nice to talk to someone, thank you. But I shouldn't concern you with my problems...}}
+{{dialogue|Amirah|indent=true|This view is nice, but I've seen enough. Don't worry about me; even if you hadn't come along, I would've found some way to deal with this issue. I always do.}}
+{{dialogue|Amirah|indent=true|reward={{NPC2|Amirah|rp=15}}|I must go. We'll talk some other time, Builder.}}
+{{dialogue|Amirah|"Deal with them?" Hm... I'm not so sure. I tend to avoid conflict. What would you have me say?}}
+
+*''"Have you no sense of decency!?"''
+*''"Your mother is a Pinecock and your father smelt of Snake Berries!"''
+
+{{dialogue|Amirah|indent=true|answer="Your mother is a Pinecock and your father smelt of Snake Berries!"
+|reward={{NPC2|Amirah|rp=-5}}|I... I'm not going to say that...}}
+{{dialogue|Amirah|indent=true|"Deal with them?" Hm... I'm not so sure. I tend to avoid conflict. What would you have me say?}}
+
+:*''"Have you no sense of decency!?"''
+
+{{dialogue|Amirah|Hm. Worth a try. Assuming they do indeed have any decency to speak of...}}
+{{dialogue|Amirah|Ahem. Excuse me, all of you: I'd prefer you show me a bit more respect.}}
+
+*''You can do better than that!''
+*''Sure, close enough.''
+
+{{dialogue|Amirah|indent=true|answer=You can do better than that!
+|Hm? Exactly as you said? I don't know if I can be that rude... Erm... alright. I'll take a swing at it.}}
+{{dialogue|Amirah|indent=true|Ahem...}}
+{{dialogue|Amirah|indent=true|H-Have you no sense of decency!?}}
+
+:*''That was great!''
+:*''I got goosebumps...''
+
+{{dialogue|Amirah|indent=double|answer=That was great!
+|Ahem...! It seems I got a bit carried away. Though, in a way, that felt kind of nice!}}
+{{dialogue|Amirah|indent=double|answer=I got goosebumps...
+|Ahem...! It seems I got a bit carried away. Though, in a way, that felt kind of nice!}}
+{{dialogue|Amirah|Alright, ''Player''. Thank you. I will take your counsel to heart.}}
+{{dialogue|Amirah|This view is nice, but I've seen enough. Don't worry about me; even if you hadn't come along, I would've found some way to deal with this issue. I always do.}}
+{{dialogue|Amirah|reward={{NPC2|Amirah|rp=15}}|I must go. We'll talk some other time, Builder.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 2) There is a conversation segment (id 3378) that ends:
+{{dialogue|Amirah|Hm? If you want to start dancing out here for everyone to see, just for my amusement, ''Player'', I won't stop you-}}
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 171362 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: 0
+Amirah stands still in Main and looks at Player
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 171362 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 171362 | delayTime: 0 | durationTime: 2 | changeType: 1 | curveIndex: 0
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: makeup_player4
+
+TRIGGER Procedure 1.0 Step 3.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 171368 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: makeup_player3
+DELAY MASK SET || maskId: 171368 | delayTime: 0 | durationTime: 2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 171362 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 17136) to Player
+(param: TargetScene:Main|FlagName:makeup_player4|Action:FunnyDance|LookAtActor:8016)
+
+TRIGGER Procedure 1.0 Step 4.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 171368 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 923_0 starts:
+{{dialogue|Amirah|Ahah... You really did it. Oh, is it over? I was just about to start clapping to the beat; I just... wasn't quite able to discern a rhythm out of your movements...}}
+{{dialogue|Amirah|How silly of you. But I must admit, I feel better. Still, I just wish I knew what to say when a tourist is aggressive about getting a photo with me.}}
+{{dialogue|Amirah|I try to sort myself out when I take my walks, and try to tell myself to not let these things get to me, but... let's just say, I've been taking a lot of walks lately...}}
+
+*''I'll teach you how to deal with creeps.''
+*''Nod solemnly''
+
+{{dialogue|Amirah|indent=true|answer=I'll teach you how to deal with creeps.
+|reward={{NPC2|Amirah|rp=4}}|"Deal with them?" Hm... I'm not so sure. I tend to avoid conflict. What would you have me say?}}
+
+:*''"Have you no sense of decency!?"''
+:*''"Your mother is a Pinecock and your father smelt of Snake Berries!"''
+
+{{dialogue|Amirah|indent=double|answer="Have you no sense of decency!?"
+|Hm. Worth a try. Assuming they do indeed have any decency to speak of...}}
+{{dialogue|Amirah|indent=double|Ahem. Excuse me, all of you: I'd prefer you show me a bit more respect.}}
+
+::*''You can do better than that!''
+::*''Sure, close enough.''
+
+{{dialogue|Amirah|indent=3|answer=You can do better than that!
+|Hm? Exactly as you said? I don't know if I can be that rude... Erm... alright. I'll take a swing at it.}}
+{{dialogue|Amirah|indent=3|Ahem...}}
+{{dialogue|Amirah|indent=3|H-Have you no sense of decency!?}}
+
+:::*''That was great!''
+:::*''I got goosebumps...''
+
+{{dialogue|Amirah|indent=4|answer=That was great!
+|Ahem...! It seems I got a bit carried away. Though, in a way, that felt kind of nice!}}
+{{dialogue|Amirah|indent=4|Alright, ''Player''. Thank you. I will take your counsel to heart.}}
+{{dialogue|Amirah|indent=4|answer=I got goosebumps...
+|Ahem...! It seems I got a bit carried away. Though, in a way, that felt kind of nice!}}
+{{dialogue|Amirah|indent=4|Alright, ''Player''. Thank you. I will take your counsel to heart.}}
+{{dialogue|Amirah|indent=3|answer=Sure, close enough.
+|Alright, ''Player''. Thank you. I will take your counsel to heart.}}
+{{dialogue|Amirah|indent=double|answer="Your mother is a Pinecock and your father smelt of Snake Berries!"
+|reward={{NPC2|Amirah|rp=-5}}|I... I'm not going to say that...}}
+{{dialogue|Amirah|indent=double|"Deal with them?" Hm... I'm not so sure. I tend to avoid conflict. What would you have me say?}}
+
+::*''"Have you no sense of decency!?"''
+
+{{dialogue|Amirah|indent=3|answer="Have you no sense of decency!?"
+|Hm. Worth a try. Assuming they do indeed have any decency to speak of...}}
+{{dialogue|Amirah|indent=3|Ahem. Excuse me, all of you: I'd prefer you show me a bit more respect.}}
+
+:::*''You can do better than that!''
+:::*''Sure, close enough.''
+
+{{dialogue|Amirah|indent=4|answer=You can do better than that!
+|Hm? Exactly as you said? I don't know if I can be that rude... Erm... alright. I'll take a swing at it.}}
+{{dialogue|Amirah|indent=4|Ahem...}}
+{{dialogue|Amirah|indent=4|H-Have you no sense of decency!?}}
+
+::::*''That was great!''
+::::*''I got goosebumps...''
+
+{{dialogue|Amirah|indent=5|answer=That was great!
+|Ahem...! It seems I got a bit carried away. Though, in a way, that felt kind of nice!}}
+{{dialogue|Amirah|indent=5|Alright, ''Player''. Thank you. I will take your counsel to heart.}}
+{{dialogue|Amirah|indent=5|answer=I got goosebumps...
+|Ahem...! It seems I got a bit carried away. Though, in a way, that felt kind of nice!}}
+{{dialogue|Amirah|indent=5|Alright, ''Player''. Thank you. I will take your counsel to heart.}}
+{{dialogue|Amirah|indent=4|answer=Sure, close enough.
+|Alright, ''Player''. Thank you. I will take your counsel to heart.}}
+{{dialogue|Amirah|indent=true|answer=Nod solemnly
+|Hm. Well, it's nice to talk to someone, thank you. But I shouldn't concern you with my problems...}}
+{{dialogue|Amirah|This view is nice, but I've seen enough. Don't worry about me; even if you hadn't come along, I would've found some way to deal with this issue. I always do.}}
+{{dialogue|Amirah|reward={{NPC2|Amirah|rp=15}}|I must go. We'll talk some other time, Builder.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 171368 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 17136) from Player
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 3377) that ends:
+{{dialogue|Amirah|I must go. We'll talk some other time, Builder.}}
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 17136
+AREA TRIGGER DELETE || id: 171360
+Amirah stops standing still
+Amirah stops standing still
+Remove behavior CommanderMoveToFlag (idName: 171361) from Player
+CUTSCENE UI STATE EXIT || 
+Amirah gains 15 favor
+END MISSION 1700136
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 3381:
+{{dialogue|Amirah|"Deal with them?" Hm... I'm not so sure. I tend to avoid conflict. What would you have me say?}}
+
+*''"Have you no sense of decency!?"'' (No unique dialogue)
+*''"Your mother is a Pinecock and your father smelt of Snake Berries!"'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Amirah gains -5 favor
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 3369:
+{{dialogue|Amirah|Oh... ''Player''. I didn't hear the sound of your footsteps. Are you also out for a walk to ease your mood as well?}}
+
+*''Sorry about what happened with the photos.'' (No unique dialogue)
+*''You're in a bad mood?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Amirah gains 1 favor
+
+TRIGGER Procedure 2.0 Step 3.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 3374:
+{{dialogue|Amirah|I try to sort myself out when I take my walks, and try to tell myself to not let these things get to me, but... let's just say, I've been taking a lot of walks lately...}}
+
+*''Let's dance our troubles away!'' (No unique dialogue)
+*''I'll teach you how to deal with creeps.'' (No unique dialogue)
+*''Nod solemnly'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Amirah gains 2 favor
+
+TRIGGER Procedure 2.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 3374:
+{{dialogue|Amirah|I try to sort myself out when I take my walks, and try to tell myself to not let these things get to me, but... let's just say, I've been taking a lot of walks lately...}}
+
+*''Let's dance our troubles away!'' (No unique dialogue)
+*''I'll teach you how to deal with creeps.'' (No unique dialogue)
+*''Nod solemnly'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 3390:
+{{dialogue|Amirah|I try to sort myself out when I take my walks, and try to tell myself to not let these things get to me, but... let's just say, I've been taking a lot of walks lately...}}
+
+*''I'll teach you how to deal with creeps.'' (No unique dialogue)
+*''Nod solemnly'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Amirah gains 4 favor
+
+TRIGGER Procedure 2.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 3368:
+{{dialogue|Amirah|Sigh...}}
+
+*''Are you alright?'' (No unique dialogue)
+*''(Quietly leave)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 171363 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 171363 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 17136
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: makeup_player2
+DELAY MASK SET || maskId: 171363 | delayTime: 0 | durationTime: 2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 7.0 Order 7 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 171360
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 3368 starts:
+{{dialogue|Amirah|Sigh...}}
+
+*''Are you alright?'' (No unique dialogue)
+*''(Quietly leave)'' (No unique dialogue)
+
+
+TRIGGER Procedure 2.0 Step 7.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 171363 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1700136 | id: 171360 | sceneName: Main | flagName: makeup_trigger | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80005370
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 3384:
+{{dialogue|Amirah|Ahem. Excuse me, all of you: I'd prefer you show me a bit more respect.}}
+
+*''You can do better than that!'' (No unique dialogue)
+*''Sure, close enough.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key AmirahShout with info 1.

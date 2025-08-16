@@ -1,0 +1,247 @@
+Reading Mission 1200238: Ain't No Mountain Wide Enough
+
+<onlyinclude>{{Infobox mission
+|name = Ain't No Mountain Wide Enough
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Ain't No Mountain Wide Enough:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200237
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|433}}
+DELIVER MISSION 1200237
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200237
+CONDITIONS
+Always:
+ACTIONS
+Run mission Ain't No Mountain Wide Enough
+END MISSION 1200237
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200238
+CONDITIONS
+Always:
+ACTIONS
+===Make Explosives===
+
+{{mission_details
+|desc = Make the explosives on the Worktable following Heidi's recipe.
+|details = Make Explosives
+*{{i2|Industrial Explosives|0/3}}
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200237 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Go to the Meeting Point===
+
+{{mission_details
+|desc = Now you have the explosives, go to the meeting point to meet with Mint and Heidi.
+|details = Go to the Meeting Point
+}}
+AREA TRIGGER CREATE || missionId: 1200237 | id: 22381 | sceneName: Main | flagName: bombmountain_trigger | showOnMap: 1 | mapIcon: MissionArea | transId: 80012260
+
+TRIGGER Procedure 1.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22381
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 22381 | delayTime: 0 | durationTime: -2 | curveIndex: 0 | changeType: 0
+AREA TRIGGER DELETE || id: 22381
+ACTOR BLIND SET || set: 1
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22381
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: bombmountain_player
+Heidi stands still in Main and looks at Player
+Mint stands still in Main and looks at Player
+NPC RANDOM ADD || dailyBehavior: RandomNPC | scene: Main | id: 1 | instId: 22381 | flagName: bombmountain_random1
+NPC RANDOM ADD || id: 1 | instId: 22382 | flagName: bombmountain_random2 | scene: Main | dailyBehavior: RandomNPC
+NPC RANDOM ADD || id: 1 | instId: 22383 | flagName: bombmountain_random3 | scene: Main | dailyBehavior: RandomNPC
+NPC RANDOM ADD || id: 3 | instId: 22384 | flagName: bombmountain_random4 | dailyBehavior: RandomNPC | scene: Main
+DELAY MASK SET || maskId: 22381 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+22381 stands still in Main
+22382 stands still in Main
+22383 stands still in Main
+22384 stands still in Main
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22382
+CONDITIONS
+Always:
+ACTIONS
+Heidi stops standing still
+Mint stops standing still
+22381 stops standing still
+22382 stops standing still
+22383 stops standing still
+22384 stops standing still
+Heidi stands still in Main and looks at Player
+Mint stands still in Main and looks at Player
+22381 stands still in Main
+22382 stands still in Main
+22383 stands still in Main
+22384 stands still in Main
+
+TRIGGER Procedure 2.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 22381
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 2230_0 starts:
+{{dialogue|Heidi|Hey, ''Player''! Welcome to the site of the future Sandrock-Portia Tunnel! You uh... got the stuff?}}
+
+*''Got it right here.''
+*''Will this work?''
+
+{{dialogue|Heidi|indent=true|answer=Got it right here.
+|Ah... one hundred percent pure nitroglycerin. You did good, ''Player''.}}
+{{dialogue|Heidi|indent=true|Now, let's put these bad boys to work!}}
+{{dialogue|Heidi|indent=true|answer=Will this work?
+|Ah... all the calculations say it will, so we'll see!}}
+{{dialogue|Heidi|indent=true|I've never used so much explosives before, so it'll be a first for me as well.}}
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Place the Charges===
+
+{{mission_details
+|desc = Everything is ready. Head to the tunnel entrance and place the explosives at the planned explosion spot.
+|details = Place the Charges
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 22381 | sceneName: Main | flagName: bombmountain_bomb | extraParams: Mission_tunnelbomb|CreatorItem|19112032_3|1547|GetGift|1.4 | path: Mission_hydroponic_empey
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 22381 | missionId: 1200237 | iconType: 3
+CUTSCENE UI STATE EXIT || 
+ACTOR BLIND SET || set: 0
+
+TRIGGER Procedure 2.0 Step 1.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 22381
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 22382 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+ACTOR BLIND SET || set: 1
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 22382 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 21875
+DELAY MASK SET || maskId: 22382 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+{{cutscene|id = 1340}}
+A cutscene CG_ROCKBURST (duration: 0.0) starts playing
+Boom! - A solid start is half the battle. We've blown a huge hole in the side of the mountain. Finally the tunnel can move forward!
+SCENEITEM DELETE || itemType: 12 | id: 22381
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: bombmountain_player2
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_ROCKBURST | state: 8
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 22381 | sceneName: Main | path: Mission_Portia_Tunnel_Portal_Boom_End | flagName: bridge_kaimu | extraParams: 0
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_ROCKBURST | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 7672, 7673 starts:
+{{dialogue|Heidi|Whew! Those explosives you made really did the trick! After some initial setup, I reckon we'll be ready to start drilling!}}
+{{dialogue|Heidi|Good work, ''Player''! Wait for Qi's drill diagram. I'll tell him to hurry it up.}}
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTOR BLIND SET || set: 0
+CUTSCENE UI STATE EXIT || 
+Heidi stops standing still
+Mint stops standing still
+22381 stops standing still
+22382 stops standing still
+22383 stops standing still
+22384 stops standing still
+SUBMIT MISSION 1200237
+
+TRIGGER Procedure 3.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Check if mission 1700246 is result 1 flag 0
+ACTIONS
+END MISSION 1700246
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM REMOVE || id: 22381
+NPC RANDOM REMOVE || id: 22382
+NPC RANDOM REMOVE || id: 22383
+NPC RANDOM REMOVE || id: 22384
+END MISSION 1200238

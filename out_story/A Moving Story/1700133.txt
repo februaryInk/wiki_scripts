@@ -1,0 +1,264 @@
+Reading Mission 1700133: A Moving Story
+
+<onlyinclude>{{Infobox mission
+|name = A Moving Story
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from A Moving Story:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700132
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1700132
+START MISSION 1700132
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700132
+CONDITIONS
+Always:
+ACTIONS
+Run mission A Moving Story
+END MISSION 1700132
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700133
+CONDITIONS
+Always:
+ACTIONS
+===Prepare Dishes===
+
+{{mission_details
+|desc = It's impolite to attend a party empty-handed. Make a Milk Steamed Egg to take with you.
+|details = Prepare Dishes
+*{{i2|Milk Steamed Egg|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1700132 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Wait Until Tomorrow===
+
+{{mission_details
+|desc = Ernest is still preparing for the party. Go to his house tomorrow at 18:00PM to attend.
+|details = Wait Until Tomorrow
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 17133001
+CONDITIONS
+CHECK PLAYER ITEM || item: 15000084 | itemGrade: -1 | set: 3 | count: 0
+CHECK TIME || compare: 2 | hour: 18 | minute: 0
+ACTIONS
+(cId 0) A conversation 3285 starts:
+{{dialogue|Player|It's pretty rude to attend the party empty-handed. Make a Milk Steamed Egg and then come back.}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 17133001
+CONDITIONS
+CHECK TIME || compare: 6 | hour: 18 | minute: 0
+ACTIONS
+(cId 0) A conversation 3942 starts:
+{{dialogue|Player|The housewarming party is still being prepared. It will start at 18:00 tonight!}}
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 17133001
+CONDITIONS
+CHECK PLAYER ITEM || item: 15000084 | itemGrade: -1 | set: 2 | count: 1
+CHECK TIME || compare: 2 | hour: 18 | minute: 0
+ACTIONS
+(cId 0) A conversation 3943 starts:
+{{dialogue|Player|The housewarming party has begun, do you want to attend?}}
+
+*''Enter'' (No unique dialogue)
+*''Leave'' (No unique dialogue)
+
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the first option in conversation segment 3943:
+{{dialogue|Player|The housewarming party has begun, do you want to attend?}}
+
+*''Enter'' (No unique dialogue)
+*''Leave'' (No unique dialogue)
+
+CONDITIONS
+CHECK PLAYER ITEM || item: 15000084 | itemGrade: -1 | set: 2 | count: 1
+CHECK TIME || compare: 2 | hour: 18 | minute: 0
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || delayTime: 0 | durationTime: 1.5 | changeType: 0 | curveIndex: 0 | maskId: 1713301
+SCENEITEM CREATE FLAG || itemType: 0 | id: 17133002 | path: SceneItem_Cake | sceneName: Apartment | flagName: ernest_q2_cake | extraParams: -1
+GLOBAL BLACK BOARD REMOVE || key: ErnestDish
+AREA TRIGGER DELETE || id: 171331
+
+TRIGGER Procedure 1.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 1713301 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Apartment | flagName: ernest_q2_player
+DELAY MASK SET || maskId: 1713301 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 18:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER ONCE CREATE || transId: 80005242 | mapIcon: MissionAreaBranch | showOnMap: 1 | missionId: 1700132 | id: 171331 | sceneName: Apartment | flagName: ernest_q2_ernest
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 24:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 171331
+
+TRIGGER Procedure 1.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 1713301 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 3276 starts:
+{{dialogue|Ernest|You grace me with your presence, ''Player''. You are the first to arrive. Have you brought a dish over? Let's wait for the others. We'll start the party when everyone's here.}}
+
+TRIGGER Procedure 2.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 8501}}
+A cutscene CG_NOBODYPARTY (duration: 1.5) starts playing
+Housewarming Party - Ernest held a housewarming party in his apartment to try and fit in a bit, but no one came. It turned out he forgot to send the invitations!
+
+TRIGGER Procedure 2.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_NOBODYPARTY | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 897_0 starts:
+{{dialogue|Ernest|Oh drat! I forgot that I've moved to Sandrock already! There's no one to do my work for me! No butlers, no cooks!}}
+{{dialogue|Ernest|I had a whole team running errands for me back home. Oh, I remember how angry I was when my butler sent my love letter before I could even finish it... and now I'm the one who forgot to send my own letters! I have no one to blame but myself.}}
+{{dialogue|Ernest|Well, at least it's nice to know I'm not hated.}}
+
+*''Love letter to whom?''
+*''Nobody would hate you.''
+
+{{dialogue|Ernest|indent=true|answer=Love letter to whom?
+|This was back in grade school. I don't even remember who it was for, but my sister turned it into a song at some point. Have you ever been to Atara? A lot of people know that song.}}
+{{dialogue|Ernest|indent=true|"Stars in the puppy's eyes, falling into the kitten's dreams..." Does that ring a bell?}}
+{{dialogue|Ernest|indent=true|answer=Nobody would hate you.
+|That's good to know. I got some side eyes when I was doing interviews about Logan. I was worried that people from Sandrock were offended by my report in the Atara Times.}}
+{{dialogue|Ernest|indent=true|Atara's writing style differs from the Tumbleweed's. We'd go bankrupt if we wrote news like Heidi does.}}
+{{dialogue|Ernest|Alright then. Seeing as nobody else will come tonight, why don't you take the cake home, if you'd like, ''Player''?}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 17133001
+CUTSCENE UI STATE EXIT || 
+Ernest stops standing still
+BAG MODIFY BY TARGET || missionId: 1700132 | targetId: 1
+SUBMIT MISSION 1700132
+
+TRIGGER Procedure 2.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 17133002
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Banquet Cake of Default quality (Notify player)
+SCENEITEM DELETE || itemType: 0 | id: 17133002
+END MISSION 1700133
+
+TRIGGER Procedure 2.0 Step 7.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 17133002
+END MISSION 1700133
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Ernest stands still in Apartment
+===Attend the Housewarming Party===
+
+{{mission_details
+|desc = Bring the dish to Ernest's house for the housewarming party at 18:00PM. Don't attend after 24:00PM, as his house will be locked!
+|details = Attend the Housewarming Party
+}}
+CALENDAR SET REMINDER || addDays: 0 | hour: 17 | transId: 80005250
+SCENEITEM CREATE FLAG || itemType: 0 | path: Interact_ErnestHouse | sceneName: Apartment | flagName: ernest_q2_door | id: 17133001 | extraParams: 0
+Set global blackboard key ErnestDish with info 1.
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1700133
+CONDITIONS
+Always:
+ACTIONS
+Ernest stops standing still
+The player receives a letter:
+{{mail|232}}
+GLOBAL BLACK BOARD REMOVE || key: ErnestDish
+SCENEITEM DELETE || itemType: 0 | id: 17133001
+AREA TRIGGER DELETE || id: 171331

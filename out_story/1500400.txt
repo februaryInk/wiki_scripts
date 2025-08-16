@@ -1,0 +1,483 @@
+Reading Mission 1500400: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200106
+
+TRIGGER Procedure 5.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check relationship with Fang is Lover
+CHECK GLOBAL BLACKBOARD || key: fangginger | info: 1 | exist: 0
+ACTIONS
+Run mission "Him"
+Set global blackboard key fangginger with info 1.
+
+TRIGGER Procedure 6.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+"Him" is successfully completed
+ACTIONS
+Run mission #1500400
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1500400 | id: 540001 | sceneName: Main | flagName: Story_5400_Area | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80009546
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 540001
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 540001 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 540001
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 540001 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 540001 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Talon stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: Story_5400_Player
+173891 stands still in Main
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 540001 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 5400001) to Talon
+(param: CMDAction:OpenDoor)
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8102 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 540001) A conversation 21091 starts:
+{{dialogue|Talon|Fang, are you here?}}
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8102 | cId: 540001 | missionId: 1500400
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 540001) from Talon
+Add behavior CommanderNPCAction (idName: 540002) to Talon
+(param: CMDAction:OpenDoor)
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8102 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 540002) A conversation 21092, 21093, 21094, 21095 starts:
+{{dialogue|Talon|Fang, I'm returning to Seesai. There is something I wish to say to you. Would you open the door?}}
+{{dialogue|Talon|Fang, I'm sorry... for everything...}}
+{{dialogue|Talon|I may not earn your forgiveness in this life... Perhaps... perhaps this is fitting punishment for my misdeeds.}}
+{{dialogue|Talon|Live well, my son.}}
+
+TRIGGER Procedure 0.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8102 | cId: 540002 | missionId: 1500400
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 540002) from Talon
+Add behavior CommanderMoveToFlagAndAction (idName: 540003) to Talon
+(param: TargetScene:Main|MoveMode:Walk|FlagName:Story_540003)
+Add behavior CommanderMoveToFlagAndAction (idName: 540004) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:Story_5400_Player1)
+
+TRIGGER Procedure 0.0 Step 10.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 540003) from Talon
+Add behavior CommanderMoveToFlagAndAction (idName: 540005) to Talon
+(param: TargetScene:Main|MoveMode:Walk|FlagName:Story_540004)
+
+TRIGGER Procedure 0.0 Step 10.5 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8102 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 540003) A conversation 6683_0 starts:
+{{dialogue|Talon|Ah, ''Player''. You're here. I am leaving. I have recovered well, but Fang...}}
+
+*''I think Fang has forgiven you.''
+*''Have a good trip.''
+
+{{dialogue|Talon|indent=true|answer=Have a good trip.
+|Thank you...}}
+{{dialogue|Talon|Why... what did he say?}}
+
+*''When the machine malfunctioned, he was so worried.''
+*''It's just a guess.''
+
+{{dialogue|Talon|indent=true|answer=When the machine malfunctioned, he was so worried.
+|The machine... malfunctioned?}}
+{{dialogue|Talon|indent=true|Maybe... he was just sticking to his oaths. Or... maybe...}}
+{{dialogue|Talon|indent=true|answer=It's just a guess.
+|My guess... is that he hasn't. After all, he still doesn't want to see me.}}
+{{dialogue|Talon|Regardless... I'm glad I came.}}
+{{dialogue|Talon|''Player'', take care of yourself. Goodbye.}}
+The conversation ends.
+Fang stands still in Main
+
+TRIGGER Procedure 0.0 Step 11.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8102 | cId: 540003 | missionId: 1500400
+CONDITIONS
+Always:
+ACTIONS
+(cId 540004) A conversation 21108, 21109, 21110 starts:
+{{dialogue|Talon|Son...!}}
+{{dialogue|Fang|Well?}}
+{{dialogue|Fang|Are you coming?}}
+Add behavior CommanderMoveToFlagAndAction (idName: 540007) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:Story_5400_Player2)
+
+TRIGGER Procedure 0.0 Step 11.5 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 540004) There is a conversation segment (id 21108) that ends:
+{{dialogue|Talon|Son...!}}
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 540005) from Talon
+Add behavior CommanderMoveToFlagAndAction (idName: 540006) to Talon
+(param: TargetScene:Main|MoveMode:Walk|FlagName:Story_540006)
+
+TRIGGER Procedure 0.0 Step 12.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8016 | cId: 540004 | missionId: 1500400
+CONDITIONS
+Always:
+ACTIONS
+(cId 540005) A conversation 21111, 21112, 21113, 21114 starts:
+{{dialogue|Talon|C... coming where?}}
+{{dialogue|Fang|To visit Mother.}}
+{{dialogue|Talon|Wh... what do you mean...?}}
+{{dialogue|Fang|Just come.}}
+
+TRIGGER Procedure 0.0 Step 13.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 540011
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 540002 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 14.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 540002 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 540002 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Fang stands still in Main
+Talon stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: Story_5400_Player3
+Remove behavior CommanderMoveToFlagAndAction (idName: 540007) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 540004) from Player
+
+TRIGGER Procedure 0.0 Step 16.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 540009
+CONDITIONS
+Always:
+ACTIONS
+(cId 540006) A conversation 21115 starts:
+{{dialogue|Talon|I... I see. You've made a shrine...}}
+
+TRIGGER Procedure 0.0 Step 17.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 540006) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 540008) to Fang
+(param: CMDAction:PutDownFlower)
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8016 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 540001 | path: Mission_StoryFlower | sceneName: Main | flagName: Story_5400_Item | extraParams: 0
+STOPWATCH REAL TIME SET || id: 540001 | sec: 2
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 540001
+CONDITIONS
+Always:
+ACTIONS
+(cId 540007) A conversation 21116, 21117 starts:
+{{dialogue|Talon|...}}
+{{dialogue|Talon|Fang, I understand why you hate me-}}
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8102 | cId: 540007 | missionId: 1500400
+CONDITIONS
+Always:
+ACTIONS
+(cId 540008) A conversation 21118, 21119, 21120, 21178 starts:
+{{dialogue|Fang|I don't hate you.}}
+{{dialogue|Fang|My whole life, I felt like I was growing up without a father. And, having met you again...}}
+{{dialogue|Fang|I feel exactly the same.}}
+{{dialogue|Talon|...}}
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 540008) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 540009) to Fang
+(param: TargetScene:Main|MoveMode:Run|FlagName:Story_540009)
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8016 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 540009) A conversation 21121, 21122, 21123, 21124 starts:
+{{dialogue|Fang|I didn't need you to find my profession, I didn't need you to find success, and I didn't need you to find happiness.}}
+{{dialogue|Fang|So...}}
+{{dialogue|Fang|No, I don't hate you.}}
+{{dialogue|Fang|You're just another patient to me.}}
+
+TRIGGER Procedure 1.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8016 | cId: 540009 | missionId: 1500400
+CONDITIONS
+Always:
+ACTIONS
+(cId 540010) A conversation 21125, 21126, 21127, 21128, 21129, 21130, 21131, 21132, 21133 starts:
+{{dialogue|Talon|...Mm.}}
+{{dialogue|Talon|Your words sting, my son. Though, I admit: you're like a stranger to me, too.}}
+{{dialogue|Talon|But... maybe it doesn't have to be that way. If I returned to Sandrock... to see you... would you-}}
+{{dialogue|Fang|I wouldn't stop you. I... keep in touch with many of my patients.}}
+{{dialogue|Talon|...}}
+{{dialogue|Fang|...Before you go... You should thank her.}}
+{{dialogue|Talon|Thank her? Thank... Sarnai?}}
+{{dialogue|Fang|I spent my life healing because of her. I studied your disease because of her. If she hadn't died... you wouldn't be alive.}}
+{{dialogue|Talon|...}}
+
+TRIGGER Procedure 1.0 Step 13.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8102 | cId: 540010 | missionId: 1500400
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 54011) to Talon
+(param: TargetScene:Main|MoveMode:Run|FlagName:Story_540008)
+
+TRIGGER Procedure 1.0 Step 14.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8102 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 540011) A conversation 21134, 21135, 21136, 21137, 21138, 21178, 21312 starts:
+{{dialogue|Talon|Th... Thank you, Sarnai. I... wish you were here. To see the amazing man our son has become. And the beautiful life he's made for himself here.}}
+{{dialogue|Talon|I wish I'd had the courage to stay when I met you. I wish I'd spent more time cherishing the people who actually loved me.}}
+{{dialogue|Talon|Those were the sacrifices I made for money and power, and in the end, none of those things could help me. What saved me was... your love. Your love which I squandered.}}
+{{dialogue|Talon|What happened to you and Fang, I was wrong. I should have taken care of you back then, I should have taken responsibility. I'll forever regret it...}}
+{{dialogue|Talon|May we meet again... under better circumstances.}}
+{{dialogue|Talon|...}}
+{{dialogue|Fang|...}}
+
+TRIGGER Procedure 1.0 Step 19.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8016 | cId: 540011 | missionId: 1500400
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 54012) to Talon
+(param: TargetScene:Main|MoveMode:Run|FlagName:Story_540010)
+
+TRIGGER Procedure 1.0 Step 20.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8102 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 540012) A conversation 21139, 21140, 21141, 21142, 21311, 21143, 21144, 21145, 21146, 21147, 21148, 21149, 21150, 21151, 21152, 21153, 21154, 21155, 21156 starts:
+{{dialogue|Talon|Fang, the reason I was knocking on your door...}}
+{{dialogue|Talon|I wanted to give you this...}}
+{{dialogue|Fang|No gifts. I've done everything til now without your help. I don't need to start now.}}
+{{dialogue|Talon|It was your mother's.}}
+{{dialogue|Fang|...?}}
+{{dialogue|Talon|This necklace... She gave it to me when she thought we would marry...}}
+{{dialogue|Talon|I never felt right wearing it. I think she'd rather you have it.}}
+{{dialogue|Fang|This is...}}
+{{dialogue|Fang|It's a mirrored image of her pendant...}}
+{{dialogue|Fang|Of course you didn't feel right wearing it. It wasn't meant for you.}}
+{{dialogue|Fang|It was meant for two people in love.}}
+{{dialogue|Fang|These pendants are the good memories you've made together, not objects of regret.}}
+{{dialogue|Fang|''Player'' and I, we will make good on her intentions.}}
+{{dialogue|Talon|Mm. I... envy what you have.}}
+{{dialogue|Fang|You had your chance.}}
+{{dialogue|Talon|Yes...}}
+{{dialogue|Talon|Thank you, my son. For saving my life. For healing my heart, in more ways than one.}}
+{{dialogue|Talon|I will return to Seesai. I will bring your medicine, and I will make sure it gets made and supplied to hospitals across the land.}}
+{{dialogue|Fang|You don't have to do that. I can find my own way to get it done.}}
+
+TRIGGER Procedure 1.0 Step 30.0 Order 26 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 540012) There is a conversation segment (id 21156) that ends:
+{{dialogue|Fang|You don't have to do that. I can find my own way to get it done.}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 54013) to Talon
+(param: TargetScene:Main|MoveMode:Run|FlagName:Story_540008)
+
+TRIGGER Procedure 1.0 Step 31.0 Order 27 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8102 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 540013) A conversation 21157, 21158, 21159, 21160, 21161, 21162 starts:
+{{dialogue|Talon|Ah, I won't be doing it for you, son.}}
+{{dialogue|Talon|I'll be doing it...}}
+{{dialogue|Talon|For her.}}
+{{dialogue|Fang|...}}
+{{dialogue|Fang|Let's go, ''Player''. Let's go home.}}
+{{dialogue|Talon|Goodbye, my son. Goodbye, ''Player''.}}
+
+TRIGGER Procedure 1.0 Step 34.0 Order 30 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8102 | cId: 540013 | missionId: 1500400
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 540004) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 540007) from Player
+Add behavior CommanderMoveToFlagAndAction (idName: 54014) to Fang
+(param: TargetScene:Main|MoveMode:Walk|FlagName:Story_540011)
+Add behavior CommanderMoveToFlagAndAction (idName: 54015) to Talon
+(param: TargetScene:Main|MoveMode:Walk|FlagName:Story_540013)
+Add behavior CommanderMoveToFlagAndAction (idName: 54016) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:Story_540012)
+STOPWATCH REAL TIME SET || id: 540002 | sec: 5
+
+TRIGGER Procedure 1.0 Step 35.0 Order 31 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 540002
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 540003 | sec: 13
+
+TRIGGER Procedure 1.0 Step 37.0 Order 33 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 540043
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 540003 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 540003 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 540003 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Talon stops standing still
+Fang stops standing still
+Fang stops standing still
+Talon stops standing still
+Remove behavior CommanderNPCAction (idName: 5400001) from Talon
+Remove behavior CommanderMoveToFlagAndAction (idName: 540005) from Talon
+Remove behavior CommanderMoveToFlagAndAction (idName: 540006) from Talon
+Remove behavior CommanderMoveToFlagAndAction (idName: 540007) from Player
+Remove behavior CommanderNPCAction (idName: 540008) from Fang
+Remove behavior CommanderMoveToFlagAndAction (idName: 540009) from Fang
+Remove behavior CommanderMoveToFlagAndAction (idName: 54012) from Talon
+Remove behavior CommanderMoveToFlagAndAction (idName: 54010) from Talon
+Remove behavior CommanderMoveToFlagAndAction (idName: 54011) from Talon
+Remove behavior CommanderMoveToFlagAndAction (idName: 54013) from Talon
+Remove behavior CommanderMoveToFlagAndAction (idName: 540004) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 54014) from Fang
+Remove behavior CommanderMoveToFlagAndAction (idName: 54015) from Talon
+Remove behavior CommanderMoveToFlagAndAction (idName: 54016) from Player
+CUTSCENE UI STATE EXIT || 
+173891 stops standing still
+END MISSION 1500400

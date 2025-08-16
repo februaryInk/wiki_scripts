@@ -1,0 +1,147 @@
+Reading Mission 1800397: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200128
+
+TRIGGER Procedure 13.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Grace
+CONDITIONS
+Check if mission Grace's Return is result 1 flag 1
+Check relationship with Grace is Lover
+ACTIONS
+(cId 51) A conversation 5307_0 starts:
+{{dialogue|Grace|When you were reading me that letter, it felt like I was under fire; my heart was pounding. You couldn't tell? Oh. Right. That's part of our training...}}
+
+*''I wouldn't expect any less from my "archaeologist" girlfriend!''
+*''I almost thought you were going to say no!''
+
+{{dialogue|Grace|indent=true|answer=I wouldn't expect any less from my "archaeologist" girlfriend!
+|Haha, it's a habit that's hard to kick!}}
+{{dialogue|Grace|indent=true|answer=I almost thought you were going to say no!
+|Oh gosh, no. I've been thinking about it for so long...}}
+{{dialogue|Grace|I'm going to try and change though. I want you to see the real me, I don't want to hide anything from you. Enough of this spy mind frame... Let me make time to ask you on a date. Then I'll explain everything.}}
+{{dialogue|Grace|Ahem... well I think that's enough of the soppy stuff for now! C'mon, get back to work. I bet you got a whole bunch of people waiting on you. So... to the new Sandrock! And to us!}}
+The conversation ends.
+
+TRIGGER Procedure 13.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+At the beginning of the day:
+CONDITIONS
+One Flew Over the Bandit Nest is successfully completed
+CHECK GLOBAL BLACKBOARD || key: 8397Run | info: 1 | exist: 0
+ACTIONS
+Run mission #1800397
+GLOBAL BLACK BOARD REMOVE || key: 8397Run
+
+Run conditions from One Flew Over the Bandit Nest:
+
+TRIGGER Procedure 0.0 Step 21.4 Order 103 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 43) After the conversation ends:
+CONDITIONS
+CHECK RIDABLE HOUSE FULL || isFull: 1
+ACTIONS
+ACTION SHOW CUSTOM IMAGE TIPS || preset: Mission | content: 6057
+
+TRIGGER Procedure 0.0 Step 21.6 Order 104 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1800397
+Set global blackboard key 8397Run with info 1.
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800397
+CONDITIONS
+CHECK RIDABLE HOUSE FULL || isFull: 1
+ACTIONS
+RIDABLE CREATE || protoId: 41 | instanceId: 21875 | ownerId: 8012 | sceneFlag: Main:S8397_1
+RIDABLE CREATE || protoId: 42 | instanceId: 21874 | ownerId: 8011 | sceneFlag: Main:S8397_2
+SCENEITEM CREATE FLAG || itemType: 0 | id: 83971 | path: S8397_Item1 | sceneName: Main | flagName: S8397_Item1 | extraParams: -1
+ACTION SHOW CUSTOM IMAGE TIPS || content: 6059 | preset: Mission
+
+TRIGGER Procedure 0.0 Step 2.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 83971
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 18351 starts:
+{{dialogue|Player|Will you accept Merle as your mount?}}
+
+*''Confirm'' (No unique dialogue)
+*''Cancel'' (No unique dialogue)
+
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 18351:
+{{dialogue|Player|Will you accept Merle as your mount?}}
+
+*''Confirm'' (No unique dialogue)
+*''Cancel'' (No unique dialogue)
+
+CONDITIONS
+CHECK RIDABLE HOUSE FULL || isFull: 0
+ACTIONS
+RIDABLE DESTROY || id: 21875
+SCENEITEM DELETE || itemType: 0 | id: 83971
+ACTION RIDABLE CREATE GRADE || protoId: 41 | instanceId: 21875 | grade: 4 | sceneFlag: Main:default | ownerId: 8000
+ACTION RIDABLE HOUSE ADD RIDABLE || ridableId: 21875
+END MISSION 1800397
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 18351:
+{{dialogue|Player|Will you accept Merle as your mount?}}
+
+*''Confirm'' (No unique dialogue)
+*''Cancel'' (No unique dialogue)
+
+CONDITIONS
+CHECK RIDABLE HOUSE FULL || isFull: 1
+ACTIONS
+ACTION SHOW CUSTOM IMAGE TIPS || preset: Mission | content: 6060
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800397
+CONDITIONS
+CHECK RIDABLE HOUSE FULL || isFull: 0
+ACTIONS
+RIDABLE DESTROY || id: 21875
+ACTION RIDABLE CREATE GRADE || grade: 4 | sceneFlag: Main:default | instanceId: 21875 | protoId: 41 | ownerId: 8000
+ACTION RIDABLE HOUSE ADD RIDABLE || ridableId: 21875
+RIDABLE CREATE || protoId: 42 | instanceId: 21874 | ownerId: 8011 | sceneFlag: Main:S8397_2
+END MISSION 1800397

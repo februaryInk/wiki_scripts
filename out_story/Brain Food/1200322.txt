@@ -1,0 +1,95 @@
+Reading Mission 1200322: Brain Food
+
+<onlyinclude>{{Infobox mission
+|name = Brain Food
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Brain Food:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|601}}
+DELIVER MISSION 1200321
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200321
+CONDITIONS
+Always:
+ACTIONS
+Run mission Brain Food
+END MISSION 1200321
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200322
+CONDITIONS
+Always:
+ACTIONS
+===Construct Automatic Cooking Machine===
+
+{{mission_details
+|desc = Help Qi continue his research by making him an Automatic Cooking Machine. You can construct it on your Assembly Station.
+|details = Construct Automatic Cooking Machine
+*{{i2|Automatic Rice Cooker|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200321 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Qi===
+
+{{mission_details
+|desc = The Automatic Cooking Machine is ready, take it to Qi.
+|details = Talk to Qi
+*{{i2|Automatic Rice Cooker|0/1}}
+*{{i2|Qi|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1200321 | targetId: 2 | canSubmit: 1
+ACTIONS
+(cId 0) A conversation 12967, 12968 starts:
+{{dialogue|Qi|Thank you! I've been so engrossed in my research lately that I often forget to eat. One time, I almost ate some food left over from the Old World. I realized it in time, but I very nearly ended up in the clinic. It's just a small matter if my body gets sick, but if it hinders my research, then it becomes a real problem.}}
+{{dialogue|Qi|Now that I have this rice cooker, I can cook for myself without wasting time. It is a benefit for my health, and my research.}}
+BAG MODIFY BY TARGET || missionId: 1200321 | targetId: 2
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1200321
+END MISSION 1200322

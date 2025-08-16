@@ -1,0 +1,163 @@
+Reading Mission 1200020: Gone with the Wind
+
+<onlyinclude>{{Infobox mission
+|name = Gone with the Wind
+|image =
+|description = The sandstorm has passed. Go and check on Mort.
+|type = Side
+|time =
+|location =
+|characters = [[Mort]]
+|condition =
+|details =
+|exp = 380
+|reputation = 10
+|gols = 50
+|npc1 = Mort
+|rp1 = 20
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100068
+
+TRIGGER Procedure 1.0 Step 7.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: pensandstorm | info: 1 | exist: 1
+ACTIONS
+Run mission Wanted!
+
+TRIGGER Procedure 1.0 Step 8.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: secondsandstorm | info: 1 | exist: 1
+ACTIONS
+Run mission Gone with the Wind
+GLOBAL BLACK BOARD REMOVE || key: secondsandstorm
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200020
+CONDITIONS
+Always:
+ACTIONS
+Set TALK to 0
+Set DAY to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Mort
+CONDITIONS
+CHECK NPC RECOGNIZED || flag: 1 | npc: 8041
+Check if TALK is == 0
+ACTIONS
+(cId 0) A conversation 859, 210_0 starts:
+{{dialogue|Mort|Greetings, young one! Settling in alright?}}
+{{dialogue|Mort|Say, if it's not too much trouble, might I make a request?}}
+{{dialogue|Mort|My wife and I were here from the earliest beginnings of Sandrock, back when it was little more than an undiscovered oasis. Through it all, I had a relic camera to chronicle our life.}}
+{{dialogue|Mort|I stored all of the photos inside a photo album. But before the last sandstorm, my memory failed me and I left the album outside. After the storm, it was gone...}}
+{{dialogue|Mort|Now, I've made peace with losing the photos, but there may yet be time to make a few more memories... Could you make {{textcolor|green|a new Photo Album}} for this old soul?}}
+
+*''Sure thing.'' (No unique dialogue)
+*''Sorry, I'm very busy.''
+
+{{dialogue|Mort|indent=true|answer=Sorry, I'm very busy.
+|That's all right, I can wait.}}
+Set TALK to 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the first option in conversation segment 1106:
+{{dialogue|Mort|Now, I've made peace with losing the photos, but there may yet be time to make a few more memories... Could you make {{textcolor|green|a new Photo Album}} for this old soul?}}
+
+*''Sure thing.'' (No unique dialogue)
+*''Sorry, I'm very busy.'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 1108:
+{{dialogue|Mort|Do you have time to make me a Photo Album now?}}
+
+*''Sure thing.'' (No unique dialogue)
+*''Sorry, I'm very busy.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1200020
+Unlock blueprint for Album
+
+TRIGGER Procedure 0.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200020
+CONDITIONS
+Always:
+ACTIONS
+Run mission Gone with the Wind
+END MISSION 1200020
+
+TRIGGER Procedure 1.0 Step 0.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment DAY by 1
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Mort
+CONDITIONS
+CHECK NPC RECOGNIZED || flag: 0 | npc: 8041
+Check if TALK is == 0
+ACTIONS
+(cId 0) A conversation 210_0 starts:
+{{dialogue|Mort|Say, if it's not too much trouble, might I make a request?}}
+{{dialogue|Mort|My wife and I were here from the earliest beginnings of Sandrock, back when it was little more than an undiscovered oasis. Through it all, I had a relic camera to chronicle our life.}}
+{{dialogue|Mort|I stored all of the photos inside a photo album. But before the last sandstorm, my memory failed me and I left the album outside. After the storm, it was gone...}}
+{{dialogue|Mort|Now, I've made peace with losing the photos, but there may yet be time to make a few more memories... Could you make {{textcolor|green|a new Photo Album}} for this old soul?}}
+
+*''Sure thing.'' (No unique dialogue)
+*''Sorry, I'm very busy.''
+
+{{dialogue|Mort|indent=true|answer=Sorry, I'm very busy.
+|That's all right, I can wait.}}
+Set TALK to 1
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if DAY is >= 6
+ACTIONS
+DELIVER MISSION 1200020
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Mort|Do you have time to make me a Photo Album now?}}
+
+*''Sure thing.'' (No unique dialogue)
+*''Sorry, I'm very busy.''
+
+{{dialogue|Mort|indent=true|answer=Sorry, I'm very busy.
+|That's all right, I can wait.}}
+
+==Rewards==
+{{mission reward
+|npc1 = Mort
+|rp1 = 20
+|exp = 380
+|reputation = 10
+|gols = 50
+}}

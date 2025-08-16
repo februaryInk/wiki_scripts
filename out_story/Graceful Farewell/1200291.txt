@@ -1,0 +1,282 @@
+Reading Mission 1200291: Graceful Farewell
+
+<onlyinclude>{{Infobox mission
+|name = Graceful Farewell
+|image =
+|description = Grace is leaving Sandrock to return to Atara. Go to the Train Station and say goodbye to her.
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 2200
+|reputation = None
+|gols = None
+|npc1 = Grace
+|rp1 = 20
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200310
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+CHECK DATE FLAG || days: 5 | flag: DATE:loganinprision | compare: 2
+
+GROUP 10:
+Check if mission 1200312 is result 1 flag 1
+
+ACTIONS
+Run mission When the Dust Settles
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1200290 is result 1 flag 1
+ACTIONS
+Run mission Graceful Farewell
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200291
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: 1200290 | info: 1 | exist: 0
+ACTIONS
+AREA TRIGGER DELETE || id: 22901
+Remove behavior CommanderBubbleTag (idName: 22902) from Owen
+Remove behavior CommanderBubbleTag (idName: 22902) from Grace
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Grace stands still in Main
+AREA TRIGGER CREATE || id: 22911 | missionId: 1200291 | flagName: graceleave_trigger1 | sceneName: Main | showOnMap: 1 | mapIcon: MissionArea | transId: 0
+ACTION AREA TRIGGER SET RADIUS || id: 22911 | radius: 15
+
+TRIGGER Procedure 0.0 Step 2.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22911
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 22911 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 22911
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 22911 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Grace stops standing still
+Grace stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: nialeave_player2
+DELAY MASK SET || maskId: 22911 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 4.5 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 22911
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 3493_0 starts:
+{{dialogue|Grace|''Player'', you came to see me off? I wanted to come and talk to you yesterday, but you just seemed so busy.}}
+
+*''(Stay to say goodbye)''
+*''(Make an excuse and leave)''
+
+{{dialogue|Grace|indent=true|answer=(Make an excuse and leave)
+|No problem, I don't want to hold you. I'm just happy I got to see you before I left. Take care of yourself.}}
+{{dialogue|Grace|You know, I actually didn't want you guys to see me off... I even told Logan the wrong time. I'm not good at this kinda stuff.}}
+{{dialogue|Grace|But honestly, when I saw you coming, I was really happy. Sigh... sometimes, I wonder if I'm really suitable for this job.}}
+
+*''Why would you say that?''
+*''No one else could do your job.''
+
+{{dialogue|Grace|indent=true|answer=Why would you say that?
+|I feel like I've changed. I'm not the person I used to be. My training was all about suppressing your emotions, embracing solitude, and putting the mission before anything else. I don't know, I feel kind of distant to all that now.}}
+
+:*''Change is a good thing.''
+:*''If you want to stay, just quit!''
+:*''Haha, you're just nervous about seeing your boss.''
+
+{{dialogue|Grace|indent=double|answer=Change is a good thing.
+|A good thing? I don't know. Maybe for a citizen, but for an agent getting ready for her next assignment...}}
+{{dialogue|Grace|indent=double|Wait, I shouldn't unload all of this on you. Sorry.}}
+
+::*''I understand, Grace.''
+::*{{flirt}}''I just care because you're important to me.''
+::*''(Stay silent)''
+
+{{dialogue|Grace|indent=3|answer=I understand, Grace.
+|Thank you.}}
+{{dialogue|Grace|indent=3|answer=I just care because you're important to me.
+|I know, I feel the same way about you.}}
+{{dialogue|Grace|indent=double|answer=If you want to stay, just quit!
+|Hahaha, that'd be nice! But I... can't right now. Too much responsibility.}}
+{{dialogue|Grace|indent=double|Maybe some time in the future. When my job's done... when that time comes, I think I'd like to come back to Sandrock.}}
+{{dialogue|Grace|indent=double|answer=Haha, you're just nervous about seeing your boss.
+|Maybe... my boss is pretty intense.}}
+{{dialogue|Grace|indent=true|answer=No one else could do your job.
+|Haha, maybe. I am pretty good at it. Still, my training was all about suppressing your emotions, embracing solitude, and putting the mission before anything else. I don't know, I feel kind of distant to all that now.}}
+
+:*''Change is a good thing.''
+:*''If you want to stay, just quit!''
+:*''Haha, you're just nervous about seeing your boss.''
+
+{{dialogue|Grace|indent=double|answer=Change is a good thing.
+|A good thing? I don't know. Maybe for a citizen, but for an agent getting ready for her next assignment...}}
+{{dialogue|Grace|indent=double|Wait, I shouldn't unload all of this on you. Sorry.}}
+
+::*''I understand, Grace.''
+::*{{flirt}}''I just care because you're important to me.''
+::*''(Stay silent)''
+
+{{dialogue|Grace|indent=3|answer=I understand, Grace.
+|Thank you.}}
+{{dialogue|Grace|indent=3|answer=I just care because you're important to me.
+|I know, I feel the same way about you.}}
+{{dialogue|Grace|indent=double|answer=If you want to stay, just quit!
+|Hahaha, that'd be nice! But I... can't right now. Too much responsibility.}}
+{{dialogue|Grace|indent=double|Maybe some time in the future. When my job's done... when that time comes, I think I'd like to come back to Sandrock.}}
+{{dialogue|Grace|indent=double|answer=Haha, you're just nervous about seeing your boss.
+|Maybe... my boss is pretty intense.}}
+{{dialogue|Grace|So uh... ''Player'', ever think about the future? How about joining me-}}
+The conversation ends.
+Remove behavior CommanderMoveToFlag (idName: 22911) from Player
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 0) There is a conversation segment (id 11434) that ends:
+{{dialogue|Grace|No problem, I don't want to hold you. I'm just happy I got to see you before I left. Take care of yourself.}}
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+NPC SET CAN INTERACT || npc: 8002 | canInteract: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 22912) from Grace
+Grace stops standing still
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200291
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: 1200290 | info: 1 | exist: 1
+ACTIONS
+AREA TRIGGER DELETE || id: 22901
+Remove behavior CommanderBubbleTag (idName: 22902) from Owen
+Remove behavior CommanderBubbleTag (idName: 22902) from Grace
+
+TRIGGER Procedure 1.0 Step 0.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DAY START FOR WEATHER || order: 0 | weather: 2
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: set_weather
+ACTIONS
+UNIQUE ACTION RUN || idStr: set_weather
+WEATHER SET STATE || WeatherState: 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player wakes up:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 11432 starts:
+{{dialogue|Player|Grace is leaving Sandrock today, I'd better go and see her off.}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1200291
+START MISSION 1200291
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200291
+CONDITIONS
+Always:
+ACTIONS
+Run mission Graceful Farewell
+END MISSION 1200291
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the first option in conversation segment 11433:
+{{dialogue|Grace|''Player'', you came to see me off? I wanted to come and talk to you yesterday, but you just seemed so busy.}}
+
+*''(Stay to say goodbye)'' (No unique dialogue)
+*''(Make an excuse and leave)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Run mission Graceful Farewell
+END MISSION 1200291
+
+TRIGGER Procedure 1.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 12:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 22911
+ACTION ACTOR START FADE IN || id: 22911 | npc: 8002 | time: 2
+STOPWATCH REAL TIME SET || id: 22911 | sec: 2
+
+TRIGGER Procedure 1.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 22911
+CONDITIONS
+Always:
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: graceleave
+GLOBAL BLACK BOARD REMOVE || key: brokentrain
+Grace stops standing still
+Grace stops standing still
+NPC SET CAN INTERACT || npc: 8002 | canInteract: 1
+AREA TRIGGER DELETE || id: 22911
+NPC LEAVE || npc: 8002
+CLOSE NPC MONSTER MISSION || npc: 8002
+CLOSE NPC ORDER MISSION || npc: 8002
+LOCK NPC ORDER MISSION || npc: 8002
+END MISSION 1200291
+
+==Rewards==
+{{mission reward
+|npc1 = Grace
+|rp1 = 20
+|exp = 2200
+|reputation = None
+|gols = None
+}}

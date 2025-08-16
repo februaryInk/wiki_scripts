@@ -23,6 +23,7 @@ from __future__ import annotations
 from sandrock                         import *
 from sandrock.lib.asset               import Asset
 from sandrock.structures.conversation import *
+from sandrock.structures.extras       import *
 
 import urllib.parse
 
@@ -162,6 +163,36 @@ class Stmt:
 
 # -- STMT Types ----------------------------------------------------------------
 
+class _StmtActionNewspaperChange(Stmt):
+    _stmt_matches = [
+        'ACTION NEWSPAPER CHANGE'
+    ]
+
+    def extract_properties(self) -> None:
+        self.newspaper_id: int = int(self._stmt.get('id'))
+
+    @cached_property
+    def newspaper_content(self) -> str:
+        return NewspaperContent(self.newspaper_id)
+
+    def read(self) -> list[str]:
+        return self.newspaper_content.read()
+
+class _StmtActionNpcAddTag(Stmt):
+    _stmt_matches = [
+        'ACTION NPC ADD TAG'
+    ]
+
+    def extract_properties(self) -> None:
+        self.npc_id: int = int(self._stmt.get('npc'))
+        self.tag: str = self._stmt.get('tag')
+
+    def npc_name(self) -> str:
+        return text.npc(self.npc_id)
+
+    def read(self) -> list[str]:
+        return [f'Add tag "{self.tag}" to {self.npc_name()}']
+
 class _StmtAlways(Stmt):
     _stmt_matches = [
         'ALWAYS'
@@ -258,7 +289,59 @@ class _StmtBlueprintUnlock(Stmt):
             return [item['id'] for item in DesignerConfig.ItemPrototype if self._item_tag in item['itemTag']]
     
     def read(self) -> list[str]:
-        return [f'Unlock blueprint {text.item(self._blueprint_id)} with {text.item(self._book_id)}']
+        items = ', '.join([text.item(id) for id in self.item_ids])
+        return [f'Unlock blueprint for {items}']
+
+class _StmtCharacterAddBehavior(Stmt):
+    _stmt_matches = [
+        'NPC ADD BEHAVIOUR',
+        'PLAYER ADD BEHAVIOUR'
+    ]
+
+    def extract_properties(self) -> None:
+        self._behavior_name: str = self._stmt.get('behaviourName', '')
+        self._character_id: int = int(self._stmt.get('npc', '8000'))
+        self._id_name: str = self._stmt.get('idName', '')
+        self._param: str = self._stmt.get('param', '')
+
+    def id_name_str(self) -> str:
+        if self._id_name: return f' (idName: {self._id_name})'
+        return ''
+
+    def character_name(self) -> str:
+        return text.npc(self._character_id)
+
+    def param_str(self) -> str:
+        if self._param: return f'(param: {self._param})'
+        return ''
+
+    def read(self) -> list[str]:
+        lines = [f'Add behavior {self._behavior_name}{self.id_name_str()} to {self.character_name()}']
+        
+        if self._param: lines.append(self.param_str())
+
+        return lines
+
+class _StmtCharacterRemoveBehavior(Stmt):
+    _stmt_matches = [
+        'NPC REMOVE BEHAVIOUR',
+        'PLAYER REMOVE BEHAVIOUR'
+    ]
+
+    def extract_properties(self) -> None:
+        self._behavior_name: str = self._stmt.get('behaviourName', '')
+        self._character_id: int = int(self._stmt.get('npc', '8000'))
+        self._id_name: str = self._stmt.get('idName', '')
+    
+    def id_name_str(self) -> str:
+        if self._id_name: return f' (idName: {self._id_name})'
+        return ''
+
+    def character_name(self) -> str:
+        return text.npc(self._character_id)
+
+    def read(self) -> list[str]:
+        return [f'Remove behavior {self._behavior_name}{self.id_name_str()} from {self.character_name()}']
 
 # Checks that an event script has played out, since event scripts do not have 
 # states in the same way that missions do.
@@ -410,6 +493,45 @@ class _StmtCheckVar(Stmt):
     def read(self) -> list[str]:
         return [f'Check if {self.name} is {self.compare} {self._ref}']
 
+class _StmtCutsceneStart(Stmt):
+    _stmt_matches = [
+        'CUTSCENE START'
+    ]
+
+    def extract_properties(self) -> None:
+        self._cutscene_id: str = self._stmt.get('id')
+        self._duration: float = float(self._stmt.get('duration', '-1'))
+
+    @property
+    def cutscene(self) -> dict:
+        for id, data in DesignerConfig.CutscenePhotos.items():
+            if data['cutsceneName'] == self._cutscene_id:
+                return data
+        
+        return {}
+
+    @property
+    def cutscene_description(self) -> dict:
+        description_id = self.cutscene.get('descriptionId')
+
+        if description_id: return text(description_id)
+
+        return None
+
+    @property
+    def cutscene_id(self) -> str:
+        return self.cutscene.get('id', self._cutscene_id)
+
+    def read(self) -> list[str]:
+        lines = [
+            f'{{{{cutscene|id = {self.cutscene_id}}}}}',
+            f'A cutscene {self._cutscene_id} (duration: {self._duration}) starts playing'
+        ]
+        
+        if self.cutscene_description: lines.append(self.cutscene_description)
+        
+        return lines
+
 class _StmtGlobalBlackBoardSet(Stmt):
     _stmt_matches = [
         'GLOBAL BLACK BOARD SET'
@@ -472,7 +594,7 @@ class _StmtNpcAddIdle(Stmt):
             return text.npc(self._look_at_npc_id)
     
     def read(self) -> list[str]:
-        line = f'{text.npc(self._npc_id)} idles in {self._scene_name}'
+        line = f'{text.npc(self._npc_id)} stands still in {self._scene_name}'
         if self.look_at_npc:
             line += f' and looks at {self.look_at_npc}'
         
@@ -513,7 +635,7 @@ class _StmtNpcRemoveIdle(Stmt):
         return text.npc(self._npc_id)
     
     def read(self) -> list[str]:
-        return [f'{self.npc_name} stops idling']
+        return [f'{self.npc_name} stops standing still']
 
 class _StmtOnEveryDayStart(Stmt):
     _stmt_matches = [
@@ -553,7 +675,7 @@ class _StmtActorShowBubble(Stmt):
         self._bubble = Bubble(self._npc_id, self._text_id)
     
     def read(self) -> list[str]:
-        return ['In a speech bubble:'] + self._bubble.read()
+        return self._bubble.read()
 
 class _StmtNpcSendGift(Stmt):
     _stmt_matches = [
@@ -661,6 +783,18 @@ class _StmtOnConversationEndSegment(Stmt):
         lines += self.conv_segment.read()
         return lines
 
+class _StmtOnHourChanged(Stmt):
+    _stmt_matches = [
+        'ON HOUR CHANGED'
+    ]
+
+    def extract_properties(self) -> None:
+        self._hour: int = int(self._stmt.get('hour'))
+        self._order: int = int(self._stmt.get('order'))
+
+    def read(self) -> list[str]:
+        return [f'When the time is {self._hour}:00 (order: {self._order}):']
+
 class _StmtOnInteractWithNpc(Stmt):
     _stmt_matches = [
         'ON INTERACT WITH NPC'
@@ -758,47 +892,44 @@ class _StmtSetSpecialGiftRuleState(Stmt):
     
     @cached_property
     def special_gift_rule(self) -> dict:
-        return DesignerConfig.SpecialGiftRule[self._rule_id]
-    
+        return next(rule for rule in DesignerConfig.SpecialGiftRule if rule['ruleID'] == self._rule_id)
+
     def read_bad_reply(self) -> list[str]:
-        bad_reply_texts = self.special_gift_rule['badReplyText'].split(',')
-        lines = []
+        return self.read_reply(self.special_gift_rule['badReplyText'])
 
-        if bad_reply_texts == ['NULL']: return lines
-
-        for segment_id in bad_reply_texts:
-            conv_segment = ConvSegment(int(segment_id))
-            lines += conv_segment.read()
-        
-        return lines
-    
     def read_items_with_tag(self, tag) -> list[str]:
         item_data = sorted(DesignerConfig.ItemPrototype, key=lambda item: item['id'])
         items = [item for item in item_data if tag in item['itemTag']]
         return [f'{text.item(item["id"])}' for item in items]
     
     def read_normal_reply(self) -> list[str]:
-        normal_reply_texts = self.special_gift_rule['normalReplyText'].split(',')
+        return self.read_reply(self.special_gift_rule['normalReplyText'])
+
+    def read_reply(self, reply_text) -> list[str]:
+        reply_texts = re.split(r'[;,]', reply_text)
         lines = []
 
-        if normal_reply_texts == ['NULL']: return lines
+        for element_id in reply_texts:
+            if element_id in ['NULL', '-1']: continue
 
-        for segment_id in normal_reply_texts:
-            conv_segment = ConvSegment(int(segment_id))
-            lines += conv_segment.read()
-        
+            if '_0' in element_id:
+                element_id = element_id.split('_', 1)[0]
+                conv_talk = ConvTalk(int(element_id))
+                lines += conv_talk.read()
+            else:
+                conv_segment = ConvSegment(int(element_id))
+                lines += conv_segment.read()
+
         return lines
-    
+
     def read_special_results(self) -> list[str]:
         special_results = self.special_gift_rule['specialResults']
         lines = []
 
         for i, result in enumerate(special_results):
             lines += [f'Special result {i + 1}, type {result["resultType"]}:']
-            reply_texts = result['replyText'].split(',')
-            for segment_id in reply_texts:
-                conv_segment = ConvSegment(int(segment_id))
-                lines += conv_segment.read()
+            lines += self.read_reply(result['replyText'])
+
             lines += ['Applied to the following items:']
             for tag in result['itemTags']:
                 lines += [f'With tag {tag}:']
@@ -858,8 +989,12 @@ class _StmtSetVar(Stmt):
     def is_initialize_var(self) -> bool:
         return self.action == 'Set'
     
+    @property
+    def verb(self) -> str:
+        return 'to' if self.action == 'Set' else 'by'
+
     def read(self) -> list[str]:
-        return [f'{self.action} {self.name} to {self.value}']
+        return [f'{self.action} {self.name} {self.verb} {self.value}']
 
 class _StmtShowConversation(Stmt):
     _stmt_matches = [
@@ -949,7 +1084,8 @@ class _StmtUpdateMissionInfo(Stmt):
     @property
     def required(self) -> tuple[str, int]:
         if self._type == 1: # Items
-            req_targets = [tar.split('_') for tar in self._req_target.split(',')]
+            print(self._req_target)
+            req_targets = [tar.split('_') for tar in re.split(r'[;,]', self._req_target)]
             return [(text.item(int(item_id), config.wiki_language), int(count)) for (item_id, count) in req_targets]
         elif self._type == 4: # Go to scene
             scene_sys_name, scene_name_id = self._req_target.split(',')

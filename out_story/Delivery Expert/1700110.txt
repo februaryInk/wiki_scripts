@@ -1,0 +1,140 @@
+Reading Mission 1700110: Delivery Expert
+
+<onlyinclude>{{Infobox mission
+|name = Delivery Expert
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Delivery Expert:
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 2531) that ends:
+{{dialogue|Arvio|As always, delivery within 24 hours, let's maintain our perfect record!}}
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Arvio's Goods of Default quality (Notify player)
+START MISSION 1700109
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700109
+CONDITIONS
+Always:
+ACTIONS
+Run mission Delivery Expert
+END MISSION 1700109
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700110
+CONDITIONS
+Always:
+ACTIONS
+===Deliver to Miguel===
+
+{{mission_details
+|desc = Deliver to Miguel within 24 hrs.
+|details = Deliver to Miguel
+*{{i2|Arvio's Goods|0/1}}
+*{{i2|Miguel|0/1}}
+}}
+MISSION TRACE NAVI NPC || isAdd: 1 | missionId: 1700109 | npc: 8019
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Miguel
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 610_0 starts:
+{{dialogue|Miguel|Finally! Let me check and see if there are any damages.}}
+{{dialogue|Miguel|Great, no problems. Where do I sign? No need for a signature? Such carefree service. Do you offer any service to help me carry it? No? Fine, forget I said anything...}}
+The conversation ends.
+BAG MODIFY BY TARGET || missionId: 1700109 | targetId: 1
+MISSION TRACE NAVI NPC || isAdd: 0 | missionId: 1700109 | npc: 8019
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Arvio===
+
+{{mission_details
+|desc = The goods have been delivered. Talk with Arvio.
+|details = Talk to Arvio
+}}
+Set global blackboard key deliveryforArvio with info 3.
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Arvio
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: deliveryforArvio | info: 3 | exist: 1
+ACTIONS
+(cId 2) A conversation 611_0 starts:
+{{dialogue|Arvio|Miguel was satisfied with his purchase? Haha, another perfect rating for By the Stairs!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: deliveryforArvio | info: 3 | exist: 1
+ACTIONS
+SUBMIT MISSION 1700109
+
+TRIGGER Procedure 1.0 Step 1.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Decrement CD by 1
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: deliveryforArvio | info: 3 | exist: 0
+ACTIONS
+Set global blackboard key deliveyforArvio with info 0.
+BAG MODIFY BY TARGET || missionId: 1700109 | targetId: 1
+FAIL MISSION || missionId: 1700109
+MISSION TRACE NAVI NPC || isAdd: 0 | missionId: 1700109 | npc: 8019
+END MISSION 1700110
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission Delivery Master
+END MISSION 1700110

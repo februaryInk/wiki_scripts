@@ -1,0 +1,208 @@
+Reading Mission 1300035: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100019
+
+TRIGGER Procedure 0.0 Step 6.0 Order 8 Repeat -1
+------------------------------------------------------------
+EVENTS
+When the time is 22:00 (order: 0):
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+ACTION NPC REMOVE CLUSTER || cluster: RestInBuleMoon
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE || compare: 3 | year: 1 | month: 2 | day: 27
+Becoming Official is successfully completed
+ACTIONS
+Set global blackboard key festival with info 1.
+Run mission #1300035
+PICK UP RESOURCE DELETE || id: 804301
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1300035
+CONDITIONS
+Always:
+ACTIONS
+Set join to 0
+Set FIRESIDE to 0
+NPC ADD TAG || tag: Recalling035
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 16:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || id: 13035 | sceneName: Main | flagName: trigger_hidemode | showOnMap: 1 | mapIcon: MissionArea | transId: 7096 | missionId: 1300035
+SCENEITEM CREATE FLAG || itemType: 0 | id: 13035 | path: ScenItem_Microphone_0 | sceneName: Main | flagName: f_maikefeng | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 13035
+CONDITIONS
+CHECK TIME || compare: 6 | hour: 17 | minute: 58
+Check if Owen is in town
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 13035 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 13035
+Set FIRESIDE to 1
+Set join to 1
+TIME SET CURRENT HOUR MINUTE || hour: 17 | minute: 58
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 13035 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: f_player
+Matilda stands still in Main
+Mi-an stands still in Main
+Owen stands still in Main
+Cooper stands still in Main
+Arvio stands still in Main
+Hugo stands still in Main
+DELAY MASK SET || maskId: 13035 | delayTime: 2 | durationTime: 1 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 13035 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 1261 starts:
+{{dialogue|Matilda|Welcome all! For some of the new folk among us, I shall be reviving the age old tradition of regalin' y'all with the origins of our fine celebration! Ahem!}}
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCActionLoop (idName: 130350) to Player
+(param: CMDAction:SilentSalute)
+Add behavior CommanderNPCActionLoop (idName: 130351) to Mi-an
+(param: CMDAction:Pray)
+Add behavior CommanderNPCActionLoop (idName: 130352) to Owen
+(param: CMDAction:Pray)
+Add behavior CommanderNPCActionLoop (idName: 130353) to Cooper
+(param: CMDAction:Pray)
+Add behavior CommanderNPCActionLoop (idName: 130354) to Arvio
+(param: CMDAction:Pray)
+Add behavior CommanderNPCActionLoop (idName: 130355) to Hugo
+(param: CMDAction:Pray)
+(cId 14) A conversation 1262, 1263, 1264, 1265, 1266, 1267, 1268, 1269 starts:
+{{dialogue|Matilda|The Day of Memories is a festival celebrated all 'cross the Free Cities, some folk have different ways of celebratin', but the fundamentals remain: we all are aimin' not to forget about those who came before us, paving the way.}}
+{{dialogue|Matilda|But the Day of Memories is not just about sorrow, not only about loss... though it did begin as the result of a rather tragic event...}}
+{{dialogue|Matilda|Indeed, we aim not to mourn the absence of those since passed, but rather to honor their memory and look forward to the future...}}
+{{dialogue|Matilda|Like most things, we Sandrockers like to do things a little differently around here! Back when Martle had just discovered the oasis, it wasn't that long removed from the Age of Darkness, when people were still cowering underground.}}
+{{dialogue|Matilda|Martle thought to organize a game not unlike hide-and-seek to finally take advantage of the freedom offered by the vastness of the Above.}}
+{{dialogue|Matilda|She had people hang lanterns all 'cross the forest around the oasis to tell our ancestors, as well as people traveling the desert, that "We're here! And we're doing well!"}}
+{{dialogue|Matilda|We'll continue that tradition today. Let our tears and joy resonate across the desert. Let our departed ones know, with one voice, our one message: and that's that we're still here!}}
+{{dialogue|Matilda|Come, let us bow our heads and take a moment of silence: in rememberance of those not with us to celebrate today...}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 14) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 130035 | sec: 5
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 130035
+CONDITIONS
+Always:
+ACTIONS
+(cId 11) A conversation 1270 starts:
+{{dialogue|Matilda|Now, without further ado, let the Day of Memories festivities begin!}}
+Remove behavior CommanderNPCActionLoop (idName: 130350) from Player
+
+TRIGGER Procedure 1.0 Step 5.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+NPC REMOVE TAG || tag: Recalling035
+Remove behavior CommanderNPCActionLoop (idName: 130350) from Player
+Remove behavior CommanderNPCActionLoop (idName: 130351) from Mi-an
+Remove behavior CommanderNPCActionLoop (idName: 130352) from Owen
+Remove behavior CommanderNPCActionLoop (idName: 130353) from Cooper
+Remove behavior CommanderNPCActionLoop (idName: 130354) from Arvio
+Remove behavior CommanderNPCActionLoop (idName: 130355) from Hugo
+CUTSCENE UI STATE EXIT || 
+NPC REMOVE TAG || tag: silent35
+SCENEITEM DELETE || itemType: 0 | id: 13035
+AREA TRIGGER DELETE || id: 13035
+Matilda stops standing still
+Mi-an stops standing still
+Owen stops standing still
+Cooper stops standing still
+Arvio stops standing still
+Hugo stops standing still
+END MISSION 1300035
+
+TRIGGER Procedure 1.0 Step 6.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8018 | cId: 11 | missionId: 1300035
+CONDITIONS
+CHECK PLAYER JOIN HIDEN SEEK || flag: 0
+ACTIONS
+HIDEN SEEK SHOW JOIN CHOICE || 
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 18:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+NPC REMOVE TAG || tag: silent35
+SCENEITEM DELETE || itemType: 0 | id: 13035
+NPC REMOVE TAG || tag: Recalling035
+AREA TRIGGER DELETE || id: 13035
+Matilda stops standing still
+Mi-an stops standing still
+Owen stops standing still
+Cooper stops standing still
+Arvio stops standing still
+Hugo stops standing still
+END MISSION 1300035

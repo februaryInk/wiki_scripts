@@ -1,0 +1,167 @@
+Reading Mission 1800272: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100068
+
+TRIGGER Procedure 2.0 Step 2.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1200271 is result 1 flag 1
+Monster Huntin' for Dummies is successfully completed
+ACTIONS
+Run mission #1200272
+
+TRIGGER Procedure 2.0 Step 2.5 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1200271 is result 1 flag 1
+ACTIONS
+Run mission #1800272
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 18:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1800272 | id: 82721 | sceneName: Main | flagName: Trigger_S8272 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 82721
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 82721 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 82721
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82721 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Cooper stands still in Main
+Elsie stands still in Main and looks at Cooper
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8272_0_1
+DELAY MASK SET || maskId: 82721 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Mabel stands still in Main
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82721 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 2694_0 starts:
+{{dialogue|Elsie|You threw away Howlett's book!? He respected you... an' you're disrespectin' him!}}
+{{dialogue|Cooper|What you talkin' about!? Cryin' about some book! Yer Ma is sittin' home with a broken arm worryin' sick 'bout you... while you continue to run out playin' yer stupid games, talkin' 'bout bein' some Monster Hunter!}}
+{{dialogue|Elsie|I...!}}
+{{dialogue|Cooper|The ranch got a whole host of stuff needin' done! Ye got responsibilities, missy! You can't jus' run around playin' yer dumb games anymore, how will you face your Ma?!}}
+{{dialogue|Elsie|You... you don't understand Pa... I'm tryin' to-}}
+{{dialogue|Cooper|This again!? Gosh dang it, stop with this nonsense, Elsie! Git yer head outta the clouds before you hurt even more people, includin' yerself!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8272052) to Elsie
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8272_5_2|LookAtActor:8003)
+
+TRIGGER Procedure 0.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8005 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 9557 starts:
+{{dialogue|Elsie|Fine!}}
+
+TRIGGER Procedure 0.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8272053) to Elsie
+(param: TargetScene:CooperHome|MoveMode:Run|FlagName:fademax2)
+STOPWATCH REAL TIME SET || id: 82722 | sec: 1
+
+TRIGGER Procedure 0.0 Step 8.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8005 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+SOUND PLAY 2D || idStr: Play_Story_ElsieDoor
+STOPWATCH REAL TIME SET || id: 82723 | sec: 1
+
+TRIGGER Procedure 0.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 82723
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 9558, 9559 starts:
+{{dialogue|Cooper|Where you goin' missy?! I ain't finished talkin'!}}
+{{dialogue|Cooper|Jus' a dang book... what's gotten into her...}}
+
+TRIGGER Procedure 0.0 Step 10.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Mabel stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8272052) from Elsie
+Remove behavior CommanderMoveToFlagAndAction (idName: 8272052) from Elsie
+Remove behavior CommanderMoveToFlagAndAction (idName: 8272053) from Elsie
+Cooper stops standing still
+Elsie stops standing still
+CUTSCENE UI STATE EXIT || 
+END MISSION 1800272
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 82721
+END MISSION 1800272

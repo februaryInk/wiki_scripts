@@ -1,0 +1,286 @@
+Reading Mission 1800513: Secret Garden
+
+<onlyinclude>{{Infobox mission
+|name = Secret Garden
+|image =
+|description = Fang's medical skills are widely renowned, and an increasing number of people seek his medical services; keeping the proper supply of medicinal herbs is becoming a challenge.
+|type = Side
+|time =
+|location =
+|characters = [[Fang]]
+|condition =
+|details =
+|exp = 1435
+|reputation = None
+|gols = None
+|npc1 = Fang
+|rp1 = 30
+|npc2 = X
+|rp2 = 15
+|npc3 = CoCo
+|rp3 = 15
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200106
+
+TRIGGER Procedure 6.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission Shonash Canyon Bridge Opening Ceremony is result 1 flag 1
+CHECK HAS LOVE DLC || 
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | path: S8522_Item1 | id: 85221 | sceneName: Main | flagName: S8522_Item1 | extraParams: 0
+
+TRIGGER Procedure 7.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check relationship with Fang is Married
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+Check if mission 1500400 is result 1 flag 1
+ACTIONS
+Run mission Secret Garden
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800513
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1800513 | showOnMap: 1 | transId: 0 | mapIcon: MissionAreaBranch | id: 85131 | sceneName: Main | flagName: Trigger_85131
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 85131
+CONDITIONS
+CHECK WEATHER STATE || weather: 2 | flag: 0
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 85131
+DELAY MASK SET || maskId: 85131 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85131 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8513_0_1
+Zeke stands still in Main and looks at Fang
+Fang stands still in Main and looks at Zeke
+DELAY MASK SET || maskId: 85131 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85131 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 8088_0 starts:
+{{dialogue|Zeke|Yo, doc... we gotta talk about all the herbs you're using. You can't be pickin' every little bud that sprouts up, y'know? Goes against our whole... thing, y'know?}}
+{{dialogue|Fang|More have come. More patients... seeking treatment for many things.}}
+{{dialogue|Zeke|I hear ya. But if you keep pickin' like you're doin', not gonna be any herbs left for your patients in the long run.}}
+{{dialogue|Fang|I had considered this may become a problem. Is it possible for us to plant the herbs I need ourselves?}}
+{{dialogue|Zeke|Eh... yeah. But I reckon at the rate you're goin', you're gonna need a whole greenhouse to yourself.}}
+{{dialogue|Fang|Hm... Things are not as simple as I'd hoped...}}
+
+*''I'll bet I can help!'' (No unique dialogue)
+*''What's going on?'' (No unique dialogue)
+
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8513162) to Fang
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8513_16_2)
+Add behavior CommanderMoveToFlagAndAction (idName: 8513332) to Zeke
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8513_33_2)
+Add behavior CommanderMoveToFlagAndAction (idName: 8513001) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8513_0_2|LookAtActor:8016)
+
+TRIGGER Procedure 0.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 8089_0 starts:
+{{dialogue|Fang|''Pet Name'', good to see you.}}
+{{dialogue|Zeke|Hey there, ''Player''. Just talkin' with the doc here; startin' to be a real trick to find half of all these herbs he likes.}}
+{{dialogue|Fang|We need a new place for herbs. Or... an addition to this one. To increase the supply. To grow them year-round.}}
+{{dialogue|Fang|''Pet Name''... A house for a garden... is that something you could build?}}
+{{dialogue|Zeke|Oh. Uh... yeah, some Builders have greenhouses in their workshops, don't they? For what you're askin', you'll need some adjustments, but... if you're willing, I doubt it'd be too much trouble for someone like yourself, ''Player''.}}
+
+*''Consider it done!''
+*''Now's not a great time...''
+
+{{dialogue|Zeke|indent=true|answer=Consider it done!
+|Nice. I'll have Heidi send you over a blueprint; just need to make some slight tailorings to get it where it needs to be. Temp, lighting, all that.}}
+{{dialogue|Fang|indent=true|Thank you, Zeke. Thank you, ''Pet Name''.}}
+{{dialogue|Zeke|indent=true|Hey. For you two? Any time.}}
+{{dialogue|Fang|indent=true|answer=Now's not a great time...
+|I see.}}
+{{dialogue|Fang|indent=true|Perhaps I can purchase what I need for now.}}
+{{dialogue|Zeke|indent=true|Yeah... I wouldn't wait too long, though. ''Player'', let the doc know when you get time.}}
+Set 8513A to 0
+DELIVER MISSION 1800513
+Set 8513B to 0
+
+TRIGGER Procedure 0.0 Step 8.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Check if 8513B is == 1
+ACTIONS
+(cId 3) A conversation 23030, 23031, 23032 starts:
+{{dialogue|Fang|''Pet Name'', please remember to check the mailbox for this diagram. The patients... It may not yet be urgent, but we shouldn't risk it.}}
+{{dialogue|Fang|When the time comes, I will arrange the herbs myself.}}
+{{dialogue|Fang|The garden will be useful, necessary. But... I will make it into... a nice place, as well.}}
+Zeke stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8513332) from Zeke
+
+TRIGGER Procedure 0.0 Step 8.2 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Check if 8513B is == 1
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8513333) to Zeke
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8513_33_3)
+
+TRIGGER Procedure 0.0 Step 9.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Check if 8513B is == 0
+ACTIONS
+Fang stops standing still
+Zeke stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8513162) from Fang
+Remove behavior CommanderMoveToFlagAndAction (idName: 8513332) from Zeke
+Remove behavior CommanderMoveToFlagAndAction (idName: 8513001) from Player
+CUTSCENE UI STATE EXIT || 
+CAMERA PATH STOP ALL || 
+
+TRIGGER Procedure 0.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the first option in conversation segment 23026:
+{{dialogue|Zeke|Oh. Uh... yeah, some Builders have greenhouses in their workshops, don't they? For what you're askin', you'll need some adjustments, but... if you're willing, I doubt it'd be too much trouble for someone like yourself, ''Player''.}}
+
+*''Consider it done!'' (No unique dialogue)
+*''Now's not a great time...'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 23036:
+{{dialogue|Fang|''Pet Name'', do you have time to help me build the garden?}}
+
+*''Sure! When shall we go?'' (No unique dialogue)
+*''Bit much on the plate, as it were...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8513A to 1
+
+TRIGGER Procedure 0.0 Step 7.1 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the first option in conversation segment 23026:
+{{dialogue|Zeke|Oh. Uh... yeah, some Builders have greenhouses in their workshops, don't they? For what you're askin', you'll need some adjustments, but... if you're willing, I doubt it'd be too much trouble for someone like yourself, ''Player''.}}
+
+*''Consider it done!'' (No unique dialogue)
+*''Now's not a great time...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8513B to 1
+
+TRIGGER Procedure 0.0 Step 9.2 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Fang stops standing still
+Zeke stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8513162) from Fang
+Remove behavior CommanderMoveToFlagAndAction (idName: 8513333) from Zeke
+Remove behavior CommanderMoveToFlagAndAction (idName: 8513001) from Player
+CUTSCENE UI STATE EXIT || 
+CAMERA PATH STOP ALL || 
+
+TRIGGER Procedure 0.0 Step 9.4 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Check if 8513A is == 1
+ACTIONS
+START MISSION 1800513
+
+TRIGGER Procedure 0.0 Step 9.4 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if 8513A is == 1
+ACTIONS
+START MISSION 1800513
+
+TRIGGER Procedure 0.0 Step 16.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800513
+CONDITIONS
+Always:
+ACTIONS
+Run mission Secret Garden
+END MISSION 1800513
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Fang|''Pet Name'', do you have time to help me build the garden?}}
+
+*''Sure! When shall we go?''
+*''Bit much on the plate, as it were...''
+
+{{dialogue|Fang|indent=true|answer=Sure! When shall we go?
+|Good. Zeke has already started working on the diagram with Heidi. I'll tell them to send it to you immediately.}}
+{{dialogue|Fang|indent=true|''Pet Name'', please remember to check the mailbox for this diagram. The patients... It may not yet be urgent, but we shouldn't risk it.}}
+{{dialogue|Fang|indent=true|When the time comes, I will arrange the herbs myself.}}
+{{dialogue|Fang|indent=true|The garden will be useful, necessary. But... I will make it into... a nice place, as well.}}
+{{dialogue|Fang|indent=true|answer=Bit much on the plate, as it were...
+|I understand. I will try to find my own way.}}
+
+==Rewards==
+{{mission reward
+|npc1 = Fang
+|rp1 = 30
+|npc2 = X
+|rp2 = 15
+|npc3 = CoCo
+|rp3 = 15
+|exp = 1435
+|reputation = None
+|gols = None
+}}

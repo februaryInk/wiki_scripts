@@ -1,0 +1,196 @@
+Reading Mission 1700391: "Him"
+
+<onlyinclude>{{Infobox mission
+|name = "Him"
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200106
+
+TRIGGER Procedure 5.0 Step 3.0 Order 3 Repeat 6
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment 1700391 by 1
+
+TRIGGER Procedure 5.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check relationship with Fang is Lover
+CHECK GLOBAL BLACKBOARD || key: fangginger | info: 1 | exist: 0
+ACTIONS
+Run mission "Him"
+Set global blackboard key fangginger with info 1.
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 20790:
+{{dialogue|Player|(What should I say?)}}
+
+*''I understand. I'll be waiting for you.'' (No unique dialogue)
+*''Can't someone else do it?'' (No unique dialogue)
+*''I'll go with you!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 20793, 20794 starts:
+{{dialogue|Fang|While I'm away, every moment, I will think of you. I love you, ''Pet Name''. See you soon.}}
+{{dialogue|X|I love you. Buh-bye!}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 173911) to Fang
+(param: TargetScene:Main|FlagName:church_peng|MoveMode:Walk)
+Add behavior CommanderMoveToFlag (idName: 173911) to X
+(param: TargetScene:Main|FlagName:church_peng|MoveMode:Walk)
+Fang stops standing still
+X stops standing still
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 20790:
+{{dialogue|Player|(What should I say?)}}
+
+*''I understand. I'll be waiting for you.'' (No unique dialogue)
+*''Can't someone else do it?'' (No unique dialogue)
+*''I'll go with you!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 20791, 20793, 20794 starts:
+{{dialogue|Fang|Possibly... but... better not take the risk.}}
+{{dialogue|Fang|While I'm away, every moment, I will think of you. I love you, ''Pet Name''. See you soon.}}
+{{dialogue|X|I love you. Buh-bye!}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the third option in conversation segment 20790:
+{{dialogue|Player|(What should I say?)}}
+
+*''I understand. I'll be waiting for you.'' (No unique dialogue)
+*''Can't someone else do it?'' (No unique dialogue)
+*''I'll go with you!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 20792, 20793, 20794 starts:
+{{dialogue|Fang|Your work here is too valuable. I'll be no more than a few days.}}
+{{dialogue|Fang|While I'm away, every moment, I will think of you. I love you, ''Pet Name''. See you soon.}}
+{{dialogue|X|I love you. Buh-bye!}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 173911) from X
+Remove behavior CommanderMoveToFlag (idName: 173911) from Fang
+NPC LEAVE || npc: 8016
+NPC LEAVE || npc: 8042
+Run mission "Him"
+END MISSION 1700391
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+When the time is 12:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 173911) from Fang
+Remove behavior CommanderMoveToFlag (idName: 173911) from X
+NPC LEAVE || npc: 8042
+NPC LEAVE || npc: 8016
+
+TRIGGER Procedure 0.0 Step 0.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: SummitBegin | info: 1 | exist: 0
+ACTIONS
+(cId -1) A conversation 20788, 20789, 20790 starts:
+{{dialogue|X|Good morning, good morning! Hi, pretty bird!}}
+{{dialogue|Fang|''Pet Name''... There's been some trouble at a nearby village. A young girl has fallen ill. I must go care for her...}}
+{{dialogue|Player|(What should I say?)}}
+
+*''I understand. I'll be waiting for you.'' (No unique dialogue)
+*''Can't someone else do it?'' (No unique dialogue)
+*''I'll go with you!'' (No unique dialogue)
+
+
+TRIGGER Procedure 0.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 10
+CONDITIONS
+Always:
+ACTIONS
+Set 7391Runnig to 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700391
+CONDITIONS
+Always:
+ACTIONS
+Set 7391Runnig to 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+CHECK WEATHER STATE || weather: 0 | flag: 1
+CHECK GLOBAL BLACKBOARD || key: SummitBegin | exist: 0 | info: 1
+CHECK TIME || compare: 5 | hour: 16 | minute: 0
+Check if 7391Runnig is <= (maybe?) 1
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+
+TRIGGER Procedure 2.0 Step 0.2 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Fang stands still in Main and looks at Player
+X stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome

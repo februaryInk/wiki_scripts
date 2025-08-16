@@ -1,0 +1,119 @@
+Reading Mission 1500403: The Girl with the Umbrella
+
+<onlyinclude>{{Infobox mission
+|name = The Girl with the Umbrella
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200364
+
+TRIGGER Procedure 11.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+CHECK WEATHER STATE || weather: 0 | flag: 1
+Check if mission 1200328 is result 1 flag 1
+Check if mission 1500330 is result 1 flag 1
+
+GROUP 10:
+CHECK WEATHER STATE || weather: 0 | flag: 1
+Check if mission 1200328 is result 1 flag 1
+Check if mission 1500330 is result 2 flag 1
+
+ACTIONS
+Run mission Aid to Portia
+
+TRIGGER Procedure 11.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+The Girl with the Umbrella is successfully completed
+
+GROUP 1:
+The Girl with the Umbrella has failed
+
+ACTIONS
+Run mission The Girl with the Umbrella
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1500403
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 540301 | path: Mission_5403Book | sceneName: Clinic | flagName: Story_5403_Item | extraParams: 0
+Set day to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 540301
+CONDITIONS
+Check if day is == 0
+ACTIONS
+(cId 540301) A conversation 21406 starts:
+{{dialogue|0|I got a telegram from Pa today. He said there's an amazing doctor in Sandrock who can cure my condition. I talked to Gust and Dr. Xu, and we decided to head over as soon as we can. Uncle Russo said Sandrock's really hot, and there's sand as far as the eye can see! But it's changed a lot lately, so I wonder what it's going to be like now... he gave me a camera so I can take lots of pictures.}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 540301
+CONDITIONS
+Check if day is != (maybe?) 0
+Eagle and the Storm is in state 3 with flag 0
+ACTIONS
+(cId 540302) A conversation 21407 starts:
+{{dialogue|0|We arrived at Sandrock! The climate here is so much drier than Portia... but it wasn't as bad as Russo said! It's actually so beautiful here... We went to the clinic when we arrived, and stayed in the Blue Moon Saloon after we left. I didn't get a chance to really see anything, though. Gust wouldn't let me go anywhere... 
+
+The owner of the Blue Moon is so lovely. He told me there's loads of stuff to do in there. Stories, musical performances... I really hope I have the chance to see some!
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 540301
+CONDITIONS
+Check if day is >= 1
+Eagle and the Storm is successfully completed
+ACTIONS
+(cId 540303) A conversation 21408 starts:
+{{dialogue|0|My brother got angry with the doctor yesterday... Luckily ''Player'' and the kind man from the Civil Corps were there to calm him down. It's just because he's worried about me, though. 
+Dr. Fang is very kind. He didn't get angry at all, and he's very gentle with me, too. Dr. Fang and Dr. Xu are so different, but they're both really good people.}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 540303) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 540301
+Add 1 Ginger's Diary of Default quality (Notify player)
+END MISSION 1500403
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 3
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment day by 1

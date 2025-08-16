@@ -1,0 +1,974 @@
+Reading Mission 1800503: House Cleaning
+
+<onlyinclude>{{Infobox mission
+|name = House Cleaning
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from House Cleaning:
+
+TRIGGER Procedure 0.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if 8502A is == 1
+ACTIONS
+START MISSION 1800502
+
+TRIGGER Procedure 0.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800502
+CONDITIONS
+Always:
+ACTIONS
+Run mission House Cleaning
+END MISSION 1800502
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800503
+CONDITIONS
+Always:
+ACTIONS
+===Wait Until Tomorrow===
+
+{{mission_details
+|desc = You've agreed to clean together tomorrow, so rest for today.
+|details = Wait Until Tomorrow
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 70 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from AmirahFamilyHome to the -1:
+CONDITIONS
+Always:
+ACTIONS
+TIME SET ENABLE || bool: 1
+NPC SET CAN INTERACT || npc: 8014 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8015 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8103 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8104 | canInteract: 1
+SCENEITEM DELETE || itemType: 0 | id: 8503014
+SCENEITEM DELETE || itemType: 0 | id: 8503015
+SCENEITEM DELETE || itemType: 0 | id: 8503103
+SCENEITEM DELETE || id: 8503104 | itemType: 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+===Go to AAA&A Family Home Before 22:00===
+
+{{mission_details
+|desc = You've arranged with Amirah to go to her parents' house today for the cleaning. Make sure to arrive before 22:00.
+|details = Go to AAA&A Family Home Before 22:00
+}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the AmirahFamilyHome:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_amirahfamilyhome
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_enter_amirahfamilyhome
+AREA TRIGGER DELETE || id: 85031
+
+TRIGGER Procedure 0.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the AmirahFamilyHome:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: AmirahFamilyHome | flagName: S8503_0_1
+Arvio stands still in AmirahFamilyHome and looks at Amirah
+Amirah stands still in AmirahFamilyHome and looks at Arthur
+Arthur stands still in AmirahFamilyHome and looks at Amirah
+Agatha stands still in AmirahFamilyHome and looks at Amirah
+TIME SET ENABLE || bool: 0
+
+TRIGGER Procedure 0.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the AmirahFamilyHome:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8503142) to Arvio
+(param: TargetScene:AmirahFamilyHome|MoveMode:Run|FlagName:S8503_14_2|LookAtActor:8000|Delay:2.5|Action:Hi)
+Add behavior CommanderMoveToFlag (idName: 8503001) to Player
+(param: TargetScene:AmirahFamilyHome|MoveMode:Run|FlagName:S8503_0_2|LookAtActor:8014|Delay:1.0)
+
+TRIGGER Procedure 0.0 Step 6.4 Order 64 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from AmirahFamilyHome to the -1:
+CONDITIONS
+Always:
+ACTIONS
+TIME SET ENABLE || bool: 1
+
+TRIGGER Procedure 0.0 Step 7.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 7932_0 starts:
+{{dialogue|Arvio|Ah ''Player'', you're here! Our guest of honor!}}
+{{dialogue|Amirah|You've come at just the right moment, ''Pet Name''. We're about to start.}}
+{{dialogue|Agatha|You're here, how about some tea before we start? We have time.}}
+{{dialogue|Arvio|Mother dearest, wasn't it always you who accused me of putting pleasure before business...?}}
+{{dialogue|Arthur|Hahaha, look who's all grown up! Very well, let's have it after we're done.}}
+{{dialogue|Amirah|Pa, Ma, you take care of the living room floor. Arvio, let's clean the furniture and the kitchen.}}
+{{dialogue|Amirah|''Pet Name'', why don't you take care of your own room?}}
+{{dialogue|Amirah|Here, this might come in handy.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 8.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Clean Your Room===
+
+{{mission_details
+|desc = Tasks have been divided among everyone. While others are cleaning outside, you are responsible for your own room.
+|details = Clean Your Room
+}}
+Add 1 Feather Duster of Default quality (Notify player)
+SCENEITEM CREATE FLAG || itemType: 0 | id: 85031 | path: S8503_Fix1 | flagName: S8503_Fix1 | sceneName: AmirahFamilyHome | extraParams: -1
+SCENEITEM CREATE FLAG || itemType: 0 | id: 85032 | path: S8503_Fix2 | flagName: S8503_Fix2 | sceneName: AmirahFamilyHome | extraParams: -1
+SCENEITEM CREATE FLAG || itemType: 0 | id: 85033 | path: S8503_Fix3 | flagName: S8503_Fix3 | sceneName: AmirahFamilyHome | extraParams: -1
+SCENEITEM CREATE FLAG || id: 85034 | itemType: 0 | path: S8503_Fix4 | flagName: S8503_Fix4 | extraParams: -1 | sceneName: AmirahFamilyHome
+SCENEITEM CREATE FLAG || id: 85035 | itemType: 0 | path: S8503_Fix5 | flagName: S8503_Fix5 | sceneName: AmirahFamilyHome | extraParams: -1
+Set 8503Sand to 0
+Remove behavior CommanderMoveToFlag (idName: 8503001) from Player
+Arvio stops standing still
+Amirah stops standing still
+Arthur stops standing still
+Agatha stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8503142) from Arvio
+Add behavior CommanderMoveToFlagAndAction (idName: 8503143) to Arvio
+(param: TargetScene:AmirahFamilyHome|MoveMode:Walk|FlagName:S8503_14_3|Delay:0.5|Action:Stroke)
+Add behavior CommanderMoveToFlag (idName: 8503152) to Amirah
+(param: TargetScene:AmirahFamilyHome|MoveMode:Walk|FlagName:S8503_15_2|Delay:2.5)
+Add behavior CommanderMoveToFlagAndAction (idName: 85031032) to Arthur
+(param: TargetScene:AmirahFamilyHome|MoveMode:Walk|FlagName:S8503_103_2|Delay:2.5|Action:OpenDoor)
+Add behavior CommanderMoveToFlagAndAction (idName: 85031042) to Agatha
+(param: TargetScene:AmirahFamilyHome|MoveMode:Walk|FlagName:S8503_104_2|Delay:2.0|Action:LookSky)
+CUTSCENE UI STATE EXIT || 
+AREA TRIGGER CREATE || missionId: 1800503 | id: 85032 | sceneName: AmirahFamilyHome | flagName: Trigger_S85031 | showOnMap: 0 | mapIcon: MissionAreaBranch | transId: 0
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 85031 | missionId: 1800502 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 85032 | missionId: 1800502 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 85033 | missionId: 1800502 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 85034 | missionId: 1800502 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 85035 | missionId: 1800502 | iconType: 2
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 8503014 | path: S8503_Item1 | flagName: S8503_14_3 | sceneName: AmirahFamilyHome | extraParams: -1
+SCENEITEM CREATE FLAG || itemType: 0 | id: 8503015 | path: S8503_Item1 | flagName: S8503_15_2 | sceneName: AmirahFamilyHome | extraParams: -1
+SCENEITEM CREATE FLAG || itemType: 0 | id: 8503103 | path: S8503_Item1 | flagName: S8503_103_2 | sceneName: AmirahFamilyHome | extraParams: -1
+SCENEITEM CREATE FLAG || id: 8503104 | itemType: 0 | path: S8503_Item1 | flagName: S8503_104_2 | extraParams: -1 | sceneName: AmirahFamilyHome
+NPC SET CAN INTERACT || canInteract: 0 | npc: 8014
+NPC SET CAN INTERACT || npc: 8015 | canInteract: 0
+NPC SET CAN INTERACT || canInteract: 0 | npc: 8103
+NPC SET CAN INTERACT || canInteract: 0 | npc: 8104
+
+TRIGGER Procedure 0.0 Step 8.1 Order 65 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8015 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 8503152) from Amirah
+Add behavior CommanderNPCActionLoop (idName: 8503159) to Amirah
+(param: CMDAction:FeatherDustingLoop|TargetScene:AmirahFamilyHome|FlagName:S8503_15_2)
+
+TRIGGER Procedure 0.0 Step 8.2 Order 66 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8014 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8503143) from Arvio
+Add behavior CommanderNPCActionLoop (idName: 8503149) to Arvio
+(param: CMDAction:FeatherDustingLoop|TargetScene:AmirahFamilyHome|FlagName:S8503_14_3)
+
+TRIGGER Procedure 0.0 Step 8.3 Order 67 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8103 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 85031032) from Arthur
+Add behavior CommanderNPCActionLoop (idName: 85031039) to Arthur
+(param: CMDAction:SweepLoop|TargetScene:AmirahFamilyHome|FlagName:S8503_103_2)
+
+TRIGGER Procedure 0.0 Step 8.4 Order 68 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8104 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 85031042) from Agatha
+Add behavior CommanderNPCActionLoop (idName: 85031049) to Agatha
+(param: CMDAction:SweepLoop|TargetScene:AmirahFamilyHome|FlagName:S8503_104_2)
+
+TRIGGER Procedure 0.0 Step 9.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 85031
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 8503002) to Player
+(param: CMDAction:Clean_Story)
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850311 | path: S8503_Sfx1 | sceneName: AmirahFamilyHome | flagName: S8503_Fix1 | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 9.2 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: NPCActionOver | behaviourName: CommanderPlayerAction | npc: 8000
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1800502 | targetId: 3 | isAdd: 1 | transId: 80034789
+SCENEITEM DELETE || itemType: 0 | id: 85031
+Remove behavior CommanderPlayerAction (idName: 8503002) from Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850321 | path: S8501_efx_clear | flagName: S8503_Fix1 | sceneName: AmirahFamilyHome | extraParams: 0
+STOPWATCH REAL TIME SET || id: 850301 | sec: 1
+SCENEITEM DELETE || itemType: 0 | id: 850311
+Increment 8503Sand by 1
+
+TRIGGER Procedure 0.0 Step 9.3 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 850301
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 850321
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 10.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 85032
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 8503002) to Player
+(param: CMDAction:Clean_Story)
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850311 | path: S8503_Sfx1 | sceneName: AmirahFamilyHome | flagName: S8503_Fix2 | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 10.2 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: NPCActionOver | behaviourName: CommanderPlayerAction | npc: 8000
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1800502 | targetId: 3 | isAdd: 1 | transId: 80034789
+SCENEITEM DELETE || itemType: 0 | id: 85032
+Remove behavior CommanderPlayerAction (idName: 8503002) from Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850321 | path: S8501_efx_clear | flagName: S8503_Fix2 | sceneName: AmirahFamilyHome | extraParams: 0
+STOPWATCH REAL TIME SET || id: 850302 | sec: 1
+SCENEITEM DELETE || itemType: 0 | id: 850311
+Increment 8503Sand by 1
+
+TRIGGER Procedure 0.0 Step 10.3 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 850302
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 850321
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 11.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 85033
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 8503002) to Player
+(param: CMDAction:Clean_Story)
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850311 | path: S8503_Sfx1 | sceneName: AmirahFamilyHome | flagName: S8503_Fix3 | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 11.2 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: NPCActionOver | behaviourName: CommanderPlayerAction | npc: 8000
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1800502 | targetId: 3 | isAdd: 1 | transId: 80034789
+SCENEITEM DELETE || itemType: 0 | id: 85033
+Remove behavior CommanderPlayerAction (idName: 8503002) from Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850321 | path: S8501_efx_clear | flagName: S8503_Fix3 | sceneName: AmirahFamilyHome | extraParams: 0
+STOPWATCH REAL TIME SET || id: 850303 | sec: 1
+SCENEITEM DELETE || itemType: 0 | id: 850311
+Increment 8503Sand by 1
+
+TRIGGER Procedure 0.0 Step 11.3 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 850303
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 850321
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 12.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 85034
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 8503002) to Player
+(param: CMDAction:FeatherDuster_Story)
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850311 | path: S8503_Sfx1 | sceneName: AmirahFamilyHome | flagName: S8503_Fix4 | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 12.2 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: NPCActionOver | behaviourName: CommanderPlayerAction | npc: 8000
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1800502 | targetId: 3 | isAdd: 1 | transId: 80034790
+SCENEITEM DELETE || itemType: 0 | id: 85034
+Remove behavior CommanderPlayerAction (idName: 8503002) from Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850321 | path: S8501_efx_clear | flagName: S8503_Fix4 | sceneName: AmirahFamilyHome | extraParams: 0
+STOPWATCH REAL TIME SET || id: 850304 | sec: 1
+SCENEITEM DELETE || itemType: 0 | id: 850311
+
+TRIGGER Procedure 0.0 Step 12.3 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 850304
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 850321
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 13.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 85035
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 8503002) to Player
+(param: CMDAction:FeatherDuster_Story)
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850311 | path: S8503_Sfx1 | sceneName: AmirahFamilyHome | flagName: S8503_Fix5 | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 13.2 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: NPCActionOver | behaviourName: CommanderPlayerAction | npc: 8000
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1800502 | targetId: 3 | isAdd: 1 | transId: 80034790
+SCENEITEM DELETE || itemType: 0 | id: 85035
+Remove behavior CommanderPlayerAction (idName: 8503002) from Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850321 | path: S8501_efx_clear | flagName: S8503_Fix5 | sceneName: AmirahFamilyHome | extraParams: 0
+STOPWATCH REAL TIME SET || id: 850305 | sec: 1
+SCENEITEM DELETE || itemType: 0 | id: 850311
+
+TRIGGER Procedure 0.0 Step 13.3 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 850305
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 850321
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 14.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 850301
+ON STOPWATCH REAL TIME END || order: 0 | id: 850302
+ON STOPWATCH REAL TIME END || order: 0 | id: 850303
+CONDITIONS
+Check if 8503Sand is == 2
+ACTIONS
+(cId 2) A conversation 7933_0 starts:
+{{dialogue|Agatha|A gol! Honey, there's a gol between the sofa pillows!}}
+{{dialogue|Arvio|Dibs!}}
+{{dialogue|Arthur|Huh? Let me see...}}
+{{dialogue|Arthur|Ah... must've slipped out of my pocket. Was wondering where this went.}}
+{{dialogue|Agatha|Oh, really? I thought maybe it belonged to the people we bought it from...}}
+{{dialogue|Amirah|Haha... Mother, all of our furniture was bought new or handmade by ''Pet Name''. Those days of us buying everything second-hand are over.}}
+{{dialogue|Arvio|Oh, yeah! Remember when I found those rare Critters cards in those old clothes Pa gave us? It was like the Day of the Bright sun had come early: in pants form!}}
+{{dialogue|Agatha|Ah, you loved those cards. And they looked great displayed above your headboard! Hum... I still wish we could've afforded better for you...}}
+{{dialogue|Arthur|Let's not keep the kids here all day, Agatha. We can reminisce about the good old days once the job's done!}}
+The conversation ends.
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 15.0 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 16.0 Order 24 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 85032
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 22393 starts:
+{{dialogue|Player|(I've promised Amirah I would help clean. Do I really want to leave now?)}}
+
+*''(Choose to stay)'' (No unique dialogue)
+*''(Choose to leave)'' (No unique dialogue)
+
+
+TRIGGER Procedure 0.0 Step 16.1 Order 25 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION CHOICE MADE END || order: 0 | selectIndex: 0 | cId: 3 | npc: 8000 | missionId: 1800503 | id: 22393
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: AmirahFamilyHome | flagName: S8503_0_3
+
+TRIGGER Procedure 0.0 Step 16.1 Order 69 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 8503015
+CONDITIONS
+CHECK CURRENT SCENE || name: AmirahFamilyHome | flag: 1
+ACTIONS
+(cId 99) A conversation 22389 starts:
+{{dialogue|Amirah|''Pet Name'', how's it going? Not too much trouble, I hope...?}}
+
+TRIGGER Procedure 0.0 Step 16.2 Order 71 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 8503014
+CONDITIONS
+CHECK CURRENT SCENE || name: AmirahFamilyHome | flag: 1
+ACTIONS
+(cId 98) A conversation 22390 starts:
+{{dialogue|Arvio|All this gives me an idea! This floor cleaner is just no good. Is this what people use around here? If we could ship in some from Tallsky, I'll bet we could make our lives here easier, not to mention a tidy profit at By the Stairs...}}
+
+TRIGGER Procedure 0.0 Step 16.3 Order 26 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION CHOICE MADE END || order: 0 | selectIndex: 1 | cId: 3 | npc: 8000 | missionId: 1800503 | id: 22393
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM ADD ICON STACK || missionId: 1800502 | iconType: 2 | add: 0 | itemType: 0 | id: 85034
+SCENEITEM ADD ICON STACK || iconType: 2 | missionId: 1800502 | add: 0 | itemType: 0 | id: 85035
+SCENEITEM ADD ICON STACK || missionId: 1800502 | iconType: 2 | add: 0 | itemType: 0 | id: 85033
+SCENEITEM ADD ICON STACK || missionId: 1800502 | iconType: 2 | add: 0 | itemType: 0 | id: 85032
+SCENEITEM ADD ICON STACK || missionId: 1800502 | iconType: 2 | id: 85031 | add: 0 | itemType: 0
+AREA TRIGGER DELETE || id: 85031
+Remove behavior CommanderMoveToFlagAndAction (idName: 8503143) from Arvio
+Remove behavior CommanderMoveToFlagAndAction (idName: 8503152) from Amirah
+Remove behavior CommanderMoveToFlagAndAction (idName: 85031032) from Arthur
+Remove behavior CommanderMoveToFlagAndAction (idName: 85031042) from Agatha
+SCENEITEM DELETE || itemType: 0 | id: 85031
+SCENEITEM DELETE || itemType: 0 | id: 85032
+SCENEITEM DELETE || itemType: 0 | id: 85033
+SCENEITEM DELETE || itemType: 0 | id: 85034
+SCENEITEM DELETE || itemType: 0 | id: 85035
+Remove behavior CommanderNPCActionLoop (idName: 8503159) from Amirah
+Remove behavior CommanderNPCActionLoop (idName: 8503149) from Arvio
+Remove behavior CommanderNPCActionLoop (idName: 85031049) from Agatha
+Remove behavior CommanderNPCActionLoop (idName: 85031039) from Arthur
+SCENEITEM DELETE || itemType: 0 | id: 8503014
+SCENEITEM DELETE || itemType: 0 | id: 8503015
+SCENEITEM DELETE || itemType: 0 | id: 8503103
+SCENEITEM DELETE || itemType: 0 | id: 8503104
+Remove behavior CommanderMoveToFlagAndAction (idName: 85031041) from Agatha
+TIME SET ENABLE || bool: 1
+NPC SET CAN INTERACT || npc: 8014 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8015 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8103 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8104 | canInteract: 1
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: Trigger_AmirahFamilyHome
+FAIL MISSION || missionId: 1800502
+
+TRIGGER Procedure 0.0 Step 16.3 Order 72 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 8503103
+CONDITIONS
+CHECK CURRENT SCENE || name: AmirahFamilyHome | flag: 1
+ACTIONS
+(cId 97) A conversation 22392 starts:
+{{dialogue|Arthur|This house is already feeling like home. Thank you again for helping us, ''Player''.}}
+
+TRIGGER Procedure 0.0 Step 16.4 Order 63 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from AmirahFamilyHome to the -1:
+CONDITIONS
+Always:
+ACTIONS
+TIME SET ENABLE || bool: 1
+NPC SET CAN INTERACT || npc: 8014 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8015 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8103 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8104 | canInteract: 1
+
+TRIGGER Procedure 0.0 Step 16.4 Order 73 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 8503104
+CONDITIONS
+CHECK CURRENT SCENE || name: AmirahFamilyHome | flag: 1
+ACTIONS
+(cId 97) A conversation 22391 starts:
+{{dialogue|Agatha|Don't forget! Once we're done, I'll make a pot of our finest tea. I just love having something to look forward to after a hard day's work!}}
+
+TRIGGER Procedure 0.0 Step 20.0 Order 54 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8503143) from Arvio
+Remove behavior CommanderMoveToFlagAndAction (idName: 85031032) from Arthur
+Remove behavior CommanderMoveToFlagAndAction (idName: 85031042) from Agatha
+Remove behavior CommanderNPCAction (idName: 8503154) from Amirah
+Remove behavior CommanderMoveToFlagAndAction (idName: 85031041) from Agatha
+
+TRIGGER Procedure 0.0 Step 20.0 Order 60 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | canSubmit: 1 | missionId: 1800502 | targetId: 3
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 85030 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 20.1 Order 59 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85030 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCActionLoop (idName: 8503159) from Amirah
+Remove behavior CommanderMoveToFlagAndAction (idName: 8503152) from Amirah
+PLAYER SET POS ROT FLAG || flagName: S8503_0_4 | sceneName: AmirahFamilyHome
+Add behavior CommanderMoveToFlagAndAction (idName: 8503153) to Amirah
+(param: TargetScene:AmirahFamilyHome|MoveMode:Walk|FlagName:S8503_15_4|LookAtActor:8000|Delay:0.5)
+DELAY MASK SET || maskId: 85030 | delayTime: 0 | durationTime: -1 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 21.0 Order 27 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8015 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 22394 starts:
+{{dialogue|Amirah|''Pet Name'', how's it going in here? We're about wrapping up upstairs.}}
+
+TRIGGER Procedure 0.0 Step 22.0 Order 28 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 8503154) to Amirah
+(param: CMDAction:Look)
+Add behavior CommanderPlayerAction (idName: 8503001) to Player
+(param: CMDAction:Talk)
+
+TRIGGER Procedure 0.0 Step 23.1 Order 30 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 850341
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850331 | path: S8503_efx_clear | sceneName: AmirahFamilyHome | flagName: S8503_Clear1 | extraParams: -1
+
+TRIGGER Procedure 0.0 Step 23.3 Order 32 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 850343
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850332 | path: S8503_efx_clear | sceneName: AmirahFamilyHome | flagName: S8503_Clear2 | extraParams: -1
+
+TRIGGER Procedure 0.0 Step 24.0 Order 33 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 850344
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 7935_0 starts:
+{{dialogue|Amirah|Spotless! Very well done.}}
+{{dialogue|Amirah|To even the smallest of tasks you offer the greatest of care... one of the things I've always admired about you, ''Pet Name''.}}
+
+*''Can't have my room of the house be dusty, can I?''
+*''It's more of a Builder induced OCD thing.''
+*''I think it's you who's made me this way.''
+
+{{dialogue|Amirah|indent=true|answer=Can't have my room of the house be dusty, can I?
+|Haha, very good... I'm glad you take pride in this room.}}
+{{dialogue|Amirah|indent=true|answer=It's more of a Builder induced OCD thing.
+|Hm... Well, if only all of them were more like you. I think always being on top of the charts is enough to prove you're not just any old Builder.}}
+{{dialogue|Amirah|indent=true|answer=I think it's you who's made me this way.
+|Haha... I think I would have detected such a change.}}
+{{dialogue|Amirah|indent=true|It's one of the first things I noticed about you, as a matter of fact. How meticulous you are.}}
+{{dialogue|Amirah|Speaking of attention to detail: there was so much dust in here that I'd missed when we first moved them in! Today was a little bit more than I'd bargained for...}}
+{{dialogue|Amirah|Can we...}}
+{{dialogue|Amirah|Can we lie down for a moment...?}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 25.0 Order 34 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 3524}}
+A cutscene CG_AMIRAHAROMA (duration: 1.0) starts playing
+Intoxicating Fragrance - Amirah's unique fragrance made us slightly dizzy. As we were about to kiss, a small incident occurred.
+
+TRIGGER Procedure 0.0 Step 26.0 Order 35 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_AMIRAHAROMA | state: 7
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8503153) from Amirah
+Amirah stands still in AmirahFamilyHome and looks at Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 85036 | path: S8503_Item6 | sceneName: AmirahFamilyHome | flagName: S8503_Item6 | extraParams: -1
+PLAYER SET POS ROT FLAG || sceneName: AmirahFamilyHome | flagName: S8503_0_5
+Agatha stands still in AmirahFamilyHome
+
+TRIGGER Procedure 0.0 Step 27.0 Order 36 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_AMIRAHAROMA | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 7939_0 starts:
+{{dialogue|Player|(Today, Amirah is emitting a different fragrance than usual. When I hugged her, I could smell it quite intensely.)}}
+
+*''Amirah, is that a new fragrance? It's wonderful.''
+*''I'll never get tired of holding you close.''
+*''Amirah, your hair smells wonderful today...''
+
+{{dialogue|Amirah|indent=true|answer=Amirah, is that a new fragrance? It's wonderful.
+|reward={{NPC2|Amirah|rp=1}}|Haha, really...?}}
+{{dialogue|Amirah|indent=true|Is it my hair?}}
+{{dialogue|Amirah|indent=true|answer=I'll never get tired of holding you close.
+|reward={{NPC2|Amirah|rp=1}}|Nor could I...}}
+{{dialogue|Amirah|indent=true|...Darling, just now, did you notice anything different about me?}}
+{{dialogue|Amirah|indent=true|answer=Amirah, your hair smells wonderful today...
+|reward={{NPC2|Amirah|rp=1}}|Oh. You mean the fragrance?}}
+{{dialogue|Amirah|''Pet Name'', have a look.}}
+{{dialogue|Amirah|Pablo helped me design a fragrance inspired by... you. It's bold, luscious, and has metallic, woody hints that come from plants and flowers that grow around Sandrock.}}
+{{dialogue|Amirah|The plants I chose were rather particular. Ones that offer a soothing effect once their fragrance enters the lungs.}}
+{{dialogue|Amirah|So... I suppose what you're smelling... is something close to the way I feel about you.}}
+
+*''Amirah, this is so romantic...''
+*''Amirah, you're so good to me...''
+*''(Kiss Amirah)'' (No unique dialogue)
+*''Kinda weird...''
+
+{{dialogue|Amirah|indent=true|answer=Amirah, this is so romantic...
+|reward={{NPC2|Amirah|rp=3}}|Haha... It's just a perfume.}}
+{{dialogue|Agatha|indent=true|Kids, come out for tea!}}
+{{dialogue|Amirah|indent=true|Okay, mother!}}
+{{dialogue|Amirah|indent=true|''Pet Name'', let's go.}}
+{{dialogue|Amirah|indent=true|answer=Amirah, you're so good to me...
+|reward={{NPC2|Amirah|rp=3}}|Haha... It's just a perfume.}}
+{{dialogue|Agatha|indent=true|Kids, come out for tea!}}
+{{dialogue|Amirah|indent=true|Okay, mother!}}
+{{dialogue|Amirah|indent=true|''Pet Name'', let's go.}}
+{{dialogue|Amirah|indent=true|answer=Kinda weird...
+|What can I say? You drive me mad, ''Pet Name''.}}
+{{dialogue|Agatha|indent=true|Kids, come out for tea!}}
+{{dialogue|Amirah|indent=true|Okay, mother!}}
+{{dialogue|Amirah|indent=true|''Pet Name'', let's go.}}
+
+TRIGGER Procedure 0.0 Step 30.0 Order 40 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) The player picks the third option in conversation segment 22413:
+{{dialogue|Amirah|So... I suppose what you're smelling... is something close to the way I feel about you.}}
+
+*''Amirah, this is so romantic...'' (No unique dialogue)
+*''Amirah, you're so good to me...'' (No unique dialogue)
+*''(Kiss Amirah)'' (No unique dialogue)
+*''Kinda weird...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+The player interacts (type 2, option 1) with Amirah
+
+TRIGGER Procedure 0.0 Step 30.0 Order 48 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) The player picks the first option in conversation segment 22413:
+{{dialogue|Amirah|So... I suppose what you're smelling... is something close to the way I feel about you.}}
+
+*''Amirah, this is so romantic...'' (No unique dialogue)
+*''Amirah, you're so good to me...'' (No unique dialogue)
+*''(Kiss Amirah)'' (No unique dialogue)
+*''Kinda weird...'' (No unique dialogue)
+
+(cId 6) The player picks the second option in conversation segment 22413:
+{{dialogue|Amirah|So... I suppose what you're smelling... is something close to the way I feel about you.}}
+
+*''Amirah, this is so romantic...'' (No unique dialogue)
+*''Amirah, you're so good to me...'' (No unique dialogue)
+*''(Kiss Amirah)'' (No unique dialogue)
+*''Kinda weird...'' (No unique dialogue)
+
+(cId 6) The player picks the third option in conversation segment 22413:
+{{dialogue|Amirah|So... I suppose what you're smelling... is something close to the way I feel about you.}}
+
+*''Amirah, this is so romantic...'' (No unique dialogue)
+*''Amirah, you're so good to me...'' (No unique dialogue)
+*''(Kiss Amirah)'' (No unique dialogue)
+*''Kinda weird...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Amirah gains 3 favor
+
+TRIGGER Procedure 0.0 Step 30.0 Order 49 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) The player picks the first option in conversation segment 22404:
+{{dialogue|Player|(Today, Amirah is emitting a different fragrance than usual. When I hugged her, I could smell it quite intensely.)}}
+
+*''Amirah, is that a new fragrance? It's wonderful.'' (No unique dialogue)
+*''I'll never get tired of holding you close.'' (No unique dialogue)
+*''Amirah, your hair smells wonderful today...'' (No unique dialogue)
+
+(cId 6) The player picks the second option in conversation segment 22404:
+{{dialogue|Player|(Today, Amirah is emitting a different fragrance than usual. When I hugged her, I could smell it quite intensely.)}}
+
+*''Amirah, is that a new fragrance? It's wonderful.'' (No unique dialogue)
+*''I'll never get tired of holding you close.'' (No unique dialogue)
+*''Amirah, your hair smells wonderful today...'' (No unique dialogue)
+
+(cId 6) The player picks the third option in conversation segment 22404:
+{{dialogue|Player|(Today, Amirah is emitting a different fragrance than usual. When I hugged her, I could smell it quite intensely.)}}
+
+*''Amirah, is that a new fragrance? It's wonderful.'' (No unique dialogue)
+*''I'll never get tired of holding you close.'' (No unique dialogue)
+*''Amirah, your hair smells wonderful today...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Amirah gains 1 favor
+
+TRIGGER Procedure 0.0 Step 31.0 Order 41 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON INTERACTIVE EXIT || order: 0 | instID: 8015
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 22416, 22417, 22418 starts:
+{{dialogue|Agatha|Kids, come out for tea!}}
+{{dialogue|Amirah|Okay, mother!}}
+{{dialogue|Amirah|''Pet Name'', let's go.}}
+SCENEITEM CREATE FLAG || itemType: 0 | path: S8503_Item8 | sceneName: AmirahFamilyHome | flagName: S8503_Item8 | extraParams: -1 | id: 85038
+
+TRIGGER Procedure 0.0 Step 32.0 Order 42 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 22418) that ends:
+{{dialogue|Amirah|''Pet Name'', let's go.}}
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85034 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 33.0 Order 43 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85034 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCActionLoop (idName: 8503149) from Arvio
+Remove behavior CommanderNPCActionLoop (idName: 85031039) from Arthur
+Remove behavior CommanderNPCActionLoop (idName: 85031049) from Agatha
+Remove behavior CommanderMoveToFlagAndAction (idName: 8503156) from Amirah
+PLAYER SET POS ROT FLAG || sceneName: AmirahFamilyHome | flagName: S8503_0_2
+Add behavior CommanderSit (idName: 8503156) to Amirah
+(param: SeatDramaName:TableSeat2|DelayTime:0|TargetScene:AmirahFamilyHome|Delay:0|LookAtActor:8103)
+Add behavior CommanderSit (idName: 8503147) to Arvio
+(param: SeatDramaName:TableSeat4|DelayTime:0|TargetScene:AmirahFamilyHome|Delay:0|LookAtActor:8000)
+Add behavior CommanderSit (idName: 85031033) to Arthur
+(param: SeatDramaName:TableSeat0|DelayTime:0|TargetScene:AmirahFamilyHome|Delay:0|LookAtActor:8000)
+Add behavior CommanderDramaWithIndex (idName: 85031043) to Agatha
+(param: SeatDramaName:TableSeat3|DelayTime:0|TargetScene:AmirahFamilyHome|DramaIndex:2|TriggerTag:83503104RaiseGlasses)
+SCENEITEM CREATE FLAG || itemType: 0 | id: 85037 | path: S8503_Item7 | flagName: S8503_Item7 | sceneName: AmirahFamilyHome | extraParams: -1
+Add behavior CommanderPlayerSit (idName: 8503004) to Player
+(param: SeatDramaName:TableSeat1|LookAtActor:8103)
+STOPWATCH REAL TIME SET || id: 85036 | sec: 3
+Agatha stops standing still
+DELAY MASK SET || maskId: 85034 | delayTime: 3 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 33.1 Order 55 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 85036
+CONDITIONS
+Always:
+ACTIONS
+Add tag "83503104RaiseGlasses" to Agatha
+
+TRIGGER Procedure 0.0 Step 33.1 Order 62 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85034 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | path: S8503_Item8 | sceneName: AmirahFamilyHome | flagName: S8503_Item8 | extraParams: -1 | id: 85038
+
+TRIGGER Procedure 0.0 Step 34.0 Order 44 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 85038
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85035 | delayTime: 6 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 35.0 Order 45 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85035 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderPlayerSit (idName: 8503004) from Player
+STOPWATCH REAL TIME SET || id: 85039 | sec: 3
+
+TRIGGER Procedure 0.0 Step 35.0 Order 61 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 85039
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8503_0_2
+
+TRIGGER Procedure 0.0 Step 36.0 Order 46 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from AmirahFamilyHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Amirah stands still in Main and looks at Player
+SCENEITEM DELETE || itemType: 0 | id: 850332
+SCENEITEM DELETE || itemType: 0 | id: 850331
+DELAY MASK SET || maskId: 85035 | delayTime: 0 | durationTime: -1 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 36.0 Order 47 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from AmirahFamilyHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId 8) A conversation 22419, 22420 starts:
+{{dialogue|Amirah|''Pet Name'', if you're ever tired, and in the neighborhood, I hope you won't hesitate to lie down for a bit in this room. You may even find it just as refreshing as our room back home.}}
+{{dialogue|Amirah|Hm. You've done plenty for us today, darling. I'm sure you had all sorts of other plans for the rest of the day. Then go ahead, we'll see each other at home tonight. Goodbye. Be safe.}}
+
+TRIGGER Procedure 0.0 Step 37.0 Order 50 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+TIME SET ENABLE || bool: 1
+SUBMIT MISSION 1800502
+CUTSCENE UI STATE EXIT || 
+Amirah stops standing still
+AREA TRIGGER DELETE || id: 85032
+Remove behavior CommanderSit (idName: 8503147) from Arvio
+Remove behavior CommanderSit (idName: 85031033) from Arthur
+Remove behavior CommanderDramaWithIndex (idName: 85031043) from Agatha
+Amirah stops standing still
+Remove behavior CommanderSit (idName: 8503156) from Amirah
+SCENEITEM DELETE || itemType: 0 | id: 85037
+Amirah stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8503153) from Amirah
+END MISSION 1800503

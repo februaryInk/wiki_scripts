@@ -1,0 +1,156 @@
+Reading Mission 1200038: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100002
+
+TRIGGER Procedure 0.0 Step 19.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION END || order: 0 | missionId: 1100089 | missionEndResult: 1
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1200050
+
+TRIGGER Procedure 0.0 Step 20.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100002
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1200038
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200038
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1200038 | id: 20381 | sceneName: Main | flagName: trigger_shileyuandoor | showOnMap: 0 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 20381
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+ACTOR BLIND SET || set: 1
+AREA TRIGGER DELETE || id: 20381
+Add behavior CommanderMoveToFlag (idName: 20381) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:shileyuan_player)
+
+TRIGGER Procedure 0.0 Step 1.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Unsuur stands still in Main
+Unsuur stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 20381) to Unsuur
+(param: TargetScene:Main|MoveMode:Run|FlagName:shileyuan_meiding)
+In a speech bubble:
+{{dialogue|Unsuur|You can't go in there.}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8026 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+CHECK NPC RECOGNIZED || npc: 8026 | flag: 0
+ACTIONS
+(cId 0) A conversation 1444, 278_0 starts:
+{{dialogue|Unsuur|Hi, you're the new Builder? I'm Unsuur. Second... or third in command at the Civil Corps, I'm not really sure. We keep the peace around here because if we didn't... things would be a lot less peaceful.}}
+{{dialogue|Unsuur|Sheriff told me I have to watch this door and make sure no crazy robots get out of the {{textcolor|green|Paradise Lost Hazardous Ruins}} here behind me.}}
+{{dialogue|Unsuur|Paradise Lost used to be a shopping mall in the Old World, but after the Day of Calamity, all the robots went crazy. Or was it before? I dunno, I was never good at history.}}
+{{dialogue|Unsuur|Oh. You wanna go in here? I thought you just wanted to chat with me... Well, the lock on this door here is broken, and Justice told me not to let anyone in or out until it's fixed. So... sorry.}}
+
+*''I can fix it.''
+*''I see.''
+
+{{dialogue|Unsuur|indent=true|answer=I can fix it.
+|Yeah, probably. The door kinda looks fine to me. But I gotta follow orders; Sheriff Justice has to get an official commission through the City Hall: that's just how it is, I guess.}}
+{{dialogue|Unsuur|indent=true|So until Justice does the paperwork, I'm sorry to say I can't help you...}}
+{{dialogue|Unsuur|Yeah. Maybe you'll get a commission soon to fix it. But... who knows how long that could be? If I were you I'd just do other things for a while. I'm sure we'll re-open Paradise Lost when the time is right. I mean, probably.}}
+{{dialogue|Unsuur|Well, good luck. Hope you're enjoying Sandrock.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTOR BLIND SET || set: 0
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlag (idName: 20381) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 20381) from Unsuur
+Unsuur stands still in Main
+Set global blackboard key firstenterdoor with info 1.
+Unsuur gains 5 favor
+
+TRIGGER Procedure 1.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1200038
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 20381
+Unsuur stops standing still
+
+TRIGGER Procedure 1.0 Step 3.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8026 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+CHECK NPC RECOGNIZED || npc: 8026 | flag: 1
+ACTIONS
+(cId 0) A conversation 1443, 278_0 starts:
+{{dialogue|Unsuur|Hey there, Builder. Need anything from the Civil Corps? If it's not urgent, I'm supposed to stay right here.}}
+{{dialogue|Unsuur|Sheriff told me I have to watch this door and make sure no crazy robots get out of the {{textcolor|green|Paradise Lost Hazardous Ruins}} here behind me.}}
+{{dialogue|Unsuur|Paradise Lost used to be a shopping mall in the Old World, but after the Day of Calamity, all the robots went crazy. Or was it before? I dunno, I was never good at history.}}
+{{dialogue|Unsuur|Oh. You wanna go in here? I thought you just wanted to chat with me... Well, the lock on this door here is broken, and Justice told me not to let anyone in or out until it's fixed. So... sorry.}}
+
+*''I can fix it.''
+*''I see.''
+
+{{dialogue|Unsuur|indent=true|answer=I can fix it.
+|Yeah, probably. The door kinda looks fine to me. But I gotta follow orders; Sheriff Justice has to get an official commission through the City Hall: that's just how it is, I guess.}}
+{{dialogue|Unsuur|indent=true|So until Justice does the paperwork, I'm sorry to say I can't help you...}}
+{{dialogue|Unsuur|Yeah. Maybe you'll get a commission soon to fix it. But... who knows how long that could be? If I were you I'd just do other things for a while. I'm sure we'll re-open Paradise Lost when the time is right. I mean, probably.}}
+{{dialogue|Unsuur|Well, good luck. Hope you're enjoying Sandrock.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 4.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Unsuur stops standing still
+END MISSION 1200038

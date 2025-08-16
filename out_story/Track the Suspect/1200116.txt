@@ -1,0 +1,242 @@
+Reading Mission 1200116: Track the Suspect
+
+<onlyinclude>{{Infobox mission
+|name = Track the Suspect
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Track the Suspect:
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200115
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: thiefcorrect | info: 1 | exist: 1
+ACTIONS
+DELIVER MISSION 1200115
+START MISSION 1200115
+GLOBAL BLACK BOARD REMOVE || key: thiefcorrect
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200115
+CONDITIONS
+Always:
+ACTIONS
+X stops standing still
+Run mission Track the Suspect
+END MISSION 1200115
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200116
+CONDITIONS
+Always:
+ACTIONS
+===Find X===
+
+{{mission_details
+|desc = The clues all point to X being the main suspect. Confront X and ask.
+|details = Find X
+}}
+Set CHOICE to 0
+X stands still in Main
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to X
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 783_0 starts:
+{{dialogue|X|What up? Hi, mister!}}
+{{dialogue|X|Shiny! Shiny! Take them! Here you go, CoCo!}}
+
+*''Where are the goods?''
+*''CoCo? Who's that?''
+*''Did you steal those things?''
+
+{{dialogue|X|indent=true|answer=Where are the goods?
+|Hide! Hide! Buzz off! Stupid!}}
+{{dialogue|X|indent=true|answer=CoCo? Who's that?
+|Friend! Friend! You're my best friend!}}
+{{dialogue|X|indent=true|answer=Did you steal those things?
+|reward={{NPC2|X|rp=-5}}|No way! No way! Not a thief! Trade! Trade! A deal's a deal!}}
+{{dialogue|X|It's a secret! Bury it! Hide it! Caww!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the third option in conversation segment 2961:
+{{dialogue|X|Shiny! Shiny! Take them! Here you go, CoCo!}}
+
+*''Where are the goods?'' (No unique dialogue)
+*''CoCo? Who's that?'' (No unique dialogue)
+*''Did you steal those things?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+X gains -5 favor
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Recover the stolen property===
+
+{{mission_details
+|desc = It turns out that X did steal everyone's things. Where are they hidden? Search around the clinic.
+|details = Recover the stolen property
+}}
+AREA TRIGGER CREATE || missionId: 1200116 | id: 21161 | sceneName: Main | flagName: thief2_trigger | showOnMap: 1 | transId: 80004818 | mapIcon: MissionAreaBranch
+SCENEITEM CREATE FLAG || itemType: 0 | id: 21161 | sceneName: Main | flagName: thief_pit | extraParams: 0 | path: Mission_fxpick
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 21161
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 21161 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 21161
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 21161
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 21161 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+{{cutscene|id = 6010}}
+A cutscene CG_REAGENT_FAIL (duration: 0.0) starts playing
+Stolen Goods - We finally found the thief. It was X all along! He was collecting little treasures from around the town to impress a local owl. It looks like his efforts were wasted, the owl flew away quite unimpressed...
+SCENEITEM DELETE || id: 21161 | itemType: 0
+X stops standing still
+X stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: thief2_player
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 9 | name: CG_REAGENT_FAIL
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+(cId 0) A conversation 788_0 starts:
+{{dialogue|X|CoCo... CoCo...}}
+{{dialogue|X|Stupid bird... Oh, no, birdie. Don't do that...}}
+
+*''Did you collect all this stuff?''
+*''Is that owl your friend?''
+
+{{dialogue|X|indent=true|answer=Did you collect all this stuff?
+|CoCo... Let's be friends!}}
+{{dialogue|X|indent=true|Shiny shiny... CoCo like...}}
+{{dialogue|X|indent=true|answer=Is that owl your friend?
+|CoCo...}}
+{{dialogue|X|indent=true|Shiny shiny... hard work... Why do I do all the hard work around here? Why?}}
+{{dialogue|X|Not good enough!  Not enough!}}
+{{dialogue|X|Gimme, gimme! Need more. More shiny!}}
+
+*''You shouldn't steal.''
+*''But these belong to other people.''
+
+{{dialogue|X|indent=true|answer=You shouldn't steal.
+|X not thief! I am not a crook! Trade! Squark! Feathers! One feather, one shiny! It's a deal!}}
+{{dialogue|X|indent=true|answer=But these belong to other people.
+|Trade feathers! Feathers! One feather, one shiny! It's a deal!}}
+{{dialogue|X|What to do... Stupid X, stupid! Bad bird!}}
+
+*''I can... help you?''
+*''I'm done with this...''
+
+{{dialogue|X|indent=true|answer=I can... help you?
+|Builder! Help birdie make friend with CoCo?}}
+{{dialogue|X|indent=true|Help! You promise? You promise! Wanna go back? X give back shiny! Today!}}
+{{dialogue|X|indent=true|Tomorrow! Morrow! Birdie find Builder! Peekaboo! Wait for me!}}
+{{dialogue|X|indent=true|answer=I'm done with this...
+|Poor little X... nobody's helping you! Nobody's helping...}}
+Run mission Saving Private Raven
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the first option in conversation segment 2976:
+{{dialogue|X|What to do... Stupid X, stupid! Bad bird!}}
+
+*''I can... help you?'' (No unique dialogue)
+*''I'm done with this...'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 2981:
+{{dialogue|X|CoCo... friend. Poor little X... nobody's helping...}}
+
+*''I can... help you?'' (No unique dialogue)
+*''I'm done with this...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 1
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+START MISSION 1200117
+X stops standing still
+ACTION MISSION TRACE 1200117
+SUBMIT MISSION 1200115
+END MISSION 1200116
+
+TRIGGER Procedure 2.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1200116
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 21161
+SCENEITEM DELETE || id: 21161 | itemType: 0
+The player receives a letter:
+{{mail|226}}
+SCENEITEM DELETE || itemType: 0 | id: 21131
+Run mission Saving Private Raven
+
+TRIGGER Procedure 2.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1200117
+CONDITIONS
+Always:
+ACTIONS
+END MISSION 1200116

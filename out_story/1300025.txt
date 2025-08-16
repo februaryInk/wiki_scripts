@@ -1,0 +1,122 @@
+Reading Mission 1300025: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100002
+
+TRIGGER Procedure 0.0 Step 13.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PLAYER FORCE SLEEP || order: 0
+CONDITIONS
+CHECK CURRENT SCENE || name: PlayerHome | flag: 0
+ACTIONS
+Run mission #1200018
+
+TRIGGER Procedure 0.0 Step 14.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE || compare: 2 | year: 1 | month: 2 | day: 3
+ACTIONS
+Run mission #1300025
+Run mission #1100052
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1300025
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || id: 13025 | sceneName: Main | flagName: trigger_justiceshoot | showOnMap: 1 | mapIcon: MissionArea | transId: 80002438 | missionId: 1300025
+Set Count to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 13025
+CONDITIONS
+CHECK FESTIVAL || type: 2 | flag: 0
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 13025 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 13025
+
+TRIGGER Procedure 0.0 Step 5.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Justice stops standing still
+END MISSION 1300025
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200009
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 13025
+END MISSION 1300025
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 13025 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: justiceshoot_player
+Justice stands still in Main
+DELAY MASK SET || maskId: 13025 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+{{cutscene|id = 1051}}
+A cutscene CG_LIZARDINTRO (duration: 0.0) starts playing
+Defense on the Bridge - I was thinking of checking out what's on the other side of the Shonash Bridge when I saw Justice tangling with a "Geegler." He suggested that I stay on the town side of the bridge until things were safer.
+
+TRIGGER Procedure 1.0 Step 7.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_LIZARDINTRO | state: 9
+CONDITIONS
+CHECK NPC RECOGNIZED || npc: 8008 | flag: 1
+ACTIONS
+(cId 0) A conversation 751, 753, 754, 755 starts:
+{{dialogue|Justice|Hey, Builder! What are you doin' so far from your workshop? It ain't safe here!}}
+{{dialogue|Justice|For some darn reason, these {{textcolor|red|lizardfolk}} have been pokin' into our territory as of late: spraypaintin' their names all over things, pickin' at structures all over... I've heard they're even messin' with our bridge here!}}
+{{dialogue|Justice|They call themselves the {{textcolor|red|"Geeglers."}} And them actin' all emboldened-like couldn't have come at a worse time! Light knows we've got enough to worry about with {{textcolor|red|Logan}} and his gang out prowlin' around...}}
+{{dialogue|Justice|Well, be warned! Best be on yer way away from here!}}
+
+TRIGGER Procedure 1.0 Step 8.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_LIZARDINTRO | state: 9
+CONDITIONS
+CHECK NPC RECOGNIZED || npc: 8008 | flag: 0
+ACTIONS
+(cId 0) A conversation 756, 753, 754, 755 starts:
+{{dialogue|Justice|You must be one of the new Builders! Well! Justice is my name, and justice is my game... That's right! I'm the law 'round these parts, head of the Civil Corps! Havin' said that, what are you doin' so far from your workshop? It ain't safe here!}}
+{{dialogue|Justice|For some darn reason, these {{textcolor|red|lizardfolk}} have been pokin' into our territory as of late: spraypaintin' their names all over things, pickin' at structures all over... I've heard they're even messin' with our bridge here!}}
+{{dialogue|Justice|They call themselves the {{textcolor|red|"Geeglers."}} And them actin' all emboldened-like couldn't have come at a worse time! Light knows we've got enough to worry about with {{textcolor|red|Logan}} and his gang out prowlin' around...}}
+{{dialogue|Justice|Well, be warned! Best be on yer way away from here!}}

@@ -1,0 +1,262 @@
+Reading Mission 1200049: Learning to Ride
+
+<onlyinclude>{{Infobox mission
+|name = Learning to Ride
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Learning to Ride:
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 1240:
+{{dialogue|Elsie|Good day, partner! Ready to get your ride on?}}
+
+*''Yeehaw!'' (No unique dialogue)
+*''Yee-naw.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set OVER to 1
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200048
+CONDITIONS
+Always:
+ACTIONS
+Run mission Learning to Ride
+END MISSION 1200048
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200049
+CONDITIONS
+Always:
+ACTIONS
+===Go to the Yakmel Ranch===
+
+{{mission_details
+|desc = Head for Cooper at the Wandering Y to rent a mount.
+|details = Go to the Yakmel Ranch
+}}
+Set AGAIN to 0
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 20491 | delayTime: 0 | durationTime: -2 | changeType: 2 | curveIndex: 0
+Set ADD to 0
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 20491
+CONDITIONS
+Always:
+ACTIONS
+Elsie stands still in Main
+Cooper stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: ride_player
+SCENEITEM INTERACT SET || itemType: 7 | id: 1 | canInteract: 1
+ACTION MISSION TRACE 1200048
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 20491
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 1246, 1247, 1248, 1249, 1250, 1251 starts:
+{{dialogue|Elsie|Hey, Pa! I brought the new Builder, I want to teach 'em to ride! Bring out the finest stallion we got, on the house!}}
+{{dialogue|Cooper|Well, now, my little butter muffin sweety pie, I'd love to help out you and your friend here, but you know we don't lend out no horses for free-}}
+{{dialogue|Elsie|Pa!}}
+{{dialogue|Cooper|Don't you "Pa" me, little missy, now you for a fact know that-...!}}
+{{dialogue|Elsie|Paaaa!}}
+{{dialogue|Cooper|...Well, I guess it couldn't hurt just this one time.}}
+Set ADD to 1
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Check if ADD is == 1
+ACTIONS
+ACTION RIDABLE SET PROTO || sceneItemId: 1 | index: 0 | protoId: 1
+SET ALL RIDE RENT FREE || 
+ACTION RIDABLE OPEN STORE || sceneItemId: 1
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON RIDEABLE STORE UI CLOSED || order: 0 | sceneItemId: 1
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 20491) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:ride_player2)
+(cId 1) A conversation 1252, 1253, 1254 starts:
+{{dialogue|Cooper|Alright, ''Player'', here you go. And you be careful now, these horses, they can smell fear-}}
+{{dialogue|Elsie|We'll be fine, thanks Pa, love you bye! ''Player''! Let's git!}}
+{{dialogue|Elsie|Giddy up!}}
+Cooper stops standing still
+Set ADD to 2
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Check if ADD is == 2
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 20491) from Player
+Elsie stops standing still
+Add behavior Story1200048_8005 (idName: 12000481) to Elsie
+(param: -1)
+RIDABLE CREATE || protoId: 100 | instanceId: 12000481 | ownerId: 8005 | sceneFlag: Main:1200048_horse1
+===Follow Elsie===
+
+{{mission_details
+|desc = Ride a horse with Elsie. Try to keep up!
+|details = Follow Elsie
+}}
+AREA TRIGGER ONCE CREATE || missionId: 1200048 | id: 12000491 | sceneName: Main | flagName: midPoint | showOnMap: 0 | mapIcon: 0 | transId: 0
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1200049
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM INTERACT SET || itemType: 7 | id: 1 | canInteract: 1
+RCOVER ALL RIDE RENT || 
+AREA TRIGGER DELETE || id: 12000491
+AREA TRIGGER DELETE || id: 12000492
+Remove behavior Story1200048_8005 (idName: 12000481) from Elsie
+Elsie stops standing still
+NPC REMOVE TAG || tag: 1200049Elsie
+The player receives a letter:
+{{mail|287}}
+RIDABLE DESTROY || id: 12000481
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 12000491
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Elsie|Looks like you're gettin' the hang of it partner! Why don't you try an' keep up with me for a bit, don't worry, I'll go easy on ya!}}
+STOPWATCH GAME TIME SET || id: 1200049 | minute: 2
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH GAME TIME END || order: 0 | id: 1200049
+CONDITIONS
+Always:
+ACTIONS
+Add tag "1200049mid" to Elsie
+AREA TRIGGER CREATE || missionId: 1200048 | id: 12000492 | sceneName: Main | flagName: endPoint | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80001838
+Set ElsieOrPlayer to 0
+===Follow Elsie!===
+
+{{mission_details
+|desc = You've learned how to ride a horse. Try to catch up to Elsie.
+|details = Follow Elsie!
+}}
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 12000492
+CONDITIONS
+CHECK NPC TAG || tag: 1200049Elsie | flag: 0
+ACTIONS
+Set ElsieOrPlayer to 1
+
+TRIGGER Procedure 2.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 1 | npc: 8000 | enter: 0 | id: 12000492
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 1200049 | delayTime: 0 | durationTime: 2.5 | changeType: 0 | curveIndex: 0
+PLAYER INPUT LOCK || set: 1
+
+TRIGGER Procedure 3.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 1200049
+CONDITIONS
+Always:
+ACTIONS
+PLAYER INPUT LOCK || set: 0
+CUTSCENE UI STATE ENTER || 
+Elsie stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: end_pos_player
+DELAY MASK SET || maskId: 1200049 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: 0
+RIDABLE DESTROY || id: 12000481
+
+TRIGGER Procedure 3.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 1200049 | eventType: 5
+CONDITIONS
+Check if ElsieOrPlayer is == 1
+ACTIONS
+(cId 2) A conversation 1256, 1258, 1259, 1260 starts:
+{{dialogue|Elsie|Whew! You're a natural! A real yak-hand! I can see I was right about you!}}
+{{dialogue|Elsie|You can rent a horse from my Pa anytime you like, but what you really ought to do is head over to Construction Junction and get yourself a Stable added to your homestead so you can keep a horse of your own! That'll make you a real yakhand!}}
+{{dialogue|Elsie|Er, just a horse owner, if you don't prefer that nomenclature...!}}
+{{dialogue|Elsie|I had a lot of fun with you today, ''Player''! I'll see you around, keep on ridin'!}}
+
+TRIGGER Procedure 3.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+RCOVER ALL RIDE RENT || 
+Remove behavior Story1200048_8005 (idName: 12000481) from Elsie
+Elsie stops standing still
+AREA TRIGGER DELETE || id: 12000492
+NPC REMOVE TAG || tag: 1200049Elsie
+SUBMIT MISSION 1200048
+END MISSION 1200049
+
+TRIGGER Procedure 3.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 1200049 | eventType: 5
+CONDITIONS
+CHECK NPC TAG || tag: 1200049Elsie | flag: 1
+Check if ElsieOrPlayer is <= (maybe?) 1
+ACTIONS
+(cId 2) A conversation 1257, 1258, 1259, 1260 starts:
+{{dialogue|Elsie|Ha ha! Havin' a bit of trouble back there, partner? Shucks, don't you worry, now, you'll get the hang of it in no time at all!}}
+{{dialogue|Elsie|You can rent a horse from my Pa anytime you like, but what you really ought to do is head over to Construction Junction and get yourself a Stable added to your homestead so you can keep a horse of your own! That'll make you a real yakhand!}}
+{{dialogue|Elsie|Er, just a horse owner, if you don't prefer that nomenclature...!}}
+{{dialogue|Elsie|I had a lot of fun with you today, ''Player''! I'll see you around, keep on ridin'!}}

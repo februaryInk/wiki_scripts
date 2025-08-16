@@ -1,0 +1,118 @@
+Reading Mission 1100052: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100002
+
+TRIGGER Procedure 0.0 Step 13.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PLAYER FORCE SLEEP || order: 0
+CONDITIONS
+CHECK CURRENT SCENE || name: PlayerHome | flag: 0
+ACTIONS
+Run mission #1200018
+
+TRIGGER Procedure 0.0 Step 14.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE || compare: 2 | year: 1 | month: 2 | day: 3
+ACTIONS
+Run mission #1300025
+Run mission #1100052
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100052
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|4}}
+Set SCENECHANGE to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Company:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_company
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_company
+Set SCENECHANGE to 1
+Heidi stands still in Company
+AREA TRIGGER DELETE || id: 10521
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Company:
+CONDITIONS
+Check if SCENECHANGE is == 1
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Company | flagName: first_player
+CUTSCENE UI STATE ENTER || 
+(cId 0) A conversation 164, 165 starts:
+{{dialogue|Heidi|Hey there, reckon you got my letter? How's Mason's old shack treating you? If it's not quite what you were expecting, might be high time to start upgrading!}}
+{{dialogue|Heidi|If you've got the Gols and the materials, I can set you up with a new {{textcolor|green|building}} for your workshop, or {{textcolor|green|upgrade}} something you've already got! Just take a look at that {{textcolor|green|catalog}} over there on my desk to see what we're workin' with.}}
+
+TRIGGER Procedure 0.0 Step 2.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 110005201 | sec: 3
+
+TRIGGER Procedure 0.0 Step 2.6 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 110005201
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 166, 167 starts:
+{{dialogue|Heidi|Oh, also, I've always got plenty of materials stored around here, if you ever want to trade some of yours for mine, just check out the {{textcolor|green|Construction Junction shop}}!}}
+{{dialogue|Heidi|That's the gist of it; here's to a happier home!}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Heidi gains 10 favor
+CUTSCENE UI STATE EXIT || 
+Heidi stops standing still
+AUTOSAVE TRY || 
+END MISSION 1100052
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 4
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || id: 10521 | sceneName: Main | showOnMap: 1 | flagName: company_trigger | mapIcon: MissionArea | transId: 30051 | missionId: 1100052

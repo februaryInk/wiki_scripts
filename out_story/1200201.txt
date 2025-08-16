@@ -1,0 +1,126 @@
+Reading Mission 1200201: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100068
+
+TRIGGER Procedure 3.0 Step 1.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1800273 is result 1 flag 1
+ACTIONS
+Run mission #1800275
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+The Kidnapping is successfully completed
+ACTIONS
+Run mission #1200201
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200201
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|356}}
+SCENEITEM CREATE FLAG || itemType: 5 | id: 7 | path: SceneItem_BusStopMark | extraParams: SceneItem_BusStop|BusStop|14000015_1|1547|Fix|1.4 | sceneName: Main | flagName: BusStop_7
+AREA TRIGGER ONCE CREATE || missionId: 1200201 | id: 22011 | sceneName: Main | flagName: BusStop_7 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 30083
+SCENEITEM CREATE FLAG || itemType: 5 | id: 8 | path: SceneItem_BusStopMark | sceneName: Main | flagName: BusStop_8 | extraParams: SceneItem_BusStop|BusStop|14000015_1|1547|Fix|1.4
+AREA TRIGGER ONCE CREATE || missionId: 1200201 | id: 22012 | sceneName: Main | flagName: BusStop_8 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 30085
+Set DAY to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 28
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment DAY by 1
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if DAY is >= 28
+CHECK SCENEITEM EXIST || sceneItemType: 6 | id: 7 | exist: 0
+CHECK SCENEITEM EXIST || sceneItemType: 6 | id: 8 | exist: 0
+ACTIONS
+SCENEITEM DELETE || itemType: 5 | id: 7
+SCENEITEM DELETE || itemType: 5 | id: 8
+AREA TRIGGER DELETE || id: 22011
+AREA TRIGGER DELETE || id: 22012
+SCENEITEM CREATE FLAG || itemType: 6 | id: 7 | path: SceneItem_BusStop | sceneName: Main | flagName: BusStop_7 | extraParams: -1
+SCENEITEM CREATE FLAG || id: 8 | itemType: 6 | flagName: BusStop_8 | extraParams: -1 | sceneName: Main | path: SceneItem_BusStop
+The player receives a letter:
+{{mail|357}}
+END MISSION 1200201
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if DAY is >= 28
+CHECK SCENEITEM EXIST || sceneItemType: 6 | id: 7 | exist: 1
+CHECK SCENEITEM EXIST || sceneItemType: 6 | id: 8 | exist: 0
+ACTIONS
+SCENEITEM DELETE || itemType: 5 | id: 8
+AREA TRIGGER DELETE || id: 22012
+SCENEITEM CREATE FLAG || id: 8 | itemType: 6 | flagName: BusStop_8 | extraParams: -1 | sceneName: Main | path: SceneItem_BusStop
+The player receives a letter:
+{{mail|358}}
+END MISSION 1200201
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if DAY is >= 28
+CHECK SCENEITEM EXIST || sceneItemType: 6 | id: 7 | exist: 0
+CHECK SCENEITEM EXIST || sceneItemType: 6 | id: 8 | exist: 1
+ACTIONS
+SCENEITEM DELETE || itemType: 5 | id: 7
+AREA TRIGGER DELETE || id: 22011
+SCENEITEM CREATE FLAG || id: 7 | itemType: 6 | flagName: BusStop_7 | extraParams: -1 | sceneName: Main | path: SceneItem_BusStop
+The player receives a letter:
+{{mail|358}}
+END MISSION 1200201
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK SCENEITEM EXIST || sceneItemType: 6 | id: 7 | exist: 1
+CHECK SCENEITEM EXIST || sceneItemType: 6 | id: 8 | exist: 1
+ACTIONS
+The player receives a letter:
+{{mail|359}}
+END MISSION 1200201

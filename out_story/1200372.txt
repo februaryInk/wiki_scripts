@@ -1,0 +1,218 @@
+Reading Mission 1200372: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200133
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION END || order: 0 | missionEndResult: 1 | missionId: 1700247
+CONDITIONS
+The Freshmaker is in state 2 with flag 1
+ACTIONS
+FAIL MISSION || missionId: 1800234
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1200302 is result 1 flag 1
+ACTIONS
+Run mission #1200372
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200372
+CONDITIONS
+Always:
+ACTIONS
+Set 1200372 to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200372
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|664}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Untilled Now is successfully completed
+ACTIONS
+The player receives a letter:
+{{mail|667}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1200328 is result 1 flag 1
+ACTIONS
+The player receives a letter:
+{{mail|671}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Sandrock is Green Again is in state 2 with flag 1
+
+GROUP 10:
+Sandrock is Green Again is successfully completed
+
+ACTIONS
+The player receives a letter:
+{{mail|675}}
+ACTION DATE SET FLAG || flag: DATE:gracemail
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL BACK || order: 0 | backMailID: 80027960 | mailID: 675
+ON MAIL BACK || order: 0 | backMailID: 80027961 | mailID: 675
+ON MAIL BACK || order: 0 | backMailID: 80027962 | mailID: 675
+CONDITIONS
+Always:
+ACTIONS
+Set 1200372 to 1
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 1200372 is <= (maybe?) 1
+CHECK DATE FLAG || flag: DATE:gracemail | compare: 2 | days: 3
+ACTIONS
+ACTION DATE REMOVE FLAG || flag: DATE:gracemail
+END MISSION 1200372
+
+TRIGGER Procedure 1.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL BACK || order: 0 | backMailID: 80027962 | mailID: 675
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key 1200372 with info 1.
+
+TRIGGER Procedure 1.0 Step 2.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL BACK || order: 0 | backMailID: 80027962 | mailID: 675
+ON MAIL BACK || order: 0 | mailID: 671 | backMailID: 80027952
+ON MAIL BACK || order: 0 | mailID: 667 | backMailID: 80027941
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key 12003721 with info 1.
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Check relationship with Owen is Lover
+ACTIONS
+Jasmine stops standing still
+CUTSCENE UI STATE EXIT || 
+ACTION DATE REMOVE FLAG || flag: DATE:gracemail
+END MISSION 1200372
+
+TRIGGER Procedure 2.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+Where's Mi-an is in state 1 with flag 0
+The Childhood Friend is in state 1 with flag 0
+Goodbye, Nia is in state 1 with flag 0
+The Kidnapping is in state 1 with flag 0
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: triallogan | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+CHECK DATE FLAG || flag: DATE:gracemail | compare: 2 | days: 3
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Jasmine stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 17231, 17232, 17233, 17234 starts:
+{{dialogue|Jasmine|''Player''! The letter you sent got sent back. Says that there isn't anyone by the name you sent it to.That's weird, of course Grace existed! We all definitely met her...!}}
+{{dialogue|Jasmine|Did she change her address? Maybe she forgot to tell us...}}
+{{dialogue|Jasmine|Ma says she's a bit worried... but I'm sure she's going to tell us her new address soon.}}
+{{dialogue|Jasmine|Anyway, I gotta run! More letters to deliver!}}
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Check relationship with Owen is 6 Lover
+ACTIONS
+Jasmine stops standing still
+CUTSCENE UI STATE EXIT || 
+Set global blackboard key con41200372 with info 1.
+Townsfolk respond to the event:
+
+{{dialogue|Owen|Hey, ''Player'', you heard from Grace lately? How's she doing lately?}}
+{{dialogue|Owen|She's been given a new assignment?}}
+{{dialogue|Owen|Ah... One of those, huh...?}}
+{{dialogue|Owen|You know, I really felt like she loved her life here at the Blue Moon. Seems like it was hard for her to let us go, but she needed to face reality.Can't really have friends in her line of work...}}
+{{dialogue|Owen|''Player'', we need to more forward, though. Keep her in your heart. She won't forget us either.}}
+
+
+TRIGGER Procedure 2.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE FLAG || flag: DATE:gracemail | compare: 2 | days: 7
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: con41200372
+ACTION DATE REMOVE FLAG || flag: DATE:gracemail
+END MISSION 1200372

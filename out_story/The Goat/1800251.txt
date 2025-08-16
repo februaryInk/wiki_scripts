@@ -1,0 +1,157 @@
+Reading Mission 1800251: The Goat
+
+<onlyinclude>{{Infobox mission
+|name = The Goat
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from The Goat:
+
+TRIGGER Procedure 0.0 Step 71.0 Order 51 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from LoganCave_Dungeon to the Main:
+CONDITIONS
+Check if 8249Today is == 1
+ACTIONS
+Run mission The Goat
+Remove behavior NPC_RideMount (idName: 82492693) from Unsuur
+Remove behavior CommanderMoveToFlagAndAction (idName: 82491109) from Logan
+Remove behavior CommanderMoveToFlagAndAction (idName: 82490210) from Grace
+Remove behavior CommanderMoveToFlagAndAction (idName: 82491210) from Haru
+SCENEITEM DELETE || itemType: 0 | id: 82495
+Justice stops standing still
+Unsuur stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8249082) from Justice
+Remove behavior CommanderMoveToFlagAndAction (idName: 8249262) from Unsuur
+Remove behavior CommanderMoveToFlagAndAction (idName: 8249122) from Haru
+Remove behavior CommanderMoveToFlagAndAction (idName: 82491281) from Haru
+SCENEITEM DELETE || itemType: 0 | id: 82495
+Logan stops standing still
+Haru stops standing still
+NPC SET CAN INTERACT || npc: 8008 | canInteract: 1
+NPC SET CAN INTERACT || npc: 8026 | canInteract: 1
+NPC ICON REMOVE || missionId: 1800249 | npc: 8002 | missionIcon: 6
+NPC ICON REMOVE || missionId: 1800249 | npc: 8011 | missionIcon: 6
+NPC ICON REMOVE || missionId: 1800249 | npc: 8012 | missionIcon: 6
+SCENEITEM DELETE || id: 822493 | itemType: 0
+NPC LEAVE || npc: 8011
+NPC LEAVE || npc: 8012
+GEAR TRIGGER TRIGGER || scene: LoganCave_Dungeon | id: 105
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800250
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Goat
+END MISSION 1800250
+
+Run conditions from Buried Secrets:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 7617:
+{{dialogue|Grace|Well? Have you thought it through? Do you want to help us with the Sandrock Storage hidden door?}}
+
+*''Heck yes!'' (No unique dialogue)
+*''Let me think about it.'' (No unique dialogue)
+*''I just don't believe you...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8250A to 1
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800250
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Goat
+END MISSION 1800250
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800251
+CONDITIONS
+Always:
+ACTIONS
+===Build Anti-Lock===
+
+{{mission_details
+|desc = Now you have the recipe, build the Anti-Lock.
+|details = Build Anti-Lock
+*{{i2|Anti-Lock|0/1}}
+}}
+Add 1 Anti-Lock of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1800250 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Report to Grace===
+
+{{mission_details
+|desc = The Anti-Lock is complete. Talk to Grace.
+|details = Report to Grace
+*{{i2|Anti-Lock|0/1}}
+*{{i2|Grace|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Grace
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1800250 | targetId: 2 | canSubmit: 1
+ACTIONS
+(cId 1) A conversation 7666 starts:
+{{dialogue|Grace|Good. I'll let you know when everything's ready, and we can get started.}}
+Remove 1 Anti-Lock of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1800250
+END MISSION 1800251
+
+TRIGGER Procedure 1.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+GROUP 0:
+Check if mission 1800273 is result 1 flag 1
+
+GROUP 10:
+CHECK GLOBAL BLACKBOARD || key: mirroroutofprison | info: 1 | exist: 0
+
+ACTIONS
+ACTION SHOW CUSTOM IMAGE TIPS || content: 80018192 | preset: Mission

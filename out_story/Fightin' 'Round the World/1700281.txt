@@ -1,0 +1,303 @@
+Reading Mission 1700281: Fightin' 'Round the World
+
+<onlyinclude>{{Infobox mission
+|name = Fightin' 'Round the World
+|image =
+|description = A strange, talking Boxing Jack has challenged you to find him out in the desert three times and spar with him. If you defeat him all three times, he promised you a prize.
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 1500
+|reputation = None
+|gols = None
+|rewards = {{i2|Golden Belt}|1}
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100068
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: pensandstorm | info: 1 | exist: 1
+ACTIONS
+Run mission Over the Moon
+
+TRIGGER Procedure 1.0 Step 2.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission Shonash Canyon Bridge Opening Ceremony is result 1 flag 1
+ACTIONS
+Run mission Fightin' 'Round the World
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700281
+CONDITIONS
+Always:
+ACTIONS
+Bogan Jack stands still in Main
+Set defeat to 0
+AREA TRIGGER ONCE CREATE || missionId: 1700281 | id: 172811 | sceneName: Main | flagName: BoxingJack_FirstPlayer | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: -1
+Set HP to 0
+STORY ADD ACTOR LOCKER || actorId: 8092 | lockerId: 72811 | lockerType: Rescue
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 172811
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 172810 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 172811) to Bogan Jack
+(param: CMDAction:ReadBook)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8092 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 3175_0 starts:
+{{dialogue|Bogan Jack|Hold on there, mate. Them's fightin' words. I reckon you're not from around here; I better warn ya, if the other Roos hear you talkin' like that, well, fightin' words like that'll get ya into a fight, won't they?}}
+
+*''I'm sorry. I didn't mean to offend.''
+*''Are you picking a fight?''
+*''Fighting words?''
+
+{{dialogue|Bogan Jack|indent=true|answer=I'm sorry. I didn't mean to offend.
+|"Offend...?"}}
+{{dialogue|Bogan Jack|indent=true|answer=Are you picking a fight?
+|"Fight...?"}}
+{{dialogue|Bogan Jack|indent=true|answer=Fighting words?
+|"Fightin' words...?"}}
+Remove behavior CommanderNPCAction (idName: 172811) from Bogan Jack
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8092 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 3179_0 starts:
+{{dialogue|Bogan Jack|Gosh golly, them's fightin' words as well! I'm beginnin' to think you're goin' far out of your way to personally verbally abuse me. You tryin' to take me for a wolly-woo, mate?}}
+
+*''I'm sorry! ...Mate?''
+*''Bring it on!''
+*''Wolly-woo?''
+
+{{dialogue|Bogan Jack|Ah, nah, mate. Triplin' down with them fightin' words? Yeah, nah. Now you've done it. Now you've gone and crossed the line. Now I gotta teach you a lesson you'll not soon forget!}}
+{{dialogue|Player|(It seems no matter what I say, this kangaroo isn't satisfied. No choice but to defend myself!)}}
+The conversation ends.
+Remove behavior CommanderNPCAction (idName: 172811) from Bogan Jack
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+(cId: -1) There is a conversation segment (id 10233) that ends:
+{{dialogue|Bogan Jack|Back for more, eh? Your funeral, mate.}}
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 172811 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: -2
+TIME SET ENABLE || bool: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 6 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172811 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+ACTOR SET LEVEL || npc: 8092 | level: 20
+ACTOR IGNORE SHOW DISTANCE || npc: 8092 | ignore: 1
+NPC SET CAN INTERACT || npc: 8092 | canInteract: 0
+Bogan Jack stops standing still
+SCENEITEM CREATE FLAG || sceneName: Main | path: Mission_BoxingJack1 | flagName: BoxJackBattleField1 | itemType: 0 | id: 172811 | extraParams: -1
+ACTOR SET FACTION || isAdd: 1 | npc: 8092 | id: 2
+DELAY MASK SET || maskId: 172811 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: -2
+ACTOR BUFF ADD || npc: 8000 | buffId: 11 | instanceId: 172811
+CUTSCENE UI STATE EXIT || 
+Set HP to 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 7 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON PLAYER HP CHANGE || order: 0 | compare: 6 | percent: 0.01
+CONDITIONS
+Check if HP is == 1
+ACTIONS
+Set defeat to 1
+DELAY MASK SET || maskId: 172812 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: -2
+Set HP to 0
+ACTOR BUFF ADD || npc: 8000 | buffId: 20 | instanceId: 172812
+ACTOR BUFF ADD || npc: 8092 | buffId: 4 | instanceId: 172814
+
+TRIGGER Procedure 0.0 Step 0.0 Order 8 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172812 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Set HP to 0
+ACTOR IGNORE SHOW DISTANCE || npc: 8092 | ignore: 0
+TIME SET ENABLE || bool: 1
+ACTOR SET FACTION || isAdd: 0 | npc: 8092 | id: 2
+ACTOR BUFF REMOVE || npc: 8000 | instanceId: 172811
+SCENEITEM DELETE || itemType: 0 | id: 172811
+DELAY MASK SET || maskId: 172812 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: -2
+Bogan Jack stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: BoxingJack_FirstPlayer
+CUTSCENE UI STATE ENTER || 
+NPC SET CAN INTERACT || npc: 8092 | canInteract: 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 9 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172812 | eventType: 5
+CONDITIONS
+Check if defeat is == 1
+ACTIONS
+(cId 4) A conversation 10956 starts:
+{{dialogue|Bogan Jack|Aw, shucks. You alright there, mate? Yeah, might've gone a bit overboard there. Well. If you ever want to regain your lost honor, cuz I know I would: you know where I'll be.}}
+CUTSCENE UI STATE EXIT || 
+ACTOR BUFF REMOVE || npc: 8000 | instanceId: 172812
+ACTOR BUFF REMOVE || npc: 8092 | instanceId: 172814
+ACTOR BUFF REMOVE || npc: 8000 | instanceId: 172813
+
+TRIGGER Procedure 0.0 Step 0.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC DEAD || order: 0 | id: 8092
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 172812 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: -2
+Set defeat to 0
+ACTOR BUFF ADD || npc: 8000 | instanceId: 172813 | buffId: 4
+
+TRIGGER Procedure 0.0 Step 0.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172812 | eventType: 5
+CONDITIONS
+Check if defeat is == 0
+ACTIONS
+(cId 5) A conversation 10234, 10235, 10236, 10237, 10238 starts:
+{{dialogue|Bogan Jack|Ah, you got lucky, mate. Lucky I forgot to dodge those attacks of yours. Yeah, if not for that, well, things would be a lot different, wouldn't they?}}
+{{dialogue|Bogan Jack|Oof! Reckon someone who spouts off fightin' words the way you do might have the moxie to back it up, that one's on me, yeh?}}
+{{dialogue|Bogan Jack|Well, you won't be so lucky next time. Assumin' there is a next time. I'm not some kinda psycho who just walks up to friendly Roos mindin' their own business, bellowin' out fightin' words like it's goin' out of style, am I?}}
+{{dialogue|Bogan Jack|Yeh, now that I think about it, I want you to seek me out for a rematch. Give me another chance to best you in a fight. If you didn't, I'm sure I'd hold it against you. Find me later and beat me two more times; I'll give you a sick reward. Sick as.}}
+{{dialogue|Bogan Jack|Look for me in hard to reach places around the desert. Mate, remember me.}}
+DELIVER MISSION 1700281
+ACTOR BUFF REMOVE || npc: 8000 | instanceId: 172813
+ACTOR BUFF REMOVE || npc: 8092 | instanceId: 172814
+ACTOR BUFF REMOVE || npc: 8000 | instanceId: 172812
+
+TRIGGER Procedure 0.0 Step 0.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 1728100 | delayTime: 0 | durationTime: 1 | changeType: 2 | curveIndex: -2
+Bogan Jack stops standing still
+
+TRIGGER Procedure 0.0 Step 0.0 Order 12 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Bogan Jack
+CONDITIONS
+Check if defeat is == 1
+ACTIONS
+(cId -1) A conversation 10233 starts:
+{{dialogue|Bogan Jack|Back for more, eh? Your funeral, mate.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172810 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 172810 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: -2
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: BoxingJack_FirstPlayer
+Bogan Jack stands still in Main
+
+TRIGGER Procedure 0.0 Step 0.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172810 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 3171_0 starts:
+{{dialogue|Bogan Jack|G'day mate. How are ya? Don't think I've seen you around here before!}}
+
+*''A talking kangaroo?!''
+*''Going good, how 'bout you?''
+*''A monster!''
+
+{{dialogue|Bogan Jack|indent=true|answer=A talking kangaroo?!
+|Woah, woah "...Talking Kangaroo?"}}
+{{dialogue|Bogan Jack|indent=true|answer=Going good, how 'bout you?
+|Woah, woah "...Going good?"}}
+{{dialogue|Bogan Jack|indent=true|answer=A monster!
+|Woah, woah "...Monster?"}}
+{{dialogue|Bogan Jack|Check it out, mate!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700281
+CONDITIONS
+Always:
+ACTIONS
+Run mission Fightin' 'Round the World
+END MISSION 1700281
+
+TRIGGER Procedure 0.0 Step 0.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 1728100 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+START MISSION 1700281
+NPC LEAVE || npc: 8092
+
+==Rewards==
+{{mission reward
+|exp = 1500
+|reputation = None
+|gols = None
+|rewards = {{i2|Golden Belt}|1}
+}}

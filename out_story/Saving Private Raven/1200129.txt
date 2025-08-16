@@ -1,0 +1,173 @@
+Reading Mission 1200129: Saving Private Raven
+
+<onlyinclude>{{Infobox mission
+|name = Saving Private Raven
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Saving Private Raven:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200118
+CONDITIONS
+Always:
+ACTIONS
+===Wait for Reply===
+
+{{mission_details
+|desc = How can you help X? Wait for his reply.
+|details = Wait for Reply
+}}
+Set DAY to 0
+Run mission Saving Private Raven
+
+Run conditions from Track the Suspect:
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+START MISSION 1200117
+X stops standing still
+ACTION MISSION TRACE 1200117
+SUBMIT MISSION 1200115
+END MISSION 1200116
+
+TRIGGER Procedure 2.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1200116
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 21161
+SCENEITEM DELETE || id: 21161 | itemType: 0
+The player receives a letter:
+{{mail|226}}
+SCENEITEM DELETE || itemType: 0 | id: 21131
+Run mission Saving Private Raven
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Set DAY to 1
+SCENEITEM DELETE || id: 21131 | itemType: 0
+SCENEITEM DELETE || itemType: 0 | id: 21132
+SCENEITEM DELETE || id: 21133 | itemType: 0
+SCENEITEM DELETE || id: 21134 | itemType: 0
+SCENEITEM DELETE || id: 21135 | itemType: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 21130 | path: Interact_magnifier | sceneName: HugoHome | flagName: thief_magnifier | extraParams: 0
+ACTION NPC RECOVER ACCESSORY || npc: 8014 | part: Finger
+ACTION NPC RECOVER ACCESSORY || npc: 8022 | part: Finger
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+Where's Mi-an is in state 1 with flag 0
+The Childhood Friend is in state 1 with flag 0
+Goodbye, Nia is in state 1 with flag 0
+The Kidnapping is in state 1 with flag 0
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: triallogan | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+Justice stands still in Main
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 2982, 2983 starts:
+{{dialogue|Justice|Hey pardner! I'm happy to say that with your help, the case of the stolen knick knacks is officially closed, and X has returned all the items to their rightful owners.}}
+{{dialogue|Justice|The bird came by to tell me it's all a big misunderstanding. At least... that's what I think it said... All's well that ends well, I guess. Nothin' matters more than that. Take 'er easy, Builder! Thanks again for the help!}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Justice stops standing still
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Vivi
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 2984 starts:
+{{dialogue|Vivi|My ol' magnifyin' glass is back in it's place! It just showed up out of thin air! Oh, it was that bird that did it? Out of fat air, then, I should say. Chunky ole sky rat...}}
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Pablo
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 2985 starts:
+{{dialogue|Pablo|I told you that trinket was a lucky charm, no matter what happens it will always find its way home! Erm, I'm sure you played your part, too, ''Player''...}}
+
+TRIGGER Procedure 0.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+(cId 3) After the conversation ends:
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+END MISSION 1200129
+
+TRIGGER Procedure 0.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Arvio
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 2986 starts:
+{{dialogue|Arvio|I mean, I'm certainly happy I got my lock back, it's not like I wanted a new bag anyway... Well, as my Pa used to say, "a defective bag is still better than no bag." He used to lose things all the time though...}}

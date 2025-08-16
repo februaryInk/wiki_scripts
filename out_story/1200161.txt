@@ -1,0 +1,164 @@
+Reading Mission 1200161: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200160
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|262}}
+CALENDAR SET REMINDER || addDays: 0 | hour: 17 | transId: 80006330
+Set IN to 0
+ACTION SHOW CUSTOM IMAGE TIPS || content: 80005408 | preset: Mission
+Set DAY to 0
+Run mission #1200161
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 17:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1200161 | id: 21611 | sceneName: Main | showOnMap: 1 | transId: 0 | mapIcon: MissionArea | flagName: Mission_1600096_Trigger_2
+ACTION AREA TRIGGER SET RADIUS || id: 21611 | radius: 15
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_saloon
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_saloon
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 21612 | delayTime: 0 | durationTime: 0 | changeType: 0 | curveIndex: 0
+Pen stands still in Saloon
+Grace stands still in Saloon
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+Pen stops standing still
+Add behavior CommanderSit (idName: 21611) to Pen
+(param: TargetScene:Saloon|SeatDramaName:SaloonSeat08)
+AREA TRIGGER DELETE || id: 21611
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8020 | behaviourName: CommanderSit | eventName: SitDownFinished
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 21612 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 21612 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 1128_0 starts:
+{{dialogue|Pen|Barkeep! Fix me up with only the heartiest of meals! A warrior requires sustenance!}}
+{{dialogue|Grace|Hm. Well, we have Hot and Sour Fish, that's kinda high protein. But it might be too spicy for you.}}
+{{dialogue|Pen|Hah! I laugh in the face of such a meager challenge! Too spicy for Pen? Hah! I laugh again!}}
+{{dialogue|Grace|If you're into spicy stuff, we actually just got some Duvos Peppers in. I've been wanting to make a Lucien Crepe, but no one's been brave enough to try it yet. Can I fix you one?}}
+{{dialogue|Pen|Ahah... you said... Duvos Peppers? The... spiciest peppers in the entire world?}}
+{{dialogue|Grace|The known world, yes.}}
+{{dialogue|Pen|The ones known for... causing anyone who consumes one to immediately dunk their heads in the nearest water source as some feeble attempt to alleviate the pain...?}}
+{{dialogue|Grace|One and the same.}}
+{{dialogue|Pen|...Hm, I don't know, I mean... we've all got a big day tomorrow... Such a spicy pepper could be not so good for my stomach, you know?}}
+{{dialogue|Grace|Aw, don't tell me the big, brave Protector of Sandrock is afraid of a widdle chili pepper...}}
+{{dialogue|Pen|It's just-}}
+{{dialogue|Grace|"Wah, my tummy...!" That's you right now...}}
+{{dialogue|Pen|...Server woman, what's gotten into-}}
+{{dialogue|Grace|...I wonder what people would say if they knew-}}
+{{dialogue|Pen|Alright!}}
+{{dialogue|Grace|Alright?}}
+{{dialogue|Pen|Alright... ahem...}}
+{{dialogue|Pen|Hah! Thrice I laugh...! For, I, Pen, the Protector of Sandrock, was only pretending to be afraid! One Lucien Crepe, barkeep! Post-haste!}}
+{{dialogue|Grace|Comin' right up...}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 21611 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 21611
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Grace stops standing still
+Remove behavior CommanderSit (idName: 21611) from Pen
+DELAY MASK SET || maskId: 21611 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Add behavior CommanderMoveToFlagAndAction (idName: 21612) to Pen
+(param: TargetScene:Main|MoveMode:Run|FlagName:showdown_peneathot)
+NPC SET CAN INTERACT || npc: 8020 | canInteract: 0
+
+TRIGGER Procedure 1.0 Step 1.1 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8020 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 21612) from Pen
+ACTION NPC GEN CLUSTER || cluster: Story1200161_8020 | behavior: Story1200161_Root | min: 1 | max: 2 | npcs: 8020 | randomNpcs: 0 | leader: -10
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+NPC SET CAN INTERACT || canInteract: 1 | npc: 8020
+AREA TRIGGER DELETE || id: 21611
+ACTION NPC REMOVE CLUSTER || cluster: Story1200161_8020
+Remove behavior CommanderMoveToFlagAndAction (idName: 21612) from Pen
+END MISSION 1200161

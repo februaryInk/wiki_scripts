@@ -1,0 +1,396 @@
+Reading Mission 1800524: Tea for Two
+
+<onlyinclude>{{Infobox mission
+|name = Tea for Two
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Tea for Two:
+
+TRIGGER Procedure 0.0 Step 12.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if 8523A is == 1
+ACTIONS
+START MISSION 1800523
+
+TRIGGER Procedure 0.0 Step 16.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800523
+CONDITIONS
+Always:
+ACTIONS
+Run mission Tea for Two
+END MISSION 1800523
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800524
+CONDITIONS
+Always:
+ACTIONS
+===Wait Until Tomorrow===
+
+{{mission_details
+|desc = You've agreed to visit the herb garden and sit with Fang the next day, so rest for today.
+|details = Wait Until Tomorrow
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DAY START FOR WEATHER || order: 0 | weather: 2
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: set_weather
+ACTIONS
+UNIQUE ACTION RUN || idStr: set_weather
+WEATHER SET STATE || WeatherState: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+===Go to the Herb Garden (After 15:00)===
+
+{{mission_details
+|desc = Today is the scheduled time to meet with Fang. Prepare and head to the Herb Garden for your appointment.
+|details = Go to the Herb Garden (After 15:00)
+}}
+SCENEITEM CREATE FLAG || flagName: S8524_Item1 | path: S8524_Item1 | id: 85241 | extraParams: -1 | itemType: 0 | sceneName: Main
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+When the time is 15:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 85241
+AREA TRIGGER CREATE || missionId: 1800524 | id: 85241 | showOnMap: 1 | mapIcon: MissionAreaBranch | sceneName: Main | flagName: Trigger_85241 | transId: 80034736
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 85241
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 85241
+CONDITIONS
+CHECK WEATHER STATE || weather: 2 | flag: 0
+ACTIONS
+AREA TRIGGER DELETE || id: 85241
+DELAY MASK SET || maskId: 85241 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85241 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8524_0_1
+Add behavior CommanderDramaWithIndex (idName: 8524161) to Fang
+(param: SeatDramaName:Seat85241|TargetScene:Main|DramaIndex:13|TriggerTag:8524SitEat)
+Add behavior CommanderDramaWithIndexPlayer (idName: 8524001) to Player
+(param: SeatDramaName:Seat85242|TargetScene:Main|DramaIndex:16|TriggerTag:8524SitEat)
+X stands still in Main and looks at Fang
+DELAY MASK SET || maskId: 85241 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85241 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 23423 starts:
+{{dialogue|Fang|''Pet Name'', try dipping this in your tea. It's a pastry given to me by Mrs. Mabel. I've found our conversations to be pleasant, so long as the Milkman is preoccupied.}}
+
+TRIGGER Procedure 0.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add tag "8524SitEat" to Player
+STOPWATCH REAL TIME SET || sec: 4 | id: 85241
+
+TRIGGER Procedure 0.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 85241
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 8217_0 starts:
+{{dialogue||(The flavor of the tea is distinct. Fresh, but not overpowering with a hint of sweetness. As I sip it, Fang regards me with the same ponderous flavor as the tea.)}}
+{{dialogue|Fang|...So you noticed. It is a special type of tea.}}
+{{dialogue|Fang|Are you curious about what it was brewed with, ''Pet Name''?}}
+{{dialogue|Fang|A blend of fresh herbs from this garden. Some you may not be as familiar with; herbs from Seesai.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 10.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add tag "8524SitEat" to Fang
+STOPWATCH REAL TIME SET || sec: 6 | id: 85242
+
+TRIGGER Procedure 0.0 Step 11.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 85242
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 8218_0 starts:
+{{dialogue|Fang|It is unlikely anyone here has tasted this kind of tea, in fact. Though it is harsher than I'd wanted. Next time, I'll try adding orange peel. Or perhaps honeysuckle...}}
+
+*''I think it tastes great.''
+*''We should do this more often.''
+
+{{dialogue|Fang|indent=true|answer=I think it tastes great.
+|Hm... Thank you, ''Pet Name''.}}
+{{dialogue|Fang|indent=true|answer=We should do this more often.
+|I feel so as well.}}
+{{dialogue|Fang|Mr. Unsuur of the Civil Corps remarked that this place would be ideal for meditation. To use his words, "imagine you are a plant..."}}
+{{dialogue|Fang|I think there is some truth to that. There is a sense of calm and belonging that comes with sitting in this garden.}}
+{{dialogue|Fang|As I waited here for you, I pondered, and came to think... I want for nothing. Only for you to arrive. I wonder... what will we be like? Many years from now?}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 12.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+CHECK CHILD COUNT || compare: 2 | count: 1
+ACTIONS
+(cId 4) A conversation 23434 starts:
+{{dialogue|Fang|I wonder if we will have more children. If they will stay here or seek their fortune elsewhere.}}
+
+TRIGGER Procedure 0.0 Step 13.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+CHECK CHILD COUNT || compare: 6 | count: 1
+ACTIONS
+(cId 5) A conversation 8221_0 starts:
+{{dialogue|Fang|When our bodies become weak with age, what will we do?}}
+
+*''I'll get a hobby. Like piano or something.''
+*''We could make more friends in town.''
+*''We could travel; go wherever we want.''
+
+{{dialogue|Fang|indent=true|answer=I'll get a hobby. Like piano or something.
+|Hm. Music. My mother liked to sing. Perhaps if you learned to play the chords, I could learn the melodies.}}
+{{dialogue|Fang|indent=true|Although, I've been criticized for my handwriting. Perhaps with time to spare, I should learn the art of calligraphy.}}
+{{dialogue|Fang|indent=true|answer=We could make more friends in town.
+|Yes, many new faces have appeared already in our town. And surely we'll see many more.}}
+{{dialogue|Fang|indent=true|We could get to know them while playing cards and mahjong.}}
+{{dialogue|Fang|indent=true|answer=We could travel; go wherever we want.
+|Yes... there are many hot springs in the mountains around Atara that are known for keeping one's vitality.}}
+{{dialogue|Fang|''Pet Name'', when the time comes, I'm sure we'll know what to do. And if nothing else, we will certainly have each other.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 14.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+CHECK CHILD COUNT || compare: 2 | count: 1
+ACTIONS
+(cId 5) A conversation 8221_0 starts:
+{{dialogue|Fang|When our bodies become weak with age, what will we do?}}
+
+*''I'll get a hobby. Like piano or something.''
+*''We could make more friends in town.''
+*''We could travel; go wherever we want.''
+
+{{dialogue|Fang|indent=true|answer=I'll get a hobby. Like piano or something.
+|Hm. Music. My mother liked to sing. Perhaps if you learned to play the chords, I could learn the melodies.}}
+{{dialogue|Fang|indent=true|Although, I've been criticized for my handwriting. Perhaps with time to spare, I should learn the art of calligraphy.}}
+{{dialogue|Fang|indent=true|answer=We could make more friends in town.
+|Yes, many new faces have appeared already in our town. And surely we'll see many more.}}
+{{dialogue|Fang|indent=true|We could get to know them while playing cards and mahjong.}}
+{{dialogue|Fang|indent=true|answer=We could travel; go wherever we want.
+|Yes... there are many hot springs in the mountains around Atara that are known for keeping one's vitality.}}
+{{dialogue|Fang|''Pet Name'', when the time comes, I'm sure we'll know what to do. And if nothing else, we will certainly have each other.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 16.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 6049}}
+A cutscene CG_GARDEN (duration: -2.0) starts playing
+Tea for Two - Fang and I were enjoying tea in the newly built herb garden when X and Coco suddenly flew in, humming a familiar melody.
+
+TRIGGER Procedure 0.0 Step 20.1 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_GARDEN | state: 3
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderDramaWithIndexPlayer (idName: 8524001) from Player
+Remove behavior CommanderDramaWithIndex (idName: 8524161) from Fang
+Fang stands still in Main and looks at Player
+
+TRIGGER Procedure 0.0 Step 21.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_GARDEN | state: 7
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderDramaWithIndexPlayer (idName: 8524001) from Player
+DELAY MASK SET || maskId: 85242 | delayTime: 0 | durationTime: 1 | changeType: 0 | curveIndex: 0
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8524_0_2
+X stands still in Main and looks at Fang
+CoCo stands still in Main and looks at Fang
+Add behavior CommanderMoveToFlagAndAction (idName: 8524002) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8524_0_2)
+
+TRIGGER Procedure 0.0 Step 22.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_GARDEN | state: 7
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8524_0_2
+DELAY MASK SET || maskId: 85242 | delayTime: 4 | durationTime: 1 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 23.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85242 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 8225_0 starts:
+{{dialogue|Fang|What is that song your friend is singing, X? It sounds familiar.}}
+{{dialogue|X|Caw... Who could say? These kids with their crazy music, why I oughtta...}}
+{{dialogue|X|La, laaaa lala, la, laaaaa lala!}}
+{{dialogue|CoCo|Co!?}}
+
+*''I think our bird friends are... more than friends.''
+*''Isn't that the wedding song?''
+
+{{dialogue|CoCo|indent=true|answer=I think our bird friends are... more than friends.
+|reward={{NPC2|CoCo|rp=5}}|CoCo!}}
+{{dialogue|X|indent=true|First comes love, then comes marriage, then comes CoCo with a baby carriage!}}
+{{dialogue|X|indent=true|answer=Isn't that the wedding song?
+|First comes love, then comes marriage, then comes CoCo with a baby carriage!}}
+{{dialogue|CoCo|CoCo!?}}
+{{dialogue|Fang|Have we... angered your friend, X?}}
+{{dialogue|X|Brah... brah... brawk! I'm sorry, baby, woncha give me another chance? Awk! I-I-I reabreahbrehhh...}}
+{{dialogue|Fang|X, it's strange to hear you struggle with your words so...}}
+{{dialogue|X|Brawk brawk bruhhhh...}}
+{{dialogue|Fang|Are you being bashful?}}
+{{dialogue|X|Cut it out! Cut it ouuuut!}}
+{{dialogue|Fang|''Pet Name'', I have an idea.}}
+
+*''I might be thinking the same thing...'' (No unique dialogue)
+*''Don't tell me, it's...'' (No unique dialogue)
+
+{{dialogue|Fang|Yes.}}
+{{dialogue|Fang|CoCo, X... I must ask you a question.}}
+{{dialogue|Fang|CoCo, do you take X to be your lawfully wedded partner, forever and ever, til death do you part?}}
+{{dialogue|CoCo|CoCo!}}
+{{dialogue|Fang|X, do you take CoCo to be your lawfully wedded partner, forever and ever, til death do you part?}}
+{{dialogue|X|Err, uhhh, hurrr...}}
+{{dialogue|X|I do! I do! Yes, yes, a thousand times, yes!}}
+{{dialogue|Fang|Then, by the power vested in me, I hereby pronounce you... married.}}
+{{dialogue|CoCo|CoCo, CoCo!}}
+{{dialogue|X|Oh, I love ya, baby! And it's always gonna be this way, see? Kiss kiss, hug hug! Mwah mwah!}}
+{{dialogue|Fang|I love you all, too...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 25.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+The player interacts (type 2, option 0) with Fang
+
+TRIGGER Procedure 0.0 Step 26.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON INTERACTIVE EXIT || order: 0 | instID: 8016
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 23468, 23469, 23470 starts:
+{{dialogue|X|I must be the luckiest man in the world!}}
+{{dialogue|Fang|Yes, yes... We think so, too.}}
+{{dialogue|Fang|The luckiest... after me...}}
+
+TRIGGER Procedure 0.0 Step 29.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderDramaWithIndex (idName: 8524161) from Fang
+Remove behavior CommanderMoveToFlagAndAction (idName: 8524002) from Player
+X stops standing still
+CoCo stops standing still
+Fang stops standing still
+CAMERA PATH STOP ALL || 
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1800523
+END MISSION 1800524
+STOPWATCH REAL TIME SET || id: 85246 | sec: 3
+
+TRIGGER Procedure 1.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 23445:
+{{dialogue|CoCo|Co!?}}
+
+*''I think our bird friends are... more than friends.'' (No unique dialogue)
+*''Isn't that the wedding song?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+CoCo gains 5 favor

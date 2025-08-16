@@ -1,0 +1,164 @@
+Reading Mission 1200229: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200135
+
+TRIGGER Procedure 5.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Something in the Air is in state 2 with flag 1
+
+GROUP 10:
+Something in the Air is successfully completed
+
+ACTIONS
+Run mission #1200228
+Newspaper adds Article content 1080.
+Title: Green Gas Gunks up Gorge
+Gas in your canyon? It's more likely than you think.
+
+Following an incident at the Blue Moon that we shall never speak of again, more bad news struck just the following day.
+
+We all know the Valley of Whispers: that quaint, funny little canyon oozing with toxic chemicals. What could go wrong, right? Well, as it turns out, all of that toxic ooze is in fact, bad.
+
+And it's really ramped up recently! Before we were pretty "live and let live" with the ooze, just staying out of its way, allowing it to ooze peacefully oozily in its little ooze-zone, but as of just recently, a lot of the gas has been floating out of the canyon and infecting citizens and critter alike!
+
+Note that the symptoms resulting from gas exposure are extremely mild, though long-term effects are still unknown so... Probably best to avoid the gas whenever possible. I mean, have you ever heard anyone say, "Dang, I really regret not inhaling more toxic chemicals?" So yeah, even if effects are mild, probably better to just... not.
+
+Nevertheless, our brave Civil Corps is on the case! With ''Player'' taking the lead, our Corps plans to head down to the canyon as soon as possible and find out what the darn dealio is already!
+
+That green gas has got to go!
+
+TRIGGER Procedure 5.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Something in the Air is in state 2 with flag 1
+
+GROUP 10:
+Something in the Air is successfully completed
+
+ACTIONS
+Run mission #1200229
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200229
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1200229 | flagName: gh_fight | id: 22291 | sceneName: Main | showOnMap: 1 | mapIcon: MissionArea | transId: 80000530
+ACTION AREA TRIGGER SET RADIUS || id: 22291 | radius: 15
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Greenhouse:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_greenhouse
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_greenhouse
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 22291
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Greenhouse:
+CONDITIONS
+Always:
+ACTIONS
+Zeke stands still in Greenhouse and looks at Musa
+Musa stands still in Greenhouse and looks at Zeke
+PLAYER SET POS ROT FLAG || sceneName: Greenhouse | flagName: greenbaby_greenhouse_player1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Greenhouse:
+CONDITIONS
+Always:
+ACTIONS
+SHOW CONVERSATION LISTENER || dialog: 1881_0 | npc: 8079 | cId: 0 | missionId: 1200229 | listeners: 8000
+
+TRIGGER Procedure 1.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Musa stops standing still
+Add behavior CommanderMoveToFlag (idName: 22291) to Player
+(param: TargetScene:Greenhouse|MoveMode:Walk|FlagName:greenbaby_greenhouse_player2)
+Add behavior CommanderMoveToFlagAndAction (idName: 22291) to Zeke
+(param: TargetScene:Greenhouse|MoveMode:Walk|FlagName:greenbaby_greenhouse_zeke2)
+
+TRIGGER Procedure 1.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8033 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 6366, 6367, 6368 starts:
+{{dialogue|Zeke|Woah. A celebrity thinks I'm cool. What'll I do now...}}
+{{dialogue|Zeke|...}}
+{{dialogue|Zeke|Um. Well. Guess I better get back to work, ''Player''. See ya.}}
+
+TRIGGER Procedure 1.0 Step 3.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 22291) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 22291) from Zeke
+CUTSCENE UI STATE EXIT || 
+Musa stops standing still
+Zeke stops standing still
+END MISSION 1200229
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_TOGETHER | state: 9
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 22291
+END MISSION 1200229
+
+TRIGGER Procedure 2.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 6354) that ends:
+{{dialogue|Zeke|Okay.}}
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 22291 | sec: 0.5

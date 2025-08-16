@@ -1,0 +1,326 @@
+Reading Mission 1200280: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200063
+
+TRIGGER Procedure 1.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200063
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1200249
+
+TRIGGER Procedure 1.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200063
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1200280
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200280
+At the beginning of the day:
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+Special gift rule 10 is set for giving Unsuur Heart Knot:
+The gift is rejected with:
+{{dialogue|Unsuur|Hey. Cool Heart Knot. Reminds me of this rock I was gonna give you. Um. Have you gotten any letters you liked lately?}}
+{{dialogue|Unsuur|Er... Nevermind... I better... go over here now...}}
+{{dialogue|Player|(Unsuur seemed like he wanted to accept my Heart Knot... but then he got embarassed all of a sudden. What did he mean about "letters?" Should I ask him about that?)}}
+
+The gift is accepted with:
+{{dialogue|Unsuur|Hey. Cool Heart Knot. Reminds me of this rock I was gonna give you. Um. Have you gotten any letters you liked lately?}}
+{{dialogue|Unsuur|Er... Nevermind... I better... go over here now...}}
+{{dialogue|Player|(Unsuur seemed like he wanted to accept my Heart Knot... but then he got embarassed all of a sudden. What did he mean about "letters?" Should I ask him about that?)}}
+
+Set global blackboard key UnsuurBeforeQ1 with info 1.
+
+TRIGGER Procedure 0.0 Step 0.1 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200280
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key UnsuurMail with info 1.
+
+TRIGGER Procedure 0.0 Step 1.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL BACK || order: 0 | mailID: 487 | backMailID: 80017721
+ON MAIL BACK || order: 0 | mailID: 488 | backMailID: 80017723
+CONDITIONS
+Always:
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: UnsuurMail
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+The Show Must Go On is successfully completed
+ACTIONS
+The player receives a letter:
+{{mail|487}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Belly of the Beast is successfully completed
+CHECK GLOBAL BLACKBOARD || key: UnsuurMail | info: 1 | exist: 1
+Who's the Deputy is successfully completed
+
+GROUP 10:
+Belly of the Beast is successfully completed
+CHECK GLOBAL BLACKBOARD || key: UnsuurMail | info: 1 | exist: 1
+Who's the Deputy has failed
+
+ACTIONS
+The player receives a letter:
+{{mail|488}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+In Trusses We Trust is successfully completed
+CHECK GLOBAL BLACKBOARD || key: UnsuurMail | info: 1 | exist: 1
+ACTIONS
+The player receives a letter:
+{{mail|489}}
+Run mission Crush
+GLOBAL BLACK BOARD REMOVE || key: UnsuurMail
+
+TRIGGER Procedure 0.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 489
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 9722 starts:
+{{dialogue|Player|(Whoever has been writing these letters seems to really support me. There certainly is a familiar style to them... Why won't this person come see me face to face?)}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if Unsuur has favor >= 100
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+Run mission Watching Paint Dry
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Check relationship with Unsuur is Friend Good
+Watching Paint Dry is successfully completed
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+
+GROUP 10:
+Check relationship with Unsuur is Lover
+Watching Paint Dry is successfully completed
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+
+ACTIONS
+Run mission Avalanche
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Avalanche is successfully completed
+Check relationship with Unsuur is Lover
+CHECK WEATHER STATE || weather: 0 | flag: 1
+IS MARRIAGE || isMarriage: 0
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+
+GROUP 10:
+Avalanche is successfully completed
+Check relationship with Unsuur is Married
+CHECK WEATHER STATE || weather: 0 | flag: 1
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+
+ACTIONS
+Run mission Stacks
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 172754
+CONDITIONS
+Crush is successfully completed
+CHECK GLOBAL BLACKBOARD || key: 172754 | info: 1 | exist: 0
+ACTIONS
+(cId -1) A conversation 11462 starts:
+{{dialogue|Player|Looks like this rock has some eyes on it. It has an eerie stare, like it is peering into your soul.}}
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 172755
+CONDITIONS
+Crush is successfully completed
+ACTIONS
+(cId -1) A conversation 11460 starts:
+{{dialogue|Player|A hearty, meaty dish. It smells really good.}}
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 172753
+CONDITIONS
+Crush is successfully completed
+ACTIONS
+(cId -1) A conversation 11463 starts:
+{{dialogue|Player|These stones are all different sizes, but are delicately and expertly stacked on top of each other.}}
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 172752
+CONDITIONS
+Crush is successfully completed
+ACTIONS
+(cId -1) A conversation 11459 starts:
+{{dialogue|Player|The stones are so carefully balanced, and stacked beautifully. Did Unsuur do this himself? He's really talented.}}
+
+TRIGGER Procedure 2.0 Step 4.0 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 172756
+CONDITIONS
+Crush is successfully completed
+ACTIONS
+(cId -1) A conversation 11458 starts:
+{{dialogue|Player|Lemon soup decorated with a giant smile made of chili peppers.}}
+
+TRIGGER Procedure 2.0 Step 5.0 Order 5 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 172757
+CONDITIONS
+Crush is successfully completed
+ACTIONS
+(cId -1) A conversation 11461 starts:
+{{dialogue|Player|Unsuur's barbell set. He doesn't look it, but judging by the weights on the bar, he's really strong.}}
+
+TRIGGER Procedure 2.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: UnsuurQ1NoStone | info: 1 | exist: 1
+Check relationship with Unsuur is 3 Lover
+ACTIONS
+The player receives a letter:
+{{mail|490}}
+GLOBAL BLACK BOARD REMOVE || key: UnsuurQ1NoStone
+
+TRIGGER Procedure 2.0 Step 6.0 Order 7 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 172751
+CONDITIONS
+Crush is successfully completed
+ACTIONS
+(cId -1) A conversation 11457 starts:
+{{dialogue|Player|Loads of rocks, lying in a box.}}
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Who's the Deputy is successfully completed
+Check if mission 1700298 is result 1 flag 1
+Just Give a Whistle is successfully completed
+
+GROUP 10:
+Who's the Deputy has failed
+Check if mission 1700298 is result 1 flag 1
+Just Give a Whistle is successfully completed
+
+ACTIONS
+Run mission Becoming Deputy
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Becoming Deputy is successfully completed
+ACTIONS
+Set 1400381 to 0
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1400381
+
+TRIGGER Procedure 3.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check relationship with Unsuur is Married
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+Run mission I Guess I Cook Now For Some Reason
+
+TRIGGER Procedure 6.0 Step 4.5 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SENDGIFT END || order: 0 | npc: 8026 | itemId: 15300000 | result: -1
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: UnsuurBeforeQ1 | info: 1 | exist: 1
+ACTIONS
+Add 1 Heart Knot of Default quality (Notify player)

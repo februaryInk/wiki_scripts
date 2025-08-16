@@ -1,0 +1,804 @@
+Reading Mission 1200299: Just Give a Whistle
+
+<onlyinclude>{{Infobox mission
+|name = Just Give a Whistle
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Just Give a Whistle:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200298
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|576}}
+DELIVER MISSION 1200298
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200298
+CONDITIONS
+Always:
+ACTIONS
+Run mission Just Give a Whistle
+END MISSION 1200298
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200299
+CONDITIONS
+Always:
+ACTIONS
+===Construct Monster Whistles===
+
+{{mission_details
+|desc = Elsie suggested that you use Monster Whistles to drive away the monsters inside the tunnel. You can construct all three of them on your Assembly Station.
+|details = Construct Monster Whistles
+*{{i2|Monster Whistle|0/3}}
+}}
+Set CHOICE to 0
+Set CAMERA to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200298 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Elsie===
+
+{{mission_details
+|desc = Your Monster Whistles are ready, show them to Elsie.
+|details = Talk to Elsie
+*{{i2|Monster Whistle|0/3}}
+*{{i2|Elsie|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Elsie
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1200298 | targetId: 2 | canSubmit: 1
+ACTIONS
+(cId 0) A conversation 11684, 11685 starts:
+{{dialogue|Elsie|Dang, you did it! These are perfect. I knew I could count on you.}}
+{{dialogue|Elsie|Alright, meet me at the entrance of the tunnel. I'll get Logan, and we can go install these. I wanna do this real tidy, but bring some weapons just in case, yeah?}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1200298 | id: 22991 | sceneName: Main | flagName: tunneldungeon_trigger | showOnMap: 1 | mapIcon: MissionArea | transId: 0
+===Meet at Tunnel===
+
+{{mission_details
+|desc = Logan and Elsie are ready to go into the tunnel and install the whistles. Prepare weapons and medicine, then meet them at the entrance of the tunnel.
+|details = Meet at Tunnel
+}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22991
+CONDITIONS
+CHECK PLAYER ITEM || item: 19810006 | itemGrade: -1 | set: 2 | count: 3
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 22991 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22991
+CONDITIONS
+Always:
+ACTIONS
+Elsie stands still in Main
+Logan stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: tunneldungeon_player
+DELAY MASK SET || maskId: 22991 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 22991 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 3558_0 starts:
+{{dialogue|Elsie|You're here!}}
+{{dialogue|Logan|Good to see ya, ''Player''. Ready to roll? {{textcolor|red|(Recommended: Lvl 46-48)}}}}
+
+*''Yeah, let's go.''
+*''Give me a bit of time.''
+
+{{dialogue|Elsie|indent=true|answer=Give me a bit of time.
+|Alright. Don't take too long, we don't wanna risk another incident.}}
+{{dialogue|Logan|indent=true|But make sure you're prepared.}}
+{{dialogue|Elsie|Well, before we head in, let's assess the situation.}}
+{{dialogue|Logan|We're gonna be facing some monsters, so make sure you're looking sharp...}}
+{{dialogue|Elsie|Huh? Nah. I wanna do this clean... no hurtin' animals!}}
+{{dialogue|Logan|Elsie... we ain't gonna be able to do this without hurtin' anythin'.}}
+{{dialogue|Elsie|But... we made the whistles so as not to harm anythin'...}}
+{{dialogue|Logan|Not to harm anythin' more than we need to. I ain't sayin' we turn into maniacs, but...}}
+
+*''We can try and minimize the hurt.''
+*''I just want to fight some monsters.''
+
+{{dialogue|Logan|indent=true|answer=We can try and minimize the hurt.
+|Of course. We ain't tryin' to deliberately cause pain, but we gotta know why we're here.}}
+{{dialogue|Logan|indent=true|answer=I just want to fight some monsters.
+|Are you crazy? We ain't here to kill, we're here to help the town.}}
+{{dialogue|Elsie|We're here to keep 'em away, not kill 'em... Howlett said violence should always be the last option.}}
+{{dialogue|Logan|We are the last option Else. You want those monsters to hurt more people?}}
+{{dialogue|Elsie|No, but...}}
+{{dialogue|Logan|I love ya, Else, but you gotta toughen up. My Pa was always finding ways to minimize damage, but he knew the deal. If you wanna be like my Pa, you gotta realize that.}}
+{{dialogue|Elsie|...}}
+The conversation ends.
+{{dialogue|Logan|I'm sorry, Elsie. But this is the reality. If you ain't got the strength to accept it, I dunno if I trust that you got my back.}}
+{{dialogue|Elsie|I got your back...}}
+{{dialogue|Logan|Alright then. Well, let's head out.}}
+{{dialogue|Elsie|...}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 2.0 Step 4.0 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+Check if CAMERA is == 1
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 0
+ACTIONS
+AREA TRIGGER DELETE || id: 22991
+DELAY MASK SET || maskId: 22992 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the second option in conversation segment 11687:
+{{dialogue|Logan|Good to see ya, ''Player''. Ready to roll? {{textcolor|red|(Recommended: Lvl 46-48)}}}}
+
+*''Yeah, let's go.'' (No unique dialogue)
+*''Give me a bit of time.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 1
+
+TRIGGER Procedure 2.0 Step 0.5 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 11687:
+{{dialogue|Logan|Good to see ya, ''Player''. Ready to roll? {{textcolor|red|(Recommended: Lvl 46-48)}}}}
+
+*''Yeah, let's go.'' (No unique dialogue)
+*''Give me a bit of time.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 0
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | enter: 0 | npc: 8000 | id: 22991
+CONDITIONS
+CHECK PLAYER ITEM || item: 19810006 | itemGrade: -1 | set: 2 | count: 3
+ACTIONS
+Elsie stops standing still
+Logan stops standing still
+Elsie stands still in Main
+Logan stands still in Main
+Set CAMERA to 1
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 22991
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 3558_0 starts:
+{{dialogue|Elsie|You're here!}}
+{{dialogue|Logan|Good to see ya, ''Player''. Ready to roll? {{textcolor|red|(Recommended: Lvl 46-48)}}}}
+
+*''Yeah, let's go.''
+*''Give me a bit of time.''
+
+{{dialogue|Elsie|indent=true|answer=Give me a bit of time.
+|Alright. Don't take too long, we don't wanna risk another incident.}}
+{{dialogue|Logan|indent=true|But make sure you're prepared.}}
+{{dialogue|Elsie|Well, before we head in, let's assess the situation.}}
+{{dialogue|Logan|We're gonna be facing some monsters, so make sure you're looking sharp...}}
+{{dialogue|Elsie|Huh? Nah. I wanna do this clean... no hurtin' animals!}}
+{{dialogue|Logan|Elsie... we ain't gonna be able to do this without hurtin' anythin'.}}
+{{dialogue|Elsie|But... we made the whistles so as not to harm anythin'...}}
+{{dialogue|Logan|Not to harm anythin' more than we need to. I ain't sayin' we turn into maniacs, but...}}
+
+*''We can try and minimize the hurt.''
+*''I just want to fight some monsters.''
+
+{{dialogue|Logan|indent=true|answer=We can try and minimize the hurt.
+|Of course. We ain't tryin' to deliberately cause pain, but we gotta know why we're here.}}
+{{dialogue|Logan|indent=true|answer=I just want to fight some monsters.
+|Are you crazy? We ain't here to kill, we're here to help the town.}}
+{{dialogue|Elsie|We're here to keep 'em away, not kill 'em... Howlett said violence should always be the last option.}}
+{{dialogue|Logan|We are the last option Else. You want those monsters to hurt more people?}}
+{{dialogue|Elsie|No, but...}}
+{{dialogue|Logan|I love ya, Else, but you gotta toughen up. My Pa was always finding ways to minimize damage, but he knew the deal. If you wanna be like my Pa, you gotta realize that.}}
+{{dialogue|Elsie|...}}
+The conversation ends.
+{{dialogue|Logan|I'm sorry, Elsie. But this is the reality. If you ain't got the strength to accept it, I dunno if I trust that you got my back.}}
+{{dialogue|Elsie|I got your back...}}
+{{dialogue|Logan|Alright then. Well, let's head out.}}
+{{dialogue|Elsie|...}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 22992 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Elsie stops standing still
+Logan stops standing still
+PLAYER SET POS ROT FLAG || sceneName: PortiaTunnel | flagName: tunneldungeon_in_player
+DELAY MASK SET || maskId: 22992 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the PortiaTunnel:
+CONDITIONS
+Always:
+ACTIONS
+ACTOR SET LEVEL || npc: 8005 | level: 48
+ACTOR SET LEVEL || npc: 8011 | level: 48
+Elsie stops standing still
+Logan stops standing still
+Elsie stands still in PortiaTunnel
+Logan stands still in PortiaTunnel
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8005 | state: Defense
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8011 | state: Attack
+===Search Tunnel===
+
+{{mission_details
+|desc = You've made it into the tunnel. Press forward and watch out for monsters!
+|details = Search Tunnel
+}}
+CUTSCENE UI STATE EXIT || 
+AREA TRIGGER ONCE CREATE || missionId: 1200299 | id: 22992 | flagName: tunneldungeon_trigger1 | sceneName: PortiaTunnel | showOnMap: 0 | mapIcon: 0 | transId: 0
+NPC SET CAN INTERACT || npc: 8005 | canInteract: 0
+NPC SET CAN INTERACT || npc: 8011 | canInteract: 0
+AREA TRIGGER ONCE CREATE || id: 22994 | flagName: tunneldungeon_save | missionId: 1200299 | sceneName: PortiaTunnel | showOnMap: 0 | mapIcon: 0 | transId: 0
+Logan stops standing still
+Elsie stops standing still
+AUTOSAVE TRY || 
+
+TRIGGER Procedure 3.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | enter: 0 | npc: 8000 | id: 22994
+CONDITIONS
+Always:
+ACTIONS
+AUTOSAVE TRY || 
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22992
+CONDITIONS
+Always:
+ACTIONS
+===Install Monster Whistles===
+
+{{mission_details
+|desc = Head to the designated spots and install each Monster Whistle.
+|details = Install Monster Whistles
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 22991 | sceneName: PortiaTunnel | path: Mission_CityObj_AlarmWhistle_0_empty1 | flagName: tunneldungeon_whistle2 | extraParams: Mission_CityObj_AlarmWhistle_0|CreatorItem|19810006_1|1547|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 22991 | iconType: 3 | missionId: 1200298
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 22991
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+MISSION TARGET COUNTER CHANGE || missionId: 1200298 | targetId: 5 | transId: 80017812 | isAdd: 1
+DELAY MASK SET || maskId: 22998 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 4.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22998
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: tunneldungeon_whistle1_player | sceneName: PortiaTunnel
+Elsie stands still in PortiaTunnel
+Logan stands still in PortiaTunnel
+DELAY MASK SET || maskId: 22998 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 4.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 22998 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 11706, 11707, 11708 starts:
+{{dialogue|Elsie|Alright. That's the first one, two more to go. I still feel bad about fightin' these animals, though...}}
+{{dialogue|Logan|Remember, we're doing this to keep everyone safe.}}
+{{dialogue|Elsie|If you insist...}}
+
+TRIGGER Procedure 5.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 11 | id: 22992 | sceneName: PortiaTunnel | path: Mission_CityObj_AlarmWhistle_0_empty1 | flagName: tunneldungeon_whistle1 | extraParams: Mission_CityObj_AlarmWhistle_0|CreatorItem|19810006_1|1547|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 22992 | iconType: 3 | missionId: 1200298
+CUTSCENE UI STATE EXIT || 
+Elsie stops standing still
+Logan stops standing still
+
+TRIGGER Procedure 5.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 11 | id: 22993 | sceneName: PortiaTunnel | path: Mission_CityObj_AlarmWhistle_0_empty3 | flagName: tunneldungeon_whistle3 | extraParams: Mission_CityObj_AlarmWhistle_0|CreatorItem|19810006_1|1547|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 22993 | iconType: 3 | missionId: 1200298
+AREA TRIGGER ONCE CREATE || missionId: 1200299 | id: 22993 | flagName: tunneldungeon_trigger2 | showOnMap: 0 | mapIcon: 0 | transId: 0 | sceneName: PortiaTunnel
+CUTSCENE UI STATE EXIT || 
+Elsie stops standing still
+Logan stops standing still
+SCENEITEM INTERACT SET || itemType: 11 | id: 22993 | canInteract: 0
+
+TRIGGER Procedure 5.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 22992
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+MISSION TARGET COUNTER CHANGE || missionId: 1200298 | targetId: 5 | transId: 80017812 | isAdd: 1
+DELAY MASK SET || maskId: 22999 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 5.0 Step 1.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 22993
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 22993 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 5.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 22999 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: tunneldungeon_whistle2_player | sceneName: PortiaTunnel
+Elsie stands still in PortiaTunnel
+Logan stands still in PortiaTunnel
+DELAY MASK SET || maskId: 22999 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 5.0 Step 2.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22993
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 22993 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+{{cutscene|id = 1387}}
+A cutscene CG_ACCIDENT (duration: 0.0) starts playing
+Watch your Six - In the tunnel, a monster attacked Logan; Elsie acted quickly to save him from harm.
+PLAYER SET POS ROT FLAG || flagName: tunneldungeon_boss_player1 | sceneName: PortiaTunnel
+Elsie stands still in PortiaTunnel
+Logan stands still in PortiaTunnel
+
+TRIGGER Procedure 5.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 22999
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 11709, 11710 starts:
+{{dialogue|Elsie|There ain't enough wind in the tunnel for the whistles to work yet. Shoot, I'd hoped that after installin' the first two, we don't need to fight no more...}}
+{{dialogue|Logan|Let's keep goin'...}}
+
+TRIGGER Procedure 6.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_ACCIDENT | state: 8
+CONDITIONS
+Always:
+ACTIONS
+MONSTER ADD TAG || tag: Boss_KuangChong | isAdd: 1
+ACTOR SET FACTION || isAdd: 1 | npc: 8005 | id: 8
+
+TRIGGER Procedure 6.0 Step 0.5 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_ACCIDENT | state: 9
+CONDITIONS
+Always:
+ACTIONS
+===Defeat Monsters===
+
+{{mission_details
+|desc = Sandworms have appeared to throw a wrench in your plans. Defeat them!
+|details = Defeat Monsters
+}}
+CUTSCENE UI STATE EXIT || 
+NPC ADD TAG || tag: Boss_KuangChong
+Elsie stops standing still
+Logan stops standing still
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8005
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8011
+ACTION ACTOR ADD FOLLOWER FLAG || id: 8000 | state: Attack | targetId: 8005 | flag: HatredHold
+ACTION ACTOR ADD FOLLOWER FLAG || id: 8000 | targetId: 8011 | state: Attack | flag: HatredHold
+
+TRIGGER Procedure 6.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 0 | tag: Boss_KuangChong
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 22994 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+NPC REMOVE TAG || tag: Boss_KuangChong
+ACTOR SET FACTION || isAdd: 0 | npc: 8005 | id: 8
+
+TRIGGER Procedure 6.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22994
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: tunneldungeon_run_player | sceneName: PortiaTunnel
+Elsie stands still in PortiaTunnel
+Logan stands still in PortiaTunnel
+DELAY MASK SET || maskId: 22994 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 6.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22994
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 11711, 11712, 11713 starts:
+{{dialogue|Logan|An' there it goes...}}
+{{dialogue|Elsie|Let's install the last whistle right here. But first, we gotta open up the last bit of the tunnel, the whistles need wind ta work.}}
+{{dialogue|Elsie|You wanna do the honors, ''Player''?}}
+
+TRIGGER Procedure 7.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 22996) to Player
+(param: CMDAction:Nod_Story)
+
+TRIGGER Procedure 7.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderPlayerAction (idName: 22996) from Player
+DELAY MASK SET || maskId: 22995 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 7.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 22995 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+SOUND PLAY 2D || idStr: Play_Story_PortiaTunnel_dig
+DELAY MASK SET || maskId: 22995 | delayTime: 3 | durationTime: -2 | changeType: 1 | curveIndex: 0
+SCENEITEM DELETE || itemType: 0 | id: 22991
+Remove behavior CommanderMoveToFlag (idName: 22997) from Player
+
+TRIGGER Procedure 7.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 22995
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 2333, 11714 starts:
+{{dialogue|Elsie|Woohoo!}}
+{{dialogue|Elsie|Awesome job! Last thing left is to install the whistle and we're home free!}}
+
+TRIGGER Procedure 8.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Install Final Monster Whistle===
+
+{{mission_details
+|desc = The hard part is out of the way. Just install one more whistle and head back to town.
+|details = Install Final Monster Whistle
+}}
+CUTSCENE UI STATE EXIT || 
+Elsie stops standing still
+Logan stops standing still
+SCENEITEM INTERACT SET || itemType: 11 | id: 22993 | canInteract: 1
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8005
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8011
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8005 | state: Attack
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | state: Attack | tActor: 8011
+
+TRIGGER Procedure 8.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 22993
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 22996 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 8.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 22996 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Elsie stands still in PortiaTunnel
+Logan stands still in PortiaTunnel
+PLAYER SET POS ROT FLAG || sceneName: PortiaTunnel | flagName: tunneldungeon_se_player
+DELAY MASK SET || maskId: 22996 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+{{cutscene|id = 1388}}
+A cutscene CG_WINDTUNNEL (duration: 0.0) starts playing
+Light at the End - With the digging complete, scorching wind rushed through the tunnel, blowing the whistles to keep the monsters away.
+
+TRIGGER Procedure 9.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_WINDTUNNEL | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 3564_0 starts:
+{{dialogue|Elsie|The Southern Eufaula...}}
+{{dialogue|Logan|Beautiful, ain't it?}}
+{{dialogue|Elsie|Sure is.}}
+{{dialogue|Elsie|I can almost see Portia from here...}}
+{{dialogue|Logan|Else, that's gotta be 2-300 leagues from here, behind another mountain range to boot.}}
+{{dialogue|Elsie|Pfft, I have good eye sight. Anyway, betta head on back and tell the Mayor.}}
+
+*''Alright, let's go!'' (No unique dialogue)
+*''Wait a while...''
+
+{{dialogue|Elsie|indent=true|answer=Wait a while...
+|Oh man. Jus' come back here when you're ready.}}
+Set CHOICE2 to 0
+
+TRIGGER Procedure 9.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Check if CHOICE2 is == 0
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+===Talk to Elsie===
+
+{{mission_details
+|desc = The mission has been a success. Speak with Elsie and return to town.
+|details = Talk to Elsie
+}}
+NPC SET CAN INTERACT || canInteract: 1 | npc: 8005
+
+TRIGGER Procedure 10.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Check if CHOICE2 is == 1
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 22997 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 9.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) The player picks the first option in conversation segment 11720:
+{{dialogue|Elsie|Pfft, I have good eye sight. Anyway, betta head on back and tell the Mayor.}}
+
+*''Alright, let's go!'' (No unique dialogue)
+*''Wait a while...'' (No unique dialogue)
+
+(cId 6) The player picks the first option in conversation segment 11722:
+{{dialogue|Elsie|Wanna head back to City Hall together?}}
+
+*''Alright, let's go!'' (No unique dialogue)
+*''Wait a while...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE2 to 1
+
+TRIGGER Procedure 9.0 Step 3.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Elsie
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 3566_0 starts:
+{{dialogue|Elsie|Wanna head back to City Hall together?}}
+
+*''Alright, let's go!'' (No unique dialogue)
+*''Wait a while...''
+
+{{dialogue|Elsie|indent=true|answer=Wait a while...
+|Oh man. Jus' come back here when you're ready.}}
+
+TRIGGER Procedure 10.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 22997 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Elsie stops standing still
+Logan stops standing still
+NPC SET CAN INTERACT || npc: 8011 | canInteract: 1
+PLAYER SET POS ROT FLAG || sceneName: Guildhall | flagName: turret_guildhall_player
+
+TRIGGER Procedure 10.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PortiaTunnel to the Guildhall:
+CONDITIONS
+Always:
+ACTIONS
+Trudy stands still in Guildhall
+Heidi stands still in Guildhall
+Wei stands still in Guildhall
+Elsie stands still in Guildhall
+Logan stands still in Guildhall
+
+TRIGGER Procedure 10.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PortiaTunnel to the Guildhall:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 22997 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 10.0 Step 3.5 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 22997
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 3567_0 starts:
+{{dialogue|Trudy|That is wonderful news! Thank you Elsie, ''Player'', and Logan. And congratulations to your team as well, Heidi! The tunnel is nearing completion.}}
+{{dialogue|Trudy|It makes you think... about the future. I really think this is the start of something big.}}
+{{dialogue|Heidi|We're really close now. Connecting Sandrock to Portia... the hard part is behind us.}}
+
+*''We're gonna get even more water!''
+*''We're connecting the Free Cities.''
+
+{{dialogue|Trudy|indent=true|answer=We're gonna get even more water!
+|That's right. The water they were hiding was just the beginning. It stabilized the city, but now we can try more ambitious plans...}}
+{{dialogue|Heidi|indent=true|answer=We're connecting the Free Cities.
+|Yeah, when Sandrock grows strong again, the Free Cities will also flourish.}}
+{{dialogue|Trudy|We still need a... paving machine right...? You mentioned something like that before.}}
+{{dialogue|Heidi|We did... but then our new Commissioner told me that he could call in a favor and get my team one himself!}}
+{{dialogue|Trudy|Oh, that's great Commissioner Wei.}}
+{{dialogue|Wei|It was a machine we built when we were trying to build a road through the Peripheries, it... didn't work out too well for us there, but I'm pretty sure it should do fine making a desert road.}}
+{{dialogue|Heidi|Well, all that's left is to wait for progress on Portia's end.}}
+{{dialogue|Trudy|Ah, speaking of which, I've already contacted Mr. Musa about it. He said he'll ask Mint to come over and give us a project update. He should be here soon!}}
+{{dialogue|Trudy|Anyway, I'm really proud of you all! Cheers to us!}}
+{{dialogue|Heidi|To us!}}
+
+*''To us!'' (No unique dialogue)
+*''To Sandrock!'' (No unique dialogue)
+*''For the Empire!''
+
+{{dialogue|Logan|indent=true|answer=For the Empire!
+|Too soon, ''Player''...}}
+
+TRIGGER Procedure 11.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+NPC SET CAN INTERACT || canInteract: 1 | npc: 8011
+NPC SET CAN INTERACT || canInteract: 1 | npc: 8005
+NPC RESET LEVEL || npc: 8005
+NPC RESET LEVEL || npc: 8011
+Remove behavior Story1700299_8011 (idName: 23121) from Logan
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8005
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8011
+CUTSCENE UI STATE EXIT || 
+Trudy stops standing still
+Heidi stops standing still
+Wei stops standing still
+Elsie stops standing still
+Logan stops standing still
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1200298
+END MISSION 1200299

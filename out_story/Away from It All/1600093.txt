@@ -1,0 +1,726 @@
+Reading Mission 1600093: Away from It All
+
+<onlyinclude>{{Infobox mission
+|name = Away from It All
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Away from It All:
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Check if IsAcceptInvite is == 1
+ACTIONS
+Elsie stops standing still
+Add behavior NPC_RideMount (idName: 16920512) to Elsie
+(param: RideInstID:16929|MoveMode:Run)
+DELIVER MISSION 1600092
+START MISSION 1600092
+
+TRIGGER Procedure 0.0 Step 4.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1600092
+CONDITIONS
+Always:
+ACTIONS
+Run mission Away from It All
+END MISSION 1600092
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1600093
+CONDITIONS
+Always:
+ACTIONS
+===Ride with Elsie===
+
+{{mission_details
+|desc = Ride with Elsie on Lil Belle and enjoy the scenery around Sandrock.
+|details = Ride with Elsie
+}}
+Set InitialRideFlag to 0
+CUTSCENE UI STATE ENTER || 
+Set IsArrivedArea1 to 0
+ACTOR BLIND SET || set: 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 32) The player picks the second option in conversation segment 2266:
+{{dialogue|Elsie|You're alright for a city-slicker, ''Player''! And a staunch companion, real true-blue! I feel like I can tell you anything! Anyway, I gotta get home. You wanna ride back to town?}}
+
+*''I'll stay here a while longer. I need to find your treasure!'' (No unique dialogue)
+*''Yeah, I'll go back with you.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 169300 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 169300 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+RIDABLE DESTROY || id: 16929
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+Elsie stands still in Main
+RIDABLE CREATE || protoId: 102 | instanceId: 16929 | ownerId: 8005 | sceneFlag: Main:1600092_G1_Horse_1
+DELAY MASK SET || maskId: 169300 | delayTime: 2 | durationTime: 1 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 169300 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 50) A conversation 6387 starts:
+{{dialogue|Elsie|Alright! At yer workshop already. Let's hang again soon, huh? See ya!}}
+
+TRIGGER Procedure 2.0 Step 6.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 50) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Elsie stops standing still
+GLOBAL BLACK BOARD REMOVE || key: NoCutSceneObstacle
+ACTOR BLIND SET || set: 0
+CUTSCENE UI STATE EXIT || 
+Elsie stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 16930032) from Player
+SUBMIT MISSION 1600092
+Add behavior NPC_RideMount (idName: 16930534) to Elsie
+(param: RideInstID:16929)
+
+TRIGGER Procedure 0.0 Step 1.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8005 | behaviourName: NPC_RideMount | eventName: HaveRiddenOnMount
+CONDITIONS
+Check if InitialRideFlag is == 0
+ACTIONS
+Set InitialRideFlag to 1
+Add behavior CommanderIdleRiding (idName: 16930514) to Elsie
+(param: TranslateFlagScene:Main|TranslateFlagPos:1600092_G1_Horse_1)
+
+TRIGGER Procedure 0.0 Step 1.1 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8005 | behaviourName: NPC_RideMount | eventName: HaveRiddenOnMount
+CONDITIONS
+Always:
+ACTIONS
+Add behavior Player_RideMount (idName: 16930011) to Player
+(param: RideInstID:16929|MoveMode:Run)
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: Player_RideMount | eventName: HaveRiddenOnMount
+CONDITIONS
+Always:
+ACTIONS
+(cId 10) A conversation 2241 starts:
+{{dialogue|Elsie|C'mon, lil' Belle, let's giddyup! Yah!}}
+Remove behavior CommanderIdleRiding (idName: 16930514) from Elsie
+SCENEITEM CREATE FLAG || itemType: 0 | id: 16931 | path: SceneItem_SCAMERA | sceneName: Main | flagName: default | extraParams: -1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndActionRiding (idName: 16930511) to Elsie
+(param: TargetScene:Main|MoveMode:Run
+|FlagName:ElsieIsFree_Des1)
+STOPWATCH REAL TIME SET || id: 1001 | sec: 3
+STOPWATCH REAL TIME SET || id: 69301 | sec: 60
+
+TRIGGER Procedure 0.0 Step 3.1 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8005 | behaviourName: CommanderMoveToFlagAndActionRiding | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndActionRiding (idName: 16930511) from Elsie
+
+TRIGGER Procedure 0.0 Step 3.2 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 69301
+CONDITIONS
+Check if IsArrivedArea1 is == 0
+ACTIONS
+DELAY MASK SET || maskId: 69301 | delayTime: 0 | durationTime: -2 | changeType: 2 | curveIndex: 0
+Set IsArrivedArea1 to 2
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 1001
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Elsie|Try to keep up, now!}}
+STOPWATCH REAL TIME SET || id: 1002 | sec: 5
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 1002
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Elsie|Hahaha! I live for this!}}
+STOPWATCH REAL TIME SET || id: 1003 | sec: 4
+
+TRIGGER Procedure 0.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 1003
+CONDITIONS
+Check if IsArrivedArea1 is == 0
+ACTIONS
+In a speech bubble:
+{{dialogue|Elsie|Woohooo! We're flyin' now!}}
+STOPWATCH REAL TIME SET || id: 1004 | sec: 6
+
+TRIGGER Procedure 0.0 Step 6.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 69302
+CONDITIONS
+Check if IsArrivedArea1 is == 2
+ACTIONS
+DELAY MASK SET || maskId: 69302 | delayTime: 0 | durationTime: -2 | changeType: 2 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 7.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 1004
+CONDITIONS
+Check if IsArrivedArea1 is == 0
+ACTIONS
+In a speech bubble:
+{{dialogue|Elsie|Woahhh, lil' Belle, it's thataway!}}
+
+TRIGGER Procedure 0.0 Step 7.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 1005
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Elsie|Woo, Belle's in a good mood today!}}
+
+TRIGGER Procedure 0.0 Step 7.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 1006
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Elsie|Hya! Hya!}}
+
+TRIGGER Procedure 0.0 Step 7.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 1007
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Elsie|Giddyup！}}
+
+TRIGGER Procedure 0.0 Step 7.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 1008
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Elsie|C'mon faster!}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8005 | behaviourName: CommanderMoveToFlagAndActionRiding | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key NoCutSceneObstacle with info 1.
+Set IsArrivedArea1 to 1
+Remove behavior CommanderPathElsie (idName: 16930519) from Elsie
+Add behavior CommanderIdleRiding (idName: 16930519) to Elsie
+(param: TranslateFlagScene:Main|TranslateFlagPos:1600093_Target1_Trigger3)
+STOPWATCH REAL TIME SET || id: 1693001 | sec: 0.5
+Remove behavior CommanderMoveToFlagAndActionRiding (idName: 16930511) from Elsie
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 1693001
+CONDITIONS
+Always:
+ACTIONS
+(cId 20) A conversation 2246 starts:
+{{dialogue|Elsie|Take a gander, ''Player''! I sometimes ride out here 'fore my mornin' cattle herdin'. Take a deep breath, soak it all in! We're above all the dust and gunk so the air is extra fresh; plus the view ain't nothin' to sneeze at neither!}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 20) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 21) A conversation 2247, 510_0 starts:
+{{dialogue|Elsie|Ah, yeah, that's the good stuff!}}
+{{dialogue|Elsie|What's your take, partner? Feelin' inspired? Humbled by the vastness of the great outdoors?}}
+
+*''It's amazing.''
+*''I dunno, I like Building better.''
+*{{flirt}}''The view pales in comparison to you.''
+
+{{dialogue|Elsie|indent=true|answer=It's amazing.
+|reward={{NPC2|Elsie|rp=3}}|Ain't it though? Bein' up here kinda puts things into perspective, don't it? We're all, like, specks of dust blowin' in the wind and what not!}}
+{{dialogue|Elsie|indent=true|answer=I dunno, I like Building better.
+|Huh? That's all you got to say? You need to get out more, ''Player''. If you make your job your whole personality, nobody's gonna wanna hang with you...}}
+{{dialogue|Elsie|indent=true|answer=The view pales in comparison to you.
+|Huh? I don't follow.}}
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 20) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 22) A conversation 2252 starts:
+{{dialogue|Elsie|Well! Ain't gettin' any younger!}}
+
+TRIGGER Procedure 1.0 Step 2.1 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 21) The player picks the first option in conversation segment 2248:
+{{dialogue|Elsie|What's your take, partner? Feelin' inspired? Humbled by the vastness of the great outdoors?}}
+
+*''It's amazing.'' (No unique dialogue)
+*''I dunno, I like Building better.'' (No unique dialogue)
+*{{flirt}}''The view pales in comparison to you.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Elsie gains 3 favor
+
+TRIGGER Procedure 1.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 22) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagRiding (idName: 169311) from Elsie
+Add behavior CommanderMoveToFlagAndActionRiding (idName: 16930522) to Elsie
+(param: TargetScene:Main|MoveMode:Run
+|FlagName:1600093_Target2_Player1)
+Remove behavior CommanderIdleRiding (idName: 16930519) from Elsie
+STOPWATCH REAL TIME SET || id: 69302 | sec: 60
+GLOBAL BLACK BOARD REMOVE || key: NoCutSceneObstacle
+Set IsArrivedArea1 to 2
+
+TRIGGER Procedure 1.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8005 | behaviourName: CommanderMoveToFlagAndActionRiding | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndActionRiding (idName: 16930522) from Elsie
+Add behavior CommanderMoveToFlagAndActionRiding (idName: 16930523) to Elsie
+(param: TargetScene:Main|MoveMode:RunFast
+|FlagName:ElsieIsFree_Des2)
+STOPWATCH REAL TIME SET || id: 1005 | sec: 1
+STOPWATCH REAL TIME SET || id: 1006 | sec: 3
+STOPWATCH REAL TIME SET || id: 1007 | sec: 5
+STOPWATCH REAL TIME SET || id: 1008 | sec: 7
+Set global blackboard key NoCutSceneObstacle with info 1.
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8005 | behaviourName: CommanderMoveToFlagAndActionRiding | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Away from It All is in state 2 with flag 1
+Check if IsArrivedArea1 is <= (maybe?) 3
+ACTIONS
+STOPWATCH REAL TIME SET || id: 169399 | sec: 1
+AREA TRIGGER DELETE || id: 169321
+SCENEITEM DELETE || itemType: 0 | id: 16931
+Set IsArrivedArea1 to 3
+
+TRIGGER Procedure 2.0 Step 1.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 69301
+ON DELAY MASK EVENT || order: 0 | maskId: 69302 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndActionRiding (idName: 16930523) from Elsie
+Remove behavior CommanderIdleRiding (idName: 16930519) from Elsie
+Remove behavior CommanderMoveToFlagRiding (idName: 169311) from Elsie
+Remove behavior CommanderMoveToFlagAndActionRiding (idName: 16930511) from Elsie
+Remove behavior CommanderPathElsie (idName: 16930519) from Elsie
+Remove behavior CommanderMoveToFlagAndActionRiding (idName: 16930522) from Elsie
+STOPWATCH REAL TIME SET || id: 169399 | sec: 1
+AREA TRIGGER DELETE || id: 169321
+SCENEITEM DELETE || itemType: 0 | id: 16931
+Set global blackboard key NoCutSceneObstacle with info 1.
+PLAYER SET POS ROT FLAG || flagName: 1600093_G3_Player_1 | sceneName: Main
+Set IsArrivedArea1 to 3
+
+TRIGGER Procedure 2.0 Step 1.1 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 169399
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 16939 | sec: 2
+Add behavior Player_RideMount_Removal (idName: 16930031) to Player
+(param: -1)
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 16939
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndActionRiding (idName: 16930523) from Elsie
+Remove behavior NPC_RideMount (idName: 16920512) from Elsie
+Add behavior CommanderMoveToFlagAndAction (idName: 16930532) to Elsie
+(param: TargetScene:Main|MoveMode:Run|FlagName:1600093_G3_8005_1)
+Add behavior CommanderMoveToFlagAndAction (idName: 16930032) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:1600093_G3_Player_1)
+STOPWATCH REAL TIME SET || id: 16940 | sec: 4
+
+TRIGGER Procedure 2.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 16940
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 30) A conversation 2253, 2254, 2255, 2257 starts:
+{{dialogue|Elsie|Yeehaw! That's my favorite runnin' spot; I like to bring Belle out here and just gun it down that hill! Hands tight on the reins, wind in my hair!}}
+{{dialogue|Elsie|Here's pretty much the only spot I feel like I'm anywhere but inside city lines... And it's the farthest my folks'll let me go. They think I'm still a kid.}}
+{{dialogue|Elsie|But when the sun sets out here at my spot, I'm whoever I wanna be! Whether I'm hoofin' it or ridin' like the wind, out here, nobody can tell me what to do! I'm a bird, wild 'n free!}}
+{{dialogue|Elsie|But my Pa doesn't even want me out this far; he's always sayin' I gotta be more 'lady-like,' which is just code for 'boring!' I'm a legal adult, I know how to take care of myself, but they still treat me like some baby Yakmel!}}
+Remove behavior CommanderMoveToFlagAndAction (idName: 16930532) from Elsie
+Elsie stands still in Main and looks at Player
+Remove behavior NPC_RideMount_Removal (idName: 16930531) from Elsie
+
+TRIGGER Procedure 2.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 30) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 31) A conversation 2258, 514_0, 2263 starts:
+{{dialogue|Elsie|One of these days, though, push is gonna come to shove, and I reckon I'm gonna have to... Say! Wanna hear a secret?}}
+{{dialogue|Elsie|I've got a treasure box hidden nearby! I'm quietly savin' up, storin away a few Gols here and there, then, before you know it, whoosh! I'll be buyin' the first ticket outta this one-yak town! Like I said, free as a bird!}}
+
+*''But we'll miss you in Sandrock.''
+*''That's a good idea.''
+*{{flirt}}''What if you had someone special to take care of you?''
+
+{{dialogue|Elsie|indent=true|answer=But we'll miss you in Sandrock.
+|reward={{NPC2|Elsie|rp=3}}|Aw, shucks, ''Player''... I'd miss you and Mi-an and all the critters around here but, I'd come back and visit! And, hey, you gotta come visit me, too! Ain't fair to put the burden all on me, now is it?}}
+{{dialogue|Elsie|indent=true|answer=That's a good idea.
+|Yeah! See, I came up with the idea when I realized: I hate it here! Er, bein' stuck here, that is. Glad you support the notion; I do feel kinda bad about leavin' some folk behind...}}
+{{dialogue|Elsie|indent=true|answer=What if you had someone special to take care of you?
+|reward={{NPC2|Elsie|rp=3}}|Huh? Ain't you payin' attention? Whole point of runnin' away is not bein' beholden to anybody! To be my own self! 'Sides, imagine someone tryna "take care of me" with my Pa around! Ha, that'd be rich!}}
+{{dialogue|Elsie|Say, I tell you what, cowpoke! I hereby issue a challenge: see if you can find my treasure chest! I'd consider it a favor whether you found it or not: if'n you did, that means I didn't hide it good enough!}}
+
+TRIGGER Procedure 2.0 Step 4.1 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 31) The player picks the first option in conversation segment 2259:
+{{dialogue|Elsie|I've got a treasure box hidden nearby! I'm quietly savin' up, storin away a few Gols here and there, then, before you know it, whoosh! I'll be buyin' the first ticket outta this one-yak town! Like I said, free as a bird!}}
+
+*''But we'll miss you in Sandrock.'' (No unique dialogue)
+*''That's a good idea.'' (No unique dialogue)
+*{{flirt}}''What if you had someone special to take care of you?'' (No unique dialogue)
+
+(cId 31) The player picks the third option in conversation segment 2259:
+{{dialogue|Elsie|I've got a treasure box hidden nearby! I'm quietly savin' up, storin away a few Gols here and there, then, before you know it, whoosh! I'll be buyin' the first ticket outta this one-yak town! Like I said, free as a bird!}}
+
+*''But we'll miss you in Sandrock.'' (No unique dialogue)
+*''That's a good idea.'' (No unique dialogue)
+*{{flirt}}''What if you had someone special to take care of you?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Elsie gains 3 favor
+
+TRIGGER Procedure 2.0 Step 4.2 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 1693032
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior Player_RideMount (idName: 16930011) from Player
+Remove behavior Player_RideMount_Removal (idName: 16930031) from Player
+
+TRIGGER Procedure 2.0 Step 5.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 31) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 32) A conversation 2266 starts:
+{{dialogue|Elsie|You're alright for a city-slicker, ''Player''! And a staunch companion, real true-blue! I feel like I can tell you anything! Anyway, I gotta get home. You wanna ride back to town?}}
+
+*''I'll stay here a while longer. I need to find your treasure!'' (No unique dialogue)
+*''Yeah, I'll go back with you.'' (No unique dialogue)
+
+
+TRIGGER Procedure 2.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 32) The player picks the first option in conversation segment 2266:
+{{dialogue|Elsie|You're alright for a city-slicker, ''Player''! And a staunch companion, real true-blue! I feel like I can tell you anything! Anyway, I gotta get home. You wanna ride back to town?}}
+
+*''I'll stay here a while longer. I need to find your treasure!'' (No unique dialogue)
+*''Yeah, I'll go back with you.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 6388 starts:
+{{dialogue|Elsie|Alright, you go find my chest! I'mma head back now. Tell me if ya find it... or don't hehe! See ya!}}
+===Find Elsie's Hidden Treasure===
+
+{{mission_details
+|desc = Elsie hid a treasure chest out in the desert. Go and find it!
+|details = Find Elsie's Hidden Treasure
+*{{i2|Elsie|0/1}}
+}}
+CUTSCENE UI STATE EXIT || 
+Elsie stops standing still
+Add behavior NPC_RideMount (idName: 16930534) to Elsie
+(param: RideInstID:16929)
+Remove behavior CommanderMoveToFlagAndAction (idName: 16930032) from Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 16931 | path: 1600093_TreasureChest | sceneName: WildCave | flagName: 1600093_TreasureChest | extraParams: 0
+Set CountDownToFailure to 0
+Set FOUND to 0
+ACTOR BLIND SET || set: 0
+GLOBAL BLACK BOARD REMOVE || key: NoCutSceneObstacle
+
+TRIGGER Procedure 2.0 Step 7.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8005 | behaviourName: NPC_RideMount | eventName: HaveRiddenOnMount
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndActionRiding (idName: 16930535) to Elsie
+(param: TargetScene:Main|MoveMode:Run|FlagName:1600092_G1_8005_2)
+
+TRIGGER Procedure 2.0 Step 8.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8005 | behaviourName: CommanderMoveToFlagAndActionRiding | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Add behavior NPC_RideMount_Removal (idName: 16930536) to Elsie
+(param: -1)
+
+TRIGGER Procedure 2.0 Step 9.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8005 | behaviourName: NPC_RideMount_Removal | eventName: HaveLeftMount
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior NPC_RideMount (idName: 16930534) from Elsie
+Remove behavior CommanderMoveToFlagAndActionRiding (idName: 16930535) from Elsie
+Remove behavior NPC_RideMount_Removal (idName: 16930536) from Elsie
+
+TRIGGER Procedure 2.0 Step 10.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if FOUND is == 1
+ACTIONS
+RIDABLE DESTROY || id: 16929
+Remove behavior NPC_RideMount (idName: 16930534) from Elsie
+Remove behavior CommanderMoveToFlagAndActionRiding (idName: 16930535) from Elsie
+Remove behavior NPC_RideMount_Removal (idName: 16930536) from Elsie
+
+TRIGGER Procedure 2.0 Step 10.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if FOUND is == 2
+ACTIONS
+RIDABLE DESTROY || id: 16929
+Remove behavior NPC_RideMount (idName: 16930534) from Elsie
+Remove behavior CommanderMoveToFlagAndActionRiding (idName: 16930535) from Elsie
+Remove behavior NPC_RideMount_Removal (idName: 16930536) from Elsie
+END MISSION 1600093
+
+TRIGGER Procedure 2.0 Step 11.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+RIDABLE DESTROY || id: 16929
+Remove behavior NPC_RideMount (idName: 16930534) from Elsie
+Remove behavior CommanderMoveToFlagAndActionRiding (idName: 16930535) from Elsie
+Remove behavior NPC_RideMount_Removal (idName: 16930536) from Elsie
+END MISSION 1600093
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 16931
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 6389 starts:
+{{dialogue|Player|This is Elsie's treasure chest. There's an intricate lock on it, looks like only Elsie can open it.}}
+Add 1 Elsie's "Treasure" of Default quality (Notify player)
+SCENEITEM DELETE || itemType: 0 | id: 16931
+===Take the Treasure Chest to Elsie.===
+
+{{mission_details
+|desc = You finally found Elsie's treasure chest. Take it back and give it to her.
+|details = Take the Treasure Chest to Elsie.
+*{{i2|Elsie|0/1}}
+}}
+Set FOUND to 1
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Elsie
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+(cId 40) A conversation 518_0, 2270 starts:
+{{dialogue|Elsie|Oh shoot! So you found my treasure chest, huh? Dang! I thought I was slick! Well, I hope it weren't too easy for you, at least?}}
+
+*''Took me 5 minutes.''
+*''It was hard to find.''
+
+{{dialogue|Elsie|indent=true|answer=Took me 5 minutes.
+|Shooooot... Alright, alright. Okay, that's alright, I just gotta find a better spot. Thanks again, ''Player''! Good thing you found it 'fore someone else did, then!}}
+{{dialogue|Elsie|indent=true|answer=It was hard to find.
+|Heh heh, well that's pretty good news; had to work for it, huh? If'n that's the case, then my next hidin' spot won't be found by nobody for a thousand years!}}
+{{dialogue|Elsie|See you soon!}}
+
+TRIGGER Procedure 3.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 40) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: NoCutSceneObstacle
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1600092
+Set FOUND to 2
+
+TRIGGER Procedure 3.0 Step 1.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+Set IsArrivedArea1 to 3
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8005 | cId: 40 | missionId: 1600093
+CONDITIONS
+Always:
+ACTIONS
+Remove 1 Elsie's "Treasure" of Default quality (Notify player)
+SET CAN SUBMIT TARGET || missionId: 1600092 | targetId: 2 | canSubmit: 1
+Elsie gains 10 favor
+
+TRIGGER Procedure 3.0 Step 7.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if FOUND is == 0
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 16931
+RIDABLE DESTROY || id: 16929
+The player receives a letter:
+{{mail|83}}
+SUBMIT MISSION 1600092
+Remove behavior NPC_RideMount (idName: 16930534) from Elsie
+Remove behavior CommanderMoveToFlagAndActionRiding (idName: 16930535) from Elsie
+Remove behavior NPC_RideMount_Removal (idName: 16930536) from Elsie
+END MISSION 1600093
+
+TRIGGER Procedure 3.0 Step 8.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the WildCave:
+CONDITIONS
+Always:
+ACTIONS
+RIDABLE DESTROY || id: 16929
+Remove behavior NPC_RideMount (idName: 16930534) from Elsie
+Remove behavior CommanderMoveToFlagAndActionRiding (idName: 16930535) from Elsie
+Remove behavior NPC_RideMount_Removal (idName: 16930536) from Elsie

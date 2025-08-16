@@ -1,0 +1,1371 @@
+Reading Mission 1700284: Prisoner Dilemma
+
+<onlyinclude>{{Infobox mission
+|name = Prisoner Dilemma
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Prisoner Dilemma:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700283
+CONDITIONS
+Always:
+ACTIONS
+===Wait Until Tomorrow===
+
+{{mission_details
+|desc = Have a rest and prepare to meet Grace for her interrogation of the prisoners.
+|details = Wait Until Tomorrow
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission Prisoner Dilemma
+END MISSION 1700283
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700284
+CONDITIONS
+Always:
+ACTIONS
+===Go to the Civil Corps===
+
+{{mission_details
+|desc = Grace asked you to meet her at the Civil Corps to speak with Miguel and Pen
+|details = Go to the Civil Corps
+}}
+Set accept to 1
+Set interact to 0
+Set mirror to 0
+Set pen to 0
+Set letters to 0
+Set book to 0
+Set list to 0
+Set music to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the CivilCorp:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_civilcorp
+Duvos Attacks! is in state 1 with flag 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_civilcorp
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the CivilCorp:
+CONDITIONS
+Always:
+ACTIONS
+Grace stands still in CivilCorp
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the CivilCorp:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 3249_0 starts:
+{{dialogue|Grace|Greetings, ''Player''! Ready to step in to the... "Tiger's den..." as it were?}}
+
+*''Let's do it.''
+*''Not yet...''
+
+{{dialogue|Grace|indent=true|answer=Let's do it.
+|Good. Alright, let me just get you up to speed on the gameplan. I've been going over their files, and I think the trick is going to be a classic prisoner's dilemma situation.}}
+{{dialogue|Grace|indent=true|We'll put 'em apart, interrogate them separately, then cross-check info to poke holes in their stories.}}
+{{dialogue|Grace|indent=true|Our best bet is to start with Pen. All brawn, no brains. When we go after Miguel, we're going to need more ammunition: facts, evidence, all that. Pen might give us something we can work with.}}
+{{dialogue|Grace|indent=true|Speaking of which... What are we working with already? {{textcolor|green|There's Mason's confession, those burnt letters, all the pictures we took, and Miguel's self-incrimination during the confrontation...}}}}
+{{dialogue|Grace|indent=true|And through it all, let's, eh... keep our cards close to our chest. {{textcolor|green|Try not to let them know what we're really after}}. Keep them guessing and all that. Alright. Ready?}}
+{{dialogue|Grace|indent=true|answer=Not yet...
+|Right, right... could get hairy in there... Better be ready if we want to earn our stripes.}}
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderSit (idName: 172841) to Pen
+(param: SeatDramaName:PenSit|TargetScene:CivilCorp)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 172842 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 10449) that ends:
+{{dialogue|Grace|Right, right... could get hairy in there... Better be ready if we want to earn our stripes.}}
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Set accept to 0
+===Begin Interrogation with Grace===
+
+{{mission_details
+|desc = When you're ready to interrogate Pen and Miguel, speak to Grace.
+|details = Begin Interrogation with Grace
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 10454) that ends:
+{{dialogue|Grace|And through it all, let's, eh... keep our cards close to our chest. {{textcolor|green|Try not to let them know what we're really after}}. Keep them guessing and all that. Alright. Ready?}}
+CONDITIONS
+CHECK CURRENT SCENE || name: CivilCorp | flag: 1
+ACTIONS
+Set InOut to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 10454) that ends:
+{{dialogue|Grace|And through it all, let's, eh... keep our cards close to our chest. {{textcolor|green|Try not to let them know what we're really after}}. Keep them guessing and all that. Alright. Ready?}}
+CONDITIONS
+CHECK CURRENT SCENE || name: CivilCorp | flag: 0
+Check if accept is == 0
+ACTIONS
+Set InOut to 1
+Miguel stands still in Main
+Yan stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: CivilCorp | flagName: Interrogation_Player1
+Grace stands still in CivilCorp
+Pen stands still in CivilCorp
+Set accept to 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172841 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Grace stands still in CivilCorp
+Pen stands still in CivilCorp
+PLAYER SET POS ROT FLAG || sceneName: CivilCorp | flagName: Interrogation_Player1
+DELAY MASK SET || maskId: 172841 | delayTime: 0 | durationTime: 2 | changeType: 1 | curveIndex: -2
+SCENEITEM CREATE FLAG || itemType: 0 | id: 172841 | path: Mission_InterrogationChair | sceneName: CivilCorp | flagName: Interrogation_Chair | extraParams: -1
+Yan stands still in Main
+Miguel stands still in Main
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1728450 | path: S8287_Item6 | sceneName: CivilCorp | flagName: Interrogation_Villain | extraParams: -1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172841 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 3252_0 starts:
+{{dialogue|Pen|Skinny... surprising to see you here! Then again, you are the do-it-all around here.  Ah, and you've brought the fry cook! Splendid! So my complaints about the food have been heard.}}
+
+*''I'm asking questions for the Civil Corps...''
+*''She's more than a fry cook...''
+
+{{dialogue|Pen|indent=true|answer=I'm asking questions for the Civil Corps...
+|I see... that's right, you're part of the Civil Corps now! I keep on forgetting! I'm sure you have... many questions...}}
+{{dialogue|Grace|indent=true|answer=She's more than a fry cook...
+|...}}
+{{dialogue|Grace|indent=true|Yes! I'm also a wonderful note-taker.}}
+{{dialogue|Grace|No omelets today, I'm afraid. I'll just be here writing down your conversation. I have been chosen for my pencil speed, forged in the fires of... taking lots of orders.}}
+{{dialogue|Pen|Wow, cool, imagine that being something that you could actually pride yourself on.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the CivilCorp:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 3252_0 starts:
+{{dialogue|Pen|Skinny... surprising to see you here! Then again, you are the do-it-all around here.  Ah, and you've brought the fry cook! Splendid! So my complaints about the food have been heard.}}
+
+*''I'm asking questions for the Civil Corps...''
+*''She's more than a fry cook...''
+
+{{dialogue|Pen|indent=true|answer=I'm asking questions for the Civil Corps...
+|I see... that's right, you're part of the Civil Corps now! I keep on forgetting! I'm sure you have... many questions...}}
+{{dialogue|Grace|indent=true|answer=She's more than a fry cook...
+|...}}
+{{dialogue|Grace|indent=true|Yes! I'm also a wonderful note-taker.}}
+{{dialogue|Grace|No omelets today, I'm afraid. I'll just be here writing down your conversation. I have been chosen for my pencil speed, forged in the fires of... taking lots of orders.}}
+{{dialogue|Pen|Wow, cool, imagine that being something that you could actually pride yourself on.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8020 | eventName: SitDownFinished | behaviourName: CommanderSit
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 3349_0 starts:
+{{dialogue|Pen|Alright, then Skinny and company, I am intrigued. Ask away!}}
+
+*''How long have you been a Duvos spy?''
+*''Who gives you orders?''
+*''Is Miguel a spy too?''
+
+{{dialogue|Pen|...}}
+{{dialogue|Pen|Right, sure, sorry, I hate to be unhelpful but... eh... Skinny... Is this your first time interrogating someone? It's okay, you can tell me.}}
+
+*''Yeah...''
+*''Well, not the first...''
+*''I've cracked criminal masterminds!''
+*''(Say nothing)''
+
+{{dialogue|Pen|indent=true|answer=Yeah...
+|Hey, that's cool, ''Player''. I happen to be a master of interrogation! And since you were always my favorite, I can offer a bit of advice...}}
+{{dialogue|Pen|indent=true|Normally, the trick to getting someone to talk is through excruciating violence! But... since it's me we're talking about... better try to buy me...}}
+{{dialogue|Grace|indent=true|Eh, I mean, what kind of leverage have you got here, bud?}}
+{{dialogue|Pen|indent=true|Woah, woah, woah, what happened to fastest pencil in the west? I thought you were meant to be only a semi-disgusting fly from some sort of "wall?" And suddenly here you are, interrupting a lovely conversation between two old pals...?}}
+{{dialogue|Grace|indent=true|Right, er. Sorry. I'll go back to being a fly. Buzz. Just out of curiosity, though, what would it take to buy you, exactly?}}
+{{dialogue|Pen|indent=true|answer=Well, not the first...
+|Hey, that's cool, ''Player''. I happen to be a master of interrogation! And since you were always my favorite, I can offer a bit of advice...}}
+{{dialogue|Pen|indent=true|Normally, the trick to getting someone to talk is through excruciating violence! But... since it's me we're talking about... better try to buy me...}}
+{{dialogue|Grace|indent=true|Eh, I mean, what kind of leverage have you got here, bud?}}
+{{dialogue|Pen|indent=true|Woah, woah, woah, what happened to fastest pencil in the west? I thought you were meant to be only a semi-disgusting fly from some sort of "wall?" And suddenly here you are, interrupting a lovely conversation between two old pals...?}}
+{{dialogue|Grace|indent=true|Right, er. Sorry. I'll go back to being a fly. Buzz. Just out of curiosity, though, what would it take to buy you, exactly?}}
+{{dialogue|Pen|indent=true|answer=I've cracked criminal masterminds!
+|Right... I mean... Nice try. I've kinda been around for your entire journey and, sure, maybe I don't pay the best attention to what you or really anyone else does in this town, but I think I'd remember someone busting a criminal mastermind.}}
+{{dialogue|Pen|indent=true|Since you were always my favorite, I can offer a bit of advice... Normally, the trick to getting someone to talk is through excruciating violence! But... since it's me we're talking about... better go for a bribe...}}
+{{dialogue|Grace|indent=true|Bribe, huh? Alright, I'll bite. What'll it take for you to talk?}}
+{{dialogue|Pen|indent=true|answer=(Say nothing)
+|Well, Skinny... I happen to be a master of interrogation! And since you were always my favorite, I can offer a bit of advice...}}
+{{dialogue|Pen|indent=true|Normally, the trick to getting someone to talk is through excruciating violence! But... since it's me we're talking about... better go for a bribe...}}
+{{dialogue|Grace|indent=true|Bribe, huh? Alright, I'll bite. What'll it take for you to talk?}}
+{{dialogue|Pen|Rooster wings! Extra crispy! Ten buckets a day, and don't be stingy with that Seesaian sauce! You know the one, the red kind with not too many calories... but it's sweet with just a little bit of tang... Utterly perfect for dipping! Mwahaha!}}
+{{dialogue|Grace|Ah? Really? You'll betray your comrades for... chicken wings?}}
+{{dialogue|Pen|I would sooner betray any empire than betray my own physique... The window for my daily gains is closing... I need protein, now! Not this paltry rabbit food you Corpsman attempt to pass off as cuisine!}}
+
+*''I say we go for it...''
+*''No way, it's a trick.''
+*''We do not negotiate with Duvos Fried Terrorists!''
+
+{{dialogue|Pen|indent=true|answer=No way, it's a trick.
+|Tch. I might expect this from some of the other law enforcement wannabes, but, you, Skinny: I thought you of all people might understand the plight of a fellow warrior... We're done here.}}
+{{dialogue|Grace|indent=true|I dunno if we have much to lose on this one. Let's play along for now and see where this goes...}}
+{{dialogue|Grace|indent=true|Alright, chicken man! You'll have your... chicken! But you better give us something good...}}
+{{dialogue|Pen|indent=true|answer=We do not negotiate with Duvos Fried Terrorists!
+|Tch. I might expect this from some of the other law enforcement wannabes, but, you, Skinny: I thought you of all people might understand the plight of a fellow warrior... We're done here.}}
+{{dialogue|Grace|indent=true|I dunno if we have much to lose on this one. Let's play along for now and see where this goes...}}
+{{dialogue|Grace|indent=true|Alright, chicken man! You'll have your... chicken! But you better give us something good...}}
+{{dialogue|Pen|Good! But wait a sec... What evidence is there that I have anything to do with Duvos? Maybe I'm just a regular, and extra attractive, mercenary!}}
+{{dialogue|Grace|Well, let's show him...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 3350_3_1 starts:
+{{dialogue|Player|What's the best proof...?}}
+
+*''Mason's confession.''
+*''Burnt letters.''
+*''Grace's photos.''
+
+{{dialogue|Pen|indent=true|answer=Mason's confession.
+|That's a lot of words... Hahaha... So Mason built all that stuff and then implicated himself with a confession? What a rookie... Got nothin' to do with me, though!}}
+{{dialogue|Grace|indent=true|Eh... I'm not sure how we can implicate Pen with this...}}
+{{dialogue|Pen|indent=true|answer=Burnt letters.
+|Hm! Burned letters, burned omelets... I'm starting to see a pattern here! Say, has anything else burned down in this town? Why isn't Grace here under investigation?}}
+{{dialogue|Grace|indent=true|Eh... I'm not sure how we can implicate Pen with this...}}
+{{dialogue|Pen|...}}
+{{dialogue|Pen|Oh, come on! That could be any ridiculously good looking muscular hunk of a man! Who says its me? Okay, fine I was there, but it's just a picture. Could mean anything...}}
+
+*''We heard you say, "For the Empire!"''
+*''We heard Miguel call you a knight!''
+
+{{dialogue|Pen|indent=true|answer=We heard Miguel call you a knight!
+|Sorry, never mentioned that before. Did I just, hurt your feelings?}}
+{{dialogue|Pen|indent=true|Knight, Protector, Enforcer, Big Daddy Love Sponge... I go by many names.}}
+{{dialogue|Grace|indent=true|Alright, well, how about when you and Miguel both told each other, "For the Empire?"}}
+{{dialogue|Pen|Ah, yeah, you heard that, huh...?}}
+{{dialogue|Pen|Dang, ''Player''! You super-stealth snuck into our totally secret sanctuary! That's... pretty sweet! Okay. So, yeah. Just don't forget our deal...}}
+{{dialogue|Grace|How about this, you talk and I'll go make your stupid chicken wings right after this.}}
+{{dialogue|Pen|Alright... fine. You want the truth? You can't handle the truth! But... here it is anyway: Miguel totally brainwashed me! Yeah, that's it... He told me, uh, Duvos rules and stuff, and...}}
+{{dialogue|Pen|I was in a bind! I have multiple obligations! Do you have any idea how expensive the holidays are when you're shopping for twelve separate lovers who all think they're my one and only? Plus with Sandrock failing... I had no choice, I needed the money from his scheme...}}
+{{dialogue|Pen|He said if I protect him, he'd give me a portion of his dirty money. Now that I think about it... say, do you think he could be some kind of high level Duvos operative? Certainly seems like it. Not trying to do your job for you or anything, though...}}
+{{dialogue|Pen|Ahem. Yeah. Well. Anyway, that's all I know. Say, do I get anything for helping in your investigation? A reduced sentence? For pointing out the kingpin and all that. ...In addition to the previously agreed upon chicken wings.}}
+{{dialogue|Grace|You...}}
+{{dialogue|Pen|Hey, we had a deal didn't we? I scratch your back, you scratch mine? I'm so... ITCHY, ''Player''!}}
+{{dialogue|Grace|He's not lying... ''Player''?}}
+
+*''Can you repeat all that?''
+*''Think I get the idea...''
+
+{{dialogue|Pen|indent=true|answer=Think I get the idea...
+|Cool. So yeah, like I said: basically innocent. So... how do we wrap this up? I have to sign something or something?}}
+{{dialogue|Grace|indent=true|Yeah, ''Player''?}}
+{{dialogue|Pen|indent=true|Ah, ah, ah...!}}
+{{dialogue|Pen|indent=true|First... the chicken?}}
+{{dialogue|Grace|indent=true|Right. I can... get you the first bucket now.}}
+{{dialogue|Pen|Fine, but the chicken tax just got two buckets higher!}}
+{{dialogue|Pen|Alright... fine. You want the truth? You can't handle the truth! But... here it is anyway: Miguel totally brainwashed me! Yeah, that's it... He told me, uh, Duvos rules and stuff, and...}}
+{{dialogue|Pen|I was in a bind! I have multiple obligations! Do you have any idea how expensive the holidays are when you're shopping for twelve separate lovers who all think they're my one and only? Plus with Sandrock failing... I had no choice, I needed the money from his scheme...}}
+{{dialogue|Pen|He said if I protect him, he'd give me a portion of his dirty money. Now that I think about it... say, do you think he could be some kind of high level Duvos operative? Certainly seems like it. Not trying to do your job for you or anything, though...}}
+{{dialogue|Pen|Ahem. Yeah. Well. Anyway, that's all I know. Say, do I get anything for helping in your investigation? A reduced sentence? For pointing out the kingpin and all that. ...In addition to the previously agreed upon chicken wings.}}
+{{dialogue|Grace|You...}}
+{{dialogue|Pen|Hey, we had a deal didn't we? I scratch your back, you scratch mine? I'm so... ITCHY, ''Player''!}}
+{{dialogue|Grace|He's not lying... ''Player''?}}
+
+*''Can you repeat all that?''
+*''Think I get the idea...''
+
+{{dialogue|Pen|indent=true|answer=Can you repeat all that?
+|Fine, but the chicken tax just got two buckets higher!}}
+{{dialogue|Pen|indent=true|Alright... fine. You want the truth? You can't handle the truth! But... here it is anyway: Miguel totally brainwashed me! Yeah, that's it... He told me, uh, Duvos rules and stuff, and...}}
+{{dialogue|Pen|indent=true|I was in a bind! I have multiple obligations! Do you have any idea how expensive the holidays are when you're shopping for twelve separate lovers who all think they're my one and only? Plus with Sandrock failing... I had no choice, I needed the money from his scheme...}}
+{{dialogue|Pen|indent=true|He said if I protect him, he'd give me a portion of his dirty money. Now that I think about it... say, do you think he could be some kind of high level Duvos operative? Certainly seems like it. Not trying to do your job for you or anything, though...}}
+{{dialogue|Pen|indent=true|Ahem. Yeah. Well. Anyway, that's all I know. Say, do I get anything for helping in your investigation? A reduced sentence? For pointing out the kingpin and all that. ...In addition to the previously agreed upon chicken wings.}}
+{{dialogue|Grace|indent=true|You...}}
+{{dialogue|Pen|indent=true|Hey, we had a deal didn't we? I scratch your back, you scratch mine? I'm so... ITCHY, ''Player''!}}
+{{dialogue|Grace|indent=true|He's not lying... ''Player''?}}
+
+:*''Think I get the idea...''
+
+{{dialogue|Pen|indent=double|answer=Think I get the idea...
+|Cool. So yeah, like I said: basically innocent. So... how do we wrap this up? I have to sign something or something?}}
+{{dialogue|Grace|indent=double|Yeah, ''Player''?}}
+{{dialogue|Pen|indent=double|Ah, ah, ah...!}}
+{{dialogue|Pen|indent=double|First... the chicken?}}
+{{dialogue|Grace|indent=double|Right. I can... get you the first bucket now.}}
+{{dialogue|Pen|indent=true|answer=Think I get the idea...
+|Cool. So yeah, like I said: basically innocent. So... how do we wrap this up? I have to sign something or something?}}
+{{dialogue|Grace|indent=true|Yeah, ''Player''?}}
+{{dialogue|Pen|indent=true|Ah, ah, ah...!}}
+{{dialogue|Pen|indent=true|First... the chicken?}}
+{{dialogue|Grace|indent=true|Right. I can... get you the first bucket now.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 172843 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 3287_0 starts:
+{{dialogue|Grace|''Player'', didn't you say that there were some {{textcolor|green|Duvos telegrams}} intercepted and decoded by the Alliance right before the Water Tower incident?}}
+
+*''"The Water Tower is ready."''
+*''"The water in town has been successfully hidden."''
+
+{{dialogue|Miguel|I'm impressed, you guys are certainly going to the extreme to try to get me to open up. But like I told you, I have nothing to hide. My plan doesn't even involve the Water Tower, plus they knew that we're successful in our plan a long time ago.}}
+{{dialogue|Grace|We didn't make this up...}}
+{{dialogue|Miguel|So you're saying what? Heh. Somebody, from Duvos, sent telegrams that could blow my entire operation. Just to what...?}}
+{{dialogue|Miguel|... Unless...}}
+{{dialogue|Miguel|...!}}
+{{dialogue|Grace|You really didn't know...}}
+
+*''Wait, what's going on?''
+*''Did Duvos just abandon you...?''
+
+{{dialogue|Grace|indent=true|answer=Wait, what's going on?
+|Seems like {{textcolor|green|someone from Duvos wanted to sabotage Miguel's plan...}}}}
+{{dialogue|Miguel|indent=true|...}}
+{{dialogue|Grace|indent=true|You know something?}}
+{{dialogue|Miguel|No... my Duvos contacts were always upfront with their intentions for the human race. I... can't imagine them betraying me or the cause...}}
+{{dialogue|Grace|What about Pen?}}
+{{dialogue|Miguel|He's- He's an agent from Duvos here to aid me.}}
+{{dialogue|Grace|Did he do it?}}
+{{dialogue|Miguel|Why would he betray our plan... and where would he send telegrams, he doesn't have access to the Telegraph in the City Hall. It makes no sense...}}
+{{dialogue|Player|(What should I ask?)}}
+
+*''Are you Tiger?''
+*''Are there any other traitors involved?''
+
+{{dialogue|Miguel|indent=true|answer=Are there any other traitors involved?
+|Pen, Yan, and I are the only ones currently involved. I would also add, I don't see myself betraying anyone, I'm saving lives.}}
+{{dialogue|Grace|indent=true|Uh huh, and who is "Tiger."}}
+{{dialogue|Miguel|I don't know who that is.}}
+{{dialogue|Grace|Oh boy, this means...}}
+{{dialogue|Player|(What should I ask?)}}
+
+*''Pen is Tiger?''
+*''A Telegraph Machine is out there!''
+*''Miguel doesn't know anything!''
+
+{{dialogue|Grace|indent=true|answer=Pen is Tiger?
+|Maybe... We'll have to ask him again.}}
+{{dialogue|Grace|indent=true|But we'll also need to find the Telegraph Machine that's still out there. If Miguel doesn't know, it means there might be another Duvos plot out there using the water plan as a diversion.}}
+{{dialogue|Grace|indent=true|answer=A Telegraph Machine is out there!
+|Yeah, we have to locate this machine. If Miguel doesn't know, it means there might be another Duvos plot out there using the water plan as a diversion.}}
+{{dialogue|Grace|indent=true|answer=Miguel doesn't know anything!
+|He really doesn't...}}
+{{dialogue|Grace|indent=true|We'll need to find the Telegraph Machine that's still out there. If Miguel doesn't know, it means there might be another Duvos plot out there using the water plan as a diversion.}}
+{{dialogue|Grace|But Pen would know, wouldn't he? He was there to intercept Logan at the Water Tower right after the telegram pointed out that exact location. In retrospect, it was a trap.}}
+{{dialogue|Miguel|I still find it hard to believe. What would Duvos or Pen gain from betraying my operation?}}
+{{dialogue|Grace|If you're the sacrificial lamb?}}
+{{dialogue|Miguel|...}}
+{{dialogue|Miguel|I will get to the bottom of this.}}
+{{dialogue|Grace|That'll be all.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172842 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 17284100 | path: Mission_FriedChiken | sceneName: CivilCorp | flagName: Interrogation_FriedChiken | extraParams: -1
+DELAY MASK SET || maskId: 172482 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172842 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 3271_0 starts:
+{{dialogue|Grace|Right here on the dotted line...}}
+{{dialogue|Pen|Whammy! Alright, looks like we're done here. Do let me know when you're ready for me to rejoin society. ...Hey, this wasn't all just some big scam to get my autograph, right? Hahaha, I kid, I kid...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172843 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderSit (idName: 172841) from Pen
+SCENEITEM DELETE || itemType: 0 | id: 17284100
+Pen stands still in CivilCorp
+Pen stops standing still
+Miguel stands still in CivilCorp
+DELAY MASK SET || maskId: 172483 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172843 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 3272_0 starts:
+{{dialogue|Grace|Guy's more slippery than I would've given him credit for...}}
+
+*''He didn't really give us anything...''
+*''You're really going to cook him all that chicken?''
+*''He was lying about basically everything...''
+
+{{dialogue|Grace|indent=true|answer=He didn't really give us anything...
+|Very true...}}
+{{dialogue|Grace|indent=true|answer=You're really going to cook him all that chicken?
+|I'm not too worried about it...}}
+{{dialogue|Grace|indent=true|Its just, he basically said things we already know.}}
+{{dialogue|Grace|indent=true|answer=He was lying about basically everything...
+|Pen is definitely trying to distance himself from any wrongdoing, that's... to be expected. Miguel being the brains behind all this checks out to me, but...}}
+{{dialogue|Grace|It all seems a little too easy. Very unlikely that he's telling us everything.}}
+{{dialogue|Grace|Let's cross-check some of what we talked about with Pen when we talk to Miguel.}}
+{{dialogue|Grace|I'll have the Civil Corps bring him here.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 172844 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 3299_0 starts:
+{{dialogue|Grace|I find it quite unbelievable that Miguel really thought he was doing the right thing... As long as he can sleep at night, I guess.}}
+{{dialogue|Grace|Alright. Let's get Pen back in here, see if he changes his tune based on what we know now...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172844 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 3277_0 starts:
+{{dialogue|Miguel|Greetings. Have you brought me here for a private sermon?}}
+{{dialogue|Grace|Not exactly. Sleep well?}}
+{{dialogue|Miguel|Indeed I have. For I can call anywhere under the Light my home sweet home. As for the rather cramped compartments, well... suffering is said to make the spirit stronger...}}
+{{dialogue|Grace|Hm. Injured a colleague. Tried to have us all killed. No signs of remorse. Yikes... ''Player''?}}
+
+*''Here to ask some questions for the Civil Corps...''
+*''I could go for a sermon or two.''
+
+{{dialogue|Grace|indent=true|answer=Here to ask some questions for the Civil Corps...
+|And I'll be keeping a record of the conversation. Just think of me as a fly on the wall. One uncharacteristically unafraid of spiders...}}
+{{dialogue|Miguel|indent=true|Yes, I have... surmised your purpose.}}
+{{dialogue|Miguel|indent=true|answer=I could go for a sermon or two.
+|I appreciate your interest, ''Player'', but these days, I find myself less inspired...}}
+{{dialogue|Miguel|Very well, allow me to put the rumors to rest. No, I am not some Duvos agent. I collaborated with them, and that is all.}}
+{{dialogue|Miguel|It is no secret that I admire the Duvosian doctrine, their boldness and order. But this is no crime.}}
+{{dialogue|Miguel|Attempted murder against Logan? Sure. Conspiracy against Sandrock? Guilty. As. Charged. But... a spy? No. My actions were my own.}}
+
+*''Why hide water?''
+*''Duvos is evil!''
+
+{{dialogue|Miguel|indent=true|answer=Why hide water?
+|There are many ways to skin a cat. Many ways to fell an empire. I chose to do my part in helping Sandrock reach its natural end. To assist in the inevitable takeover.}}
+{{dialogue|Miguel|indent=true|The weaker the Alliance, the less blood will be shed on the battlefield. Truly, my intentions were pure. I want to see a united human race, this is what the Light intended me to do.}}
+{{dialogue|Miguel|indent=true|answer=Duvos is evil!
+|Evil? The path to evil is paved by good intentions. Unfortunately, all that matters in this world is consequence.}}
+{{dialogue|Miguel|indent=true|The way things are going, The Free Cities is destined to bring about another Day of Calamity. Too much disorder, that is the true evil. Even if Duvos could be called an evil, no doubt it's a necessary one.}}
+{{dialogue|Miguel|indent=true|Truly, my intentions were pure. I want to see a united human race, this is what the Light intended me to do.}}
+{{dialogue|Grace|Even though it drove you to commit treason. Against the very people you swore to look after...}}
+{{dialogue|Miguel|I am but a humble servant of the Light. Once upon a time, the Light was almost snuffed out by darkness due to human bickering and division. The effects are still reverberating today... I will never allow that again.}}
+{{dialogue|Grace|...}}
+{{dialogue|Miguel|Are we... done here? Though I'd love to stay, I'm afraid there's no more tale left to tell...}}
+{{dialogue|Grace|Hm. Show him the evidence that we have gathered.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 3348_3_0 starts:
+{{dialogue|Player|What's the best proof...?}}
+
+*''Mason's confession.''
+*''Burnt letters.''
+*''Grace's photos.''
+
+{{dialogue|Grace|indent=true|answer=Mason's confession.
+|Look familiar?}}
+{{dialogue|Miguel|indent=true|Hm? Mason hid this somewhere? No matter. Then I'll wish that he gets the penance he seems to have yearned for.}}
+{{dialogue|Grace|indent=true|Mason mentions you and Yan in the letter, but nothing about Pen. Why might that be?}}
+{{dialogue|Miguel|indent=true|Pen wasn't involved at the time of construction. That should have been... obvious?}}
+{{dialogue|Miguel|indent=true|I hired perhaps the most easily corruptable Commerce Guild leader ever to exist. This is a secret to no one.}}
+{{dialogue|Miguel|indent=true|answer=Burnt letters.
+|What of it?}}
+{{dialogue|Grace|indent=true|Can you explain what they are?}}
+{{dialogue|Miguel|indent=true|That's how I communicated with Duvos, isn't this obvious? An associate would come into town and hand deliver the communication.}}
+{{dialogue|Miguel|indent=true|But I haven't communicated with them since the plan was set in motion many years ago.}}
+{{dialogue|Grace|indent=true|That... is not a lie...}}
+{{dialogue|Grace|indent=true|That can't be right, you sent the {{textcolor|green|telegrams}} to Duvos about the {{textcolor|green|Water Tower}} recently.}}
+{{dialogue|Miguel|indent=true|{{textcolor|green|No... I didn't.}} I see... if you're trying to fish for more information, there's no point. Since I have nothing to hide.}}
+{{dialogue|Grace|indent=true|That... is also not a lie...}}
+{{dialogue|Miguel|indent=true|answer=Grace's photos.
+|Hmph. Caught in the act. Seems our days were always numbered... Well done, then. Very well executed. You managed to evade my observant eye and the one of that bumbling so-called knight...}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172844 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 172844 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 25 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Pen stands still in CivilCorp
+Miguel stands still in CivilCorp
+DELAY MASK SET || maskId: 172845 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 26 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172845 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 3300_0, 3301_0 starts:
+{{dialogue|Grace|Hey there partner, long time no see!}}
+{{dialogue|Pen|Yes, yes... You've brought me back for some reason...}}
+{{dialogue|Grace|Had a nice chat with your pal, Miguel!}}
+{{dialogue|Pen|Oh yeah? What'd he, er... What'd he tell you...?}}
+{{dialogue|Grace|Oh, I dunno. How about... everything...}}
+{{dialogue|Pen|What!? I thought that guy was like super devout! Duvos for life, blah blah blah, the end is nigh and all that...!}}
+{{dialogue|Grace|We know about the Telegraph Station...}}
+{{dialogue|Pen|Right. Yeah. Okay. No idea what you're talking about. I've got nothing more to say. Time to lawyer up.}}
+{{dialogue|Grace|And that you set up a trap for Logan at the Water Tower with that telegram message...}}
+{{dialogue|Pen|Lalalala, nope, not hearing this!}}
+{{dialogue|Grace|Plus, you tossed Miguel and his plan under the bus... to hide a bigger plan.}}
+The conversation ends.
+{{dialogue|Pen|Woah, you're still talking, and I still have no idea!}}
+{{dialogue|Grace|What conspiracy is Duvos hiding out there?}}
+{{dialogue|Pen|Uh... I need my lawyer.}}
+{{dialogue|Pen|And, uh...}}
+{{dialogue|Pen|Do I still get the chicken wings?}}
+
+*''Yeah, sure.''
+*''Yes, but no Seesai sauce.''
+*''No chicken for you!''
+
+{{dialogue|Pen|indent=true|answer=Yeah, sure.
+|Sweet! I'll remember this forever, Skinny!}}
+{{dialogue|Pen|indent=true|answer=Yes, but no Seesai sauce.
+|You... monster! Without the Seesaian sauce, what's even the point!? It's so dry and hard to swallow without the dipping sauce... Aren't there laws against this kind of cruel and unusual punishment!?}}
+{{dialogue|Pen|indent=true|answer=No chicken for you!
+|There has never been... a greater betrayal... in Sandrock history...}}
+{{dialogue|Grace|Alright, that's enough from you...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 27 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 3306_0 starts:
+{{dialogue|Grace|Pen is dangerous, I couldn't tell if he's telling the truth or not... and I'm really good at that! We should assume he knows exactly what we're talking about and there's a bigger conspiracy afoot.}}
+{{dialogue|Grace|Ugh, I'm not feeling well.}}
+{{dialogue|Justice|Hey all! Just thought we'd check in. Just cleared all this evidence, you can take a look through it if you like.}}
+{{dialogue|Unsuur|This stuff was in their possession.}}
+{{dialogue|Grace|Sure. Let's have at it, ''Player''. Let's see if we can find any clues as to the whereabouts of the {{textcolor|green|secret Telegraph Machine.}}}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 28 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 172846 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 29 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172846 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Miguel stops standing still
+Yan stops standing still
+Miguel stands still in CivilCorp
+Grace stops standing still
+Grace stops standing still
+Grace stands still in CivilCorp
+Justice stands still in CivilCorp
+Unsuur stands still in CivilCorp
+Miguel stops standing still
+Miguel stops standing still
+Pen stops standing still
+Pen stops standing still
+PLAYER SET POS ROT FLAG || sceneName: CivilCorp | flagName: Interrogation_Player2
+DELAY MASK SET || maskId: 172486 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: -2
+CUTSCENE UI STATE EXIT || 
+===Investigate the items===
+
+{{mission_details
+|desc = The Civil Corps produced some evidence for you to look through, see if you can't find any clues amongst them.
+|details = Investigate the items
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 30 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 10605) that ends:
+{{dialogue|Grace|Ugh, I'm not feeling well.}}
+CONDITIONS
+Always:
+ACTIONS
+Justice stands still in CivilCorp and looks at Player
+Unsuur stands still in CivilCorp and looks at Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 172840 | sceneName: CivilCorp | extraParams: -1 | flagName: Interrogation_Desk | path: Interrogation_Desk
+SCENEITEM CREATE FLAG || itemType: 21 | id: 172840 | path: SceneItem_FindInfo_Interrogation1 | sceneName: CivilCorp | flagName: Interrogation_Mirror | extraParams: -1
+SCENEITEM CREATE FLAG || itemType: 21 | id: 172841 | sceneName: CivilCorp | flagName: Interrogation_Pen | extraParams: -1 | path: SceneItem_FindInfo_Interrogation2
+SCENEITEM CREATE FLAG || flagName: Interrogation_Letters | extraParams: -1 | sceneName: CivilCorp | itemType: 21 | id: 172842 | path: SceneItem_FindInfo_Interrogation3
+SCENEITEM CREATE FLAG || itemType: 21 | id: 172843 | sceneName: CivilCorp | extraParams: -1 | path: SceneItem_FindInfo_Interrogation4 | flagName: Interrogation_List
+SCENEITEM CREATE FLAG || itemType: 21 | extraParams: -1 | sceneName: CivilCorp | id: 172844 | path: SceneItem_FindInfo_Interrogation5 | flagName: Interrogation_Book
+SCENEITEM CREATE FLAG || itemType: 21 | sceneName: CivilCorp | extraParams: -1 | id: 172845 | path: SceneItem_FindInfo_Interrogation6 | flagName: Interrogation_Music
+SCENEITEM CREATE FLAG || id: 172846 | itemType: 21 | sceneName: CivilCorp | extraParams: -1 | path: SceneItem_FindInfo_Interrogation7 | flagName: Interrogation_Dumbbell
+
+TRIGGER Procedure 0.0 Step 0.0 Order 31 Repeat 3
+------------------------------------------------------------
+EVENTS
+ON FIND INFO || order: 0 | info: Interrogation1
+CONDITIONS
+Always:
+ACTIONS
+Increment mirror by 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 32 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON FIND INFO || order: 0 | info: Interrogation2
+CONDITIONS
+Always:
+ACTIONS
+Increment pen by 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 33 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Burgess
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 3325_0 starts:
+{{dialogue|Burgess|Light, Order, and the Future of Mankind? Oh snap, new scripture just dropped!}}
+{{dialogue|Burgess|Eh? Miguel wrote it? Ew! Evil villain fan-fic! And yet... my eyes cannot turn away...! Hm... Hm... Hm, hm hm...}}
+{{dialogue|Burgess|Oh, dang! This is bad! I mean, you know me, I'm always looking on the bright side of things, but... Yeesh! Never try to rewrite a classic, that's the real lesson in this scripture! Plus, like... "The strong must control the weak?" C'mon, that's super OOC for us!}}
+{{dialogue|Burgess|Wow... thinking back, I guess the clues were all there. He was always kind of getting kind of "freestyle" with his sermons.}}
+{{dialogue|Burgess|I always thought it was kind of cool, actually! Going off script! Wow! Imagine actually doing that. Wait a sec... have I been brainwashed by the evil Duvos version of our scripture!?}}
+
+*''Yeah, almost certainly.''
+*''I don't think so.''
+*''Has your view on evil changed recently?''
+
+{{dialogue|Burgess|indent=true|answer=Yeah, almost certainly.
+|Huh?! Oh... oh no!}}
+{{dialogue|Burgess|indent=true|I'd better strap on a straitjacket and hop on the first train to Meidi, double quick! Should I hold my breath for a minute? I've heard that does wonders for deprogramming.}}
+{{dialogue|Burgess|indent=true|Oh, ''Player''. You're just joking. Nice! I wish I could have seen the look on my face, as I was surely petrified! Rain check on the straitjacket, I guess.}}
+{{dialogue|Burgess|indent=true|Whew! Looks like I'm true blue! Totally dedicated to the cause! Miguel couldn't change me! But... that also means I wasn't able to change him, either... Is it even possible to change the mind of someone who believes in something with their whole heart...?}}
+{{dialogue|Burgess|indent=true|answer=I don't think so.
+|Whew! You know... for a second there...}}
+{{dialogue|Burgess|indent=true|Rah! Fire and brimstone! Repent, heretics!}}
+{{dialogue|Burgess|indent=true|Haha, just kidding, just kidding. Peace and love. Peace and looove. And water. Love that H2O!}}
+{{dialogue|Burgess|indent=true|answer=Has your view on evil changed recently?
+|Well. I don't know. I mean, if anything I'd say I dislike evil more than I used to! I mean, what with all the evil going on these days. Wait a sec...}}
+{{dialogue|Burgess|indent=true|Rah! Fire and brimstone! Repent, heretics!}}
+{{dialogue|Burgess|indent=true|Haha, just kidding, just kidding. Peace and love. Peace and looove. And water. Love that H2O!}}
+{{dialogue|Burgess|Hm... Matilda always says that... everyone sees different things in the scripture, so all you can do is to look deep inside and listen to your own heart to find the real answers. And my heart says... this stuff is not "it!"}}
+{{dialogue|Burgess|Well. You've given me a lot to think about. Thank you, ''Player''!}}
+The conversation ends.
+FINISH FIND NPC || npc: 8021 | missionId: 1700283 | targetId: 4
+
+TRIGGER Procedure 0.0 Step 0.0 Order 34 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Cooper
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 3330_0 starts:
+{{dialogue|Cooper|Howdy there! Wavin' around a piece of paper, I see! Pretty keen... pretty keen...}}
+{{dialogue|Cooper|Wait a sec, that's no ordinary piece of paper. Why, that's a musical score! All I Want for the Day of the Bright Sun is You, that's a classic, you know, and it really only gets more true with time as you realize it's not the gifts that fall from the sky you treasure, but in fact the gifts you have already cherish that matter most...}}
+{{dialogue|Cooper|Give it here! There's a ganderin' afoot! ...Uh uh... Hm... Ah shucks, ''Player''... where'd you get this?}}
+
+*''I picked it up on the road.''
+*''I bought it in the shop.''
+*''I wrote it myself.''
+*''It's a piece of evidence in a massive conspiracy case.''
+
+{{dialogue|Cooper|indent=true|answer=I picked it up on the road.
+|That about adds up. Clearly someone tossed this after they saw all the wrong notes! Doesn't excuse the littering but... I can certainly see where they were comin' from...}}
+{{dialogue|Cooper|indent=true|answer=I bought it in the shop.
+|Dang. Still got the receipt? This thing is a mess! Full of wrong notes!}}
+{{dialogue|Cooper|indent=true|answer=I wrote it myself.
+|Aw. Isn't that cute. But it's wrong!}}
+{{dialogue|Cooper|indent=true|answer=It's a piece of evidence in a massive conspiracy case.
+|Holy guacamole! Well, you've come to the right place. Heck, any time there's a mystery in this darn town, first feller on the scene ought to be ya boy Coop!}}
+{{dialogue|Cooper|indent=true|Heh heh, let me just take a look here... Hm... my first thought is "aliens," but... wait a sec. Naw! Here's the real conspiracy: all these here notes are plum wrong!}}
+{{dialogue|Cooper|Ya done went and left this here chord half-diminished. If yer gonna diminish a chord, diminish it all the way! That's the problem with y'all's generation. And this one here, that's a C flat, and this is supposed to be a B sharp. This is a D. This is a D. This is also a D. There's almost poetry in how bad this is!}}
+{{dialogue|Cooper|Lucky for you I'm only pullin' a fifteen hour shift today so I got time to help out the lil' homies. Here, let me fix this piece here for you right quick...}}
+The conversation ends.
+FINISH FIND NPC || npc: 8003 | missionId: 1700283 | targetId: 4
+
+TRIGGER Procedure 0.0 Step 0.0 Order 35 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8003 | cId: 1 | missionId: 1700284
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 3336_0 starts:
+{{dialogue|Cooper|There! Whew! Dang, that was tougher that I thought... Alright, well, there you go then! Get to practicin'! Once you got it good, come play it with me an' Hugo!}}
+{{dialogue|Cooper|Just remember: i after e, except after c... Er, nah, that's the other one. Well, I'm sure you'll figure it out.}}
+{{dialogue|Cooper|Huh? What're you still there for? We got work to do! Oh, right. Okay, I get it. You want to know why I can read music but I can't read all them regular words and the what not. Answer's simple.}}
+{{dialogue|Cooper|Only seven notes you can find on a score! That's A, B, C, D, E, F, and G! Then it's A again! Alphabet's got twenty-six of 'em! Man's got to know his limits. After G in the alphabet, well, that's when it gets fuzzy, man...}}
+{{dialogue|Cooper|Be seein' ya then. Like I said, come jam with us sometime!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 36 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Ernest
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 3337_0 starts:
+{{dialogue|Ernest|Hello there, ''Player''! Ah, do you need my help for something?}}
+{{dialogue|Ernest|Oh! Yes, one of my earlier works. Who could've known it'd blow up like it did...}}
+{{dialogue|Ernest|Oh. But hey. There are some mistakes here in the lyrics. This line, it's not supposed to be "Watching falling stars with you, and listen to the stars shine." It's supposed to be "listen to them shine."I would never use the same word like that back to back. Plus it ruins the meter...}}
+{{dialogue|Ernest|Oh. Every line with the word "star" in it has a mistake. Weird! Did somebody try to... bootleg our song...?}}
+{{dialogue|Ernest|Well. I can fix it for you so at least your copy is right. Let me just...}}
+The conversation ends.
+FINISH FIND NPC || npc: 8069 | missionId: 1700283 | targetId: 4
+
+TRIGGER Procedure 0.0 Step 0.0 Order 37 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8069 | cId: 1 | missionId: 1700284
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 3338_0 starts:
+{{dialogue|Ernest|There! Now all the lyrics are right. Where did you get this, anyway? Learning music?}}
+
+*''Found it on the ground.''
+*''I bought it, yeah. Started learning music.''
+*''Saw this: Is "Nest" your pen name?''
+
+{{dialogue|Ernest|indent=true|answer=Found it on the ground.
+|Very strange. Someone printed a version full of mistakes and just released it out into the world... If you hadn't shown it to me, I wonder if people in Sandrock would start singing this version...?}}
+{{dialogue|Ernest|indent=true|answer=I bought it, yeah. Started learning music.
+|Hm. Well, if the words are wrong, I'd maybe talk to a musician and have them look at the chords; they could be wrong, too.}}
+{{dialogue|Ernest|indent=true|answer=Saw this: Is "Nest" your pen name?
+|Oh. Hah, yes. Kinda cringey, huh? Well, give me a break, I made it up when I was thirteen! Then it became my official name at the copyright office so I kind of got stuck with it.}}
+{{dialogue|Ernest|Well. This gives me an amusing little anecdote to include in one of my short stories. Thanks for the inspiration, ''Player''! Good luck with the song.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 38 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Grace
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 3343_0 starts:
+{{dialogue|Grace|''Player'', any result?}}
+{{dialogue|Grace|Hm... so no one's read that book of Miguel's? And Burgess said he'd never heard any sermons out of it? That's a relief.}}
+{{dialogue|Grace|I thought about it more and more while you were gone... I mean, what if Miguel really started convincing people to see Duvos in a positive light? That would have... unimaginable consequences...}}
+{{dialogue|Grace|And the sheet music? Ah, it's full of mistakes? Hm...!}}
+{{dialogue|Grace|Make no mistake, these errors may not yet be erroneous! But rather, omissions of intention! Can I take a look?}}
+{{dialogue|Grace|I see...!}}
+{{dialogue|Grace|Ah hah! I've got it! {{textcolor|green|It's a code! Or rather... a key to a cipher!}}}}
+{{dialogue|Grace|The lyrical mistakes are particularly placed: "left: three, right: five, up: eight, down: seven." If we use this cipher, we can crack any message intended for Pen or Miguel... Hm...}}
+{{dialogue|Grace|Hm, and the musical mistakes... I spot five of them. Five numbers in your average radio frequency, doubt that's a coincidence. That must be the frequency they're operating on!}}
+{{dialogue|Grace|And this frequency is different from what we intercepted before... that means Duvos knew we were listening before and the telegrams they sent must have been {{textcolor|green|fishing operations}} to get me and Logan into the open!}}
+{{dialogue|Grace|Dang! We did it!}}
+{{dialogue|Grace|We can put our interrogation on hold. We've got everything we need to find {{textcolor|green|the secret telegraph station}} right here!}}
+
+*''We do?''
+*''Call Duvos and ask where it is!''
+*''We can track them!''
+
+{{dialogue|Grace|indent=true|answer=We do?
+|We do.}}
+{{dialogue|Grace|indent=true|answer=Call Duvos and ask where it is!
+|I- er. Well. Kind of...}}
+{{dialogue|Grace|indent=true|answer=We can track them!
+|Exactly!}}
+{{dialogue|Grace|{{textcolor|green|We can pretend to be Pen!}} We send encoded messages out on the agreed upon frequency, and if anyone is at that Telegraph Station, we can triangulate them after they respond!}}
+{{dialogue|Grace|ACI has signal triangulators, but they're huge. There's no way we can ship them here and install them without the enemy knowing exactly what we're doing.}}
+{{dialogue|Grace|I'm going to update the Civil Corps and City Hall about this; could you {{textcolor|green|talk to Qi}} and ask him if it's possible to make {{textcolor|green|a miniature signal triangulation device}}?}}
+{{dialogue|Grace|If there is, then we're all set! Good thing we looked into the whole sheet music thing, eh? Alright, talk soon. Let's do this!}}
+The conversation ends.
+FINISH FIND NPC || npc: 8002 | missionId: 1700283 | targetId: 5
+
+TRIGGER Procedure 0.0 Step 0.0 Order 40 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Grace stops standing still
+SUBMIT MISSION 1700283
+END MISSION 1700284
+
+TRIGGER Procedure 0.0 Step 0.0 Order 39 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1700283 | targetId: 4 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Report to Grace===
+
+{{mission_details
+|desc = You seem to have collected some useful information. You should talk it over with Grace.
+|details = Report to Grace
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 41 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON FIND INFO || order: 10 | info: Interrogation1
+CONDITIONS
+Check if mirror is == 3
+ACTIONS
+Increment interact by 1
+(cId -1) A conversation 10614 starts:
+{{dialogue|Grace|Nothing to see here. Except ourselves. Er. Anyway, if you'd given me a hundred guesses as to what prized possession Pen would keep on his person at all times, I'd tell you, "Save your guesses. It's a mirror."}}
+MISSION TARGET COUNTER CHANGE || missionId: 1700283 | targetId: -1 | isAdd: 1 | transId: 80016163
+SCENEITEM INTERACT SET || itemType: 21 | canInteract: 0 | id: 172840
+
+TRIGGER Procedure 0.0 Step 0.0 Order 57 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 1728400 | delayTime: 0 | durationTime: 1 | changeType: 2 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 62 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 10632) that ends:
+{{dialogue|0|(It seems your training has paid off! You're able to lift it above your head before gently placing it back on the table.)}}
+CONDITIONS
+Always:
+ACTIONS
+Grace gains 5 favor
+
+TRIGGER Procedure 0.0 Step 0.0 Order 42 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON FIND INFO || order: 10 | info: Interrogation2
+CONDITIONS
+Check if pen is == 2
+ACTIONS
+Increment interact by 1
+(cId -1) A conversation 10644, 10645 starts:
+{{dialogue|Grace|Hm. Nice pen. I think everyone who finishes their residency in Meidi gets one. Plus a robe and a hat or something.}}
+{{dialogue|Grace|I wonder when did Miguel go astray, they certainly don't teach any Duvos doctrine in Meidi, or else the Free Cities would have banned the Church a long time ago.}}
+MISSION TARGET COUNTER CHANGE || missionId: 1700283 | targetId: -1 | isAdd: 1 | transId: 80016167
+SCENEITEM INTERACT SET || canInteract: 0 | itemType: 21 | id: 172841
+
+TRIGGER Procedure 0.0 Step 0.0 Order 43 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON FIND INFO || order: 0 | info: Interrogation3
+CONDITIONS
+Always:
+ACTIONS
+Increment letters by 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 44 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON FIND INFO || order: 10 | info: Interrogation3
+CONDITIONS
+Check if letters is == 2
+ACTIONS
+Increment interact by 1
+(cId -1) A conversation 3311_0 starts:
+{{dialogue|Grace|I'm just gonna say it: I've always thought it was weird anyone could ever be into Pen. I mean. Sure, he's in good shape but as soon as he opens his mouth... Barf.}}
+{{dialogue|Grace|Wait a sec... I recognize {{textcolor|green|this handwriting...}}}}
+
+*''Similar to the burned letters?''
+*''Written with his left hand?''
+*''You wrote this fan letter?''
+
+{{dialogue|Grace|indent=true|answer=Similar to the burned letters?
+|reward={{NPC2|Grace|rp=5}}|That's right! They're the same!}}
+{{dialogue|Grace|indent=true|answer=Written with his left hand?
+|reward={{NPC2|Grace|rp=5}}|Ah...?}}
+{{dialogue|Grace|indent=true|You... really picked up on that?}}
+{{dialogue|Grace|indent=true|Yes... many operatives are trained to write in various styles with both hands in order to cover their tracks across documents. But those with a careful eye can spot key consistencies, the way he dots his i's for example.}}
+{{dialogue|Grace|indent=true|But that's not the point, look, doesn't the writing here look exactly like the writing on {{textcolor|green|the burnt letters}}?}}
+{{dialogue|Grace|indent=true|answer=You wrote this fan letter?
+|I- Y- What!? No!}}
+{{dialogue|Grace|indent=true|You're trying to say I'm one of those girls who says they hate a guy but secretly I have a crush on them or something? Nuh-uh. And I resent the accusation.}}
+{{dialogue|Grace|indent=true|Back on task: this handwriting sample proves that Pen is the one who wrote {{textcolor|green|the burned letters}} we found in the church storage.}}
+{{dialogue|Grace|Yes. No doubt in my mind that Pen wrote these letters. Which could mean... any number of things. But it confirms that Pen was relaying messages to Miguel from the Duvos side even before he was sent here!}}
+The conversation ends.
+MISSION TARGET COUNTER CHANGE || missionId: 1700283 | targetId: -1 | isAdd: 1 | transId: 80016164
+SCENEITEM INTERACT SET || canInteract: 0 | itemType: 21 | id: 172842
+
+TRIGGER Procedure 0.0 Step 0.0 Order 45 Repeat 4
+------------------------------------------------------------
+EVENTS
+ON FIND INFO || order: 0 | info: Interrogation6
+CONDITIONS
+Always:
+ACTIONS
+Increment music by 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 46 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON FIND INFO || order: 10 | info: Interrogation6
+CONDITIONS
+Check if music is == 4
+ACTIONS
+Increment interact by 1
+(cId -1) A conversation 3307_0 starts:
+{{dialogue|Grace|Ugh. I'm so sick of this song. They play it everywhere for a week before the Day of the Bright Sun in Atara... I love Luna, but the B-sides are really where she shines...}}
+{{dialogue|Grace|Pen doesn't really play music does he? Is he a fan? Eh, kind of a long shot, but maybe someone who plays music could comment on the significance of this...}}
+
+*''Ask someone in the Coogo band?''
+*''Could "Nest" be Ernest?''
+
+{{dialogue|Grace|indent=true|answer=Ask someone in the Coogo band?
+|Yeah, they could tell you, I bet.}}
+{{dialogue|Grace|indent=true|answer=Could "Nest" be Ernest?
+|Slightly uninspired choice for a nickname, but I wouldn't put it past him.}}
+{{dialogue|Grace|Maybe once we've gone through everything here, we could go ask 'em about it. Couldn't hurt.}}
+The conversation ends.
+MISSION TARGET COUNTER CHANGE || missionId: 1700283 | targetId: -1 | isAdd: 1 | transId: 80016162
+SCENEITEM INTERACT SET || canInteract: 0 | itemType: 21 | id: 172845
+
+TRIGGER Procedure 0.0 Step 0.0 Order 47 Repeat 3
+------------------------------------------------------------
+EVENTS
+ON FIND INFO || order: 0 | info: Interrogation4
+CONDITIONS
+Always:
+ACTIONS
+Increment list by 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 48 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON FIND INFO || order: 10 | info: Interrogation4
+CONDITIONS
+Check if list is == 3
+ACTIONS
+Increment interact by 1
+(cId -1) A conversation 3316_0 starts:
+{{dialogue|Grace|Hm... so Miguel was hoping to recruit others in town? As in... "turn us to the dark side?" Yikes. Well, if this is anything to go on, we're all there with X's except...}}
+{{dialogue|Grace|Hey! You got special markings and stuff by your name! Looks like they really wanted to recruit you! I'm jealous. I just got a regular mark. Wait, no... there's a minus next to me and Rian. They really put me in Rian-tier...?}}
+
+*''I'd never join them.''
+*''Nice to know I have options.''
+*''You must have really fooled them.''
+*''They want me more than you!''
+
+{{dialogue|Grace|indent=true|answer=I'd never join them.
+|reward={{NPC2|Grace|rp=3}}|Hey, not saying you ever would. Nor would I. Just, uh... it's a nice compliment in a weird way. They wanted you on their side.}}
+{{dialogue|Grace|indent=true|answer=Nice to know I have options.
+|reward={{NPC2|Grace|rp=3}}|Hah. Well. I'd think about it. Cloudy, wet, and cold this time of year. And any time of year. As in: all the time. Plus their insurance packages are really "meh."}}
+{{dialogue|Grace|indent=true|answer=You must have really fooled them.
+|reward={{NPC2|Grace|rp=3}}|Hm, yeah. Let's go with that.}}
+{{dialogue|Grace|indent=true|I mean, if they knew who I was, they probably wouldn't try to recruit me, but rather... try to kill me. Which never happened. So I've got that going for me.}}
+{{dialogue|Grace|indent=true|answer=They want me more than you!
+|Har har. Sure, of course they do! They didn't know you were working for me, and they didn't know I'm working for the Alliance! They... probably would have tried to kill us...}}
+{{dialogue|Grace|indent=true|So, yeah. Can't blame them for not wanting to recruit a middling cook known for starting fires. Which is all they believed me to be. Which totally worked, by the way.}}
+MISSION TARGET COUNTER CHANGE || missionId: 1700283 | targetId: -1 | isAdd: 1 | transId: 80016166
+SCENEITEM INTERACT SET || canInteract: 0 | itemType: 21 | id: 172843
+
+TRIGGER Procedure 0.0 Step 0.0 Order 49 Repeat 3
+------------------------------------------------------------
+EVENTS
+ON FIND INFO || order: 0 | info: Interrogation5
+CONDITIONS
+Always:
+ACTIONS
+Increment book by 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 50 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON FIND INFO || order: 10 | info: Interrogation5
+CONDITIONS
+Check if book is == 3
+ACTIONS
+Increment interact by 1
+(cId -1) A conversation 3321_0 starts:
+{{dialogue|Grace|Hm. Not an expert, but none of this stuff is in the actual Church of the Light scripture. So Miguel is making up his own content? That's bold. He really thinks he's got the chops to make changes to world renowned scripture? It reads like fan-fic...}}
+{{dialogue|Grace|Okay. This is kind of a long-shot: what if this stuff of his is actually working? I mean, some of those church folk are, let's say, "impressionable." What if he's actually gotten through to some people and like... brainwashed them?}}
+
+*''Let's check on Burgess.''
+*''I don't think that's possible.''
+
+{{dialogue|Grace|indent=true|answer=Let's check on Burgess.
+|Fine idea. As the most "impressionable" of church-goers, Burgess would be a fine litmus test to see whether or not Miguel's little fan-fic has done any permanent damage.}}
+{{dialogue|Grace|indent=true|answer=I don't think that's possible.
+|I mean. You never know. Psychological warfare is a thing. Maybe he's even gotten to us! How have your opinions on Duvos Peppers shifted in the last year? I like them more than I used to...}}
+{{dialogue|Grace|indent=true|HQ mentioned Duvos has made major breakthroughs in this department. Maybe I'm being paranoid, but I think it's worth following up on. Let's ask Burgess about it. If anyone's been influenced by this stuff, he'd be the first one to show any sign of it.}}
+MISSION TARGET COUNTER CHANGE || missionId: 1700283 | targetId: -1 | isAdd: 1 | transId: 80016168
+SCENEITEM INTERACT SET || canInteract: 0 | itemType: 21 | id: 172844
+
+TRIGGER Procedure 0.0 Step 0.0 Order 51 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON FIND INFO || order: 10 | info: Interrogation7
+CONDITIONS
+Always:
+ACTIONS
+Increment interact by 1
+(cId -1) A conversation 10626 starts:
+{{dialogue|Grace|If I had to say one nice thing about Pen, I guess it'd be that he's very dedicated to his training. I don't think I could lift this, let alone carry it with me through the day...}}
+
+*''Let me try!'' (No unique dialogue)
+*''I don't think I can, either.'' (No unique dialogue)
+
+MISSION TARGET COUNTER CHANGE || missionId: 1700283 | targetId: -1 | isAdd: 1 | transId: 80016165
+SCENEITEM INTERACT SET || canInteract: 0 | itemType: 21 | id: 172846
+
+TRIGGER Procedure 0.0 Step 0.0 Order 52 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 10626:
+{{dialogue|Grace|If I had to say one nice thing about Pen, I guess it'd be that he's very dedicated to his training. I don't think I could lift this, let alone carry it with me through the day...}}
+
+*''Let me try!'' (No unique dialogue)
+*''I don't think I can, either.'' (No unique dialogue)
+
+CONDITIONS
+CHECK PLAYER LEVEL || compare: 6 | level: 45
+ACTIONS
+(cId -1) A conversation 10802, 10627 starts:
+{{dialogue|0|(You begin to lift the dumbbell. You start to get it off the ground, but it proves quite unwieldy. Exhausted, you return it to the table.)}}
+{{dialogue|Grace|Eh, I'll just pretend I didn't see that.}}
+SCENEITEM CREATE FLAG || path: S8281_Item2 | sceneName: CivilCorp | extraParams: -1 | itemType: 0 | id: 1728400 | flagName: Interrogation_Curtain
+
+TRIGGER Procedure 0.0 Step 0.0 Order 53 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 10626:
+{{dialogue|Grace|If I had to say one nice thing about Pen, I guess it'd be that he's very dedicated to his training. I don't think I could lift this, let alone carry it with me through the day...}}
+
+*''Let me try!'' (No unique dialogue)
+*''I don't think I can, either.'' (No unique dialogue)
+
+CONDITIONS
+CHECK PLAYER LEVEL || compare: 2 | level: 45
+ACTIONS
+(cId -1) A conversation 10631, 10632, 10633, 10634 starts:
+{{dialogue|0|(You begin to lift the dumbbell. It's heavy, as advertised.)}}
+{{dialogue|0|(It seems your training has paid off! You're able to lift it above your head before gently placing it back on the table.)}}
+{{dialogue|Grace|Woah! Look at you! I knew you were strong, but I never knew you were that strong!}}
+{{dialogue|Grace|You'll have to fill me in on the official Builder training regimen sometime, maybe our ACI program is becoming outdated...}}
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1728400 | path: S8281_Item2 | sceneName: CivilCorp | flagName: Interrogation_Curtain | extraParams: -1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 54 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 10626:
+{{dialogue|Grace|If I had to say one nice thing about Pen, I guess it'd be that he's very dedicated to his training. I don't think I could lift this, let alone carry it with me through the day...}}
+
+*''Let me try!'' (No unique dialogue)
+*''I don't think I can, either.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 10635 starts:
+{{dialogue|Grace|Good call. Don't want to hurt yourself. Never try to lift more than you're comfortable with!}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 55 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from CivilCorp to the -1:
+MISSION END BEFORE 1700284
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 172840
+SCENEITEM DELETE || itemType: 21 | id: 172840
+SCENEITEM DELETE || itemType: 21 | id: 172841
+SCENEITEM DELETE || itemType: 21 | id: 172842
+SCENEITEM DELETE || itemType: 21 | id: 172843
+SCENEITEM DELETE || itemType: 21 | id: 172844
+SCENEITEM DELETE || itemType: 21 | id: 172845
+SCENEITEM DELETE || itemType: 21 | id: 172846
+SCENEITEM DELETE || itemType: 0 | id: 172841
+
+TRIGGER Procedure 0.0 Step 0.0 Order 56 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON FIND INFO END || order: 10
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1700283 | targetId: 3 | canSubmit: 1
+ACTIONS
+(cId -1) A conversation 10651, 10652 starts:
+{{dialogue|Grace|Hm... well, we have a few things here we can follow up on.}}
+{{dialogue|Grace|I want to take some time to simulate their whole scheme in my head again, to see if we missed anything. So ''Player'', can you go around town and talk to Cooper, Ernest, and Burgess? Let me know what you turn up!}}
+===Speak with Townsfolk===
+
+{{mission_details
+|desc = Based on what you found, Cooper, Ernest, and Burgess might be able to help.
+|details = Speak with Townsfolk
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 58 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 1728400 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 1728400
+
+TRIGGER Procedure 0.0 Step 0.0 Order 59 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Grace
+CONDITIONS
+Check if accept is == 0
+ACTIONS
+(cId 1) A conversation 3249_0 starts:
+{{dialogue|Grace|Greetings, ''Player''! Ready to step in to the... "Tiger's den..." as it were?}}
+
+*''Let's do it.''
+*''Not yet...''
+
+{{dialogue|Grace|indent=true|answer=Let's do it.
+|Good. Alright, let me just get you up to speed on the gameplan. I've been going over their files, and I think the trick is going to be a classic prisoner's dilemma situation.}}
+{{dialogue|Grace|indent=true|We'll put 'em apart, interrogate them separately, then cross-check info to poke holes in their stories.}}
+{{dialogue|Grace|indent=true|Our best bet is to start with Pen. All brawn, no brains. When we go after Miguel, we're going to need more ammunition: facts, evidence, all that. Pen might give us something we can work with.}}
+{{dialogue|Grace|indent=true|Speaking of which... What are we working with already? {{textcolor|green|There's Mason's confession, those burnt letters, all the pictures we took, and Miguel's self-incrimination during the confrontation...}}}}
+{{dialogue|Grace|indent=true|And through it all, let's, eh... keep our cards close to our chest. {{textcolor|green|Try not to let them know what we're really after}}. Keep them guessing and all that. Alright. Ready?}}
+{{dialogue|Grace|indent=true|answer=Not yet...
+|Right, right... could get hairy in there... Better be ready if we want to earn our stripes.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 61 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 10616:
+{{dialogue|Grace|Wait a sec... I recognize {{textcolor|green|this handwriting...}}}}
+
+*''Similar to the burned letters?'' (No unique dialogue)
+*''Written with his left hand?'' (No unique dialogue)
+*''You wrote this fan letter?'' (No unique dialogue)
+
+(cId -1) The player picks the second option in conversation segment 10616:
+{{dialogue|Grace|Wait a sec... I recognize {{textcolor|green|this handwriting...}}}}
+
+*''Similar to the burned letters?'' (No unique dialogue)
+*''Written with his left hand?'' (No unique dialogue)
+*''You wrote this fan letter?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Grace gains 5 favor
+
+TRIGGER Procedure 0.0 Step 0.0 Order 63 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 10637:
+{{dialogue|Grace|Hey! You got special markings and stuff by your name! Looks like they really wanted to recruit you! I'm jealous. I just got a regular mark. Wait, no... there's a minus next to me and Rian. They really put me in Rian-tier...?}}
+
+*''I'd never join them.'' (No unique dialogue)
+*''Nice to know I have options.'' (No unique dialogue)
+*''You must have really fooled them.'' (No unique dialogue)
+*''They want me more than you!'' (No unique dialogue)
+
+(cId -1) The player picks the second option in conversation segment 10637:
+{{dialogue|Grace|Hey! You got special markings and stuff by your name! Looks like they really wanted to recruit you! I'm jealous. I just got a regular mark. Wait, no... there's a minus next to me and Rian. They really put me in Rian-tier...?}}
+
+*''I'd never join them.'' (No unique dialogue)
+*''Nice to know I have options.'' (No unique dialogue)
+*''You must have really fooled them.'' (No unique dialogue)
+*''They want me more than you!'' (No unique dialogue)
+
+(cId -1) The player picks the third option in conversation segment 10637:
+{{dialogue|Grace|Hey! You got special markings and stuff by your name! Looks like they really wanted to recruit you! I'm jealous. I just got a regular mark. Wait, no... there's a minus next to me and Rian. They really put me in Rian-tier...?}}
+
+*''I'd never join them.'' (No unique dialogue)
+*''Nice to know I have options.'' (No unique dialogue)
+*''You must have really fooled them.'' (No unique dialogue)
+*''They want me more than you!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Grace gains 3 favor
+
+TRIGGER Procedure 0.0 Step 0.0 Order 64 Repeat 1
+------------------------------------------------------------
+EVENTS
+ENTER GAMING STATE || order: 0
+CONDITIONS
+Check if InOut is == 0
+ACTIONS
+DELAY MASK SET || maskId: 172841 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: -2
+Set accept to 1
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 65 Repeat 1
+------------------------------------------------------------
+EVENTS
+ENTER GAMING STATE || order: 0
+CONDITIONS
+Check if InOut is == 1
+ACTIONS
+Miguel stands still in Main
+Yan stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: CivilCorp | flagName: Interrogation_Player1
+Grace stands still in CivilCorp
+Pen stands still in CivilCorp
+Set accept to 1
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 66 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from CivilCorp to the -1:
+MISSION END BEFORE 1700284
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 1728450
+Justice stops standing still
+Unsuur stops standing still
+
+TRIGGER Procedure 0.0 Step 0.0 Order 93 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172845 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 172845 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: -2

@@ -1,0 +1,349 @@
+Reading Mission 1800285: Do it Your Shelf
+
+<onlyinclude>{{Infobox mission
+|name = Do it Your Shelf
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Do it Your Shelf:
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 532
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1800284
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800284
+CONDITIONS
+Always:
+ACTIONS
+Run mission Do it Your Shelf
+END MISSION 1800284
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800285
+CONDITIONS
+Always:
+ACTIONS
+===Prepare Materials===
+
+{{mission_details
+|desc = Materials required: Bronze Pipe x1, Wood Board x2.
+|details = Prepare Materials
+*{{i2|Wooden Boards|0/2}}
+*{{i2|Bronze Pipes|0/1}}
+}}
+Set 8285Talk to 0
+
+TRIGGER Procedure 0.0 Step 8.1 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Catori stops standing still
+
+TRIGGER Procedure 0.0 Step 11.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82851 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 3104_0 starts:
+{{dialogue|Catori|Fixed already? That was super quick. Thank you!}}
+
+*''Just doin' my job, ma'am.''
+*{{flirt}}''It's the least I can do for my girlfriend.''
+
+{{dialogue|Catori|indent=true|answer=Just doin' my job, ma'am.
+|I promise to keep the customers from knocking it around in the future. Thanks for being such a good friend.}}
+{{dialogue|Catori|Haha! Wait... You're serious, aren't you.}}
+{{dialogue|Catori|Let's get this straight. I had a really nice time the other night. You're great. Really. But one date... one kiss... doesn't mean we're in a committed relationship.}}
+{{dialogue|Catori|You know better than anybody how important this business is to me. I don't have the time or energy to put into a relationship. You deserve someone who makes you their number one priority. I just can't do that right now.}}
+{{dialogue|Catori|I'm afraid I let things get away from me the other night. You're real good company, and I haven't had an evening like that in a long time.}}
+{{dialogue|Catori|So, I let my guard down and let you kiss me. For just a moment, I was a regular woman who didn't have a million responsibilities and worries.}}
+{{dialogue|Catori|Truth is, you're real special. If I could think only about myself, I think we could be pretty happy together. But that's not in the cards right now.}}
+{{dialogue|Catori|What I want for myself is on the bottom of the priority list. My son is at the top. My business is next. And the town of Sandrock is after that.}}
+{{dialogue|Catori|My time'll come later, when everything else is settled. I hope you understand.}}
+
+*''I understand. Maybe someday?''
+*''We're still friends, right?''
+
+{{dialogue|Catori|indent=true|answer=I understand. Maybe someday?
+|Gosh, I really hope so. I'd hate if this was our only shot and I'm throwing it away.}}
+{{dialogue|Catori|indent=true|answer=We're still friends, right?
+|Of course! I would be sad to lose your friendship over a misunderstanding.}}
+{{dialogue|Catori|Anyway... thank you for fixing the rack so quickly.}}
+{{dialogue|Catori|And don't worry about me. I think I have some jewelry I can sell to keep the bank off my back for awhile longer.}}
+{{dialogue|Catori|reward={{NPC2|Catori|rp=5}}|Everything will turn out okay, eventually.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 12.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Catori stops standing still
+Catori stops standing still
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1800284
+
+TRIGGER Procedure 1.0 Step 12.5 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 3) There is a conversation segment (id 10120) that ends:
+{{dialogue|Catori|Everything will turn out okay, eventually.}}
+CONDITIONS
+Always:
+ACTIONS
+Catori gains 5 favor
+
+TRIGGER Procedure 0.0 Step 13.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Catori stops standing still
+NPC RANDOM REMOVE || id: 82851
+END MISSION 1800285
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1800284 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Repair the Shelf===
+
+{{mission_details
+|desc = You have the materials, go repair the shelf!
+|details = Repair the Shelf
+}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800285
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 12 | id: 828302
+SCENEITEM CREATE FLAG || itemType: 11 | id: 828512 | path: S8285_Item1 | sceneName: GameCenter | flagName: S8283_Label2 | extraParams: S8285_Item2|CreatorItem|19010001_2,19112002_1|1547|Fix|1.4
+SCENEITEM DELETE || itemType: 11 | id: 828511
+
+TRIGGER Procedure 1.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the GameCenter:
+CONDITIONS
+Opportunities Abound is successfully completed
+CHECK UNIQUE ACTION RUN || idStr: enter_gamecenter
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_gamecenter
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 828512 | missionId: 1800284 | iconType: 2
+
+TRIGGER Procedure 1.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the GameCenter:
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM ADD || id: 1 | instId: 82851 | scene: GameCenter | flagName: S8285_1_RNPC1 | dailyBehavior: RandomNPC
+Catori stands still in GameCenter and looks at 82851
+PLAYER SET POS ROT FLAG || sceneName: GameCenter | flagName: S8285_1_0_1
+82851 stands still in GameCenter and looks at Catori
+ACTION NPC RENAME || npc: 82851 | nameTransId: 80015393
+Add behavior CommanderMoveToFlagAndAction (idName: 8285001) to Player
+(param: TargetScene:GameCenter|MoveMode:Walk|FlagName:S8285_1_0_2|Delay:0.0|LookAtActor:8024)
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 1.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the GameCenter:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 3097_0 starts:
+{{dialogue|82851|I'm going to need something to take back to my boss at the bank. My hands are tied, here.}}
+{{dialogue|Catori|Couldn't you tell him how great this place is and that you're confident it's going to pick up soon?}}
+{{dialogue|Catori|If you knew anything about me, you'd know how hard I'm working to make this place profitable. It's not going to fail. I won't let it.}}
+{{dialogue|82851|I suppose I could tell him something like that. But I'd be risking my own job. It would have to be worth the risk, you know?}}
+{{dialogue|Catori|I... I don't know what you mean. A bribe? If I had money to bribe you, I'd just pay the bank.}}
+{{dialogue|82851|I was thinking something a little more...personal. Get to know you better. Dinner, perhaps?}}
+{{dialogue|Catori|I see. That's very flattering but-}}
+
+*''Is this guy bothering you?''
+*''Say nothing.''
+*{{flirt}}''Get away from my girlfriend!''
+
+{{dialogue|Catori|indent=true|answer=Is this guy bothering you?
+|No, it's fine. He's just–}}
+{{dialogue|82851|indent=true|Leaving. I'm just leaving. Get me the payment before I leave town, or we'll be forced to take further action.}}
+{{dialogue|Catori|indent=true|answer=Say nothing.
+|-I'm sorry. I can't have dinner with you. I appreciate the offer, but I'm not comfortable with it. If you only-}}
+{{dialogue|82851|indent=true|Suit yourself. Get me the payment before I leave town, or we'll be forced to take further action.}}
+{{dialogue|82851|indent=true|answer=Get away from my girlfriend!
+|You didn't tell me you were in a relationship. Forget it. Get me the payment before I leave town, or we'll be forced to take further action.}}
+
+TRIGGER Procedure 1.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+82851 stops standing still
+In a speech bubble:
+{{dialogue|82851|What is wrong with this place? First the bandits and now this...}}
+STOPWATCH REAL TIME SET || id: 82851 | sec: 3
+
+TRIGGER Procedure 1.0 Step 7.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 82851
+CONDITIONS
+Check if 8285Talk is == 1
+ACTIONS
+(cId 2) A conversation 3101_0 starts:
+{{dialogue|Catori|Thanks... I know you meant well, but I had it under control.}}
+{{dialogue|Catori|If I'd had a few more minutes, I might have talked him into giving me an extension.}}
+{{dialogue|Catori|This isn't the first time I've had to deal with creeps like him, you know. It happens. I deal with it. Diplomacy is the safest way through it.}}
+{{dialogue|Catori|What if you're not here to defend me next time? Right? Catori has to look after Catori. I have to be able to rely on myself, you know?}}
+{{dialogue|Catori|I have no idea what I'm going to do.}}
+{{dialogue|Catori|Having a working Storage Rack would be a good start, though. Thanks for coming to fix it.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8285001) from Player
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 7.1 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 82851
+CONDITIONS
+Check if 8285Talk is == 2
+ACTIONS
+(cId 2) A conversation 3102_0 starts:
+{{dialogue|Catori|Hi, ''Player''. I wish you hadn't seen what just happened. That guy's been hitting on me since I first took out a loan with his bank. A real slimeball, you know?}}
+{{dialogue|Catori|I have no idea what I'm going to do.}}
+{{dialogue|Catori|Having a working Storage Rack would be a good start, though. Thanks for coming to fix it.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 7.2 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 82851
+CONDITIONS
+Check if 8285Talk is == 3
+ACTIONS
+(cId 2) A conversation 3103_0 starts:
+{{dialogue|Catori|What was that, ''Player''? You can't just come in here pretending I'm your girlfriend and threaten the man from the bank!}}
+{{dialogue|Catori|I had it under control. If I'd had a few more minutes, I might have talked him into giving me an extension.}}
+{{dialogue|Catori|I have no idea what I'm going to do.}}
+{{dialogue|Catori|Having a working Storage Rack would be a good start, though. Thanks for coming to fix it.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 828512
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 82851 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+SCENEITEM CREATE FLAG || itemType: 0 | id: 828502 | path: Mission8250_efx_clear | sceneName: GameCenter | flagName: S8283_Label2 | extraParams: -1
+
+TRIGGER Procedure 1.0 Step 10.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82851 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Catori stands still in GameCenter and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: GameCenter | flagName: S8285_1_0_2
+DELAY MASK SET || maskId: 82851 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+SCENEITEM DELETE || id: 828502 | itemType: 0
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 10091:
+{{dialogue|Catori|I see. That's very flattering but-}}
+
+*''Is this guy bothering you?'' (No unique dialogue)
+*''Say nothing.'' (No unique dialogue)
+*{{flirt}}''Get away from my girlfriend!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8285Talk to 1
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the second option in conversation segment 10091:
+{{dialogue|Catori|I see. That's very flattering but-}}
+
+*''Is this guy bothering you?'' (No unique dialogue)
+*''Say nothing.'' (No unique dialogue)
+*{{flirt}}''Get away from my girlfriend!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8285Talk to 2
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the third option in conversation segment 10091:
+{{dialogue|Catori|I see. That's very flattering but-}}
+
+*''Is this guy bothering you?'' (No unique dialogue)
+*''Say nothing.'' (No unique dialogue)
+*{{flirt}}''Get away from my girlfriend!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8285Talk to 3

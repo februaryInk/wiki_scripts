@@ -1,0 +1,145 @@
+Reading Mission 1200146: Excavating the Sky
+
+<onlyinclude>{{Infobox mission
+|name = Excavating the Sky
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Excavating the Sky:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200145
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1200145
+Set DAY to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200145
+CONDITIONS
+Always:
+ACTIONS
+Run mission Excavating the Sky
+ACTION MISSION TRACE 1200145
+END MISSION 1200145
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200146
+CONDITIONS
+CHECK PLAYER ITEM || item: 19200021 | itemGrade: -1 | set: 6 | count: 1
+ACTIONS
+===Collect Equatorial Mount Pieces===
+
+{{mission_details
+|desc = Go to the Abandoned Ruins near Eufaula Salvage to find the pieces of the Equatorial Mount relic, which may be buried in deeper layers.
+|details = Collect Equatorial Mount Pieces
+*{{i2|Equatorial Mount Piece 1|0/1}}
+*{{i2|Equatorial Mount Piece 2|0/1}}
+*{{i2|Equatorial Mount Piece 3|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200145 | canSubmit: 1 | targetId: 1
+ON BAG CHANGE || order: 0 | item: 19200021 | changeType: 0 | itemGrade: -1
+CONDITIONS
+Always:
+ACTIONS
+===Restore Equatorial Mount===
+
+{{mission_details
+|desc = After collecting the pieces of the Equatorial Mount, go to the Sandrock Museum and assemble a complete Equatorial Mount using the Restoration Machine.
+|details = Restore Equatorial Mount
+*{{i2|Equatorial Mount|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200145 | canSubmit: 1 | targetId: 2
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Qi===
+
+{{mission_details
+|desc = The Equatorial Mount has been repaired. Bring it to Qi.
+|details = Talk to Qi
+*{{i2|Equatorial Mount|0/1}}
+*{{i2|Qi|0/1}}
+}}
+
+TRIGGER Procedure 0.5 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200146
+CONDITIONS
+CHECK PLAYER ITEM || item: 19200021 | itemGrade: -1 | set: 2 | count: 1
+ACTIONS
+===Talk to Qi===
+
+{{mission_details
+|desc = The Equatorial Mount has been repaired. Bring it to Qi.
+|details = Talk to Qi
+*{{i2|Equatorial Mount|0/1}}
+*{{i2|Qi|0/1}}
+}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1200145 | targetId: 3 | canSubmit: 1
+ACTIONS
+(cId 0) A conversation 3515, 3516, 3517, 3518, 3519, 3520, 3521 starts:
+{{dialogue|Qi|Finally! This is it! 68 degree latitude range, ultra-fine axis controls, it's got to be accurate at least to 7-arcseconds. And do you hear that? Exactly. Silence. But if you place your ear just so, you can hear the motor drive purring like a diminutive kitten...}}
+{{dialogue|Qi|This Equatorial Mount looks like it could counterbalance a pretty sizable telescope. Which confirms my postulation that the Old World metropolis that Sandrock sits upon must have dealt with space related industries!}}
+{{dialogue|Qi|There must have been some Old World observatories under the sand. Now that we have a mount, it only stands to reason that there are also telescopes somewhere in the ruins, too! Maybe even rocket engines and starsh-... no, I'm getting ahead of myself.}}
+{{dialogue|Qi|Anyhow, I implore you, ''Player'', find a telescope and restore it, for science!}}
+{{dialogue|Qi|If you can manage this task, I'll even let you use it. Sometimes. When I'm not using it for research. Or non-research. Perhaps you can use it once a year, on your birthday? How does that sound? We can hammer out the details later.}}
+{{dialogue|Qi|If data from the Civil Corps' surveys are reliable, I think there might be some Telescope parts deep down the Gecko Station Abandoned Ruins. Not sure how they got into a transport hub, maybe a few buildings got crunched together back when the Calamity happened.}}
+{{dialogue|Qi|Are the Civil Corps letting us use those nowadays? I'll have to check and get back to you. Await my further correspondence by... erm, "keeping an eye on your mailbox." Excellent work, Builder. Thank you, that will be all.}}
+Remove 1 Equatorial Mount of Default quality (Notify player)
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1200145
+END MISSION 1200146
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1200146
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|259}}
+END MISSION 1200146

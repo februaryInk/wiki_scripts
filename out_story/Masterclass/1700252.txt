@@ -1,0 +1,373 @@
+Reading Mission 1700252: Masterclass
+
+<onlyinclude>{{Infobox mission
+|name = Masterclass
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Masterclass:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 8183) that ends:
+{{dialogue|Pen|Come, Skinny! We have much work to do!}}
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1700251
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700251
+CONDITIONS
+Always:
+ACTIONS
+Run mission Masterclass
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700252
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 172521 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: -2
+Set Monsters to 0
+END MISSION 1700251
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172521 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Pen stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: MasterLesson_Player2
+DELAY MASK SET || maskId: 172521 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: -2
+NPC SET CAN INTERACT || npc: 8020 | canInteract: 0
+NPC WEAPON LOCK || npc: 8020 | id: 1024 | name: 172521
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 8202) that ends:
+{{dialogue|Pen|Follow me, Skinny! Behold as I use my fists to paint upon this canvas of sky!}}
+CONDITIONS
+Always:
+ACTIONS
+TIME SET ENABLE || bool: 0
+DELAY MASK SET || maskId: 172522 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: -2
+Add behavior CommanderMoveToFlag (idName: 172521) to Pen
+(param: TargetScene:Main|FlagName:MasterLesson_fight|MoveMode:Run)
+Add behavior CommanderMoveToFlag (idName: 172521) to Player
+(param: TargetScene:Main|FlagName:MasterLesson_fight|MoveMode:Run)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 10 | tag: PenDateMonster
+CONDITIONS
+Check if Monsters is == 8
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 172523 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172522 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 172521 | path: Mission_BattlefieldPENdate | sceneName: Main | flagName: MasterLesson_field | extraParams: -1
+Pen stops standing still
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlag (idName: 172521) from Player
+MONSTER ADD TAG || isAdd: 1 | tag: PenDateMonster
+===Follow Pen===
+
+{{mission_details
+|desc = Pen is using his Space Punch on various monsters outside of town. See if you can't learn something from him.
+|details = Follow Pen
+}}
+DELAY MASK SET || maskId: 172522 | delayTime: 0 | durationTime: 2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 8212) that ends:
+{{dialogue|Pen|Space punch time! Go for it!}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 172521) to Player
+(param: CMDAction:AttackFist_Story)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 2406_0 starts:
+{{dialogue|Pen|Oh... Oh no... that's not it at all...}}
+{{dialogue|Pen|I... I've failed. For the first time in my life, I've failed! It feels... ew, gross, it feels really bad!}}
+{{dialogue|Pen|Dang it, Skinny! I've failed you! My only friend and I blew it! Makes me so mad I just want to- Grraah!}}
+
+*''It's okay, Pen...''
+*''Let me try again!''
+*''Yeah, you blew it.''
+*''You... alright there?''
+
+{{dialogue|Pen|indent=true|answer=It's okay, Pen...
+|It's not okay, Skinny! I can't fail! What will people say when they find out-}}
+{{dialogue|Pen|indent=true|answer=Let me try again!
+|No... I'm afraid there's no point. I've simply failed too hard as an instructor. There's no way you possibly could've gained anything from our lesson.}}
+{{dialogue|Pen|indent=true|answer=Yeah, you blew it.
+|Hey, I don't see you teaching anyone how to space punch!}}
+{{dialogue|Pen|indent=true|answer=You... alright there?
+|No, Skinny, I am not alright! Y... You don't know what it's like-}}
+{{dialogue|Pen|Deep breaths, Pen old boy... Just like the minister says... Take all those bad thoughts and push them down... deep down...}}
+{{dialogue|Pen|You know what, Skinny? This is going to be fine. Everything is going to be fine. You know why?}}
+
+*''I won't tell anyone?''
+*''No one cares?''
+*''Failing is a part of life?''
+
+{{dialogue|Pen|indent=true|answer=I won't tell anyone?
+|reward={{NPC2|Pen|rp=5}}|Exactly.}}
+{{dialogue|Pen|indent=true|answer=No one cares?
+|What the- No!}}
+{{dialogue|Pen|indent=true|answer=Failing is a part of life?
+|Now is not the time for joking around, Skinny!}}
+{{dialogue|Pen|Everyone cares about what Pen does! Everyone's always got their eye on me, just waiting for that moment for me to slip up so they can laugh! But we won't let them know, will we, Skinny? We're going to keep this all between us pals, yes?}}
+
+*''Your secret is safe with me.''
+*''I really don't think anyone cares.''
+
+{{dialogue|Pen|indent=true|answer=Your secret is safe with me.
+|That is... good to hear, Skinny. Truly, you are a stalwart companion. Trustworthy, far beyond any length I could throw you, and believe you me... that's far. Very far.}}
+{{dialogue|Pen|indent=true|answer=I really don't think anyone cares.
+|Ahaha! Skinny! You always know how to cheer me up with that signature Skinny brand of hilarity! Heh heh... "don't think anyone cares..." Cracks me up...}}
+{{dialogue|Pen|Hm... so it seems there really are things beyond even one such as myself, the glorious Protector of Sandrock...}}
+{{dialogue|Pen|You know, Skinny, I've never had someone I really considered a friend before. Furthermore, I always promised myself I'd never be friends with anyone who didn't have an awesome cape, but... you made me break that promise.}}
+{{dialogue|Pen|Seems I couldn't predict the future... perhaps... there are many things I cannot do...}}
+{{dialogue|Pen|Perhaps... there is indeed a lesson here to be learned... When I got stuck looking into that mirror... failing today as a teacher... occasionally getting edged out in Whac-a-mole from time to time...}}
+{{dialogue|Pen|Perhaps the lesson of humility I often preach was meant for... me?}}
+{{dialogue|Pen|Yes... yes, that's precisely it, Skinny! I can't just take my own greatness for granted! Even though I've historically been ridiculously awesome at everything and done so effortlessly, that doesn't mean it's always going to be so!}}
+{{dialogue|Pen|I need to treat people better. I need to do something nice for Burgess. I...}}
+{{dialogue|Pen|I need to write this stuff down. Do you have a pen? I know I... said you didn't need one. I wasn't planning on having an epiphany...}}
+{{dialogue|Pen|You don't? Ah, well. I'm sure I'll remember it.}}
+{{dialogue|Pen|Hey, look over there, a Rocket Rooster! Watch me tie its neck in a knot! Ahahaa! Smell ya later, Skinny!}}
+The conversation ends.
+Remove behavior CommanderPlayerAction (idName: 172521) from Player
+
+TRIGGER Procedure 0.0 Step 0.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Pen stops standing still
+Pen stops standing still
+(cId -1) A conversation 8238 starts:
+{{dialogue|Player|(I don't think I learned how to do the "space punch." But watching Pen's attacks closely did give me some insight on how to hit a little harder.)}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 8238) that ends:
+{{dialogue|Player|(I don't think I learned how to do the "space punch." But watching Pen's attacks closely did give me some insight on how to hit a little harder.)}}
+CONDITIONS
+Always:
+ACTIONS
+ACTION SHOW CUSTOM IMAGE TIPS || preset: Mission | content: 80016151
+NPC SET CAN INTERACT || npc: 8020 | canInteract: 1
+ACTION PLAYER ADD ATTR VALUE || attrType: 6 | value: 2
+ACTION PLAYER ADD ATTR VALUE || attrType: 5 | value: 2
+CUTSCENE UI STATE EXIT || 
+TIME SET ENABLE || bool: 1
+SUBMIT MISSION 1700251
+END MISSION 1700252
+
+TRIGGER Procedure 0.0 Step 0.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8020 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 172521) from Pen
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8020 | state: Attack
+
+TRIGGER Procedure 0.0 Step 0.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172523 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+NPC WEAPON UNLOCK || npc: 8020 | name: 172521
+Pen stands still in Main
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8020
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: MasterLesson_Player2
+SCENEITEM DELETE || itemType: 0 | id: 172521
+MONSTER ADD TAG || isAdd: 0 | tag: PenDateMonster
+DELAY MASK SET || maskId: 172523 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 8187) that ends:
+{{dialogue|Pen|You take your hand like this and, uh...}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 172521) to Pen
+(param: CMDAction:SpacePunch)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8020 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 172521) from Pen
+(cId -1) A conversation 2404_0 starts:
+{{dialogue|Pen|Any questions?}}
+
+*''I don't get it...''
+*''Can you do it again?''
+*''No questions...''
+
+{{dialogue|Pen|indent=true|answer=I don't get it...
+|Ahah! Of course! Atara wasn't built in a day after all! Right? I dunno, maybe it was. Don't quote me on that. Here, let's see some more examples.}}
+{{dialogue|Pen|indent=true|So you just go like...}}
+{{dialogue|Pen|indent=true|answer=Can you do it again?
+|Ahah! Of course! Atara wasn't built in a day after all! Right? I dunno, maybe it was. Don't quote me on that. Here, let's see some more examples.}}
+{{dialogue|Pen|indent=true|So you just go like...}}
+{{dialogue|Pen|indent=true|answer=No questions...
+|Come now, Skinny! Don't be shy! If you never ask, you'll never know! Here, let me show you some more examples.}}
+{{dialogue|Pen|Boop! Space punch.}}
+{{dialogue|Pen|Suh suh suh... Space puuunch...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 8193) that ends:
+{{dialogue|Pen|Suh suh suh... Space puuunch...}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 172521) to Pen
+(param: CMDAction:SpacePunchSlow)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8020 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 172521) from Pen
+(cId -1) A conversation 2396_0 starts:
+{{dialogue|Pen|Well...?}}
+
+*''Don't really get it.''
+*''Let's try something more hands-on?''
+*''Oh... now I get it...''
+
+{{dialogue|Pen|indent=true|answer=Don't really get it.
+|Wh... wha?}}
+{{dialogue|Pen|indent=true|...C-C'mon, Skinny! Get it together! I'm... I'm doin' everything right over here!}}
+{{dialogue|Pen|indent=true|answer=Let's try something more hands-on?
+|Look, Skinny, this is my class, okay? I make the rules, I call the shots-}}
+{{dialogue|Pen|indent=true|Eh. "Hands-on." Right, right...}}
+{{dialogue|Pen|indent=true|answer=Oh... now I get it...
+|Oh, come on, Skinny, don't patronize me!}}
+{{dialogue|Pen|This is my first time actually trying to teach anyone something, okay? But normally I'm great at everything I do after trying for like five minutes, so just... stick with me!}}
+{{dialogue|Pen|I... I know what the problem is! I can't just space punch out of nowhere, not without a target! Yeah, that's it...}}
+{{dialogue|Pen|Follow me, Skinny! Behold as I use my fists to paint upon this canvas of sky!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 8221:
+{{dialogue|Pen|You know what, Skinny? This is going to be fine. Everything is going to be fine. You know why?}}
+
+*''I won't tell anyone?'' (No unique dialogue)
+*''No one cares?'' (No unique dialogue)
+*''Failing is a part of life?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Pen gains 5 favor
+
+TRIGGER Procedure 0.0 Step 0.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1700252
+CONDITIONS
+Always:
+ACTIONS
+NPC SET CAN INTERACT || npc: 8020 | canInteract: 1
+TIME SET ENABLE || bool: 1
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172521 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 2391_0 starts:
+{{dialogue|Pen|Alright! We're here! Welcome to Space Punch 101. I'll be your instructor, I hope you brought your... Pen!}}
+{{dialogue|Pen|Hahaha! You don't really need a pen. That was just an icebreaker...}}
+{{dialogue|Pen|So the first thing about space punch is...}}
+{{dialogue|Pen|You take your hand like this and, uh...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 1.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 172523 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 2403_0 starts:
+{{dialogue|Pen|Whew! Well, I think that will answer any questions you might have had!}}
+{{dialogue|Pen|So... go ahead...}}
+{{dialogue|Pen|Space punch time! Go for it!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 0 | tag: PenDateMonster
+CONDITIONS
+Always:
+ACTIONS
+Increment Monsters by 1

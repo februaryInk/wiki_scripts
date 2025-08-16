@@ -1,0 +1,167 @@
+Reading Mission 1200048: Learning to Ride
+
+<onlyinclude>{{Infobox mission
+|name = Learning to Ride
+|image =
+|description = Elsie has invited you to learn how to ride mounts, go meet her!
+|type = Side
+|time =
+|location =
+|characters = [[Elsie]]
+|condition =
+|details =
+|exp = 300
+|reputation = None
+|gols = None
+|npc1 = Elsie
+|rp1 = 10
+|npc2 = Cooper
+|rp2 = 10
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100068
+
+TRIGGER Procedure 1.0 Step 9.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+CLOSE MISSION || missionId: 1600068
+
+TRIGGER Procedure 1.0 Step 12.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK WEATHER STATE || weather: 2 | flag: 0
+CHECK DATE || compare: 2 | year: 1 | month: 2 | day: 8
+ACTIONS
+Run mission Learning to Ride
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200048
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|46}}
+Set OVER to 0
+Set DAY to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 46
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1200048
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Elsie
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 256_0 starts:
+{{dialogue|Elsie|Good day, partner! Ready to get your ride on?}}
+
+*''Yeehaw!''
+*''Yee-naw.''
+
+{{dialogue|Elsie|indent=true|answer=Yeehaw!
+|Yeehaw! Let's go talk to my Pa at the Ranch, he can lend you a horse for the day. I'll be right behind you!}}
+{{dialogue|Elsie|indent=true|answer=Yee-naw.
+|Shoot! Well, come back if you change your mind!}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 1240:
+{{dialogue|Elsie|Good day, partner! Ready to get your ride on?}}
+
+*''Yeehaw!'' (No unique dialogue)
+*''Yee-naw.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set OVER to 1
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200048
+CONDITIONS
+Always:
+ACTIONS
+Run mission Learning to Ride
+END MISSION 1200048
+
+TRIGGER Procedure 1.0 Step 0.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Learning to Ride is in state 1 with flag 1
+ACTIONS
+Increment DAY by 1
+
+TRIGGER Procedure 1.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Check if DAY is >= 2
+ACTIONS
+SCENEITEM INTERACT SET || itemType: 7 | id: 1 | canInteract: 1
+
+TRIGGER Procedure 1.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if OVER is == 1
+Learning to Ride is in state 1 with flag 0
+ACTIONS
+DELIVER MISSION 1200048
+
+TRIGGER Procedure 1.0 Step 4.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if OVER is == 1
+ACTIONS
+START MISSION 1200048
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Elsie|Good day, partner! Ready to get your ride on?}}
+
+*''Yeehaw!''
+*''Yee-naw.''
+
+{{dialogue|Elsie|indent=true|answer=Yeehaw!
+|Yeehaw! Let's go talk to my Pa at the Ranch, he can lend you a horse for the day. I'll be right behind you!}}
+{{dialogue|Elsie|indent=true|answer=Yee-naw.
+|Shoot! Well, come back if you change your mind!}}
+
+==Rewards==
+{{mission reward
+|npc1 = Elsie
+|rp1 = 10
+|npc2 = Cooper
+|rp2 = 10
+|exp = 300
+|reputation = None
+|gols = None
+}}

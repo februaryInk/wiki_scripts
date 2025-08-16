@@ -1,0 +1,247 @@
+Reading Mission 1100046: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100095
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100095
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|17}}
+Set STORM to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Check if STORM is == 0
+ACTIONS
+Run mission #1100046
+END MISSION 1100095
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100046
+CONDITIONS
+Always:
+ACTIONS
+Set DONE to 0
+Set KILL to 0
+
+TRIGGER Procedure 0.0 Step 0.1 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player wakes up:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|26}}
+
+TRIGGER Procedure 0.0 Step 0.5 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON DAY START FOR WEATHER || order: 0 | weather: 2
+CONDITIONS
+Check if DONE is == 0
+CHECK UNIQUE ACTION RUN || idStr: set_weather
+ACTIONS
+UNIQUE ACTION RUN || idStr: set_weather
+WEATHER SET STATE || WeatherState: 2
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+Pen stands still in Main
+Set SCENECHANGE to 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Check if SCENECHANGE is == 1
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Check if SCENECHANGE is == 1
+ACTIONS
+(cId 10) A conversation 507, 508, 509, 510, 511, 512 starts:
+{{dialogue|Pen|Greetings, Skinny Arms! No doubt you've noticed the countless granules of sand being mercilessly tossed about! This is what we in the business call a "{{textcolor|red|sandstorm}}!"}}
+{{dialogue|Pen|I'm here to inform you, as the Protector of Sandrock, that you have no need to be afraid!}}
+{{dialogue|Pen|We do recommend staying indoors until the sandstorm subsides. But in case you must go outside, the Church has this free set of {{textcolor|green|Sandgear}} for you. Isn't it nice!}}
+{{dialogue|Pen|These will help you move around in the sandstorm, but they sure as Light won't help you much against the ravenous {{textcolor|red|beasts}} that come out during the storms.}}
+{{dialogue|Pen|And in case you're wondering why I am not wearing any Sandgear, to an experienced hero such as myself, these raging sands are but a gentle massage on my chiseled jawline...}}
+{{dialogue|Pen|Well, good chat, Skinny Arms. Try to remember everything I just said, I'd rather not repeat myself. I saw a {{textcolor|red|crazy big Wild Yakmel}} wandering around on the way here. So I'm about to clean it up in a minute. Enjoy your gear!}}
+Set DONE to 1
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Sand Hat of Default quality (Notify player)
+Pen stops standing still
+CUTSCENE UI STATE EXIT || 
+Add behavior CommanderMoveToArea (idName: 20461) to Pen
+(param: TargetScene:Main|MoveMode:Run|AreaName:HugeWildYakmel)
+ACTOR BUFF ADD || npc: 8020 | instanceId: 20461 | buffId: 4
+MONSTER ADD TAG || isAdd: 1 | tag: HugeWildYakmel
+MONSTER MODIFIER ADD || type: Buff | data: 4 | tag: HugeWildYakmel | name: 20462
+AREA TRIGGER CREATE || flagName: HugeWildYakmel | missionId: 1100046 | id: 20461 | sceneName: Main | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+MONSTER MODIFIER ADD || name: 20463 | tag: HugeWildYakmel | type: Faction | data: Monster
+Set global blackboard key pensandstorm with info 1.
+Townsfolk respond to the event:
+
+{{dialogue|Amirah|Is it a coincidence that the sandstorms seem to be getting worse? In any case, it surely seems like a bad omen to me.}}
+
+{{dialogue|Arvio|Sandstorms mean lots of work for Builders like you. Once things settle down, why not stop into my store and reward yourself for a job well done?}}
+
+{{dialogue|Burgess|Wow... and I just had our Temple plants cleaned, too... Sometimes it feels like that whole desert really has it in for us, huh! Well, enjoy all your commissions!}}
+
+{{dialogue|Catori|So... I couldn't help but notice you keep all your machines out in your yard... my game machines are spick and span, safe from sand damage inside my game center. Are you catchin' my drift?}}
+
+{{dialogue|Cooper|Now, when yer takin' care of my sandstorm commissions, make sure that you only use materials of the highest quality; and don't think I can't tell: I can tell.}}
+
+{{dialogue|Dan-bi|After the sandstorm, I'm sure sand removal is top priority! Builder, you got to remember to take care of your machines after this, though! Anyway, I gotta run, I'm super busy!}}
+
+{{dialogue|Elsie|Mi-an canceled hangin' with me on account of the dang sandstorm. You don't reckon... maybe you could just do all the commissions? Well, shucks. Alright, just figured I'd ask.}}
+
+{{dialogue|Grace|If you don't own any property, it can't get damaged by sandstorms. Just one of the many benefits of being an intern.}}
+
+{{dialogue|Heidi|It's always busy for us after a sandstorm, can't help it.}}
+
+{{dialogue|Hugo|My daughter's always thinking two steps ahead of the rest of us, she's probably got plans and diagrams at ready for any type of contingency. That's also why we had to stop inviting her to Mah-jong...}}
+
+{{dialogue|Jasmine|My Ma said that there's always some good in everything... but where's the good in sandstorms...?}}
+
+{{dialogue|Jensen|Ever cleaned sand out of an engine with a toothbrush? Oh, the things I do for love...}}
+
+{{dialogue|Justice|Man, I hate sandstorms. Wish someone would just build a giant fan that could blow the next one away? I mean... just think about it...}}
+
+{{dialogue|Krystal|That sandstorm was wicked fierce! Near scared the life outta our Pebbles, took him crazy long to fall asleep! Now you gotta work hard there Builda! Lotta stuff gotta be fixed up now, huh?}}
+
+{{dialogue|Mabel|Well, one of these sandstorms was bound to hit sooner or later. Hang in there, Builder! Make sure you have a good long rest after you handle all this rebuilding!}}
+
+{{dialogue|Matilda|I know you Builders are raring to go with all the repairs we need around town, but don't forget to take care of yourselves at the same time; can't build if you get ill!}}
+
+{{dialogue|Miguel|Though I do enjoy our little chats, shouldn't you be working on your sandstorm commissions? Let's catch up when you have more time, hm?}}
+
+{{dialogue|Mort|Sometimes I get buried in the sand. Those sandstorms, they can sneak up on you like a thief in the night... Or... perhaps it's just my hearing...}}
+
+{{dialogue|Pen|Still remember everything from our little chat? Hm? Well, you at least remember the part about the ravenous beasts, right? Good.}}
+
+{{dialogue|Qi|When I came here, I was expecting one of two things. Sandstorm was not one of them.}}
+
+{{dialogue|Rian|Pal, I'm totally glad that sandstorm has blown over. There's crazy work to be done now, though. Take your time, no point in rushin'. Well, as long as your done by the next sandstorm...}}
+
+{{dialogue|Rocky|Things might look tough now, but if you make it through these sandstorm commissions, you'll have earned a lot of respect in the eyes of me an' the boys, for what it's worth.}}
+
+{{dialogue|Unsuur|I heard you have a lot of commissions to do. Well, it's like Justice always says: "When the going gets tough... just do your job."}}
+
+{{dialogue|Vivi|Oh, look at you, poor thing... you've got more commissions than you can count, don't you? Maybe I should go get lil Hugo to help you out, he's been spendin' a lot of time on his behind lately...}}
+
+{{dialogue|Yan|How many sandstorm commissions have you finished so far? ...Huh!? Those are rookie numbers, Builder! Me? I ask the questions here, bub. Now, back to the workshop for you, pronto!}}
+
+Set global blackboard key miansandstorm with info 1.
+Townsfolk respond to the event:
+
+{{dialogue|Mi-an|I kinda wanted to build what you're building! But! It's okay! Let's hurry up with this order: the show must go on!}}
+
+GUIDE ADD CONTROL || forced: 0 | id: 1076
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 20461
+CONDITIONS
+Check if DONE is == 1
+ACTIONS
+ACTOR BUFF REMOVE || npc: 8020 | instanceId: 20461
+MONSTER MODIFIER REMOVE || name: 20462
+AREA TRIGGER DELETE || id: 20461
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 10 | tag: HugeWildYakmel
+CONDITIONS
+Check if KILL is >= 1
+ACTIONS
+MONSTER ADD TAG || isAdd: 0 | tag: HugeWildYakmel
+MONSTER KILL TAG || tag: HugeWildYakmel
+MONSTER MODIFIER REMOVE || name: 20464
+END MISSION 1100046
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if DONE is == 1
+ACTIONS
+Remove behavior CommanderMoveToArea (idName: 20461) from Pen
+MONSTER ADD TAG || tag: HugeWildYakmel | isAdd: 0
+ACTOR BUFF REMOVE || npc: 8020 | instanceId: 20461
+MONSTER MODIFIER REMOVE || name: 20462
+AREA TRIGGER DELETE || id: 20461
+MONSTER KILL TAG || tag: HugeWildYakmel
+Pen stands still in Main
+Pen stops standing still
+MONSTER MODIFIER REMOVE || name: 20464
+END MISSION 1100046
+
+TRIGGER Procedure 2.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 0 | tag: HugeWildYakmel
+CONDITIONS
+Always:
+ACTIONS
+Increment KILL by 1
+
+TRIGGER Procedure 2.0 Step 4.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8020 | enter: 0 | id: 20461
+CONDITIONS
+Check if DONE is == 1
+ACTIONS
+MONSTER MODIFIER ADD || name: 20464 | tag: HugeWildYakmel | type: Hated | data: 8020
+Remove behavior CommanderMoveToArea (idName: 20461) from Pen

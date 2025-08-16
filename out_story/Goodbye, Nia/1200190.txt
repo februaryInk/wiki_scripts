@@ -1,0 +1,220 @@
+Reading Mission 1200190: Goodbye, Nia
+
+<onlyinclude>{{Infobox mission
+|name = Goodbye, Nia
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Goodbye, Nia:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200189
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1200189
+START MISSION 1200189
+GLOBAL BLACK BOARD REMOVE || key: niaday2
+Set global blackboard key niaday3 with info 1.
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200189
+CONDITIONS
+Always:
+ACTIONS
+Run mission Goodbye, Nia
+END MISSION 1200189
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player wakes up:
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 4604 starts:
+{{dialogue|Player|(Nia is going back to Highwind today. I should go see her off.)}}
+AREA TRIGGER ONCE CREATE || missionId: 1200190 | id: 21901 | sceneName: Main | flagName: nialeave_trigger1 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80007359
+
+TRIGGER Procedure 0.0 Step 1.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 21901
+AREA TRIGGER ONCE CREATE || missionId: 1200190 | id: 21901 | sceneName: Main | flagName: nialeave_trigger1 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80007359
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 21901
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 21901 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 21901 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Nia stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: nialeave_player2
+DELAY MASK SET || maskId: 21901 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 21901
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 4605 starts:
+{{dialogue|Nia|Hi ''Player'', so you came to see me off?}}
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 21901) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:nialeave_player1)
+
+TRIGGER Procedure 0.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 21901) from Player
+(cId 1) A conversation 1343_3_0 starts:
+{{dialogue|Nia|Urgh, three days went by way too quickly...}}
+{{dialogue|Nia|But I need to go back and take care of my plants. You remember my neighbor raised a pig right? When that pig gets hungry, it gets really hungry. So you can see why I'm worried...}}
+{{dialogue|Nia|Hey! Don't laugh! If that pig eats my graduate project, I'm not gonna be able to graduate for another semester!}}
+{{dialogue|Player|(What should I say?)}}
+
+*''Remember to write.''
+*''Have you packed the Sand Jujube Cake?''
+*''When does the train leave?''
+
+{{dialogue|Nia|indent=true|answer=Remember to write.
+|You're sweet. Don't panic, dear. I'll write.}}
+{{dialogue|Nia|indent=true|answer=Have you packed the Sand Jujube Cake?
+|Yeah it's all packed, don't worry! I went to where they sell it, the "Wandering Y!" Weird name for a ranch, haha. The Yakboy and his wife were really friendly, he sat me down and told me about his family history for what felt like eternity. Their cake is famous, though!}}
+{{dialogue|Nia|indent=true|answer=When does the train leave?
+|There's no rush, we still have a little time. Let's chat for a bit.}}
+
+TRIGGER Procedure 0.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8059 | cId: 1 | missionId: 1200190
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 1347_0 starts:
+{{dialogue|Jensen|Train to Highwind, now departing. Train to Highwind, now departing. Please gather your belongings and board the train.}}
+{{dialogue|Nia|Ah, that's me...}}
+{{dialogue|Nia|I'll see you soon. Hey, when I'm graduated, I'll come see you again, okay? So don't miss me too much!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: missnia | info: 1 | exist: 1
+ACTIONS
+{{cutscene|id = 9002}}
+A cutscene CG_FAREWELL (duration: 0.0) starts playing
+A Sad Goodbye - Nia is going back home. I really didn't want her to leave, and as she ran onto the train, she whispered something in my ear. What could this mean?
+
+TRIGGER Procedure 1.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: missnia | info: 1 | exist: 0
+ACTIONS
+{{cutscene|id = 9003}}
+A cutscene CG_FAREWELL_B (duration: 0.0) starts playing
+Goodbye My Friend - Nia's visit to Sandrock went really well. It looks like she enjoyed her stay, and I'm really happy for her.
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_FAREWELL | state: 9
+ON CUTSCENE CHANGE || order: 0 | name: CG_FAREWELL_B | state: 9
+CONDITIONS
+Always:
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: missnia
+Nia stops standing still
+NPC LEAVE || npc: 8059
+CUTSCENE UI STATE EXIT || 
+GLOBAL BLACK BOARD REMOVE || key: niaday3
+SUBMIT MISSION 1200189
+END MISSION 1200190
+
+TRIGGER Procedure 1.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200190
+CONDITIONS
+Always:
+ACTIONS
+===Go to Train Station===
+
+{{mission_details
+|desc = Nia's train leaves at midday. Go to the station to say goodbye.
+|details = Go to Train Station
+}}
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1200190
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 21901
+NPC LEAVE || npc: 8059
+GLOBAL BLACK BOARD REMOVE || key: niaday3
+GLOBAL BLACK BOARD REMOVE || key: missnia
+The player receives a letter:
+{{mail|302}}
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_FAREWELL | state: 8
+ON CUTSCENE CHANGE || order: 0 | name: CG_FAREWELL_B | state: 8
+CONDITIONS
+Always:
+ACTIONS
+Nia stops standing still
+NPC LEAVE || npc: 8059

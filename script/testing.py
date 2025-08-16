@@ -11,24 +11,16 @@ from sandrock.preproc  import get_config_paths
 from sandrock.structures.conversation import *
 from sandrock.structures.story    import *
 from sandrock.preproc             import get_interest_points
-from script.structures.generators import *
-
-from pathvalidate import sanitize_filename
+from sandrock.structures.generators import *
 
 # ------------------------------------------------------------------------------
 
 def run() -> None:
     # print_scenes()
     # # print_items_with_item_tag(86)
-    # print_mission_names()
     # # # print_scenes()
     # print_npc_names()
     # print_items_with_item_tag(1122)
-
-    story = Story()
-    m = story.get_mission(1700391)
-    # m = story.get_mission(1100071)
-    m.print()
 
     # id_to_pet_name = {}
 
@@ -41,7 +33,7 @@ def run() -> None:
 
     # print('---')
 
-    # print_conv_builder(6143)
+    print_conv_builder(1364)
 
     # GeneratorGroup.print_generators_for_item_id(19210010)
     # GeneratorGroup.print_generators_for_item_id(10000008)

@@ -1,0 +1,368 @@
+Reading Mission 1600120: Person of Interest
+
+<onlyinclude>{{Infobox mission
+|name = Person of Interest
+|image =
+|description = Ernest seems to be very interested in Logan's story, and has been visiting the residents in town.
+|type = Side
+|time =
+|location =
+|characters = [[Ernest]]
+|condition =
+|details =
+|exp = 400
+|reputation = None
+|gols = None
+|npc1 = Ernest
+|rp1 = 10
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200125
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK CUTSCENE PHOTO UNLOCK || cutscene: CG_TRAINROBBER | set: 1
+ACTIONS
+Run mission Person of Interest
+GLOBAL BLACK BOARD REMOVE || key: openernest1
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1600120
+CONDITIONS
+Always:
+ACTIONS
+Set IsAccept to 0
+Set global blackboard key IsStory1600120Refuse with info 0.
+Set IsTriggered to 0
+Set DaysCounter to 0
+Set DAY to 0
+ACTION DATE SET FLAG || flag: Story16120Begin
+
+TRIGGER Procedure 0.0 Step 0.1 Order 5 Repeat 8
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment DaysCounter by 1
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK WEATHER STATE || weather: 2 | flag: 0
+ACTIONS
+Ernest stands still in Main and looks at Mabel
+Mabel stands still in Main and looks at Ernest
+AREA TRIGGER CREATE || missionId: 1600120 | id: 161201 | sceneName: Main | flagName: 16120_G1_TriggerFlag | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80005037
+ACTION AREA TRIGGER SET RADIUS || id: 161201 | radius: 20
+
+TRIGGER Procedure 0.0 Step 1.1 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | enter: 0 | npc: 8000 | id: 161201
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 61201 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 1.2 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 61201 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: 16120_G1_Player_1 | sceneName: Main
+AREA TRIGGER DELETE || id: 161201
+Set IsTriggered to 1
+DELAY MASK SET || maskId: 61201 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Ernest stops standing still
+Mabel stops standing still
+Ernest stands still in Main
+Mabel stands still in Main
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 61201 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 10) A conversation 808_0 starts:
+{{dialogue|Ernest|Excuse me, ma'am. Might I have a word? I'm new to Sandrock, and I would be remiss to pass up an opportunity to speak with a dignified looking damsel such as yourself...}}
+{{dialogue|Mabel|My stars! ''Player'', would you listen to that? I reckon that must be the phrasings of a bonafide Ataran gentleman! Ain't nobody talks fancy like that 'round here...}}
+{{dialogue|Mabel|Well, what can I do ya for, newcomer? Lookin' for good eats? Or just a place to kick up your heels? I've been ranchin' these parts for more than twenty years! Reckon I ought to know a thing or two by now... Just ask ''Player'', our Builder here!}}
+{{dialogue|Ernest|Mm. I believe you. I'm Ernest, by the way. I'm here on the behalf of the Atara Times, I was hoping to do a piece on that bandit fellow who's been giving you all so much trouble. Would you care to weigh in on the situation?}}
+{{dialogue|Mabel|Oh... I reckon you mean Logan... Mr. Ernie, sir, I don't suppose you were on that train were you? You still wanna catch up with that rascal...?}}
+{{dialogue|Mabel|Well, here's my weighin' in: you'd do best by packin' your bags. That Logan's a wanted man! And he likely won't take kindly to a fancy-talkin', pants-wearin', cityslickin' poindexter snoopin' around! ... No offense!}}
+{{dialogue|Mabel|If you gotta write about somethin', write about the scenery! Try some of our Yakmel Sausage; it's so good, people all the way from Portia make their way over to stock up on it! Logan? Forget about it! Wait 'til the Corps catches 'im, then ask 'im yourself!}}
+The conversation ends.
+AREA TRIGGER DELETE || id: 161201
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Mabel stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 1612012) to Mabel
+(param: TargetScene:Main|MoveMode:Walk|FlagName:16120_G1_8004_2|Delay:0.5)
+Remove behavior CommanderMoveToFlagAndAction (idName: 1612011) from Player
+(cId 111) A conversation 874_0 starts:
+{{dialogue|Ernest|Hm. And it was going so well... Sigh. I've really hit a wall these past few days, can't seem to get anyone to open up. Are they really so afraid of one guy?}}
+{{dialogue|Ernest|... Is it my cologne?}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 4.1 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 111) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Ernest stops standing still
+Add behavior CommanderIdle (idName: 1612012) to Ernest
+(param: TurnToActor:8000|LookAtActor:8000|Reset:true)
+STOPWATCH REAL TIME SET || id: 161201 | sec: 1.5
+Remove behavior CommanderMoveToFlagAndAction (idName: 1612011) from Player
+Add behavior CommanderIdle (idName: 1612012) to Player
+(param: TurnToActor:8069|LookAtActor:8069)
+
+TRIGGER Procedure 0.0 Step 4.5 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 161201
+CONDITIONS
+Always:
+ACTIONS
+GROUP 0:
+(cId 11) A conversation 809_0 starts:
+{{dialogue|Ernest|You, Builder. Erm... Despite all that, I don't suppose you would be willing to answer some of my questions? About Logan.}}
+
+*''Ask away!''
+*''Try asking the Church.''
+*''Try asking City Hall.''
+
+{{dialogue|Ernest|indent=true|answer=Ask away!
+|Ah, really? You will? Fantastic! One moment, let me just get out my notebook...}}
+{{dialogue|Ernest|Yes, I've tried that. The Minister, her second-in-command, the editor of your local paper... all of them have been most unhelpful. But rather than directly tell me "no," they all just euphemistically tout off a, "no comment..."}}
+
+*''Well, ask me, then!''
+*''Can't help you, pal...''
+
+{{dialogue|Ernest|indent=true|answer=Well, ask me, then!
+|Ah, really? You will? Fantastic! One moment, let me just get out my notebook...}}
+{{dialogue|Ernest|indent=true|answer=Can't help you, pal...
+|Hm, yes. Well, thank you for listening, anyhow. Maybe I'll go check out the clinic. I'll bet that guy has plenty to say.}}
+
+GROUP 1:
+DELIVER MISSION 1600120
+
+
+TRIGGER Procedure 1.0 Step 5.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) After the conversation ends:
+CONDITIONS
+Check if IsAccept is == 0
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Ernest stops standing still
+Remove behavior CommanderIdle (idName: 1612012) from Player
+Set global blackboard key IsStory1600120Refuse with info 1.
+Remove behavior CommanderIdle (idName: 1612012) from Ernest
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8004 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 1612012) from Mabel
+
+TRIGGER Procedure 1.0 Step 3.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) The player picks the first option in conversation segment 3074:
+{{dialogue|Ernest|You, Builder. Erm... Despite all that, I don't suppose you would be willing to answer some of my questions? About Logan.}}
+
+*''Ask away!'' (No unique dialogue)
+*''Try asking the Church.'' (No unique dialogue)
+*''Try asking City Hall.'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 3075:
+{{dialogue|Ernest|Yes, I've tried that. The Minister, her second-in-command, the editor of your local paper... all of them have been most unhelpful. But rather than directly tell me "no," they all just euphemistically tout off a, "no comment..."}}
+
+*''Well, ask me, then!'' (No unique dialogue)
+*''Can't help you, pal...'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 3077:
+{{dialogue|Ernest|The kind workshop owner! I don't suppose you changed your mind about answering my questions? It'll only take a moment, I promise!}}
+
+*''Ask away!'' (No unique dialogue)
+*''Try asking the Church.'' (No unique dialogue)
+*''Try asking City Hall.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set IsAccept to 1
+
+TRIGGER Procedure 1.0 Step 4.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if IsAccept is == 1
+ACTIONS
+START MISSION 1600120
+
+TRIGGER Procedure 1.0 Step 6.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1600120
+CONDITIONS
+Always:
+ACTIONS
+Run mission Person of Interest
+END MISSION 1600120
+
+TRIGGER Procedure 1.0 Step 7.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1600120
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key Story1600120 with info 1.
+Townsfolk respond to the event:
+
+{{dialogue|Burgess|I asked Mr. Ernest to do a deep-dive on our Church and all the cool happenings that go on, especially on the weekends! But he said he didn't think he could sell papers with my story... How strange! Sounded like page one material to me!}}
+
+{{dialogue|Cooper|Heard some folks sayin' that article about the trainrobbin' was mighty fearful. Good thing I can't read. Dodged a bullet there!}}
+
+{{dialogue|Ernest|I hope my article makes it here to Sandrock. Kind of a shame, my editor made me water it down a bit, remove a bit of the flourish, but all in all I think it came out well enough.}}
+
+{{dialogue|Grace|Yeah, I read Ernie's World. I understood all the words but it don't make a lick of sense! Who do you think reads travel articles, the Deacon of Meidi!?}}
+
+{{dialogue|Heidi|I admire the bravado of the Atara Times, but, eh, a bit of levity wouldn't kill ya, am I right? I mean, I just think being so dramatic all the time can really blow things out of proportion... And not one alliteration, either...}}
+
+{{dialogue|Jasmine|Mr. Ernie works for the paper! I guess that's how he makes money when nobody buys his books.}}
+
+{{dialogue|Justice|Yo, did you see that article about the trainrobbin' incident? Man, that Ernie character made me sound cool as heck! I mean, I always thought I was cool, but I never thought I was that cool!}}
+
+{{dialogue|Mabel|That article by that young city-slicker boy... When he wrote, 'worn woman clutching a pastry,' you don't think he was talkin' about me and my Sandrolls, do you? Cuz I wouldn't take too kindly to that..}}
+
+{{dialogue|Matilda|Factually, I reckon that little writer boy ain't really done wrong, but... I can't help but feel like the danger of it all was a bit sensationalized in that Atara Times article. Why can't he write more "Ernie World?" Those are nice and friendly.}}
+
+{{dialogue|Mi-an|Did you see the article Ernest wrote about Logan? Chilling stuff! I'm just glad everyone's okay! ...And that I don't have to read stuff like that in literature class anymore. Sheesh, what a headache!}}
+
+{{dialogue|Mort|What a way with words that young writer has... If only we'd had someone like him on our side back in the early days. Perhaps he could've helped people see the bigger picture...}}
+
+{{dialogue|Owen|Kinda crazy, I've got me a prolific wordsmith type guy stayin' over at the saloon! Did you read the Ernie's World piece on Sandrock? Just line after line of all this honey-soaked stuff about our hometown! Hope he interviews me sometime...}}
+
+{{dialogue|Pablo|Ernie's World just speaks to me... the ink just cascades off the page, into my eyeballs and sparks up literary joy in my heart! I do hope I get to meet him personally one day. But I mean, he obviously puts work into his hair; should only be a matter of time...}}
+
+{{dialogue|Pen|Ernest's article was pretty good. I could probably write better if I tried. Which I won't. But... just so you know.}}
+
+{{dialogue|Tourist|I dunno about that Ernest dude. Seems like kind of a try-hard to me. Why not just write some funny stuff? Nobody wants to read, like... poetry about sand or whatever.}}
+
+{{dialogue|Unsuur|I guess that writer, Mr. Ernest, forgot to include my interviews in any of his articles. Oh well, what can you do?}}
+
+{{dialogue|Vivi|I dunno about that little writer boy. Wants us all to think he's so smart with his big words and fancy prose. Now you don't have to believe ol' armchair psychologist Grandma Vivi, but I figure that boy is compensatin' for somethin'...}}
+
+{{dialogue|Yan|That Ernest fellow made us Sandrockers look bad! I'll have his head for such libel! That is, unless he agrees to do my biography. "A young lad, born from nothing who would grow up to do great things..." Dang, maybe I'll just write it myself!}}
+
+
+TRIGGER Procedure 1.0 Step 8.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if IsTriggered is == 0
+CHECK DATE FLAG || flag: Story16120Begin | compare: 2 | days: 7
+ACTIONS
+Mabel stops standing still
+Ernest stops standing still
+AREA TRIGGER DELETE || id: 161201
+ACTION NPC REMOVE CLUSTER || cluster: 161201
+NPC REMOVE TAG || tag: ChatKeeper
+NPC REMOVE TAG || tag: ChatUpdater
+The player receives a letter:
+{{mail|234}}
+ACTION DATE REMOVE FLAG || flag: Story16120Begin
+END MISSION 1600120
+
+TRIGGER Procedure 1.0 Step 9.0 Order 6 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment DAY by 1
+
+TRIGGER Procedure 1.0 Step 10.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if DAY is >= 3
+ACTIONS
+The player receives a letter:
+{{mail|234}}
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Ernest|The kind workshop owner! I don't suppose you changed your mind about answering my questions? It'll only take a moment, I promise!}}
+
+*''Ask away!''
+*''Try asking the Church.''
+*''Try asking City Hall.''
+
+{{dialogue|Ernest|indent=true|answer=Ask away!
+|Ah, really? You will? Fantastic! One moment, let me just get out my notebook...}}
+{{dialogue|Ernest|indent=true|answer=Try asking the Church.
+|Yes, I've tried that. The Minister, her second-in-command, the editor of your local paper... all of them have been most unhelpful. But rather than directly tell me "no," they all just euphemistically tout off a, "no comment..."}}
+
+:*''Well, ask me, then!''
+:*''Can't help you, pal...''
+
+{{dialogue|Ernest|indent=double|answer=Well, ask me, then!
+|Ah, really? You will? Fantastic! One moment, let me just get out my notebook...}}
+{{dialogue|Ernest|indent=double|answer=Can't help you, pal...
+|Hm, yes. Well, thank you for listening, anyhow. Maybe I'll go check out the clinic. I'll bet that guy has plenty to say.}}
+{{dialogue|Ernest|indent=true|answer=Try asking City Hall.
+|Yes, I've tried that. The Minister, her second-in-command, the editor of your local paper... all of them have been most unhelpful. But rather than directly tell me "no," they all just euphemistically tout off a, "no comment..."}}
+
+:*''Well, ask me, then!''
+:*''Can't help you, pal...''
+
+{{dialogue|Ernest|indent=double|answer=Well, ask me, then!
+|Ah, really? You will? Fantastic! One moment, let me just get out my notebook...}}
+{{dialogue|Ernest|indent=double|answer=Can't help you, pal...
+|Hm, yes. Well, thank you for listening, anyhow. Maybe I'll go check out the clinic. I'll bet that guy has plenty to say.}}
+
+==Rewards==
+{{mission reward
+|npc1 = Ernest
+|rp1 = 10
+|exp = 400
+|reputation = None
+|gols = None
+}}

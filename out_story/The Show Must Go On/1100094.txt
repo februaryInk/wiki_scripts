@@ -1,0 +1,684 @@
+Reading Mission 1100094: The Show Must Go On
+
+<onlyinclude>{{Infobox mission
+|name = The Show Must Go On
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from The Show Must Go On:
+
+TRIGGER Procedure 0.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Mi-an stops standing still
+START MISSION 1100093
+
+TRIGGER Procedure 0.0 Step 5.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1100093
+CONDITIONS
+Always:
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: AfterSandStorm1
+Run mission The Show Must Go On
+END MISSION 1100093
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100094
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 11093) to Mi-an
+(param: TargetScene:Main|MoveMode:Run|FlagName:1193_G2_8017)
+===Follow Mi-an to the stage===
+
+{{mission_details
+|desc = Matilda asked Mi-an bring you to the Blue Moon outdoor stage.
+|details = Follow Mi-an to the stage
+}}
+Set DAY to 0
+SCENEITEM DELETE || itemType: 0 | id: 110939
+PICK UP RESOURCE REFRESH || id: 1308
+PICK UP RESOURCE REFRESH || id: 1309
+Set IsInStoryModeArea to 1
+Set IsMianIdle to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 11093
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 11093
+ACTION CAMERA START FOCUS POINT || flagName: 1193_G2_FocusFlag | scene: Main | distance: 8 | pitch: 0.66 | blendTime: 5 | style: 1
+STOPWATCH REAL TIME SET || id: 119411 | sec: 3
+Add behavior CommanderMoveToFlagAndAction (idName: 119411) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:1193_G2_Player)
+NPC REMOVE TAG || tag: ChatKeeper
+NPC REMOVE TAG || tag: ChatUpdater
+ACTION NPC REMOVE CLUSTER || cluster: 1193GroupTalk
+Matilda stands still in Main
+Owen stands still in Main
+Heidi stands still in Main
+Mi-an stands still in Main
+
+TRIGGER Procedure 0.0 Step 1.2 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 119411) from Player
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 119411
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 119419 | sec: 1
+
+TRIGGER Procedure 0.0 Step 2.1 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 119411
+CONDITIONS
+Always:
+ACTIONS
+ACTION CAMERA END FOCUS POINT || blendTime: 0 | style: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 119412
+CONDITIONS
+Always:
+ACTIONS
+(cId 10) A conversation 887, 888 starts:
+{{dialogue|Owen|My... beautiful... stage...}}
+{{dialogue|Matilda|Now, now, at least no one was hurt, we can always rebuild...}}
+Remove behavior CommanderNPCActionLoop (idName: 119411) from Owen
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderIdle (idName: 119411) to Matilda
+(param: TurnToActor:8017|LookAtActor:8000|Reset:True)
+STOPWATCH REAL TIME SET || id: 119413 | sec: 0.6
+
+TRIGGER Procedure 4.0 Step 9.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+GROUP 0:
+GLOBAL BLACK BOARD REMOVE || key: WuTaiPartDown
+GLOBAL BLACK BOARD REMOVE || key: WuTaiPartUp
+Run mission Farewell Party
+ACTION MISSION TRACE 1100096
+GLOBAL BLACK BOARD REMOVE || key: miansandstorm
+Remove behavior CommanderNPCAction (idName: 110941) from Mi-an
+Remove behavior CommanderPlayerAction (idName: 10941) from Player
+Remove behavior CommanderNPCAction (idName: 1094) from Mi-an
+GLOBAL BLACK BOARD REMOVE || key: stagereceiveowen
+SUBMIT MISSION 1100093
+
+GROUP 10:
+END MISSION 1100094
+
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 119413
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderIdle (idName: 119412) to Owen
+(param: TurnToActor:8017|Reset:True)
+Add behavior CommanderIdle (idName: 119411) to Heidi
+(param: TurnToActor:8000|Reset:True|Delay:0.3)
+STOPWATCH REAL TIME SET || id: 119414 | sec: 1
+
+TRIGGER Procedure 0.0 Step 5.1 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 119414
+CONDITIONS
+Always:
+ACTIONS
+(cId 30) A conversation 889, 890, 891, 892, 894, 879, 216_0 starts:
+{{dialogue|Matilda|Say, speak of the devil, if it isn't our resident Builders here to save the day!}}
+{{dialogue|Matilda|We're in a real jam here: we'd wanted to do a stage performance for Mason's going away ceremony, but now the plan's in shambles. Would you two be dears and find a way to fix this thing up?}}
+{{dialogue|Matilda|I don't doubt you'll be up to your eyeballs in other commissions, but whenever the stage is fixed we can reschedule that ceremony. So I'm afraid I must insist on an {{textcolor|green|official town request}} of the highest priority!}}
+{{dialogue|Matilda|Heidi-dear, can you draw up a new design...?}}
+{{dialogue|Heidi|I was sorta expecting this stage to collapse one of these days, so I already designed a new one. Here's the diagram, Builders.}}
+{{dialogue|Matilda|Oh my, that's great. Why don't you Builders decide on which part you want to do.}}
+{{dialogue|Mi-an|You pick first, ''Player'', I'm fine with either.}}
+
+*''I want to build the {{textcolor|green|Stage Backdrop}}.'' (No unique dialogue)
+*''I want to build the {{textcolor|green|Stage Support}}.'' (No unique dialogue)
+
+
+TRIGGER Procedure 0.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 30) The player picks the first option in conversation segment 895:
+{{dialogue|Mi-an|You pick first, ''Player'', I'm fine with either.}}
+
+*''I want to build the {{textcolor|green|Stage Backdrop}}.'' (No unique dialogue)
+*''I want to build the {{textcolor|green|Stage Support}}.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 40) A conversation 2049, 893, 896 starts:
+{{dialogue|Mi-an|Alright! I'll take care of the other one then! Let's see, what've we got here... Ah! I don't have the machines I'll need! I'd better get to {{textcolor|green|Qi's research center}} on the double and get myself a {{textcolor|green|Grinder}} and a {{textcolor|green|Processor}}...}}
+{{dialogue|Matilda|Alright you two, let me know how it goes! Good luck, and thanks again!}}
+{{dialogue|Owen|By the way, if you guys need it, you can go ahead and {{textcolor|green|salvage this here stage}}. Stage-y... would've wanted it that way.}}
+Set global blackboard key WuTaiPartUp with info 1.
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 40) After the conversation ends:
+CONDITIONS
+Check if IsMianIdle is == 0
+ACTIONS
+GROUP 0:
+GLOBAL BLACK BOARD REMOVE || key: AfterSandStorm1
+Mi-an stops standing still
+Owen stops standing still
+Heidi stops standing still
+Matilda stops standing still
+===Recycle the Old Stage===
+
+{{mission_details
+|desc = You'll need to recycle the old stage to make room for the new one!
+
+(Need {{textcolor|green|Bronze Pickhammer}})
+|details = Recycle the Old Stage
+}}
+Set part to 0
+Add behavior CommanderMoveToFlagAndAction (idName: 11094) to Mi-an
+(param: TargetScene:Main|MoveMode:Run|FlagName:Wutai_MianRe)
+STOPWATCH REAL TIME SET || id: 110941 | sec: 3
+Set CG to 0
+Set global blackboard key stagereceiveowen with info 1.
+Townsfolk respond to the event:
+
+{{dialogue|Owen|Try to build something nice with the scrap you get from my stage, would you? She wasn't much but, she always did her best.}}
+
+Remove behavior CommanderIdle (idName: 119412) from Owen
+Remove behavior CommanderIdle (idName: 119411) from Heidi
+Remove behavior CommanderMoveToFlagAndAction (idName: 11093) from Mi-an
+Remove behavior CommanderIdle (idName: 119411) from Matilda
+SCENEITEM DELETE || itemType: 0 | id: 11093
+
+GROUP 1:
+CUTSCENE UI STATE EXIT || 
+
+GROUP 2:
+AUTOSAVE TRY || 
+
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 40) After the conversation ends:
+CONDITIONS
+Check if IsMianIdle is == 1
+ACTIONS
+GROUP 0:
+GLOBAL BLACK BOARD REMOVE || key: AfterSandStorm1
+Mi-an stops standing still
+Owen stops standing still
+Heidi stops standing still
+Matilda stops standing still
+===Recycle the Old Stage===
+
+{{mission_details
+|desc = You'll need to recycle the old stage to make room for the new one!
+
+(Need {{textcolor|green|Bronze Pickhammer}})
+|details = Recycle the Old Stage
+}}
+Set part to 0
+Add behavior CommanderMoveToFlagAndAction (idName: 11094) to Mi-an
+(param: TargetScene:Main|MoveMode:Run|FlagName:Wutai_MianRe)
+STOPWATCH REAL TIME SET || id: 110941 | sec: 3
+Set CG to 0
+Set global blackboard key stagereceiveowen with info 1.
+Townsfolk respond to the event:
+
+{{dialogue|Owen|Try to build something nice with the scrap you get from my stage, would you? She wasn't much but, she always did her best.}}
+
+Remove behavior CommanderIdle (idName: 119412) from Owen
+Remove behavior CommanderIdle (idName: 119411) from Heidi
+Remove behavior CommanderIdle (idName: 119411) from Matilda
+SCENEITEM DELETE || itemType: 0 | id: 11093
+
+GROUP 1:
+CUTSCENE UI STATE EXIT || 
+
+GROUP 2:
+AUTOSAVE TRY || 
+
+
+TRIGGER Procedure 4.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 40) After the conversation ends:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: WuTaiPartDown | info: 1 | exist: 1
+ACTIONS
+RESOURCE LOCK INTERACT || id: 1308 | set: 1
+Add 1 Stage Support of Unknown quality (Notify player)
+Add 1 Stage Backdrop of Default quality (Do not notify player)
+SCENEITEM CREATE FLAG || itemType: 0 | id: 109415 | path: Lable_kong | sceneName: Main | flagName: wutai | extraParams: 0
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 109415 | missionId: 1100093 | iconType: 3
+
+TRIGGER Procedure 4.0 Step 1.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 40) After the conversation ends:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: WuTaiPartUp | info: 1 | exist: 1
+ACTIONS
+RESOURCE LOCK INTERACT || id: 1309 | set: 1
+Add 1 Stage Backdrop of Unknown quality (Notify player)
+Add 1 Stage Support of Default quality (Do not notify player)
+SCENEITEM CREATE FLAG || itemType: 0 | id: 109415 | path: Lable_kong | sceneName: Main | flagName: wutai1094 | extraParams: 0
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 109415 | missionId: 1100093 | iconType: 3
+
+TRIGGER Procedure 0.0 Step 6.1 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 30) The player picks the second option in conversation segment 895:
+{{dialogue|Mi-an|You pick first, ''Player'', I'm fine with either.}}
+
+*''I want to build the {{textcolor|green|Stage Backdrop}}.'' (No unique dialogue)
+*''I want to build the {{textcolor|green|Stage Support}}.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 40) A conversation 893, 896 starts:
+{{dialogue|Matilda|Alright you two, let me know how it goes! Good luck, and thanks again!}}
+{{dialogue|Owen|By the way, if you guys need it, you can go ahead and {{textcolor|green|salvage this here stage}}. Stage-y... would've wanted it that way.}}
+Set global blackboard key WuTaiPartDown with info 1.
+
+TRIGGER Procedure 0.0 Step 7.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Owen stops standing still
+Heidi stops standing still
+Matilda stops standing still
+Mi-an stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 11093) from Mi-an
+Set DAY to 1
+
+TRIGGER Procedure 0.0 Step 8.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 119419
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCActionLoop (idName: 119411) to Owen
+(param: CMDAction:Pissed_Start)
+STOPWATCH REAL TIME SET || id: 119412 | sec: 4
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if DAY is >= 1
+CHECK GLOBAL BLACKBOARD || key: stagereceiveowen | info: 1 | exist: 0
+ACTIONS
+PICK UP RESOURCE REFRESH || id: 1308
+PICK UP RESOURCE REFRESH || id: 1309
+
+TRIGGER Procedure 2.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Set FRESH to 0
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100094
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1100094 | id: 20941 | sceneName: Main | flagName: wutai_trigger2 | showOnMap: 1 | mapIcon: MissionArea | transId: 80000689
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 20941
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 20941
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderMoveToFlag (idName: 20941) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:wutai_player2)
+Mi-an stands still in Main
+Mi-an stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 20942) to Mi-an
+(param: TargetScene:Main|MoveMode:Run|FlagName:wutai_mian3)
+
+TRIGGER Procedure 2.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8017 | eventName: MoveToFlagOver | behaviourName: CommanderMoveToFlagAndAction
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 305_0 starts:
+{{dialogue|Mi-an|Hey there, ''Player''! Ready to do some divin'? The show must go on, but it sure isn't going anywhere until the two of us get what we need to build that stage!}}
+{{dialogue|Mi-an|Say, if you don't mind me asking: how deep have you dived to in the Abandoned Ruins?}}
+
+*''Huh? How deep?''
+*''I've travelled down pretty deep.''
+
+{{dialogue|Mi-an|indent=true|answer=Huh? How deep?
+|Yeah, you know! The Abandoned Ruins isn't just a single layer. If you follow your scanner, you can find deeper areas within the ruins. That's where all the good stuff is since they're less disturbed by other divers.}}
+{{dialogue|Mi-an|indent=true|answer=I've travelled down pretty deep.
+|Oh, really? Wow! I always follow my scanner's readings, and I'm still only in the shallow areas! You must be really good at exploring!}}
+{{dialogue|Mi-an|Well, all I know for now is that we're going to have to go {{textcolor|green|pretty deep}} for this commission. Hope you brought {{textcolor|green|some snacks}}! Maybe see you inside! Later, ''Player''!}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 3.5 Order 6 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if FRESH is <= (maybe?) 1
+ACTIONS
+PICK UP RESOURCE REFRESH || id: 1308
+
+TRIGGER Procedure 2.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 20942) from Mi-an
+Remove behavior CommanderMoveToFlag (idName: 20941) from Player
+NPC ADD TAG || tag: MianMining
+
+TRIGGER Procedure 2.0 Step 5.0 Order 5 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if FRESH is <= (maybe?) 1
+ACTIONS
+PICK UP RESOURCE REFRESH || id: 1309
+
+TRIGGER Procedure 2.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON RESOURCE PICK UP || order: 0 | npc: 8000 | id: 1308
+ON RESOURCE PICK UP || order: 0 | npc: 8000 | id: 1309
+CONDITIONS
+Always:
+ACTIONS
+Set FRESH to 1
+
+TRIGGER Procedure 2.0 Step 7.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Set FRESH to 1
+
+TRIGGER Procedure 3.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 110941
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 11094) from Mi-an
+Add behavior CommanderNPCAction (idName: 110941) to Mi-an
+(param: CMDAction:Fix)
+STOPWATCH REAL TIME SET || id: 110942 | sec: 3
+
+TRIGGER Procedure 3.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 110942
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: WuTaiPartDown | info: 1 | exist: 1
+ACTIONS
+PICK UP RESOURCE DELETE || id: 1308
+Remove behavior CommanderMoveToFlagAndAction (idName: 110941) from Mi-an
+
+TRIGGER Procedure 3.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON RESOURCE PICK UP || order: 0 | npc: 8000 | id: 1308
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: WuTaiPartUp | info: 1 | exist: 1
+ACTIONS
+===Assemble the Stage Backdrop===
+
+{{mission_details
+|desc = The stage was destroyed by a sandstorm, you and Mi-an need to each build one part of a new stage. You may need to {{textcolor|green|research a new machine}} from Director Qi at the {{textcolor|green|Research Center}} to complete this.
+|details = Assemble the Stage Backdrop
+*{{i2|Stage Backdrop|0/1}}
+}}
+SCENEITEM DELETE || itemType: 0 | id: 109415
+Set FRESH to 1
+
+TRIGGER Procedure 3.0 Step 3.5 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1100093 | targetId: 2 | canSubmit: 1
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: WuTaiPartUp | info: 1 | exist: 1
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 109415
+===Install Stage Backdrop===
+
+{{mission_details
+|desc = The part you built for the new stage is ready, go install it outside the Blue Moon Saloon.
+|details = Install Stage Backdrop
+*{{i2|Stage Backdrop|0/1}}
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 1100094 | path: Lable_Newwutai | sceneName: Main | flagName: party_suxin | extraParams: -1|CreatorItem|14000040_1_0|1547|-1|0
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 1100094 | missionId: 1100093 | iconType: 3
+AUTOSAVE TRY || 
+
+TRIGGER Procedure 4.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 110942
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: WuTaiPartUp | info: 1 | exist: 1
+ACTIONS
+PICK UP RESOURCE DELETE || id: 1309
+Remove behavior CommanderMoveToFlagAndAction (idName: 110941) from Mi-an
+
+TRIGGER Procedure 4.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON RESOURCE PICK UP || order: 0 | npc: 8000 | id: 1309
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: WuTaiPartDown | info: 1 | exist: 1
+ACTIONS
+===Construct the Stage Support===
+
+{{mission_details
+|desc = The stage was destroyed by a sandstorm, you and Mi-an need to each build one part of a new stage. You may need to {{textcolor|green|research a new machine}} from Director Qi at the {{textcolor|green|Research Center}} to complete this.
+|details = Construct the Stage Support
+*{{i2|Stage Support|0/1}}
+}}
+SCENEITEM DELETE || itemType: 0 | id: 109415
+Set FRESH to 1
+
+TRIGGER Procedure 4.0 Step 3.5 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | canSubmit: 1 | missionId: 1100093 | targetId: 2
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: WuTaiPartDown | info: 1 | exist: 1
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 109415
+===Install Stage Support===
+
+{{mission_details
+|desc = The part you built for the new stage is ready, go install it outside the Blue Moon Saloon.
+|details = Install Stage Support
+*{{i2|Stage Support|0/1}}
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 1100094 | path: Lable_Newwutai | sceneName: Main | flagName: party_suxin | extraParams: -1|CreatorItem|14000034_1_0|1547|-1|0
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 1100094 | missionId: 1100093 | iconType: 3
+AUTOSAVE TRY || 
+
+TRIGGER Procedure 4.0 Step 4.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 1100094
+CONDITIONS
+Always:
+ACTIONS
+Set part to 10
+CUTSCENE UI STATE ENTER || 
+Set CG to 1
+NPC REMOVE TAG || tag: BeforeNewWT
+Add behavior CommanderMoveToFlag (idName: 110940) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:owen_moonmiss)
+NPC REMOVE TAG || tag: MianMining
+
+TRIGGER Procedure 4.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 1109404
+CONDITIONS
+Always:
+ACTIONS
+Mi-an stands still in Main
+Mi-an stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 1100940) to Mi-an
+(param: TargetScene:Main|MoveMode:Run|FlagName:player_owen)
+
+TRIGGER Procedure 4.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8017 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 20) A conversation 1493 starts:
+{{dialogue|Mi-an|Fancy seeing you here, ''Player''! Since we're both finished, let's put this stage back in business!}}
+
+TRIGGER Procedure 4.0 Step 7.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 20) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+GROUP 0:
+Remove behavior CommanderMoveToFlagAndAction (idName: 1100940) from Mi-an
+Add behavior CommanderPlayerAction (idName: 10941) to Player
+(param: CMDAction:Fix)
+
+GROUP 1:
+Add behavior CommanderNPCAction (idName: 1094) to Mi-an
+(param: CMDAction:Fix)
+
+
+TRIGGER Procedure 4.0 Step 8.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8017 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 110094 | sceneName: Main | extraParams: 0 | flagName: wutai | path: ScenItem_WuTai
+(cId 5) A conversation 1128, 1129, 1494, 1495 starts:
+{{dialogue|Mi-an|Ta-daa! This looks great!}}
+{{dialogue|Mi-an|You know what? It feels so nice to work with a really good Builder like you! Can't wait for more projects!}}
+{{dialogue|Mi-an|Well, guess we're done! All that's left to do is inform our good Minister Matilda of our good deed!}}
+{{dialogue|Mi-an|Anyway, do you mind doing the honors and tell her we've finished? I've really gotten behind on my commissions! Thanks!}}
+
+TRIGGER Procedure 5.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 20941
+Remove behavior CommanderMoveToFlag (idName: 110940) from Player
+===Report to Matilda===
+
+{{mission_details
+|desc = You've rebuild the stage, go tell Matilda the good news.
+|details = Report to Matilda
+}}
+Mi-an stops standing still
+AUTOSAVE TRY || 
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 5.0 Step 4.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Matilda
+CONDITIONS
+Check if part is == 10
+ACTIONS
+(cId 10) A conversation 897, 898, 1496 starts:
+{{dialogue|Matilda|You've rebuilt the stage? Well aren't you two just precious! That was quick! On behalf of everyone in Sandrock who enjoys a good hoe-down: thank you very much for your service.}}
+{{dialogue|Matilda|Since Mason's in a hurry to get outta town, let's just hold his farewell party {{textcolor|green|tomorrow morning}}. I'm sure I can get everyone together, even on such short notice. You won't miss it, right?}}
+{{dialogue|Matilda|That's grand! See you tomorrow, then!}}
+NPC REMOVE TAG || tag: stagebroken

@@ -1,0 +1,1027 @@
+Reading Mission 1700390: "Him"
+
+<onlyinclude>{{Infobox mission
+|name = "Him"
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from "Him":
+
+TRIGGER Procedure 0.0 Step 0.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173892 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 173891) from 173891
+173891 stands still in Saloon
+Set global blackboard key FangQ9Door with info 1.
+Remove behavior CommanderSit (idName: 173891) from Talon
+DELAY MASK SET || maskId: 173892 | delayTime: 3 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173892 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 20866 starts:
+{{dialogue|Player|(Fang... I need to meet him at the train platform tomorrow. Maybe I can warn him...)}}
+CUTSCENE UI STATE EXIT || 
+DELIVER MISSION 1700389
+START MISSION 1700389
+Run mission "Him"
+===Wait for Tomorrow===
+
+{{mission_details
+|desc = Fang's biological father has found him here in Sandrock and seeks to take him back to Seesai. Head to the Train Station immediately tomorrow morning to tell him the news as soon as possible.
+|details = Wait for Tomorrow
+}}
+END MISSION 1700389
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+CHECK NPC PK STATE || npc: 8000 | set: 0
+CHECK TIME || compare: 5 | hour: 16 | minute: 0
+CHECK GLOBAL BLACKBOARD || key: SummitBegin | info: 1 | exist: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: FangQ9Station_Player
+Fang stands still in Main
+X stands still in Main
+Talon stands still in Main
+173891 stands still in Main
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 20868, 20869, 20870, 20871, 20872, 20873 starts:
+{{dialogue|Fang|''Pet Name''...}}
+{{dialogue|X|Hi, birdie! We missed you!}}
+{{dialogue|Fang|''Pet Name'', are you alright? Is something troubling you?}}
+{{dialogue|X|Awwwwk!}}
+{{dialogue|Fang|...!}}
+{{dialogue|X|It's him! Him...!}}
+GLOBAL BLACK BOARD REMOVE || key: leavehome
+Set global blackboard key noleave390 with info 1.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 173901) to Fang
+(param: FlagName:FangQ9Station_Fang2|TargetScene:Main)
+STOPWATCH REAL TIME SET || id: 739010 | sec: 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 173901) from Fang
+Add behavior CommanderMoveToFlagAndAction (idName: 173901) to Fang
+(param: FlagName:FangQ9Station_Fang3|TargetScene:Main)
+In a speech bubble:
+{{dialogue|X|Run, just run! Don't turn back! Don't wanna go back! Don't wanna go back!}}
+STOPWATCH REAL TIME SET || id: 173903 | sec: 2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 173901) to Fang
+(param: CMDAction:Nod)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 173901) to Fang
+(param: TargetScene:Clinic|FlagName:FangQ9Clinic_Guard)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 173901) from Fang
+===Talk to Qi===
+
+{{mission_details
+|desc = Talon's condition is serious, and he needs a breathing machine to stay alive. Visit Qi with Fang's prototype design and see what can be done to manifest it.
+|details = Talk to Qi
+}}
+CUTSCENE UI STATE EXIT || 
+X stops standing still
+
+TRIGGER Procedure 0.0 Step 0.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Oxygen Concentrator of Unknown quality (Notify player)
+Add 1 Oxygen Concentrator Chip of Ordinary quality (Notify player)
+===Build Machine, find Herbs===
+
+{{mission_details
+|desc = To have a chance to cure his father, Fang wants you to build an Oxygen Concentrator machine, as well as help him collect quite a few Hyacinth Orchids. Without either, the procedure will fail.
+|details = Build Machine, find Herbs
+*{{i2|Hyacinth Orchid|0/500}}
+*{{i2|Oxygen Concentrator|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Cooper stops standing still
+
+TRIGGER Procedure 0.0 Step 0.0 Order 25 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add 40 Hyacinth Orchid of Default quality (Notify player)
+Add 5 Yakmel Milk of Default quality (Notify player)
+NPC ICON REMOVE || missionId: 1700389 | npc: 8003 | missionIcon: 6
+
+TRIGGER Procedure 0.0 Step 0.0 Order 32 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 6047}}
+A cutscene CG_TREATMENT (duration: 0.0) starts playing
+Second Chance - Fang's treatment of his father was arduous, but ultimately successful. We shared a somber moment once his condition started to improve.
+BAG MODIFY BY TARGET || missionId: 1700389 | targetId: 5
+
+TRIGGER Procedure 0.0 Step 0.0 Order 36 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Give Fang Some Time===
+
+{{mission_details
+|desc = Talon's treatment has started. Fang should have news for you in three days.
+|details = Give Fang Some Time
+}}
+CUTSCENE UI STATE EXIT || 
+Fang stops standing still
+Set talk to 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 46 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1700389
+END MISSION 1700390
+
+TRIGGER Procedure 0.0 Step 0.0 Order 49 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+===Give Fang Some Time===
+
+{{mission_details
+|desc = Fang has made the decision to study Talon's illness; check in tomorrow to see if there's been any progress made.
+|details = Give Fang Some Time
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 53 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 173901 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 58 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 173901) to Player
+(param: TargetScene:Clinic|FlagName:FangQ9Clinic_Player2|MoveMode:Run)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 739010
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8016 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 20874, 20875, 20876, 20877 starts:
+{{dialogue|Talon|Fang. It is I. I... see you've kept that little pet of yours...}}
+{{dialogue|Talon|Yes, your father is here. Do not be scared, child. No one will hurt you anymore.}}
+{{dialogue|Talon|It's time... to go home.}}
+{{dialogue|Fang|I am home. ''Player''... I think we should be going.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 173903
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 20879, 20880, 20881, 20883, 20884, 20885, 20886, 20887, 20888, 20889, 20890, 20891, 20892, 20893, 20894, 20895, 20896, 20897, 20898, 20899, 20900, 20901, 20902, 20903, 20904, 20905 starts:
+{{dialogue|Talon|Fang, don't go! Son! Please... hear me out!}}
+{{dialogue|Talon|You... do you really despise me so?}}
+{{dialogue|Talon|I've been in Sandrock for a few days. Fang, you've changed. I saw you talking to people in town. You... have your own family.}}
+{{dialogue|Talon|I thought perhaps... given all this time... things might have changed. At least... don't leave now. Not before you hear why I've come...!}}
+{{dialogue|X|Aw, shove it in your ear!}}
+{{dialogue|Fang|X. Be silent.}}
+{{dialogue|X|Caww...}}
+{{dialogue|Fang|What do you... want to say?}}
+{{dialogue|Talon|I want to take you back. Back to Seesai. I'll make it up to you. For everything.}}
+{{dialogue|Talon|About the past... I didn't know! I didn't know what they were doing to you, Fang! I heard everything from your spouse, ''Player''-}}
+{{dialogue|Fang|You stay away from ''Player''!You will not lay a hand on them. Not a finger, do you hear me!?}}
+{{dialogue|Talon|I won't harm anyone! I never wanted to! Forget about Rita! She's dead, Fang. She's dead, and I never loved her. I loved your mother! And I loved... you...!}}
+{{dialogue|Fang|She... what...? Dead...?}}
+{{dialogue|Talon|Come with me! Bring your family! I can give you everything you ever wanted, you can be... happy!}}
+{{dialogue|Fang|We are happy. You... you can't...}}
+{{dialogue|Fang|We are very happy. Without you. Here.}}
+{{dialogue|Talon|Here? This is not our place, my son. This is wasteland! How can you say you're happy here? If you're worried about being hurt, I promise you it will never happen again-}}
+{{dialogue|Fang|No. That's not it. I won't leave my home. I won't leave my ''Player''. This is my family now. This is my home. This is where I belong.}}
+{{dialogue|Talon|Fang, I traveled weeks to get here! Do you have any idea how much I've sacrificed to try to make things right with you? Listen to reason...}}
+{{dialogue|Fang|Weeks? Consider it meager compensation... for the years you allowed to be taken from me. Your journey here... was folly. Come, ''Pet Name''. We're done here.}}
+{{dialogue|Talon|Tch! I offer you riches, I offer you a better life for your family, I offer you the loving embrace of your father! ...And you spit in my face.}}
+{{dialogue|Talon|...My son, you are making the biggest mistake of your life. You hear me? The biggest mist- ... ack...!}}
+{{dialogue|Talon|Wh... What...!? Chest... Hngh!}}
+{{dialogue|173891|Boss?}}
+{{dialogue|173891|What the-!?}}
+{{dialogue|X|Man down! Is there a doctor in the house!?}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderDrama (idName: 173901) to Talon
+(param: TargetScene:Clinic|DramaName:GingerBedRight|DramaType:Sleep|TargetFlag:GKA_Qi2)
+PLAYER SET POS ROT FLAG || sceneName: Clinic | flagName: FangQ9Clinic_Player
+Fang stands still in Clinic
+X stands still in Clinic
+173891 stands still in Clinic
+CUTSCENE UI STATE EXIT || 
+CAMERA PATH STOP ALL || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 17390111 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 17390111 | delayTime: 2 | durationTime: 2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8016 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 20914, 20915, 20916, 6689_0, 20929, 20930, 20931, 20932, 6695_0, 20939, 20940, 20941, 20942, 20943, 20944, 20945 starts:
+{{dialogue|Fang|Unmistakably, it is very similar to my mother's illness.}}
+{{dialogue|Fang|I've been looking for a way to eradicate that disease much of my life. Some progress has been made but... I haven't done trials since... we first met...}}
+{{dialogue|Fang|The first case I've ever encountered in person. And it's... "him."}}
+{{dialogue|Player|(What should I say?)}}
+
+*''Will you try to cure him?''
+*''Seesai doctors can handle this.''
+
+{{dialogue|Fang|indent=true|answer=Seesai doctors can handle this.
+|Can't recommend such a long journey to an ill patient. Besides, there's no time.}}
+{{dialogue|Fang|indent=true|And... after all, this... disease is still my enemy.}}
+{{dialogue|Fang|Hm. ...What do you think?}}
+{{dialogue|Player|(What should I say?)}}
+
+*''You should save him if you can.''
+*''He doesn't deserve your help...''
+*''Let him die.''
+
+{{dialogue|Fang|indent=true|answer=You should save him if you can.
+|Mm. It is my duty. Doesn't matter who it is.}}
+{{dialogue|Fang|indent=true|answer=He doesn't deserve your help...
+|You're right.}}
+{{dialogue|Fang|indent=true|But I have no choice. Even after all this, disease is my enemy.}}
+{{dialogue|Fang|indent=true|answer=Let him die.
+|No!}}
+{{dialogue|Fang|indent=true|No...}}
+{{dialogue|Fang|indent=true|The pain I went through... I wouldn't wish upon anyone. Not even him...}}
+{{dialogue|Fang|indent=true|You want him to pay... for what he did to me. I know. But this is not us. We are better. I swore only to heal, and heal is what I will do...}}
+{{dialogue|Fang|''Pet Name'', I'll be staying at the clinic. If you have need of me-}}
+{{dialogue|Talon|My boy... my boy!}}
+{{dialogue|Talon|What... what's happening to me?}}
+{{dialogue|Talon|What is it? It still hurts... Am I going to... die?}}
+{{dialogue|Player|(What should I say?)}}
+
+*''Trust your son.''
+*''You have Sarnai's disease.''
+
+{{dialogue|Talon|indent=true|answer=Trust your son.
+|My boy... can you... help me?}}
+{{dialogue|Fang|indent=true|I'm familiar with the nature of your disease. It has been the subject of my research for... a long time.}}
+{{dialogue|Fang|indent=true|It is similar to... Mother's.}}
+{{dialogue|Talon|indent=true|...!}}
+{{dialogue|Talon|indent=true|answer=You have Sarnai's disease.
+|...!}}
+{{dialogue|Fang|indent=true|The symptoms are similar. Disease of this kind have been the subject of my research for... a long time.}}
+{{dialogue|Talon|Hah... fate... has a sense of humor, it seems... What... could have caused this?}}
+{{dialogue|Fang|A psychosomatic reaction. A great emotional toll can set the symptoms into motion. Stress, anger... sadness. For lack of a better term: you suffer from a broken heart.}}
+{{dialogue|Fang|I've had your... subordinates write to inform your associates in Seesai and sent them away.}}
+{{dialogue|Fang|For now, you are my patient.}}
+{{dialogue|Talon|My boy... you are a... real stickler for the details... Just like... just like your old man... You see yourself in me, that's why... you want to help me.}}
+{{dialogue|Fang|...We are not the same.}}
+{{dialogue|Fang|There's nothing more to be done for today. I'll stay here. ''Pet Name'', you should go. Rest.}}
+Remove behavior CommanderNPCAction (idName: 173901) from Fang
+
+TRIGGER Procedure 0.0 Step 0.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player wakes up:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+ACTIONS
+===Go to Clinic===
+
+{{mission_details
+|desc = Did Fang stay up all night? Better go check on him at the clinic.
+|details = Go to Clinic
+}}
+NPC LEAVE || npc: 8016
+NPC LEAVE || npc: 8042
+173891 stands still in Clinic
+
+TRIGGER Procedure 0.0 Step 0.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_clinic
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_clinic
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 173903
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 20949, 6698_0 starts:
+{{dialogue|Talon|Ah, ''Player''. It's you. Fang's gone off to the Moisture Farm. You're... not looking for me, I presume.}}
+{{dialogue|Player|(What should I say?)}}
+
+*''Correct. I'll be back later.''
+*''Let's chat 'til he gets back.''
+*''(Wait in silence)''
+
+{{dialogue|Talon|indent=true|answer=Correct. I'll be back later.
+|You don't have to worry about me anymore. I won't be taking Fang anywhere. Not like this...}}
+{{dialogue|Talon|indent=true|Stay for a while.}}
+{{dialogue|Talon|indent=true|answer=Let's chat 'til he gets back.
+|As you wish...}}
+{{dialogue|Talon|indent=true|answer=(Wait in silence)
+|Hm. Two of a kind. No surprise Fang would go after someone soft-spoken...}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8016 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 6705_0, 20968, 20969, 20970, 20971, 20972, 20973, 20974, 6708_0 starts:
+{{dialogue|Player|(What should I say?)}}
+
+*''How's the treatment coming along?''
+*''I'm talking with your father.''
+
+{{dialogue|Fang|indent=true|answer=How's the treatment coming along?
+|Almost there.}}
+{{dialogue|Fang|indent=true|answer=I'm talking with your father.
+|...Ah.}}
+{{dialogue|Talon|Fang... do not worry about me... and my illness. I'm going to return to Seesai, I have doctors there. They will be able... to cure me.}}
+{{dialogue|Fang|You don't understand. It's not about you... it's not that simple.}}
+{{dialogue|Fang|This condition... has never been cured before.}}
+{{dialogue|Talon|Wh... what?}}
+{{dialogue|Fang|But I have... a plan.}}
+{{dialogue|Talon|I'll... I'll buy up... the best medicine there is... from all over the world... send it here...}}
+{{dialogue|Fang|Your money won't save you. Only I can.}}
+{{dialogue|Player|(What should I say?)}}
+
+*''(Comfort Fang)''
+*''(Keep silent)''
+
+{{dialogue|Fang|indent=true|answer=(Comfort Fang)
+|...Sorry. I... don't mean to be harsh.}}
+{{dialogue|Fang|indent=true|Regarding the treatment, I'll discuss the process with ''Player''.}}
+{{dialogue|Fang|indent=true|You... rest. Just follow my advice and rest.}}
+{{dialogue|Fang|indent=true|answer=(Keep silent)
+|Regarding the treatment, I'll discuss with ''Player''.}}
+{{dialogue|Fang|indent=true|You... speak less, and rest.}}
+{{dialogue|Talon|Ah...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 21263, 21264, 21265, 21266, 21267, 21268, 21269, 21270, 21271, 21272 starts:
+{{dialogue|Qi|Greetings, ''Player''. You seem a bit pale. Have you been ingesting a proper dosage of vitamin D as of late?}}
+{{dialogue|Qi|Hm. That is indeed troubling. And unrelated to vitamin intake. I apologize for my misdiagnosis, and offer condolences to you and your husband.}}
+{{dialogue|Qi|There are many causes for dyspnea. Is... Dr. Fang confident that he's addressing the issue correctly? The diagram. Please.}}
+{{dialogue|Qi|...}}
+{{dialogue|Qi|I... see...}}
+{{dialogue|Qi|Fascinating. Zeolyte, a porous mineral, being used as a molecular sieve to filter out the oxygen... Then it vents the purified air into the patients lungs... Utterly brilliant. I...}}
+{{dialogue|Qi|I have no notes.}}
+{{dialogue|Qi|Let me just transpose it into a slightly more Builder friendly format... And...}}
+{{dialogue|Qi|Here you are. This diagram... follow it closely. Construct it on your Assembly Station; I'm confident it will achieve the desired effect.}}
+{{dialogue|Qi|Good luck.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Set a to 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON ADD || missionId: 1700389 | npc: 8003 | missionIcon: 6
+Cooper stands still in Main
+
+TRIGGER Procedure 0.0 Step 0.0 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Cooper
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 21276, 21277, 21278, 21279 starts:
+{{dialogue|Cooper|Is the doc around? He ain't home? At the clinic, huh? Oh yeah, gotta be takin' care of his Pa. Owen done told me. Said his Pa fell down, couldn't get back up again. Doc ain't nothin' but a bag o' bones, like father like son.}}
+{{dialogue|Cooper|I tell ya, this here is Yakmel Milk. Ya gotta drink up, seen my body? Bones so tough wouldn't break if ye hit me with m'pal Hugo's hammer. That there Fang's Pa, he jus' drinkin' that city boy milk. All watered down.}}
+{{dialogue|Cooper|Mabel reckoned we ought to just get y'all some of them herbs y'all're after. And to her credit, the healin' properties of Yakmel Milk have been contested by so called "scientists," so we went ahead and agreed to disagree 'n got both.}}
+{{dialogue|Cooper|So here ye are! Drink up! Chew on them leaves! Or whatever it is y'all vega-ma-tarians get up to...}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 26 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player wakes up:
+CONDITIONS
+Always:
+ACTIONS
+Arvio leaves a gift: 577
+Zeke leaves a gift: 578
+Burgess leaves a gift: 579
+Owen leaves a gift: 580
+Catori leaves a gift: 581
+
+TRIGGER Procedure 0.0 Step 0.0 Order 27 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 173901
+DELAY MASK SET || curveIndex: 0 | changeType: 0 | durationTime: 0 | delayTime: 0 | maskId: 17390111
+
+TRIGGER Procedure 0.0 Step 0.0 Order 28 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | canSubmit: 1 | missionId: 1700389 | targetId: 5
+CONDITIONS
+Always:
+ACTIONS
+===Bring the Herbs, Install the Machine===
+
+{{mission_details
+|desc = The machine is ready, and you have the herbs you need, too. Take them to Fang to try to save Talon.
+|details = Bring the Herbs, Install the Machine
+}}
+Cooper stops standing still
+NPC ICON REMOVE || missionId: 1700389 | npc: 8003 | missionIcon: 6
+
+TRIGGER Procedure 0.0 Step 0.0 Order 29 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_clinic
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_clinic
+
+TRIGGER Procedure 0.0 Step 0.0 Order 30 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 31 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 21375 starts:
+{{dialogue|Fang|Incredible. Let's get to work.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 33 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_TREATMENT | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 21376, 21377, 21378, 21379 starts:
+{{dialogue|Talon|I fell asleep. I feel... better.}}
+{{dialogue|Fang|You may feel better, but the illness is still present. We need to maintain a three day treatment course.}}
+{{dialogue|Talon|Three days... it will be cured? Ha... cough... I never cease to be surprised... how much we depend on the knowledge of the Old World. What a reliable machine you've made...}}
+{{dialogue|Player|(What should I say?)}}
+
+*''Actually, you almost-'' (No unique dialogue)
+*''My work is always top quality!'' (No unique dialogue)
+
+
+TRIGGER Procedure 0.0 Step 0.0 Order 34 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 21379:
+{{dialogue|Player|(What should I say?)}}
+
+*''Actually, you almost-'' (No unique dialogue)
+*''My work is always top quality!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 21380, 21382, 21383 starts:
+{{dialogue|Fang|Everything is fine. Do not worry the patient.}}
+{{dialogue|Fang|For the next three days, your men are responsible for taking care of you. I will observe your condition.}}
+{{dialogue|Fang|If the treatment is successful, then I will see you tonight, ''Pet Name''.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 35 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 21379:
+{{dialogue|Player|(What should I say?)}}
+
+*''Actually, you almost-'' (No unique dialogue)
+*''My work is always top quality!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 21381, 21382, 21383 starts:
+{{dialogue|Fang|Yes...}}
+{{dialogue|Fang|For the next three days, your men are responsible for taking care of you. I will observe your condition.}}
+{{dialogue|Fang|If the treatment is successful, then I will see you tonight, ''Pet Name''.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 37 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Set b to 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 38 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Set b to 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 39 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Fang===
+
+{{mission_details
+|desc = Three days have passed, go to the clinic and check on Fang and his father.
+|details = Talk to Fang
+}}
+173891 stops standing still
+Remove behavior CommanderDrama (idName: 173901) from Talon
+Talon stops standing still
+Fang stops standing still
+Talon stops standing still
+ACTION ACTOR ADD FOLLOWER || mActor: 8102 | tActor: 173891 | state: Defense
+Set talk to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 40 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Fang
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 21386, 21387 starts:
+{{dialogue|Fang|Today, "his" treatment... is finished.}}
+{{dialogue|Player|(What should I say?)}}
+
+*''He's cured?'' (No unique dialogue)
+*''It's finally over...'' (No unique dialogue)
+
+
+TRIGGER Procedure 0.0 Step 0.0 Order 41 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 21387:
+{{dialogue|Player|(What should I say?)}}
+
+*''He's cured?'' (No unique dialogue)
+*''It's finally over...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 21388, 21389, 21392, 21394, 21393 starts:
+{{dialogue|Fang|This illness... cannot be completely cured.}}
+{{dialogue|Fang|Now, as long as he takes the medicine, there is no danger.}}
+{{dialogue|Fang|The recipe for treatment, I'm calling it Sarnaiol. The machine, of course, will be named after you. I plan to make this treatment process public. No one will suffer from this disease any longer.}}
+{{dialogue|Fang|We've... done a great thing, ''Pet Name''. Let's celebrate soon, after my father recovers and... leaves.}}
+{{dialogue|Player|(What should I say?)}}
+
+*''Sounds good.'' (No unique dialogue)
+*''So we've done it. How do you feel?'' (No unique dialogue)
+*''Will you forgive your father?'' (No unique dialogue)
+
+
+TRIGGER Procedure 0.0 Step 0.0 Order 42 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 21387:
+{{dialogue|Player|(What should I say?)}}
+
+*''He's cured?'' (No unique dialogue)
+*''It's finally over...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 21390, 21391, 21392, 21394, 21393 starts:
+{{dialogue|Fang|Mm. Not over.}}
+{{dialogue|Fang|When he returns to Seesai, he will still need to take the medicine.}}
+{{dialogue|Fang|The recipe for treatment, I'm calling it Sarnaiol. The machine, of course, will be named after you. I plan to make this treatment process public. No one will suffer from this disease any longer.}}
+{{dialogue|Fang|We've... done a great thing, ''Pet Name''. Let's celebrate soon, after my father recovers and... leaves.}}
+{{dialogue|Player|(What should I say?)}}
+
+*''Sounds good.'' (No unique dialogue)
+*''So we've done it. How do you feel?'' (No unique dialogue)
+*''Will you forgive your father?'' (No unique dialogue)
+
+
+TRIGGER Procedure 0.0 Step 0.0 Order 43 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 21393:
+{{dialogue|Player|(What should I say?)}}
+
+*''Sounds good.'' (No unique dialogue)
+*''So we've done it. How do you feel?'' (No unique dialogue)
+*''Will you forgive your father?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 21395, 21397, 21398, 21399, 21400 starts:
+{{dialogue|Fang|Mm.}}
+{{dialogue|Fang|I know we did the right thing. Whatever happens to him...}}
+{{dialogue|Fang|I'm not sure how I feel. Little is certain other than... I feel a weight off my shoulders. Knowing "he" isn't looking for me anymore.}}
+{{dialogue|Fang|I'll say that... I feel a sense of peace. And I'm also certain that wouldn't be possible without you.}}
+{{dialogue|Fang|Give me some time... ''Pet Name''. Let's talk about this again soon.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 44 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 21393:
+{{dialogue|Player|(What should I say?)}}
+
+*''Sounds good.'' (No unique dialogue)
+*''So we've done it. How do you feel?'' (No unique dialogue)
+*''Will you forgive your father?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 21396, 21397, 21398, 21399, 21400 starts:
+{{dialogue|Fang|I...}}
+{{dialogue|Fang|I know we did the right thing. Whatever happens to him...}}
+{{dialogue|Fang|I'm not sure how I feel. Little is certain other than... I feel a weight off my shoulders. Knowing "he" isn't looking for me anymore.}}
+{{dialogue|Fang|I'll say that... I feel a sense of peace. And I'm also certain that wouldn't be possible without you.}}
+{{dialogue|Fang|Give me some time... ''Pet Name''. Let's talk about this again soon.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 45 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the third option in conversation segment 21393:
+{{dialogue|Player|(What should I say?)}}
+
+*''Sounds good.'' (No unique dialogue)
+*''So we've done it. How do you feel?'' (No unique dialogue)
+*''Will you forgive your father?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 21396, 21397, 21398, 21399, 21400 starts:
+{{dialogue|Fang|I...}}
+{{dialogue|Fang|I know we did the right thing. Whatever happens to him...}}
+{{dialogue|Fang|I'm not sure how I feel. Little is certain other than... I feel a weight off my shoulders. Knowing "he" isn't looking for me anymore.}}
+{{dialogue|Fang|I'll say that... I feel a sense of peace. And I'm also certain that wouldn't be possible without you.}}
+{{dialogue|Fang|Give me some time... ''Pet Name''. Let's talk about this again soon.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 54 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173901 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Clinic | flagName: FangQ9Clinic_Player
+Fang stands still in Clinic
+X stands still in Clinic
+DELAY MASK SET || maskId: 173901 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 55 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173901 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 20955, 20956, 20957, 6702_0, 20961, 20962, 20963, 20964 starts:
+{{dialogue|Talon|...You'd think his mouth was sewn shut; that boy won't give his old man the time of day. Won't regard me as anything but an ordinary patient of his...}}
+{{dialogue|Talon|I... at this point, I don't care if he comes to Seesai or not. I just want him to forgive me. Before I...}}
+{{dialogue|Talon|I can hardly believe this is all happening...}}
+{{dialogue|Player|(What should I say?)}}
+
+*''Apologize after you're well.''
+*''Save your breath. It's no use.''
+
+{{dialogue|Talon|indent=true|answer=Apologize after you're well.
+|Heh. Might not get the chance. Maybe I want it to kill me. Even if he hates me, it'd still tear him up that he couldn't cure this thing. That'd teach him to treat me like such a...! Hng...!}}
+{{dialogue|Talon|indent=true|answer=Save your breath. It's no use.
+|Then what would you have me do? Does one deserve to be condemned for eternity, all because of one mistake? No matter how deep his repentence!? What would you have me- d... ack!}}
+{{dialogue|Talon|Hng... ah... ha.....}}
+{{dialogue|Talon|He told me... to stay calm... not to... work myself up.}}
+{{dialogue|Talon|I'll be fine... just a little... short of breath...}}
+{{dialogue|Fang|''Pet Name'', you came? I'm sorry, I couldn't come home last night.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 59 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 20982, 20983, 20984, 20985, 20986, 20987, 20988, 20989, 20990, 20991, 20992, 20993, 20994 starts:
+{{dialogue|Fang|My studies here in Sandrock have led me to discover that the Hyacinth Orchid, common to the area, contains trace amounts of saponin, a naturally occuring plant steroid.}}
+{{dialogue|Fang|I had theorized that extracting enough of this saponin and super-concentrating it into a medicine could give the body the strength required to rebuild the heart...}}
+{{dialogue|Fang|But... as you know, it's never been tried...}}
+{{dialogue|Fang|I picked some herbs from the Moisture Farm... but they won't be enough. We need more.}}
+{{dialogue|Fang|Shipping herbs here now... might not be enough time. ''Pet Name'', I'll need your help to gather more herbs.}}
+{{dialogue|Fang|We need... hundreds of samples. Easily more than five hundred in order to get the plant extract required. It's... a lot. For you alone, it's too much. I will find others to help.}}
+{{dialogue|Fang|His difficulty breathing is also a problem.}}
+{{dialogue|Fang|In its weakened state, his heart will progressively fail to pump blood effectively, resulting in fluid backing up in the lungs. I have anticipated this. It's what happened... to my mother.}}
+{{dialogue|Fang|A breathing machine is necessary to keep him alive long enough for the herbal treatment to have a chance to run its course.}}
+{{dialogue|Fang|I'd designed such a machine, based on Old World hospital equipment, but... I'm not a scientist. Take this to the Director of the Research Center. Have him look to see if it's sound. Make improvements where necessary.}}
+{{dialogue|Fang|We will need both the herbs and the machine to have any hope of success.}}
+{{dialogue|Fang|Thank you, ''Player''. I...}}
+{{dialogue|Fang|I love you. We will get through this.}}
+Remove behavior CommanderMoveToFlag (idName: 173901) from Player
+
+TRIGGER Procedure 0.0 Step 0.0 Order 60 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_TREATMENT | state: 7
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Clinic | flagName: FangQ9Clinic_Player
+Fang stands still in Clinic
+
+TRIGGER Procedure 0.0 Step 0.0 Order 81 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 17390111 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 20906, 20907, 20908, 20909, 20910, 8098, 20911, 20912, 20913 starts:
+{{dialogue|Talon|Gasp... ah...}}
+{{dialogue|Fang|I've applied a sedative and given him an herbal anti coagulant mixture. His condition is stable. For now.}}
+{{dialogue|Fang|Diagnosis: paled face, extremities numb, shortness of breathing. All signs point to... the heart.}}
+{{dialogue|Fang|Without regular check-ups, heart disease will strike without warning...}}
+{{dialogue|Fang|He... in my memories, was always a pillar of strength. In Seesai, he earned the nickname, "Iron Talon." Nothing could topple him. Age, it seems, comes for us all...}}
+{{dialogue|Fang|...}}
+{{dialogue|Fang|At the moment, it's not life threatening. But if left untreated, it will kill him.}}
+{{dialogue|Fang|I speak on this matter with great confidence because... because...}}
+{{dialogue|Player|(What should I say?)}}
+
+*''Because?'' (No unique dialogue)
+*''It can't be...'' (No unique dialogue)
+
+
+TRIGGER Procedure 0.0 Step 0.0 Order 82 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to 173891
+CONDITIONS
+Check if talk is == 1
+ACTIONS
+(cId -1) A conversation 21915 starts:
+{{dialogue|173891|Iron Talon is a powerful man. Nothing can take him down.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 83 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Talon
+CONDITIONS
+Check if talk is == 1
+ACTIONS
+(cId -1) A conversation 21914 starts:
+{{dialogue|Talon|I feel much better today. But... I still need to use your breathing machine...}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 84 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: noleave390 | info: 1 | exist: 0
+ACTIONS
+Set global blackboard key leavehome with info 1.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 85 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: leavehome
+
+TRIGGER Procedure 0.0 Step 0.0 Order 86 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key noleave390 with info 1.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 87 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Fang
+CONDITIONS
+CHECK TARGET CAN SUBMIT || canSubmit: 0 | targetId: 5 | missionId: 1700389
+ACTIONS
+(cId 99) A conversation 21273 starts:
+{{dialogue|Fang|It's best to start treatment before he has another episode...}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 88 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to X
+CONDITIONS
+CHECK TARGET CAN SUBMIT || canSubmit: 0 | targetId: 5 | missionId: 1700389
+ACTIONS
+(cId 98) A conversation 21274, 21275 starts:
+{{dialogue|X|Talon Sandrock! Talon Sandrock!}}
+{{dialogue|X|Talon fell! "Iron Talon" fell!}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 89 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Talon
+CONDITIONS
+CHECK TARGET CAN SUBMIT || canSubmit: 0 | targetId: 5 | missionId: 1700389
+ACTIONS
+(cId 97) A conversation 20947 starts:
+{{dialogue|Talon|Hard... to speak... my... chest...}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 90 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to 173891
+CONDITIONS
+CHECK TARGET CAN SUBMIT || canSubmit: 0 | targetId: 5 | missionId: 1700389
+ACTIONS
+(cId 96) A conversation 20948 starts:
+{{dialogue|173891|Despite all he's been through... And still Fang does his job without hesitation. He is truly a great doctor.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 91 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON REMOVE || missionId: 1700389 | npc: 8003 | missionIcon: 6
+
+TRIGGER Procedure 0.0 Step 0.0 Order 92 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_clinic
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: FangQ9Clinic_Player | sceneName: Clinic
+CUTSCENE UI STATE ENTER || 
+UNIQUE ACTION RUN || idStr: enter_clinic

@@ -1,0 +1,572 @@
+Reading Mission 1200064: Where's Mi-an
+
+<onlyinclude>{{Infobox mission
+|name = Where's Mi-an
+|image =
+|description = Elsie grabbed Mi-an and they ran off somewhere. Yan asked you to tell Mi-an about your assignments.
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 500
+|reputation = None
+|gols = None
+|npc1 = Elsie
+|rp1 = 20
+|npc2 = Mi-an
+|rp2 = 10
+}}</onlyinclude>
+
+The start (or end?) of the mission causes new newspaper content to appear:
+Newspaper adds Unknown content 5031.
+Mission Add ID: 1200064
+Title: WE'RE DOOMED: A balanced and levelheaded discourse
+By Burgess
+We'RE OUTOFWATER OH MAN OH GEEZ THIS IS NOT GOOD
+
+==Overview==
+Run conditions from Sandapalooza:
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 62
+CONDITIONS
+Always:
+ACTIONS
+===Wait for Opening Ceremony===
+
+{{mission_details
+|desc = You got Catori's letter. The ceremony will be held at 12:00 tomorrow at the Sandrunning Complex.
+|details = Wait for Opening Ceremony
+}}
+Set STEP to 1
+
+TRIGGER Procedure 0.0 Step 2.5 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission Where's Mi-an
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200064
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1200064
+Set ActionTag to 0
+SCENEITEM DELETE || itemType: 0 | id: 20592
+GLOBAL BLACK BOARD REMOVE || key: con4bridgefinish
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player wakes up:
+CONDITIONS
+CHECK WEATHER STATE || weather: 0 | flag: 1
+ACTIONS
+ACTION SET BGM ENABLE || set: 0
+CUTSCENE UI STATE ENTER || 
+SOUND PLAY 2D || idStr: LuoGenCome
+In a speech bubble:
+{{dialogue|Player|There's a loud commotion outside, I'd better go see what's going on.}}
+DELAY MASK SET || maskId: 20640 | delayTime: 2 | durationTime: 2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 1.6 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 20640 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: explosion_player0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Matilda stands still in Main
+SCENEITEM DELETE || itemType: 0 | id: 10031
+SCENEITEM CREATE FLAG || itemType: 0 | id: 20641 | path: Mission_Broken_WaterTower | sceneName: Main | flagName: mission_shuita | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 20640 | path: Mission_WaterTowerfx | sceneName: Main | flagName: bridge_kaimu | extraParams: 0
+Cooper stands still in Main
+Elsie stands still in Main
+Mi-an stands still in Main
+Vivi stands still in Main
+Burgess stands still in Main
+Miguel stands still in Main
+Yan stands still in Main
+Pen stands still in Main
+Justice stands still in Main
+Unsuur stands still in Main
+Heidi stands still in Main
+ACTION SET BGM ENABLE || set: 1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 20640 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+ACTION CUTSCENE START AUDIO TYPE || id: CG_LOGANATTACKS | duration: 0 | audioType: NoTransitionOff
+
+TRIGGER Procedure 0.0 Step 3.5 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_LOGANATTACKS | state: 8
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 206411 | path: Mission_SearchBGMStart | sceneName: Main | flagName: default | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_LOGANATTACKS | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 1610 starts:
+{{dialogue|Player|(I should check on the Water Tower.)}}
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 20641 | delayTime: 0 | durationTime: 1 | changeType: 0 | curveIndex: 0
+Add behavior CommanderMoveToFlag (idName: 20642) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:explosion_player)
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 20641 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 20642) from Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: explosion_player
+DELAY MASK SET || maskId: 20641 | delayTime: 0.5 | durationTime: 3 | changeType: 1 | curveIndex: 0
+Burgess stops standing still
+Add behavior CommanderNPCAction (idName: 2064219) to Burgess
+(param: CMDAction:LookAround)
+Matilda stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 2064185) to Matilda
+(param: TargetScene:Main|MoveMode:Walk|FlagName:explosion_matilda)
+
+TRIGGER Procedure 1.0 Step 0.1 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 20641 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 1584, 1585, 1586 starts:
+{{dialogue|Matilda|Burgess! Are you alright? What happened?}}
+{{dialogue|Burgess|Logan! He came out of nowhere! I... I couldn't stop him.}}
+{{dialogue|Matilda|It's okay, as long as no one's hurt.}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Pen stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 20642) to Pen
+(param: TargetScene:Main|MoveMode:Run|FlagName:explosion_pen|LookAtActor:8018)
+STOPWATCH REAL TIME SET || id: 2064101 | sec: 0.5
+Remove behavior CommanderMoveToFlagAndAction (idName: 2064218) from Burgess
+Add behavior CommanderMoveToFlagAndAction (idName: 2064211) to Burgess
+(param: TargetScene:Main|MoveMode:Walk|FlagName:explosion_burgess4|LookAtActor:8018)
+
+TRIGGER Procedure 1.0 Step 1.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8021 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 2064219) from Burgess
+Add behavior CommanderMoveToFlagAndAction (idName: 2064218) to Burgess
+(param: TargetScene:Main|MoveMode:Run|FlagName:explosion_burgess|LookAtActor:8018)
+
+TRIGGER Procedure 1.0 Step 2.1 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8020 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 1587, 1588, 1589, 1590 starts:
+{{dialogue|Matilda|Well?}}
+{{dialogue|Pen|The coward escaped.}}
+{{dialogue|Justice|He's gone too far this time...}}
+{{dialogue|Matilda|I'm afraid you're right, sheriff.}}
+Set ActionTag to 0
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 20642) from Matilda
+Add behavior CommanderMoveToFlagAndAction (idName: 20645) to Matilda
+(param: TargetScene:Main|MoveMode:Walk|FlagName:explosion_matilda5|LookAtActor:8000)
+STOPWATCH REAL TIME SET || id: 2064501 | sec: 0.2
+
+TRIGGER Procedure 1.0 Step 2.2 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 2064102
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 2064185) from Matilda
+Add behavior CommanderMoveToFlagAndAction (idName: 20642) to Matilda
+(param: TargetScene:Main|MoveMode:Walk|FlagName:explosion_matilda2|LookAtActor:8020)
+Set ActionTag to 2
+
+TRIGGER Procedure 1.0 Step 2.3 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 2064101
+CONDITIONS
+Always:
+ACTIONS
+Miguel stops standing still
+Unsuur stops standing still
+Justice stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 20642) to Unsuur
+(param: TargetScene:Main|MoveMode:Run|FlagName:explosion_unsuur|LookAtActor:8018)
+Add behavior CommanderMoveToFlagAndAction (idName: 20642) to Justice
+(param: TargetScene:Main|MoveMode:Run|FlagName:explosion_justice|LookAtActor:8018)
+Add behavior CommanderMoveToFlagAndAction (idName: 20642) to Miguel
+(param: TargetScene:Main|MoveMode:Walk|FlagName:explosion_miguel2|LookAtActor:8018)
+STOPWATCH REAL TIME SET || id: 2064102 | sec: 0.5
+
+TRIGGER Procedure 1.0 Step 3.1 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 2064501
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 1591, 1592, 1593, 1594 starts:
+{{dialogue|Matilda|I think we need to face the truth, Logan is no longer the person we knew. He and his gang... need to be brought in.}}
+{{dialogue|Matilda|For too long have we allowed him to do whatever he liked because we respected his Pa. But after the Temple incident, the hijacked train, now with this Water Tower, it's just the last straw!}}
+{{dialogue|Cooper|What's wrong with that boy?!}}
+{{dialogue|Vivi|Old man Howlett would've been so sad to see his boy actin' such a fool.}}
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 1595, 1596, 1597 starts:
+{{dialogue|Matilda|We showed those Geeglers that Sandrock ain't nothin' to mess with; what's a couple of podunk, two-bit crooks to brave folk like us?}}
+{{dialogue|Matilda|I say we get a posse together and make Logan pay for what he's done!}}
+{{dialogue|Pen|Say no more, Minister! Civil Corps, with me! Let's see if we can't track down that ne'er-do-well before the trail goes cold!}}
+Remove behavior CommanderMoveToFlagAndAction (idName: 20645) from Matilda
+Add behavior CommanderMoveToFlagAndAction (idName: 20642) to Matilda
+(param: TargetScene:Main|MoveMode:Walk|FlagName:explosion_matilda2|LookAtActor:8020)
+
+TRIGGER Procedure 1.0 Step 4.1 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 20642) from Pen
+Add behavior CommanderMoveToFlagAndAction (idName: 20644) to Pen
+(param: TargetScene:Main|MoveMode:Run|FlagName:explosion_pen_exit)
+(cId 51) A conversation 1598 starts:
+{{dialogue|Justice|Hey now, as senior officer and guy who's been here in this town waaay longer than your Mr. Macho, protein-huffin' behind, I give the orders around here! But, uh, yeah. Unsuur, do what Pen said. Let's ride.}}
+STOPWATCH REAL TIME SET || id: 2064509 | sec: 0.5
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 51) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 20642) from Justice
+Remove behavior CommanderMoveToFlagAndAction (idName: 20642) from Unsuur
+Add behavior CommanderMoveToFlagAndAction (idName: 20644) to Justice
+(param: TargetScene:Main|MoveMode:Run|FlagName:explosion_justice_exit)
+Add behavior CommanderMoveToFlagAndAction (idName: 20644) to Unsuur
+(param: TargetScene:Main|MoveMode:Run|FlagName:explosion_unsuur_exit)
+Remove behavior CommanderMoveToFlagAndAction (idName: 20642) from Matilda
+Add behavior CommanderMoveToFlagAndAction (idName: 20643) to Matilda
+(param: TargetScene:Main|MoveMode:Walk|FlagName:explosion_matilda3|LookAtActor:8000)
+Set ActionTag to 1
+
+TRIGGER Procedure 1.0 Step 4.2 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 2064509
+CONDITIONS
+Always:
+ACTIONS
+Elsie stops standing still
+Mi-an stops standing still
+Add behavior CommanderMoveToFlag (idName: 20644) to Elsie
+(param: TargetScene:Main|MoveMode:Run|FlagName:explosion_elsie_exit)
+Add behavior CommanderMoveToFlag (idName: 20644) to Mi-an
+(param: TargetScene:Main|MoveMode:Run|FlagName:explosion_mian_exit)
+
+TRIGGER Procedure 2.0 Step 0.1 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8018 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Check if ActionTag is == 1
+ACTIONS
+Elsie stops standing still
+Mi-an stops standing still
+Add behavior CommanderMoveToFlag (idName: 20644) to Elsie
+(param: TargetScene:Main|MoveMode:Run|FlagName:explosion_elsie_exit)
+Add behavior CommanderMoveToFlag (idName: 20644) to Mi-an
+(param: TargetScene:Main|MoveMode:Run|FlagName:explosion_mian_exit)
+(cId 3) A conversation 1599, 1600 starts:
+{{dialogue|Matilda|Now, we need to get ourselves a new Water Tower in a hurry.}}
+{{dialogue|Matilda|Without it, our town can't easily access water from the oasis. The only solace I can find in all this mess is that at the very least the Water Tower was almost empty. Our next shipment of water ought to arrive soon, but before that...}}
+Yan stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 2064439) to Yan
+(param: TargetScene:Main|MoveMode:Run|FlagName:explosion_yan_1|LookAtActor:8018)
+
+TRIGGER Procedure 2.0 Step 1.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 31) A conversation 1601 starts:
+{{dialogue|Matilda|Where is that Commerce Commissioner...?}}
+STOPWATCH REAL TIME SET || id: 2064901 | sec: 1
+
+TRIGGER Procedure 2.0 Step 2.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 31) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 2064902 | sec: 0.5
+(cId 63) A conversation 1602 starts:
+{{dialogue|Yan|Right behind you, Minister!}}
+
+TRIGGER Procedure 2.0 Step 4.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 63) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 20643) from Matilda
+Add behavior CommanderMoveToFlagAndAction (idName: 20644) to Matilda
+(param: TargetScene:Main|MoveMode:Walk|FlagName:explosion_matilda4|LookAtActor:8043)
+(cId 62) A conversation 1603 starts:
+{{dialogue|Matilda|Yes... Yan, I need your Guild to help our town rebuild this Water Tower before the next water shipment. I trust y'all can handle it?}}
+
+TRIGGER Procedure 2.0 Step 3.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 2064902
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 2064439) from Yan
+Add behavior CommanderMoveToFlagAndAction (idName: 2064432) to Yan
+(param: TargetScene:Main|MoveMode:Run|FlagName:explosion_yan2|LookAtActor:8018)
+
+TRIGGER Procedure 2.0 Step 5.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 62) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 621) A conversation 1604, 1605, 1606, 1611 starts:
+{{dialogue|Yan|Is the sun hot? Does sand sting? Of course we can handle it, we'll also make the new Water Tower absolutely, positively Logan-proof! There is just one minor thing... the inconvenient matter of... {{textcolor|green|the bill}}?}}
+{{dialogue|Matilda|...}}
+{{dialogue|Yan|Of course, of course... I'll just put it on the tab! I'll have my Builders working on it by tomorrow!}}
+{{dialogue|Yan|Hear that, Builders? Oh, drat, where'd the other one go...?}}
+
+TRIGGER Procedure 2.0 Step 6.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 621) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 64) A conversation 1607, 1608, 1609 starts:
+{{dialogue|Yan|''Player''! Go find that slacker co-worker of yours and tell her to expect the job to begin first thing in the morning! Pronto!}}
+{{dialogue|Miguel|Alright folks, let's move along then. Nothing more to see here. Let's just trust in our Civil Corps that there will be no more of these incidents.}}
+{{dialogue|Matilda|Indeed, y'all. Rest assured that everything is going to turn out alright in the end.}}
+Remove behavior CommanderMoveToFlagAndAction (idName: 20642) from Matilda
+Add behavior CommanderMoveToFlagAndAction (idName: 20643) to Matilda
+(param: TargetScene:Main|MoveMode:Walk|FlagName:explosion_matilda3|LookAtActor:8000)
+Remove behavior CommanderMoveToFlagAndAction (idName: 20642) from Miguel
+Add behavior CommanderMoveToFlagAndAction (idName: 20643) to Miguel
+(param: TargetScene:Main|MoveMode:Walk|FlagName:explosion_miguel3|LookAtActor:8000)
+STOPWATCH REAL TIME SET || id: 2064602 | sec: 1.5
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 64) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 2064218) from Burgess
+START MISSION 1200064
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlag (idName: 20644) from Elsie
+Cooper stops standing still
+Remove behavior CommanderMoveToFlag (idName: 20644) from Mi-an
+Vivi stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 2064211) from Burgess
+Remove behavior CommanderMoveToFlagAndAction (idName: 20643) from Miguel
+Remove behavior CommanderMoveToFlagAndAction (idName: 2064432) from Yan
+Remove behavior CommanderMoveToFlagAndAction (idName: 20644) from Pen
+Remove behavior CommanderMoveToFlagAndAction (idName: 20644) from Justice
+Remove behavior CommanderMoveToFlagAndAction (idName: 20644) from Unsuur
+Remove behavior CommanderMoveToFlagAndAction (idName: 20644) from Matilda
+Remove behavior CommanderMoveToFlagAndAction (idName: 20643) from Matilda
+Heidi stops standing still
+Set global blackboard key con4brokentower with info 1.
+Townsfolk respond to the event:
+
+{{dialogue|Amirah|Logan used to come by my shop from time to time; he was always polite. But I guess it goes to show being polite doesn't make you a good person...}}
+
+{{dialogue|Arvio|Do you think Logan dolls would sell? I mean, everyone likes a bad boy, right? ...Too soon?}}
+
+{{dialogue|Burgess|Logan was always pretty nice to me when he lived here. Well, except that one time where he knocked me out. But... I'm sure he was just having a bad day. That being said, do what you will to me, but once you lay a finger on my Water Tower, it's personal, bub!}}
+
+{{dialogue|Catori|Logan? Well, to be frank, I can't say I much care for someone trying to ruin the town I gave up everything to start a business in. Lock him up and throw away the key, I say.}}
+
+{{dialogue|Cooper|Dang bandits! Get a real job! No doubt Logan and his gang are lookin' to extort us; yeah, for a 'small fee,' they'll leave us alone, well to that I say 'phooey!' You'll have to take my hard earned Gols from my cold, dead hands!}}
+
+{{dialogue|Dan-bi|I'm already sick of all these Logan problems. Even the Light can't save him anymore.}}
+
+{{dialogue|Elsie|All evidence points to Logan's innocence! What evidence you ask? Well, my gut feeling! And I trust my gut!}}
+
+{{dialogue|Ernest|Did I miss Logan again!? I was still sleeping when the Water Tower was attacked! Argh, I couldn't see them with my own eyes... forget it, my imagination will fill all the lacking details!}}
+
+{{dialogue|Grace|I don't really know anything about Logan other than what I hear from Sandrockers who have been here a while. He's got some personal vendetta against this town or something? If he keeps this up, he'll attract attention on an Alliance level; whatever he's thinking, I'm pretty sure all paths lead to a dead end...}}
+
+{{dialogue|Heidi|Logan and his father were monster hunters; they helped keep us safe, so long as we had the pay to keep them around. How does that saying go? "One who fights with monsters must be careful of becoming one themselves." Well. Too little, too late on that one.}}
+
+{{dialogue|Hugo|Tch. That Logan. What ever happened to "like father, like son?" Nah, that ain't it. That ain't it at all...}}
+
+{{dialogue|Jasmine|I talked to Logan before he left... He looked so mad! He told me, "Don't worry, everything will be fine." Why... why would he lie like that?}}
+
+{{dialogue|Jensen|Darn that Logan! Now that he's got a taste for destruction, I don't doubt he's got his sights set on one of my trains next. You and the Civil Corps... you won't let that happen, will you? Will you?!}}
+
+{{dialogue|Justice|I once offered up Logan the position of deputy here at the Civil Corps; he said he preferred to remain a free agent. I've never really understood the mercenary type. How could somebody fight for a cause they don't even believe in?}}
+
+{{dialogue|Krystal|That Logan had a real bad life, and now he's tryin' to drag everyone else into it too. It's really too bad, our Pebbles won't ever grow up to be someone like him though!}}
+
+{{dialogue|Mabel|A lot of us folks were sympathetic towards Logan; you know, he's been through an awful lot. But goin' and doin' somethin' like this? I don't know what to say...}}
+
+{{dialogue|Matilda|Yes, I suppose this was bound to come up sooner or later. Logan blames the Church for not being able to save his father. We tried everything we could, but... well, sometimes it's just someone's time. I still have hope that one day that boy may see the Light again.}}
+
+{{dialogue|Mi-an|Oh man, and we just finished the bridge as well. What is this Logan fellow up to? Why are there people following him? What's in it for them? Something's just not adding up...}}
+
+{{dialogue|Miguel|Logan has shown his true colors. He's had plenty of time to cool down and come to a rational conclusion. Instead, he's decided that he means to continue his assault on our way of life; we have no reason to show him any mercy.}}
+
+{{dialogue|Mort|Logan... Why, I watched that boy grow into a man. And what an honest man his father was. What could have caused him to take such a bleak path... and one I fear has no return...?}}
+
+{{dialogue|Owen|Logan? Well, he used to hang around in the Blue Moon from time to time. He was a little ornery but he always paid his tab. His father passed away suddenly and he... changed, I guess. It's all such a shame...}}
+
+{{dialogue|Pablo|Logan... I mean, when I left, he was still on our side so your guess is as good as mine.}}
+
+{{dialogue|Pen|You know, I think Logan's been avoiding me on purpose! That's no way to treat an old friend! I'll have to teach him the meaning of "justice" once I finally get my hands around that stringy neck of his... Ooh... ooh hoo hoo, boy...}}
+
+{{dialogue|Qi|I'd say it's most likely Logan losing his father triggered some sort of late-onset schizophrenia. Paranoia, delusions of grandeur... It's all rather tragic; we should be helping him. But I'm afraid the administrative staff won't want to see things from such a perspective. Oh well, none of my business.}}
+
+{{dialogue|Rian|Dang, that beautiful wooden fence, it was like, my pride and joy and stuff. Kinda breaks my heart seein' it all totally destroyed like that dude. It's gonna take ages to rebuild...}}
+
+{{dialogue|Rocky|We've got a million other things to worry about here in Sandrock; I don't care about Logan and his sob story. When you mess with Sandrock, you mess with Eufaula Salvage!}}
+
+{{dialogue|Unsuur|Logan always attacks from where we least expect. Maybe I need to try to think of somewhere I would never be, then be there. That's how I could catch him, I bet.}}
+
+{{dialogue|Vivi|I used to bake pies for Logan... to take pie from someone and then go and do something like this! It's a level of betrayal I must say I am unfamiliar with.}}
+
+{{dialogue|Yan|Hey, you were face to face with Logan! Why didn't you do anything, eh? Throw a Pickhammer or something at him at least, geez! What do I pay you for, honestly?}}
+
+{{dialogue|Zeke|Luckily, I'd the foresight to store some water in the Moisture Farm, so we're not in a dire situation as far as food supply's concerned. Yet.}}
+
+The player receives a letter:
+{{mail|63}}
+Remove behavior CommanderMoveToFlagAndAction (idName: 2064218) from Burgess
+SCENEITEM DELETE || id: 206411 | itemType: 0
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200064
+CONDITIONS
+Always:
+ACTIONS
+Run mission Where's Mi-an
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission Appetite for Construction
+Newspaper adds Article content 1025.
+Title: Dervish Detonates Indispensable Dispenser of Di-hydrogen Monoxide
+Logan has returned.
+
+After some time of relative inactivity, Logan has attacked Sandrock directly, in a bold and egregious fashion.
+
+The timing of this attack is precise, and yet confusing. Does he aim to break our spirits in light of our recent success with the Shonash Bridge? Or perhaps he intends to cripple our economy by maintaining the image to the public that Sandrock is an unsafe place? It's likely that only the capture of Logan by Sandrock authorities will give us the answers we seek.
+
+When pressed for comment, Sheriff Justice had this to say on the matter: "Yeah, he ain't my friend no more."
+
+Justice went on to say that he is in talks with City Hall to increase efforts towards the capture of Logan and his gang, and no doubt they will find a way to take action soon.
+
+Reported By Heidi
+END MISSION 1200064
+
+==Rewards==
+{{mission reward
+|npc1 = Elsie
+|rp1 = 20
+|npc2 = Mi-an
+|rp2 = 10
+|exp = 500
+|reputation = None
+|gols = None
+}}

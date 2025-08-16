@@ -1,0 +1,401 @@
+Reading Mission 1800532: X's Show
+
+<onlyinclude>{{Infobox mission
+|name = X's Show
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from X's Show:
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800531
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1800531
+START MISSION 1800531
+
+TRIGGER Procedure 0.0 Step 6.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800531
+CONDITIONS
+Always:
+ACTIONS
+Run mission X's Show
+END MISSION 1800531
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800532
+CONDITIONS
+Always:
+ACTIONS
+===Talk to X===
+
+{{mission_details
+|desc = Does X still remember these magic tricks? Maybe you should have a chat with him.
+|details = Talk to X
+}}
+Set 8532A to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to X
+CONDITIONS
+Check if 8532A is == 0
+ACTIONS
+(cId 1) A conversation 8359_0 starts:
+{{dialogue|X|Squark! Photo! Photo!}}
+{{dialogue|X|Find Fang! Find Fang!}}
+
+*''Let's go!''
+*''Caw... Too much on my plate... Too much! Too much!''
+
+{{dialogue|X|indent=true|answer=Let's go!
+|One, two, three and... poof!}}
+{{dialogue|X|indent=true|answer=Caw... Too much on my plate... Too much! Too much!
+|Squark! Wise guy, huh? Too bad... What a shame! Too bad, too bad!}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Check if 8532A is == 1
+ACTIONS
+DELAY MASK SET || maskId: 85321 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 24007:
+{{dialogue|X|Find Fang! Find Fang!}}
+
+*''Let's go!'' (No unique dialogue)
+*''Caw... Too much on my plate... Too much! Too much!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8532A to 1
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85321 | eventType: 2
+CONDITIONS
+CHECK CURRENT SCENE || name: Main | flag: 1
+ACTIONS
+X stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8532_0_1
+DELAY MASK SET || maskId: 85321 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) The player picks the first option in conversation segment 24036:
+{{dialogue|Fang|Did you like... my trick?}}
+
+*''(Swoon)'' (No unique dialogue)
+*''I loved your "trick."'' (No unique dialogue)
+*''What? It's over?'' (No unique dialogue)
+
+(cId 8) The player picks the second option in conversation segment 24036:
+{{dialogue|Fang|Did you like... my trick?}}
+
+*''(Swoon)'' (No unique dialogue)
+*''I loved your "trick."'' (No unique dialogue)
+*''What? It's over?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Fang gains 3 favor
+
+TRIGGER Procedure 0.0 Step 4.0 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Main:
+CONDITIONS
+Always:
+ACTIONS
+X stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8532_0_1
+DELAY MASK SET || maskId: 85321 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85321 | eventType: 2
+CONDITIONS
+CHECK CURRENT SCENE || name: Main | flag: 0
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8532_0_1
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85321 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 8362_0 starts:
+{{dialogue|X|Fang! Fang!}}
+{{dialogue|Fang|What's wrong X?}}
+{{dialogue|X|Pick a card, any card, ha ha ha...!}}
+{{dialogue|Fang|...?}}
+{{dialogue|Fang|Our tricks from long ago...? No, X. We are too old for such games.}}
+{{dialogue|X|Open sesame! Alakazam! I cast a spell on you! Cawww! Open up!}}
+{{dialogue|Fang|...}}
+{{dialogue|Fang|...}}
+{{dialogue|Fang|Abracadabra, you have no power here. I break the spell, begone.}}
+{{dialogue|X|Squark! He's too strong! ''Player'', help! Help!}}
+The conversation ends.
+Set 8532B to 0
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85322 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85322 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+X stops standing still
+X stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8532_0_2
+Fang stands still in Main and looks at Player
+DELAY MASK SET || maskId: 85322 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85322 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 8363_0 starts:
+{{dialogue|Fang|''Player'', you're here too...}}
+{{dialogue|X|Squark! I'm gone, Hoopini!}}
+{{dialogue|Fang|...}}
+{{dialogue|X|C'mon, honey. You can do it!}}
+The conversation ends.
+SCENEITEM CREATE FLAG || flagName: S8532_Item3 | path: S8510_efx | itemType: 0 | id: 85323 | sceneName: Main | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8532162) to Fang
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8532_16_2|Delay:0.0|LookAtActor:8042|Action:Needle)
+
+TRIGGER Procedure 1.0 Step 8.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 3) There is a conversation segment (id 24020) that ends:
+{{dialogue|Fang|''Player'', you're here too...}}
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 85323
+
+TRIGGER Procedure 0.0 Step 10.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8016 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 24024 starts:
+{{dialogue|X|Buh-bye!}}
+
+TRIGGER Procedure 0.0 Step 11.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+X stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8532162) from Fang
+SCENEITEM CREATE FLAG || itemType: 0 | id: 85321 | path: S8532_Item1 | flagName: S8532_Item1 | extraParams: 0 | sceneName: Main
+Add behavior CommanderMoveToFlagAndAction (idName: 8532163) to Fang
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8532_16_3|Delay:0.0|LookAtActor:8000|Action:Hi)
+STOPWATCH REAL TIME SET || id: 85321 | sec: 0.5
+
+TRIGGER Procedure 0.0 Step 11.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 85321
+CONDITIONS
+Always:
+ACTIONS
+X stands still in Main
+
+TRIGGER Procedure 0.0 Step 12.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8016 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Check relationship with Fang is 6 Lover
+ACTIONS
+(cId 5) A conversation 8364_0 starts:
+{{dialogue|Fang|..."The Raven's Shadow."}}
+
+*''Haha, that was amazing!'' (No unique dialogue)
+*''I didn't expect you two to have a whole show prepared!'' (No unique dialogue)
+
+{{dialogue|Fang|That was... from a long time ago.}}
+{{dialogue|Fang|When I was young... I trained X.}}
+{{dialogue|Fang|After... we stopped playing this game.}}
+{{dialogue|Fang|Talking to you... is nice.}}
+{{dialogue|Fang|I have to go.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 13.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+(cId 8) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8532163) from Fang
+SCENEITEM DELETE || itemType: 0 | id: 85321
+Fang stops standing still
+X stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8532162) from Fang
+SUBMIT MISSION 1800531
+CUTSCENE UI STATE EXIT || 
+CAMERA PATH STOP ALL || 
+END MISSION 1800532
+
+TRIGGER Procedure 0.0 Step 14.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8016 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Check relationship with Fang is Lover
+ACTIONS
+(cId 6) A conversation 8365_0 starts:
+{{dialogue|Fang|..."The Raven's Shadow."}}
+
+*''Haha, that was amazing!'' (No unique dialogue)
+*''I didn't expect you two to have a whole show prepared!'' (No unique dialogue)
+
+{{dialogue|Fang|When X was young... we made this together.}}
+{{dialogue|Fang|He was smart. Learned quickly.}}
+
+*''Honey... can you perform a trick for me?'' (No unique dialogue)
+*''I want to see a trick!'' (No unique dialogue)
+
+{{dialogue|Fang|I... haven't performed in a long time...}}
+{{dialogue|Fang|...Close your eyes.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 16.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85323 | delayTime: 0 | durationTime: -2 | changeType: 2 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 17.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85323 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 24174 starts:
+{{dialogue||(You close your eyes and feel a soft kiss from Fang. It makes you feel warm and comforted.)}}
+
+TRIGGER Procedure 0.0 Step 18.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85324 | delayTime: 0 | durationTime: -2 | changeType: 2 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 19.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85324 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+(cId 8) A conversation 8366_0 starts:
+{{dialogue|Fang|You can open your eyes.}}
+{{dialogue|Fang|Did you like... my trick?}}
+
+*''(Swoon)''
+*''I loved your "trick."''
+*''What? It's over?''
+
+{{dialogue|Fang|indent=true|answer=(Swoon)
+|reward={{NPC2|Fang|rp=3}}|You're blushing... I think you liked it.}}
+{{dialogue|Fang|indent=true|answer=I loved your "trick."
+|reward={{NPC2|Fang|rp=3}}|Your worries... have disappeared.}}
+{{dialogue|Fang|indent=true|answer=What? It's over?
+|It was... the kiss...}}
+{{dialogue|Fang|Thank you for coming, darling.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 20.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) The player picks the first option in conversation segment 24036:
+{{dialogue|Fang|Did you like... my trick?}}
+
+*''(Swoon)'' (No unique dialogue)
+*''I loved your "trick."'' (No unique dialogue)
+*''What? It's over?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 85322 | path: S8510_efx | flagName: S8532_Item2 | extraParams: -1 | sceneName: Main
+STOPWATCH REAL TIME SET || id: 85322 | sec: 2
+
+TRIGGER Procedure 0.0 Step 30.8 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 85322
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 85322

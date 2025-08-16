@@ -1,0 +1,201 @@
+Reading Mission 1200328: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200310
+
+TRIGGER Procedure 8.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Starship Enterprising is successfully completed
+ACTIONS
+Run mission #1800324
+
+TRIGGER Procedure 8.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+The North South Water Diversion Project is successfully completed
+ACTIONS
+Run mission #1200328
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DAY START FOR WEATHER || order: 0 | weather: 2
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: set_weather
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: set_weather
+WEATHER SET STATE || WeatherState: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200328
+CONDITIONS
+Always:
+ACTIONS
+ACTION SOCIAL ADD CHILD FLAG || flag: StoryBlock
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player wakes up:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Set global blackboard key leavehome with info 1.
+(cId 2) A conversation 18352 starts:
+{{dialogue|Player|(Today is the day the water should start flowing in. I should go check!)}}
+
+TRIGGER Procedure 0.0 Step 1.5 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 23281 | delayTime: 2 | durationTime: 2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 23281
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: wateropening_player
+DELAY MASK SET || maskId: 23281 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Trudy stands still in Main
+Heidi stands still in Main
+Qi stands still in Main
+Zeke stands still in Main
+Mort stands still in Main
+Mi-an stands still in Main
+Wei stands still in Main
+Elsie stands still in Main
+Dan-bi stands still in Main
+Burgess stands still in Main
+Vivi stands still in Main
+Larry stands still in Main
+Professor Luo stands still in Main
+Nia stands still in Main
+Jasmine stands still in Main
+Logan stands still in Main
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+ACTION CUTSCENE START AUDIO TYPE || id: CG_WATERCEREMONY | duration: 0 | audioType: NoTransitionOff
+
+TRIGGER Procedure 2.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_WATERCEREMONY | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 14654 starts:
+{{dialogue|Trudy|I also declare, from this day forward, we can all take a nice dip in Martle's Oasis on a hot day!}}
+SCENEITEM DELETE || itemType: 0 | id: 218722
+SCENEITEM CREATE FLAG || itemType: 0 | id: 23281 | sceneName: Main | extraParams: 0 | path: Mission_WaterNew2 | flagName: bridge_kaimu
+SCENEITEM CREATE FLAG || itemType: 0 | id: 23282 | path: Mission_FX_Water_Fall_01 | sceneName: Main | flagName: bridge_kaimu | extraParams: 0
+SCENEITEM DELETE || id: 203213 | itemType: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 203214 | path: Mission_City_Obj_Paishuikou2 | sceneName: Main | flagName: bridge_kaimu | extraParams: 0
+
+TRIGGER Procedure 2.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Elsie|Hooray!}}
+Add behavior CommanderNPCAction (idName: 23281) to Elsie
+(param: CMDAction:Cheer_Story)
+
+TRIGGER Procedure 2.0 Step 1.5 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 23282 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 23282
+CONDITIONS
+Always:
+ACTIONS
+ACTION SOCIAL REMOVE CHILD FLAG || flag: StoryBlock
+PLAYER SET POS ROT FLAG || flagName: MSGA_Player1_1 | sceneName: Guildhall
+GLOBAL BLACK BOARD REMOVE || key: leavehome
+CUTSCENE UI STATE EXIT || 
+Trudy stops standing still
+Heidi stops standing still
+Qi stops standing still
+Zeke stops standing still
+Mort stops standing still
+Mi-an stops standing still
+Wei stops standing still
+Elsie stops standing still
+Dan-bi stops standing still
+Burgess stops standing still
+Vivi stops standing still
+Larry stops standing still
+Professor Luo stops standing still
+Nia stops standing still
+Jasmine stops standing still
+Logan stops standing still
+Remove behavior CommanderNPCAction (idName: 23281) from Elsie
+DELAY MASK SET || maskId: 23282 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Run mission The Quest for the Panacea
+END MISSION 1200328
+
+TRIGGER Procedure 3.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8005 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 17588 starts:
+{{dialogue|Trudy|Ah, and since we're all here... Professor Luo says there have been some developments in our research. For those of you who are interested in discussing, please join us in the City Hall shortly!}}

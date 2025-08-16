@@ -1,0 +1,154 @@
+Reading Mission 1200099: How to Tune your Banjo
+
+<onlyinclude>{{Infobox mission
+|name = How to Tune your Banjo
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from How to Tune your Banjo:
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Elsie stops standing still
+Banjo stops standing still
+START MISSION 1200098
+NPC ADD TAG || tag: BanjoPlayer
+NPC REMOVE TAG || tag: BanjoRanch
+
+TRIGGER Procedure 1.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200098
+CONDITIONS
+Always:
+ACTIONS
+Run mission How to Tune your Banjo
+END MISSION 1200098
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200099
+CONDITIONS
+Always:
+ACTIONS
+===Make Animal House===
+
+{{mission_details
+|desc = To help him feel more at home, and correct his bad behaviour, make Banjo an Animal House.
+|details = Make Animal House
+*{{i2|Animal House|0/1}}
+}}
+Set DAY to 0
+Add 1 Animal House of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200098 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Install Animal House===
+
+{{mission_details
+|desc = The Animal House is ready. Go and install it at the designated location.
+|details = Install Animal House
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 20991 | path: Mission_CatHouse_empty | sceneName: Main | flagName: tunebanjo_cathouse | extraParams: Mission_CatHouse|CreatorItem|18000048_1|80003784|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 20991 | missionId: 1200098 | iconType: 2
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 20991
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 20991 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 20991 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: tunebanjo_player4
+Banjo stands still in Main
+Elsie stands still in Main
+DELAY MASK SET || maskId: 20991 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+{{cutscene|id = 2062}}
+A cutscene CG_BANNEWHOME (duration: 0.0) starts playing
+Banjo Tame and Tuned - Having a home of his own seemed to really straighten Banjo out. He hasn't had any 'incidents' since.
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_BANNEWHOME | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 6417, 6418, 6419, 6420, 6421 starts:
+{{dialogue|Elsie|Hey, speakin' of, you thinkin' of adopting any of the animals in town, ''Player''? They ain't just cute lil companions, they'll go get ya some cool stuff too!}}
+{{dialogue|Elsie|It's super easy, when you have a close relationship with 'em, they'll stick with you like family. Jus' build them a bed in your home. If ya don't then... well, they gotta sleep on the ground, an'... you ain't a monster, are ya!?}}
+{{dialogue|Elsie|After you adopt 'em, you can name 'em whatever you want! But take it seriously, okay? Don't be like my old man, namin' me after a Yakmel...}}
+{{dialogue|Elsie|Oh, an' take this Pet Whistle. Don't matter how far yer little critters are, give this a blow an' they'll come runnin'!}}
+{{dialogue|Elsie|Alright, that's about it. I ain't gonna talk yer ear off no more. I'm gonna go find some cute lil animals to play with!}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Elsie stops standing still
+Banjo stops standing still
+NPC REMOVE TAG || tag: BanjoPlayer
+SUBMIT MISSION 1200098
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|88}}
+END MISSION 1200099
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1200099
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|89}}
+SCENEITEM DELETE || itemType: 11 | id: 20991
+NPC REMOVE TAG || tag: BanjoPlayer
+SCENEITEM CREATE FLAG || path: Mission_CatHouse | itemType: 12 | id: 20991 | sceneName: Main | flagName: tunebanjo_cathouse | extraParams: -1

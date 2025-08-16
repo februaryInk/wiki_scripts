@@ -1,0 +1,1028 @@
+Reading Mission 1100107: Belly of the Beast
+
+<onlyinclude>{{Infobox mission
+|name = Belly of the Beast
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Belly of the Beast:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100106
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1100106
+START MISSION 1100106
+ACTION MISSION TRACE 1100106
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1100106
+CONDITIONS
+Always:
+ACTIONS
+Run mission Belly of the Beast
+END MISSION 1100106
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100107
+CONDITIONS
+Always:
+ACTIONS
+NPC SET CAN INTERACT || npc: 8008 | canInteract: 0
+NPC WEAPON LOCK || npc: 8008 | name: 21071 | id: 1005
+Set BOSS to 0
+AREA TRIGGER CREATE || missionId: 1100107 | id: 21071 | sceneName: Metro_Dungeon | flagName: metro_triggerboss | showOnMap: 0 | mapIcon: MissionArea | transId: -1
+MONSTER ADD TAG || tag: metrosmall | isAdd: 1
+MONSTER MODIFIER ADD || tag: metrosmall | name: 11072 | type: Faction | data: Npc
+ACTION SHOW CUSTOM IMAGE TIPS || content: 7170 | preset: Mission
+AREA TRIGGER CREATE || missionId: 1100107 | id: 1100107 | sceneName: Metro_Dungeon | flagName: metro_shoot | showOnMap: 0 | mapIcon: 0 | transId: 0
+Set part to 0
+Set Shoot to 0
+Set IsG5Shot2End to 0
+Set IsG5Shot2TalkEnd to 0
+Set IsG5Shot4End to 0
+Set IsG5Shot4TalkEnd to 0
+
+TRIGGER Procedure 0.0 Step 0.5 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100107
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+===Defeat the Geeglers===
+
+{{mission_details
+|desc = The ropeway suddenly snapped; you and Justice fell into Gecko Station, an old salvage mine that used to be a transportation hub back in the Old World. Fight your way out!
+|details = Defeat the Geeglers
+}}
+Set KILLFIRST to 0
+Set KILLSEC to 0
+Set DONG to 0
+Justice stops standing still
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8008 | state: Attack
+MONSTER MODIFIER REMOVE || name: 11031
+NPC SET CAN INTERACT || npc: 8008 | canInteract: 0
+ACTOR SET LEVEL || npc: 8008 | level: 17
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 0 | tag: xiyiren1
+CONDITIONS
+Always:
+ACTIONS
+Increment KILLFIRST by 1
+MISSION TARGET COUNTER CHANGE || missionId: 1100106 | targetId: 0 | transId: 80000925 | isAdd: 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 10 | tag: xiyiren1
+CONDITIONS
+Check if KILLFIRST is >= 3
+ACTIONS
+AREA TRIGGER CREATE || id: 11070 | sceneName: Metro_Dungeon | flagName: metro_trigger | showOnMap: 0 | mapIcon: MissionArea | transId: -1 | missionId: 1100106
+AREA TRIGGER CREATE || id: 210716 | missionId: 1100106 | sceneName: Metro_Dungeon | flagName: metro_triggerbossbefore | showOnMap: 0 | mapIcon: 0 | transId: 0
+ACTION BATTLE SET STATE || set: 0
+MONSTER ADD TAG || tag: xiyiren2 | isAdd: 1
+MONSTER ADD TAG || isAdd: 0 | tag: xiyiren1
+Geegler President stands still in Metro_Dungeon
+MONSTER MODIFIER ADD || name: 11071 | tag: xiyiren2 | type: Faction | data: NormalMonster
+(cId 10) A conversation 1140 starts:
+{{dialogue|Justice|There's gotta be an exit around here somewhere, let's try to find it. ''Player'', you take point, I'll cover you!}}
+===Escape Gecko Station===
+
+{{mission_details
+|desc = You've defeated all the Geeglers, look for the exit now.
+|details = Escape Gecko Station
+}}
+Set part to 1
+
+TRIGGER Procedure 0.0 Step 2.1 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 1100107
+CONDITIONS
+Check if part is == 1
+ACTIONS
+===Use your gun to open the door===
+
+{{mission_details
+|desc = You've reached a door that can be opened by a switch out of reach. Use the gun Justice gave you to shoot it.
+|details = Use your gun to open the door
+}}
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 1100107
+Add behavior CommanderMoveToFlag (idName: 21071) to Player
+(param: TargetScene:Metro_Dungeon|MoveMode:Run|FlagName:metro_shootplayer)
+Add behavior CommanderMoveToFlagAndAction (idName: 21071) to Justice
+(param: TargetScene:Metro_Dungeon|MoveMode:Run|FlagName:metro_shootjustice)
+
+TRIGGER Procedure 0.0 Step 2.3 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8008 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 11) A conversation 1138, 1139, 1356 starts:
+{{dialogue|Justice|Well, ''Player''. Looks like we're in this thing! Plenty of Geeglers between us and salvation...}}
+{{dialogue|Justice|Now this goes against pretty much every regulation in the book, but we're in dire straits and... uh... have you ever fired a {{textcolor|green|gun}} before? Nevermind, don't answer that, just take this here shootin' iron.}}
+{{dialogue|Justice|Locked... hmmm.}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 11) There is a conversation segment (id 1139) that ends:
+{{dialogue|Justice|Now this goes against pretty much every regulation in the book, but we're in dire straits and... uh... have you ever fired a {{textcolor|green|gun}} before? Nevermind, don't answer that, just take this here shootin' iron.}}
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Vintage Pistol of Ordinary quality (Notify player)
+Add 90 Pistol Bullet of Unknown quality (Notify player)
+(cId 12) A conversation 1357 starts:
+{{dialogue|Justice|Look, see that little light thingy there, try shooting it. It's gonna unlock this door, I can tell.}}
+GUIDE ADD MULTI CONTROL || ids: 106 | forced: 0
+GUIDE ADD MULTI CONTROL || ids: 1107 | forced: 0
+
+TRIGGER Procedure 0.0 Step 3.1 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 12) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 21071) from Justice
+Remove behavior CommanderMoveToFlag (idName: 21071) from Player
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 21071
+CONDITIONS
+Always:
+ACTIONS
+AUTOSAVE TRY || 
+
+TRIGGER Procedure 0.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 0 | tag: xiyiren3
+CONDITIONS
+Always:
+ACTIONS
+(cId 21) A conversation 1123, 1121, 1122 starts:
+{{dialogue|Justice|I didn't expect this, I thought I'd at least have Pen and a posse with me.}}
+{{dialogue|Justice|Them Geeglers just showed up one day a couple years back. Now, you see and hear 'bout a few mutated beings here and there, but I have never seen 'em on such a large scale.}}
+{{dialogue|Justice|Rumor is they come from the Peripheries. Who knows?}}
+
+TRIGGER Procedure 0.0 Step 11.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 21075
+CONDITIONS
+Always:
+ACTIONS
+(cId 31) A conversation 1141, 1142 starts:
+{{dialogue|Justice|Hey, I think if we go through that turnstile, there's an exit in that direction! This place used to be a mining spot back during the relic rush... I came once a long time ago.}}
+{{dialogue|Justice|We're going to need to swipe a {{textcolor|green|card}} to get through that turnstile, let's look around, maybe we can find ourselves one!}}
+AREA TRIGGER DELETE || id: 21075
+ACTION CAMERA START FOCUS POINT || flagName: 11107_FocusPoint_1 | scene: Metro_Dungeon | distance: 13 | pitch: 0.6 | blendTime: 2.5 | style: 1
+
+TRIGGER Procedure 0.0 Step 11.1 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 31) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTION CAMERA END FOCUS POINT || blendTime: 1 | style: 1
+
+TRIGGER Procedure 4.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 31) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 21071 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 12.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100107
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1100107 | id: 21072 | sceneName: Metro_Dungeon | flagName: metro_topstair | showOnMap: 0 | mapIcon: 0 | transId: 0
+MONSTER ADD TAG || isAdd: 1 | tag: xiyiren3
+AREA TRIGGER CREATE || flagName: metro_treasureroom | missionId: 1100107 | id: 21073 | sceneName: Metro_Dungeon | showOnMap: 0 | mapIcon: 0 | transId: 0
+AREA TRIGGER CREATE || missionId: 1100107 | id: 21074 | sceneName: Metro_Dungeon | flagName: metro_puzzledoor | showOnMap: 0 | mapIcon: 0 | transId: 0
+AREA TRIGGER CREATE || flagName: metro_turnstile | missionId: 1100107 | id: 21075 | sceneName: Metro_Dungeon | showOnMap: 0 | mapIcon: 0 | transId: 0
+AREA TRIGGER CREATE || flagName: metro_turnstilejump | missionId: 1100107 | id: 21076 | sceneName: Metro_Dungeon | showOnMap: 0 | mapIcon: 0 | transId: 0
+AREA TRIGGER CREATE || flagName: metro_hallway2card | missionId: 1100107 | id: 21077 | sceneName: Metro_Dungeon | showOnMap: 0 | mapIcon: 0 | transId: 0
+AREA TRIGGER CREATE || missionId: 1100107 | id: 21078 | sceneName: Metro_Dungeon | flagName: metro_keyroom | showOnMap: 0 | mapIcon: 0 | transId: 0
+AREA TRIGGER CREATE || missionId: 1100107 | id: 21079 | sceneName: Metro_Dungeon | flagName: metro_turnstilethrough | showOnMap: 0 | mapIcon: 0 | transId: 0
+MONSTER ADD TAG || tag: xiyiren4 | isAdd: 1
+AREA TRIGGER CREATE || missionId: 1100107 | id: 210710 | sceneName: Metro_Dungeon | flagName: metro_speech | showOnMap: 0 | mapIcon: 0 | transId: 0
+AREA TRIGGER CREATE || missionId: 1100107 | id: 210711 | sceneName: Metro_Dungeon | flagName: metro_deadend | showOnMap: 0 | mapIcon: 0 | transId: 0
+AREA TRIGGER CREATE || missionId: 1100107 | id: 210712 | sceneName: Metro_Dungeon | flagName: metro_blockeddoor | showOnMap: 0 | mapIcon: 0 | transId: 0
+AREA TRIGGER CREATE || missionId: 1100107 | id: 210713 | sceneName: Metro_Dungeon | flagName: metro_blockeddoor2 | showOnMap: 0 | mapIcon: 0 | transId: 0
+AREA TRIGGER CREATE || missionId: 1100107 | id: 210714 | sceneName: Metro_Dungeon | flagName: metro_doormachine | showOnMap: 0 | mapIcon: 0 | transId: 0
+AREA TRIGGER CREATE || missionId: 1100107 | id: 210715 | sceneName: Metro_Dungeon | flagName: metro_doormachine2 | showOnMap: 0 | mapIcon: 0 | transId: 0
+
+TRIGGER Procedure 0.0 Step 12.1 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 21072
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Justice|What's down there?}}
+AREA TRIGGER DELETE || id: 21072
+
+TRIGGER Procedure 0.0 Step 12.2 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 21073
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Justice|Find anything good?}}
+AREA TRIGGER DELETE || id: 21073
+
+TRIGGER Procedure 0.0 Step 13.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 21077
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Justice|Yeah! Let's check this way!}}
+AREA TRIGGER DELETE || id: 21077
+
+TRIGGER Procedure 0.0 Step 14.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 21078
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Justice|Hey, there's the key card!}}
+AREA TRIGGER DELETE || id: 21078
+
+TRIGGER Procedure 0.0 Step 15.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 21079
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Justice|Woah! He's comin' right for us!}}
+AREA TRIGGER DELETE || id: 21079
+
+TRIGGER Procedure 0.0 Step 16.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 0 | tag: xiyiren4
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Justice|Whew... that was a close one!}}
+ADD MONSTER KILL ILLUSTRATION || monsterID: 5005
+
+TRIGGER Procedure 1.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | id: 210710 | enter: 0
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 210710
+CUTSCENE UI STATE ENTER || 
+ACTION MONSTER HIDE INDICATOR || 
+Add behavior CommanderMoveToFlagAndAction (idName: 1110741) to Player
+(param: TargetScene:Metro_Dungeon|MoveMode:Run|FlagName:11107_G4_Player_1|LookAtActor:8046)
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8008
+Add behavior CommanderMoveToFlagAndAction (idName: 1110741) to Justice
+(param: TargetScene:Metro_Dungeon|MoveMode:Run|FlagName:11107_G4_8008_1|LookAtActor:8046)
+ACTION CAMERA START FOCUS POINT || flagName: 11107_FocusPoint_2 | scene: Metro_Dungeon | distance: 12 | pitch: 0.6 | blendTime: 3 | style: 1
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1110701 | path: 11107_Bottle_1 | sceneName: Metro_Dungeon | flagName: 11107_G5_Bottle_1 | extraParams: 0
+Set global blackboard key arrivegaotai with info 0.
+
+TRIGGER Procedure 1.0 Step 1.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: arrivegaotai | info: 0 | exist: 1
+ACTIONS
+Add behavior CommanderNPCActionLoop (idName: 1110742) to Player
+(param: CMDAction:Bow_Loop_Story)
+
+TRIGGER Procedure 1.0 Step 1.2 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8008 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 41) A conversation 1144, 1145 starts:
+{{dialogue|Justice|D... Dang! That's a whole gaggle of Geeglers... Looks like they're all listening to that big fella talk about... lizard stuff or somethin'.}}
+{{dialogue|Justice|I remember this place: if we can find {{textcolor|green|two keys}} we can get through that door on the opposite side of this room. Let's move quick while they're distracted!}}
+Remove behavior CommanderNPCAction (idName: 1110742) from Justice
+Remove behavior CommanderMoveToFlagAndAction (idName: 1110741) from Player
+Set global blackboard key arrivegaotai with info 1.
+
+TRIGGER Procedure 1.0 Step 1.3 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 41) There is a conversation segment (id 1144) that ends:
+{{dialogue|Justice|D... Dang! That's a whole gaggle of Geeglers... Looks like they're all listening to that big fella talk about... lizard stuff or somethin'.}}
+CONDITIONS
+Always:
+ACTIONS
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8008 | state: Attack
+STOPWATCH REAL TIME SET || id: 1110743 | sec: 0.2
+ACTION CAMERA END FOCUS POINT || blendTime: 0 | style: 0
+
+TRIGGER Procedure 1.0 Step 2.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 41) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+ACTION MONSTER SHOW INDICATOR || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 1110741) from Justice
+Remove behavior CommanderNPCActionLoop (idName: 1110742) from Player
+AUTOSAVE TRY || 
+
+TRIGGER Procedure 1.0 Step 11.0 Order 1 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 210712
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 210713
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Justice|There must be a way to open this...}}
+
+TRIGGER Procedure 1.0 Step 13.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 210711
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Justice|Dead end...}}
+
+TRIGGER Procedure 1.0 Step 15.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON TRIGGER TRIGGER || order: 0 | id: 1 | scene: Metro_Dungeon
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Justice|Hey, there you go! You're gettin' the hang of it. I feel a bit better about the situation overall...}}
+Set Shoot to 1
+===Escape Gecko Station===
+
+{{mission_details
+|desc = The path ahead is clear, look for an exit!
+|details = Escape Gecko Station
+}}
+AREA TRIGGER DELETE || id: 1100107
+
+TRIGGER Procedure 1.0 Step 16.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON BAG CHANGE || order: 0 | item: 11900000 | changeType: 1 | itemGrade: -1
+CONDITIONS
+Check if Shoot is == 0
+CHECK PLAYER ITEM || item: 11900000 | itemGrade: -1 | set: 3 | count: 0
+ACTIONS
+(cId 65) A conversation 1358 starts:
+{{dialogue|Justice|Wow! You missed every shot. I'm not even upset, that's incredible. Here, I have a few more rounds... Just, uh, try to aim a bit more carefully! And definitely stay in front of me...}}
+Add 24 Pistol Bullet of Default quality (Notify player)
+
+TRIGGER Procedure 1.0 Step 17.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON TRIGGER TRIGGER || order: 0 | id: 5 | scene: Metro_Dungeon
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Justice|There we go.}}
+
+TRIGGER Procedure 1.0 Step 18.0 Order 9 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON TRIGGER TRIGGER || order: 0 | id: 6 | scene: Metro_Dungeon
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Justice|Yeah! Just press 'em! You got it!}}
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | id: 210716 | enter: 0
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key NoCutSceneObstacle with info 1.
+CUTSCENE UI STATE ENTER || 
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8008
+Add behavior CommanderMoveToFlagAndAction (idName: 1110751) to Player
+(param: TargetScene:Metro_Dungeon|MoveMode:Run|FlagName:11107_G5_Player_1|LookAtActor:8046)
+Add behavior CommanderMoveToFlagAndAction (idName: 1110751) to Justice
+(param: TargetScene:Metro_Dungeon|MoveMode:Run|FlagName:11107_G5_8008_1|Delay:0.5|LookAtActor:8046)
+ACTION MONSTER HIDE INDICATOR || 
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8008 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 51) A conversation 1147, 1148 starts:
+{{dialogue|Justice|Dang, I hate to say this pardner, but... I think our only way out of this thing is on the other side of that room with all the Geeglers...}}
+{{dialogue|Justice|It looks like they're all payin' attention to that big guy though, I'll bet we can sneak past 'em; follow my lead...}}
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 51) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 1110751) from Justice
+Add behavior CommanderMoveToFlag (idName: 1110752) to Justice
+(param: TargetScene:Metro_Dungeon|MoveMode:Walk|FlagName:11107_G5_8008_2)
+Remove behavior CommanderMoveToFlagAndAction (idName: 1110751) from Player
+Add behavior CommanderMoveToFlag (idName: 1110752) to Player
+(param: TargetScene:Metro_Dungeon|MoveMode:Walk|FlagName:11107_G5_Player_2|Delay:2)
+STOPWATCH REAL TIME SET || id: 11107001 | sec: 2
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8008 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 1110752) from Justice
+Add behavior CommanderMoveToFlagAndAction (idName: 1110753) to Justice
+(param: TargetScene:Metro_Dungeon|MoveMode:Walk|FlagName:11107_G5_8008_3|LookAtActor:8046)
+
+TRIGGER Procedure 2.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 1110752) from Player
+Add behavior CommanderMoveToFlagAndAction (idName: 1110753) to Player
+(param: TargetScene:Metro_Dungeon|MoveMode:Walk|FlagName:11107_G5_Player_3|LookAtActor:8008)
+STOPWATCH REAL TIME SET || id: 1110751 | sec: 1.3
+
+TRIGGER Procedure 2.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 1110751
+CONDITIONS
+Always:
+ACTIONS
+ACTION CAMERA END FOCUS POINT || blendTime: 0 | style: 0
+STOPWATCH REAL TIME SET || id: 1110752 | sec: 0.2
+(cId 52) A conversation 652, 653 starts:
+{{dialogue|Geegler President|My fellow Geeglers. Too long have we slithered underfoot; forgotten, betrayed... abandoned! It is time to take action! Let me remind you of a phrase from our {{textcolor|green|Holy Book}}:}}
+{{dialogue|Geegler President|They, meaning the man-creatures, are not fit to be the rulers of this world; they lie, cheat, and even conspire against their own!}}
+
+TRIGGER Procedure 2.0 Step 5.2 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 52) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Set IsG5Shot2TalkEnd to 1
+
+TRIGGER Procedure 2.0 Step 5.5 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 52) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 1110753 | sec: 0.2
+(cId 521) A conversation 654 starts:
+{{dialogue|Geegler President|...It is not enough to simply reach their level; we must destroy them or take them over, one city at a time, until we, the Geeglers, are sitting atop the world!}}
+
+TRIGGER Procedure 2.0 Step 5.3 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 1110752
+CONDITIONS
+Always:
+ACTIONS
+Set IsG5Shot2End to 1
+
+TRIGGER Procedure 2.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 1110753
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 1110754 | sec: 0.2
+
+TRIGGER Procedure 2.0 Step 6.1 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 1110754
+CONDITIONS
+Always:
+ACTIONS
+Set IsG5Shot4End to 1
+
+TRIGGER Procedure 2.0 Step 6.2 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 521) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Set IsG5Shot4TalkEnd to 1
+
+TRIGGER Procedure 2.0 Step 6.4 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 521) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 53) A conversation 655 starts:
+{{dialogue|Geegler President|Strong words of providence. Today will mark our first step in that direction, we're going to take over Sandrock and-}}
+
+TRIGGER Procedure 2.0 Step 8.2 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 53) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 54) A conversation 675 starts:
+{{dialogue|Justice|What the heck is that guy talkin' about... take over Sandrock?}}
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1110703 | path: 11107_G5_BottleTage | sceneName: Metro_Dungeon | flagName: 11107_G5_BottleTage | extraParams: 0
+
+TRIGGER Procedure 2.0 Step 15.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 54) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 1110753) from Justice
+Add behavior CommanderIdle (idName: 1110754) to Justice
+(param: TurnToActor:8046|LookAtActor:8046)
+SCENEITEM DELETE || itemType: 0 | id: 1110701
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1110702 | path: 11107_Bottle_2 | sceneName: Metro_Dungeon | flagName: 11107_G5_Bottle_2 | extraParams: 0
+STOPWATCH REAL TIME SET || id: 11107006 | sec: 0.1
+SOUND PLAY 2D || idStr: Play_fb_can_roll
+
+TRIGGER Procedure 2.0 Step 16.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 11107006
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 11107005 | sec: 0.5
+Remove behavior CommanderIdle (idName: 1110754) from Justice
+Add behavior CommanderIdle (idName: 1110759) to Justice
+(param: TurnToActor:8050)
+
+TRIGGER Procedure 2.0 Step 17.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8008 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON STOPWATCH REAL TIME END || order: 0 | id: 11107005
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 1110755 | sec: 2
+Add behavior CommanderNPCAction (idName: 1110755) to Justice
+(param: CMDAction:StandnSurprise_Story|LookAtActor:8050)
+
+TRIGGER Procedure 2.0 Step 18.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 1110755
+CONDITIONS
+Always:
+ACTIONS
+Geegler President stops standing still
+Add behavior CommanderIdle (idName: 1110751) to Geegler President
+(param: LookAtActor:8008|TurnToActor:8008)
+SCENEITEM DELETE || itemType: 0 | id: 1110703
+STOPWATCH REAL TIME SET || id: 11107010 | sec: 1
+
+TRIGGER Procedure 2.0 Step 18.1 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 11107010
+CONDITIONS
+Always:
+ACTIONS
+(cId 55) A conversation 656 starts:
+{{dialogue|Geegler President|Hey, who are those two back there?!}}
+
+TRIGGER Procedure 2.0 Step 19.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 55) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 56) A conversation 143_0 starts:
+{{dialogue|Justice|Oh crap! They saw us! What do we do?}}
+
+*''We're here to stop you!''
+*''Ssss ss ssss sss?''
+*''Let Justice answer.''
+
+{{dialogue|Geegler President|indent=true|answer=We're here to stop you!
+|Hah! You're too late, humans! Geeglers, attack!}}
+{{dialogue|Geegler President|indent=true|answer=Ssss ss ssss sss?
+|What did you say about my mother?!}}
+{{dialogue|Geegler President|indent=true|Geeglers! Destroy them! Teach them some respect!}}
+{{dialogue|Justice|indent=true|answer=Let Justice answer.
+|Sorry to interrupt yer little world domination speech there partner, but there's just one little complication you didn't account for in all your plans and contemplations... That thing... is Justice!}}
+{{dialogue|Geegler President|indent=true|I don't get it. Geeglers, wipe them out!}}
+
+TRIGGER Procedure 2.0 Step 20.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 56) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTION CUTSCENE START AUDIO TYPE || id: CG_METROBOSS | duration: 0 | audioType: NoTransitionOff
+SCENEITEM DELETE || itemType: 0 | id: 1110702
+ACTOR BLIND SET || set: 1
+
+TRIGGER Procedure 3.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 8 | name: CG_METROBOSS
+CONDITIONS
+Always:
+ACTIONS
+MONSTER MODIFIER REMOVE || name: 11072
+GEAR TRIGGER TRIGGER || id: 10 | scene: Metro_Dungeon
+Set BOSS to 1
+STOPWATCH REAL TIME SET || sec: 6 | id: 21071
+STOPWATCH REAL TIME SET || id: 11107002 | sec: 1
+
+TRIGGER Procedure 3.0 Step 0.2 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 21071
+CONDITIONS
+Always:
+ACTIONS
+(cId 61) A conversation 658, 659, 661 starts:
+{{dialogue|Justice|Oh... kay... all according to plan...}}
+{{dialogue|Geegler President|I knew we should've gotten rid of that button...}}
+{{dialogue|Geegler President|No matter! I'll destroy you myself! En garde!}}
+
+TRIGGER Procedure 3.0 Step 0.5 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 61) After the conversation ends:
+CONDITIONS
+Check if BOSS is == 1
+ACTIONS
+MONSTER KILL TAG || tag: metrosmall
+DELAY MASK SET || maskId: 170107 | delayTime: 4 | durationTime: 1 | changeType: 0 | curveIndex: 0
+Remove behavior CommanderIdle (idName: 1110751) from Geegler President
+Add behavior CommanderNPCAction (idName: 21071) to Geegler President
+(param: CMDAction:JumpDown_Dungeon)
+STOPWATCH REAL TIME SET || id: 1110765 | sec: 3
+
+TRIGGER Procedure 3.0 Step 1.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8046 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Check if BOSS is == 1
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: NoCutSceneObstacle
+ACTOR BLIND SET || set: 0
+NPC LEAVE || npc: 8046
+MONSTER ADD TAG || tag: xiyirenboss | isAdd: 1
+ACTION ACTOR ADD FOLLOWER FLAG || id: 8000 | targetId: 8008 | state: Attack | flag: HatredHold
+CUTSCENE UI STATE EXIT || 
+===Defeat the Geegler President===
+
+{{mission_details
+|desc = You made the Geegler President angry for some reason, perhaps a nap would chill him out. But for now it seems you need to defeat him!
+|details = Defeat the Geegler President
+}}
+MONSTER MODIFIER REMOVE || name: 11071
+ACTION MONSTER SHOW INDICATOR || 
+Remove behavior CommanderNPCAction (idName: 1110755) from Justice
+Remove behavior CommanderIdle (idName: 1110759) from Justice
+Remove behavior CommanderMoveToFlagAndAction (idName: 1110753) from Player
+Remove behavior CommanderNPCAction (idName: 21071) from Geegler President
+DELAY MASK SET || maskId: 170107 | delayTime: 0.5 | durationTime: 2 | changeType: 1 | curveIndex: 0
+ACTOR IGNORE SHOW DISTANCE || ignore: 1 | npc: 5016001
+SCENEITEM CREATE FLAG || path: Mission_1100107 | id: 11071 | itemType: 0 | sceneName: Metro_Dungeon | flagName: metro_triggerbossbefore | extraParams: 0
+
+TRIGGER Procedure 3.0 Step 2.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 0 | tag: xiyirenboss
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+{{cutscene|id = 1161}}
+A cutscene CG_THEGEEGLER (duration: -1.0) starts playing
+Today Sandrock, Tomorrow the World - After defeating the Geegler President in his lair, he decided to hatch his plan earlier than expected. Also, there was a horse in their lair for some reason. Was it Geegler food?
+MONSTER ADD TAG || tag: xiyiren2 | isAdd: 0
+MONSTER ADD TAG || tag: xiyirenboss | isAdd: 0
+MISSION TARGET COUNTER CHANGE || missionId: 1100106 | targetId: 2 | transId: 32000014 | isAdd: 1
+ADD MONSTER KILL ILLUSTRATION || monsterID: 5016
+ACTOR IGNORE SHOW DISTANCE || npc: 5016001 | ignore: 0
+SCENEITEM DELETE || itemType: 0 | id: 11071
+
+TRIGGER Procedure 3.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_THEGEEGLER | state: 8
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: 11107_Player_1
+
+TRIGGER Procedure 3.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Metro_Dungeon to the Main:
+CONDITIONS
+Always:
+ACTIONS
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8008
+SCENEITEM DELETE || itemType: 0 | id: 1100003
+AREA TRIGGER DELETE || id: 11051
+MONSTER ADD TAG || tag: BridgeThief | isAdd: 0
+Justice stands still in Main and looks at Player
+Mi-an stands still in Main and looks at Player
+Unsuur stands still in Main and looks at Justice
+
+TRIGGER Procedure 3.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Metro_Dungeon to the Main:
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 1162}}
+A cutscene CG_XIYILOSE (duration: -1.0) starts playing
+Pride Before the Fall - We arrived just in time to force the Geegler President to hatch his plan before it was ready. It was here he learned the consquences of using pieces from the Shonash Bridge to build his weaponized train...
+NPC WEAPON UNLOCK || npc: 8008 | name: 21071
+
+TRIGGER Procedure 3.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1100107
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 21073
+AREA TRIGGER DELETE || id: 210711
+AREA TRIGGER DELETE || id: 210712
+AREA TRIGGER DELETE || id: 210713
+
+TRIGGER Procedure 4.0 Step 3.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_XIYILOSE | state: 8
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1300031 | path: Mission_BigBridgeBroken | sceneName: Main | flagName: BigBridge | extraParams: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 4.0 Step 3.1 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_XIYILOSE | state: 9
+CONDITIONS
+Always:
+ACTIONS
+Mi-an stops standing still
+Unsuur stops standing still
+Add behavior CommanderNPCAction (idName: 1110702) to Justice
+(param: CMDAction:Flap_Story)
+Add behavior CommanderMoveToFlagAndAction (idName: 1110702) to Unsuur
+(param: TargetScene:Main|MoveMode:Run|FlagName:11107_8026_2|LookAtActor:8008|Delay:1)
+Add behavior CommanderMoveToFlagAndAction (idName: 1110702) to Mi-an
+(param: TargetScene:Main|MoveMode:Run|FlagName:11107_8017_2|LookAtActor:8000|Delay:2)
+
+TRIGGER Procedure 4.0 Step 3.2 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8008 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 1110702) from Justice
+Justice stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 1110703) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:11107_Player_2|LookAtActor:8017|Delay:1)
+Add behavior CommanderMoveToFlagAndAction (idName: 1110703) to Justice
+(param: TargetScene:Main|MoveMode:Run|FlagName:11107_8008_2|LookAtActor:8026)
+
+TRIGGER Procedure 4.0 Step 3.3 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8017 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 31) A conversation 665, 666, 667, 668 starts:
+{{dialogue|Mi-an|What the heck, guys?! I was worried sick! I was so anxious while you guys were in there that I fixed the trolley engines! Gah! You're lucky to be alive!}}
+{{dialogue|Justice|Luck... ain't got nothin' to do with it...}}
+{{dialogue|Unsuur|Look, the rest of the Geeglers are runnin' for the hills, we won, Sheriff.}}
+{{dialogue|Justice|Let's go back and talk to the 'ol Minister. I guess we'll have to take the trolley again.}}
+
+TRIGGER Procedure 4.0 Step 6.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 21071
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Matilda===
+
+{{mission_details
+|desc = Report what happened to Matilda.
+|details = Talk to Matilda
+}}
+NPC SET CAN INTERACT || npc: 8008 | canInteract: 1
+Set DONG to 10
+Set global blackboard key bridgebroken with info 1.
+CUTSCENE UI STATE EXIT || 
+TIME SET ENABLE || bool: 1
+Remove behavior CommanderMoveToFlagAndAction (idName: 1110703) from Justice
+Remove behavior CommanderMoveToFlagAndAction (idName: 1110702) from Unsuur
+Remove behavior CommanderMoveToFlagAndAction (idName: 1110703) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 1110702) from Mi-an
+Mi-an stands still in Guildhall
+Justice stands still in Guildhall
+Unsuur stands still in Guildhall
+Matilda stands still in Guildhall
+PLAYER SET POS ROT FLAG || sceneName: Guildhall | flagName: 11107_G2_Player_1
+
+TRIGGER Procedure 5.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+Check if DONG is == 10
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Guildhall | flagName: 11107_G2_Player_1
+Mi-an stops standing still
+Unsuur stops standing still
+Justice stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 1110705) to Mi-an
+(param: TargetScene:Guildhall|MoveMode:Run|FlagName:11107_G2_8017_2|LookAtActor:8018|Delay:1)
+Add behavior CommanderMoveToFlagAndAction (idName: 1110705) to Justice
+(param: TargetScene:Guildhall|MoveMode:Run|FlagName:11107_G2_8008_2|LookAtActor:8018)
+Add behavior CommanderMoveToFlagAndAction (idName: 1110705) to Unsuur
+(param: TargetScene:Guildhall|MoveMode:Run|FlagName:11107_G2_8026_2|LookAtActor:8018|Delay:0.5)
+
+TRIGGER Procedure 5.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+Check if DONG is == 10
+ACTIONS
+DELAY MASK SET || delayTime: 2 | durationTime: -2 | curveIndex: 0 | maskId: 21071 | changeType: 1
+Matilda stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 1110705) to Matilda
+(param: TargetScene:Guildhall|MoveMode:Walk|FlagName:11107_G2_8018_2|LookAtActor:8008)
+Add behavior CommanderMoveToFlagAndAction (idName: 1110705) to Player
+(param: TargetScene:Guildhall|MoveMode:Run|FlagName:11107_G2_Player_2|LookAtActor:8018|Delay:1)
+
+TRIGGER Procedure 5.0 Step 1.1 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8018 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 40) A conversation 669, 670, 671 starts:
+{{dialogue|Matilda|... So that's what happened. My goodness, sounds like you folks went through heck and back. I'm glad y'all are safe and sound.}}
+{{dialogue|Matilda|That Geegler train sure did some damage to our bridge though. I'm having Heidi assess the situation right now. I'll be calling a special town meeting to talk about it once we're sure of what to do next.}}
+{{dialogue|Matilda|You've done the town proud scaring away the Geeglers, mighty heroic! Get some rest now, ya hear?}}
+
+TRIGGER Procedure 5.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 40) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: arrivegaotai
+NPC SET CAN INTERACT || canInteract: 1 | npc: 8008
+Add behavior Story1100106_8008_1 (idName: 21072) to Justice
+(param: -1)
+Add behavior Story1100106_8017_1 (idName: 21072) to Mi-an
+(param: -1)
+Add behavior Story1100106_8026_1 (idName: 21072) to Unsuur
+(param: -1)
+Set global blackboard key shileyuanopen2 with info 1.
+GLOBAL BLACK BOARD REMOVE || key: shileyuanopen1
+PICK UP RESOURCE REFRESH || id: 1100106
+PICK UP RESOURCE DELETE || id: 1310
+PICK UP RESOURCE DELETE || id: 1311
+GLOBAL BLACK BOARD REMOVE || key: con4lizardmeeting
+Remove behavior CommanderMoveToFlagAndAction (idName: 1110705) from Mi-an
+Remove behavior CommanderMoveToFlagAndAction (idName: 1110705) from Unsuur
+Remove behavior CommanderMoveToFlagAndAction (idName: 1110705) from Justice
+Remove behavior CommanderMoveToFlagAndAction (idName: 1110705) from Player
+CUTSCENE UI STATE EXIT || 
+CUTSCENE UI STATE EXIT || 
+Set AI to 0
+NPC RESET LEVEL || npc: 8008
+SUBMIT MISSION 1100106
+
+TRIGGER Procedure 5.0 Step 7.0 Order 4 Repeat 3
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8008 | behaviourName: Story1100106_8008_1 | eventName: NeedsRemoval8008
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8017 | behaviourName: Story1100106_8017_1 | eventName: NeedsRemoval8017
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8026 | behaviourName: Story1100106_8026_1 | eventName: NeedsRemoval8026
+CONDITIONS
+Always:
+ACTIONS
+Increment AI by 1
+
+TRIGGER Procedure 5.0 Step 8.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8008 | behaviourName: Story1100106_8008_1 | eventName: NeedsRemoval8008
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8017 | behaviourName: Story1100106_8017_1 | eventName: NeedsRemoval8017
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8026 | behaviourName: Story1100106_8026_1 | eventName: NeedsRemoval8026
+CONDITIONS
+Check if AI is >= 3
+ACTIONS
+Remove behavior Story1100106_8008_1 (idName: 21072) from Justice
+Remove behavior Story1100106_8017_1 (idName: 21072) from Mi-an
+Remove behavior Story1100106_8026_1 (idName: 21072) from Unsuur
+Remove behavior CommanderMoveToFlagAndAction (idName: 1110705) from Matilda
+END MISSION 1100107

@@ -1,0 +1,735 @@
+Reading Mission 1200394: Model Free Cities
+
+<onlyinclude>{{Infobox mission
+|name = Model Free Cities
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Model Free Cities:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|803}}
+DELIVER MISSION 1200393
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200393
+CONDITIONS
+Always:
+ACTIONS
+Run mission Model Free Cities
+END MISSION 1200393
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200394
+CONDITIONS
+Always:
+ACTIONS
+===Make Judge Cards===
+
+{{mission_details
+|desc = Jane provided you with a recipe of a Judge Card, make it on your Worktable as soon as you can!
+|details = Make Judge Cards
+*{{i2|Judge Card|0/4}}
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200393 | canSubmit: 1 | targetId: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Jane===
+
+{{mission_details
+|desc = You've made the Judge Cards, take it to Jane.
+|details = Talk to Jane
+*{{i2|Judge Card|0/4}}
+*{{i2|Jane|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Jane
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1200393 | canSubmit: 1 | targetId: 2
+ACTIONS
+BAG MODIFY BY TARGET || targetId: 2 | missionId: 1200393
+(cId 0) A conversation 6929_0 starts:
+{{dialogue|Jane|Let's see... These props are fantastic! ''Player'', you remind me of the protagonist from the show "The Greatest Builder": responsive, fast, with quality service!}}
+{{dialogue|Jane|"The only way to change the world is to be different!" That line at the time was so inspirational that it motivated me to push forward and graduate from Atara University, haha.}}
+{{dialogue|Jane|The school will hold the Model Free Cities tomorrow. ''Player'', literally everyone wants you to be the judge, so come and join us if you got time!}}
+{{dialogue|Jane|That's all for now, "The Greatest Builder", I'll be off!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Wait Until Tomorrow===
+
+{{mission_details
+|desc = Jane has invited you to attend the Model Free Cities event tomorrow at the Sandrock School. Make sure you don't forget!
+|details = Wait Until Tomorrow
+}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+===Go to School===
+
+{{mission_details
+|desc = The Model Free Cities event is today! Go and check it out at the Sandrock School.
+|details = Go to School
+}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 23941
+SUBMIT MISSION 1200393
+END MISSION 1200394
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the School:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_school
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+UNIQUE ACTION RUN || idStr: enter_school
+AREA TRIGGER DELETE || id: 23941
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the School:
+CONDITIONS
+Always:
+ACTIONS
+Pebbles stands still in School
+Jasmine stands still in School
+Andy stands still in School
+Jane stands still in School
+Heidi stands still in School
+Vivi stands still in School
+Catori stands still in School
+Trudy stands still in School
+Logan stands still in School
+Krystal stands still in School
+Rocky stands still in School
+Hugo stands still in School
+Cooper stands still in School
+Dan-bi stands still in School
+Rian stands still in School
+PLAYER SET POS ROT FLAG || sceneName: School | flagName: modelfree_player
+
+TRIGGER Procedure 2.0 Step 5.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 23945
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 21805, 21806 starts:
+{{dialogue|Jane|''Player'', we're all waiting for you! Things are all set and ready to go, and look, here is a Placard that you helped to make, just hold it up for whoever you think is the best representative later!}}
+{{dialogue|Jane|Welcome, parents and students! I apologize for the delay. I hope everyone is ready, the show is about to start. ''Player'', please find your place among the Judges.}}
+Add 1 Judge Card of Default quality (Notify player)
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 23941 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23941 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: School | flagName: modelfree_player2
+DELAY MASK SET || maskId: 23941 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 23941
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 21807 starts:
+{{dialogue|Jane|Ladies and gentleman, welcome to the "Fifteenth Sandrock Mayor Election," I'm your current Sandrock mayor "Granny Jane". It's such a great feelin' seein' so many young faces runnin' for the next Mayor today.}}
+
+TRIGGER Procedure 3.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Andy|Wow, great acting!}}
+
+TRIGGER Procedure 3.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC BUBBLE STATE CHANGE || order: 0 | npc: 8013 | flag: 0
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Jasmine|That's not acting, she is Mayor Jane!}}
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC BUBBLE STATE CHANGE || order: 0 | npc: 8040 | flag: 0
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 6930_0 starts:
+{{dialogue|Jane|As y'all can see, I'm gettin' too old for the role of Mayor and it's time for some new saplin' to take over. I've witnessed Sandrock's rapid development over the years, and everyone has been sayin' lately that we're the center of the Alliance. Ahem...!}}
+{{dialogue|Jane|But I think our city still has the potential to grow even further in areas like entertainment, culture and city development. That's exactly what I wanted to hear in today's campaign proposals.}}
+{{dialogue|Jane|Four representatives from the Alliance Council are also invited to be the judges of this event. They are: the clothing mogul - Grandma Vivi.}}
+{{dialogue|Vivi|Oh, hey everyone! I'm...I am clothing mogul Vivi and I'd liked to make clothes for people!}}
+{{dialogue|Jane|Entertainment industry leader - Ms. Catori.}}
+{{dialogue|Catori|Ahem, yep, better present some solid differentiation in your plans or otherwise I will not invest.}}
+{{dialogue|Jane|Architecture and engineerin' mastermind - Ms. Heidi.}}
+{{dialogue|Heidi|Hello everyone! I hope you all do well!}}
+{{dialogue|Jane|And finally, our biggest guest here today - superstar Builder ''Player''!}}
+
+*''Without a doubt!''
+*''You guys better behave yourself!''
+*''Uh, hi guys...''
+
+{{dialogue|Jane|indent=true|answer=Without a doubt!
+|One of the best, if not the best Builder across the Alliance!}}
+{{dialogue|Jane|indent=true|answer=You guys better behave yourself!
+|Hope you all put your best foot forward!}}
+{{dialogue|Jane|indent=true|answer=Uh, hi guys...
+|Our judges should not be nervous.}}
+{{dialogue|Jane|So without further do, let's welcome the first candidate, Ms. Jasmine, to make her speech!}}
+The conversation ends.
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 23942) to Jasmine
+(param: TargetScene:School|MoveMode:Run|FlagName:modelfree_jasmine)
+SOUND PLAY 2D || idStr: mission_claph
+
+TRIGGER Procedure 4.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8040 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Jasmine stops standing still
+(cId 4) A conversation 21821, 21822, 21823 starts:
+{{dialogue|Jasmine|Ahem! Hi everyone, my name is Jasmine and I am running for the Mayor of Sandrock. Once elected, I'll put more resources into the promotion of our town and the education sector.}}
+{{dialogue|Jasmine|Sandrock has a fascinating history and loads of townsfolks, yet it has not been properly marketed in my opinion. My plan is to set up a publishing house in Martle Square and invite Mr. Ernie, er, I mean Mr. Ernest, along with Mr. Owen to write up a chronicle of Sandrock.}}
+{{dialogue|Jasmine|That way, we can spread the word of Sandrock among the Alliance and let more people learn about the city's rich history and culture.}}
+
+TRIGGER Procedure 4.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Hugo|Sounds like she's been learnin' from her Ma!}}
+
+TRIGGER Procedure 4.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC BUBBLE STATE CHANGE || order: 0 | npc: 8010 | flag: 0
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Cooper|Now jes wait a darn moment, are we really changing the Mayor?!}}
+
+TRIGGER Procedure 4.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC BUBBLE STATE CHANGE || order: 0 | npc: 8003 | flag: 0
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 21824, 21825 starts:
+{{dialogue|Jasmine|As Sandrock's population increases, I'm also going to divide the school into kindergarten, grade school and high school, so that students within the appropriate age group can receive the focused education that they deserve.}}
+{{dialogue|Jasmine|The plan will culminate in establishing a new university of higher learning right here in Sandrock! So that talented children don't have to leave anymore.}}
+
+TRIGGER Procedure 4.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Trudy|Nice ideas Jazz!}}
+
+TRIGGER Procedure 4.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC BUBBLE STATE CHANGE || order: 0 | npc: 8006 | flag: 0
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 21826, 21827 starts:
+{{dialogue|Jasmine|That's all for me today, thanks everyone!}}
+{{dialogue|Jane|Thank you, Ms. Jasmine. Next up we have our next candidate, Mr. Andy!}}
+
+TRIGGER Procedure 5.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 23942) from Jasmine
+Add behavior CommanderMoveToFlagAndAction (idName: 23943) to Jasmine
+(param: TargetScene:School|MoveMode:Run|FlagName:modelfree_jasmine0)
+Andy stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 23942) to Andy
+(param: TargetScene:School|MoveMode:Run|FlagName:modelfree_jasmine)
+SOUND PLAY 2D || idStr: mission_claph
+
+TRIGGER Procedure 5.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8013 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 21828 starts:
+{{dialogue|Andy|Hey there, how y'all doin'! My name is Andy and I have a master plan for the future of Sandrock! Let's take a look, shall we?}}
+
+TRIGGER Procedure 5.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Cooper|What in the Yakmel is this?}}
+
+TRIGGER Procedure 5.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC BUBBLE STATE CHANGE || order: 0 | npc: 8003 | flag: 0
+CONDITIONS
+Always:
+ACTIONS
+(cId 8) A conversation 21829 starts:
+{{dialogue|Andy|Ahem, I will set foot in the recreational business and revamp Sandrock into a giant theme park with attractions everywhere! Like the Yakmel Ranch, let's make a yakmel-themed carousel called "The Wheel of Yakmel!"}}
+
+TRIGGER Procedure 5.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Cooper|Now I get you kid!}}
+
+TRIGGER Procedure 5.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC BUBBLE STATE CHANGE || order: 0 | npc: 8003 | flag: 0
+CONDITIONS
+Always:
+ACTIONS
+(cId 9) A conversation 21830 starts:
+{{dialogue|Andy|After the revamp, the Martle Oasis will turn into a water park. Ideally it'll be extended to the other side of the valley so we can design a waterfall, let's call it "The Desert Falls!"}}
+
+TRIGGER Procedure 5.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Catori|Now that's a thought...}}
+
+TRIGGER Procedure 5.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC BUBBLE STATE CHANGE || order: 0 | npc: 8024 | flag: 0
+CONDITIONS
+Always:
+ACTIONS
+(cId 10) A conversation 21831 starts:
+{{dialogue|Andy|Lastly, a handicraft paradise will be built next to the workshop of ''Player'' so that they can teach these tourists how to make the best handicrafts. As for the stuff they make, they'll buy it for themselves!}}
+
+TRIGGER Procedure 5.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Logan|This kid's got talent!}}
+
+TRIGGER Procedure 5.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC BUBBLE STATE CHANGE || order: 0 | npc: 8011 | flag: 0
+CONDITIONS
+Always:
+ACTIONS
+(cId 11) A conversation 21832 starts:
+{{dialogue|Andy|With a large theme park like this, it'll be mad not to have proper transportation. Look! I've designed this "Super Steam Mobile Suit Backpack" so that people could get to places, faster!}}
+
+TRIGGER Procedure 5.0 Step 10.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Heidi|Ooh! Too bad Qi's not here.}}
+
+TRIGGER Procedure 5.0 Step 11.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC BUBBLE STATE CHANGE || order: 0 | npc: 8009 | flag: 0
+CONDITIONS
+Always:
+ACTIONS
+(cId 12) A conversation 21833, 21834 starts:
+{{dialogue|Andy|So that's all for my plan, thank you all for listenin'! Vote for me and you get free water park tickets!}}
+{{dialogue|Jane|Thank you Mr. Andy. So, let's give a warm welcome to our last candidate, Mr. Pebbles!}}
+
+TRIGGER Procedure 6.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 12) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 23942) from Andy
+Add behavior CommanderMoveToFlagAndAction (idName: 23943) to Andy
+(param: TargetScene:School|MoveMode:Run|FlagName:modelfree_andy0)
+Pebbles stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 23942) to Pebbles
+(param: TargetScene:School|MoveMode:Run|FlagName:modelfree_jasmine)
+SOUND PLAY 2D || idStr: mission_claph
+
+TRIGGER Procedure 6.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8058 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 13) A conversation 21835, 21836 starts:
+{{dialogue|Pebbles|Uh... My name is Pebbles and when I am May-er I will grow my Papa's digging company!}}
+{{dialogue|Pebbles|I will have the awesome Builder make some giant robots to help! That way Papa will have more time to play with me!}}
+
+TRIGGER Procedure 6.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 13) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Rocky|Son... I'm so proud of you, oooh!}}
+
+TRIGGER Procedure 6.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC BUBBLE STATE CHANGE || order: 0 | npc: 8044 | flag: 0
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Krystal|Ain't a bad idea there, Pebbles!}}
+
+TRIGGER Procedure 6.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC BUBBLE STATE CHANGE || order: 0 | flag: 0 | npc: 8057
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 23942) from Pebbles
+(cId 14) A conversation 21837, 21838, 21839 starts:
+{{dialogue|Jane|Good, very good, thank you Mr. Pebbles!}}
+{{dialogue|Jane|After hearin' everyone's proposal, I think the future of Sandrock is in safe hands! So let's have our judges decide whose the best candidate!}}
+{{dialogue|Vivi|I didn't understand some of 'em, but I think Jasmine's ideas are well thought out so I vote for her!}}
+Add behavior CommanderMoveToFlagAndAction (idName: 23943) to Pebbles
+(param: TargetScene:School|MoveMode:Run|FlagName:modelfree_pebbles0)
+
+TRIGGER Procedure 7.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 14) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Jasmine|Yes!}}
+
+TRIGGER Procedure 7.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC BUBBLE STATE CHANGE || order: 0 | npc: 8040 | flag: 0
+CONDITIONS
+Always:
+ACTIONS
+(cId 15) A conversation 21840 starts:
+{{dialogue|Catori|I think Andy's ideas are a bit pie-in-the-sky. However, it's not unreasonable and has opened up a lot of my mind. I'll vote for Andy.}}
+
+TRIGGER Procedure 7.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 15) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Andy|Yo! Woo-hoo! Andy is the best!}}
+
+TRIGGER Procedure 7.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC BUBBLE STATE CHANGE || order: 0 | npc: 8013 | flag: 0
+CONDITIONS
+Always:
+ACTIONS
+(cId 16) A conversation 21841 starts:
+{{dialogue|Heidi|While Andy's idea is certainly thoughtful, I think some of the cost would be too much for Sandrock to handle. I think Pebbles' idea is honestly not that bad, a more capable salvaging company would help our city. I guess I'll vote for Pebbles!}}
+
+TRIGGER Procedure 7.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 16) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Rocky|I dunno whether I appreciate that comment or not...}}
+
+TRIGGER Procedure 7.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC BUBBLE STATE CHANGE || order: 0 | npc: 8044 | flag: 0
+CONDITIONS
+Always:
+ACTIONS
+(cId 17) A conversation 6935_0 starts:
+{{dialogue|Player|（Select your preferred proposal）}}
+
+*''Jasmine's idea has solid foundations!''
+*''Andy's proposal is certainly innovative!''
+*''Pebbles got potentials!''
+
+{{dialogue|Jane|indent=true|answer=Jasmine's idea has solid foundations!
+|Then Ms. Jasmine will win the race with two votes. Congratulations, Ms. Jasmine, you're now the newly elected Mayor of Sandrock!}}
+{{dialogue|Jasmine|indent=true|I appreciate the support everyone! Sandrock will surely become a even more prosperous place under my leadership!}}
+{{dialogue|Jane|indent=true|answer=Andy's proposal is certainly innovative!
+|Then Mr. Andy will win the race with two votes. Congratulations, Mr. Andy, you're now the newly elected Mayor of Sandrock!}}
+{{dialogue|Andy|indent=true|Yeah! Folks will live it up once I become the Mayor! Oh yeah! And free tickets to the water park!}}
+{{dialogue|Jane|indent=true|answer=Pebbles got potentials!
+|Then Mr. Pebbles will win the race with two votes. Congratulations, Mr. Pebbles, you're now the newly elected Mayor of Sandrock!}}
+{{dialogue|Pebbles|indent=true|Yah! Presto, change-o!}}
+{{dialogue|Jane|So that's it for today's Model Free Cities, thanks to everyone again for tuning in!}}
+{{dialogue|Trudy|This is such a great activity, I've never seen these kids acting like this before.}}
+{{dialogue|Logan|As a parent, I also found it quite interestin'!}}
+{{dialogue|Rocky|Yep! All the kids are so motivated! I must say, this is a genius of an idea from Ms. Jane!}}
+{{dialogue|Dan-bi|I didn't even get the idea at first but I was fully immersed at the end!}}
+{{dialogue|Jane|Today's event went well thanks to everyone's support, and I really appreciate it! Learning needs to be fun and we hope to do more in the future. That'll be all, have a good day everyone!}}
+The conversation ends.
+
+TRIGGER Procedure 8.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 17) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 23942 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+Remove behavior CommanderPlayerAction (idName: 239401) from Player
+
+TRIGGER Procedure 7.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 21842) that ends:
+{{dialogue|Player|（Select your preferred proposal）}}
+
+*''Jasmine's idea has solid foundations!'' (No unique dialogue)
+*''Andy's proposal is certainly innovative!'' (No unique dialogue)
+*''Pebbles got potentials!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 239401) to Player
+(param: CMDAction:LiftBrand)
+
+TRIGGER Procedure 8.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 23942
+CONDITIONS
+Always:
+ACTIONS
+Jane stops standing still
+Heidi stops standing still
+Vivi stops standing still
+Catori stops standing still
+Trudy stops standing still
+Logan stops standing still
+Krystal stops standing still
+Rocky stops standing still
+Hugo stops standing still
+Cooper stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 23943) from Jasmine
+Remove behavior CommanderMoveToFlagAndAction (idName: 23943) from Andy
+Remove behavior CommanderMoveToFlagAndAction (idName: 23943) from Pebbles
+PLAYER SET POS ROT FLAG || flagName: modelfree_player | sceneName: School
+Jane stands still in School and looks at Player
+DELAY MASK SET || maskId: 23942 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Rian stops standing still
+Dan-bi stops standing still
+Pebbles stops standing still
+Jasmine stops standing still
+Andy stops standing still
+
+TRIGGER Procedure 8.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23942 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 18) A conversation 6940_0 starts:
+{{dialogue|Jane|Phew, did I look nervous?}}
+{{dialogue|Jane|Fortunately, the event ended in a blast. I felt like folks have now started to get my teaching style, that's such a weight off my mind! And it's all thanks to you, ''Player''!}}
+{{dialogue|Jane|You have been so helpful and caring since I came to Sandrock. I couldn't have done it without you!}}
+
+*''Friends should help each other out!''
+*{{flirt}}''In fact, I was kinda hoping to move further with our relationship...''
+*''Alright I'll be off then.''
+
+{{dialogue|Jane|indent=true|answer=Friends should help each other out!
+|reward={{NPC2|Jane|rp=5}}|That's so true! Can't wait to continue my life in Sandrock with buddies like you!}}
+{{dialogue|Jane|indent=true|answer=In fact, I was kinda hoping to move further with our relationship...
+|reward={{NPC2|Jane|rp=5}}|Oh...What does that... mean?}}
+{{dialogue|Jane|indent=true|Of course our relationships could grow even further, you're my first friend in Sandrock and will certainly be the best!}}
+{{dialogue|Jane|That's all for today. I haven't slept very much over the past few days, so I need to go catch some shut eye. Seeya later, ''Player''!}}
+The conversation ends.
+
+TRIGGER Procedure 9.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 18) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Jane stops standing still
+SUBMIT MISSION 1200393
+END MISSION 1200394
+
+TRIGGER Procedure 8.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 18) The player picks the first option in conversation segment 21857:
+{{dialogue|Jane|You have been so helpful and caring since I came to Sandrock. I couldn't have done it without you!}}
+
+*''Friends should help each other out!'' (No unique dialogue)
+*{{flirt}}''In fact, I was kinda hoping to move further with our relationship...'' (No unique dialogue)
+*''Alright I'll be off then.'' (No unique dialogue)
+
+(cId 18) The player picks the second option in conversation segment 21857:
+{{dialogue|Jane|You have been so helpful and caring since I came to Sandrock. I couldn't have done it without you!}}
+
+*''Friends should help each other out!'' (No unique dialogue)
+*{{flirt}}''In fact, I was kinda hoping to move further with our relationship...'' (No unique dialogue)
+*''Alright I'll be off then.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Jane gains 5 favor
+
+TRIGGER Procedure 8.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 21844) that ends:
+{{dialogue|Jasmine|I appreciate the support everyone! Sandrock will surely become a even more prosperous place under my leadership!}}
+(cId: -1) There is a conversation segment (id 21846) that ends:
+{{dialogue|Andy|Yeah! Folks will live it up once I become the Mayor! Oh yeah! And free tickets to the water park!}}
+(cId: -1) There is a conversation segment (id 21847) that ends:
+{{dialogue|Jane|Then Mr. Pebbles will win the race with two votes. Congratulations, Mr. Pebbles, you're now the newly elected Mayor of Sandrock!}}
+CONDITIONS
+Always:
+ACTIONS
+SOUND PLAY 2D || idStr: mission_claph
+
+TRIGGER Procedure 9.0 Step 5.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 21849) that ends:
+{{dialogue|Jane|So that's it for today's Model Free Cities, thanks to everyone again for tuning in!}}
+CONDITIONS
+Always:
+ACTIONS
+Remove 1 Judge Card of Default quality (Notify player)

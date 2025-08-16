@@ -1,0 +1,322 @@
+Reading Mission 1200052: Sandapalooza
+
+<onlyinclude>{{Infobox mission
+|name = Sandapalooza
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Sandapalooza:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200051
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1200051
+START MISSION 1200051
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200051
+CONDITIONS
+Always:
+ACTIONS
+Run mission Sandapalooza
+END MISSION 1200051
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200052
+CONDITIONS
+Always:
+ACTIONS
+===Wait for a Letter===
+
+{{mission_details
+|desc = Catori is not sure when and where the ceremony will take place, wait for her to send a letter.
+|details = Wait for a Letter
+}}
+Set STEP to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|62}}
+SCENEITEM DELETE || id: 20271 | itemType: 12
+SCENEITEM CREATE FLAG || itemType: 0 | id: 20521 | path: Label_Sandskiing_Entrancer0 | flagName: bridge_kaimu | extraParams: 0 | sceneName: Main
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 62
+CONDITIONS
+Always:
+ACTIONS
+===Wait for Opening Ceremony===
+
+{{mission_details
+|desc = You got Catori's letter. The ceremony will be held at 12:00 tomorrow at the Sandrunning Complex.
+|details = Wait for Opening Ceremony
+}}
+Set STEP to 1
+
+TRIGGER Procedure 0.0 Step 2.5 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission Where's Mi-an
+
+TRIGGER Procedure 0.0 Step 4.1 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 0) There is a conversation segment (id 1430) that ends:
+{{dialogue|Catori|This ain't the end of the world though, maybe once the Civil Corps finally catch that no-goodnik, I'll paint the sleds a different color and re-brand the whole thing or somethin'...}}
+CONDITIONS
+CHECK CAMERA UNLOCK || set: 1
+ACTIONS
+Add 1 Spacesuit of Outstanding quality (Notify player)
+Burgess stands still in Main
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Who's the Deputy is in state 1 with flag 1
+ACTIONS
+CLOSE MISSION || missionId: 1200089
+The player receives a letter:
+{{mail|85}}
+ACTION NPC RENAME || npc: 8049 | nameTransId: 30038046
+ACTION ACTOR ADD ATTACH MODEL || modelId: 6001 | npc: 8049 | archive: 1 | scale: 1
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Who's the Deputy is in state 2 with flag 1
+ACTIONS
+FAIL MISSION || missionId: 1200089
+The player receives a letter:
+{{mail|85}}
+ACTION NPC RENAME || npc: 8049 | nameTransId: 30038046
+ACTION ACTOR ADD ATTACH MODEL || npc: 8049 | modelId: 6001 | archive: 1 | scale: 1
+
+TRIGGER Procedure 0.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DAY START FOR WEATHER || order: 0 | weather: 2
+CONDITIONS
+Always:
+ACTIONS
+WEATHER SET STATE || WeatherState: 0
+
+TRIGGER Procedure 0.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DAY START FOR WEATHER || order: 0 | weather: 2
+CONDITIONS
+Always:
+ACTIONS
+WEATHER SET STATE || WeatherState: 0
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+===Attend the Opening Ceremony at 12:00===
+
+{{mission_details
+|desc = The Opening Ceremony of the Sandrunning Complex will be held at 12:00 today in the desert. Remember to attend on time.
+|details = Attend the Opening Ceremony at 12:00
+}}
+CALENDAR SET REMINDER || addDays: 0 | hour: 9 | transId: 80002254
+SCENEITEM CREATE FLAG || itemType: 0 | id: 20522 | sceneName: Main | extraParams: 0 | path: Label_Sandskiing_Entrancer1 | flagName: bridge_kaimu
+Set STEP to 3
+Set global blackboard key sandrunningopen with info 1.
+Catori stands still in Main
+Catori stops standing still
+Add behavior MissionCatoriSandSkiing (idName: 20521) to Catori
+(param: -1)
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 11:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1200052 | id: 20521 | sceneName: Main | showOnMap: 1 | mapIcon: MissionArea | transId: 80002254 | flagName: huasha_openingtrigger
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 20521
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior MissionCatoriSandSkiing (idName: 20521) from Catori
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 20521
+DELAY MASK SET || maskId: 20521 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 3.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 20521 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Catori stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: huasha_opening_player
+Set STEP to 5
+DELAY MASK SET || maskId: 20521 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 5.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 20522
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || sec: 1 | id: 20523
+
+TRIGGER Procedure 1.0 Step 7.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 20523
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || sec: 1 | id: 20524
+
+TRIGGER Procedure 1.0 Step 9.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 20524
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: huasha_opening_player2
+(cId 0) A conversation 276_0 starts:
+{{dialogue|Catori|Oh. Hey there, ''Player''. Here for the ceremony, huh?}}
+{{dialogue|Catori|Well, this is it. I paid an arm and a leg getting advertising all the way out to Atara, and this is the turnout.}}
+{{dialogue|Catori|Logan... Why couldn't he have blown up the water tower next week!? Or, better yet, ehhhh... not at all?}}
+{{dialogue|Catori|Well, on the bright side, since there's no one here, there's no one to see how miserable of a failure this is...}}
+{{dialogue|Catori|Thanks for coming out to show your support, I'm sure you've still got plenty to do after the attack. It means a lot.}}
+{{dialogue|Catori|reward={{i2|Spacesuit|1}}|reward={{i2|Camera|1}}|This ain't the end of the world though, maybe once the Civil Corps finally catch that no-goodnik, I'll paint the sleds a different color and re-brand the whole thing or somethin'...}}
+{{dialogue|Catori|I even had this gift 'specially picked out for my first customer and... I guess my first customer is you now, huh, ''Player''?}}
+{{dialogue|Catori|Er, I guess technically Burgess was here first, but his beliefs wouldn't allow him to accept a relic. Here ya go.}}
+{{dialogue|Catori|Oh, speaking of Burgess, he wanted to talk to you: he feels responsible for getting the ball rolling on this thing, I guess. I mean, this is nobody's fault but Logan's! But I couldn't convince him otherwise.}}
+{{dialogue|Catori|Catch ya later, ''Player''. We'll get 'em next time.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 10.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 0) There is a conversation segment (id 1430) that ends:
+{{dialogue|Catori|This ain't the end of the world though, maybe once the Civil Corps finally catch that no-goodnik, I'll paint the sleds a different color and re-brand the whole thing or somethin'...}}
+CONDITIONS
+CHECK CAMERA UNLOCK || set: 0
+ACTIONS
+Add 1 Camera of Outstanding quality (Notify player)
+Burgess stands still in Main
+
+TRIGGER Procedure 1.0 Step 11.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Burgess===
+
+{{mission_details
+|desc = Catori said Burgess has something to say about all this. Go see what it is.
+|details = Talk to Burgess
+}}
+CUTSCENE UI STATE EXIT || 
+Catori stops standing still
+SCENEITEM INTERACT SET || id: 10 | itemType: 9 | canInteract: 1
+ACTION MAP SHOW BUILDING TEXT || id: 41
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Burgess
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 277_0 starts:
+{{dialogue|Burgess|Hey there, ''Player''! Gosh! Real shame about all this! It seems like this whole entertainment thing blew up in our faces, and it's all my fault! If I just hadn't bothered with that darn survey...}}
+{{dialogue|Burgess|Well, I suppose one could blame Logan, as his antics did scare everyone away from the ceremony but... Oh, shucks, let's call it fifty-fifty.}}
+{{dialogue|Burgess|What's more, I realized that my survey, which was intended to support the need for giving people in town a rest, actually ended up putting you Builders back to work!}}
+{{dialogue|Burgess|Well, I'm real sorry that things turned out like this... "Foresight is not your strong suit!" Miguel always says that about me!}}
+{{dialogue|Burgess|Ahem... if it means anything, I did want to tell you that I think you did a really great job on the sand sled thing, even if nobody showed up...!}}
+{{dialogue|Burgess|All the stuff you've been doing for Sandrock, well, a lot of people appreciate it. We're all rooting for you!}}
+{{dialogue|Burgess|So! I saved up some money and got you {{textcolor|green|a week long pass}} to ride on Catori's sand sled game as many times as you want! I got one for Mi-an, too, since you guys have been working so hard lately!}}
+{{dialogue|Burgess|Well, have fun! Be careful, those sleds can get real speedy!}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1200051
+Burgess stops standing still
+ACTION SAND SKIING BUY DAYS || days: 7
+END MISSION 1200052
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 18:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Burgess stops standing still
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 18:00 (order: 0):
+CONDITIONS
+Check if STEP is == 3
+ACTIONS
+Burgess stops standing still
+Catori stops standing still
+AREA TRIGGER DELETE || id: 20521
+Run mission Sandapalooza
+FAIL MISSION || missionId: 1200051

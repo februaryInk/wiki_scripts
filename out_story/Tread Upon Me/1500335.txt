@@ -1,0 +1,148 @@
+Reading Mission 1500335: Tread Upon Me
+
+<onlyinclude>{{Infobox mission
+|name = Tread Upon Me
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Tread Upon Me:
+
+TRIGGER Procedure 0.0 Step 7.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if BridgeDay is == 1
+ACTIONS
+The player receives a letter:
+{{mail|625}}
+
+TRIGGER Procedure 0.0 Step 8.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 625
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1500336
+START MISSION 1500336
+Run mission Tread Upon Me
+END MISSION 1500336
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1500335
+CONDITIONS
+Always:
+ACTIONS
+===Construct Bridge===
+
+{{mission_details
+|desc = After a short discussion, it seems clear that a small bridge over the center of the oasis would be a nice thing to have. Construct one on your Assembly Station.
+|details = Construct Bridge
+*{{i2|Bridge|0/1}}
+}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1500336 | targetId: 533501 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Install Bridge===
+
+{{mission_details
+|desc = You've made the bridge, now go and install it over the oasis so that no one will ever be tempted to walk through the oasis with shoes on ever again.
+|details = Install Bridge
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 533501 | path: Mission_StoneBridge | sceneName: Main | flagName: Story_5335_StoneBridge | extraParams: Mission_StoneBridge1|CreatorItem|19810086_1|1547|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 533501 | missionId: 1500336 | iconType: 2
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 533501
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 533505 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 533505 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Burgess stands still in Main
+Trudy stands still in Main
+DELAY MASK SET || maskId: 533506 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 533505 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 533504) A conversation 14893, 14894, 14895 starts:
+{{dialogue|Burgess|Wow! Amazing! This is a billion times better than me dedicating the rest of my life to being a human bridge!}}
+{{dialogue|Trudy|Dedicating... what? Er, well, yes, ''Player''. For you, I'm sure it was a simple task. But this bridge will no doubt be a landmark for years to come! You should be proud}}
+{{dialogue|Burgess|Sandrock really gets better every day because of you, ''Player''. Thanks a million!}}
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 533504) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Set NextDay to 0
+Trudy stops standing still
+Burgess stops standing still
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1500336
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment NextDay by 1
+
+TRIGGER Procedure 1.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if NextDay is == 1
+ACTIONS
+The player receives a letter:
+{{mail|626}}
+
+TRIGGER Procedure 1.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 626
+CONDITIONS
+Always:
+ACTIONS
+END MISSION 1500335

@@ -1,0 +1,154 @@
+Reading Mission 1900399: Spread Your Wings
+
+<onlyinclude>{{Infobox mission
+|name = Spread Your Wings
+|image =
+|description = Ernest is writing a new book outside of his usual comfort zone and is feeling a little unconfident.
+|type = Side
+|time =
+|location =
+|characters = [[Jasmine]]
+|condition =
+|details =
+|exp = 1700
+|reputation = None
+|gols = None
+|npc1 = Ernest
+|rp1 = 30
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1900398
+
+TRIGGER Procedure 2.0 Step 6.0 Order 6 Repeat 7
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment DayD by 1
+
+TRIGGER Procedure 2.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if DayD is == 7
+ACTIONS
+Run mission Spread Your Wings
+END MISSION 1900398
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1900399
+CONDITIONS
+Always:
+ACTIONS
+Newspaper adds Unknown content 6037.
+Title: "Wunderkind" or "Daddy's Boy?" Atara's Ernest Making a Splash Like a Fish Out of Water
+Detective Ned author Ernest has been making the rounds lately with the surprise rumours of a new series of books. Famous for his children's novels, Ernest has relied greatly on the clout of his father to succeed, with many (myself included) reviewing his Detective Ned series as "a laughable attempt at literature." Will Atara's daddy's boy be able to deliver? Or will this new bargain-bin bound book be another futile attempt at prestige? Only time will tell. But this reporter thinks the proof is in the mediocre pudding.
+Guillaume
+Walnut Groove Literary Club
+AREA TRIGGER CREATE || missionId: 1900399 | id: 93990 | sceneName: Main | flagName: T9399 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Jasmine stands still in Main
+NPC ICON ADD || missionId: 1900399 | npc: 8040 | missionIcon: 6
+
+TRIGGER Procedure 0.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Jasmine
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 19197 starts:
+{{dialogue|Jasmine|Good morning! Here's your paper!}}
+NPC ICON REMOVE || missionId: 1900399 | npc: 8040 | missionIcon: 6
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 93990
+CONDITIONS
+Always:
+ACTIONS
+Jasmine stops standing still
+Jasmine stands still in Main
+Add behavior CommanderNPCAction (idName: 2939900) to Jasmine
+(param: CMDAction:SendNewspaper)
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTION NEWSPAPER OPENNEWUI || 
+Jasmine stands still in Main and looks at Player
+DELIVER MISSION 1900399
+
+TRIGGER Procedure 0.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Jasmine
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 6021_0 starts:
+{{dialogue|Jasmine|I dunno all about Ernest's Pa... but even though the Ned series is a bit simple... it's super fun! I feel like this guy's just being a big meanie!}}
+{{dialogue|Jasmine|I haven't seen Ernest in a few days, though...}}
+{{dialogue|Jasmine|I hope he's not sad... it's just some bully!}}
+{{dialogue|Jasmine|Maybe you can make him feel better? He's like, very close to you, right?}}
+
+*''I'll go check in on him.''
+*''I have a lot on my plate...''
+
+{{dialogue|Jasmine|indent=true|answer=I'll go check in on him.
+|Wow, no wonder Ernest likes you so much!}}
+{{dialogue|Jasmine|indent=true|answer=I have a lot on my plate...
+|Ah... well, I hope he's not too sad then...}}
+
+TRIGGER Procedure 0.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON REMOVE || missionId: 1900399 | npc: 8040 | missionIcon: 0
+AREA TRIGGER DELETE || id: 93990
+Jasmine stops standing still
+Jasmine stops standing still
+Remove behavior CommanderNPCAction (idName: 2939900) from Jasmine
+START MISSION 1900399
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1900399
+CONDITIONS
+Always:
+ACTIONS
+Run mission Spread Your Wings
+END MISSION 1900399
+
+==Rewards==
+{{mission reward
+|npc1 = Ernest
+|rp1 = 30
+|exp = 1700
+|reputation = None
+|gols = None
+}}

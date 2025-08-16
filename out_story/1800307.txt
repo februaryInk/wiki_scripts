@@ -1,0 +1,368 @@
+Reading Mission 1800307: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200310
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1800296 is result 1 flag 1
+ACTIONS
+Run mission The Wei Forward
+
+TRIGGER Procedure 4.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: 1700299 | info: 1 | exist: 1
+ACTIONS
+Run mission #1800307
+GLOBAL BLACK BOARD REMOVE || key: 1700299
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800307
+CONDITIONS
+Always:
+ACTIONS
+Set 8307Move to 0
+Set global blackboard key 1800307 with info 1.
+
+TRIGGER Procedure 0.0 Step 0.5 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Elsie stands still in Main and looks at Player
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || flagName: tunneldungeon_player | sceneName: PortiaTunnel
+SCENEITEM CREATE FLAG || path: Mission_Grounp_MoleRock_0 | flagName: tunneldungeon | id: 22991 | itemType: 0 | sceneName: PortiaTunnel | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 1.2 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the PortiaTunnel:
+CONDITIONS
+Always:
+ACTIONS
+ACTION CUTSCENE START AUDIO TYPE || id: CG_MONSTERATTACK | duration: 0 | audioType: NoTransitionOff
+
+TRIGGER Procedure 0.0 Step 1.4 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_MONSTERATTACK | state: 8
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PortiaTunnel to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 12230, 12231 starts:
+{{dialogue|Elsie|Hey there, ''Player''! Trudy just called an emergency meeting in the Town Hall and she wanted you to join in, so I came to get ya!}}
+{{dialogue|Elsie|Come on partner, we're all waitin' for ya!}}
+
+TRIGGER Procedure 0.0 Step 4.3 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 83071 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 4.5 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83071 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Guildhall | flagName: S8307_0_1
+Elsie stops standing still
+CUTSCENE UI STATE EXIT || 
+AREA TRIGGER CREATE || missionId: 1800307 | id: 83071 | sceneName: Main | flagName: trigger_guildhall | showOnMap: 1 | mapIcon: MissionArea | transId: 0
+DELAY MASK SET || maskId: 83071 | delayTime: 0 | curveIndex: 0 | changeType: 1 | durationTime: -2
+
+TRIGGER Procedure 0.0 Step 5.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_guildhall
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_guildhall
+AREA TRIGGER DELETE || id: 83071
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 5.2 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Guildhall | flagName: S8307_0_1
+Elsie stands still in Guildhall and looks at Player
+Trudy stands still in Guildhall and looks at Player
+Heidi stands still in Guildhall and looks at Player
+Justice stands still in Guildhall and looks at Player
+Logan stands still in Guildhall and looks at Player
+Wei stands still in Guildhall and looks at Player
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8307001) to Player
+(param: TargetScene:Guildhall|MoveMode:Run|FlagName:S8307_0_2|Delay:0.0)
+
+TRIGGER Procedure 0.0 Step 7.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 3716_0 starts:
+{{dialogue|Trudy|Thank you all for coming. We have a situation at the Portia tunnel. As the construction team was tunneling through to the other side, monsters started to enter. The construction is currently on hold until we can deal with the monsters.}}
+{{dialogue|Trudy|I have called this emergency meeting to try and find a solution.}}
+{{dialogue|Trudy|Heidi, can you give us a bit more detail?}}
+{{dialogue|Heidi|Sure. Well, I wasn't there at the time, but from what my workers were telling me, the monsters bursted in as soon as they made a hole to the other side of the range. They must've been attracted by the noise.}}
+{{dialogue|Logan|Yeah, makin' a lotta noise is like puttin' a light in front of a moth when it comes to predators. Shouldn't have done that. I reckon you should have asked me for some advice.}}
+{{dialogue|Heidi|Oh yeah, where were you when we were building this tunnel project?}}
+{{dialogue|Logan|Right... sorry.}}
+{{dialogue|Wei|Is there a way to get them out?}}
+{{dialogue|Justice|Well, I suppose we could go in guns ablazing, but what's to keep the monsters out of the tunnel for good?}}
+{{dialogue|Logan|I could pitch a tent there at the entrance.}}
+{{dialogue|Justice|That's actually a pretty-}}
+{{dialogue|Elsie|Don't be stupid!}}
+{{dialogue|Justice|...Bad idea.}}
+{{dialogue|Elsie|Once the tunnel's done, I reckon the difference in pressure on the two sides of the range will cause a major draft through the tunnel. That'll continue to attract the monsters from the Southern Eufaula.}}
+{{dialogue|Elsie|Unless you plan on campin' there forever, I've got a better idea.}}
+{{dialogue|Logan|Shoot.}}
+{{dialogue|Elsie|Howlett wrote of a Monster Whistle, know of it? It's supposed to produce a range of high frequencies that can keep most monsters away.}}
+{{dialogue|Elsie|The way I figure it, we'll need three of 'em in the tunnel to keep the monsters out. The wind goin' through will power them.}}
+{{dialogue|Elsie|Anyway, I jus' need help from a Builder to put 'em together, then we can head in to the tunnel to install 'em. We got the tunnel sealed off, so shouldn't be any danger, but I reckon we oughta be quick about it still.}}
+{{dialogue|Heidi|That's a great idea, I concur.}}
+{{dialogue|Logan|Way to go, Else!}}
+{{dialogue|Trudy|Justice, what do you think? After the Martle Duck incident, I trust Elsie to get it done.}}
+{{dialogue|Justice|I agree, Elsie can take care of herself. Still, I'd prefer if the Civil Corps went-}}
+{{dialogue|Elsie|I'll take Logan!}}
+{{dialogue|Elsie|I mean, I'll go with Logan, he's a monster hunter, right? It's his job!}}
+{{dialogue|Trudy|I don't see why not...}}
+{{dialogue|Logan|Wait a minute, Trudes, I'm still tryin' to do my community service and-}}
+{{dialogue|Elsie|Oh my heck, are you still spewin' that nonsense? You're one of us now, so you'd better take care of Sandrock!}}
+{{dialogue|Trudy|Please, Logan, you have the most experience out of all of us when dealin' with monsters of the desert.}}
+{{dialogue|Justice|Come on partner, just accept it. Now that you're back, we can focus on our task of keepin' the order! Just like old times!}}
+{{dialogue|Logan|Fine, Trudy, I'll do it.}}
+{{dialogue|Trudy|Then it's settled.}}
+{{dialogue|Trudy|Elsie, you also need a Builder right? Why don't you work with ''Player''. They're also a Civil Corps member. Is that fine, ''Player''?}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 9.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 83071 | sec: 3
+Add behavior CommanderPlayerAction (idName: 8307002) to Player
+(param: CMDAction:Nod_Story)
+
+TRIGGER Procedure 0.0 Step 9.2 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 83071
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 12265 starts:
+{{dialogue|Trudy|Okay then, Elsie, please discuss the details of the plan afterwards. Let me know how it goes. Thanks for coming everyone. This meeting is adjourned!}}
+
+TRIGGER Procedure 0.0 Step 9.5 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8307001) from Player
+Remove behavior CommanderPlayerAction (idName: 8307002) from Player
+Trudy stops standing still
+Justice stops standing still
+Heidi stops standing still
+Wei stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 8307054) to Elsie
+(param: TargetScene:Guildhall|MoveMode:Walk|FlagName:S8307_5_4|Delay:3.0)
+Add behavior CommanderMoveToFlagAndAction (idName: 8307112) to Logan
+(param: TargetScene:Guildhall|MoveMode:Walk|FlagName:S8307_11_2|Delay:3.5)
+Add behavior CommanderMoveToFlagAndAction (idName: 8307003) to Player
+(param: TargetScene:Guildhall|MoveMode:Walk|FlagName:S8307_0_3|Delay:4.0)
+
+TRIGGER Procedure 0.0 Step 10.0 Order 17 Repeat 3
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8005 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8011 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: MoveToFlagOver | behaviourName: CommanderMoveToFlagAndAction | npc: 8000
+CONDITIONS
+Always:
+ACTIONS
+Increment 8307Move by 1
+
+TRIGGER Procedure 0.0 Step 10.5 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8005 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8011 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+ON ACTOR BEHAVIOUR EVENT || order: 10 | eventName: MoveToFlagOver | behaviourName: CommanderMoveToFlagAndAction | npc: 8000
+CONDITIONS
+Check if 8307Move is >= 3
+ACTIONS
+(cId 4) A conversation 3717_0 starts:
+{{dialogue|Elsie|Alright, ''Player''. You're gonna be my go-to Builder on this project. Goin' through this tunnel is gonna be dangerous, an' Mi-an ain't exactly a fighter...}}
+{{dialogue|Elsie|I'm gonna talk to Qi, an' get him to whip us up a diagram. Logan, you head over to the tunnel an' take a look at the situation, see how many monsters we got.}}
+{{dialogue|Logan|I'll go an' take a look. But it ain't cos you gave me an order... it's jus'... a good idea.}}
+{{dialogue|Elsie|Logan, I ain't yer boss. We're partners. I wanna be in this with you.}}
+{{dialogue|Logan|...Alright. Partners.}}
+{{dialogue|Elsie|This is awesome! Logan, me, and ''Player''! The strongest team in Sandrock!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 11.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || flagName: Trigger_S83071 | id: 83072 | missionId: 1800307 | sceneName: Main | transId: 0 | mapIcon: MissionArea | showOnMap: 1
+Remove behavior CommanderMoveToFlagAndAction (idName: 8307003) from Player
+Logan stops standing still
+Elsie stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8307054) from Elsie
+Remove behavior CommanderMoveToFlagAndAction (idName: 8307112) from Logan
+Remove behavior CommanderMoveToFlagAndAction (idName: 8307001) from Player
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 12.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 83072
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 83074 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 83072
+
+TRIGGER Procedure 0.0 Step 13.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83074 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Justice stands still in Main and looks at Unsuur
+Unsuur stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8307_0_4
+DELAY MASK SET || maskId: 83074 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 15.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83074 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 3718_0 starts:
+{{dialogue|Justice|Well, looks like you got yourself some new partners there, partner.}}
+{{dialogue|Unsuur|Wow, sheriff. Feels weird that we're not going this time.}}
+{{dialogue|Justice|Unsuur, sometimes it's time to hang up your hat, and pass the torch on.}}
+{{dialogue|Unsuur|That's not a bad idea sheriff, but I don't have a hat rack. Or a hat. Or a torch.}}
+{{dialogue|Justice|It's just a saying, Unsuur...}}
+
+*''So what are you guys going to do?''
+*''I'm a little worried...''
+
+{{dialogue|Unsuur|indent=true|answer=So what are you guys going to do?
+|We're swamped. It's thrilling. This case is a classic 427.}}
+{{dialogue|Justice|indent=true|I wouldn't call it thrilling...}}
+{{dialogue|Justice|indent=true|answer=I'm a little worried...
+|Aw, don't be worried. I know Logan's a bit of a loose canon, but he's got a good heart. He's been working real hard to get in everyone's good graces.}}
+{{dialogue|Unsuur|indent=true|I thought there was only one good Grace...}}
+{{dialogue|Justice|indent=true|Uh, yeah. And we're kinda swamped at the moment, still out lookin' for any Duvos stragglers, so I'm glad someone's got you.}}
+{{dialogue|Unsuur|indent=true|That's right. We've got a classic 427 on our hands.}}
+{{dialogue|Justice|indent=true|Right... classic...}}
+{{dialogue|Justice|We've also got a whole bunch of paperwork to do...}}
+{{dialogue|Unsuur|City code 15A subsection 32, paragraph 7. "In the case of a monster attack, fill out the relevant form for the following cases: 424 - on a road, 425 - on a Yakmel trail, 426 - in the oasis, 427 - in a tunnel."}}
+{{dialogue|Justice|It's fifteen pages...}}
+{{dialogue|Unsuur|I'll handle the personal essay. I really think I'm going to nail it this time.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 16.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 83072
+GLOBAL BLACK BOARD REMOVE || key: 1800307
+Justice stops standing still
+Unsuur stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8307051) from Elsie
+Unsuur stops standing still
+Remove behavior CommanderPlayerAction (idName: 8307001) from Player
+CUTSCENE UI STATE EXIT || 
+END MISSION 1800307
+
+==Post-conduct==
+
+If the player successfully completes the mission, some of the townsfolk will comment on it:
+
+{{dialogue|Elsie|Hehe, Mi-an's gonna be so jealous I get to go off on an adventure with you an' Logan!}}
+{{dialogue|Logan|I've had a look at the tunnel, but there's a whole loada materials piled up. It might be a little more complicated than we though.}}
+{{dialogue|Trudy|Elsie's really grown up. And Cooper seems so proud!}}

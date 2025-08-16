@@ -1,0 +1,287 @@
+Reading Mission 1200009: Pitching In
+
+<onlyinclude>{{Infobox mission
+|name = Pitching In
+|image =
+|description = The Geeglers have thrown garbage into Martle's Oasis, Sandrock's main water source. Go help clean things up!
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 300
+|reputation = None
+|gols = 50
+|npc1 = Burgess
+|rp1 = 20
+|rewards = {{i2|Water}|1}
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100002
+
+TRIGGER Procedure 1.0 Step 14.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 120180 | path: Mission_HaruPoster | sceneName: Main | flagName: haruposter1 | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 120181 | path: Mission_HaruPoster | sceneName: Main | flagName: haruposter2 | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 120182 | path: Mission_HaruPoster | sceneName: Main | flagName: haruposter3 | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 120184 | path: Mission_HaruPoster | sceneName: Main | flagName: haruposter5 | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 120185 | path: Mission_HaruPoster | sceneName: Chamber | flagName: haruposter6 | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 120186 | path: Mission_HaruPoster | sceneName: Main | flagName: haruposter7 | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 120187 | path: Mission_HaruPoster | sceneName: Main | flagName: haruposter8 | extraParams: 0
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+CHECK WEATHER STATE || weather: 2 | flag: 0
+Cover My Glass is successfully completed
+
+GROUP 10:
+Cover My Glass has failed
+CHECK WEATHER STATE || weather: 2 | flag: 0
+
+GROUP 20:
+CHECK GLOBAL BLACKBOARD || key: 1200057missed | info: 1 | exist: 1
+
+ACTIONS
+Run mission Pitching In
+GLOBAL BLACK BOARD REMOVE || key: 1200057missed
+GLOBAL BLACK BOARD REMOVE || key: brokentrain
+Run mission #1100040
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200009
+CONDITIONS
+Always:
+ACTIONS
+Set COUNT to 0
+Set SCENECHANGE to 0
+Set ACCEPT to 0
+DELIVER MISSION 1200009
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment COUNT by 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+CHECK WEATHER STATE || weather: 2 | flag: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+Set SCENECHANGE to 1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Check if SCENECHANGE is == 1
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+NPC ADD TAG || tag: lakepollute
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+PICK UP RESOURCE REFRESH || id: 98
+
+TRIGGER Procedure 0.0 Step 3.5 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Check if SCENECHANGE is == 1
+ACTIONS
+TRAIN SET VISIBLE || set: 0
+ACTION CUTSCENE START AUDIO TYPE || id: CG_POLLUTION | duration: 0 | audioType: NoTransitionOff
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_POLLUTION | state: 9
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+In a speech bubble:
+{{dialogue|Player|(There's something happening by the oasis, I should check it out.)}}
+AREA TRIGGER CREATE || missionId: 1200009 | id: 10571 | sceneName: Main | flagName: trigger_lake3 | showOnMap: 1 | mapIcon: MissionArea | transId: 80000239
+Set ACCEPT to 1
+TRAIN SET VISIBLE || set: 1
+ACTION AREA TRIGGER SET RADIUS || id: 10571 | radius: 25
+Set global blackboard key newspaperweiledajia with info 1.
+Set global blackboard key afterpollution with info 1.
+Townsfolk respond to the event:
+
+{{dialogue|Amirah|I wonder what point the Geeglers were trying to make with their little stunt? Was their goal to make us dislike them even more?}}
+
+{{dialogue|Arvio|I don't understand why the Geeglers want to cause trouble around Sandrock. Do they even understand our language?}}
+
+{{dialogue|Burgess|I hope the Geegler lizardmen will see the Light eventually. I don't think we should antagonize each other, the desert is big enough for the both of us.}}
+
+{{dialogue|Catori|You know, I did not foresee a Geegler problem when I selected Sandrock for my entrepreneurship.}}
+
+{{dialogue|Cooper|Throw trash in MY water hole, will they? You'd best believe that next time those Geeglers show their low-down, no-good, yellow belly... bellies around here, I'm gonna show 'em what for in the only way I know how! By giving them a very stern talking to!}}
+
+{{dialogue|Dan-bi|I just hate litterbugs! Double goes to litter-lizards! If you want me to go get them, then I'll give them a piece of my mind! But now I gotta pick up all this trash...}}
+
+{{dialogue|Elsie|I happen to think the Geeglers are pretty cool in their own way! Er, I hope my Pa didn't hear me say that. Do you reckon we can make friends with them?}}
+
+{{dialogue|Ernest|Lizards? Interesting... could they also be sent by Logan? "A tenuous alliance between man and beast. As we peer into this villain's dark heart, do we see a lack of morality, or humanity?"}}
+
+{{dialogue|Grace|Geegler? How did they end up with a name like that? I've got to learn five new recipes this week, I don't have time for this.}}
+
+{{dialogue|Heidi|The Geeglers... my opinion of them is that their society struggles because they prefer to destroy rather than create. But I guess I'm preaching to the choir, right, ''Player''?}}
+
+{{dialogue|Hugo|Everytime an event happens in town, Cooper starts up with his tirades again. He'll talk your ear off, spin you around, then talk your other ear off if you let him. I'm more afraid of him than I am of any of those lizardfolk.}}
+
+{{dialogue|Jasmine|The Geeglers were so mean! My Ma always tried her best to keep Martle's Oasis clean. Now they've ruined it.}}
+
+{{dialogue|Jensen|As long as the Geeglers are throwing the trash into the oasis and not onto the tracks...}}
+
+{{dialogue|Justice|Can't believe those dang Geeglers got away! I dare 'em to step one foot back in this town! Double-dog, lizard dare 'em!}}
+
+{{dialogue|Krystal|Litterin' ain't right! I gotta teach our Pebbles well, litterin' ain't something that a real man does! We don't want our town lookin' like that!}}
+
+{{dialogue|Mabel|The worst thing about this whole Geegler mess is that now I have to listen to Cooper throw a hissy fit about it for the next few days.}}
+
+{{dialogue|Matilda|Hm, so you've met our friends the Geeglers. They live about the Eufaula, mostly concentrated around Shonash Canyon; they can be right troublesome, but I still have hopes that one day they'll see the Light.}}
+
+{{dialogue|Mi-an|So those were the "Geeglers" I've heard everyone talking about... They tag places all over town with spray paint, so everyone knows their name. Talk about aggressive marketing, sheesh!}}
+
+{{dialogue|Miguel|The Geeglers have been a thorn in our side for far too long. I believe we'll have to take action sooner rather than later.}}
+
+{{dialogue|Mort|Young Builder, what's got everyone down all of a sudden? Ah, so it's those lizard folk again... I've been seeing them for years, although back then they mostly stayed up by the ship graveyard...}}
+
+{{dialogue|Owen|Our water supply is on its last leg... Do you think the Geeglers actually know that? Maybe they're smarter than we give them credit for...}}
+
+{{dialogue|Pen|That Geegler leader thinks he's all that because he landed a shot into our Oasis from that distance... but he's not! I could sink one from twice as far!}}
+
+{{dialogue|Qi|The Geeglers are... interesting. New intelligent species appeared near the ending of the Old World due to genetic experimentation. Records show that's one of the reasons that lead to the Day of Calamity. But intellegence and aggressiveness varied; I wonder at which end of the spectrum this falls on.}}
+
+{{dialogue|Rian|Word of advice, homie: don't do anything to tick off Dan-dan these days. She's real riled up about these lizard-dudes messin' up the place. She's been, like, super eager to help clean the place up again an' stuff.}}
+
+{{dialogue|Rocky|Them Geegler fellas pickin' on poor Burgess... I'd like to see 'em try the same thing at the Salvage Co.! Me an' my boys don't take kindly to garbage rain!}}
+
+{{dialogue|Unsuur|I'm just waiting for the call for action from the higher-ups. It might seem like a game to most people, but for the Civil Corps, it's life or death.}}
+
+{{dialogue|Vivi|The audacity of them Geeglers, throwin' trash up in our business. If I were just a few years younger, I'd go teach them a lesson in manners!}}
+
+{{dialogue|Yan|Can you believe those Geegler characters? Throwin' away perfectly good trash like that? Well, I just hope you got your fill, cause I ain't sharin'!}}
+
+AUTOSAVE TRY || 
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 10571
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 10571
+Set ACCEPT to 10
+DELAY MASK SET || maskId: 10571 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 10571
+CONDITIONS
+Always:
+ACTIONS
+Burgess stands still in Main
+DELAY MASK SET || maskId: 10571 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+PLAYER SET POS ROT FLAG || flagName: lake_player | sceneName: Main
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 10571 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 100_0 starts:
+{{dialogue|Burgess|Did you see that, ''Player''?! Those darn {{textcolor|red|Geeglers}} are at it again. Look at this mess! They're muddling up our water! I honestly don't know what it is they have against us!}}
+{{dialogue|Burgess|Do you mind helping out with the {{textcolor|green|trash around the oasis?}} The longer they're in the water, the higher the risk of contamination. So we must hurry!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+PICK UP RESOURCE REFRESH || id: 99
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlag (idName: 20091) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 20091) from Burgess
+RESOURCE LOCK INTERACT || id: 99 | set: 0
+START MISSION 1200009
+Add tag "NpcCanPickUpTrash" to Burgess
+Burgess stops standing still
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200009
+CONDITIONS
+Always:
+ACTIONS
+Run mission Pitching In
+END MISSION 1200009
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if ACCEPT is >= 1
+Check if ACCEPT is < 10
+ACTIONS
+Increment ACCEPT by 1
+
+TRIGGER Procedure 1.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if ACCEPT is >= 3
+Check if ACCEPT is < 10
+ACTIONS
+NPC REMOVE TAG || tag: lakepollute
+AREA TRIGGER DELETE || id: 10571
+PICK UP RESOURCE DELETE || id: 99
+PICK UP RESOURCE DELETE || id: 98
+Remove behavior NPC_PickUpTrash (idName: 20091) from Burgess
+END MISSION 1200009
+
+==Rewards==
+{{mission reward
+|npc1 = Burgess
+|rp1 = 20
+|exp = 300
+|reputation = None
+|gols = 50
+|rewards = {{i2|Water}|1}
+}}

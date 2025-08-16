@@ -1,0 +1,254 @@
+Reading Mission 1900384: Birthday Blues
+
+<onlyinclude>{{Infobox mission
+|name = Birthday Blues
+|image =
+|description = Catori's son Alo is celebrating his birthday, but as a mother, Catori feels guilty that she won't be there with him.
+|type = Side
+|time =
+|location =
+|characters = [[Catori]]
+|condition =
+|details =
+|exp = 1600
+|reputation = 10
+|gols = 500
+|npc1 = Catori
+|rp1 = 15
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200289
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200289
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+Special gift rule 47 is set for giving Catori Heart Knot:
+The gift is accepted with:
+{{dialogue|-2|Uh... how do I say this politely... we don't really know each other that well. I'm sorry.}}
+
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if Catori has favor >= 400
+Opportunities Abound is successfully completed
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+The Happiest Place in the Free Cities is in state 3 with flag 0
+ACTIONS
+Run mission Birthday Blues
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1900384
+CONDITIONS
+Always:
+ACTIONS
+Set Done to 0
+AREA TRIGGER CREATE || missionId: 1900384 | id: 93840 | sceneName: Main | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0 | flagName: T9384
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Museum:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_museum
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_museum
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Museum:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 93840
+Catori stops standing still
+Catori stands still in Museum
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Museum:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 2938100) to Catori
+(param: CMDAction:LookSky)
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8024 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 2938100) from Catori
+DELIVER MISSION 1900384
+Add behavior CommanderMoveToFlagAndAction (idName: 2938101) to Player
+(param: TargetScene:Museum|MoveMode:Walk|FlagName:P9381_1|LookAtActor:8024)
+Add behavior CommanderMoveToFlagAndAction (idName: 2938102) to Catori
+(param: TargetScene:Museum|MoveMode:Walk|FlagName:Ca9381_1|LookAtActor:8000)
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 2938102) from Catori
+Remove behavior CommanderNPCAction (idName: 2938100) from Catori
+Remove behavior CommanderMoveToFlagAndAction (idName: 2938101) from Player
+Catori stops standing still
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8024 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 5800_3_1 starts:
+{{dialogue|Catori|Oh, hi, ''Player''. Got a new artifact to donate or just here for a bit of culture?}}
+
+*''The museum is looking great!''
+*''I came to watch the movie.''
+*''Are you okay?'' (No unique dialogue)
+
+{{dialogue|Catori|indent=true|answer=The museum is looking great!
+|Definitely an improvement, thanks to you. I still need to put some finishing touches on it, but I love how it turned out.}}
+{{dialogue|Catori|indent=true|answer=I came to watch the movie.
+|Well, there are plenty of seats waiting. I wish more people would come and watch it.}}
+
+TRIGGER Procedure 0.0 Step 5.5 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 5801_0 starts:
+{{dialogue|Catori|Sure, sure. I'll be fine. I'm just having a rough week is all.}}
+{{dialogue|Catori|My son's birthday is coming up soon, and I'm missing him somethin' fierce. It's hard not bein' there for so many milestones and important dates, ya know?}}
+{{dialogue|Catori|Did I ever show you what he looks like? This is the picture Ma sent me a few weeks ago.}}
+{{dialogue|Catori|Isn't he handsome? Looks a lot like my Pa. Ma says he started his own business, selling his classmates snacks he made at home.}}
+{{dialogue|Catori|Got a head for business, that one. Just like his Ma. Or... maybe not just like me.}}
+{{dialogue|Catori|Most days, I know I made the right choice coming here to build us a better life. But it's taking so long. On days like today, I feel like the worst mother ever.}}
+{{dialogue|Catori|Every birthday I miss is a year of my boy's life I'll never get back. And this year, every Gol I had went into expanding the business. There's nothing left to buy him a gift.}}
+
+*''I could loan you the money.''
+*''Maybe I could build him something.''
+*''You could make him something.''
+
+{{dialogue|Catori|indent=true|answer=I could loan you the money.
+|That's super generous of you, but you've already done a lot for me, and I don't want to take advantage of our friendship. I appreciate the offer though.}}
+{{dialogue|Catori|indent=true|But maybe...if it's not too much trouble, could you make him something for me? It would have to be on the train soon to get to him on time.}}
+{{dialogue|Catori|indent=true|answer=Maybe I could build him something.
+|That would be amazing. Are you sure you don't mind? It would have to be on the train soon to get it to him on time.}}
+{{dialogue|Catori|indent=true|answer=You could make him something.
+|I'm not much good at that sort of thing. I once tried to make a cuddly toy bear for Alo when he was a baby. When I turned it right side out to fill it with stuffing, the head was on backwards.}}
+{{dialogue|Player|(What should I say?)}}
+
+*''I'm happy to help.''
+*''Too much on my plate.''
+
+{{dialogue|Catori|indent=true|answer=I'm happy to help.
+|Really? Oh thank you! You're the best! What would I do without you?}}
+{{dialogue|Catori|indent=true|I've been thinking about what to give him. Ma said in her last letter that Alo's become obsessed with trains. Last year it was Yakmel ranching. Now, he wants to be a conductor.}}
+{{dialogue|Catori|indent=true|Jensen collects models of trains. Maybe he has some recipes he can share with us. Alo would love a model train.}}
+{{dialogue|Catori|indent=true|Alright, let's do this, I'll ask Jensen and see if he'll lend me a recipe. I'll let you know as soon as I've got anything!}}
+{{dialogue|Catori|indent=true|answer=Too much on my plate.
+|I understand. You do a lot around here without having to bail me out of every jam. It did give me some ideas, though. I'll ask Mi-an. I don't know why I didn't think about it before.}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if Done is == 1
+ACTIONS
+START MISSION 1900384
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 18782:
+{{dialogue|Player|(What should I say?)}}
+
+*''I'm happy to help.'' (No unique dialogue)
+*''Too much on my plate.'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 13383:
+{{dialogue|Catori|Hey, ''Player'', that schedule opened up any? Alo's birthday's coming up, and I could really use a hand.}}
+
+*''I'm happy to help.'' (No unique dialogue)
+*''Too much on my plate.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set Done to 1
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1900384
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 2938102) from Catori
+Remove behavior CommanderNPCAction (idName: 2938100) from Catori
+Remove behavior CommanderMoveToFlagAndAction (idName: 2938100) from Player
+CUTSCENE UI STATE EXIT || 
+Run mission Birthday Blues
+END MISSION 1900384
+
+TRIGGER Procedure 1.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if Alo is in town
+ACTIONS
+Catori stops standing still
+AREA TRIGGER DELETE || id: 93840
+CLOSE MISSION || missionId: 1900384
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Catori|Hey, ''Player'', that schedule opened up any? Alo's birthday's coming up, and I could really use a hand.}}
+
+*''I'm happy to help.''
+*''Too much on my plate.''
+
+{{dialogue|Catori|indent=true|answer=I'm happy to help.
+|Really? Oh thank you! You're the best! What would I do without you?}}
+{{dialogue|Catori|indent=true|I've been thinking about what to give him. Ma said in her last letter that Alo's become obsessed with trains. Last year it was Yakmel ranching. Now, he wants to be a conductor.}}
+{{dialogue|Catori|indent=true|Jensen collects models of trains. Maybe he has some recipes he can share with us. Alo would love a model train.}}
+{{dialogue|Catori|indent=true|Alright, let's do this, I'll ask Jensen and see if he'll lend me a recipe. I'll let you know as soon as I've got anything!}}
+{{dialogue|Catori|indent=true|answer=Too much on my plate.
+|I understand. You do a lot around here without having to bail me out of every jam. It did give me some ideas, though. I'll ask Mi-an. I don't know why I didn't think about it before.}}
+
+==Rewards==
+{{mission reward
+|npc1 = Catori
+|rp1 = 15
+|exp = 1600
+|reputation = 10
+|gols = 500
+}}

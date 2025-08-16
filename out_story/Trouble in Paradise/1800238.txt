@@ -1,0 +1,345 @@
+Reading Mission 1800238: Trouble in Paradise
+
+<onlyinclude>{{Infobox mission
+|name = Trouble in Paradise
+|image =
+|description = Miguel and Matilda seems to be having an argument. The Temple needs a new mural to cover the current "Day of Calamity" mural.
+|type = Side
+|time =
+|location =
+|characters = [[Miguel]]
+|condition =
+|details =
+|exp = 850
+|reputation = 10
+|gols = 200
+|npc1 = Miguel
+|rp1 = 20
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200245
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if Miguel has favor >= 50
+The Kidnapping is in state 2 with flag 0
+Check if mission 1200265 is result 1 flag 0
+Check if Pablo is in town
+ACTIONS
+Run mission Trouble in Paradise
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800238
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1800238 | id: 82381 | sceneName: Main | flagName: Trigger_Temple | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+Set 8238Task to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Temple:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_temple
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_temple
+AREA TRIGGER DELETE || id: 82381
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Temple:
+CONDITIONS
+Always:
+ACTIONS
+Matilda stands still in Temple and looks at Miguel
+PLAYER SET POS ROT FLAG || sceneName: Temple | flagName: S8238_Player_1
+Miguel stands still in Temple and looks at Matilda
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Temple:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 2051_0 starts:
+{{dialogue|Miguel|Minister, I beg of you to reconsider-}}
+{{dialogue|Matilda|I've told you Miguel, the people won't stomach another Water Tax hike. They're stretched thin as it is, I doubt half these folks could even afford it.}}
+{{dialogue|Miguel|Every penny, Minister. You know this.}}
+{{dialogue|Matilda|What I know is this: now is a time of tribulation for our people, we need not burden them any further.}}
+{{dialogue|Miguel|But this project will add cost...}}
+{{dialogue|Matilda|It inspires hope, we can afford it.}}
+{{dialogue|Miguel|We're spending our Gols on frivolities! Meaningless eyesores...!}}
+{{dialogue|Matilda|We're spending our Gols on our people. We're giving someone a chance to make a day's earnings, and an opportunity to make a difference in this town. That, to me, is priceless...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8238182) to Matilda
+(param: TargetScene:Temple|MoveMode:Walk|FlagName:S8238_Madi_2|LookAtActor:8000)
+Add behavior CommanderMoveToFlagAndAction (idName: 8238192) to Miguel
+(param: TargetScene:Temple|MoveMode:Walk|FlagName:S8238_Megle_2|LookAtActor:8000)
+Miguel stops standing still
+Matilda stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 8238002) to Player
+(param: TargetScene:Temple|MoveMode:Walk|FlagName:S8238_Player_2|LookAtActor:8019)
+
+TRIGGER Procedure 0.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 2052_0 starts:
+{{dialogue|Matilda|Well now, always in the right place at the right time, aren't we, Builder? That's good, I think Miguel may require a bit of assistance; I must be going, but be a dear and help him, won't you?}}
+{{dialogue|Miguel|Hm, yes... "help..." That's right, Builder. A moment of your time, please.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderTeleport (idName: 8238183) to Matilda
+(param: TargetScene:Main|Delay:2.5|TargetFlag:church_player)
+Matilda stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8238182) from Matilda
+
+TRIGGER Procedure 0.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the second option in conversation segment 6896:
+{{dialogue|Miguel|The Church would be highly appreciative if you could work with our town's artists to manifest these vague requests... The Minister thinks that certain effigies of our faith are... uninviting. Will you assist us?}}
+
+*''You don't agree with her?'' (No unique dialogue)
+*''No problem.'' (No unique dialogue)
+*''Can't you just go and get it yourself?'' (No unique dialogue)
+*''I've got a whole lot of stuff on my plate.'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 6949:
+{{dialogue|Miguel|The Church would be highly appreciative if you could work with our town's artists to manifest these vague requests... The Minister thinks that certain effigies of our faith are... uninviting. Will you assist us?}}
+
+*''No problem.'' (No unique dialogue)
+*''I've got a whole lot of stuff on my plate.'' (No unique dialogue)
+
+(cId 3) The player picks the second option in conversation segment 7050:
+{{dialogue|Player|(What should I say?)}}
+
+*''You don't agree with her?'' (No unique dialogue)
+*''No problem.'' (No unique dialogue)
+*''Can't you just go and get it yourself?'' (No unique dialogue)
+*''I've got a whole lot of stuff on my plate.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8238Task to 2
+
+TRIGGER Procedure 0.0 Step 10.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8018 | behaviourName: CommanderTeleport | eventName: Teleported
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 2053_0 starts:
+{{dialogue|Miguel|According to some, the Church needs a new mural in the Temple.}}
+{{dialogue|Miguel|The Church would be highly appreciative if you could work with our town's artists to manifest these vague requests... The Minister thinks that certain effigies of our faith are... uninviting. Will you assist us?}}
+
+*''You don't agree with her?''
+*''No problem.''
+*''Can't you just go and get it yourself?''
+*''I've got a whole lot of stuff on my plate.''
+
+{{dialogue|Miguel|indent=true|answer=You don't agree with her?
+|Hm, heard us did you? It's not my place to question the Minister. She has the final say in matters these days, and I must respect that. However much I may disagree with her decisions.}}
+{{dialogue|Miguel|indent=true|answer=No problem.
+|She gave rather limited notes on the specifics... Nevertheless, I would expect Pablo or Amirah should be able to produce a painting of sufficent quality.}}
+{{dialogue|Miguel|indent=true|If we're conscious of budget, perhaps even Jasmine could be recruited to our cause, hahah.}}
+{{dialogue|Miguel|indent=true|The Church has allocated 1000 Gols for the project. Here you are. What remains afterwards will be your commission for the frame. Return to me when you have the items in question. Be swift, Builder.}}
+{{dialogue|Miguel|indent=true|answer=Can't you just go and get it yourself?
+|For a regular painting, I would do so. But for one of this size, we will need a custom frame. So it seems that using your expertise would be fitting.}}
+{{dialogue|Miguel|indent=true|answer=I've got a whole lot of stuff on my plate.
+|I see... I thought we at the Church could come to rely on you, Builder. I hope my faith has not been misplaced... Please stop by if you do find time.}}
+{{dialogue|Player|(What should I say?)}}
+
+*''You don't agree with her?''
+*''No problem.''
+*''Can't you just go and get it yourself?''
+*''I've got a whole lot of stuff on my plate.''
+
+{{dialogue|Miguel|indent=true|answer=You don't agree with her?
+|Hm, heard us did you? It's not my place to question the Minister. She has the final say in matters these days, and I must respect that. However much I may disagree with her decisions.}}
+{{dialogue|Miguel|indent=true|answer=No problem.
+|She gave rather limited notes on the specifics... Nevertheless, I would expect Pablo or Amirah should be able to produce a painting of sufficent quality.}}
+{{dialogue|Miguel|indent=true|If we're conscious of budget, perhaps even Jasmine could be recruited to our cause, hahah.}}
+{{dialogue|Miguel|indent=true|The Church has allocated 1000 Gols for the project. Here you are. What remains afterwards will be your commission for the frame. Return to me when you have the items in question. Be swift, Builder.}}
+{{dialogue|Miguel|indent=true|answer=Can't you just go and get it yourself?
+|For a regular painting, I would do so. But for one of this size, we will need a custom frame. So it seems that using your expertise would be fitting.}}
+{{dialogue|Miguel|indent=true|answer=I've got a whole lot of stuff on my plate.
+|I see... I thought we at the Church could come to rely on you, Builder. I hope my faith has not been misplaced... Please stop by if you do find time.}}
+{{dialogue|Player|(What should I say?)}}
+
+*''You don't agree with her?''
+*''No problem.''
+*''Can't you just go and get it yourself?''
+*''I've got a whole lot of stuff on my plate.''
+
+{{dialogue|Miguel|indent=true|answer=You don't agree with her?
+|Hm, heard us did you? It's not my place to question the Minister. She has the final say in matters these days, and I must respect that. However much I may disagree with her decisions.}}
+{{dialogue|Player|indent=true|(What should I say?)}}
+
+:*''No problem.''
+:*''Can't you just go and get it yourself?''
+:*''I've got a whole lot of stuff on my plate.''
+
+{{dialogue|Miguel|indent=double|answer=No problem.
+|She gave rather limited notes on the specifics... Nevertheless, I would expect Pablo or Amirah should be able to produce a painting of sufficent quality.}}
+{{dialogue|Miguel|indent=double|If we're conscious of budget, perhaps even Jasmine could be recruited to our cause, hahah.}}
+{{dialogue|Miguel|indent=double|The Church has allocated 1000 Gols for the project. Here you are. What remains afterwards will be your commission for the frame. Return to me when you have the items in question. Be swift, Builder.}}
+{{dialogue|Miguel|indent=double|answer=Can't you just go and get it yourself?
+|For a regular painting, I would do so. But for one of this size, we will need a custom frame. So it seems that using your expertise would be fitting.}}
+{{dialogue|Player|indent=double|(What should I say?)}}
+
+::*''No problem.''
+::*''I've got a whole lot of stuff on my plate.''
+
+{{dialogue|Miguel|indent=3|answer=No problem.
+|She gave rather limited notes on the specifics... Nevertheless, I would expect Pablo or Amirah should be able to produce a painting of sufficent quality.}}
+{{dialogue|Miguel|indent=3|If we're conscious of budget, perhaps even Jasmine could be recruited to our cause, hahah.}}
+{{dialogue|Miguel|indent=3|The Church has allocated 1000 Gols for the project. Here you are. What remains afterwards will be your commission for the frame. Return to me when you have the items in question. Be swift, Builder.}}
+{{dialogue|Miguel|indent=3|answer=I've got a whole lot of stuff on my plate.
+|I see... I thought we at the Church could come to rely on you, Builder. I hope my faith has not been misplaced... Please stop by if you do find time.}}
+{{dialogue|Miguel|indent=double|answer=I've got a whole lot of stuff on my plate.
+|I see... I thought we at the Church could come to rely on you, Builder. I hope my faith has not been misplaced... Please stop by if you do find time.}}
+{{dialogue|Miguel|indent=true|answer=No problem.
+|She gave rather limited notes on the specifics... Nevertheless, I would expect Pablo or Amirah should be able to produce a painting of sufficent quality.}}
+{{dialogue|Miguel|indent=true|If we're conscious of budget, perhaps even Jasmine could be recruited to our cause, hahah.}}
+{{dialogue|Miguel|indent=true|The Church has allocated 1000 Gols for the project. Here you are. What remains afterwards will be your commission for the frame. Return to me when you have the items in question. Be swift, Builder.}}
+{{dialogue|Miguel|indent=true|answer=Can't you just go and get it yourself?
+|For a regular painting, I would do so. But for one of this size, we will need a custom frame. So it seems that using your expertise would be fitting.}}
+{{dialogue|Player|indent=true|(What should I say?)}}
+
+:*''You don't agree with her?''
+:*''No problem.''
+:*''I've got a whole lot of stuff on my plate.''
+
+{{dialogue|Miguel|indent=double|answer=You don't agree with her?
+|Hm, heard us did you? It's not my place to question the Minister. She has the final say in matters these days, and I must respect that. However much I may disagree with her decisions.}}
+{{dialogue|Player|indent=double|(What should I say?)}}
+
+::*''No problem.''
+::*''I've got a whole lot of stuff on my plate.''
+
+{{dialogue|Miguel|indent=3|answer=No problem.
+|She gave rather limited notes on the specifics... Nevertheless, I would expect Pablo or Amirah should be able to produce a painting of sufficent quality.}}
+{{dialogue|Miguel|indent=3|If we're conscious of budget, perhaps even Jasmine could be recruited to our cause, hahah.}}
+{{dialogue|Miguel|indent=3|The Church has allocated 1000 Gols for the project. Here you are. What remains afterwards will be your commission for the frame. Return to me when you have the items in question. Be swift, Builder.}}
+{{dialogue|Miguel|indent=3|answer=I've got a whole lot of stuff on my plate.
+|I see... I thought we at the Church could come to rely on you, Builder. I hope my faith has not been misplaced... Please stop by if you do find time.}}
+{{dialogue|Miguel|indent=double|answer=No problem.
+|She gave rather limited notes on the specifics... Nevertheless, I would expect Pablo or Amirah should be able to produce a painting of sufficent quality.}}
+{{dialogue|Miguel|indent=double|If we're conscious of budget, perhaps even Jasmine could be recruited to our cause, hahah.}}
+{{dialogue|Miguel|indent=double|The Church has allocated 1000 Gols for the project. Here you are. What remains afterwards will be your commission for the frame. Return to me when you have the items in question. Be swift, Builder.}}
+{{dialogue|Miguel|indent=double|answer=I've got a whole lot of stuff on my plate.
+|I see... I thought we at the Church could come to rely on you, Builder. I hope my faith has not been misplaced... Please stop by if you do find time.}}
+{{dialogue|Miguel|indent=true|answer=I've got a whole lot of stuff on my plate.
+|I see... I thought we at the Church could come to rely on you, Builder. I hope my faith has not been misplaced... Please stop by if you do find time.}}
+DELIVER MISSION 1800238
+
+TRIGGER Procedure 0.0 Step 10.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderTeleport (idName: 8238183) from Matilda
+Miguel stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8238192) from Miguel
+Remove behavior CommanderMoveToFlagAndAction (idName: 8238002) from Player
+CUTSCENE UI STATE EXIT || 
+Matilda stops standing still
+
+TRIGGER Procedure 0.0 Step 10.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8018 | behaviourName: CommanderTeleport | eventName: Teleported
+CONDITIONS
+Always:
+ACTIONS
+Matilda stands still in Main
+
+TRIGGER Procedure 0.0 Step 12.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if 8238Task is == 2
+ACTIONS
+START MISSION 1800238
+Add 1 Exquisite Frame of Default quality (Notify player)
+MONEY PLAYER ADD || money: 1000
+
+TRIGGER Procedure 0.0 Step 15.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800238
+CONDITIONS
+Always:
+ACTIONS
+Run mission Trouble in Paradise
+END MISSION 1800238
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END || order: 0 | result: 1 | missionId: 1200265
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 82381
+CLOSE MISSION || missionId: 1800238
+END MISSION 1800238
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Miguel|The Church would be highly appreciative if you could work with our town's artists to manifest these vague requests... The Minister thinks that certain effigies of our faith are... uninviting. Will you assist us?}}
+
+*''No problem.''
+*''I've got a whole lot of stuff on my plate.''
+
+{{dialogue|Miguel|indent=true|answer=No problem.
+|She gave rather limited notes on the specifics... Nevertheless, I would expect Pablo or Amirah should be able to produce a painting of sufficent quality.}}
+{{dialogue|Miguel|indent=true|If we're conscious of budget, perhaps even Jasmine could be recruited to our cause, hahah.}}
+{{dialogue|Miguel|indent=true|The Church has allocated 1000 Gols for the project. Here you are. What remains afterwards will be your commission for the frame. Return to me when you have the items in question. Be swift, Builder.}}
+{{dialogue|Miguel|indent=true|answer=I've got a whole lot of stuff on my plate.
+|I see... I thought we at the Church could come to rely on you, Builder. I hope my faith has not been misplaced... Please stop by if you do find time.}}
+
+==Rewards==
+{{mission reward
+|npc1 = Miguel
+|rp1 = 20
+|exp = 850
+|reputation = 10
+|gols = 200
+}}

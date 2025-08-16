@@ -1,0 +1,152 @@
+Reading Mission 1600123: Once More Into the Breach
+
+<onlyinclude>{{Infobox mission
+|name = Once More Into the Breach
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Once More Into the Breach:
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 12) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Grace stops standing still
+ACTION CAMERA END FOCUS POINT || style: 0 | blendTime: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 1612214) from Grace
+START MISSION 1600122
+
+TRIGGER Procedure 1.0 Step 5.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1600122
+CONDITIONS
+Always:
+ACTIONS
+Run mission Once More Into the Breach
+ACTION DATE REMOVE FLAG || flag: DATE:Run1600122
+Remove behavior CommanderMoveToFlagAndAction (idName: 1612212) from Justice
+END MISSION 1600122
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1600123
+CONDITIONS
+Always:
+ACTIONS
+===Collect Items===
+
+{{mission_details
+|desc = Grace needs to find various relics for her archaeological research. Help her collect the things she needs for the Breach. Some of what she's looking for is harder to find than others, it may take a few visits to get everything.
+|details = Collect Items
+*{{i2|Admiral Salt's Well-liked Fringe Group Ensemble|0/1}}
+*{{i2|No Thanks, Computer|0/1}}
+*{{i2|Simple Circuits|0/2}}
+*{{i2|Techno Calendar|0/1}}
+}}
+Remove behavior CommanderIdle (idName: 1612212) from Player
+CUTSCENE UI STATE EXIT || 
+ACTION AREA TRIGGER SET RADIUS || id: 161231 | radius: 20
+Grace stops standing still
+Set global blackboard key breachitemdrop1 with info 1.
+Set global blackboard key breachitemdrop2 with info 1.
+
+TRIGGER Procedure 0.0 Step 0.5 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON BAG CHANGE || order: 0 | item: 19810015 | changeType: 0 | itemGrade: -1
+CONDITIONS
+Always:
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: breachitemdrop1
+
+TRIGGER Procedure 0.0 Step 0.6 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON BAG CHANGE || order: 0 | item: 19810016 | changeType: 0 | itemGrade: -1
+CONDITIONS
+Always:
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: breachitemdrop2
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1600122 | targetId: 0 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Report to Grace===
+
+{{mission_details
+|desc = You have collected all the relevant items. Bring them back to Grace.
+|details = Report to Grace
+*{{i2|Admiral Salt's Well-liked Fringe Group Ensemble|0/1}}
+*{{i2|No Thanks, Computer|0/1}}
+*{{i2|Simple Circuits|0/2}}
+*{{i2|Techno Calendar|0/1}}
+*{{i2|Grace|0/1}}
+}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Grace
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1600122 | targetId: 1 | canSubmit: 1
+ACTIONS
+(cId 20) A conversation 869_0 starts:
+{{dialogue|Grace|Ah hah! What's all this then...? Hm, slight damage around the edges, bit of fading, but you can make out the font pretty clearly. "Admiral Salt something something," "No Thanks, Computer..."}}
+{{dialogue|Grace|Probably from around 250 Before Peach if I had to guess. Would probably score a preservation rating of at least a B back with the professors. Nice find, ''Player''!}}
+{{dialogue|Grace|...And good timing, too. My latest essay topic was just approved: "Old World Utilization Theory: A Case Study on Sandrock's 'The Breach.'" Mouthful that it is, my essay titles are actually more concise than most.}}
+{{dialogue|Grace|Anyway, this helps me build my case around my "hooky hypothesis," so thanks again ''Player''.}}
+{{dialogue|Grace|Wasn't too much trouble I hope? Dangerous? You appear to be in once piece, at least.}}
+
+*''It was dangerous, but I handled it.''
+*''Eh, not so bad. Next time, you go.''
+
+{{dialogue|Grace|indent=true|answer=It was dangerous, but I handled it.
+|Oh yeah? Make sure you train if you're going to keep diving like this though. "Follow through with your strikes, use all your weight to attack, don't forget to exercise your core." Just some tips I saw in Ruin Divers Seasonly.}}
+{{dialogue|Grace|indent=true|answer=Eh, not so bad. Next time, you go.
+|Eh? You think I look tough enough to go in there? Well, unfortunately, our good friend Sheriff Justice wouldn't agree with you...}}
+{{dialogue|Grace|Well, in any case, you've been a lot of help. If, hypothetically, I'd gone into The Breach myself, I wouldn't have had all this time to get a jump start on my essay. Oh, speaking of which, I'll let you know how that goes. Thanks again!}}
+The conversation ends.
+CUTSCENE UI STATE ENTER || 
+BAG MODIFY BY TARGET || missionId: 1600122 | targetId: 1
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 20) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1600122
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 20) The player picks the first option in conversation segment 3193:
+{{dialogue|Grace|Oh yeah? Make sure you train if you're going to keep diving like this though. "Follow through with your strikes, use all your weight to attack, don't forget to exercise your core." Just some tips I saw in Ruin Divers Seasonly.}}
+CONDITIONS
+Always:
+ACTIONS
+Grace gains 3 favor

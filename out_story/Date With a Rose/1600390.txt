@@ -1,0 +1,360 @@
+Reading Mission 1600390: Date With a Rose
+
+<onlyinclude>{{Infobox mission
+|name = Date With a Rose
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Date With a Rose:
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 785
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1600389
+START MISSION 1600389
+===Wait Until Tomorrow===
+
+{{mission_details
+|desc = Ernest is having some problems with his writing and wants to invite you to his house to talk.
+|details = Wait Until Tomorrow
+}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission Date With a Rose
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PLAYER BREAKUP || order: 0 | id: 8069
+CONDITIONS
+Always:
+ACTIONS
+Ernest stops standing still
+SCENEITEM DELETE || itemType: 0 | id: 1368901
+FAIL MISSION || missionId: 1600389
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 63891) The player picks the first option in conversation segment 20215:
+{{dialogue|Ernest|So, help me act it out. Let's get a feeling for it.}}
+
+*''Sure, what should I do?'' (No unique dialogue)
+*''Come on, you've been writing since grade school!'' (No unique dialogue)
+*''I'm not great at this...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Ernest gains 5 favor
+
+TRIGGER Procedure 1.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 63891) The player picks the third option in conversation segment 20250:
+{{dialogue|Ernest|My dear, what do you think? Would the carpenter accept the bard's love?}}
+
+*''The "carpenter" is already in love with the "bard."'' (No unique dialogue)
+*''Maybe they need to get to know each other a little better.'' (No unique dialogue)
+*''I don't think it'd work out.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Ernest gains -2 favor
+
+TRIGGER Procedure 1.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 63891) The player picks the second option in conversation segment 20250:
+{{dialogue|Ernest|My dear, what do you think? Would the carpenter accept the bard's love?}}
+
+*''The "carpenter" is already in love with the "bard."'' (No unique dialogue)
+*''Maybe they need to get to know each other a little better.'' (No unique dialogue)
+*''I don't think it'd work out.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Ernest gains 5 favor
+
+TRIGGER Procedure 1.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 63891) The player picks the first option in conversation segment 20250:
+{{dialogue|Ernest|My dear, what do you think? Would the carpenter accept the bard's love?}}
+
+*''The "carpenter" is already in love with the "bard."'' (No unique dialogue)
+*''Maybe they need to get to know each other a little better.'' (No unique dialogue)
+*''I don't think it'd work out.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Ernest gains 10 favor
+
+TRIGGER Procedure 1.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 63891) The player picks the first option in conversation segment 20250:
+{{dialogue|Ernest|My dear, what do you think? Would the carpenter accept the bard's love?}}
+
+*''The "carpenter" is already in love with the "bard."'' (No unique dialogue)
+*''Maybe they need to get to know each other a little better.'' (No unique dialogue)
+*''I don't think it'd work out.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Ernest gains 10 favor
+
+TRIGGER Procedure 1.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1600390
+CONDITIONS
+Always:
+ACTIONS
+===Go to Ernest's House on 19:30PM===
+
+{{mission_details
+|desc = Go to Ernest's house at 19:30PM tonight, he has something for you.
+|details = Go to Ernest's House on 19:30PM
+}}
+CALENDAR SET REMINDER HM || addDays: 0 | hour: 19 | minute: 30 | transId: 80027740
+
+TRIGGER Procedure 1.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Apartment:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_apartment
+CHECK TIME || compare: 2 | hour: 19 | minute: 30
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_apartment
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 1.0 Step 2.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Apartment:
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Apartment | flagName: 16389_player
+Ernest stands still in Apartment and looks at Player
+SCENEITEM CREATE FLAG || path: Mission_ErnestRose | itemType: 0 | id: 1638901 | sceneName: Apartment | flagName: ErnestRomance | extraParams: -1
+
+TRIGGER Procedure 1.0 Step 3.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Apartment:
+CONDITIONS
+Always:
+ACTIONS
+(cId 63890) A conversation 6660_0 starts:
+{{dialogue|Ernest|Please, my love, take a seat.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 4.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 63890) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 39001 | delayTime: 1 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 6.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 39001 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Ernest stops standing still
+Add behavior CommanderSit (idName: 1638904) to Ernest
+(param: SeatDramaName:16389_ernestsit|TargetScene:Apartment)
+Add behavior CommanderPlayerSit (idName: 1638903) to Player
+(param: SeatDramaName:16389_playersit|TargetScene:Apartment)
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8069 | behaviourName: CommanderSit | eventName: SitDownFinished
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 39001 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 39001 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 63891) A conversation 6419_0 starts:
+{{dialogue|Ernest|Haha, don't look so surprised, my dear. I'm writing a scene about love... where the protagonist confesses their love. But... I'm finding it a little hard to make it authentic.}}
+{{dialogue|Ernest|I've come up with so many possibilities that it has clouded my mind as to how it could actually play out. I feel like it's become far too fantastical. So I was hoping you could help me...}}
+{{dialogue|Ernest|So, help me act it out. Let's get a feeling for it.}}
+
+*''Sure, what should I do?''
+*''Come on, you've been writing since grade school!''
+*''I'm not great at this...''
+
+{{dialogue|Ernest|indent=true|answer=Sure, what should I do?
+|reward={{NPC2|Ernest|rp=5}}|Haha, you're so cute. Just relax, and leave it to me.}}
+{{dialogue|Ernest|indent=true|answer=Come on, you've been writing since grade school!
+|Well, we all miss the mark sometimes. Besides, I want to make it real, authentic. Poetry has its place, but... nothing beats raw emotions and real settings.}}
+{{dialogue|Ernest|indent=true|answer=I'm not great at this...
+|Honey, believe me. Your ideas are important... I wouldn't ask for your help if I didn't know you and trust you.}}
+{{dialogue|Ernest|indent=true|You don't need to change anything, just be yourself.}}
+{{dialogue|Ernest|So, the story goes as such: Once upon a time there was a wandering bard, traveling from town to town. He arrived at a town, distant, remote. There he met a carpenter. This town had many carpenters, but this one... was special.}}
+{{dialogue|Ernest|The carpenter helped the bard repair his broken lyre. The lyre was important to the bard, it had accompanied him throughout his travels. He was grateful to the carpenter, and invited him to his first performance in town.}}
+{{dialogue|Ernest|But next... What next? If you were the carpenter, would you accept the bard's invitation?}}
+
+*''Yeah, of course!''
+*''No, I wouldn't.''
+*''What's a bard?''
+
+{{dialogue|Ernest|indent=true|answer=Yeah, of course!
+|That's what I expected. As the carpenter arrived, he was taken aback. For what he had thought would be a public spectacle, was a bonfire, a man, and a lyre. It seems the others were not willing to listen to his songs.}}
+{{dialogue|Ernest|indent=true|He was but a wandering bard, his melodies unknown. It's not surprising that the locals were not flocking to hear him play.}}
+{{dialogue|Ernest|indent=true|answer=No, I wouldn't.
+|You wouldn't? Well, of course. The lyre was important to the bard, but for the carpenter, it was simply another job.}}
+{{dialogue|Ernest|indent=true|The carpenter denied the request, and carried on their work. They soon forgot about the request altogether. One night, after dinner on a walk across the town, the carpenter came across a lonely bonfire, and the bard sitting alone, playing his lyre.}}
+{{dialogue|Ernest|indent=true|answer=What's a bard?
+|Ah! A bard was an ancent Old World musician, traveling across from place to place, learning stories and songs, and sharing them as they traveled. If they sang well, people would pay them.}}
+{{dialogue|Ernest|indent=true|So, if you were the carpenter, would you accept the invitation?}}
+
+:*''Yeah, of course!''
+:*''No, I wouldn't.''
+
+{{dialogue|Ernest|indent=double|answer=Yeah, of course!
+|That's what I expected. As the carpenter arrived, he was taken aback. For what he had thought would be a public spectacle, was a bonfire, a man, and a lyre. It seems the others were not willing to listen to his songs.}}
+{{dialogue|Ernest|indent=double|answer=No, I wouldn't.
+|You wouldn't? Well, of course. The lyre was important to the bard, but for the carpenter, it was simply another job.}}
+{{dialogue|Ernest|indent=double|The carpenter denied the request, and carried on their work. They soon forgot about the request altogether. One night, after dinner on a walk across the town, the carpenter came across a lonely bonfire, and the bard sitting alone, playing his lyre.}}
+{{dialogue|Ernest|So, what should the carpenter do?}}
+
+*''Quietly sit down.''
+*''Comfort the bard.''
+*''Leave before he notices.''
+
+{{dialogue|Ernest|indent=true|answer=Quietly sit down.
+|Yes, perhaps the bard's lonesome figure gave the carpenter a twinge of sentimentality.}}
+{{dialogue|Ernest|indent=true|The carpenter silently walked up and sat down next to the bonfire.}}
+{{dialogue|Ernest|indent=true|answer=Comfort the bard.
+|The carpenter's heart is as delicate as their craft. The carpenter knew that it must hurt the bard, to sing but for no one to listen.}}
+{{dialogue|Ernest|indent=true|So the carpenter sat quietly beside the bard, comforting them in sincere silence.}}
+{{dialogue|Ernest|indent=true|answer=Leave before he notices.
+|Hmm... the carpenter felt it best that they left. The bard turned and watched the figure depart, recognizing them, but did not call for them to stay.}}
+{{dialogue|Ernest|indent=true|The bard sat alone by the bonfire, which slowly burned out.}}
+{{dialogue|Ernest|indent=true|As the bard prepared to leave, alone and defeated, he heard footsteps from behind him... suddenly people started appearing, following behind the carpenter.}}
+{{dialogue|Ernest|indent=true|"The carpenter told us there was a heck of a show!" said one of the townsfolk.}}
+{{dialogue|Ernest|The bard looked at the carpenter, a shy smile appearing on his lips.}}
+{{dialogue|Ernest|Tell me, what do you think the bard did next?}}
+
+*''Started playing!''
+*''Was this his plan all along?''
+
+{{dialogue|Ernest|indent=true|answer=Started playing!
+|That's right. The bard sat softly plucking the strings of his lyre. He sang of his travels, his memories, of his meeting with the carpenter...}}
+{{dialogue|Ernest|indent=true|answer=Was this his plan all along?
+|Exactly. He chose a remote location and put on a concert that he only told of to the carpenter. The performance was but for the carpenters ears alone... he did not expect the carpenter to both fix his lyre, and the strings of his heart.}}
+{{dialogue|Ernest|indent=true|The bard sat softly plucking the strings of his lyre. He sang of his travels, his memories, of his meeting with the carpenter...}}
+{{dialogue|Ernest|He sang of how the carpenter entered his heart...}}
+{{dialogue|Ernest|The bard stopped playing, and handed the carpenter a rose.}}
+{{dialogue|Ernest|And as the music continued, he sang...}}
+{{dialogue|Ernest|"My rose, your fragrance sets my heart ablaze, Your branches bind me close in love's content. Oh, I desire to be your singing bird. Forever serenading, love's sweet word."}}
+{{dialogue|Ernest|My dear, what do you think? Would the carpenter accept the bard's love?}}
+
+*''The "carpenter" is already in love with the "bard."''
+*''Maybe they need to get to know each other a little better.''
+*''I don't think it'd work out.''
+
+{{dialogue|Ernest|indent=true|answer=The "carpenter" is already in love with the "bard."
+|reward={{NPC2|Ernest|rp=10}}|I knew I shouldn't have doubted you, of course you saw through my plan.}}
+{{dialogue|Ernest|indent=true|answer=Maybe they need to get to know each other a little better.
+|reward={{NPC2|Ernest|rp=5}}|Of course, while the bard loves the carpenter, they don't know each other.}}
+{{dialogue|Ernest|indent=true|Luckily for us, we have grown so close already.}}
+{{dialogue|Ernest|indent=true|answer=I don't think it'd work out.
+|reward={{NPC2|Ernest|rp=-2}}|They... ah... was the story not good? Forget it. Forget the story, it's not important...}}
+{{dialogue|Ernest|indent=true|What I mean is... erm...}}
+{{dialogue|Ernest|indent=true|Ahem.}}
+{{dialogue|Ernest|Honey, ever since our love blossomed, I've been thinking about how I can show you my feelings.}}
+{{dialogue|Ernest|So I prepared this for you, although it is but a story, it contains my feelings. What is in my heart. The bard longs for the carpenter, and though they have seperate lives...}}
+{{dialogue|Ernest|When I think back to when we met, it is hard to define the moment you first entered my heart. I thought it may have been when we entered the cave, or discussed the diamonds and stars.}}
+{{dialogue|Ernest|Or perhaps the moment we first met, when I left the train...}}
+{{dialogue|Ernest|But I realized... the moment we met was fleeting. It is not important. What is important is now. The love I have for you in every waking moment of my life. So I wanted to express this to you, tell you how much you mean to me.}}
+{{dialogue|Ernest|And this is what I owe you, a poem of my love.}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 63891) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 8503}}
+A cutscene CG_ROSE (duration: 2.0) starts playing
+Kiss from a Rose - Ernest recited to me a poem he wrote that sparked all kinds of memories...
+
+TRIGGER Procedure 3.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_ROSE | state: 9
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 39002 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+SCENEITEM DELETE || itemType: 0 | id: 1638901
+Remove behavior CommanderSit (idName: 1638904) from Ernest
+Remove behavior CommanderPlayerSit (idName: 1638903) from Player
+STOPWATCH REAL TIME SET || id: 6390 | sec: 2
+
+TRIGGER Procedure 3.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 6390
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 39002 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 39002 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1600389
+END MISSION 1600389
+END MISSION 1600390

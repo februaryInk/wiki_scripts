@@ -1,0 +1,157 @@
+Reading Mission 1200242: This is Not a Drill
+
+<onlyinclude>{{Infobox mission
+|name = This is Not a Drill
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from This is Not a Drill:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200241
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|435}}
+DELIVER MISSION 1200241
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200241
+CONDITIONS
+Always:
+ACTIONS
+Run mission This is Not a Drill
+END MISSION 1200241
+
+==Conduct==
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200242
+CONDITIONS
+Always:
+ACTIONS
+===Construct Drill Arm===
+
+{{mission_details
+|desc = Now you have the diagram, construct the Drill Arm.
+|details = Construct Drill Arm
+*{{i2|Drill Arm|0/1}}
+}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200241 | canSubmit: 1 | targetId: 3
+CONDITIONS
+Always:
+ACTIONS
+===Install Drill Arm===
+
+{{mission_details
+|desc = The drill arm has been constructed, install it on the mobile suit.
+|details = Install Drill Arm
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 22421 | sceneName: Science | flagName: newrobot_robot | extraParams: Mission_robot2|CreatorItem|19112031_1|1547|Fix|1.4 | path: newrobot_robot_empty
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 22421 | missionId: 1200241 | iconType: 3
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 22421
+CONDITIONS
+Always:
+ACTIONS
+SOUND PLAY 2D || idStr: player_interact_buildover
+SCENEITEM DELETE || itemType: 0 | id: 21111
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 22421 | delayTime: 0 | durationTime: -2 | curveIndex: 0 | changeType: 0
+SCENEITEM CREATE FLAG || path: Mission_FX_Machine_1 | itemType: 0 | id: 22422 | sceneName: Science | flagName: newrobot_robot | extraParams: 0
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22421
+CONDITIONS
+Always:
+ACTIONS
+Qi stands still in Science
+Heidi stands still in Science
+PLAYER SET POS ROT FLAG || flagName: makedrill_player | sceneName: Science
+DELAY MASK SET || maskId: 22421 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+SCENEITEM DELETE || itemType: 0 | id: 22422
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 22421
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 2233_0 starts:
+{{dialogue|Qi|Fantastic work, ''Player''. Now the Mobile Suit will be an unstoppable force, capable even of moving mountains...}}
+{{dialogue|Qi|I do have... tepid news to share.}}
+{{dialogue|Qi|You see, following the last instance... or rather instances... of me crashing the Mobile Suit, the city has elected to train a construction worker to operate it.}}
+{{dialogue|Qi|Yes, yes, I'm devastated as well. Really, it's a travesty. But save your tears: I intend to appeal this decision, perhaps design a license test of sorts... Mark my words, I shall ride again...}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Heidi stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 22422) to Heidi
+(param: TargetScene:Science|MoveMode:Walk|FlagName:makedrill_heidi1)
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 22422) from Heidi
+Heidi stops standing still
+Qi stops standing still
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1200241
+END MISSION 1200242
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8009 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 2234_0 starts:
+{{dialogue|Heidi|Knock, knock!}}
+{{dialogue|Qi|Ah, you've come just in time. Gaze upon the glory of the Gungam Mobile Suit Mark Two! I mean- Mobile Suit Mark Two! Now with more drilling.}}
+{{dialogue|Heidi|Amazing! Your inspiration for this design must have come from something very obscure again...}}
+{{dialogue|Qi|Yes... Yes, it did...}}
+{{dialogue|Heidi|And hats off to you, too, ''Player''! Looks like this thing packs a punch! Can't wait to let it loose on that mean ol' mountain! Since we've already selected a pilot, we can get started tomorrow.}}
+{{dialogue|Heidi|Oh, also, Director, the diagram for the Steel Frames...}}
+{{dialogue|Qi|Can't you just let me enjoy my work for just a moment longer...?}}
+{{dialogue|Heidi|Fine, fine.}}
+{{dialogue|Heidi|Good work, ''Player''! Keep it up! I'll call on you again when we're into the tunnel structural phase.}}
+The conversation ends.

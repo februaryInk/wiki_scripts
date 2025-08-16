@@ -1,0 +1,113 @@
+Reading Mission 1200073: License for Ransom
+
+<onlyinclude>{{Infobox mission
+|name = License for Ransom
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from License for Ransom:
+
+TRIGGER Procedure 2.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 20291
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 963, 964, 965, 966 starts:
+{{dialogue|Elsie|That's it, by Peach, you found it!}}
+{{dialogue|Elsie|Whew! Light at the end of the tunnel! Maybe tonight I can finally get myself a half decent rest. I can't believe this all flew so far off the handle; maybe committin' fraud ain't all it's cracked up to be!}}
+{{dialogue|Elsie|I'll go give this to Mi-an as soon as possible and tell her all what happened! I really hope she can find some way to forgive me...}}
+{{dialogue|Elsie|Say, ''Player'', you're a really good listener! And a good license-finder t'boot! You're alright in my book! Thanks for all your help! We should catch up again soon under less incriminatin' circumstances!}}
+
+TRIGGER Procedure 2.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Elsie gains 10 favor
+CUTSCENE UI STATE EXIT || 
+Elsie stops standing still
+Elsie stops standing still
+Set DAY to 3
+AREA TRIGGER CREATE || missionId: 1200029 | id: 20292 | sceneName: Main | flagName: license_trigger2 | showOnMap: 0 | mapIcon: 0 | transId: 0
+Run mission License for Ransom
+SUBMIT MISSION 1200028
+END MISSION 1200029
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 20292
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 20292
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 20292 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 20292 | eventType: 2
+CONDITIONS
+Check if Elsie is in town
+ACTIONS
+Mi-an stands still in Main
+Elsie stands still in Main
+DELAY MASK SET || maskId: 20292 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: license_player3
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 20292 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 10) A conversation 342_0 starts:
+{{dialogue|Elsie|... And that's my story. I understand if you don't wanna go ridin' with me no more, but I really was harborin' good intentions...}}
+{{dialogue|Mi-an|Elsie, I... C'mon, you think I'd just forget about all our good times over one little mix-up? Riding Yakmel, greeting all the little critters. Whenever you drag me outta my shell, I always feel like I never want to go back!}}
+{{dialogue|Mi-an|But I can't go out all the time, doing lots of commissions is like, my 'thing,' you know? Honestly, nothing stresses me out more than getting behind in my work...}}
+{{dialogue|Elsie|I didn't know it was like that. I'm real awful sorry.}}
+{{dialogue|Mi-an|Yeah, I mean, how could you know? Maybe just... next time if you're having a problem like this, can you try to find a solution that isn't an elaborate scheme?}}
+{{dialogue|Elsie|Okay! I promise!}}
+{{dialogue|Mi-an|Friends?}}
+{{dialogue|Elsie|Friends!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Elsie stops standing still
+Mi-an stops standing still
+END MISSION 1200073
+
+TRIGGER Procedure 2.0 Step 5.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200073
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1200029 | id: 20292 | sceneName: Main | flagName: license_trigger2 | showOnMap: 0 | mapIcon: 0 | transId: 0

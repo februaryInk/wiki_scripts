@@ -1,0 +1,529 @@
+Reading Mission 1200061: Combat Training
+
+<onlyinclude>{{Infobox mission
+|name = Combat Training
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Combat Training:
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Check if NOPK is == 1
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Pen stops standing still
+Remove behavior CommanderIdle (idName: 12601) from Player
+GLOBAL BLACK BOARD REMOVE || key: PKeducation
+CLOSE MISSION || missionId: 1200060
+END MISSION 1200060
+
+TRIGGER Procedure 1.0 Step 4.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Check if NOPK is == 0
+ACTIONS
+DELAY MASK SET || maskId: 20601 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+Pen stops standing still
+Run mission Combat Training
+Remove behavior CommanderIdle (idName: 12601) from Player
+END MISSION 1200060
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 20601 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: PKED_player
+DELAY MASK SET || maskId: 20601 | delayTime: 1 | durationTime: 2 | changeType: 1 | curveIndex: 0
+Pen stands still in Main
+Set CG to 0
+Set PK to 0
+ACTION PET ADD MODE || mode: Idle | modeId: 20611
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 20601 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 781, 782 starts:
+{{dialogue|Pen|You know why I came all the way out here to serve and protect? Because this place builds toughness! If you ain't tough, the desert will chew you up and spit you out!}}
+{{dialogue|Pen|People here need to train often to build that toughness! Now, before we spar, you can go pick a weapon from over there. Doesn't matter which, all the same to me. When you're ready, come at me.}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+NPC WEAPON LOCK || npc: 8020 | id: 1004 | name: 20611
+Set PK to 1
+DELAY MASK SET || maskId: 20611 | delayTime: 0 | durationTime: 1 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 20611 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+GROUP 0:
+Pen stops standing still
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: trigger_guildhall_player
+Pen stands still in Main
+NPC START PK || sponsor: 8000 | recipient: 8020 | fieldName: -1 | isReplace: 0 | time: -1 | hasCountDown: 0 | startBubble: 0 | noResultAnim: 0
+DELAY MASK SET || maskId: 20611 | delayTime: 2 | durationTime: 3 | changeType: 1 | curveIndex: 0
+
+GROUP 1:
+
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PK STATE CHANGE || order: 0 | sponsor: 8000 | recipient: 8020 | state: Running
+CONDITIONS
+Check if PK is == 1
+ACTIONS
+(cId 1) A conversation 851 starts:
+{{dialogue|Pen|Come! Come and attack me, I won't fight back, let me see what you can do!}}
+ACTOR BUFF ADD || npc: 8020 | buffId: 9 | instanceId: 20611
+ACTOR BUFF ADD || npc: 8020 | buffId: 8 | instanceId: 20612
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1200060
+===Spar with Pen===
+
+{{mission_details
+|desc = Pen is waiting for you to attack him. Give it your best shot!
+|details = Spar with Pen
+}}
+CUTSCENE UI STATE EXIT || 
+GUIDE ADD CONTROL || id: 201 | forced: 0
+STOPWATCH REAL TIME SET || id: 20611 | sec: 15
+
+TRIGGER Procedure 0.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR HP CHANGE || order: 0 | npc: 8020
+CONDITIONS
+Check if PK is == 1
+ACTIONS
+Set PK to 2
+STOPWATCH REAL TIME SET || id: 20612 | sec: 1
+
+TRIGGER Procedure 0.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 20612
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Pen|Is that all you got? Don't tell me you skip leg day?}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR HP CHANGE || order: 0 | npc: 8020
+CONDITIONS
+Check if PK is != (maybe?) 1
+CHECK ACTOR RUNTIME ATTR || npc: 8020 | attrType: Hp | isPercent: 1 | compare: 6 | value: 0.97
+ACTIONS
+(cId 2) A conversation 852 starts:
+{{dialogue|Pen|Okay, you can swing a weapon around, we're all very proud of you. But can you break through my defense!?}}
+ACTOR BUFF ADD || npc: 8000 | buffId: 10 | instanceId: 20613
+ACTOR BUFF REMOVE || npc: 8020 | instanceId: 20611
+ACTOR BUFF REMOVE || npc: 8020 | instanceId: 20612
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+GUIDE ADD MULTI CONTROL || ids: 209 | forced: 0
+Set PK to 3
+===Combat Training===
+
+{{mission_details
+|desc = Attack to drop Pen's toughness to zero, then he'll be vulnerable!
+|details = Combat Training
+}}
+STOPWATCH REAL TIME SET || id: 11005013 | sec: 25
+ACTOR BUFF ADD || npc: 8020 | buffId: 12 | instanceId: 11050875
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 20611
+ON STOPWATCH REAL TIME END || order: 0 | id: 11005012
+CONDITIONS
+Check if PK is == 1
+ACTIONS
+In a speech bubble:
+{{dialogue|Pen|You can run, but you can't hide!}}
+STOPWATCH REAL TIME SET || id: 11005011 | sec: 10
+
+TRIGGER Procedure 1.0 Step 3.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 11005011
+CONDITIONS
+Check if PK is == 1
+ACTIONS
+In a speech bubble:
+{{dialogue|Pen|I don't have time for your childish games!}}
+STOPWATCH REAL TIME SET || id: 11005012 | sec: 10
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 11005013
+CONDITIONS
+Check if PK is == 3
+ACTIONS
+In a speech bubble:
+{{dialogue|Pen|Stop tryin' to hit me and hit me!}}
+STOPWATCH REAL TIME SET || id: 11005014 | sec: 10
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 11005014
+CONDITIONS
+Check if PK is == 3
+ACTIONS
+In a speech bubble:
+{{dialogue|Pen|Haha, scared?}}
+STOPWATCH REAL TIME SET || id: 11005015 | sec: 10
+
+TRIGGER Procedure 1.0 Step 6.0 Order 6 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 11005015
+CONDITIONS
+Check if PK is == 3
+ACTIONS
+In a speech bubble:
+{{dialogue|Pen|You can run, but you can't hide!}}
+STOPWATCH REAL TIME SET || id: 11005015 | sec: 10
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BREAK || order: 0 | npc: 8020
+CONDITIONS
+Check if PK is == 3
+ACTIONS
+In a speech bubble:
+{{dialogue|Pen|Huh? Did I just feel... pain...?}}
+GUIDE ADD CONTROL || id: 204 | forced: 0
+Set PK to 4
+MISSION TARGET COUNTER CHANGE || missionId: 1200060 | targetId: -1 | transId: 80001192 | isAdd: 1
+ACTOR BUFF REMOVE || npc: 8000 | instanceId: 20613
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR STOIC RECOVER || order: 0 | npc: 8020
+CONDITIONS
+Check if PK is == 4
+ACTIONS
+In a speech bubble:
+{{dialogue|Pen|Don't you know any other moves? I'm getting bored!}}
+GUIDE ADD CONTROL || id: 205 | forced: 0
+ACTOR BUFF ADD || npc: 8020 | buffId: 6 | instanceId: 20614
+ACTOR BUFF ADD || npc: 8020 | buffId: 16 | instanceId: 110505
+STOPWATCH REAL TIME SET || id: 20614 | sec: 7
+
+TRIGGER Procedure 2.0 Step 2.5 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PLAYER ROLL || order: 0
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1200060 | targetId: -1 | transId: 4010 | isAdd: 1
+===Combat Training===
+
+{{mission_details
+|desc = You've got the basic skills; try to take down Pen!
+|details = Combat Training
+}}
+
+TRIGGER Procedure 2.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 20614
+CONDITIONS
+Check if PK is == 4
+ACTIONS
+===Combat Training===
+
+{{mission_details
+|desc = Pen's toughness is filled up again; dodge his attacks!
+|details = Combat Training
+}}
+In a speech bubble:
+{{dialogue|Pen|{{textcolor|red|Now it's my turn!}}}}
+NPC ADD TAG || tag: ATTACKPH
+GUIDE ADD MULTI CONTROL || ids: 206 | forced: 0
+STOPWATCH REAL TIME SET || id: 20615 | sec: 7
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 1105094
+CONDITIONS
+Check if PK is == 4
+ACTIONS
+In a speech bubble:
+{{dialogue|Pen|I'm alive again! En garde!}}
+STOPWATCH REAL TIME SET || id: 20615 | sec: 7
+
+TRIGGER Procedure 2.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 20615
+CONDITIONS
+Check if PK is == 4
+ACTIONS
+In a speech bubble:
+{{dialogue|Pen|Stand still! This won't hurt... much!}}
+STOPWATCH REAL TIME SET || id: 20616 | sec: 20
+STOPWATCH REAL TIME SET || id: 20617 | sec: 10
+
+TRIGGER Procedure 2.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 20616
+CONDITIONS
+Check if PK is == 4
+ACTIONS
+NPC REMOVE TAG || tag: ATTACKPH
+STOPWATCH REAL TIME SET || id: 20618 | sec: 1
+ACTOR BUFF ADD || npc: 8020 | buffId: 8 | instanceId: 105041
+
+TRIGGER Procedure 2.0 Step 5.5 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 20617
+CONDITIONS
+Check if PK is == 4
+ACTIONS
+In a speech bubble:
+{{dialogue|Pen|I can read you like a book, Skinny Arms!}}
+
+TRIGGER Procedure 2.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 20618
+CONDITIONS
+Check if PK is != (maybe?) 0
+Check if PK is < 10
+ACTIONS
+STOPWATCH REAL TIME SET || id: 20619 | sec: 3
+Set PK to 5
+ACTOR BUFF REMOVE || npc: 8020 | instanceId: 20614
+
+TRIGGER Procedure 2.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 20619
+CONDITIONS
+Check if PK is == 5
+Check if CG is == 0
+ACTIONS
+GROUP 0:
+CUTSCENE UI STATE ENTER || 
+Set CG to 1
+ACTION PLAYER GIVE UP PK || 
+
+GROUP 1:
+{{cutscene|id = 1021}}
+A cutscene CG_PENEND (duration: 0.0) starts playing
+Pen's Finisher - Sure enough, the confident warrior was as powerful as he claimed to be. He used a mighty technique that proved that I was yet the student and he the master...
+
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PK STATE CHANGE || order: 0 | sponsor: 8000 | recipient: 8020 | state: Complete
+CONDITIONS
+Check if CG is == 0
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+NPC REMOVE TAG || tag: ATTACKPH
+NPC WEAPON UNLOCK || npc: 8020 | name: 20611
+(cId 3) A conversation 865 starts:
+{{dialogue|Pen|Are you really going to walk away from a lesson offered by the Protector of Sandrock? Oh well, your loss.}}
+Set PK to 10
+
+TRIGGER Procedure 4.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Pen stops standing still
+Pen stops standing still
+ACTOR BUFF REMOVE || npc: 8020 | instanceId: 105041
+Set PK to 10
+ACTOR BUFF REMOVE || npc: 8020 | instanceId: 11050
+Pen stops standing still
+CUTSCENE UI STATE EXIT || 
+GLOBAL BLACK BOARD REMOVE || key: PKeducation
+ACTOR BUFF REMOVE || npc: 8020 | instanceId: 20611
+ACTOR BUFF REMOVE || npc: 8020 | instanceId: 110501
+ACTOR BUFF REMOVE || npc: 8020 | instanceId: 110502
+ACTOR BUFF REMOVE || npc: 8020 | instanceId: 110503
+ACTOR BUFF REMOVE || npc: 8020 | instanceId: 110505
+ACTOR BUFF REMOVE || npc: 8000 | instanceId: 13
+ACTOR BUFF REMOVE || npc: 8000 | instanceId: 20613
+ACTOR BUFF REMOVE || npc: 8020 | instanceId: 20614
+ACTOR BUFF REMOVE || npc: 8020 | instanceId: 1105041
+ACTOR BUFF REMOVE || npc: 8020 | instanceId: 20612
+ACTOR BUFF REMOVE || npc: 8020 | instanceId: 11050875
+Remove behavior CommanderIdle (idName: 12611) from Player
+GUIDE ADD CONTROL || id: 1070 | forced: 0
+ACTION PET REMOVE MODE || mode: Idle | modeId: 20611
+FAIL MISSION || missionId: 1200060
+END MISSION 1200061
+
+TRIGGER Procedure 3.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BREAK || order: 0 | npc: 8000
+CONDITIONS
+Check if PK is == 4
+ACTIONS
+GUIDE ADD CONTROL || id: 207 | forced: 0
+
+TRIGGER Procedure 3.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PLAYER HP CHANGE || order: 0 | compare: 6 | percent: 0.3
+CONDITIONS
+Check if PK is != (maybe?) 0
+Check if CG is == 0
+ACTIONS
+GROUP 0:
+CUTSCENE UI STATE ENTER || 
+NPC REMOVE TAG || tag: ATTACKPH
+Set CG to 1
+ACTION PLAYER GIVE UP PK || 
+
+GROUP 1:
+{{cutscene|id = 1021}}
+A cutscene CG_PENEND (duration: 0.0) starts playing
+Pen's Finisher - Sure enough, the confident warrior was as powerful as he claimed to be. He used a mighty technique that proved that I was yet the student and he the master...
+
+
+TRIGGER Procedure 3.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR HP CHANGE || order: 0 | npc: 8020
+CONDITIONS
+Check if PK is != (maybe?) 0
+Check if CG is == 0
+CHECK ACTOR RUNTIME ATTR || npc: 8020 | attrType: Hp | isPercent: 1 | compare: 6 | value: 0.65
+ACTIONS
+GROUP 0:
+CUTSCENE UI STATE ENTER || 
+NPC REMOVE TAG || tag: ATTACKPH
+Set CG to 1
+ACTION PLAYER GIVE UP PK || 
+
+GROUP 1:
+{{cutscene|id = 1021}}
+A cutscene CG_PENEND (duration: 0.0) starts playing
+Pen's Finisher - Sure enough, the confident warrior was as powerful as he claimed to be. He used a mighty technique that proved that I was yet the student and he the master...
+
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PK STATE CHANGE || order: 0 | sponsor: 8000 | recipient: 8020 | state: Complete
+CONDITIONS
+Check if CG is == 1
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: trigger_guildhall_player
+Set PK to 10
+Add behavior CommanderIdle (idName: 12611) to Player
+(param: LookAtActor:8020)
+Pen stands still in Main and looks at Player
+NPC WEAPON UNLOCK || name: 20611 | npc: 8020
+
+TRIGGER Procedure 4.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 9 | name: CG_PENEND
+CONDITIONS
+Check if PK is >= 5
+ACTIONS
+(cId 4) A conversation 783, 980 starts:
+{{dialogue|Pen|And thus concludes the segment of my combat course titled: "Never Mess with Pen." I hope you learned something. I sure had fun teaching it.}}
+{{dialogue|Pen|The first thing I would do if I were you is to go back to your worktable and craft a weapon. But that's just me. Farewell, Skinny Arms.}}
+
+TRIGGER Procedure 4.0 Step 2.1 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Pen stops standing still
+Pen stops standing still
+ACTOR BUFF REMOVE || npc: 8020 | instanceId: 105041
+Set PK to 10
+ACTOR BUFF REMOVE || npc: 8020 | instanceId: 11050
+Pen stops standing still
+CUTSCENE UI STATE EXIT || 
+GLOBAL BLACK BOARD REMOVE || key: PKeducation
+ACTOR BUFF REMOVE || npc: 8020 | instanceId: 20611
+ACTOR BUFF REMOVE || npc: 8020 | instanceId: 110501
+ACTOR BUFF REMOVE || npc: 8020 | instanceId: 110502
+ACTOR BUFF REMOVE || npc: 8020 | instanceId: 110503
+ACTOR BUFF REMOVE || npc: 8020 | instanceId: 110505
+ACTOR BUFF REMOVE || npc: 8000 | instanceId: 13
+ACTOR BUFF REMOVE || npc: 8000 | instanceId: 20613
+ACTOR BUFF REMOVE || npc: 8020 | instanceId: 20614
+ACTOR BUFF REMOVE || npc: 8020 | instanceId: 1105041
+ACTOR BUFF REMOVE || npc: 8020 | instanceId: 20612
+ACTOR BUFF REMOVE || npc: 8020 | instanceId: 11050875
+Remove behavior CommanderIdle (idName: 12611) from Player
+GUIDE ADD CONTROL || forced: 0 | id: 1070
+ACTION PET REMOVE MODE || mode: Idle | modeId: 20611
+SUBMIT MISSION 1200060
+END MISSION 1200061

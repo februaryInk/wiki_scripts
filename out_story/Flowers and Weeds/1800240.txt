@@ -1,0 +1,195 @@
+Reading Mission 1800240: Flowers and Weeds
+
+<onlyinclude>{{Infobox mission
+|name = Flowers and Weeds
+|image =
+|description = Miguel has invited you to assist him in weeding the Temple and planting new flowers.
+|type = Side
+|time =
+|location =
+|characters = [[Miguel]]
+|condition =
+|details =
+|exp = 500
+|reputation = None
+|gols = None
+|npc1 = Miguel
+|rp1 = 30
+|rewards = {{i2|Mountain Rose Seeds}|3}
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200245
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if Miguel has favor >= 50
+The Kidnapping is in state 2 with flag 0
+Check if mission 1200265 is result 1 flag 0
+Check if Pablo is in town
+ACTIONS
+Run mission Trouble in Paradise
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if Miguel has favor >= 100
+Check if mission 1200265 is result 1 flag 0
+ACTIONS
+Run mission Flowers and Weeds
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800240
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER ONCE CREATE || missionId: 1800240 | id: 82401 | sceneName: Main | flagName: Trigger_82401 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80011371
+Set 8240A to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 82401
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 82401 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+DELIVER MISSION 1800240
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82401 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Miguel stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8240_Player_1
+DELAY MASK SET || maskId: 82401 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82401 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 2079_0 starts:
+{{dialogue|Miguel|I see you working hard to bring Telesis to Sandrock, ''Player'', which is wise and noble. Care to join me in tending to the garden for a while? It won't take long.}}
+{{dialogue|Miguel|The people here simply don't understand how important the Light is. And to keep the Light, we have to maintain the earth. You know how to tend to a garden, right? Gardening is not just for the eyes, but for the soul.}}
+
+*''Sure.''
+*''Gardening? Booooring.''
+
+{{dialogue|Miguel|indent=true|answer=Sure.
+|reward={{NPC2|Miguel|rp=1}}|I expected you would understand. You're a bright one. I wish Burgess could take after you. He is... very attentive, but naive. I fear he could easily falter with the wrong influence...}}
+{{dialogue|Miguel|indent=true|I know you have an understanding of planting, at the least. Here, take these seeds and help me plant some flowers. First, as with society, we must root out the weeds.}}
+{{dialogue|Miguel|indent=true|Let's start with these ones here...}}
+{{dialogue|Miguel|indent=true|answer=Gardening? Booooring.
+|Then building is your garden. It matters not what the activity is, only that it compliments the soul. Come by and garden with me when you get the chance.}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Miguel stops standing still
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 4.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the first option in conversation segment 7026:
+{{dialogue|Miguel|The people here simply don't understand how important the Light is. And to keep the Light, we have to maintain the earth. You know how to tend to a garden, right? Gardening is not just for the eyes, but for the soul.}}
+
+*''Sure.'' (No unique dialogue)
+*''Gardening? Booooring.'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 7461:
+{{dialogue|Miguel|Would you like to help me tend to the Temple garden?}}
+
+*''Sure.'' (No unique dialogue)
+*''No.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8240A to 1
+
+TRIGGER Procedure 0.0 Step 4.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the first option in conversation segment 7026:
+{{dialogue|Miguel|The people here simply don't understand how important the Light is. And to keep the Light, we have to maintain the earth. You know how to tend to a garden, right? Gardening is not just for the eyes, but for the soul.}}
+
+*''Sure.'' (No unique dialogue)
+*''Gardening? Booooring.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Miguel gains 1 favor
+
+TRIGGER Procedure 0.0 Step 5.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if 8240A is == 1
+ACTIONS
+START MISSION 1800240
+
+TRIGGER Procedure 0.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800240
+CONDITIONS
+Always:
+ACTIONS
+Run mission Flowers and Weeds
+END MISSION 1800240
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END || order: 0 | result: 1 | missionId: 1200265
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 82401
+CLOSE MISSION || missionId: 1800240
+END MISSION 1800240
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Miguel|Would you like to help me tend to the Temple garden?}}
+
+*''Sure.''
+*''No.'' (No unique dialogue)
+
+{{dialogue|Miguel|indent=true|answer=Sure.
+|I expected you would understand. You're a bright one. I wish Burgess could take after you. He is... very attentive, but naive. I fear he could easily falter with the wrong influence...}}
+{{dialogue|Miguel|indent=true|I know you have an understanding of planting, at the least. Here, take these seeds and help me plant some flowers. First, as with society, we must root out the weeds.}}
+{{dialogue|Miguel|indent=true|Let's start with these ones here...}}
+
+==Rewards==
+{{mission reward
+|npc1 = Miguel
+|rp1 = 30
+|exp = 500
+|reputation = None
+|gols = None
+|rewards = {{i2|Mountain Rose Seeds}|3}
+}}

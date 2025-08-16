@@ -1,0 +1,254 @@
+Reading Mission 1800293: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200135
+
+TRIGGER Procedure 9.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+We'll Be Ready For 'Em is successfully completed
+The Battle of Sandrock is in state 3 with flag 0
+ACTIONS
+NPC ADD TAG || tag: NoRandomNPCInTown
+
+TRIGGER Procedure 9.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 12) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1800290
+Run mission #1800291
+Run mission #1800292
+Run mission #1800302
+Run mission #1800303
+Run mission #1800304
+Run mission #1800299
+Run mission #1800301
+Run mission #1800300
+Run mission #1800293
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800293
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1800293 | id: 82931 | sceneName: Main | flagName: Trigger_Saloon | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80017281
+Set Trigger to 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_saloon
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+CHECK TIME || compare: 2 | hour: 17 | minute: 30
+CHECK TIME || compare: 6 | hour: 23 | minute: 0
+ACTIONS
+AREA TRIGGER DELETE || id: 82931
+UNIQUE ACTION RUN || idStr: enter_saloon
+DELAY MASK SET || maskId: 82930 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+Commander Lefu stands still in Saloon and looks at Player
+Add behavior CommanderSit (idName: 8293952) to Commander Lefu
+(param: SeatDramaName:SaloonSeat9501|TargetScene:Saloon)
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: S8293_0_1
+NPC RANDOM ADD || id: 10 | instId: 82931 | scene: Saloon | flagName: S8293_1 | dailyBehavior: RandomNPC
+82931 stands still in Saloon and looks at Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 82932 | path: S8293_Item2 | sceneName: Saloon | flagName: S8293_Item2 | extraParams: -1
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 4.5 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 82930 | delayTime: 3 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 5.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82930 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 3459_0 starts:
+{{dialogue|Commander Lefu|Oh!}}
+{{dialogue|Commander Lefu|Welcome Builder! Please, have a seat.}}
+{{dialogue|Commander Lefu|Can I get you something? A drink? Some Cabbage Soup?}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 8.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || delayTime: 0 | durationTime: -2 | maskId: 82931 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 10.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82931 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerSit (idName: 8293001) to Player
+(param: SeatDramaName:SaloonSeat9502|TargetScene:Saloon)
+DELAY MASK SET || maskId: 82931 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 82931 | path: S8293_Item1 | sceneName: Saloon | flagName: S8293_Item1 | extraParams: -1
+
+TRIGGER Procedure 0.0 Step 12.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 82931
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 3460_0 starts:
+{{dialogue|Commander Lefu|Ahem...! Let's have a chat. I've always wanted to get to know the people of the Free Cities.}}
+{{dialogue|Commander Lefu|Because in my mind, we're... not so different, you and I...}}
+{{dialogue|Commander Lefu|You... build in your workshop, repair the worn architecture of Sandrock as it appears before you... You construct bridges and tunnels galore!}}
+{{dialogue|Commander Lefu|On the other hand, I help build the Empire. The pillar of human civilization, the bulwark against all the chaos released into the world by the Day of Calamity.}}
+{{dialogue|Commander Lefu|Anyway, so... what do you think of Duvos? I'm curio-}}
+{{dialogue|Commander Lefu|Hold on, you haven't even touched your Cabbage Soup! That's a Duvosian delicacy! Try it, try it!}}
+
+*''You're the invader here!''
+*''Why are you picking a fight with us?''
+*''Tell me about Duvos.''
+
+{{dialogue|Commander Lefu|indent=true|answer=You're the invader here!
+|I'll be the first to admit that we're not meeting under the best of circumstances, but still, this is just temporary. The Empire is not looking to have a fight with the Free Cities. Oh, no, no! I assure you, citizen.}}
+{{dialogue|Commander Lefu|indent=true|That's the only reason we took over Sandrock. We didn't want to have any confrontations during this mission. If an Alliance fighter shows up, uh-oh, another Duvos-Alliance war, totally not worth it.}}
+{{dialogue|Commander Lefu|indent=true|Once the mission's done, we'll be on our merry way. We're on strict orders to not harm any civilians, you know. See, we're not so bad...}}
+{{dialogue|Commander Lefu|indent=true|answer=Why are you picking a fight with us?
+|I'll be the first to admit that we're not meeting under the best of circumstances, but still, this is just temporary. The Empire is not looking to have a fight with the Free Cities. Oh, no, no! I assure you, citizen.}}
+{{dialogue|Commander Lefu|indent=true|That's the only reason we took over Sandrock. We didn't want to have any confrontations during this mission. If an Alliance fighter shows up, uh-oh, another Duvos-Alliance war, totally not worth it.}}
+{{dialogue|Commander Lefu|indent=true|Once the mission's done, we'll be on our merry way. We're on strict orders to not harm any civilians, you know. See, we're not so bad...}}
+{{dialogue|Commander Lefu|indent=true|answer=Tell me about Duvos.
+|Huh, let me remember my PR training. Uh...}}
+{{dialogue|Commander Lefu|indent=true|So, Duvos is currently the largest country in the world, with the biggest population and all that... what else? We're an empire, with a benevolent Emperor. And uh... we want to be your... friend?}}
+{{dialogue|Commander Lefu|Anyway, I just want to tell you that Builders in Duvos... it's not like here. No! Not at all!}}
+{{dialogue|Commander Lefu|You lot are all are celebrities in Duvos!}}
+{{dialogue|Commander Lefu|And we don't send you down into the mines, yech! What's even the deal with that?}}
+{{dialogue|Commander Lefu|You'll have assistants! A network of people catering to your every want and need! That's what Stev's for... right, Stev?}}
+{{dialogue|Commander Lefu|You can be rich and famous, Builder! Come with us! Forget about these Sandrock nobodies, they're beneath you!}}
+
+*''I will NEVER betray my friends!''
+*''Gonna be a pass...''
+*''If I'm so great... you should work for me!''
+*''I yearn for the mines!''
+*''I'll think about it...''
+
+{{dialogue|Commander Lefu|indent=true|answer=I will NEVER betray my friends!
+|Very well...}}
+{{dialogue|Commander Lefu|indent=true|It cannot be said that I did not try.}}
+{{dialogue|Commander Lefu|indent=true|Such talent! Wasted... Tch tch tch...}}
+{{dialogue|Commander Lefu|indent=true|answer=Gonna be a pass...
+|Very well...}}
+{{dialogue|Commander Lefu|indent=true|It cannot be said that I did not try.}}
+{{dialogue|Commander Lefu|indent=true|Such talent! Wasted... Tch tch tch...}}
+{{dialogue|Commander Lefu|indent=true|answer=If I'm so great... you should work for me!
+|Sigh...}}
+{{dialogue|Commander Lefu|indent=true|You really believe yourself to be above the might of the Duvos Empire?}}
+{{dialogue|Commander Lefu|indent=true|Such arrogance is unbecoming... even for someone of your talent.}}
+{{dialogue|Commander Lefu|indent=true|answer=I yearn for the mines!
+|Hahahah-...!}}
+{{dialogue|Commander Lefu|indent=true|Ah?}}
+{{dialogue|Commander Lefu|indent=true|You mean to tell me... you actually enjoy gathering your own materials? Dirtying yourself in those decrepit pits they call "ruins?" Slaving day after day as a piece of living machinery!?}}
+{{dialogue|Commander Lefu|indent=true|I-Is that how Builders are treated down here...?}}
+{{dialogue|Commander Lefu|Great. All I ask is that you think about it.}}
+{{dialogue|Commander Lefu|Now, be on your way, I'm sure you're busy.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 14.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 82932 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 16.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 82932 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderPlayerSit (idName: 8293001) from Player
+DELAY MASK SET || maskId: 82932 | delayTime: 2.5 | durationTime: -2 | changeType: 1 | curveIndex: 0
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 18.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 23:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Commander Lefu stops standing still
+Remove behavior CommanderSit (idName: 8293952) from Commander Lefu
+82931 stops standing still
+
+TRIGGER Procedure 0.0 Step 20.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 82932
+SCENEITEM DELETE || itemType: 0 | id: 82931
+NPC RANDOM REMOVE || id: 82931
+END MISSION 1800293
+
+TRIGGER Procedure 1.0 Step 40.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 22841
+CONDITIONS
+Always:
+ACTIONS
+82931 stops standing still
+AREA TRIGGER DELETE || id: 82931
+NPC RANDOM REMOVE || id: 82931
+SCENEITEM DELETE || itemType: 0 | id: 82931
+SCENEITEM DELETE || itemType: 0 | id: 82932
+Remove behavior CommanderSit (idName: 8293952) from Commander Lefu
+Commander Lefu stops standing still
+END MISSION 1800293

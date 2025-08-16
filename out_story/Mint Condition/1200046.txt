@@ -1,0 +1,121 @@
+Reading Mission 1200046: Mint Condition
+
+<onlyinclude>{{Infobox mission
+|name = Mint Condition
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Mint Condition:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200045
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: mintcomefail | info: 1 | exist: 0
+ACTIONS
+DELIVER MISSION 1200045
+START MISSION 1200045
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200045
+CONDITIONS
+Always:
+ACTIONS
+Run mission Mint Condition
+END MISSION 1200045
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200046
+CONDITIONS
+Always:
+ACTIONS
+===Wait for Diagram===
+
+{{mission_details
+|desc = Qi agreed to help Mint design something for his task, wait for Qi's design to arrive in your mailbox.
+|details = Wait for Diagram
+}}
+NPC ADD TAG || tag: mintnotice
+
+TRIGGER Procedure 0.0 Step 0.5 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 43
+CONDITIONS
+Always:
+ACTIONS
+===Construct the Magneto Inductive Inspector===
+
+{{mission_details
+|desc = According to Qi's design, construct the Bridge Gauge on the Assembly Station.
+|details = Construct the Magneto Inductive Inspector
+*{{i2|Magneto Inductive Inspector|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 0.6 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200045 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Mint===
+
+{{mission_details
+|desc = Take the finished Bridge Gauge to Mint.
+|details = Talk to Mint
+*{{i2|Magneto Inductive Inspector|0/1}}
+*{{i2|Mint|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Mint
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1200045 | targetId: 2 | canSubmit: 1
+ACTIONS
+(cId 1) A conversation 1205, 1206 starts:
+{{dialogue|Mint|Nice! I think this will work perfectly. I'll go look at the bridge right away.}}
+{{dialogue|Mint|Oh, right, here's some of what you're owed from the budget for the project. I think I was supposed to give some to you on the front end... oh well.}}
+BAG MODIFY BY TARGET || missionId: 1200045 | targetId: 2
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key mintjudgebridge with info 1.
+SUBMIT MISSION 1200045
+NPC REMOVE TAG || tag: mintnotice
+END MISSION 1200046
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|43}}

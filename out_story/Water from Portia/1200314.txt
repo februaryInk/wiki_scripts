@@ -1,0 +1,224 @@
+Reading Mission 1200314: Water from Portia
+
+<onlyinclude>{{Infobox mission
+|name = Water from Portia
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Water from Portia:
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: treeplant | info: 3 | exist: 1
+ACTIONS
+The player receives a letter:
+{{mail|598}}
+DELIVER MISSION 1200313
+Run mission A Green Wall
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200313
+CONDITIONS
+Always:
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: attend1800318
+Run mission Water from Portia
+END MISSION 1200313
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200314
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+CHECK GLOBAL BLACKBOARD || info: 0 | key: treeplant | exist: 1
+
+GROUP 10:
+CHECK GLOBAL BLACKBOARD || info: 3 | key: treeplant | exist: 1
+
+ACTIONS
+===Construct Irrigation Tower Tank and Frame===
+
+{{mission_details
+|desc = You volunteered to handle everything related to the Irrigation Tower project. Construct both the Irrigation Tower Tank and the Irrigation Tower Frame on your Assembly Station.
+|details = Construct Irrigation Tower Tank and Frame
+*{{i2|Irrigation Tower Frame|0/1}}
+*{{i2|Irrigation Water Tank|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200314
+At the beginning of the day:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || info: 0 | exist: 0 | key: treeplant
+CHECK GLOBAL BLACKBOARD || info: 3 | exist: 0 | key: treeplant
+ACTIONS
+===Construct Irrigation Tower Frame===
+
+{{mission_details
+|desc = Everyone's doing their part, and your job is to make the Irrigation Tower that will keep the trees hydrated. Construct the Irrigaton Tower Frame on your Assembly Station.
+|details = Construct Irrigation Tower Frame
+*{{i2|Irrigation Tower Frame|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200314
+CONDITIONS
+Always:
+ACTIONS
+Run mission Let's School
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+CHECK TARGET CAN SUBMIT || canSubmit: 0 | targetId: 1 | missionId: 1200313
+CHECK SCENEITEM EXIST || sceneItemType: 11 | id: 23141 | exist: 0
+CHECK SCENEITEM EXIST || id: 23141 | exist: 0 | sceneItemType: 12
+ACTIONS
+===Construct Irrigation Tower Tank and Frame===
+
+{{mission_details
+|desc = You volunteered to handle everything related to the Irrigation Tower project. Construct both the Irrigation Tower Tank and the Irrigation Tower Frame on your Assembly Station.
+|details = Construct Irrigation Tower Tank and Frame
+*{{i2|Irrigation Tower Frame|0/1}}
+*{{i2|Irrigation Water Tank|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1200313 | targetId: 1 | canSubmit: 0
+CHECK SCENEITEM EXIST || sceneItemType: 11 | id: 23142 | exist: 0
+CHECK SCENEITEM EXIST || sceneItemType: 12 | id: 23142 | exist: 0
+ACTIONS
+===Construct Irrigation Tower Frame===
+
+{{mission_details
+|desc = Everyone's doing their part, and your job is to make the Irrigation Tower that will keep the trees hydrated. Construct the Irrigaton Tower Frame on your Assembly Station.
+|details = Construct Irrigation Tower Frame
+*{{i2|Irrigation Tower Frame|0/1}}
+}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200313 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Install Irrigation Tower===
+
+{{mission_details
+|desc = You have what you need for the Irrigation Tower. Head to the Eufaula Outback for installation.
+|details = Install Irrigation Tower
+*{{i2|Irrigation Tower Frame|0/1}}
+*{{i2|Irrigation Water Tank|0/1}}
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 23141 | sceneName: DesertOutback | extraParams: Mission_CityObj_IrrigationTower_1|CreatorItem|19810064_1,19810065_1|1547|Fix|1.4 | flagName: treeplant_tower | path: Mission_hydroponic_empey
+SCENEITEM ADD ICON STACK || id: 23141 | itemType: 11 | add: 1 | missionId: 1200313 | iconType: 3
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200313 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Install Irrigation Tower===
+
+{{mission_details
+|desc = You have what you need for the Irrigation Tower. Head to the Eufaula Outback for installation.
+|details = Install Irrigation Tower
+*{{i2|Irrigation Tower Frame|0/1}}
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 23142 | sceneName: DesertOutback | extraParams: Mission_CityObj_IrrigationTower_1_0|CreatorItem|19810064_1|1547|Fix|1.4 | flagName: treeplant_tower | path: Mission_hydroponic_empey
+SCENEITEM ADD ICON STACK || id: 23142 | itemType: 11 | add: 1 | missionId: 1200313 | iconType: 3
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 23141
+ON SCENEITEM CREATE || order: 0 | id: 23142 | itemType: 12 | actorId: 8000
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 23141 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23141 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: DesertOutback | flagName: treeplant_player
+Mi-an stands still in DesertOutback
+DELAY MASK SET || maskId: 23141 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 23141
+CONDITIONS
+GROUP 0:
+CHECK GLOBAL BLACKBOARD || key: treeplant | info: 0 | exist: 1
+
+GROUP 10:
+CHECK GLOBAL BLACKBOARD || key: treeplant | info: 3 | exist: 1
+
+ACTIONS
+(cId 0) A conversation 12774, 12775 starts:
+{{dialogue|Mi-an|Thanks for the help, ''Player''! It looks great! You're gonna end up being one of the best Builders of our generation, aren't ya, haha!}}
+{{dialogue|Mi-an|Anyway, if you want to also help us plant some trees, you can get some seeds from Zeke, help yourself.}}
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 23141
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: treeplant | info: 0 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: treeplant | info: 3 | exist: 0
+ACTIONS
+(cId 0) A conversation 12773 starts:
+{{dialogue|Mi-an|Thanks for the help, ''Player''! It looks great! Now we just have to wait for Commissioner Wei to install the tank. In the mean time, if you want to help us plant some trees, you can get some seeds from Zeke, help yourself.}}
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: treeplant
+CUTSCENE UI STATE EXIT || 
+Mi-an stops standing still
+SUBMIT MISSION 1200313
+END MISSION 1200314

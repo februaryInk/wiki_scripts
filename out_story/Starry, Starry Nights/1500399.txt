@@ -1,0 +1,536 @@
+Reading Mission 1500399: Starry, Starry Nights
+
+<onlyinclude>{{Infobox mission
+|name = Starry, Starry Nights
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Starry, Starry Nights:
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Nia
+CONDITIONS
+Always:
+ACTIONS
+(cId 539801) A conversation 20137, 20138, 20139, 6397_0 starts:
+{{dialogue|Nia|Heya, ''Player''! I hardly recognized ya without your nose buried in that Worktable of yours, heh heh...}}
+{{dialogue|Nia|So... does that mean you have time... for a date?}}
+{{dialogue|Nia|The weather should be clear tonight, we could go stargazing! Stars sparkling above, cool breeze in the air carrying those unique scents and smells... hum...}}
+{{dialogue|Nia|Now that I think about it, I've hardly taken the time to look at the stars here at all... So... let's do it!}}
+
+*''Yeah!''
+*''Ah, I really can't today, sorry...''
+
+{{dialogue|Nia|indent=true|answer=Yeah!
+|Let's meet at the {{textcolor|green|Shipwreck Ruins around 22:00PM}}. Sure, we could try to use Qi's telescope, but I prefer au naturel. Besides, I don't want him hassling us anyway. Best to be just us. See you soon!}}
+{{dialogue|Nia|indent=true|answer=Ah, I really can't today, sorry...
+|I seeee... I was mistaken. Alright! No problem. Let me know if you do end up getting time.}}
+Set notaccept to 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 20148) that ends:
+{{dialogue|Nia|Let's meet at the {{textcolor|green|Shipwreck Ruins around 22:00PM}}. Sure, we could try to use Qi's telescope, but I prefer au naturel. Besides, I don't want him hassling us anyway. Best to be just us. See you soon!}}
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1500398
+START MISSION 1500398
+===Go to Shipwreck Ruins at 22:00===
+
+{{mission_details
+|desc = The weather is clear today, head towards the Shipwreck Ruins at 22:00PM.
+|details = Go to Shipwreck Ruins at 22:00
+}}
+NPC ICON REMOVE || missionId: 1500398 | npc: 8059 | missionIcon: 0
+Run mission Starry, Starry Nights
+END MISSION 1500398
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1500399
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1500398 | id: 539901 | sceneName: Main | flagName: Story_5399_Area | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80031232
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 539901
+CONDITIONS
+CHECK TIME || compare: 2 | hour: 22 | minute: 0
+ACTIONS
+DELAY MASK SET || maskId: 539901 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 539901
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 539901 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 539901 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Nia stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: Story_5399_Player
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 539901 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 5399001) to Player
+(param: CMDAction:LookSky)
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 539902
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 5399002) to Nia
+(param: TargetScene:Main|MoveMode:Run|FlagName:Story_539902)
+
+TRIGGER Procedure 0.0 Step 4.5 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8059 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 5399003) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:Story_5399_Player1)
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 539901) A conversation 6401_0 starts:
+{{dialogue|Nia|Whew! Hey! Sorry... have you been waiting long?}}
+
+*''Not long at all.''
+*''Why the rush?''
+
+{{dialogue|Nia|indent=true|answer=Not long at all.
+|Whew, good... I just... got into one of those things where, I was like... "Did I leave the lights on at the Moisture Farm? Did I forget to water the new saplings...?" Ran back and forth a few times...}}
+{{dialogue|Nia|indent=true|answer=Why the rush?
+|Oh, it's nothing... I just... got into one of those things where, I was like... "Did I leave the lights on at the Moisture Farm? Did I forget to water the new saplings...?" Ran back and forth a few times...}}
+
+TRIGGER Procedure 0.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8059 | cId: 539901 | missionId: 1500399
+CONDITIONS
+Always:
+ACTIONS
+(cId 539902) A conversation 20154, 20155 starts:
+{{dialogue|Nia|I get a little spacy sometimes over there; so much to do! But! Looks like I got here just in the nick of time...!}}
+{{dialogue|Nia|Soo... let's look around and find ourselves a good star seein' spot!}}
+
+TRIGGER Procedure 0.0 Step 8.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8059 | cId: 539902 | missionId: 1500399
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 539902 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 9.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 539902 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Nia stands still in Main
+Nia stops standing still
+ACTOR FREEZ COLLIDER || npc: 8059 | freezeCollider: 1
+Nia stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 5399002) from Nia
+DELAY MASK SET || maskId: 539902 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Add behavior CommanderDramaWithIndexEvent (idName: 5399004) to Nia
+(param: DramaName:Story_5399_NiYa|TargetScene:Main|DramaType:SitBoat)
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: Story_5399_Player3
+Add behavior CommanderDramaWithIndexPlayer2 (idName: 5399101) to Player
+(param: SeatDramaName:Story_5399_Player|TargetScene:Main|DramaIndex:1|TriggerTag:BoatKiss)
+
+TRIGGER Procedure 0.0 Step 10.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 539902 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 539903) A conversation 20156, 20157, 20661, 20158, 20159, 6404_0 starts:
+{{dialogue|Nia|Whew! Top of the world, Ma! Heh heh... Hey, is it just me or does it feel like we're actually closer to the stars up here?}}
+{{dialogue|Nia|We've been so busy lately, it's a delight to have just you and me up here and not a worry in the world...!}}
+{{dialogue|Nia|...}}
+{{dialogue|Nia|To tell you the truth... I've been fearing for a while now that you're having so much fun in Sandrock making a new life and all that, that I'm being left behind. That's why I always bring up the past...}}
+{{dialogue|Nia|Yes, it's really childish of me and somewhat unhealthy...}}
+{{dialogue|Nia|But you're very important to me. I don't... want to lose you...}}
+
+*''Yes, I knew, this whole time. Teehee.''
+*''Really?''
+
+{{dialogue|Nia|indent=true|answer=Yes, I knew, this whole time. Teehee.
+|Whaaa?! Now I'm super embarrassed. Why didn't you tell me you meanie!}}
+{{dialogue|Nia|indent=true|answer=Really?
+|Yeah... I was probably being very obvious, heh. Now I'm super embarrassed!}}
+
+TRIGGER Procedure 0.0 Step 16.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8059 | cId: 539903 | missionId: 1500399
+CONDITIONS
+Always:
+ACTIONS
+(cId 539904) A conversation 20165, 20166, 6407_0 starts:
+{{dialogue|Nia|Well, whatever the case. Now that we're here, in the now, I want to make lots of new memories... with you.}}
+{{dialogue|Nia|...Golden years... I don't know why, I just thought of that.}}
+{{dialogue|Nia|You know what they say about the golden years... yawn... you never know when you're in 'em...! And when you do know, it's too late to cherish it in the moment...!}}
+
+*''You think these are our new "golden years?"'' (No unique dialogue)
+*''Yeah, this is the start of our golden years...'' (No unique dialogue)
+*''I cherish this.'' (No unique dialogue)
+
+
+TRIGGER Procedure 0.0 Step 20.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 539904) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 1500399100 | sec: 5
+ACTION NPC SEND BEHAVIOUR EVENT1 || npc: 8059 | event: DramaIndexBool | type: Int | value: 2
+
+TRIGGER Procedure 0.0 Step 20.0 Order 30 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 1500399100
+CONDITIONS
+Always:
+ACTIONS
+(cId 539905) A conversation 20171, 6408_0 starts:
+{{dialogue|Nia|Zzzzzz...}}
+{{dialogue|0|(Nia seems to have fallen asleep...)}}
+
+*''Kiss her to wake her up.''
+*''Let her sleep.'' (No unique dialogue)
+
+{{dialogue|0|indent=true|answer=Kiss her to wake her up.
+|(Nia continues to sleep soundly and doesn't react.)}}
+Set chooseA to 0
+
+TRIGGER Procedure 0.0 Step 24.0 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 539905) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 539906) A conversation 6411_0 starts:
+{{dialogue|0|(You soak in the cool evening air and enjoy a moment of peace. Nia is still sound asleep.)}}
+
+*''Kiss her to wake her up.''
+*''Enjoy the moment.''
+
+{{dialogue|0|indent=true|answer=Kiss her to wake her up.
+|(Nia continues to sleep soundly and doesn't react.)}}
+{{dialogue|0|indent=true|answer=Enjoy the moment.
+|(Sitting here with Nia brings back memories of your own. For a moment, you think you catch a whiff of the flowery smell of being back home.)}}
+
+TRIGGER Procedure 0.0 Step 21.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 539905) The player picks the first option in conversation segment 20172:
+{{dialogue|0|(Nia seems to have fallen asleep...)}}
+
+*''Kiss her to wake her up.'' (No unique dialogue)
+*''Let her sleep.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 5399003) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 5399001) from Player
+Set chooseA to 1
+Add tag "BoatKiss" to Player
+
+TRIGGER Procedure 0.0 Step 24.5 Order 27 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 539906) The player picks the first option in conversation segment 20176:
+{{dialogue|0|(You soak in the cool evening air and enjoy a moment of peace. Nia is still sound asleep.)}}
+
+*''Kiss her to wake her up.'' (No unique dialogue)
+*''Enjoy the moment.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set chooseA to 1
+Add tag "BoatKiss" to Player
+
+TRIGGER Procedure 0.0 Step 27.0 Order 25 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 539906) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 539907) A conversation 6413_0 starts:
+{{dialogue|0|(What should I do?)}}
+
+*''Kiss her to wake her up.'' (No unique dialogue)
+*''Just sit back and relax.'' (No unique dialogue)
+
+
+TRIGGER Procedure 0.0 Step 27.5 Order 31 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 539907) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTION NPC SEND BEHAVIOUR EVENT1 || npc: 8059 | event: DramaIndex | type: Int | value: 3
+STOPWATCH REAL TIME SET || id: 53991000 | sec: 5
+
+TRIGGER Procedure 0.0 Step 27.5 Order 28 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 539907) The player picks the first option in conversation segment 20204:
+{{dialogue|0|(What should I do?)}}
+
+*''Kiss her to wake her up.'' (No unique dialogue)
+*''Just sit back and relax.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Add tag "BoatKiss" to Player
+Set chooseA to 1
+
+TRIGGER Procedure 0.0 Step 28.0 Order 26 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 53991000
+CONDITIONS
+Check if chooseA is == 1
+ACTIONS
+(cId 539908) A conversation 20181, 6415_0, 20191, 20192, 20193, 20194, 20195 starts:
+{{dialogue|Nia|Haha, what's that look? See anything you like...?}}
+{{dialogue|Nia|Yawn...What'd I miss? Anything good?}}
+
+*''If you're tired, let's go home.''
+*''We were just talking about memories...''
+*''Just a few shooting stars...''
+
+{{dialogue|Nia|indent=true|answer=If you're tired, let's go home.
+|Nah... I think I just got my second wind...!}}
+{{dialogue|Nia|indent=true|answer=We were just talking about memories...
+|Yeah... like I was saying... golden years and all that.}}
+{{dialogue|Nia|indent=true|I think now that I'm a little older and a little wiser... this time, I know I'm in the golden years...!}}
+{{dialogue|Nia|indent=true|answer=Just a few shooting stars...
+|Wha!? Seriously? Why didn't you wake me up...!}}
+{{dialogue|Nia|indent=true|Oh... you're messing with me, huh... Well, let's stick around, maybe we'll really see one...!}}
+{{dialogue|Nia|I used to think Sandrock was kind of weird. The wind's all wrong here, I thought. I really only stayed because... of you. But now... I think I kinda like it! And the wind, well, it just puts me to sleep, as we have seen...}}
+{{dialogue|Nia|Oh, yeah! I just dreamed about us!}}
+{{dialogue|Nia|We were setting on top of your workshop...}}
+{{dialogue|Nia|And there was a huge meteor shower. Huge! Falling stars everywhere...}}
+{{dialogue|Nia|Some of them fell down to our planet, and even landed on us. But it didn't hurt, it was just a light show, and it felt like... a kiss from the stars...}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 539908) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 9007}}
+A cutscene CG_NIASTAR (duration: -2.0) starts playing
+Starry, Starry Nights - Nia and I enjoyed our old childhood pastime of watching the sky. A shooting star went by, and she excitedly asked me to make a wish.
+ACTOR FREEZ COLLIDER || npc: 8059 | freezeCollider: 1
+ACTOR FREEZ COLLIDER || npc: 8000 | freezeCollider: 1
+
+TRIGGER Procedure 0.0 Step 29.0 Order 29 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 53991000
+CONDITIONS
+Check if chooseA is == 0
+ACTIONS
+(cId 539908) A conversation 6415_0, 20191, 20192, 20193, 20194 starts:
+{{dialogue|Nia|Yawn...What'd I miss? Anything good?}}
+
+*''If you're tired, let's go home.''
+*''We were just talking about memories...''
+*''Just a few shooting stars...''
+
+{{dialogue|Nia|indent=true|answer=If you're tired, let's go home.
+|Nah... I think I just got my second wind...!}}
+{{dialogue|Nia|indent=true|answer=We were just talking about memories...
+|Yeah... like I was saying... golden years and all that.}}
+{{dialogue|Nia|indent=true|I think now that I'm a little older and a little wiser... this time, I know I'm in the golden years...!}}
+{{dialogue|Nia|indent=true|answer=Just a few shooting stars...
+|Wha!? Seriously? Why didn't you wake me up...!}}
+{{dialogue|Nia|indent=true|Oh... you're messing with me, huh... Well, let's stick around, maybe we'll really see one...!}}
+{{dialogue|Nia|I used to think Sandrock was kind of weird. The wind's all wrong here, I thought. I really only stayed because... of you. But now... I think I kinda like it! And the wind, well, it just puts me to sleep, as we have seen...}}
+{{dialogue|Nia|Oh, yeah! I just dreamed about us!}}
+{{dialogue|Nia|We were setting on top of your workshop...}}
+{{dialogue|Nia|And there was a huge meteor shower. Huge! Falling stars everywhere...}}
+
+TRIGGER Procedure 1.0 Step 1.5 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_NIASTAR | state: 8
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 539904 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 1.6 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 539904 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 539904 | delayTime: 5 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Add behavior CommanderDrama (idName: 5399007) to Nia
+(param: TargetScene:Main|DramaName:Story_5399_NiYa|DramaType:SitBoat|TargetFlag:Story_539904)
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: Story_5399_Player3
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 539904 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 539909) A conversation 20198, 20199, 20200, 20201 starts:
+{{dialogue|Nia|Hah! What luck! ...Did you know this was going to happen?}}
+{{dialogue|Nia|Hah... it seems... with you... all my dreams really do come true...!}}
+{{dialogue|Nia|Yawn... Hum... hmm...}}
+{{dialogue|Nia|Okay, now I am tired for real... As tempted as I am to sleep out under the stars, I think that'd just be a one way ticket to pneumonia...Next time, sleeping bags!}}
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8059 | cId: 539909 | missionId: 1500399
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 539903 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 539903 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderDramaWithIndexPlayer2 (idName: 5399101) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 5399003) from Player
+Remove behavior CommanderPlayerAction (idName: 5399001) from Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: Story_5399_Player4
+DELAY MASK SET || maskId: 539903 | delayTime: 6 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Nia stands still in Main
+ACTOR FREEZ COLLIDER || npc: 8000 | freezeCollider: 0
+ACTOR FREEZ COLLIDER || npc: 8059 | freezeCollider: 0
+
+TRIGGER Procedure 1.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 539903 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: Story_5399_Player4
+(cId 539910) A conversation 20202 starts:
+{{dialogue|Nia|Thanks, ''Player''... for taking me out. I can't remember the last time I had such a good night...! Other than, well, the last time we did this!}}
+
+TRIGGER Procedure 1.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8059 | cId: 539910 | missionId: 1500399
+CONDITIONS
+Always:
+ACTIONS
+The player interacts (type 2, option 1) with Nia
+
+TRIGGER Procedure 1.0 Step 8.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON INTERACTIVE EXIT || order: 0 | instID: 8059
+CONDITIONS
+Always:
+ACTIONS
+(cId 539911) A conversation 20203 starts:
+{{dialogue|Nia|Let's head home, ''Player''. Get some rest! And... I hope your wish comes true!}}
+
+TRIGGER Procedure 1.0 Step 9.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 539911) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderDrama (idName: 5399007) from Nia
+Remove behavior CommanderPlayerAction (idName: 5399001) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 5399003) from Player
+Remove behavior CommanderNPCActionLoop (idName: 5399006) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 5399002) from Nia
+Nia stops standing still
+Nia stops standing still
+Remove behavior CommanderDramaWithIndexEvent (idName: 5399004) from Nia
+Remove behavior CommanderDramaWithIndexPlayer2 (idName: 5399101) from Player
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1500398
+END MISSION 1500399
+
+TRIGGER Procedure 1.0 Step 10.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderDrama (idName: 5399007) from Nia
+Remove behavior CommanderPlayerAction (idName: 5399001) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 5399003) from Player
+Remove behavior CommanderNPCActionLoop (idName: 5399006) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 5399002) from Nia
+Nia stops standing still
+Nia stops standing still
+Remove behavior CommanderDramaWithIndexEvent (idName: 5399004) from Nia
+CUTSCENE UI STATE EXIT || 
+AREA TRIGGER DELETE || id: 539901
+FAIL MISSION || missionId: 1500398
+END MISSION 1500399

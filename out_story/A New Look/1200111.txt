@@ -1,0 +1,228 @@
+Reading Mission 1200111: A New Look
+
+<onlyinclude>{{Infobox mission
+|name = A New Look
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from A New Look:
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Add behavior CommanderMoveToFlagAndAction (idName: 21102) to Qi
+(param: TargetScene:Science|MoveMode:Walk|FlagName:robot_qi)
+Qi stops standing still
+Heidi stops standing still
+START MISSION 1200110
+Remove behavior CommanderMoveToFlag (idName: 21101) from Player
+Remove behavior CommanderNPCAction (idName: 21101) from Qi
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200110
+CONDITIONS
+Always:
+ACTIONS
+Run mission A New Look
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200111
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 20263
+===Collect Materials===
+
+{{mission_details
+|desc = Prepare the materials needed to repair the Mobile Suit, according to the list provided by Qi.
+|details = Collect Materials
+*{{i2|Steel Bar|0/10}}
+*{{i2|Copper Wire|0/10}}
+*{{i2|Microchip|0/2}}
+}}
+SCENEITEM CREATE FLAG || itemType: 0 | id: 21111 | path: Mission_robot | sceneName: Science | extraParams: 0 | flagName: newrobot_robot
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200110 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Qi===
+
+{{mission_details
+|desc = All the materials have been prepared, go to the Research Center to give them to Qi.
+|details = Talk to Qi
+*{{i2|Steel Bar|0/10}}
+*{{i2|Copper Wire|0/10}}
+*{{i2|Microchip|0/2}}
+*{{i2|Qi|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1200110 | targetId: 2 | canSubmit: 1
+ACTIONS
+BAG MODIFY BY TARGET || targetId: 2 | missionId: 1200110
+(cId 0) A conversation 2826 starts:
+{{dialogue|Qi|Good. It seems you followed my instructions to not make any mistakes. These materials will do.}}
+Set global blackboard key 1200111 with info 1.
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+CHECK CURRENT SCENE || name: Science | flag: 0
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 21111 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 21111 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Science | flagName: newrobot_player3
+DELAY MASK SET || maskId: 21111 | delayTime: 0 | durationTime: 0.2 | curveIndex: 0 | changeType: 1
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Science:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_science
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_science
+Qi stands still in Science
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Science:
+CONDITIONS
+Always:
+ACTIONS
+ACTION CUTSCENE START AUDIO TYPE || id: CG_QIFIX | duration: 0 | audioType: NoTransitionOff
+PLAYER SET POS ROT FLAG || flagName: newrobot_player3 | sceneName: Science
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+CHECK CURRENT SCENE || name: Science | flag: 1
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 21111 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 21111 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Science | flagName: newrobot_player3
+Qi stands still in Science
+DELAY MASK SET || maskId: 21111 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+{{cutscene|id = 6501}}
+A cutscene CG_QIFIX (duration: 0.0) starts playing
+Good as New - Once I'd gotten the materials Qi had asked for, I headed over to the Research Center and fixed up the mobile suit, good as new. Qi seemed quite pleased.
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 9 | name: CG_QIFIX
+CONDITIONS
+Always:
+ACTIONS
+(cId 111) A conversation 725_0 starts:
+{{dialogue|Qi|Good. It was no small task, but it's done. I almost hate to put the suit back into the field as impeccable as it looks now, but, alas, bound to the pursuit of knowledge, I must.}}
+
+*''...Need anything else?''
+*''Can I play with the Mobile Suit?''
+
+{{dialogue|Qi|indent=true|answer=...Need anything else?
+|reward={{NPC2|Qi|rp=5}}|Presently, your assistance is no longer required. The subsequent tasks to be completed require knowledge far beyond your area of expertise.}}
+{{dialogue|Qi|indent=true|Goodbye.}}
+{{dialogue|Qi|indent=true|answer=Can I play with the Mobile Suit?
+|Play? What? No, of course not. Don't be daft. The Mobile Suit is not for playing. It is for very serious adult things only. And science.}}
+{{dialogue|Qi|indent=true|Those incapable of offering the esteem which must be given to the suit and suit related activites may not pilot the suit. But since you have been such a help, you may look at it. From time to time.}}
+{{dialogue|Qi|indent=true|I must return to my work. Perhaps you should go... "play."}}
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 111) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: 1200111
+CUTSCENE UI STATE EXIT || 
+Qi stops standing still
+Qi stops standing still
+SUBMIT MISSION 1200110
+END MISSION 1200111
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 111) The player picks the first option in conversation segment 2827:
+{{dialogue|Qi|Good. It was no small task, but it's done. I almost hate to put the suit back into the field as impeccable as it looks now, but, alas, bound to the pursuit of knowledge, I must.}}
+
+*''...Need anything else?'' (No unique dialogue)
+*''Can I play with the Mobile Suit?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Qi gains 5 favor
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1200111
+CONDITIONS
+Always:
+ACTIONS
+Qi stops standing still
+
+TRIGGER Procedure 1.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Company to the -1:
+CONDITIONS
+Always:
+ACTIONS
+Qi stands still in Science

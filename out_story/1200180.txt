@@ -1,0 +1,96 @@
+Reading Mission 1200180: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200106
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Check if Fang has favor >= 150
+Cheery Conspiracy is successfully completed
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+
+GROUP 10:
+Check if Fang has favor >= 150
+Cheery Conspiracy has failed
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+
+GROUP 20:
+Check if Fang has favor >= 150
+Check if mission Cheery Conspiracy is result 1 flag 1
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+
+ACTIONS
+Run mission Fragrant Memories
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Fragrant Memories is successfully completed
+ACTIONS
+Run mission #1200180
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200180
+CONDITIONS
+Always:
+ACTIONS
+Set DAY to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Fang
+CONDITIONS
+CHECK NPC TAG || flag: 1 | tag: FangMemoryDay
+Check if DAY is == 0
+CHECK DATE || compare: 3 | year: -1 | month: 3 | day: 21
+ACTIONS
+(cId 0) A conversation 1265_0 starts:
+{{dialogue|Fang|What is it?}}
+
+*''I've come to pay respects to your mother.''
+*''Is today a special day?''
+
+{{dialogue|Fang|indent=true|answer=I've come to pay respects to your mother.
+|Mother... in my heart.}}
+{{dialogue|Fang|indent=true|answer=Is today a special day?
+|...}}
+Set DAY to 1
+Fang gains 5 favor
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if DAY is == 1
+ACTIONS
+Set DAY to 0

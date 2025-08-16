@@ -1,0 +1,148 @@
+Reading Mission 1200060: Combat Training
+
+<onlyinclude>{{Infobox mission
+|name = Combat Training
+|image =
+|description = Pen calls himself the Protector of Sandrock and claims to have excellent fighting skills. Perhaps you can learn a thing or two from his training.
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 200
+|reputation = None
+|gols = None
+|npc1 = Pen
+|rp1 = 20
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Becoming Official:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100049
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1100049
+START MISSION 1100049
+ACTION MISSION TRACE 1100049
+Run mission Combat Training
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200060
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || showOnMap: 0 | mapIcon: MissionArea | id: 20601 | sceneName: Main | flagName: trigger_guildhall | transId: -1 | missionId: 1200060
+Set NOPK to 0
+DELIVER MISSION 1200060
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 20601
+CONDITIONS
+CHECK FESTIVAL || type: 2 | flag: 0
+ACTIONS
+AREA TRIGGER DELETE || id: 20601
+CUTSCENE UI STATE ENTER || 
+{{cutscene|id = 1011}}
+A cutscene CG_CHURCH_ENTRANCE (duration: -2.0) starts playing
+Pen Pounces from Above - When I went in to register my workshop, I was stopped by an extremely confident warrior who wanted to teach me how to fight.
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 8 | name: CG_CHURCH_ENTRANCE
+CONDITIONS
+Always:
+ACTIONS
+Pen stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: trigger_guildhall_player
+NPC REMOVE TAG || tag: PKeducation
+Add behavior CommanderIdle (idName: 12601) to Player
+(param: LookAtActor:8020)
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_CHURCH_ENTRANCE | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 149_0 starts:
+{{dialogue|Pen|And your arms... are so skinny. Do you even know how to defend yourself? You know, the desert isn't kind to the fragile.}}
+{{dialogue|Pen|Hmm... it is decided! I, the magnificent Pen, the protector of Sandrock, as of five seconds ago, have taken it upon myself to offer you... a combat lesson!}}
+
+*''Sounds good.<color=#ffc64c>【Tutorial】}}''
+*''I'll pass.''
+
+{{dialogue|Pen|indent=true|answer=Sounds good.<color=#ffc64c>【Tutorial】}}
+|Splendid! Let's go!}}
+{{dialogue|Pen|Huh? But, Skinny Arms, you can never be too careful with all these bandits about! And... did I mention, I'm the {{textcolor|green|strongest man in the world}}?}}
+
+*''Sure, let's train.<color=#ffc64c>【Tutorial】}}''
+*''Sorry, still no.''
+
+{{dialogue|Pen|indent=true|answer=Sure, let's train.<color=#ffc64c>【Tutorial】}}
+|Splendid! Let's go!}}
+{{dialogue|Pen|indent=true|answer=Sorry, still no.
+|I... see! Well, don't blame me when you're halfway down the gullet of a giant {{textcolor|red|Geegler}}.}}
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Check if NOPK is == 1
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Pen stops standing still
+Remove behavior CommanderIdle (idName: 12601) from Player
+GLOBAL BLACK BOARD REMOVE || key: PKeducation
+CLOSE MISSION || missionId: 1200060
+END MISSION 1200060
+
+TRIGGER Procedure 1.0 Step 4.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Check if NOPK is == 0
+ACTIONS
+DELAY MASK SET || maskId: 20601 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+Pen stops standing still
+Run mission Combat Training
+Remove behavior CommanderIdle (idName: 12601) from Player
+END MISSION 1200060
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the second option in conversation segment 790:
+{{dialogue|Pen|Huh? But, Skinny Arms, you can never be too careful with all these bandits about! And... did I mention, I'm the {{textcolor|green|strongest man in the world}}?}}
+
+*''Sure, let's train.<color=#ffc64c>【Tutorial】}}'' (No unique dialogue)
+*''Sorry, still no.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set NOPK to 1
+
+==Rewards==
+{{mission reward
+|npc1 = Pen
+|rp1 = 20
+|exp = 200
+|reputation = None
+|gols = None
+}}

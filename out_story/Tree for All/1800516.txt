@@ -1,0 +1,753 @@
+Reading Mission 1800516: Tree for All
+
+<onlyinclude>{{Infobox mission
+|name = Tree for All
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Tree for All:
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if 8515A is == 1
+ACTIONS
+START MISSION 1800515
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800515
+CONDITIONS
+Always:
+ACTIONS
+Run mission Tree for All
+END MISSION 1800515
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800516
+CONDITIONS
+CHECK PLAYER ITEM || item: 19999998 | itemGrade: -1 | set: 6 | count: 5
+ACTIONS
+===Collect Water===
+
+{{mission_details
+|desc = To care for the Mama Tree, you need to collect some water in advance.
+|details = Collect Water
+*{{i2|Water|0/5}}
+}}
+Set 8516A to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800516
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1800515 | targetId: 1 | canSubmit: 1
+CONDITIONS
+CHECK PLAYER ITEM || item: 19999998 | itemGrade: -1 | set: 2 | count: 5
+ACTIONS
+===Talk to Nia===
+
+{{mission_details
+|desc = The water has been collected. Go and report to Nia now.
+|details = Talk to Nia
+*{{i2|Water|0/5}}
+*{{i2|Nia|0/1}}
+}}
+Set 8516A to 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Nia
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1800515 | targetId: 2 | canSubmit: 1
+ACTIONS
+(cId 1) A conversation 23070 starts:
+{{dialogue|Nia|Oh! You're ready? You're the best! Let's go and see Mama Tree!}}
+BAG MODIFY BY TARGET || missionId: 1800515 | targetId: 2
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85161 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+SCENEITEM CREATE FLAG || itemType: 0 | id: 85165 | path: S8516_Item5 | flagName: S8516_Item2 | sceneName: Main | extraParams: -1
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85161 | eventType: 2
+CONDITIONS
+CHECK CURRENT SCENE || flag: 1 | name: Main
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8516_0_1
+Nia stands still in Main and looks at Player
+DELAY MASK SET || maskId: 85161 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85161 | eventType: 2
+CONDITIONS
+CHECK CURRENT SCENE || flag: 0 | name: Main
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8516_0_1
+
+TRIGGER Procedure 0.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Main:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Nia stands still in Main and looks at Player
+DELAY MASK SET || maskId: 85161 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 851611
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8516592) to Nia
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8516_59_2|Delay:0|Action:Watering)
+
+TRIGGER Procedure 0.0 Step 10.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8059 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8516592) from Nia
+Add behavior CommanderMoveToFlagAndAction (idName: 8516593) to Nia
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8516_59_3|Delay:0|LookAtActor:8000)
+Add behavior CommanderMoveToFlagAndAction (idName: 8516002) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8516_0_2|Delay:1.3|LookAtActor:8059)
+
+TRIGGER Procedure 0.0 Step 11.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8059 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 23071 starts:
+{{dialogue|Nia|Nutrients - check! Watering - check! Mama Tree's looking better than ever!}}
+
+TRIGGER Procedure 0.0 Step 12.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Check if mission A Secret Under the Tree is result 1 flag 1
+ACTIONS
+(cId 3) A conversation 8109_0, 23078, 8113_0 starts:
+{{dialogue|Nia|Hehe... do you remember what we did last time we were here? The wish...}}
+
+*''Of course I remember! We wrote the wishes together!''
+*''Oh yeah... those wishes we wrote... the bottles, right?''
+*''What wish?''
+
+{{dialogue|Nia|indent=true|answer=Of course I remember! We wrote the wishes together!
+|reward={{NPC2|Nia|rp=1}}|I remember that day so well...}}
+{{dialogue|Nia|indent=true|answer=Oh yeah... those wishes we wrote... the bottles, right?
+|Haha it wasn't a bottle! The little wooden plaques... You haven't really forgotten, have you?}}
+{{dialogue|Nia|indent=true|answer=What wish?
+|reward={{NPC2|Nia|rp=-1}}|What!? You forgot?! Ah... Maybe this'll remind you...}}
+{{dialogue|Nia|"I hope our love will be like this tree, sprouting from strong roots and growing into something beautiful."}}
+{{dialogue|Nia|Haha, I still remember what I wrote! Now, where's our plaque...}}
+The conversation ends.
+{{dialogue|Nia|Wow! There's so many plaques here!}}
+{{dialogue|Nia|"Moira and Pietr together forever..." Here's another! "Dali and Huan 4 eva" hehe, they even wrote "4!" There's so many here...}}
+{{dialogue|Nia|Haha, look at this one! "Mama Tree, help me pass my exams!" I can't believe it!}}
+{{dialogue|Nia|Looks like Mama Tree has become a conduit for everyone's hopes and dreams...}}
+{{dialogue|Nia|But...}}
+
+*''Is it bad for the tree to have all these hanging off of it?''
+*''Uh oh... people are going to see what I wrote!''
+*''Phew, aren't they embarrassed!?''
+
+{{dialogue|Nia|indent=true|answer=Is it bad for the tree to have all these hanging off of it?
+|reward={{NPC2|Nia|rp=1}}|Yeah, I'm a little worried about that, too...}}
+{{dialogue|Nia|indent=true|answer=Uh oh... people are going to see what I wrote!
+|reward={{NPC2|Nia|rp=1}}|Hehe, did they get inspired by us?}}
+{{dialogue|Nia|indent=true|Oh gosh, it's a little embarrassing... but who cares, right? Yeah! It's inspiring!}}
+{{dialogue|Nia|indent=true|answer=Phew, aren't they embarrassed!?
+|I understand, though. When you see Mama Tree, you can't help but imagine the whole history...}}
+{{dialogue|Nia|indent=true|Mama Tree has been around for so long. She's seen the good and bad of man, she's seen people come together, and presided over all our happiness...}}
+{{dialogue|Nia|Hm... I'm just thinking how dangerous it would be if someone tried to hang one on the top... if the branch broke, someone could get hurt.}}
+{{dialogue|Nia|But everyone is just like us... they just want to make wishes... it would be horrible to stop them.}}
+{{dialogue|Nia|Ah! I've got it!}}
+{{dialogue|Nia|''Player'', how about we make a stand that people can hang their wishes on?}}
+
+*''That's a great idea!''
+*''A Wish Stand... seems a bit weird...''
+
+{{dialogue|Nia|indent=true|answer=That's a great idea!
+|Haha, pretty smart aren't I?}}
+{{dialogue|Nia|indent=true|answer=A Wish Stand... seems a bit weird...
+|Well, what else could we do?}}
+{{dialogue|Nia|Actually... we could really redo the whole area! There's a beautiful view, but nowhere to sit. Look, you can see the whole of Sandrock from up here!}}
+{{dialogue|Nia|Let's go to City Hall and pitch it! I think we could build a whole Observation Deck so that when people come they can really soak in the view.}}
+{{dialogue|Nia|Well, I'd say we're all done with our inspection, too. Let's head home, honey.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 13.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Check if mission A Secret Under the Tree is result 1 flag 0
+ACTIONS
+(cId 3) A conversation 23078, 8114_0 starts:
+{{dialogue|Nia|Wow! There's so many plaques here!}}
+{{dialogue|Nia|"Moira and Pietr together forever..." Here's another! "Dali and Huan 4 eva" hehe, they even wrote "4!" There's so many here...}}
+{{dialogue|Nia|Haha, look at this one! "Mama Tree, help me pass my exams!" I can't believe it!}}
+{{dialogue|Nia|Looks like Mama Tree has become a conduit for everyone's hopes and dreams...}}
+{{dialogue|Nia|But...}}
+
+*''Is it bad for the tree to have all these hanging off of it?''
+*''Phew, aren't they embarrassed!?''
+
+{{dialogue|Nia|indent=true|answer=Is it bad for the tree to have all these hanging off of it?
+|reward={{NPC2|Nia|rp=1}}|Yeah, I'm a little worried about that, too...}}
+{{dialogue|Nia|indent=true|answer=Phew, aren't they embarrassed!?
+|I understand, though. When you see Mama Tree, you can't help but imagine the whole history...}}
+{{dialogue|Nia|indent=true|Mama Tree has been around for so long. She's seen the good and bad of man, she's seen people come together, and presided over all our happiness...}}
+{{dialogue|Nia|Hm... I'm just thinking how dangerous it would be if someone tried to hang one on the top... if the branch broke, someone could get hurt.}}
+{{dialogue|Nia|But everyone is just like us... they just want to make wishes... it would be horrible to stop them.}}
+{{dialogue|Nia|Ah! I've got it!}}
+{{dialogue|Nia|''Player'', how about we make a stand that people can hang their wishes on?}}
+
+*''That's a great idea!''
+*''A Wish Stand... seems a bit weird...''
+
+{{dialogue|Nia|indent=true|answer=That's a great idea!
+|Haha, pretty smart aren't I?}}
+{{dialogue|Nia|indent=true|answer=A Wish Stand... seems a bit weird...
+|Well, what else could we do?}}
+{{dialogue|Nia|Actually... we could really redo the whole area! There's a beautiful view, but nowhere to sit. Look, you can see the whole of Sandrock from up here!}}
+{{dialogue|Nia|Let's go to City Hall and pitch it! I think we could build a whole Observation Deck so that when people come they can really soak in the view.}}
+{{dialogue|Nia|Well, I'd say we're all done with our inspection, too. Let's head home, honey.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 14.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85162 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 15.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85162 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8516_0_4
+Nia stands still in Main and looks at Player
+DELAY MASK SET || maskId: 85162 | delayTime: 3 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 8516002) from Player
+
+TRIGGER Procedure 0.0 Step 16.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85162 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 23098 starts:
+{{dialogue|Nia|Thank you for coming with me today, honey. I'll write up a pitch for Trudy a bit later. When I get approval we can give Mama Tree a spruce up!}}
+
+TRIGGER Procedure 0.0 Step 17.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8516593) from Nia
+Nia stops standing still
+CAMERA PATH STOP ALL || 
+CUTSCENE UI STATE EXIT || 
+===Wait for a Letter===
+
+{{mission_details
+|desc = Nia is determined to build an Observation Deck for the Mama Tree, allowing everyone to place their wishes on it while also protecting its growth. Wait for a letter from City Hall approving the construction.
+|details = Wait for a Letter
+}}
+Nia stops standing still
+
+TRIGGER Procedure 0.0 Step 20.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|827}}
+The player receives a letter:
+{{mail|828}}
+
+TRIGGER Procedure 0.0 Step 22.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 827
+CONDITIONS
+Always:
+ACTIONS
+===Gather Materials===
+
+{{mission_details
+|desc = There are several items needed for the Observation Deck. Collect them according to the checklist.
+|details = Gather Materials
+*{{i2|Antique Street Lamp|0/2}}
+*{{i2|Wish Stand|0/1}}
+*{{i2|Yakboy Swing|0/1}}
+*{{i2|Poplar Wood Board|0/6}}
+}}
+
+TRIGGER Procedure 0.0 Step 23.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Nia
+CONDITIONS
+CHECK SCENEITEM EXIST || sceneItemType: 12 | id: 85162 | exist: 0
+ACTIONS
+(cId 5) A conversation 23099 starts:
+{{dialogue|Nia|The more I think about it, the more excited I am! An Observation Deck and a Wish Stand to let everyone write their dreams... isn't it romantic?}}
+
+TRIGGER Procedure 0.0 Step 25.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1800515 | targetId: 5 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Turn-in at Mama Tree===
+
+{{mission_details
+|desc = All the materials for the Observation Deck are ready. Go to the area near the Mama Tree to submit them.
+|details = Turn-in at Mama Tree
+*{{i2|Antique Street Lamp|0/2}}
+*{{i2|Wish Stand|0/1}}
+*{{i2|Yakboy Swing|0/1}}
+*{{i2|Poplar Wood Board|0/6}}
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | id: 85162 | path: S8516_Item2_Mark | sceneName: Main | flagName: S8516_Item2 | extraParams: S8516_Item2|CreatorItem|17200006_2,18000267_1,18000103_1,19010016_6|1547|Fix|1.4
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 85162 | missionId: 1800515 | iconType: 2
+
+TRIGGER Procedure 0.0 Step 26.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 85162
+CONDITIONS
+Always:
+ACTIONS
+===Wait for Construction===
+
+{{mission_details
+|desc = Building such a large Observation Deck requires effort from the workers. Wait for a while during this time.
+|details = Wait for Construction
+}}
+
+TRIGGER Procedure 0.0 Step 30.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+===Go to the Observation Deck===
+
+{{mission_details
+|desc = The Observation Deck seems to be completed. Go and see what it looks like.
+|details = Go to the Observation Deck
+}}
+AREA TRIGGER CREATE || missionId: 1800515 | id: 85162 | sceneName: Main | flagName: Trigger_85161 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80034801
+SCENEITEM DELETE || itemType: 12 | id: 85162
+SCENEITEM CREATE FLAG || itemType: 0 | id: 85161 | path: S8516_Item1 | sceneName: Main | flagName: S8516_Item1 | extraParams: -1
+SCENEITEM DELETE || id: 85165 | itemType: 0
+
+TRIGGER Procedure 0.0 Step 30.2 Order 40 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 1731501
+SCENEITEM DELETE || itemType: 0 | id: 1731502
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1731501 | sceneName: Main | flagName: S8516_Item3 | extraParams: -1 | path: NiaQ3_Plague1
+SCENEITEM CREATE FLAG || itemType: 0 | id: 1731502 | sceneName: Main | extraParams: -1 | flagName: S8516_Item4 | path: NiaQ3_Plague2
+
+TRIGGER Procedure 0.0 Step 31.0 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 85162
+CONDITIONS
+CHECK WEATHER STATE || weather: 2 | flag: 0
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 85162
+ACTION CUTSCENE START AUDIO TYPE || id: CG_WHOGUESS | duration: -2 | audioType: NormalOff
+
+TRIGGER Procedure 0.0 Step 32.0 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_WHOGUESS | state: 7
+CONDITIONS
+Always:
+ACTIONS
+Nia stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8516_0_5
+
+TRIGGER Procedure 0.0 Step 33.0 Order 25 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_WHOGUESS | state: 9
+CONDITIONS
+Check if mission A Secret Under the Tree is result 1 flag 1
+ACTIONS
+(cId 10) A conversation 8120_0 starts:
+{{dialogue|Nia|''Player'', I love it so much! Mama Tree feels like she's watching over the town, and we're here spending our lives with her. It's so big I feel like I could dance!}}
+{{dialogue|Nia|Honey, look!}}
+{{dialogue|Nia|I moved our wishes onto the Wishing Stand.}}
+{{dialogue|Nia|It feels weird that people can see our wishes... but I feel like this is special.}}
+{{dialogue|Nia|In the future if someone has a wish, they can write it and hang it here.}}
+{{dialogue|Nia|I didn't realize people would write them so quickly.}}
+{{dialogue|Nia|''Player'', look!}}
+{{dialogue|Nia|My Pa and Ma came through Sandrock on their honeymoon with dreams of the future.}}
+{{dialogue|Nia|When my wife and I heard that it had been brought back to life, we came to realize those dreams ourselves.}}
+{{dialogue|Nia|This is a special place, full of love and happiness. The dreams of my parents live on through us.}}
+{{dialogue|Nia|Thank you Sandrock, for giving us your love - Eugene.}}
+{{dialogue|Nia|''Player''... Eugene's words make me feel so-}}
+
+*''-Moving.'' (No unique dialogue)
+*''-Happy.'' (No unique dialogue)
+*''-Proud.'' (No unique dialogue)
+
+
+TRIGGER Procedure 0.0 Step 36.0 Order 27 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8516596) to Nia
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8516_59_6|Delay:0.0|Action:Hands)
+Add behavior CommanderMoveToFlagAndAction (idName: 8516006) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8516_0_6|Delay:0.0|Action:Hands)
+Set 8516Hands to 0
+
+TRIGGER Procedure 0.0 Step 34.0 Order 26 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_WHOGUESS | state: 9
+CONDITIONS
+Check if mission A Secret Under the Tree is result 1 flag 0
+ACTIONS
+(cId 10) A conversation 8121_0 starts:
+{{dialogue|Nia|''Player'', I love it so much! Mama Tree feels like she's watching over the town, and we're here spending our lives with her. It's so big I feel like I could dance!}}
+{{dialogue|Nia|Honey, look!}}
+{{dialogue|Nia|I wrote a plaque for us...}}
+{{dialogue|Nia|"I hope our love will be like this tree, sprouting from strong roots and growing into something beautiful."}}
+{{dialogue|Nia|Hehe, do you like it?}}
+{{dialogue|Nia|In the future if someone has a wish, they can write it and hang it here.}}
+{{dialogue|Nia|I didn't realize people would write them so quickly.}}
+{{dialogue|Nia|''Player'', look!}}
+{{dialogue|Nia|My Pa and Ma came through Sandrock on their honeymoon with dreams of the future.}}
+{{dialogue|Nia|When my wife and I heard that it had been brought back to life, we came to realize those dreams ourselves.}}
+{{dialogue|Nia|This is a special place, full of love and happiness. The dreams of my parents live on through us.}}
+{{dialogue|Nia|Thank you Sandrock, for giving us your love - Eugene.}}
+{{dialogue|Nia|''Player''... Eugene's words make me feel so-}}
+
+*''-Moving.'' (No unique dialogue)
+*''-Happy.'' (No unique dialogue)
+*''-Proud.'' (No unique dialogue)
+
+
+TRIGGER Procedure 0.0 Step 37.0 Order 28 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8059 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Increment 8516Hands by 1
+
+TRIGGER Procedure 0.0 Step 38.0 Order 29 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8059 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Check if 8516Hands is >= 2
+ACTIONS
+(cId 11) A conversation 8122_0 starts:
+{{dialogue|Nia|Me too... it's just... I feel so touched.}}
+{{dialogue|Nia|Look at us... we spent so long apart, but here we are. Together. You've done so much for so many people... for me...}}
+
+*''Do I get a reward...?''
+*''You're making me blush...''
+*''I still have more to do...''
+
+{{dialogue|Nia|indent=true|answer=Do I get a reward...?
+|What kind of reward...}}
+
+:*''(Point at your mouth)'' (No unique dialogue)
+:*''(Open your arms)'' (No unique dialogue)
+
+{{dialogue|Nia|indent=true|answer=You're making me blush...
+|I'm not exaggerating... you're really amazing. I feel like you're some sort of... superhero! Haha, "The Super Builder!"}}
+{{dialogue|Nia|indent=true|answer=I still have more to do...
+|Me too! Let's reach for the stars!}}
+Set 8516KH to 0
+
+TRIGGER Procedure 0.0 Step 41.0 Order 32 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) After the conversation ends:
+CONDITIONS
+Check if 8516KH is == 1
+ACTIONS
+The player interacts (type 2, option 1) with Nia
+
+TRIGGER Procedure 0.0 Step 41.3 Order 33 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) After the conversation ends:
+CONDITIONS
+Check if 8516KH is == 2
+ACTIONS
+The player interacts (type 2, option 0) with Nia
+
+TRIGGER Procedure 0.0 Step 42.0 Order 34 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) After the conversation ends:
+CONDITIONS
+Check if 8516KH is == 0
+ACTIONS
+(cId 12) A conversation 8126_0, 8127_0 starts:
+{{dialogue|Nia|I want to read Eugene's wish again...}}
+{{dialogue|Nia|Hm...}}
+{{dialogue|Nia|Eugene and his wife love each other so much... it's just like us.}}
+The conversation ends.
+{{dialogue|Nia|Looking at Mama Tree... she's connected to us all. She gives life to the land.}}
+{{dialogue|Nia|Mama Tree represents all of us. The spirit of Telesis, returning life to the world. Even though we're tiny in front of her, we're also part of her... She's really like a mother to us all...}}
+{{dialogue|Nia|She also represents our love... always growing stronger, and it'll look over Sandrock forever...}}
+{{dialogue|Nia|Goodbye, Mama Tree! We'll come and see you soon!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 39.0 Order 30 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) The player picks the first option in conversation segment 23117:
+{{dialogue|Nia|What kind of reward...}}
+
+*''(Point at your mouth)'' (No unique dialogue)
+*''(Open your arms)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8516KH to 1
+
+TRIGGER Procedure 0.0 Step 40.0 Order 31 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) The player picks the second option in conversation segment 23117:
+{{dialogue|Nia|What kind of reward...}}
+
+*''(Point at your mouth)'' (No unique dialogue)
+*''(Open your arms)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8516KH to 2
+
+TRIGGER Procedure 0.0 Step 42.3 Order 35 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON INTERACTIVE EXIT || order: 0 | instID: 8059
+CONDITIONS
+Always:
+ACTIONS
+(cId 12) A conversation 8126_0, 8127_0 starts:
+{{dialogue|Nia|I want to read Eugene's wish again...}}
+{{dialogue|Nia|Hm...}}
+{{dialogue|Nia|Eugene and his wife love each other so much... it's just like us.}}
+The conversation ends.
+{{dialogue|Nia|Looking at Mama Tree... she's connected to us all. She gives life to the land.}}
+{{dialogue|Nia|Mama Tree represents all of us. The spirit of Telesis, returning life to the world. Even though we're tiny in front of her, we're also part of her... She's really like a mother to us all...}}
+{{dialogue|Nia|She also represents our love... always growing stronger, and it'll look over Sandrock forever...}}
+{{dialogue|Nia|Goodbye, Mama Tree! We'll come and see you soon!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 44.0 Order 36 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 12) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85166 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 45.0 Order 37 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85166 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Nia stops standing still
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8516_0_4
+Nia stands still in Main and looks at Player
+DELAY MASK SET || maskId: 85166 | delayTime: 3 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 8516006) from Player
+Nia stops standing still
+
+TRIGGER Procedure 0.0 Step 46.0 Order 38 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85166 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 14) A conversation 23127 starts:
+{{dialogue|Nia|Today was really special... it feels a bit weird to be leaving you again now. Are you going to work? Haha, well, good luck, honey!}}
+
+TRIGGER Procedure 0.0 Step 47.0 Order 39 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 14) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Nia stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8516596) from Nia
+Nia stops standing still
+CAMERA PATH STOP ALL || 
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1800515
+END MISSION 1800516
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the first option in conversation segment 23072:
+{{dialogue|Nia|Hehe... do you remember what we did last time we were here? The wish...}}
+
+*''Of course I remember! We wrote the wishes together!'' (No unique dialogue)
+*''Oh yeah... those wishes we wrote... the bottles, right?'' (No unique dialogue)
+*''What wish?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Nia gains 1 favor
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the third option in conversation segment 23072:
+{{dialogue|Nia|Hehe... do you remember what we did last time we were here? The wish...}}
+
+*''Of course I remember! We wrote the wishes together!'' (No unique dialogue)
+*''Oh yeah... those wishes we wrote... the bottles, right?'' (No unique dialogue)
+*''What wish?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Nia gains -1 favor
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the first option in conversation segment 23082:
+{{dialogue|Nia|But...}}
+
+*''Is it bad for the tree to have all these hanging off of it?'' (No unique dialogue)
+*''Uh oh... people are going to see what I wrote!'' (No unique dialogue)
+*''Phew, aren't they embarrassed!?'' (No unique dialogue)
+
+(cId 3) The player picks the first option in conversation segment 23083:
+{{dialogue|Nia|But...}}
+
+*''Is it bad for the tree to have all these hanging off of it?'' (No unique dialogue)
+*''Phew, aren't they embarrassed!?'' (No unique dialogue)
+
+(cId 3) The player picks the second option in conversation segment 23082:
+{{dialogue|Nia|But...}}
+
+*''Is it bad for the tree to have all these hanging off of it?'' (No unique dialogue)
+*''Uh oh... people are going to see what I wrote!'' (No unique dialogue)
+*''Phew, aren't they embarrassed!?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Nia gains 1 favor
+
+TRIGGER Procedure 2.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 23114:
+{{dialogue|Nia|''Player''... Eugene's words make me feel so-}}
+
+*''-Moving.'' (No unique dialogue)
+*''-Happy.'' (No unique dialogue)
+*''-Proud.'' (No unique dialogue)
+
+(cId -1) The player picks the second option in conversation segment 23114:
+{{dialogue|Nia|''Player''... Eugene's words make me feel so-}}
+
+*''-Moving.'' (No unique dialogue)
+*''-Happy.'' (No unique dialogue)
+*''-Proud.'' (No unique dialogue)
+
+(cId -1) The player picks the third option in conversation segment 23114:
+{{dialogue|Nia|''Player''... Eugene's words make me feel so-}}
+
+*''-Moving.'' (No unique dialogue)
+*''-Happy.'' (No unique dialogue)
+*''-Proud.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Nia gains 1 favor

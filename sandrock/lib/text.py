@@ -41,6 +41,7 @@ _non_standard_variant_names = {
 _substitutions = {
     '<color=#00ff78>': '{{textcolor|green|',
     '<color=#3aa964>': '{{textcolor|green|',
+    '<color=#ff6669>': '{{textcolor|red|',
     '</color>': '}}',
     '[ChildCallPlayer]': '\'\'Parent Name\'\'',
     '[MarriageCall|Name]': '\'\'Pet Name\'\'',

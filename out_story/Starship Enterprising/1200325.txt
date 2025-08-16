@@ -1,0 +1,1008 @@
+Reading Mission 1200325: Starship Enterprising
+
+<onlyinclude>{{Infobox mission
+|name = Starship Enterprising
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Starship Enterprising:
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 23241
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 23241) from Trudy
+Remove behavior CommanderMoveToFlagAndAction (idName: 23241) from Qi
+CUTSCENE UI STATE ENTER || 
+Trudy stands still in Guildhall and looks at Qi
+Qi stands still in Guildhall and looks at Trudy
+AREA TRIGGER DELETE || id: 23241
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200324
+CONDITIONS
+Always:
+ACTIONS
+Run mission Starship Enterprising
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200325
+CONDITIONS
+Always:
+ACTIONS
+===Wait Until Tomorrow===
+
+{{mission_details
+|desc = Be ready for action tomorrow with Qi and Justice.
+|details = Wait Until Tomorrow
+}}
+Set CHOICE to 0
+Set CAMERA to 0
+Set ITEM to 0
+Set CHOICE2 to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+===Go to Starship Ruins===
+
+{{mission_details
+|desc = Head towards the entrance of the Starship Ruins to begin the search for the Old World water source. Make sure you have the equipment and medicine you might need for such a dive.
+|details = Go to Starship Ruins
+}}
+AREA TRIGGER ONCE CREATE || missionId: 1200324 | id: 23251 | sceneName: Main | flagName: reservoir_trigger1 | showOnMap: 1 | transId: 0 | mapIcon: MissionArea
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | enter: 0 | npc: 8000 | id: 23251
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 23251 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 23251
+CONDITIONS
+Always:
+ACTIONS
+Qi stands still in Main
+Justice stands still in Main
+PLAYER SET POS ROT FLAG || flagName: reservoir_player1 | sceneName: Main
+DELAY MASK SET || maskId: 23251 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 23251
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 3889_0 starts:
+{{dialogue|Justice|Hey there pardner! I reckon I'd secure this site early, but it seems like Director Qi still got here before me...}}
+{{dialogue|Qi|I arrived at precisely 3:02AM.}}
+{{dialogue|Qi|I'm glad you're here. Now we can get started.}}
+{{dialogue|Qi|According to the documents, the entrance to another section of the base is around here. I have narrowed it down as far as humanly possible by walking the distance from the starship wing.}}
+{{dialogue|Qi|I'm certain this is the section that houses the water reservoir. We must now excavate to reveal the entrance.}}
+{{dialogue|Justice|Excavate? As in dig? Dang, that wasn't in the mission description... Director, do you know how far down we have to go?}}
+{{dialogue|Qi|No. Just dig until we hit metal.}}
+{{dialogue|Justice|Eh... Uh, alright, let's get to it. If we work together, we're gonna find it in no time at all.}}
+
+*''Let's do it!''
+*''Are you absolutely sure it's down there?''
+
+{{dialogue|Qi|indent=true|answer=Are you absolutely sure it's down there?
+|Trust me, ''Player'', the data doesn't lie.}}
+{{dialogue|Justice|Okay pardner, pick a spot that looks appealin' and start diggin'.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Search for Entrance===
+
+{{mission_details
+|desc = Based on the blueprints, Qi believes the water source is in the ruins somewhere under the sand. Dig down and see if he's right.
+|details = Search for Entrance
+}}
+CUTSCENE UI STATE EXIT || 
+AREA TRIGGER CREATE || missionId: 1200324 | id: 23252 | sceneName: Main | flagName: reservoir_trigger2 | showOnMap: 1 | mapIcon: MissionArea | transId: 0
+AREA TRIGGER CREATE || id: 23253 | flagName: reservoir_trigger3 | missionId: 1200324 | sceneName: Main | showOnMap: 1 | mapIcon: MissionArea | transId: 0
+AREA TRIGGER CREATE || id: 23254 | flagName: reservoir_trigger4 | missionId: 1200324 | sceneName: Main | showOnMap: 1 | mapIcon: MissionArea | transId: 0
+SCENEITEM CREATE FLAG || id: 23251 | itemType: 0 | sceneName: Main | flagName: reservoir_trigger2 | extraParams: 0 | path: Interact_Tang
+SCENEITEM CREATE FLAG || id: 23252 | itemType: 0 | flagName: reservoir_trigger3 | path: Interact_Tang | sceneName: Main | extraParams: 0
+SCENEITEM CREATE FLAG || id: 23253 | itemType: 0 | flagName: reservoir_trigger4 | path: Interact_Tang | sceneName: Main | extraParams: 0
+SCENEITEM CREATE FLAG || path: Mission_Broken_Doorin | itemType: 0 | id: 23254 | sceneName: Main | flagName: bridge_kaimu | extraParams: 0
+Qi stops standing still
+Justice stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 23251) to Qi
+(param: TargetScene:Main|MoveMode:Run|FlagName:reservoir_qidig|Action:Mining)
+Add behavior CommanderMoveToFlagAndAction (idName: 23251) to Justice
+(param: TargetScene:Main|MoveMode:Run|FlagName:reservoir_justicedig|Action:Mining)
+AUTOSAVE TRY || 
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+ON STOPWATCH REAL TIME END || order: 0 | id: 23253
+CONDITIONS
+Check if QI is == 0
+ACTIONS
+AREA TRIGGER DELETE || id: 23255
+AREA TRIGGER CREATE || flagName: reservoir_desk_trigger | id: 23255 | missionId: 1200324 | sceneName: Reservoir_Dungeon | showOnMap: 0 | mapIcon: MissionArea | transId: 0
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 23251
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 23252
+SCENEITEM DELETE || itemType: 0 | id: 23251
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 23252) to Player
+(param: CMDAction:Mining_Story)
+
+TRIGGER Procedure 2.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 13009 starts:
+{{dialogue|Player|(The soil here is soft, but it feels like solid metal underneath. The entrance must be nearby.)}}
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderPlayerAction (idName: 23252) from Player
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 23252
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 23253
+SCENEITEM DELETE || itemType: 0 | id: 23252
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 23253) to Player
+(param: CMDAction:Mining_Story)
+
+TRIGGER Procedure 2.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 13010 starts:
+{{dialogue|Player|(There are just rocks under here. The entrance isn't here.)}}
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderPlayerAction (idName: 23253) from Player
+
+TRIGGER Procedure 2.0 Step 3.5 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 23253
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 23254
+SCENEITEM DELETE || itemType: 0 | id: 23253
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 23253) to Player
+(param: CMDAction:Mining_Story)
+
+TRIGGER Procedure 2.0 Step 3.6 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderPlayerAction (idName: 23253) from Player
+DELAY MASK SET || maskId: 23252 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 23253
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 23252
+AREA TRIGGER DELETE || id: 23253
+AREA TRIGGER DELETE || id: 23254
+SCENEITEM DELETE || itemType: 0 | id: 23251
+SCENEITEM DELETE || itemType: 0 | id: 23252
+SCENEITEM DELETE || itemType: 0 | id: 23253
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23252 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Qi stops standing still
+Justice stops standing still
+Qi stands still in Main
+Justice stands still in Main
+PLAYER SET POS ROT FLAG || flagName: reservoir_player2 | sceneName: Main
+DELAY MASK SET || maskId: 23252 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+SCENEITEM DELETE || itemType: 0 | id: 23254
+Remove behavior CommanderMoveToFlagAndAction (idName: 23251) from Justice
+Remove behavior CommanderMoveToFlagAndAction (idName: 23251) from Qi
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23252 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 3892_0 starts:
+{{dialogue|Justice|Great job ''Player'', looks like you found it!}}
+{{dialogue|Qi|Let me just head in and see-}}
+{{dialogue|Justice|Woah, hold it, pardner. I know you're excited, but uh, you ain't exactly known for yer fightin' skills. I reckon me and ''Player'' better head on down first to see what the deal is.}}
+{{dialogue|Justice|''Player'', ready? Did you bring, y'know, medicine, weapons, the usual?  {{textcolor|red|(Recommended: Lvl 50-52)}}}}
+
+*''I'm ready, let's go!'' (No unique dialogue)
+*''Oh, I was supposed to bring that myself?''
+
+{{dialogue|Justice|indent=true|answer=Oh, I was supposed to bring that myself?
+|No problem. We'll be here waiting for you.}}
+{{dialogue|Qi|indent=true|Come back sooner rather than later, please.}}
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+===Talk to Justice===
+
+{{mission_details
+|desc = When you're ready, talk to Justice.
+|details = Talk to Justice
+}}
+
+TRIGGER Procedure 5.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 0
+ACTIONS
+DELAY MASK SET || maskId: 23253 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+STOP ENGAGEMENT || stopType: 2
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the second option in conversation segment 13014:
+{{dialogue|Justice|''Player'', ready? Did you bring, y'know, medicine, weapons, the usual?  {{textcolor|red|(Recommended: Lvl 50-52)}}}}
+
+*''I'm ready, let's go!'' (No unique dialogue)
+*''Oh, I was supposed to bring that myself?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 1
+
+TRIGGER Procedure 3.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the first option in conversation segment 13017:
+{{dialogue|Justice|Ready to go?}}
+
+*''I'm ready, let's go!'' (No unique dialogue)
+*''Oh, I was supposed to bring that myself?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 0
+
+TRIGGER Procedure 4.0 Step 2.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Justice
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: 1200325 | info: 1 | exist: 0
+ACTIONS
+(cId 2) A conversation 3894_0 starts:
+{{dialogue|Justice|Ready to go?}}
+
+*''I'm ready, let's go!'' (No unique dialogue)
+*''Oh, I was supposed to bring that myself?''
+
+{{dialogue|Justice|indent=true|answer=Oh, I was supposed to bring that myself?
+|No problem. We'll be here waiting for you.}}
+{{dialogue|Qi|indent=true|Come back sooner rather than later, please.}}
+
+TRIGGER Procedure 5.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23253 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Qi stops standing still
+Justice stops standing still
+PLAYER SET POS ROT FLAG || sceneName: Reservoir_Dungeon | flagName: reservoir_in_player1
+DELAY MASK SET || maskId: 23253 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 5.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Reservoir_Dungeon:
+CONDITIONS
+Always:
+ACTIONS
+Qi stands still in Reservoir_Dungeon
+Justice stands still in Reservoir_Dungeon
+
+TRIGGER Procedure 5.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Reservoir_Dungeon:
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || sec: 6.5 | id: 23251
+
+TRIGGER Procedure 6.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 23251
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 13018, 13019, 13020 starts:
+{{dialogue|Qi|There it is! That's it! Look at that!}}
+{{dialogue|Qi|It's... far larger than I thought...! And that tank must be the reservoir! The machine attached to it must be the Atmospheric Water Generator! Wow! Breathe, Qi, breathe.}}
+{{dialogue|Qi|Need a closer look... I must go!}}
+
+TRIGGER Procedure 6.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Set QI to 0
+Qi stops standing still
+Qi stands still in Reservoir_Dungeon
+Qi stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 23254) to Qi
+(param: TargetScene:Reservoir_Dungeon|MoveMode:Run|FlagName:reservoir_in_fade)
+(cId 4) A conversation 13021, 13022 starts:
+{{dialogue|Justice|Director! Wait! What if you-}}
+{{dialogue|Justice|Ah crud, c'mon, ''Player'', we'd better catch up with him. That guy has a heck of a brain, but in a fight... well, let's just make sure we're there.}}
+NPC SET CAN INTERACT || npc: 8007 | canInteract: 0
+ACTION ACTOR START FADE IN || id: 23251 | npc: 8007 | time: 7
+STOPWATCH REAL TIME SET || id: 23253 | sec: 7
+
+TRIGGER Procedure 6.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTOR SET LEVEL || npc: 8008 | level: 52
+ACTOR SET LEVEL || npc: 8007 | level: 52
+Set QI to 0
+===Explore Reservoir===
+
+{{mission_details
+|desc = Look around the area to see if you can't uncover information related to the water source.
+|details = Explore Reservoir
+}}
+NPC SET CAN INTERACT || npc: 8008 | canInteract: 0
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8008 | state: Defense
+Justice stops standing still
+CUTSCENE UI STATE EXIT || 
+AREA TRIGGER ONCE CREATE || missionId: 1200324 | id: 23255 | sceneName: Reservoir_Dungeon | flagName: reservoir_desk_trigger | showOnMap: 0 | mapIcon: MissionArea | transId: 0
+CUTSCENE UI STATE EXIT || 
+AUTOSAVE TRY || 
+
+TRIGGER Procedure 6.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 23253
+CONDITIONS
+Check if QI is == 0
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 23254) from Qi
+Qi stands still in Reservoir_Dungeon
+ACTION ACTOR END FADE IN || id: 23251 | time: 0
+Add behavior CommanderNPCActionLoop (idName: 23251) to Qi
+(param: CMDAction:Read_Story)
+
+TRIGGER Procedure 7.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | enter: 0 | npc: 8000 | id: 23255
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 23254 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+Remove behavior CommanderTeleport (idName: 23254) from Qi
+Set QI to 1
+ACTION ACTOR END FADE IN || id: 23251 | time: 0
+AREA TRIGGER DELETE || id: 23255
+
+TRIGGER Procedure 7.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23254 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 23254) from Qi
+Justice stands still in Reservoir_Dungeon
+PLAYER SET POS ROT FLAG || flagName: reservoir_desk_player | sceneName: Reservoir_Dungeon
+MONSTER ADD TAG || tag: Monster_Reservoir | isAdd: 1
+DELAY MASK SET || maskId: 23254 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+ACTOR BLIND SET || set: 1
+
+TRIGGER Procedure 7.0 Step 2.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 23254
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 23254 | sec: 3
+
+TRIGGER Procedure 7.0 Step 2.5 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 23254
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 13023, 13024 starts:
+{{dialogue|Justice|Director! What are you doin'?! Get to cover!}}
+{{dialogue|Justice|Dang, he's in his own world now... Well ''Player'', you know what to do!}}
+
+TRIGGER Procedure 7.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Defeat Robots===
+
+{{mission_details
+|desc = As Qi said, there are a lot of robots guarding the water source. Clear the way forward!
+|details = Defeat Robots
+}}
+CUTSCENE UI STATE EXIT || 
+ACTOR BLIND SET || set: 0
+Justice stops standing still
+Set KILL to 0
+Remove behavior CommanderNPCAction (idName: 23256) from Qi
+
+TRIGGER Procedure 8.0 Step 0.0 Order 0 Repeat 3
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 0 | tag: Monster_Reservoir
+CONDITIONS
+Always:
+ACTIONS
+Increment KILL by 1
+
+TRIGGER Procedure 8.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MONSTER TAG DEAD || order: 10 | tag: Monster_Reservoir
+CONDITIONS
+Check if KILL is == 3
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 23255 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 8.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23255 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+MONSTER ADD TAG || tag: Monster_Reservoir | isAdd: 0
+Justice stands still in Reservoir_Dungeon
+PLAYER SET POS ROT FLAG || flagName: reservoir_desk_player2 | sceneName: Reservoir_Dungeon
+DELAY MASK SET || maskId: 23255 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 8.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 23255
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 13025, 13026, 13027, 13028 starts:
+{{dialogue|Justice|Director Qi! Director!}}
+{{dialogue||"...On this basis, at any moment, 1-5% of the atmosphere is made of water vapor... the Atmospheric Water Generator takes advantage of this resource... provides enough to serve the fabrication facility and the launch center..."}}
+{{dialogue||Fascinating...! So a single Atmospheric Generator can be that powerful...}}
+{{dialogue|Justice|Hey! Director Qi! Can. You. Hear. Me?}}
+
+TRIGGER Procedure 8.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCActionLoop (idName: 23251) from Qi
+(cId 6) A conversation 3895_0 starts:
+{{dialogue|Qi|Hm? Oh, you're here too.}}
+{{dialogue|Qi|It's a real shame. This is just another tourist pamphlet. It doesn't tell me what I want to know...}}
+{{dialogue|Qi|Oh... look around! I expected the combat AIs to still be functional, but they appear to be destroyed.}}
+
+*''We destroyed them!''
+*''They almost got you!''
+*''Qi, stay behind us!''
+
+{{dialogue|Justice|indent=true|answer=We destroyed them!
+|Director, you gotta be more careful. You can't just stop an' read everything you see. If it weren't for me an' ''Player'', you'd be robot toast righta 'bout now!}}
+{{dialogue|Qi|indent=true|I'm sorry. I'll try to be more careful next time. New scientific information is... exhilarating...!}}
+{{dialogue|Justice|indent=true|answer=They almost got you!
+|Director, you gotta be more careful. You can't just stop an' read everything you see. If it weren't for me an' ''Player'', you'd be robot toast righta 'bout now!}}
+{{dialogue|Qi|indent=true|I'm sorry. I'll try to be more careful next time. New scientific information is... exhilarating...!}}
+{{dialogue|Qi|indent=true|answer=Qi, stay behind us!
+|Hm? You two saved me? Ah. Thank you.}}
+{{dialogue|Justice|indent=true|Director, you need to be more careful. You can't just stop an' read everything you see. If it weren't for me an' ''Player'', you'd be robot toast righta 'bout now!}}
+{{dialogue|Qi|indent=true|I am sorry. I will be more careful next time.}}
+{{dialogue|Qi|I've finished reading everything here anyway. Although I didn't find any technical data, I have found out that the generator in this facility can produce at least 100 tons of water per day.}}
+{{dialogue|Justice|Holy yakmel! One hundred tons! Is it still workin'?}}
+{{dialogue|Qi|It... doesn't look damaged. We need to find the {{textcolor|green|control room}} for the generator. Then we'll know for sure.}}
+The conversation ends.
+
+TRIGGER Procedure 9.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Find the Control Room===
+
+{{mission_details
+|desc = To learn more about the water generator, seek out the Control Room.
+|details = Find the Control Room
+}}
+Justice stops standing still
+Qi stops standing still
+CUTSCENE UI STATE EXIT || 
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8007 | state: Defense
+AREA TRIGGER ONCE CREATE || id: 23256 | missionId: 1200324 | sceneName: Reservoir_Dungeon | showOnMap: 0 | mapIcon: MissionArea | transId: 0 | flagName: reservoir_control_trigger
+Qi stops standing still
+
+TRIGGER Procedure 9.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | enter: 0 | npc: 8000 | id: 23256
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 23256 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 9.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23256 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Qi stands still in Reservoir_Dungeon
+Justice stands still in Reservoir_Dungeon
+PLAYER SET POS ROT FLAG || flagName: reservoir_control_player | sceneName: Reservoir_Dungeon
+DELAY MASK SET || maskId: 23256 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 9.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 23256
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 13040, 13041, 13042, 13043 starts:
+{{dialogue|Qi|This should be the control room. I going to look at the controls. ''Player'', can you please look around for any documentation?}}
+{{dialogue|Justice|Whata 'bout me, Director? How can I help?}}
+{{dialogue|Qi|...I don't particularly have faith in your ability to find things.}}
+{{dialogue|Justice|Shucks, I mean... at least you're honest...}}
+
+TRIGGER Procedure 10.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Find Logs===
+
+{{mission_details
+|desc = Now that you're in the control room, find the work logs to get more information about the water technology.
+|details = Find Logs
+*{{i2|Control Room Work Log|0/1}}
+}}
+Justice stops standing still
+Qi stops standing still
+CUTSCENE UI STATE EXIT || 
+Set ITEM to 0
+AUTOSAVE TRY || 
+
+TRIGGER Procedure 9.0 Step 4.0 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 23255
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 14407, 14408, 14409, 14410 starts:
+{{dialogue|-2|1.The Purification Tank is the primary source of water for the staff living on base, as well as ship manufacturing and experimentation. It needs to be kept to the highest standards of hygiene. Personnel entering the reservoir must wear protective clothing.}}
+{{dialogue|-2|2.Reservoir staff are to patrol daily at 19:00, make the generator room, control room, and public areas accessible at this time. Relevant staff will be disinfecting the area.}}
+{{dialogue|-2|3.The lowest level of the reservoir is directly connected to the water pipes for the base, and must be patrolled by security AIs at all time. Disruptions to their patrols will not be tolerated.}}
+{{dialogue|-2|Addendum: Takeout is strictly forbidden. All food is provided at the cafeteria. Outside food can be a critical danger to the Atmospheric Water Generator. If an employee is found to be ordering takeout, 15% will be deducted from their next paycheck.}}
+
+TRIGGER Procedure 10.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | targetId: 7 | canSubmit: 1 | missionId: 1200324
+CONDITIONS
+Always:
+ACTIONS
+===Find Logs===
+
+{{mission_details
+|desc = Now that you're in the control room, find the work logs to get more information about the water technology.
+|details = Find Logs
+*{{i2|Control Room Work Log|0/1}}
+*{{i2|Qi|0/1}}
+}}
+NPC SET CAN INTERACT || npc: 8007 | canInteract: 1
+
+TRIGGER Procedure 10.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1200324 | targetId: 7 | canSubmit: 1
+ACTIONS
+(cId 8) A conversation 13044, 13045, 13046 starts:
+{{dialogue|Qi|I have checked the generator, it seems to be intact. I'm unclear as to whether the rest of the system is still in working condition.}}
+{{dialogue|Qi|Let me see the logs. Perhaps there is a record on system integrity.}}
+{{dialogue|Qi|"Generator - repaired. Maintenance has updated the automatic repair units. Troubleshooting will be automatically repeated at regular intervals." Good. It seems the system has an automatic maintenance system. I'll try restarting it.}}
+
+TRIGGER Procedure 10.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 23257 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+NPC SET CAN INTERACT || canInteract: 0 | npc: 8007
+
+TRIGGER Procedure 10.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23257 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Qi stands still in Reservoir_Dungeon
+Justice stands still in Reservoir_Dungeon
+PLAYER SET POS ROT FLAG || flagName: reservoir_control_player3 | sceneName: Reservoir_Dungeon
+DELAY MASK SET || maskId: 23257 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 10.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 10 | itemType: 0 | id: 23255
+CONDITIONS
+Always:
+ACTIONS
+Increment ITEM by 1
+
+TRIGGER Procedure 10.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON BAG CHANGE || order: 0 | item: 10000024 | changeType: 0 | itemGrade: -1
+CONDITIONS
+Always:
+ACTIONS
+Increment ITEM by 1
+
+TRIGGER Procedure 11.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 23257
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 23252) to Qi
+(param: TargetScene:Reservoir_Dungeon|MoveMode:Run|FlagName:reservoir_control_qi2|Action:Operate)
+SOUND PLAY 2D || idStr: Play_Story_qi_operate
+GEAR TRIGGER TRIGGER || id: 20 | scene: Reservoir_Dungeon
+
+TRIGGER Procedure 11.0 Step 0.5 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8007 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 9) A conversation 13047, 13048 starts:
+{{dialogue|-2|Welcome to the Olympus 3000 water generation system. Troubleshooting will begin shortly...}}
+{{dialogue|-2|Troubleshooting complete. System integrity: 100%. All systems functional. Water generation, engaged...}}
+Remove behavior CommanderMoveToFlagAndAction (idName: 23252) from Qi
+
+TRIGGER Procedure 11.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 9) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 23252 | sec: 3
+
+TRIGGER Procedure 11.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 23252
+CONDITIONS
+Always:
+ACTIONS
+(cId 10) A conversation 3899_0 starts:
+{{dialogue|Justice|That sound... it's water flowin'!}}
+{{dialogue|Qi|It's working! The glory of science!}}
+
+*''We did it!''
+*''Sandrock is saved!''
+
+{{dialogue|Qi|indent=true|answer=We did it!
+|That we did. I think Mayor Trudy's water problem is no longer an issue. I'm going to celebrate by drinking twelve cups of tea today. To be clear, this is an almost infinite supply of water. As long as the machine is running...}}
+{{dialogue|Qi|indent=true|answer=Sandrock is saved!
+|That seems to be the case... Yay for us. To be clear, this is an almost infinite supply of water. As long as the machine is running...}}
+Qi stands still in Reservoir_Dungeon
+
+TRIGGER Procedure 11.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8007 | cId: 10 | missionId: 1200325
+CONDITIONS
+Check if ITEM is == 2
+ACTIONS
+(cId 11) A conversation 13053 starts:
+{{dialogue|Qi|Wait, ''Player'', it seems you found something else. What did you discover?}}
+
+TRIGGER Procedure 11.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 23251) to Player
+(param: CMDAction:Talk)
+
+TRIGGER Procedure 11.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver | npc: 8000
+CONDITIONS
+Always:
+ACTIONS
+(cId 12) A conversation 13054, 13055, 13056, 13057, 13058 starts:
+{{dialogue|Qi|Interesting. Let me see.}}
+{{dialogue|Qi|Hm. This transcript record implies that people in the base had plans to leave on the next Olympia launch. They aimed to avoid the calamity...}}
+{{dialogue|Qi|I wonder if there is a way for us to contact the human voyagers traveling in these starships... Think of all the knowledge we could gain... I wonder why they haven't tried to contact us...?}}
+{{dialogue|Justice|Uh... Director... I think you're kinda gettin' a little away from our mission here.}}
+{{dialogue|Qi|Oh sorry. My mind was wandering.}}
+Remove behavior CommanderPlayerAction (idName: 23251) from Player
+
+TRIGGER Procedure 12.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8007 | cId: 10 | missionId: 1200325
+CONDITIONS
+Check if ITEM is < 2
+ACTIONS
+(cId 13) A conversation 3902_0 starts:
+{{dialogue|Justice|Well, what are we waitin' for? Let's head on back and tell the Mayor the good news!}}
+
+*''Yeah, let's go.'' (No unique dialogue)
+*''I want to look around.''
+
+{{dialogue|Justice|indent=true|answer=I want to look around.
+|Gotcha. Let me know when you're ready.}}
+
+TRIGGER Procedure 12.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 13) After the conversation ends:
+CONDITIONS
+Check if CHOICE2 is == 0
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+===Talk to Justice===
+
+{{mission_details
+|desc = You've found everything you need. Talk to Justice to leave.
+|details = Talk to Justice
+}}
+NPC SET CAN INTERACT || canInteract: 1 | npc: 8008
+Set global blackboard key 1200325 with info 1.
+
+TRIGGER Procedure 13.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 13) After the conversation ends:
+CONDITIONS
+Check if CHOICE2 is == 1
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 23258 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 23255
+
+TRIGGER Procedure 12.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CONVERSATION END BEFORE || order: 0 | npc: 8007 | cId: 12 | missionId: 1200325
+CONDITIONS
+Always:
+ACTIONS
+(cId 13) A conversation 3902_0 starts:
+{{dialogue|Justice|Well, what are we waitin' for? Let's head on back and tell the Mayor the good news!}}
+
+*''Yeah, let's go.'' (No unique dialogue)
+*''I want to look around.''
+
+{{dialogue|Justice|indent=true|answer=I want to look around.
+|Gotcha. Let me know when you're ready.}}
+
+TRIGGER Procedure 12.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 13) The player picks the first option in conversation segment 13059:
+{{dialogue|Justice|Well, what are we waitin' for? Let's head on back and tell the Mayor the good news!}}
+
+*''Yeah, let's go.'' (No unique dialogue)
+*''I want to look around.'' (No unique dialogue)
+
+(cId 13) The player picks the first option in conversation segment 13061:
+{{dialogue|Justice|You ready to rollout?}}
+
+*''Yeah, let's go.'' (No unique dialogue)
+*''I want to look around.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE2 to 1
+
+TRIGGER Procedure 12.0 Step 4.0 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Justice
+CONDITIONS
+Starship Enterprising is in state 2 with flag 1
+ACTIONS
+(cId 13) A conversation 3904_0 starts:
+{{dialogue|Justice|You ready to rollout?}}
+
+*''Yeah, let's go.'' (No unique dialogue)
+*''I want to look around.''
+
+{{dialogue|Justice|indent=true|answer=I want to look around.
+|Gotcha. Let me know when you're ready.}}
+
+TRIGGER Procedure 13.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 23258 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Qi stops standing still
+Justice stops standing still
+NPC SET CAN INTERACT || npc: 8007 | canInteract: 1
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: reservoir_player2
+DELAY MASK SET || maskId: 23258 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Qi stops standing still
+
+TRIGGER Procedure 13.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Reservoir_Dungeon to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Qi stands still in Main
+Justice stands still in Main
+
+TRIGGER Procedure 14.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Reservoir_Dungeon to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId 14) A conversation 13062, 13063, 13064 starts:
+{{dialogue|Qi|Sheriff, I would like to request the Civil Corps' help in clearing the entrances to the Starship Ruins. It would be easier for me when I come back for further research expeditions.}}
+{{dialogue|Justice|Good thinkin'! Now that our main water source will be from here, gotta make it more accessible, right?}}
+{{dialogue|Justice|''Player'', thanks for your hard work today. I'm gonna take the Director and go report this to Mayor Trudy. We'll see what she wants to do next. You take it easy now.}}
+
+TRIGGER Procedure 14.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 14) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: 1200325
+NPC SET CAN INTERACT || canInteract: 1 | npc: 8008
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8007
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8008
+Qi stops standing still
+Justice stops standing still
+CUTSCENE UI STATE EXIT || 
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1200324
+
+TRIGGER Procedure 14.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 23255
+SCENEITEM DELETE || id: 218727 | itemType: 0
+END MISSION 1200325

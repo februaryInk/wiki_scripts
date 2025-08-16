@@ -1,0 +1,410 @@
+Reading Mission 1500328: Sandrock is Green Again
+
+<onlyinclude>{{Infobox mission
+|name = Sandrock is Green Again
+|image =
+|description = The forest is getting larger and larger. Don't quit now, this is the home stretch!
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 2750
+|reputation = 15
+|gols = 1000
+|npc1 = -1
+|rp1 = 10
+|rewards = {{i2|Planting Kit Lv3}|1}
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200310
+
+TRIGGER Procedure 9.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Operation Greenland is successfully completed
+Check if mission Luo and the Tree is result 1 flag 1
+ACTIONS
+Run mission #1200331
+
+TRIGGER Procedure 9.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1200331 is result 1 flag 1
+ACTIONS
+Run mission Sandrock is Green Again
+Set global blackboard key 1800342 with info 1.
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1500328
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|618}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 618
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1500328
+START MISSION 1500328
+===Go to Outback Forest===
+
+{{mission_details
+|desc = Nia said the forest in the Outback is getting huge! Go see what she's talking about.
+|details = Go to Outback Forest
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 4
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment TreeNumber by 1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if TreeNumber is == 2
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 532805 | path: Mission_Plant_DesertOutBack_2_NPCArea_3 | sceneName: DesertOutback | flagName: showdown_desertoutback | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 532800007 | path: Mission_Plant_DesertOutBack_2_OutGreen_0 | sceneName: Main | flagName: showdown_main | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 23167 | path: Mission_Main_GreenCity_Tree_1 | sceneName: Main | flagName: showdown_main | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 532800007
+SCENEITEM DELETE || itemType: 0 | id: 23167
+SCENEITEM CREATE FLAG || itemType: 0 | id: 532800007 | path: Mission_Plant_DesertOutBack_2_OutGreen_0 | sceneName: Main | flagName: showdown_main | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 23167 | path: Mission_Main_GreenCity_Tree_1 | sceneName: Main | flagName: showdown_main | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if TreeNumber is == 4
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 532806 | path: Mission_Plant_DesertOutBack_2_NPCArea_4 | sceneName: DesertOutback | flagName: showdown_desertoutback | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 532800008 | path: Mission_Plant_DesertOutBack_2_OutGreen_1 | sceneName: Main | flagName: showdown_main | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 23168 | path: Mission_Main_GreenCity_Tree_2 | sceneName: Main | flagName: showdown_main | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+END MISSION 1500328
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the DesertOutback:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_desertoutback
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_desertoutback
+CUTSCENE UI STATE ENTER || 
+Nia stands still in DesertOutback
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the DesertOutback:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 150032801 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 150032801 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 150032801 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+PLAYER SET POS ROT FLAG || sceneName: DesertOutback | flagName: Story_5328_Player_New
+
+TRIGGER Procedure 1.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 150032801 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 150032801) A conversation 14353 starts:
+{{dialogue|Nia|It's really beautiful, isn't it?}}
+
+TRIGGER Procedure 1.0 Step 5.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 150032801) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 150032801) to Nia
+(param: TargetScene:DesertOutback|MoveMode:Walk|FlagName:Story_5328_NiYa)
+Add behavior CommanderMoveToFlagAndAction (idName: 150032802) to Player
+(param: TargetScene:DesertOutback|MoveMode:Walk|FlagName:Story_5328_Player)
+
+TRIGGER Procedure 2.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 150032801) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 532804) A conversation 14387 starts:
+{{dialogue|Trudy|You all checked on it not that long ago, yes? What did you discover?}}
+
+TRIGGER Procedure 1.0 Step 5.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8059 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 532801) A conversation 4246_0 starts:
+{{dialogue|Nia|It's crazy to think that this used to be all desert...}}
+{{dialogue|Nia|But through sheer perseverence and will. And hard work, of course...}}
+{{dialogue|Nia|We've made a forest out of nothing. It makes you think there's hope. That the future will be brighter. It's why I love agriculture. It's the creation of life.}}
+
+*''It's really something.''
+*''We couldn't have done it without you.''
+*{{flirt}}''I'm so glad I can share this with you.''
+
+{{dialogue|Nia|indent=true|answer=It's really something.
+|Yeah. Sandrock's been through so much...}}
+{{dialogue|Nia|indent=true|answer=We couldn't have done it without you.
+|Haha, I've only been here for a little while! It's you that did all the heavy lifting.}}
+{{dialogue|Nia|indent=true|answer=I'm so glad I can share this with you.
+|Me too... it's been so long, and we're finally together again.}}
+{{dialogue|Nia|But now this is my life! I'm here to stay in Sandrock. As long as you're here, that is...}}
+{{dialogue|Nia|But enough sappy stuff!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 5.1 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 532801) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 5328100) A conversation 14365, 14366 starts:
+{{dialogue|Nia|It's been exciting being here, too. And I'm learning so much from Zeke.}}
+{{dialogue|Nia|This forest... it feels like our forest. It represents us, and our future here!}}
+
+TRIGGER Procedure 1.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 532802
+CONDITIONS
+Always:
+ACTIONS
+Zeke stands still in DesertOutback
+Trudy stands still in DesertOutback
+Mort stands still in DesertOutback
+
+TRIGGER Procedure 2.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5328100) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 532802) A conversation 14367 starts:
+{{dialogue|Trudy|Oh, hello! Come to admire our handiwork as well, eh?}}
+Nia stands still in DesertOutback
+PLAYER SET POS ROT FLAG || sceneName: DesertOutback | flagName: Story_5328_Player1
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 532802) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 5328002) to Zeke
+(param: TargetScene:DesertOutback|MoveMode:Walk|FlagName:Story_5328_Zake1)
+Add behavior CommanderMoveToFlagAndAction (idName: 5328003) to Trudy
+(param: TargetScene:DesertOutback|MoveMode:Walk|FlagName:Story_5328_Du1)
+Add behavior CommanderMoveToFlagAndAction (idName: 5328004) to Mort
+(param: TargetScene:DesertOutback|MoveMode:Walk|FlagName:Story_5328_MoTe1)
+
+TRIGGER Procedure 2.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 532802) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 532803) A conversation 14376, 14377, 14378, 14379, 14380, 14381, 14382, 14383 starts:
+{{dialogue|Mort|It's... wonderful. These poplars... they're the same Martle planted when the sandstorms got worse.}}
+{{dialogue|Zeke|Ma was right. We just didn't know what was wrong with the soil then.}}
+{{dialogue|Nia|And now we've got the ammunition we need to fight back against those sandstorms! A green wall, pew! Gonna stop 'em in their tracks!}}
+{{dialogue|Mort|When the sandstorms lessen... will plants grow in Sandrock proper?}}
+{{dialogue|Zeke|That's the plan...}}
+{{dialogue|Mort|What about... our tree? Is there any hope for our tree?}}
+{{dialogue|Nia|Huh? "Our tree?" Which one's that?}}
+{{dialogue|Zeke|The one up at Mt. Rocksand. Ma and Pa used to go up there all the time. Had their wedding there.}}
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8033 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 532802) A conversation 14368, 14369, 14370, 14371, 14372, 14373, 14374, 14375 starts:
+{{dialogue|Nia|Right you are! Great minds think alike, it seems!}}
+{{dialogue|Zeke|Hope we're not intrudin'.}}
+{{dialogue|Nia|Not at all! We were just talking about you!}}
+{{dialogue|Zeke|Nothin' bad I hope.}}
+{{dialogue|Nia|No! No, I was actually just saying... How great you are! And how amazing this community is... and how I'm already learning a lot from you!}}
+{{dialogue|Mort|I've always said, son. You do have the power to inspire. Through your deeds. Your deeds need only be known...}}
+{{dialogue|Zeke|Might be some truth to that. Thanks, Pa.}}
+{{dialogue|Trudy|Well, Mort... what do you think?}}
+
+TRIGGER Procedure 2.0 Step 3.5 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 532803) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Nia|Mama tree...!}}
+Set global blackboard key TreeResearch with info 1.
+
+TRIGGER Procedure 2.0 Step 3.6 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC BUBBLE STATE CHANGE || order: 0 | npc: 8059 | flag: 0
+CONDITIONS
+Always:
+ACTIONS
+(cId 150032801) A conversation 14385, 14386 starts:
+{{dialogue|Zeke|Yeah, it was one of the last trees beyond town to wilt when things started getting drier out here, but... sure enough, not long after Ma went out...}}
+{{dialogue|Zeke|Well. We all know what it looks like.}}
+
+TRIGGER Procedure 2.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 532804) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 532805) A conversation 14388, 14389, 14390, 14391, 14392, 14393, 14394, 14395, 14396, 14397 starts:
+{{dialogue|Zeke|Sigh... Well, I talked to Dr. Luo about it and-}}
+{{dialogue|Nia|I'm on it!}}
+{{dialogue|Zeke|Ah...? Luo said there's no time... and even if we tried, there's no guarantee we could save it.}}
+{{dialogue|Nia|I'll make time! And I'll do whatever it takes to save Mama- er, your Pa's tree!}}
+{{dialogue|Zeke|Hm. As long as it doesn't interfere with our work at the Greenhouse, guess I can't argue.}}
+{{dialogue|Mort|Oh... that would be so wonderful if that happened...}}
+{{dialogue|Mort|But...}}
+{{dialogue|Mort|That tree was old when we first arrived... It would be foolish to hope it has much life left to live...}}
+{{dialogue|Mort|Nevertheless, I appreciate your attempts to console this old man...}}
+{{dialogue|Nia|I really am going to give it my all, Mr. Mort. In the meantime, I say we double our efforts towards reforestation! I bet we can get twice as many trees out here in a season!}}
+
+TRIGGER Procedure 2.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 532805) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 532805) A conversation 14398, 14399, 14400 starts:
+{{dialogue|Trudy|Couldn't have said it better myself! In fact, I was just about to suggest the same thing...}}
+{{dialogue|Nia|Like I said, great minds think alike!}}
+{{dialogue|Trudy|Alright, then! To phase two of our greenification efforts! Keep up the fantastic work everyone! This is the home stretch!}}
+
+TRIGGER Procedure 2.0 Step 10.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 532805) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Plant 100 Trees===
+
+{{mission_details
+|desc = Saxoul Tree Seeds
+|details = Plant 100 Trees
+}}
+Nia stops standing still
+Zeke stops standing still
+Trudy stops standing still
+Mort stops standing still
+Nia stops standing still
+Remove behavior CommanderNPCAction (idName: 5328001) from Trudy
+Remove behavior CommanderMoveToFlagAndAction (idName: 5328002) from Zeke
+Remove behavior CommanderMoveToFlagAndAction (idName: 5328003) from Trudy
+Remove behavior CommanderMoveToFlagAndAction (idName: 5328004) from Mort
+CUTSCENE UI STATE EXIT || 
+SCENEITEM CREATE FLAG || itemType: 0 | id: 532801 | path: Mission_Plant_DesertOutBack_2_2 | sceneName: DesertOutback | flagName: showdown_desertoutback | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 532802 | path: Mission_Plant_DesertOutBack_2_3 | sceneName: DesertOutback | flagName: showdown_desertoutback | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 532803 | path: Mission_Plant_DesertOutBack_2_NPCArea_2 | sceneName: DesertOutback | flagName: showdown_desertoutback | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 532804 | path: Mission_Plant_DesertOutBack_2_FX_1 | sceneName: DesertOutback | flagName: showdown_desertoutback | extraParams: 0
+Set TreeNumber to 0
+Add 100 Black Saxoul Seed of Default quality (Notify player)
+Add 100 Biocrust of Default quality (Notify player)
+Remove behavior CommanderMoveToFlagAndAction (idName: 150032801) from Nia
+Remove behavior CommanderMoveToFlagAndAction (idName: 150032802) from Player
+RIDABLE DESTROY || id: 23301
+RIDABLE CREATE || protoId: 1001 | instanceId: 532801 | ownerId: 8000 | sceneFlag: DesertOutback:successplant_robot
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 100
+------------------------------------------------------------
+EVENTS
+ON SEED PLANT || order: 0 | id: 16100030
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1500328 | targetId: 532802 | transId: 80006101 | isAdd: 1
+
+TRIGGER Procedure 3.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SEED PLANT || order: 10 | id: 16100030
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1500328 | targetId: 532802 | canSubmit: 1
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 532804
+SUBMIT MISSION 1500328
+
+==Rewards==
+{{mission reward
+|npc1 = -1
+|rp1 = 10
+|exp = 2750
+|reputation = 15
+|gols = 1000
+|rewards = {{i2|Planting Kit Lv3}|1}
+}}

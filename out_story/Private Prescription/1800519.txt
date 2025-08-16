@@ -1,0 +1,157 @@
+Reading Mission 1800519: Private Prescription
+
+<onlyinclude>{{Infobox mission
+|name = Private Prescription
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200106
+
+TRIGGER Procedure 6.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1500400 is result 1 flag 1
+ACTIONS
+Run mission #1300394
+
+TRIGGER Procedure 6.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check relationship with Fang is Lover
+Ghost Recon is in state 1 with flag 0
+Ghost Recon is in state 2 with flag 0
+CHECK SCENEITEM EXIST || id: 23081 | exist: 0 | sceneItemType: 0
+Check if Ginger has left town
+Check if Talon has left town
+The Kidnapping is in state 1 with flag 0
+The Kidnapping is in state 2 with flag 0
+Words to Betray the Heart is successfully completed
+Between the Lines is in state 1 with flag 0
+Between the Lines is in state 2 with flag 0
+Check if mission Shonash Canyon Bridge Opening Ceremony is result 1 flag 1
+CHECK HAS LOVE DLC || 
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+Run mission Private Prescription
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800519
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1800519 | id: 85191 | sceneName: Main | flagName: Trigger_85191 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 85191
+CONDITIONS
+CHECK WEATHER STATE || weather: 2 | flag: 0
+ACTIONS
+AREA TRIGGER DELETE || id: 85191
+DELAY MASK SET || maskId: 85191 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 5.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85191 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8519_0_1
+Fang stands still in Main
+Vivi stands still in Main and looks at Mabel
+Mabel stands still in Main and looks at Vivi
+DELAY MASK SET || maskId: 85191 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 6.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85191 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 8180_0 starts:
+{{dialogue|Mabel|...Saw another Builder the other day with big circles under their eyes... Somethin' about that profession keeps 'em all up at night; couldn't tell you what it is...!}}
+{{dialogue|Vivi|It's the job! I swear I hear the doors of that Commerce Guild next door opening and shutting at all hours of the day and night.}}
+{{dialogue|Mabel|Well, whenever we put up a commission, most times it's done within the day. We didn't used to have this kinda twenty four hour turnaround... Is it possible... that the Builders are bein' worked like mules so that folks like us can enjoy the most minor of conveniences...!?}}
+{{dialogue|Vivi|I say it's ambition. Some of these Builders work themselves half to death just to make an extra buck. Sad to say they'll be paying it all back down the line with doctor bills to restore the body they destroyed in the process...}}
+{{dialogue|Fang|Half... to death...?}}
+{{dialogue|Vivi|Doctor Fang! We were just talking about you! Kinda. Talking about staying healthy and what not.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 7.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8519042) to Mabel
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8519_4_2|Delay:0.8|LookAtActor:8016)
+Add behavior CommanderMoveToFlagAndAction (idName: 8519392) to Vivi
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8519_39_2|Delay:1.5|LookAtActor:8016)
+Add behavior CommanderMoveToFlagAndAction (idName: 8519162) to Fang
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8519_16_2|Delay:0.0|LookAtActor:8039)
+
+TRIGGER Procedure 0.0 Step 8.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8016 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 8181_0 starts:
+{{dialogue|Fang|Hm. Yes, hello. How is your treatment faring? The knee?}}
+{{dialogue|Vivi|Oh, much better, thank you! That medicine you whipped up really did the trick. Used to keep me up at night, but now I sleep like a baby.}}
+{{dialogue|Mabel|You really are our guardian angel, Dr. Fang! That concoction of yours cured Coop's throat in a jiffy! 'Course... he stopped taking it and the infection came back... but... he's back on it again, and should be good as new in no time!}}
+{{dialogue|Fang|Good to hear. The medicine is without issue. Let me know if you have any more problems.}}
+{{dialogue|Vivi|You got it, doc. Thanks again!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 11.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Fang stops standing still
+Mabel stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8519162) from Fang
+Remove behavior CommanderMoveToFlagAndAction (idName: 8519042) from Mabel
+CAMERA PATH STOP ALL || 
+CUTSCENE UI STATE EXIT || 
+Remove behavior CommanderMoveToFlagAndAction (idName: 8519392) from Vivi
+Vivi stops standing still
+ACTION NPC GEN CLUSTER || cluster: S1800519_1 | npcs: 8039,8004 | randomNpcs: -1 | leader: 8004 | min: 2 | max: 3 | behavior: Story1800519_Chat
+
+TRIGGER Procedure 0.0 Step 13.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+ACTION NPC REMOVE CLUSTER || cluster: S1800519_1
+END MISSION 1800519

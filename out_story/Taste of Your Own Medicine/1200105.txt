@@ -1,0 +1,156 @@
+Reading Mission 1200105: Taste of Your Own Medicine
+
+<onlyinclude>{{Infobox mission
+|name = Taste of Your Own Medicine
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Taste of Your Own Medicine:
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior XReagent (idName: 21041) from X
+START MISSION 1200104
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200104
+CONDITIONS
+Always:
+ACTIONS
+Run mission Taste of Your Own Medicine
+END MISSION 1200104
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200105
+CONDITIONS
+Always:
+ACTIONS
+===Go to Medicine Stall on time===
+
+{{mission_details
+|desc = Go to the Medicine Stall at Fang's Clinic. The medicine stall is only open on {{textcolor|green|Wednesday}} and {{textcolor|green|Friday}} every week.
+|details = Go to Medicine Stall on time
+}}
+Add 1 Medical Poster of Default quality (Notify player)
+SCENEITEM CREATE FLAG || itemType: 0 | id: 21051 | path: Mission_Fangsposter | sceneName: Main | flagName: fangsposter1 | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 21052 | path: Mission_Fangsposter2 | sceneName: Chamber | flagName: fangsposter2 | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON EVERY WEEK START || order: 0 | week: 3
+ON EVERY WEEK START || order: 0 | week: 5
+CONDITIONS
+CHECK WEATHER STATE || weather: 2 | flag: 0
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1200105 | id: 210511 | sceneName: Main | flagName: tastemed_trigger | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80004136
+Set REAGENT to 1
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200105
+CONDITIONS
+CHECK SCENEITEM EXIST || sceneItemType: 0 | id: 20325 | exist: 1
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1200105 | id: 210511 | sceneName: Main | flagName: tastemed_trigger | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80004136
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 210511
+CONDITIONS
+CHECK SCENEITEM EXIST || sceneItemType: 0 | id: 20325 | exist: 1
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+{{cutscene|id = 2021}}
+A cutscene CG_SELLPRODUCTS (duration: -2.0) starts playing
+Taste at Your Own Risk - One day the strange doctor, Fang, started handing out free medicine in front of his clinic. It seemed a bit dubious, but his bird was able to convince people to try.
+AREA TRIGGER DELETE || id: 210511
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_SELLPRODUCTS | state: 8
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: tastemed_player
+Fang stands still in Main
+X stands still in Main
+X stops standing still
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_SELLPRODUCTS | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 620_0 starts:
+{{dialogue|Fang|Want?}}
+{{dialogue|X|It's free! It's free!}}
+
+*''Okay.''
+*''Let me think about it...''
+
+{{dialogue|X|indent=true|answer=Okay.
+|Go! Go!}}
+{{dialogue|X|indent=true|answer=Let me think about it...
+|It's free! It's free! Leave your wallet at home!}}
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Fang stops standing still
+ACTION REAGENT START || type: 0 | id: 20325
+ACTION SOCIAL REMOVE MASK || npc: 8016 | mask: LockFavor
+SUBMIT MISSION 1200104
+END MISSION 1200105
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+When the time is 18:00 (order: 0):
+CONDITIONS
+GROUP 0:
+CHECK DAY OF WEEK || dayOfWeek: 3 | set: 1
+
+GROUP 1:
+CHECK DAY OF WEEK || dayOfWeek: 5 | set: 1
+
+GROUP 2:
+CHECK DAY OF WEEK || dayOfWeek: 4 | set: 1
+
+GROUP 3:
+CHECK DAY OF WEEK || dayOfWeek: 6 | set: 1
+
+ACTIONS
+AREA TRIGGER DELETE || id: 210511

@@ -1,0 +1,313 @@
+Reading Mission 1200373: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100004
+
+TRIGGER Procedure 4.0 Step 2.5 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 1719401 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 1719401 | delayTime: 0 | durationTime: 1 | changeType: 1 | curveIndex: 0
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: CB_Ladder_Top
+
+TRIGGER Procedure 4.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1200373
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+Where's Mi-an is in state 1 with flag 0
+The Childhood Friend is in state 1 with flag 0
+Goodbye, Nia is in state 1 with flag 0
+The Kidnapping is in state 1 with flag 0
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: triallogan | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: mortphoto5 | info: 1 | exist: 1
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Mort stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+ACTION DROP TASK START || id: 2
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: mortphoto5 | info: 1 | exist: 1
+Check if CON is == 0
+ACTIONS
+(cId 0) A conversation 17309, 17310, 17312, 17313, 17314 starts:
+{{dialogue|Mort|''Player''! How are you?}}
+{{dialogue|Mort|I just wanted to thank you again for helping me find those photos. Losing them made me realize... those memories are everything to me.}}
+{{dialogue|Mort|Now my new album is nearly half full... I can't help but wonder, will we really find them all?}}
+{{dialogue|Mort|There was also a letter tucked away in the old one- Er, well, nevermind about that. If you see any more of those photos, please do let me know.}}
+{{dialogue|Mort|Well, I'm sure you're very busy... My, your workshop is flourishing! This generation... you really are something...}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: mortphoto5 | info: 1 | exist: 0
+Check if CON is == 0
+ACTIONS
+(cId 0) A conversation 17309, 17311, 17312, 17313, 17314 starts:
+{{dialogue|Mort|''Player''! How are you?}}
+{{dialogue|Mort|I'm not sure if you remember, but I've been looking for those photos that blew away in that first sandstorm after you were here... As a matter of fact, I managed to find some of them myself!}}
+{{dialogue|Mort|Now my new album is nearly half full... I can't help but wonder, will we really find them all?}}
+{{dialogue|Mort|There was also a letter tucked away in the old one- Er, well, nevermind about that. If you see any more of those photos, please do let me know.}}
+{{dialogue|Mort|Well, I'm sure you're very busy... My, your workshop is flourishing! This generation... you really are something...}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Mort stops standing still
+Set CON to 1
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200373
+CONDITIONS
+Always:
+ACTIONS
+Set CON to 0
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+Set CON to 1
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON BAG CHANGE || order: 0 | item: 15410010 | changeType: 0 | itemGrade: -1
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON ADD || missionIcon: 4 | missionId: 1200373 | npc: 8041
+PHOTO UNLOCK PRESTORE || id: 48
+
+TRIGGER Procedure 2.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON BAG CHANGE || order: 0 | item: 15410011 | changeType: 0 | itemGrade: -1
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON ADD || missionIcon: 4 | missionId: 1200373 | npc: 8041
+PHOTO UNLOCK PRESTORE || id: 49
+
+TRIGGER Procedure 2.0 Step 0.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+At the beginning of the day:
+MISSION BEGIN 1200373
+CONDITIONS
+CHECK PLAYER ITEM || item: 15410010 | itemGrade: -1 | set: 2 | count: 1
+ACTIONS
+PHOTO UNLOCK PRESTORE || id: 48
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Mort
+CONDITIONS
+CHECK PLAYER ITEM || item: 15410010 | itemGrade: -1 | set: 2 | count: 1
+ACTIONS
+NPC ICON REMOVE || npc: 8041 | missionIcon: 4 | missionId: 1200373
+Remove 1 The Before Times of Default quality (Notify player)
+Mort gains 5 favor
+(cId 1) A conversation 5246_0 starts:
+{{dialogue|Mort|Oh... well, if it isn't...}}
+{{dialogue|Mort|This was Mason's first day as a Builder here. One of the cheeriest folk you could've known... back then, anyhow. Your friend reminded me of him, Mi-an. Always the first on the scene to lend a hand.}}
+{{dialogue|Mort|And... I'd almost forgotten about those two...}}
+{{dialogue|Mort|Email and Lou; that woman there with the glasses, and that fellow wearing a suit next to Theodore...}}
+{{dialogue|Mort|They took over running the town at the height of the relic rush. Lou believed with development, Sandrock would figure out ways to overcome its environmental drawbacks... So he did everything he could to push for progress...}}
+{{dialogue|Mort|Sadly, he was mistaken. With all those big machines coming in along with more and more mouths to feed, the water dried up... and that was the end of it.}}
+{{dialogue|Mort|In his later years, he tried to find a way to keep what was left afloat, but it was too late. He left office a broken man... Same thing happened to Email.}}
+{{dialogue|Mort|For nearly forty years they fought for this town. But... we all have our limits, I suppose.}}
+{{dialogue|Mort|Now... no one in this photo is here anymore.}}
+{{dialogue|Mort|But... we have new hope in this town, now, ''Player''. We've learned from our past. Learned from our mistakes.}}
+{{dialogue|Mort|Sacrifices are sometimes necessary to make progress. Let us hope that the last of our sacrifices have been made...}}
+{{dialogue|Mort|...}}
+{{dialogue|Mort|Thank you for finding this, ''Player''. I think... there are only {{textcolor|green|a few more}}. I must say I am astounded at how fortunate we've been; I hardly expected to see any again...}}
+{{dialogue|Mort|Let me know if any more turn up. And... thank you.}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Mort
+CONDITIONS
+CHECK PLAYER ITEM || item: 15410011 | itemGrade: -1 | set: 2 | count: 1
+ACTIONS
+NPC ICON REMOVE || npc: 8041 | missionIcon: 4 | missionId: 1200373
+Remove 1 Minister Zeke of Default quality (Notify player)
+(cId 2) A conversation 5247_0 starts:
+{{dialogue|Mort|Oh, this old thing...}}
+{{dialogue|Mort|Many people forget that Zeke was the minister of our town for a while. Back in 78, a lot of folks were leaving. That was the year Martle didn't come back from one of her excursions. Without her around, well...}}
+{{dialogue|Mort|Those close to Zeke now know that he can be a truly inspiring person. So, those few of us left, myself included, asked him to step up and try to be the voice that we needed to keep spirits up in Sandrock.}}
+{{dialogue|Mort|Of course, we knew Zeke's soft-spoken nature might not translate well to the stage, but... well, we'd hoped he could find his voice in time.}}
+{{dialogue|Mort|That, ahem...}}
+{{dialogue|Mort|Never happened...}}
+{{dialogue|Mort|He gave it his all...! It was... moving as a father to see him trying so hard, but... at the end of the day, he was a fish out of quicksand; each of his sermons floundered to roughly the same extent, showing no signs of improvement.}}
+{{dialogue|Mort|"Life is like bio-crust," he'd say. The issue therewithin being... no one really knows what bio-crust is.}}
+{{dialogue|Mort|He didn't want to give up. But... it wasn't his decision. People stopped coming to his sermons. And when Miguel came, he didn't even know he was replacing anyone.}}
+{{dialogue|Mort|It was... for the best.}}
+{{dialogue|Mort|I'd like to think now that Zeke is inspiring people in other ways. All the efforts he's put into understanding this desert of ours... his achievements are finally visible. Thanks in no small part to people like yourself, ''Player''.}}
+{{dialogue|Mort|Now there are those who would seek him out for his insights... Funny how to have his voice heard, it helped to step off the stage...}}
+{{dialogue|Mort|I thank you for bringing this to me, ''Player''. I'll just keep this one in the back. Zeke has a lot on his mind these days...}}
+The conversation ends.
+Mort gains 5 favor
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON BAG CHANGE || order: 0 | item: 15410012 | changeType: 0 | itemGrade: -1
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON ADD || missionIcon: 4 | missionId: 1200373 | npc: 8041
+PHOTO UNLOCK PRESTORE || id: 51
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Mort
+CONDITIONS
+CHECK PLAYER ITEM || item: 15410012 | itemGrade: -1 | set: 2 | count: 1
+ACTIONS
+NPC ICON REMOVE || npc: 8041 | missionIcon: 4 | missionId: 1200373
+Remove 1 Wedding at the Tree of Default quality (Notify player)
+(cId 3) A conversation 5248_0 starts:
+{{dialogue|Mort|Ah...! This photo...!}}
+{{dialogue|Mort|Thank you, ''Player''! This is the photo I'd hoped most we'd be able to find. This of course... is our wedding day. Everything... was perfect then.}}
+{{dialogue|Mort|Never was there a more picture perfect model of Telesis than on that day.}}
+{{dialogue|Mort|We all shared that oasis; not one of us was wanting. And as our little camp grew in numbers, so too did our family.}}
+{{dialogue|Mort|That day, we thought we'd chosen a fate: to live forever in paradise.}}
+{{dialogue|Mort|Let's just say... it's hard for me to believe in that old Light doctrine... "Everything happens for a reason."}}
+{{dialogue|Mort|...}}
+{{dialogue|Mort|...Thank you.}}
+The conversation ends.
+Mort gains 5 favor
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON BAG CHANGE || order: 0 | item: 15410013 | changeType: 0 | itemGrade: -1
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON ADD || missionIcon: 4 | missionId: 1200373 | npc: 8041
+PHOTO UNLOCK PRESTORE || id: 50
+
+TRIGGER Procedure 3.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Mort
+CONDITIONS
+CHECK PLAYER ITEM || item: 15410013 | itemGrade: -1 | set: 2 | count: 1
+ACTIONS
+UNLOCK ACHIEVEMENT || unlockID: 37
+NPC ICON REMOVE || npc: 8041 | missionIcon: 4 | missionId: 1200373
+Remove 1 Last photo of Martle of Default quality (Notify player)
+(cId 4) A conversation 5249_0 starts:
+{{dialogue|Mort|Oh...}}
+{{dialogue|Mort|So...}}
+{{dialogue|Mort|You did find it...}}
+{{dialogue|Mort|Yes, this is the last photo ever taken of Martle. Spring, 78.}}
+{{dialogue|Mort|When we lost the kids in 74, I think that was the beginning of the end for a lot of folks.}}
+{{dialogue|Mort|At first we... came together. There was strength in mourning them. We supported the families. And that day we swore that we would do everything we could to not let their losses be for nothing. A vow I still cherish to this day.}}
+{{dialogue|Mort|Everyone went out to the straw grid, doubled our efforts. Zeke took his first step toward being the hermit he is today, practically taking up residence in that greenhouse.}}
+{{dialogue|Mort|Our hopes were strangely... renewed. But the storms kept coming.}}
+{{dialogue|Mort|...and coming... and coming...}}
+{{dialogue|Mort|Stronger by the season.}}
+{{dialogue|Mort|Strangely, it was the most determined of us who left first, save for a few. Esca the poet I was surprised to see go. She always seemed to know how to cheer us up...}}
+{{dialogue|Mort|Martle scouted almost every inch of the desert, looking for some Old World technology that might save us. That meant... each journey had to be greater than the last. She travelled further and further out until...}}
+{{dialogue|Mort|Spring, 78.}}
+{{dialogue|Mort|There was nothing particular about that morning. Cool weather. Couple clouds.}}
+{{dialogue|Mort|I never really worried about Martle. She's as tough as anyone.}}
+{{dialogue|Mort|But I suppose... the only ones who drown are those brave enough to swim.}}
+{{dialogue|Mort|That was...}}
+{{dialogue|Mort|More than twenty years ago.}}
+{{dialogue|Mort|...}}
+{{dialogue|Mort|''Player''... This is all of my photos.}}
+{{dialogue|Mort|Thank you.}}
+{{dialogue|Mort|Truly, thank you.}}
+The conversation ends.
+Mort gains 5 favor
+END MISSION 1200373
+
+TRIGGER Procedure 3.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+(cId -1) After the conversation ends:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: mortphoto5 | info: 1 | exist: 1
+ACTIONS
+(cId 5) A conversation 17352 starts:
+{{dialogue|Mort|I think... there's {{textcolor|green|only one photo left}}, but... You've done enough, ''Player'', really. Because of you, I've been able to see my life slowly flash before my eyes. Few have had such an opportunity.}}
+GLOBAL BLACK BOARD REMOVE || key: mortphoto5
+ACTION DROP TASK START || id: 3
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+MISSION BEGIN 1200373
+At the beginning of the day:
+CONDITIONS
+CHECK PLAYER ITEM || item: 15410012 | itemGrade: -1 | set: 2 | count: 1
+ACTIONS
+PHOTO UNLOCK PRESTORE || id: 51

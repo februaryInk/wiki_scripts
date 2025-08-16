@@ -1,0 +1,104 @@
+Reading Mission 1700294: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200310
+
+TRIGGER Procedure 0.0 Step 1.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+ACTION NPC REMOVE FLAG || flag: 256 | npc: 8011
+Logan stops standing still
+Haru stops standing still
+Logan stops standing still
+Andy stops standing still
+END MISSION 1200312
+
+TRIGGER Procedure 0.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200310
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1700294
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700294
+CONDITIONS
+Always:
+ACTIONS
+Add behavior Story1700295 (idName: 172941) to Justice
+(param: FlagName:UprisingEnd_Justice)
+Add behavior Story1700295 (idName: 172941) to Unsuur
+(param: FlagName:UprisingEnd_Unsuur)
+Add behavior Story1700295 (idName: 172941) to Yan
+(param: FlagName:UprisingEnd_Yan|Delay:5)
+Add behavior Story1700295 (idName: 172941) to Miguel
+(param: FlagName:UprisingEnd_Miguel|Delay:5)
+Run mission #1700295
+AREA TRIGGER ONCE CREATE || missionId: 1700294 | id: 172951 | sceneName: CivilCorp | showOnMap: 0 | mapIcon: MissionAreaBranch | transId: -1 | flagName: UprisingEnd_Pen
+SCENEITEM CREATE FLAG || itemType: 0 | id: 172941 | sceneName: CivilCorp | extraParams: -1 | path: Interact_Blackbox | flagName: JailTime_Lefu
+AREA TRIGGER CREATE || missionId: 1700294 | id: 172942 | sceneName: Main | flagName: trigger_civilcorp | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: -1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200311
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior Story1700295 (idName: 172941) from Justice
+Remove behavior Story1700295 (idName: 172941) from Unsuur
+Remove behavior Story1700295 (idName: 172941) from Yan
+Remove behavior Story1700295 (idName: 172941) from Miguel
+AREA TRIGGER DELETE || id: 172951
+SCENEITEM DELETE || itemType: 0 | id: 172941
+NPC LEAVE || npc: 8095
+NPC LEAVE || npc: 8094
+NPC LEAVE || npc: 8096
+NPC LEAVE || npc: 8020
+Stev stops standing still
+Commander Lefu stops standing still
+Justice stops standing still
+Unsuur stops standing still
+AREA TRIGGER DELETE || id: 172942
+NPC SET CAN INTERACT || npc: 8020 | canInteract: 1
+NPC RANDOM REMOVE || id: 172881
+END MISSION 1700295
+ACTION NPC REMOVE FLAG || npc: 8019 | flag: 256
+ACTION NPC REMOVE FLAG || npc: 8019 | flag: 256
+ACTION NPC REMOVE FLAG || npc: 8020 | flag: 256
+ACTION NPC REMOVE FLAG || npc: 8020 | flag: 256
+END MISSION 1700294
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the CivilCorp:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 172942

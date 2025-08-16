@@ -1,0 +1,202 @@
+Reading Mission 1800395: A Penny for Your Thoughts
+
+<onlyinclude>{{Infobox mission
+|name = A Penny for Your Thoughts
+|image =
+|description = A girl carrying a guitar has arrived in Sandrock. She seems to want to brighten everyone's day.
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 2100
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200364
+
+TRIGGER Procedure 10.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission Class Reunion is result 1 flag 1
+ACTIONS
+Run mission #1500402
+
+TRIGGER Procedure 11.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission 1200311 is result 1 flag 1
+CHECK WEATHER STATE || weather: 2 | flag: 1
+CHECK GLOBAL BLACKBOARD || key: 1700314 | info: 1 | exist: 0
+ACTIONS
+Run mission A Penny for Your Thoughts
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800395
+CONDITIONS
+Always:
+ACTIONS
+ACTION SOCIAL ADD CHILD FLAG || flag: StoryBlock
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+CHECK WEATHER STATE || weather: 2 | flag: 1
+CHECK TIME || compare: 5 | hour: 16 | minute: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+
+TRIGGER Procedure 0.0 Step 2.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 833001 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+TRAIN SET VISIBLE || set: 0
+TRAIN SET DISABLE || isDisable: 1
+
+TRIGGER Procedure 0.0 Step 2.8 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+NPC REPLACE SUIT || npcSuitID: 4
+ACTION CUTSCENE START AUDIO TYPE || id: CG_COMEPENNY | duration: 0 | audioType: NoTransitionOff
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_COMEPENNY | state: 7
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8330_0_1
+SCENEITEM CREATE FLAG || itemType: 0 | id: 83301 | path: S8330_Item1 | sceneName: Main | flagName: S8330_Item1 | extraParams: 0
+Penny stands still in Main
+SCENEITEM CREATE FLAG || itemType: 0 | id: 535201 | path: Mission_Carriage | flagName: S8330_Item2 | extraParams: -1 | sceneName: Main
+
+TRIGGER Procedure 0.0 Step 3.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_COMEPENNY | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 3970_0 starts:
+{{dialogue|Penny|Hey! Is Sandrock always like this? Heck of a storm, huh? I can barely open my eyes!}}
+{{dialogue|Penny|You live around here? I've just arrived from Highwind, gonna stay in Sandrock for a while.}}
+{{dialogue|Penny|Oh, I'm Penny, by the way! I gotta say, I'm happy to be here, but I didn't expect the welcome to be so... sandy.}}
+
+*''Welcome to Sandrock! I'm ''Player''.''
+*''I'm ''Player''. Is that thing yours?'' (No unique dialogue)
+*''I'm ''Player''! I'm also from Highwind!''
+
+{{dialogue|Penny|indent=true|answer=Welcome to Sandrock! I'm ''Player''.
+|Thanks! I'm a musician actually, I came here with my-}}
+{{dialogue|Penny|indent=true|Huh?! Where's my guitar!?}}
+{{dialogue|Penny|indent=true|answer=I'm ''Player''! I'm also from Highwind!
+|Woah, that's awesome! I really loved staying in Highwind.}}
+{{dialogue|Penny|indent=true|You see, I'm on my journey from Barnarock to Walnut Groove with my trusted-}}
+{{dialogue|Penny|indent=true|Huh!? Where's my guitar!?}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8330552) to Penny
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8330_55_2|Delay:1.0)
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8055 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 13496 starts:
+{{dialogue|Penny|My guitar!}}
+
+TRIGGER Procedure 0.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8330553) to Penny
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8330_55_2|Action:PickUp)
+Remove behavior CommanderMoveToFlagAndAction (idName: 8330552) from Penny
+
+TRIGGER Procedure 0.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8055 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 3973_0 starts:
+{{dialogue|Penny|It's not broken is it? Argh, this darn wind! I can't even open my eyes!}}
+
+*''Sandstorms are dangerous, you should really head inside.''
+*''Where do you need to go? I'll take you.''
+
+{{dialogue|Penny|indent=true|answer=Sandstorms are dangerous, you should really head inside.
+|Thanks for the heads up... faceless stranger. Sorry, I can't even see what you look like in this sand...}}
+{{dialogue|Penny|indent=true|answer=Where do you need to go? I'll take you.
+|Really? You're an angel! Is everyone over here as nice as you?}}
+{{dialogue|Penny|I heard about there's a place called the Blue Moon Saloon, it would be great if you can take me there.}}
+The conversation ends.
+SCENEITEM DELETE || itemType: 0 | id: 83301
+DELIVER MISSION 1800395
+
+TRIGGER Procedure 0.0 Step 9.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8330553) from Penny
+Add behavior CommanderRandomBubbleTag (idName: 8330554) to Penny
+(param: BubbleTag:S833055_1|BubbleTime:4|minTime:6|maxTime:8|isRandom:TRUE|Follower:8000)
+START MISSION 1800395
+
+TRIGGER Procedure 0.0 Step 14.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800395
+CONDITIONS
+Always:
+ACTIONS
+ACTION SOCIAL REMOVE CHILD FLAG || flag: StoryBlock
+Run mission A Penny for Your Thoughts
+END MISSION 1800395
+
+==Rewards==
+{{mission reward
+|exp = 2100
+|reputation = None
+|gols = None
+}}

@@ -1,0 +1,594 @@
+Reading Mission 1600096: Once in a Blue Moon
+
+<onlyinclude>{{Infobox mission
+|name = Once in a Blue Moon
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Once in a Blue Moon:
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1600095
+CONDITIONS
+Always:
+ACTIONS
+Run mission Once in a Blue Moon
+END MISSION 1600095
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1600096
+CONDITIONS
+Always:
+ACTIONS
+===Meet Mi-an===
+
+{{mission_details
+|desc = Mi-an asked you to meet her tomorrow at noon inside the Blue Moon Saloon.
+|details = Meet Mi-an
+}}
+Set IsMianArrived to 0
+Set IsPlayerArrived to 0
+Set IsOrderCpDinner to 0
+Set IsTakePhoto to 0
+Set CpIndex to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+===Meet Mi-an===
+
+{{mission_details
+|desc = Today at noon, Mi-an asked you to meet her inside the Blue Moon Saloon.
+|details = Meet Mi-an
+}}
+CALENDAR SET REMINDER || addDays: 0 | hour: 11 | transId: 80003742
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 11:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1600095 | id: 16962 | sceneName: Main | flagName: Mission_1600096_Trigger_2 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80003742
+ACTION AREA TRIGGER SET RADIUS || id: 16962 | radius: 15
+
+TRIGGER Procedure 0.0 Step 2.1 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 14:00 (order: 0):
+CONDITIONS
+Check if IsPlayerArrived is == 0
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 16961701) from Mi-an
+FAIL MISSION || missionId: 1600095
+AREA TRIGGER DELETE || id: 16962
+END MISSION 1600096
+
+TRIGGER Procedure 0.0 Step 2.2 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_saloon
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+Check if Owen is in town
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+UNIQUE ACTION RUN || idStr: enter_saloon
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+ACTION CUTSCENE START AUDIO TYPE || id: CG_MIANMEAL | duration: 0 | audioType: NoTransitionOff
+Set IsPlayerArrived to 1
+Mi-an stands still in Saloon and looks at Player
+AREA TRIGGER DELETE || id: 16962
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_MIANMEAL | state: 7
+CONDITIONS
+Always:
+ACTIONS
+Mi-an stops standing still
+Add behavior CommanderSit (idName: 16961702) to Mi-an
+(param: TargetScene:Saloon|SeatDramaName:SaloonSeat08)
+Owen stands still in Saloon and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: 1600096_G1_8000_1
+
+TRIGGER Procedure 0.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_MIANMEAL | state: 8
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerSit (idName: 16960002) to Player
+(param: TargetScene:Saloon|SeatDramaName:SaloonSeat07)
+
+TRIGGER Procedure 0.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_MIANMEAL | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 10) A conversation 2087, 2088, 2089 starts:
+{{dialogue|Owen|Welcome, welcome! Well, if it isn't the Builder duo!}}
+{{dialogue|Owen|You're in luck! As a part of a very new Blue Moon marketing campaign involving a series of promotional activities, today we're offering a couple's discount! 50% off and a commorative gift after your meal!}}
+{{dialogue|Owen|Dang, ''Player'', nice one! I didn't know you two were a thing... nice.}}
+
+TRIGGER Procedure 0.0 Step 8.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 11) A conversation 2090, 2091, 2092 starts:
+{{dialogue|Mi-an|H-huh?! A... thing?! Is this promotion... only available to 'couples?'}}
+{{dialogue|Owen|Uh, yeah? Made obvious by the fact that the name of the activity is 'couple's discount...' hey, are you two a couple or not?}}
+{{dialogue|Mi-an|I... I... we're... you...! ''Player''...!}}
+
+*{{flirt}}''Take the couple's discount.'' (No unique dialogue)
+*''Don't take the discount.'' (No unique dialogue)
+
+
+TRIGGER Procedure 1.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) The player picks the first option in conversation segment 2092:
+{{dialogue|Mi-an|I... I... we're... you...! ''Player''...!}}
+
+*{{flirt}}''Take the couple's discount.'' (No unique dialogue)
+*''Don't take the discount.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 110) A conversation 2095, 2096 starts:
+{{dialogue|Mi-an|...Uh... ah...}}
+{{dialogue|Owen|Haha! Look at that, Mi-an's blushing! Ah, to be young and in love...! Alright you two lovebirds, two Blue Moon specials, coming right up!}}
+Set IsOrderCpDinner to 1
+
+TRIGGER Procedure 1.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 110) After the conversation ends:
+(cId 111) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CAMERA SET LOOK AT || set: 0 | hidePlayer: 0
+ACTION CUTSCENE START AUDIO TYPE || id: CG_GRACESERVE | duration: 0 | audioType: NoTransitionOff
+Owen stops standing still
+
+TRIGGER Procedure 1.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 11) The player picks the second option in conversation segment 2092:
+{{dialogue|Mi-an|I... I... we're... you...! ''Player''...!}}
+
+*{{flirt}}''Take the couple's discount.'' (No unique dialogue)
+*''Don't take the discount.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 111) A conversation 2093, 2094 starts:
+{{dialogue|Mi-an|Haha, right, not like I can't afford it or anything. Normal price it is!}}
+{{dialogue|Owen|Okay, whatever you two! Two Blue Moon specials, comin' right up!}}
+
+TRIGGER Procedure 1.0 Step 4.1 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_GRACESERVE | state: 3
+CONDITIONS
+Check if IsOrderCpDinner is == 1
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 169695 | path: 1600096_CpDinner_Dishes_0 | sceneName: Saloon | flagName: 1600096_G1_DinnerFlag | extraParams: 0
+
+TRIGGER Procedure 1.0 Step 4.2 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_GRACESERVE | state: 3
+CONDITIONS
+Check if IsOrderCpDinner is == 0
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 169696 | path: 1600096_NormalDinner_Dishes_0 | sceneName: Saloon | flagName: 1600096_G1_DinnerFlag | extraParams: 0
+
+TRIGGER Procedure 1.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_GRACESERVE | state: 7
+CONDITIONS
+Check if IsOrderCpDinner is == 1
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 169691 | path: 1600096_CpDinner_Dishes | sceneName: Saloon | flagName: 1600096_G1_DinnerFlag | extraParams: 0
+SCENEITEM DELETE || itemType: 0 | id: 169695
+
+TRIGGER Procedure 1.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_GRACESERVE | state: 7
+CONDITIONS
+Check if IsOrderCpDinner is == 0
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 169690 | path: 1600096_NormalDinner_Dishes | sceneName: Saloon | flagName: 1600096_G1_DinnerFlag | extraParams: 0
+SCENEITEM DELETE || itemType: 0 | id: 169696
+
+TRIGGER Procedure 1.0 Step 7.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_GRACESERVE | state: 8
+CONDITIONS
+Check if IsOrderCpDinner is == 0
+ACTIONS
+(cId 12) A conversation 469_3_1 starts:
+{{dialogue|Mi-an|Feels like so long since we've had a chance to catch up, but enough about me let's talk about you...! Or, you know, whatever you want to talk about.}}
+
+*''About her hobby...''
+*''About me...''
+*{{flirt}}''Tell me about your first love.''
+*{{flirt}}''Is there anyone you like in Sandrock...?''
+*''I'm finished, let's go.''
+
+{{dialogue|Mi-an|indent=true|answer=About her hobby...
+|Oh, yeah! Since we had our chat a while ago, I've been making some time to cultivate a hobby! And plants... My new hobby is plants. Botany.}}
+{{dialogue|Mi-an|indent=true|Zeke has been teaching me all kinds of stuff; if I grow anything good, I'll make sure to give something to you!}}
+{{dialogue|Mi-an|indent=true|You know, it really is good to get out of the workshop from time to time, and the desert plants, they fight so hard to make it in this climate, it's kind of inspiring!}}
+{{dialogue|Mi-an|indent=true|I've also heard that somewhere out in the desert is a super rare, extremely colorful flower... I hope I get to see it one day!}}
+{{dialogue|Mi-an|indent=true|answer=About me...
+|Ah, hah... What's there to say that hasn't already been said? I... I've never had a lot of friends so, I consider your friendship to be very special to me. I feel like I can be myself in front of you, and...}}
+{{dialogue|Mi-an|indent=true|Well, I just know we're always going to be great friends!}}
+{{dialogue|Mi-an|indent=true|answer=Tell me about your first love.
+|I-I actually have never been in a relationship. Let alone first love... Eh? You're not laughing are you?}}
+{{dialogue|Mi-an|indent=true|My grandparents and parents, they all only loved one person in their lives and things turned out pretty well for them, so why should I be any different? I'll love one person, and they'll love me, and we'll spend our lives together, and... that sounds great to me.}}
+{{dialogue|Mi-an|indent=true|answer=Is there anyone you like in Sandrock...?
+|Sure! I like everybody- Ooh! You mean, like... "like like" someone, huh? Um. Maybe? Maybe not? Am I supposed to? I think I have time to figure things out...}}
+{{dialogue|Mi-an|indent=true|If I did, I guess I'd want to be treated like one of the people in those cheesy love stories. Where the hero saves me at the end and we live happily ever after, haha... Er, should I be saying this out loud?}}
+{{dialogue|Mi-an|indent=true|answer=I'm finished, let's go.
+|Finished already? Okay, let me get the bill...}}
+STOPWATCH REAL TIME SET || id: 16961 | sec: 2
+CAMERA SET LOOK AT || hidePlayer: 1 | set: 0
+
+TRIGGER Procedure 1.0 Step 13.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 12) After the conversation ends:
+CONDITIONS
+Check if IsOrderCpDinner is == 0
+ACTIONS
+(cId 13) A conversation 2122 starts:
+{{dialogue|Mi-an|All in all, it turned out to be a pleasant lunch! We should do it again sometime! See you soon, ''Player''!}}
+
+TRIGGER Procedure 1.0 Step 14.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 12) After the conversation ends:
+CONDITIONS
+Check if IsOrderCpDinner is == 1
+ACTIONS
+Owen stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 16960103) to Owen
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:1600096_G1_8001_1|LookAtActor:8000)
+
+TRIGGER Procedure 1.0 Step 7.1 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_GRACESERVE | state: 8
+CONDITIONS
+Check if IsOrderCpDinner is == 1
+ACTIONS
+(cId 12) A conversation 2123, 469_3_1 starts:
+{{dialogue|Mi-an|Ha, hahaha, ha... yes, well, that was.... Um, let's talk about... literally anything else! Soooo, what's been up with you? Build anything fun lately? Got any new tools?}}
+{{dialogue|Mi-an|Feels like so long since we've had a chance to catch up, but enough about me let's talk about you...! Or, you know, whatever you want to talk about.}}
+
+*''About her hobby...''
+*''About me...''
+*{{flirt}}''Tell me about your first love.''
+*{{flirt}}''Is there anyone you like in Sandrock...?''
+*''I'm finished, let's go.''
+
+{{dialogue|Mi-an|indent=true|answer=About her hobby...
+|Oh, yeah! Since we had our chat a while ago, I've been making some time to cultivate a hobby! And plants... My new hobby is plants. Botany.}}
+{{dialogue|Mi-an|indent=true|Zeke has been teaching me all kinds of stuff; if I grow anything good, I'll make sure to give something to you!}}
+{{dialogue|Mi-an|indent=true|You know, it really is good to get out of the workshop from time to time, and the desert plants, they fight so hard to make it in this climate, it's kind of inspiring!}}
+{{dialogue|Mi-an|indent=true|I've also heard that somewhere out in the desert is a super rare, extremely colorful flower... I hope I get to see it one day!}}
+{{dialogue|Mi-an|indent=true|answer=About me...
+|Ah, hah... What's there to say that hasn't already been said? I... I've never had a lot of friends so, I consider your friendship to be very special to me. I feel like I can be myself in front of you, and...}}
+{{dialogue|Mi-an|indent=true|Well, I just know we're always going to be great friends!}}
+{{dialogue|Mi-an|indent=true|answer=Tell me about your first love.
+|I-I actually have never been in a relationship. Let alone first love... Eh? You're not laughing are you?}}
+{{dialogue|Mi-an|indent=true|My grandparents and parents, they all only loved one person in their lives and things turned out pretty well for them, so why should I be any different? I'll love one person, and they'll love me, and we'll spend our lives together, and... that sounds great to me.}}
+{{dialogue|Mi-an|indent=true|answer=Is there anyone you like in Sandrock...?
+|Sure! I like everybody- Ooh! You mean, like... "like like" someone, huh? Um. Maybe? Maybe not? Am I supposed to? I think I have time to figure things out...}}
+{{dialogue|Mi-an|indent=true|If I did, I guess I'd want to be treated like one of the people in those cheesy love stories. Where the hero saves me at the end and we live happily ever after, haha... Er, should I be saying this out loud?}}
+{{dialogue|Mi-an|indent=true|answer=I'm finished, let's go.
+|Finished already? Okay, let me get the bill...}}
+STOPWATCH REAL TIME SET || id: 16961 | sec: 2
+
+TRIGGER Procedure 1.0 Step 7.2 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 16961
+CONDITIONS
+Check if IsOrderCpDinner is == 1
+ACTIONS
+Owen stands still in Saloon and looks at Player
+
+TRIGGER Procedure 1.0 Step 10.0 Order 6 Repeat 2
+------------------------------------------------------------
+EVENTS
+(cId 12) The player picks the third option in conversation segment 2097:
+{{dialogue|Mi-an|Feels like so long since we've had a chance to catch up, but enough about me let's talk about you...! Or, you know, whatever you want to talk about.}}
+
+*''About her hobby...'' (No unique dialogue)
+*''About me...'' (No unique dialogue)
+*{{flirt}}''Tell me about your first love.'' (No unique dialogue)
+*{{flirt}}''Is there anyone you like in Sandrock...?'' (No unique dialogue)
+*''I'm finished, let's go.'' (No unique dialogue)
+
+(cId 12) The player picks the fourth option in conversation segment 2097:
+{{dialogue|Mi-an|Feels like so long since we've had a chance to catch up, but enough about me let's talk about you...! Or, you know, whatever you want to talk about.}}
+
+*''About her hobby...'' (No unique dialogue)
+*''About me...'' (No unique dialogue)
+*{{flirt}}''Tell me about your first love.'' (No unique dialogue)
+*{{flirt}}''Is there anyone you like in Sandrock...?'' (No unique dialogue)
+*''I'm finished, let's go.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Increment CpIndex by 1
+
+TRIGGER Procedure 1.0 Step 15.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8001 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 14) A conversation 2109, 2110 starts:
+{{dialogue|Owen|Thanks again for participating in our very special, limited time offer, the Blue Moon couple's discount!}}
+{{dialogue|Owen|Before you go, I'd like to snap a picture of the lovely couple, and with your permission, place the shot up on the wall of the saloon; you'll get a copy of the photo for yourselves as well...}}
+
+*{{flirt}}''Let's do it.'' (No unique dialogue)
+*''No, thanks.'' (No unique dialogue)
+
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 14) The player picks the first option in conversation segment 2110:
+{{dialogue|Owen|Before you go, I'd like to snap a picture of the lovely couple, and with your permission, place the shot up on the wall of the saloon; you'll get a copy of the photo for yourselves as well...}}
+
+*{{flirt}}''Let's do it.'' (No unique dialogue)
+*''No, thanks.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 140) A conversation 2114 starts:
+{{dialogue|Owen|Alriiiight! Now everybody say... Steaaaamed sandfish!}}
+Increment CpIndex by 1
+Set IsTakePhoto to 1
+
+TRIGGER Procedure 2.0 Step 1.1 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 140) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 16965 | delayTime: 0 | durationTime: 1 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 14) The player picks the second option in conversation segment 2110:
+{{dialogue|Owen|Before you go, I'd like to snap a picture of the lovely couple, and with your permission, place the shot up on the wall of the saloon; you'll get a copy of the photo for yourselves as well...}}
+
+*{{flirt}}''Let's do it.'' (No unique dialogue)
+*''No, thanks.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 141) A conversation 2111, 2112, 2113 starts:
+{{dialogue|Owen|Suit yourself! More photos for me! Well, congratulations to the happy couple! Take 'er easy and come back any time!}}
+{{dialogue|Mi-an|Today was nice, ''Player''! Even if Owen made it a bit awkward. I'm glad you had the idea to pretend to be a couple! Saved a few Gols, heh heh...}}
+{{dialogue|Mi-an|Well, let's do it again sometime! See you soon!}}
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 16965 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 16965 | delayTime: 0.1 | durationTime: 1 | changeType: 1 | curveIndex: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 16960103) from Owen
+Owen stands still in Main
+ACTION CAPTURE STORY FOCUS MODE || npc: 8017 | photoId: 10 | poseIds: 4001,4002,4003,4004 | scene: Saloon | flagName: 1600096_G1_FocusFlag
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAPTURE MODE EXIT || order: 0 | isStory: 1
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 16966 | delayTime: 0 | durationTime: 1 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 3.1 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 16966 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+(cId 15) A conversation 2115, 2116 starts:
+{{dialogue|Owen|Nice! It came out perfect! You two really do look lovely together. I can't wait to paste this up on the wall! I'll send you guys a copy soon.}}
+{{dialogue|Owen|Well, thanks again for participating, come back again soon!}}
+Owen stops standing still
+Owen stands still in Saloon and looks at Player
+DELAY MASK SET || maskId: 16966 | delayTime: 0.1 | durationTime: 1 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 15) After the conversation ends:
+CONDITIONS
+Check if CpIndex is == 3
+ACTIONS
+(cId 16) A conversation 2118, 2119 starts:
+{{dialogue|Mi-an|Today... was really nice, ''Player''. Pretending to be a couple for a discount, genius! Hm, I must be allergic to something we ate, my heart is beating quickly for some reason, haha...}}
+{{dialogue|Mi-an|All in all, it turned out to be a pleasant lunch! We should do it again sometime! See you soon, ''Player''!}}
+Owen stops standing still
+
+TRIGGER Procedure 2.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 15) After the conversation ends:
+CONDITIONS
+Check if CpIndex is < 3
+ACTIONS
+(cId 17) A conversation 2117, 2119 starts:
+{{dialogue|Mi-an|Today... was really nice, ''Player''. Pretending to be a couple for a discount, genius! And, say, this is a really nice photo of us...}}
+{{dialogue|Mi-an|All in all, it turned out to be a pleasant lunch! We should do it again sometime! See you soon, ''Player''!}}
+Remove behavior CommanderMoveToFlagAndAction (idName: 16960103) from Owen
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 13) After the conversation ends:
+(cId 141) After the conversation ends:
+(cId 16) After the conversation ends:
+(cId 17) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SET CAN SUBMIT TARGET || missionId: 1600095 | targetId: 0 | canSubmit: 1
+Remove behavior CommanderSit (idName: 16961702) from Mi-an
+Remove behavior CommanderPlayerSit (idName: 16960002) from Player
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1600095 | targetId: 0 | canSubmit: 1
+CONDITIONS
+Check if IsOrderCpDinner is == 0
+ACTIONS
+CAMERA SET LOOK AT || hidePlayer: 0 | set: 0
+SUBMIT MISSION 1600095
+
+TRIGGER Procedure 3.0 Step 1.1 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Saloon to the -1:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 169690
+END MISSION 1600096
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1600095 | targetId: 0 | canSubmit: 1
+CONDITIONS
+Check if IsOrderCpDinner is == 1
+Check if IsTakePhoto is == 0
+ACTIONS
+CAMERA SET LOOK AT || set: 0 | hidePlayer: 0
+Remove behavior CommanderMoveToFlagAndAction (idName: 16960103) from Owen
+SUBMIT MISSION 1600095
+
+TRIGGER Procedure 3.0 Step 2.1 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Saloon to the -1:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 169691
+
+TRIGGER Procedure 3.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1600095 | targetId: 0 | canSubmit: 1
+CONDITIONS
+Check if IsOrderCpDinner is == 1
+Check if IsTakePhoto is == 1
+ACTIONS
+SUBMIT MISSION 1600095
+Remove behavior CommanderMoveToFlagAndAction (idName: 16960103) from Owen
+CAMERA SET LOOK AT || set: 0 | hidePlayer: 0
+
+TRIGGER Procedure 3.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 169693 | path: Mission_1600096_Saloon_Photo | sceneName: Saloon | flagName: 1600096_SceneItem_1 | extraParams: 0
+The player receives a letter:
+{{mail|84}}
+PHOTO UNLOCK PRESTORE || id: 7001
+SCENEITEM CREATE FLAG || itemType: 0 | id: 169692 | path: Mission_1600096_Saloon_Photo | flagName: 1600096_SceneItem_2 | extraParams: 0 | sceneName: MianHome
+END MISSION 1600096
+
+TRIGGER Procedure 3.0 Step 5.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC FAVOR LEVEL CHANGE || order: 0 | npc: 8001 | compare: 2 | level: Lover
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 16961701) from Mi-an
+AREA TRIGGER DELETE || id: 16962
+SCENEITEM DELETE || id: 169091 | itemType: 0
+SCENEITEM DELETE || id: 169090 | itemType: 0
+CAMERA SET LOOK AT || set: 0 | hidePlayer: 0
+FAIL MISSION || missionId: 1600095

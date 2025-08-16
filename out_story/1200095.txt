@@ -1,0 +1,256 @@
+Reading Mission 1200095: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200128
+
+TRIGGER Procedure 6.0 Step 0.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+At the beginning of the day:
+CONDITIONS
+Check if mission 1200309 is result 1 flag 1
+ACTIONS
+Burgess stops standing still
+Trudy stops standing still
+Fang stops standing still
+X stops standing still
+
+TRIGGER Procedure 6.0 Step 13.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Public Image is in state 2 with flag 1
+Check if mission 1200095 is result 1 flag 1
+ACTIONS
+Run mission #1200095
+
+Run conditions from Public Image:
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+START MISSION 1200094
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200094
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1200095
+END MISSION 1200094
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200095
+CONDITIONS
+Always:
+ACTIONS
+===Take Landscape Photos===
+
+{{mission_details
+|desc = Owen thinks some nice photography of Sandrock will help dispel the rumors; help him take the shots he's suggested. Note: The Water Shop and Water Tower can be photographed from {{textcolor|green|Martle's Oasis}}. The Bumble Ant photos can be taken anywhere in {{textcolor|green|the wild}}. The train station would best be captured from {{textcolor|green|the side facing the tracks}}.
+|details = Take Landscape Photos
+}}
+Set DAY to 0
+Set RDCon to 1
+Set global blackboard key con4randompsg with info 1.
+SCENEITEM CREATE FLAG || itemType: 0 | id: 173002 | sceneName: Main | flagName: mission_shuita | path: publicimage_tower | extraParams: 0
+ACTION PHOTO ADD TARGET || id: 15
+ACTION PHOTO ADD TARGET || id: 16
+ACTION PHOTO ADD TARGET || id: 13
+ACTION PHOTO ADD TARGET || id: 14
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ALBUM ADD PHOTO || order: 0 | id: 16
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1200094 | targetId: 0 | transId: 80003723 | isAdd: 1
+ACTION PHOTO REMOVE TARGET || id: 16
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ALBUM ADD PHOTO || order: 0 | id: 15
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1200094 | targetId: 0 | transId: 80003724 | isAdd: 1
+SCENEITEM DELETE || itemType: 0 | id: 173002
+ACTION PHOTO REMOVE TARGET || id: 15
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ALBUM ADD PHOTO || order: 0 | id: 14
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1200094 | targetId: 0 | transId: 80003725 | isAdd: 1
+ACTION PHOTO REMOVE TARGET || id: 14
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ALBUM ADD PHOTO || order: 0 | id: 13
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1200094 | targetId: 0 | transId: 80003726 | isAdd: 1
+ACTION PHOTO REMOVE TARGET || id: 13
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the Main:
+CONDITIONS
+CHECK SCENEITEM EXIST || sceneItemType: 0 | id: 173002 | exist: 0
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 173002 | sceneName: Main | flagName: mission_shuita | path: publicimage_tower | extraParams: 0
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ALBUM ADD PHOTO || order: 10 | id: 15
+ON ALBUM ADD PHOTO || order: 10 | id: 16
+ON ALBUM ADD PHOTO || order: 10 | id: 13
+ON ALBUM ADD PHOTO || order: 10 | id: 14
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1200094 | targetId: 0 | canSubmit: 1
+ACTIONS
+===Talk to Owen===
+
+{{mission_details
+|desc = You've got the photos, head back to Owen to show him.
+|details = Talk to Owen
+}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Owen
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 2282, 2285 starts:
+{{dialogue|Owen|Hey, these are some pretty ace shots! Are you sure you weren't a photographer before you picked up the building gig? And dang! Only someone with a real Sandrock soul could take a shot like this...}}
+{{dialogue|Owen|Alright, well, that about does it! I'll send 'em off to my friend and let you know how it goes! Hopefully this'll help spread the good word about this old place I call home. Thanks for all your help!}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1200094
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if DAY is >= 4
+ACTIONS
+Run mission Old Familiar Face
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: con4randompsg | info: 1 | exist: 0
+ACTIONS
+END MISSION 1200095
+
+TRIGGER Procedure 2.0 Step 1.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment DAY by 1
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if RDCon is != (maybe?) 30
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 173002
+GLOBAL BLACK BOARD REMOVE || key: con4randompsg
+
+TRIGGER Procedure 2.0 Step 3.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if RDCon is >= 1
+ACTIONS
+Increment RDCon by 1
+
+TRIGGER Procedure 2.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+CHECK ALBUM HAS PHOTO || set: 0 | id: 13
+ACTIONS
+PHOTO UNLOCK PRESTORE || id: 13
+
+TRIGGER Procedure 2.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+CHECK ALBUM HAS PHOTO || set: 0 | id: 14
+ACTIONS
+PHOTO UNLOCK PRESTORE || id: 14
+
+TRIGGER Procedure 2.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+CHECK ALBUM HAS PHOTO || set: 0 | id: 15
+ACTIONS
+PHOTO UNLOCK PRESTORE || id: 15
+
+TRIGGER Procedure 2.0 Step 7.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+CHECK ALBUM HAS PHOTO || set: 0 | id: 16
+ACTIONS
+PHOTO UNLOCK PRESTORE || id: 16

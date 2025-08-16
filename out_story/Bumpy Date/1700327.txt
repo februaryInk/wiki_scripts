@@ -1,0 +1,145 @@
+Reading Mission 1700327: Bumpy Date
+
+<onlyinclude>{{Infobox mission
+|name = Bumpy Date
+|image =
+|description = Logan wants to take you on a date ride on Rambo.
+|type = Side
+|time =
+|location =
+|characters = [[Logan]]
+|condition =
+|details =
+|exp = 1500
+|reputation = None
+|gols = None
+|npc1 = Logan
+|rp1 = 15
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200332
+
+TRIGGER Procedure 0.0 Step 4.0 Order 5 Repeat 6
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment 1800336 by 1
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Check relationship with Logan is Lover
+Check if Logan has favor >= 500
+IS MARRIAGE || isMarriage: 0
+
+GROUP 10:
+Check relationship with Logan is Married
+
+ACTIONS
+Run mission Bumpy Date
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+Where's Mi-an is in state 1 with flag 0
+The Childhood Friend is in state 1 with flag 0
+Goodbye, Nia is in state 1 with flag 0
+The Kidnapping is in state 1 with flag 0
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+CHECK WEATHER STATE || weather: 0 | flag: 1
+CHECK GLOBAL BLACKBOARD || key: triallogan | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700327
+CONDITIONS
+Always:
+ACTIONS
+Run mission Bumpy Date
+END MISSION 1700327
+
+TRIGGER Procedure 0.0 Step 0.1 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Logan stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 4034_0 starts:
+{{dialogue|Logan|Hey, ''Player'', you got some time? Maybe we can head out, take Rambo for a ride, soak in the sights.}}
+
+*''Sure!''
+*''I've got a lot on my plate...''
+
+{{dialogue|Logan|indent=true|answer=Sure!
+|Great! Lemme go get Rambo.}}
+{{dialogue|Logan|indent=true|answer=I've got a lot on my plate...
+|That's fine, no problem. Another time, when you're free.}}
+DELIVER MISSION 1700327
+Logan stops standing still
+
+TRIGGER Procedure 0.0 Step 1.1 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 13653) that ends:
+{{dialogue|Logan|Great! Lemme go get Rambo.}}
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1700327
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC FAVOR LEVEL CHANGE || order: 0 | compare: 6 | level: Lover | npc: 8011
+CONDITIONS
+Always:
+ACTIONS
+CLOSE MISSION || missionId: 1700327
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Logan|You free now? Let's head out an' spend the day together.}}
+
+*''Sure!''
+*''I've got a lot on my plate...''
+
+{{dialogue|Logan|indent=true|answer=Sure!
+|Great! Lemme go get Rambo.}}
+{{dialogue|Logan|indent=true|answer=I've got a lot on my plate...
+|That's fine, no problem. Another time, when you're free.}}
+
+==Rewards==
+{{mission reward
+|npc1 = Logan
+|rp1 = 15
+|exp = 1500
+|reputation = None
+|gols = None
+}}

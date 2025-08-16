@@ -1,0 +1,238 @@
+Reading Mission 1200268: Peachy Keen
+
+<onlyinclude>{{Infobox mission
+|name = Peachy Keen
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Peachy Keen:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200267
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|479}}
+DELIVER MISSION 1200267
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200267
+CONDITIONS
+Always:
+ACTIONS
+Run mission Peachy Keen
+END MISSION 1200267
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200268
+CONDITIONS
+Always:
+ACTIONS
+===Prepare Materials===
+
+{{mission_details
+|desc = Gather the things you need to repair the Peach Statue.
+|details = Prepare Materials
+*{{i2|Limestone Bricks|0/10}}
+*{{i2|Granite Slab|0/5}}
+*{{i2|Magnesium Aluminum Alloy|0/6}}
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200267 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Repair the Statue===
+
+{{mission_details
+|desc = You have the materials, go to Martle's Oasis and repair the statue!
+|details = Repair the Statue
+}}
+SCENEITEM CREATE FLAG || itemType: 11 | path: S8295_Label | id: 22681 | sceneName: Main | flagName: peachstatue_mark | extraParams: -1|CreatorItem|19112024_10,19111004_5,19112020_6|80014472|-1|0
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 22681 | missionId: 1200267 | iconType: 2
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 22681
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 22681 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22681
+CONDITIONS
+Always:
+ACTIONS
+Burgess stands still in Main
+Trudy stands still in Main
+Heidi stands still in Main
+DELAY MASK SET || maskId: 22681 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+SCENEITEM CREATE FLAG || path: Mission_CityObj_PiQiDiaoXiang_0 | flagName: peachstatue | extraParams: 0 | sceneName: Main | id: 22681 | itemType: 0
+SCENEITEM DELETE || itemType: 12 | id: 22681
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: peachstatue_player
+SCENEITEM DELETE || itemType: 0 | id: 22682
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 22681
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || sec: 5 | id: 22681
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 22683
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 9366 starts:
+{{dialogue|Burgess|Wowee! Nice one, ''Player''! Now our Peach looks as young as the day he... was... when... he... was... immortalized for this particular image that we seem to use for all the Peach statues!}}
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Trudy stops standing still
+Heidi stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 22682) to Trudy
+(param: TargetScene:Main|MoveMode:Walk|FlagName:peachstatue_trudy2)
+Add behavior CommanderMoveToFlagAndAction (idName: 22682) to Heidi
+(param: TargetScene:Main|MoveMode:Walk|FlagName:peachstatue_heidi2)
+Set ARRIVE to 0
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 2
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8006 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8009 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Increment ARRIVE by 1
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8006 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8009 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Check if ARRIVE is == 2
+ACTIONS
+(cId 1) A conversation 2612_0 starts:
+{{dialogue|Burgess|Look who it is, everyone's favorite Mayor architect duo! What brings you to our neck of the woods? Say, have you seen what ''Player'' did with the statue? Pretty ace if I do say so myself!}}
+{{dialogue|Trudy|That looks so well done, ''Player''!}}
+{{dialogue|Heidi|Fine work indeed! I daresay our Peach looks as young as the day... he... er...}}
+{{dialogue|Burgess|The day he was immortalized for this particular image that we seem to use for all the Peach statues?}}
+{{dialogue|Heidi|Yeah!}}
+{{dialogue|Trudy|Hm... well, I hate to dampen anyone's spirits, but I'm afraid we have some less than stellar news to report...}}
+{{dialogue|Burgess|Oh, no!}}
+{{dialogue|Heidi|Don't worry, it's not the end of the world!}}
+{{dialogue|Trudy|We've been down to check the oasis water source, done some measurements... {{textcolor|green|We thought the water thieves were really straddling that relic}}, but... well, have you noticed the water level going up lately, Burgess?}}
+{{dialogue|Burgess|Our oasis water comes from a relic? What?!}}
+{{dialogue|Burgess|Indeed, this is sour news! I'll need some time to reflect on the ramifications of such a revelation! The sacred water I hold so near and dear to my heart comes from Age of Corruption technology...!?}}
+{{dialogue|Heidi|Ooh. Right. Forgot that might be something that would bother you. That wasn't even the bad news...}}
+{{dialogue|Burgess|Wasn't even the bad news!?}}
+
+*''He's been through a lot lately...''
+*''What's the bad news?''
+
+{{dialogue|Burgess|indent=true|answer=He's been through a lot lately...
+|I have... I really have...!}}
+{{dialogue|Burgess|indent=true|I-it's okay...! Thanks, ''Player'', I can take it! Wh-what's the bad news!?}}
+{{dialogue|Trudy|Er, we can come back later...}}
+{{dialogue|Burgess|No, no... let's just rip the bandage off...!}}
+{{dialogue|Trudy|Al-Alright... we didn't actually find the machine that generates the oasis water, it's somewhere deeper underground; but even when we turned on the flow of water into the oasis to the maximum, the water level isn't going up...}}
+{{dialogue|Trudy|We think {{textcolor|green|the relic is on its last leg...}} We're going to have Qi take a look at it but... for now, we're going to need to keep the water conservation policy... same as it ever was.}}
+{{dialogue|Burgess|Same as it ever was?}}
+{{dialogue|Trudy|Same as it ever was.}}
+{{dialogue|Burgess|Don't you all worry about me. I'll keep doing my best. Just like I know you will, too!}}
+{{dialogue|Trudy|Thank you Pastor Burgess. I'm glad we ran into you, too, ''Player''. We'll update you on the status of the underground water machine when we can. Stay strong, everyone... The {{textcolor|green|Portia road}} will be done soon.}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 9371) that ends:
+{{dialogue|Heidi|Yeah!}}
+CONDITIONS
+Always:
+ACTIONS
+Trudy stands still in Main and looks at Burgess
+Heidi stands still in Main and looks at Burgess
+Burgess stands still in Main and looks at Trudy
+PLAYER SET POS ROT FLAG || flagName: peachstatue_player3 | sceneName: Main
+
+TRIGGER Procedure 3.0 Step 0.5 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 22682 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22682
+CONDITIONS
+Always:
+ACTIONS
+Trudy stops standing still
+Heidi stops standing still
+Burgess stops standing still
+Burgess stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 22682) from Trudy
+Remove behavior CommanderMoveToFlagAndAction (idName: 22682) from Heidi
+Trudy stands still in Main
+Heidi stands still in Main
+Burgess stands still in Main
+Trudy stops standing still
+Heidi stops standing still
+Burgess stops standing still
+DELAY MASK SET || maskId: 22682 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 22682
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1200267
+END MISSION 1200268

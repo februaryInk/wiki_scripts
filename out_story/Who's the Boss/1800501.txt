@@ -1,0 +1,1010 @@
+Reading Mission 1800501: Who's the Boss?
+
+<onlyinclude>{{Infobox mission
+|name = Who's the Boss?
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Who's the Boss?:
+
+TRIGGER Procedure 0.0 Step 11.2 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Check if 8500A is == 3
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: 8500Mission
+CLOSE MISSION || missionId: 1800500
+END MISSION 1800500
+
+TRIGGER Procedure 0.0 Step 11.3 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800500
+CONDITIONS
+Always:
+ACTIONS
+Run mission Who's the Boss?
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800501
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: 8500Mission | info: 1 | exist: 1
+ACTIONS
+===Helping Out at the Saloon===
+
+{{mission_details
+|desc = Owen wants everyone to know that you are the other owner of Blue Moon. You can help out during regular days, starting from today.
+|details = Helping Out at the Saloon
+}}
+SCENEITEM CREATE FLAG || path: S8501_Clean1 | itemType: 0 | id: 85011 | sceneName: Saloon | extraParams: -1 | flagName: S8501_Clean1
+SCENEITEM CREATE FLAG || itemType: 0 | id: 85012 | path: S8501_Clean2 | sceneName: Saloon | flagName: S8501_Clean2 | extraParams: -1
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 85011 | missionId: 1800500 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 85012 | missionId: 1800500 | iconType: 2
+SCENEITEM CREATE FLAG || path: S8501_Food1 | flagName: S8501_Food1 | itemType: 0 | sceneName: Saloon | id: 85016 | extraParams: -1
+SCENEITEM CREATE FLAG || path: S8501_Food2 | flagName: S8501_Food2 | itemType: 0 | id: 85017 | sceneName: Saloon | extraParams: -1
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 85016 | missionId: 1800500 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | iconType: 2 | missionId: 1800500 | itemType: 0 | id: 85017
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850121 | path: S8501_Fix1_Mass | sceneName: Saloon | flagName: S8501_Fix1 | extraParams: -1
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850122 | extraParams: -1 | sceneName: Saloon | flagName: S8501_Fix2 | path: S8501_Fix2_Mass
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 850121 | missionId: 1800500 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 1 | id: 850122 | missionId: 1800500 | iconType: 2 | itemType: 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 85011
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 8501001) to Player
+(param: CMDAction:Clean_Story)
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850101 | path: S8501_Sfx1 | sceneName: Saloon | flagName: S8501_Clean1 | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 1.2 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: NPCActionOver | behaviourName: CommanderPlayerAction | npc: 8000
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1800500 | targetId: 1 | isAdd: 1 | transId: 80032261
+SCENEITEM DELETE || itemType: 0 | id: 85011
+Remove behavior CommanderPlayerAction (idName: 8501001) from Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850111 | path: S8501_efx_clear | flagName: S8501_Clean1 | sceneName: Saloon | extraParams: 0
+STOPWATCH REAL TIME SET || id: 850101 | sec: 3
+CUTSCENE UI STATE EXIT || 
+SCENEITEM DELETE || itemType: 0 | id: 850101
+
+TRIGGER Procedure 0.0 Step 1.3 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 850101
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 850111
+
+TRIGGER Procedure 0.0 Step 2.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 85012
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 8501001) to Player
+(param: CMDAction:Clean_Story)
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850102 | path: S8501_Sfx1 | sceneName: Saloon | flagName: S8501_Clean2 | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 2.1 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: NPCActionOver | behaviourName: CommanderPlayerAction | npc: 8000
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1800500 | targetId: 1 | isAdd: 1 | transId: 80032261
+SCENEITEM DELETE || itemType: 0 | id: 85012
+Remove behavior CommanderPlayerAction (idName: 8501001) from Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850112 | path: S8501_efx_clear | flagName: S8501_Clean2 | sceneName: Saloon | extraParams: 0
+SCENEITEM DELETE || itemType: 0 | id: 850102
+STOPWATCH REAL TIME SET || id: 850102 | sec: 3
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 2.2 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 850102
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 850112
+
+TRIGGER Procedure 0.0 Step 3.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 85013
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 8501001) to Player
+(param: CMDAction:Clean_Story)
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850103 | path: S8501_Sfx1 | sceneName: Saloon | flagName: S8501_Clean3 | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 3.1 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: NPCActionOver | behaviourName: CommanderPlayerAction | npc: 8000
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1800500 | targetId: 1 | isAdd: 1 | transId: 80032261
+SCENEITEM DELETE || itemType: 0 | id: 85013
+Remove behavior CommanderPlayerAction (idName: 8501001) from Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850113 | path: S8501_efx_clear | flagName: S8501_Clean3 | sceneName: Saloon | extraParams: 0
+SCENEITEM DELETE || itemType: 0 | id: 850103
+STOPWATCH REAL TIME SET || id: 850103 | sec: 3
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 3.2 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 850103
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 850113
+
+TRIGGER Procedure 0.0 Step 4.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 85014
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 8501001) to Player
+(param: CMDAction:Clean_Story)
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850104 | path: S8501_Sfx1 | sceneName: Saloon | flagName: S8501_Clean4 | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 4.1 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: NPCActionOver | behaviourName: CommanderPlayerAction | npc: 8000
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1800500 | targetId: 1 | isAdd: 1 | transId: 80032261
+SCENEITEM DELETE || itemType: 0 | id: 85014
+Remove behavior CommanderPlayerAction (idName: 8501001) from Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850114 | path: S8501_efx_clear | flagName: S8501_Clean4 | sceneName: Saloon | extraParams: 0
+SCENEITEM DELETE || itemType: 0 | id: 850104
+STOPWATCH REAL TIME SET || id: 850104 | sec: 3
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 4.2 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 850104
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 850114
+
+TRIGGER Procedure 0.0 Step 5.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 85015
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 8501001) to Player
+(param: CMDAction:Clean_Story)
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850105 | path: S8501_Sfx1 | sceneName: Saloon | flagName: S8501_Clean5 | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 5.1 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: NPCActionOver | behaviourName: CommanderPlayerAction | npc: 8000
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1800500 | targetId: 1 | isAdd: 1 | transId: 80032261
+SCENEITEM DELETE || itemType: 0 | id: 85015
+Remove behavior CommanderPlayerAction (idName: 8501001) from Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850115 | path: S8501_efx_clear | flagName: S8501_Clean5 | sceneName: Saloon | extraParams: 0
+SCENEITEM DELETE || itemType: 0 | id: 850105
+STOPWATCH REAL TIME SET || id: 850105 | sec: 3
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 5.2 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 850105
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 850115
+
+TRIGGER Procedure 0.0 Step 6.1 Order 75 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 85016
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1800500 | targetId: 1 | transId: 80032262 | isAdd: 1
+SCENEITEM DELETE || itemType: 0 | id: 85016
+
+TRIGGER Procedure 0.0 Step 6.2 Order 76 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 85017
+CONDITIONS
+Always:
+ACTIONS
+MISSION TARGET COUNTER CHANGE || missionId: 1800500 | targetId: 1 | transId: 80032262 | isAdd: 1
+SCENEITEM DELETE || itemType: 0 | id: 85017
+
+TRIGGER Procedure 0.0 Step 7.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 850121
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 8501001) to Player
+(param: CMDAction:PickUp_Story)
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850101 | path: S8501_Sfx1 | sceneName: Saloon | flagName: S8501_Fix1 | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 7.1 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850131 | path: S8501_Fix1 | sceneName: Saloon | flagName: S8501_Fix1 | extraParams: -1
+STOPWATCH REAL TIME SET || id: 850121 | sec: 3
+SCENEITEM DELETE || itemType: 0 | id: 850121
+CUTSCENE UI STATE EXIT || 
+MISSION TARGET COUNTER CHANGE || missionId: 1800500 | targetId: 1 | transId: 80032263 | isAdd: 1
+Remove behavior CommanderPlayerAction (idName: 8501001) from Player
+
+TRIGGER Procedure 0.0 Step 7.2 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 850121
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 850101
+
+TRIGGER Procedure 0.0 Step 8.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 850122
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 8501001) to Player
+(param: CMDAction:PickUp_Story)
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850101 | path: S8501_Sfx1 | sceneName: Saloon | flagName: S8501_Fix2 | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 8.1 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850132 | path: S8501_Fix2 | sceneName: Saloon | flagName: S8501_Fix2 | extraParams: -1
+STOPWATCH REAL TIME SET || id: 850122 | sec: 3
+SCENEITEM DELETE || itemType: 0 | id: 850122
+CUTSCENE UI STATE EXIT || 
+MISSION TARGET COUNTER CHANGE || missionId: 1800500 | targetId: 1 | transId: 80032263 | isAdd: 1
+Remove behavior CommanderPlayerAction (idName: 8501001) from Player
+
+TRIGGER Procedure 0.0 Step 8.2 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 850122
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 850101
+
+TRIGGER Procedure 0.0 Step 9.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 850123
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 8501001) to Player
+(param: CMDAction:PickUp_Story)
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850101 | path: S8501_Sfx1 | sceneName: Saloon | flagName: S8501_Fix3 | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 9.1 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850133 | path: S8501_Fix3 | sceneName: Saloon | flagName: S8501_Fix3 | extraParams: -1
+STOPWATCH REAL TIME SET || id: 850123 | sec: 3
+SCENEITEM DELETE || itemType: 0 | id: 850123
+CUTSCENE UI STATE EXIT || 
+MISSION TARGET COUNTER CHANGE || missionId: 1800500 | targetId: 1 | transId: 80032263 | isAdd: 1
+Remove behavior CommanderPlayerAction (idName: 8501001) from Player
+
+TRIGGER Procedure 0.0 Step 9.2 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 850123
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 850101
+
+TRIGGER Procedure 0.0 Step 10.0 Order 25 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 850124
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+Add behavior CommanderPlayerAction (idName: 8501001) to Player
+(param: CMDAction:PickUp_Story)
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850101 | path: S8501_Sfx1 | sceneName: Saloon | flagName: S8501_Fix4 | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 10.1 Order 26 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850134 | path: S8501_Fix4 | sceneName: Saloon | flagName: S8501_Fix4 | extraParams: -1
+STOPWATCH REAL TIME SET || id: 850124 | sec: 3
+SCENEITEM DELETE || itemType: 0 | id: 850124
+CUTSCENE UI STATE EXIT || 
+MISSION TARGET COUNTER CHANGE || missionId: 1800500 | targetId: 1 | transId: 80032263 | isAdd: 1
+Remove behavior CommanderPlayerAction (idName: 8501001) from Player
+
+TRIGGER Procedure 0.0 Step 10.2 Order 27 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 850124
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 850101
+
+TRIGGER Procedure 0.0 Step 18.1 Order 66 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 850110
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 850110 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: S8500_0_3
+Owen stands still in Saloon and looks at Player
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 18.2 Order 52 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Check if 8501Day is == 0
+ACTIONS
+===Wait Until Tomorrow===
+
+{{mission_details
+|desc = The customer's banquet is tomorrow, and Owen has invited you to attend as well. Rest for today.
+|details = Wait Until Tomorrow
+}}
+
+TRIGGER Procedure 0.0 Step 18.3 Order 59 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 1) There is a conversation segment (id 22318) that ends:
+{{dialogue|Owen|Hey, why don't you take this? As a... commemoration! Of our first time running the place together. Here, it's what we made today.}}
+CONDITIONS
+Always:
+ACTIONS
+Add 3000 Gols of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 18.5 Order 67 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Owen stops standing still
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 20.0 Order 28 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+===Attend the Banquet at 18:00===
+
+{{mission_details
+|desc = The banquet is tonight. Prepare and head to {{textcolor|green|the Blue Moon}}. Remember, the banquet starts after 18:00.
+|details = Attend the Banquet at 18:00
+}}
+NPC ADD TAG || tag: NoStory
+
+TRIGGER Procedure 0.0 Step 20.1 Order 53 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM ADD ICON STACK || add: 0 | itemType: 0 | id: 85011 | missionId: 1800500 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 0 | itemType: 0 | id: 85012 | missionId: 1800500 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 0 | itemType: 0 | id: 85013 | missionId: 1800500 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 0 | itemType: 0 | id: 85014 | missionId: 1800500 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 0 | iconType: 2 | itemType: 0 | id: 85015 | missionId: 1800500
+SCENEITEM ADD ICON STACK || add: 0 | itemType: 0 | id: 85016 | missionId: 1800500 | iconType: 2
+SCENEITEM ADD ICON STACK || add: 0 | iconType: 2 | missionId: 1800500 | itemType: 0 | id: 85017
+SCENEITEM ADD ICON STACK || add: 0 | itemType: 11 | id: 85018 | missionId: 1800500 | iconType: 2
+SCENEITEM DELETE || itemType: 0 | id: 850121
+SCENEITEM DELETE || itemType: 0 | id: 850122
+SCENEITEM DELETE || itemType: 0 | id: 850123
+SCENEITEM DELETE || itemType: 0 | id: 850124
+SCENEITEM DELETE || itemType: 0 | id: 850111
+SCENEITEM DELETE || itemType: 0 | id: 850112
+SCENEITEM DELETE || itemType: 0 | id: 850113
+SCENEITEM DELETE || itemType: 0 | id: 850114
+SCENEITEM DELETE || itemType: 0 | id: 850115
+SCENEITEM DELETE || itemType: 0 | id: 85016
+SCENEITEM DELETE || itemType: 0 | id: 85017
+SCENEITEM ADD ICON STACK || add: 0 | itemType: 0 | id: 850121 | iconType: 2 | missionId: 1800500
+SCENEITEM ADD ICON STACK || add: 0 | id: 850122 | itemType: 0 | iconType: 2 | missionId: 1800500
+SCENEITEM ADD ICON STACK || add: 0 | itemType: 0 | id: 850123 | iconType: 2 | missionId: 1800500
+SCENEITEM ADD ICON STACK || add: 0 | id: 850124 | itemType: 0 | iconType: 2 | missionId: 1800500
+SCENEITEM DELETE || itemType: 0 | id: 850131
+SCENEITEM DELETE || itemType: 0 | id: 850132
+SCENEITEM DELETE || itemType: 0 | id: 850133
+SCENEITEM DELETE || itemType: 0 | id: 850134
+
+TRIGGER Procedure 0.0 Step 21.0 Order 30 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 18:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || id: 85011 | sceneName: Main | flagName: Trigger_Saloon | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0 | missionId: 1800500
+
+TRIGGER Procedure 0.0 Step 21.1 Order 32 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_saloon
+CHECK GLOBAL BLACKBOARD || key: musacomes | exist: 0 | info: 1
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_saloon
+AREA TRIGGER DELETE || id: 85011
+SCENEITEM DELETE || itemType: 0 | id: 22173
+
+TRIGGER Procedure 0.0 Step 21.2 Order 31 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM ADD || dailyBehavior: RandomNPC | flagName: default | instId: 85012 | id: 14 | scene: Saloon
+NPC RANDOM ADD || dailyBehavior: RandomNPC | flagName: default | instId: 85013 | id: 1 | scene: Saloon
+NPC RANDOM ADD || id: 1 | instId: 85014 | scene: Saloon | flagName: default | dailyBehavior: RandomNPC
+NPC RANDOM ADD || scene: Saloon | id: 14 | instId: 85015 | dailyBehavior: RandomNPC | flagName: default
+NPC RANDOM ADD || scene: Saloon | id: 1 | instId: 85016 | dailyBehavior: RandomNPC | flagName: default
+NPC RANDOM ADD || scene: Saloon | id: 14 | instId: 85017 | dailyBehavior: RandomNPC | flagName: default
+NPC RANDOM ADD || scene: Saloon | id: 1 | instId: 85018 | dailyBehavior: RandomNPC | flagName: default
+NPC RANDOM ADD || scene: Saloon | id: 14 | instId: 85019 | dailyBehavior: RandomNPC | flagName: default
+Add behavior CommanderSit (idName: 850111) to 85001
+(param: SeatDramaName:8501Seat1|DelayTime:0|TargetScene:Saloon|Delay:0)
+Add behavior CommanderSit (idName: 850121) to 85012
+(param: SeatDramaName:8501Seat2|DelayTime:0|TargetScene:Saloon|Delay:0)
+Add behavior CommanderSit (idName: 850131) to 85013
+(param: SeatDramaName:8501Seat3|DelayTime:0|TargetScene:Saloon|Delay:0)
+Add behavior CommanderDramaWithIndex (idName: 850141) to 85014
+(param: SeatDramaName:8501Seat4|TargetScene:Saloon|DramaIndex:13|TriggerTag:85014RaiseGlasses)
+Add behavior CommanderSit (idName: 850151) to 85015
+(param: SeatDramaName:8501Seat5|DelayTime:0|TargetScene:Saloon|Delay:0)
+Add behavior CommanderDramaWithIndex (idName: 850161) to 85016
+(param: SeatDramaName:8501Seat6|TargetScene:Saloon|DramaIndex:13|TriggerTag:85016RaiseGlasses)
+Add behavior CommanderSit (idName: 850171) to 85017
+(param: SeatDramaName:8501Seat7|DelayTime:0|TargetScene:Saloon|Delay:0)
+Add behavior CommanderDramaWithIndex (idName: 850181) to 85018
+(param: SeatDramaName:8501Seat8|TargetScene:Saloon|DramaIndex:13|TriggerTag:85018RaiseGlasses)
+Add behavior CommanderSit (idName: 850191) to 85019
+(param: SeatDramaName:8501Seat9|DelayTime:0|TargetScene:Saloon|Delay:0)
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850110 | path: S8501_Item1 | flagName: S8501_Item1 | sceneName: Saloon | extraParams: -1
+CUTSCENE UI STATE ENTER || 
+Owen stands still in Saloon and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: S8501_0_1
+DELAY MASK SET || maskId: 85011 | delayTime: 0 | durationTime: 0.5 | changeType: 0 | curveIndex: 0
+Add behavior CommanderMoveToFlagAndAction (idName: 8501000) to Player
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:S8501_0_1|LookAtActor:8001)
+
+TRIGGER Procedure 0.0 Step 21.3 Order 33 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85011 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || delayTime: 3 | durationTime: -2 | maskId: 85011 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 22.0 Order 77 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Who's the Boss? is in state 2 with flag 1
+ACTIONS
+NPC REMOVE TAG || tag: NoStory
+ACTION SHOW CUSTOM IMAGE TIPS || preset: Mission | content: 80031781
+AREA TRIGGER DELETE || id: 85011
+SUBMIT MISSION 1800500
+END MISSION 1800501
+
+TRIGGER Procedure 0.0 Step 24.1 Order 68 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 850161
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 7911_0 starts:
+{{dialogue|Owen|Hey, ''Pet Name'', you made it! First batch for the party just came out, take a seat and try a bite!}}
+{{dialogue|85001|Yes, please! Our party could stand to have more restaurant owners in the mix!}}
+{{dialogue|85001|Ah, my daughter Niula; I'm so proud of this day. To think, when we first met, you could hardly form coherent sentences, and now here you are, going off to a prestigious institution of the learned citizen...! Ah... Bosses, Niula. Niula, bosses.}}
+{{dialogue|85012|Hey, bosses! I gotta say, you two are real pros! I've never tasted something so delicious!}}
+{{dialogue|Owen|Haha, hey, thanks. Just glad you're enjoying it!}}
+{{dialogue|85012|No, I mean, seriously, Pa; why have I never experienced such flavors before!? This dish... this one here... I must know what it's called!}}
+{{dialogue|85001|Ahem. Well. Your mother always said tasteful food was the first step on the path to another Day of Calamity, but... maybe you're old enough to try something other than mush... Alright, Boss Owen, we'll bite! What is this lovely dish here?}}
+{{dialogue|Owen|This one, huh... well the main flavor profile comes from the fish and the spice, and...}}
+{{dialogue|Owen|Come to think of it, ''Pet Name'', we never came up with a name for this, did we?}}
+
+*''Let's call it "Spicy Fiiiish!" Because that's what it is.''
+*''"Owen and ''Player'''s Sandfish Surprise!"''
+*''"Stinkfish a la Owen!"''
+*''Maybe you'd better name it...''
+
+{{dialogue|Owen|indent=true|answer=Let's call it "Spicy Fiiiish!" Because that's what it is.
+|Ah hah... "Spicy Fish..." fish... that is spicy. Which is what it is. As you mentioned. Yes, I suppose there's really no going wrong with a name like that.}}
+{{dialogue|Owen|indent=true|answer="Owen and ''Player'''s Sandfish Surprise!"
+|Haha... slightly wordy... maybe a bit self-aggrandizing, but... oh, what the heck!}}
+{{dialogue|Owen|indent=true|answer="Stinkfish a la Owen!"
+|Hm... You know, they say "a rose by any other name would smell just as sweet." But I think if roses were called "stinkflowers," nobody would associate them with romantic love. Or buy them.}}
+{{dialogue|Owen|indent=true|I think what I'm getting at is... I'd like to sell some of these dishes, so...}}
+{{dialogue|Owen|indent=true|You know what? What the heck. It's just crazy enough, people might order the dish as a gag. I'll do it. Stinkfish a la Owen it is, my love.}}
+{{dialogue|Owen|indent=true|answer=Maybe you'd better name it...
+|Oh, shoot... Well, you know me, everything on my menu is pretty straightforward. Uh... "Cold Spicy Fish?" That's essentially what it is. I mean, you know what you're getting with a name like that...}}
+{{dialogue|85014|Brilliant! What an apt name! Your culinary skills are rivalled only by your wordsmithing!}}
+{{dialogue|85018|The two of you working together really are a sight to behold: like yin and yang, rhythm and melody, peanut butter and chocolate... those two people who make the tigers jump through hoops! ...They've got to be in love, right?}}
+{{dialogue|85001|I'm sorry I didn't see it before... You two are made to be together! But I won't take all the blame! I never saw any announcement or anything that there were now two owners of the Blue Moon...}}
+{{dialogue|Owen|Guess I'll have to be a bit more vocal about that, won't I?}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 25.0 Order 34 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8501012) to Owen
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:S8501_1_2)
+Add behavior CommanderMoveToFlag (idName: 85010001) to Player
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:S8501_0_2|LookAtActor:85001)
+Remove behavior CommanderMoveToFlagAndAction (idName: 8501000) from Player
+
+TRIGGER Procedure 0.0 Step 26.0 Order 35 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: MoveToFlagOver | behaviourName: CommanderMoveToFlagAndAction | npc: 8001
+CONDITIONS
+Always:
+ACTIONS
+Owen stops standing still
+(cId 3) A conversation 7916_0 starts:
+{{dialogue|Owen|Ahem! To all of you who don't know...}}
+{{dialogue|Owen|This is the other owner of the Blue Moon Saloon! We got married not that long ago, and we want the world to know!}}
+{{dialogue|Owen|So get out there and spread the word: for the next three days, mention the news at the counter and your meal is free!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 27.0 Order 36 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|85017|Free food, eh? Heh... I'll make you regret that.}}
+STOPWATCH REAL TIME SET || id: 85011 | sec: 5
+STOPWATCH REAL TIME SET || id: 850111 | sec: 0.5
+STOPWATCH REAL TIME SET || id: 850112 | sec: 1.6
+STOPWATCH REAL TIME SET || id: 850113 | sec: 2.3
+
+TRIGGER Procedure 0.0 Step 27.1 Order 60 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 850111
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|85013|Yeah!}}
+
+TRIGGER Procedure 0.0 Step 27.2 Order 61 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 850112
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|85015|Two bosses? Is that even possible!?}}
+
+TRIGGER Procedure 0.0 Step 27.3 Order 62 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 850113
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|85016|Congratulations, you two!}}
+
+TRIGGER Procedure 0.0 Step 28.0 Order 37 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 85011
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 8501013) to Owen
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:S8501_1_3|LookAtActor:8000)
+Add behavior CommanderMoveToFlagAndAction (idName: 8501002) to Player
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:S8501_0_3|LookAtActor:8001)
+Remove behavior CommanderMoveToFlagAndAction (idName: 8501012) from Owen
+Remove behavior CommanderMoveToFlag (idName: 85010001) from Player
+
+TRIGGER Procedure 0.0 Step 29.0 Order 38 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | eventName: MoveToFlagOver | behaviourName: CommanderMoveToFlag | npc: 8001
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8501012) from Owen
+(cId 4) A conversation 7917_0 starts:
+{{dialogue|Owen|Whaddya think, ''Pet Name''? That'll sort things out in a hurry, eh?}}
+
+*''Thanks, Owen.''
+*''Ah, you're so sweet...!''
+*''Can you clear your big romantic ideas with me from now on...''
+
+{{dialogue|Owen|indent=true|answer=Thanks, Owen.
+|Hey, don't mention it. Shoulda done it a long time ago.}}
+{{dialogue|Owen|indent=true|answer=Ah, you're so sweet...!
+|Haha... It feels nice, right? To let the world know how we feel about each other.}}
+{{dialogue|Owen|indent=true|answer=Can you clear your big romantic ideas with me from now on...
+|Ah, shoot, ''Pet Name''... You know me, sometimes I get caught up in moments like these...}}
+{{dialogue|Owen|indent=true|Alright, er... no more grand gestures. Not without talking to you first.}}
+
+TRIGGER Procedure 0.0 Step 30.0 Order 29 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8501002) from Player
+DELAY MASK SET || maskId: 85012 | delayTime: 3 | durationTime: 5 | changeType: 0 | curveIndex: 0
+Add tag "85014RaiseGlasses" to 85014
+Add tag "85016RaiseGlasses" to 85016
+Add tag "85018RaiseGlasses" to 85018
+Add behavior CommanderMoveToFlagAndAction (idName: 8501019) to Owen
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:S8501_1_2|Action:Hi|LookAtActor:85012|Delay:0.0)
+Add behavior CommanderMoveToFlag (idName: 85010011) to Player
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:S8501_0_2|Action:Bye)
+
+TRIGGER Procedure 0.0 Step 29.0 Order 64 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | canSubmit: 1 | missionId: 1800500 | targetId: 1
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 850110 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 31.0 Order 39 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85012 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8501019) from Owen
+Remove behavior CommanderMoveToFlag (idName: 8501013) from Owen
+Remove behavior CommanderSit (idName: 850111) from 85001
+Remove behavior CommanderSit (idName: 850121) from 85012
+Remove behavior CommanderSit (idName: 850131) from 85013
+Remove behavior CommanderDramaWithIndex (idName: 850141) from 85014
+Remove behavior CommanderSit (idName: 850151) from 85015
+Remove behavior CommanderDramaWithIndex (idName: 850161) from 85016
+Remove behavior CommanderSit (idName: 850171) from 85017
+Remove behavior CommanderDramaWithIndex (idName: 850181) from 85018
+Remove behavior CommanderSit (idName: 850191) from 85019
+NPC RANDOM REMOVE || id: 85013
+NPC RANDOM REMOVE || id: 85015
+NPC RANDOM REMOVE || id: 85017
+NPC RANDOM REMOVE || id: 85018
+NPC RANDOM REMOVE || id: 85019
+Owen stands still in Saloon
+Add behavior CommanderNPCAction (idName: 8501015) to Owen
+(param: CMDAction:Hi|Delay:2.0)
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: S8501_0_5
+Add behavior CommanderPlayerAction (idName: 8501001) to Player
+(param: CMDAction:Hi|Delay:2.0)
+DELAY MASK SET || maskId: 85012 | delayTime: 3 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 31.0 Order 65 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 850110
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 7909_0 starts:
+{{dialogue|Owen|Whew! Think you've done enough for today. Pretty smooth, all things considered!}}
+{{dialogue|Owen|reward={{i2|Gols|3000}}|Hey, why don't you take this? As a... commemoration! Of our first time running the place together. Here, it's what we made today.}}
+{{dialogue|Owen|Love ya, ''Pet Name''!}}
+{{dialogue|Owen|Oh, and y'know... I could really use your help tomorrow with that customer's banquet. I mean... I'll manage either way. But with you around, it'd be a breeze!}}
+{{dialogue|Owen|If you're beat after today, though, I'd understand. Sometimes running this place ain't all it's cracked up to be, heh... Anyway, just something to think on!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 32.0 Order 40 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85012 | eventType: 4
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85013 | delayTime: 3 | durationTime: 3 | changeType: 2 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 33.0 Order 41 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85013 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM REMOVE || id: 85001
+NPC RANDOM REMOVE || id: 85012
+NPC RANDOM REMOVE || id: 85014
+NPC RANDOM REMOVE || id: 85016
+Owen stands still in Saloon and looks at Player
+Owen stops standing still
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: S8501_0_4
+SCENEITEM DELETE || itemType: 0 | id: 850110
+SCENEITEM CREATE FLAG || itemType: 0 | id: 850140 | path: S8501_Item2 | sceneName: Saloon | flagName: S8501_Item2 | extraParams: 0
+
+TRIGGER Procedure 0.0 Step 34.0 Order 42 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85013 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 22349 starts:
+{{dialogue|Owen|Whew! That's the last of the cleaning. I could use a good sit and a hot cup of tea, how about you?}}
+
+TRIGGER Procedure 0.0 Step 36.0 Order 43 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Owen stops standing still
+Add behavior CommanderMoveSit (idName: 8501017) to Owen
+(param: SeatDramaName:SaloonSeat01|TargetScene:Saloon)
+Add behavior CommanderPlayerMoveSit (idName: 8501002) to Player
+(param: SeatDramaName:SaloonSeat02|TargetScene:Saloon)
+STOPWATCH REAL TIME SET || id: 85018 | sec: 4
+
+TRIGGER Procedure 0.0 Step 37.0 Order 44 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 85018
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 7921_0 starts:
+{{dialogue|Owen|Haha... you know, it's funny. I just realized... I dreamed about us doing this. Taking care of the saloon, sitting around together after closing...}}
+{{dialogue|Owen|...}}
+{{dialogue|Owen|I would've mentioned it, but it was so long ago. "Hope you're settling well into Sandrock. By the way, I dreamed about us sharing a life together last night!" Haha... I mean... you've gotta give me a little more credit than that...}}
+{{dialogue|Owen|Before I met you, I never pictured anyone doing this with me.}}
+{{dialogue|Owen|Which is strange; this is the way my parents did it. Two peas in a pod, all that.}}
+{{dialogue|Owen|But now that we have this... I can feel that this is exactly what I've been longing for all these years.}}
+
+*''I'll always be here by your side.''
+*''Don't ever worry about feeling lonely again.''
+*''I'm happy to share this with you, too.''
+
+{{dialogue|Owen|indent=true|answer=I'll always be here by your side.
+|Thank you, ''Pet Name''.}}
+{{dialogue|Owen|indent=true|Y'know, now it's hard to imagine things any other way. Now this place would never feel the same without you.}}
+{{dialogue|Owen|indent=true|You're... really something special, ''Pet Name''. You know that?}}
+{{dialogue|Owen|indent=true|answer=Don't ever worry about feeling lonely again.
+|Hah... Well, that hasn't been much of an issue, especially as of late. Even when you're off on your adventures, I can still feel you're here in my heart.}}
+{{dialogue|Owen|indent=true|So... yeah. Don't you worry about me either, darling.}}
+{{dialogue|Owen|indent=true|answer=I'm happy to share this with you, too.
+|Meeting someone like you, I reckon that kind of thing only comes along once in a lifetime... if you're lucky.}}
+{{dialogue|Owen|indent=true|What a legacy to be carrying... the second couple to be running the Blue Moon...}}
+{{dialogue|Owen|indent=true|Big shoes to fill, but... I feel blessed to have the chance with you.}}
+
+TRIGGER Procedure 0.0 Step 38.0 Order 46 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85015 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 38.1 Order 63 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85015 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveSit (idName: 8501017) from Owen
+Remove behavior CommanderPlayerMoveSit (idName: 8501002) from Player
+DELAY MASK SET || maskId: 85015 | delayTime: 3 | durationTime: -1 | changeType: 1 | curveIndex: 0
+STOPWATCH REAL TIME SET || id: 85015 | sec: 4
+
+TRIGGER Procedure 0.0 Step 39.0 Order 45 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 3 | maskId: 85015
+CONDITIONS
+Always:
+ACTIONS
+The player interacts (type 2, option 1) with Owen
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: S8501_0_4
+
+TRIGGER Procedure 0.0 Step 40.0 Order 47 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON INTERACTIVE EXIT || order: 0 | instID: 8001
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 22364 starts:
+{{dialogue|Owen|I'll finish up here at the saloon, why don't you take the rest of the day off, "boss!" See you tonight!}}
+
+TRIGGER Procedure 0.0 Step 41.0 Order 48 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1800500
+CUTSCENE UI STATE EXIT || 
+Owen stops standing still
+CAMERA PATH STOP ALL || 
+
+TRIGGER Procedure 0.0 Step 42.0 Order 49 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+ACTION SHOW CUSTOM IMAGE TIPS || preset: Mission | content: 80031781
+NPC RANDOM ADD || id: 1 | instId: 85004 | scene: Main | flagName: 0 | dailyBehavior: RandomNPC
+NPC RANDOM ADD || dailyBehavior: RandomNPC | id: 1 | instId: 85006 | scene: Main | flagName: 0
+NPC RANDOM ADD || dailyBehavior: RandomNPC | id: 14 | flagName: 0 | scene: Main | instId: 85009
+Set global blackboard key 8500OwenClaim with info 1.
+SCENEITEM DELETE || itemType: 0 | id: 850140
+NPC REMOVE TAG || tag: NoStory
+
+TRIGGER Procedure 0.0 Step 43.0 Order 50 Repeat 2
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 85019 | sec: 1
+
+TRIGGER Procedure 0.0 Step 44.0 Order 51 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: 8500Mission
+GLOBAL BLACK BOARD REMOVE || key: 8500OwenClaim
+NPC RANDOM REMOVE || id: 85004
+NPC RANDOM REMOVE || id: 85006
+NPC RANDOM REMOVE || id: 85009
+END MISSION 1800501
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800501
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: 8500Mission | info: 2 | exist: 1
+ACTIONS
+===Wait Until Tomorrow===
+
+{{mission_details
+|desc = The customer's banquet is tomorrow, and Owen has invited you to attend as well. Rest for today.
+|details = Wait Until Tomorrow
+}}
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800501
+CONDITIONS
+Always:
+ACTIONS
+Set 8501Day to 0
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment 8501Day by 1

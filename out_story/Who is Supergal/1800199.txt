@@ -1,0 +1,310 @@
+Reading Mission 1800199: Who is Supergal?
+
+<onlyinclude>{{Infobox mission
+|name = Who is Supergal?
+|image =
+|description = The Punch-o-Tron in the Game Center is broken after the mysterious "Supergal" gave it a beating.
+|type = Side
+|time =
+|location =
+|characters = [[Catori]]
+|condition =
+|details =
+|exp = 800
+|reputation = 10
+|gols = None
+|npc1 = Catori
+|rp1 = 10
+|npc2 = Heidi
+|rp2 = 10
+|rewards = {{i2|Token}|30}
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200124
+
+TRIGGER Procedure 0.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission Shonash Canyon Bridge Opening Ceremony is result 1 flag 1
+Check if Heidi has favor >= 50
+Duvos Attacks! is in state 2 with flag 0
+ACTIONS
+Run mission Heart to Heart, Abridged
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Opportunities Abound is successfully completed
+ACTIONS
+Run mission Who is Supergal?
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 8199Day is >= 5
+ACTIONS
+AREA TRIGGER ONCE CREATE || flagName: Story_81991_Trigger | sceneName: Main | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80008883 | id: 81990 | missionId: 1800199
+Set DAY to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800199
+CONDITIONS
+Always:
+ACTIONS
+Set 8199Day to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 81990
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 81991 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+DELIVER MISSION 1800199
+
+TRIGGER Procedure 0.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 81991 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 81991 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+PLAYER SET POS ROT FLAG || flagName: S81991_Player_Stand0 | sceneName: Main
+Mi-an stands still in Main and looks at Catori
+Catori stands still in Main and looks at Mi-an
+
+TRIGGER Procedure 0.0 Step 2.9 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 81991 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8199170) to Mi-an
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S81991_Mian_Stand|LookAtActor:8024|Action:Talk)
+
+TRIGGER Procedure 0.0 Step 3.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8017 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 1681_0 starts:
+{{dialogue|Mi-an|Hey, Catori, you can't call her that! I don't care how many times she breaks the machine, I mean it's weird how strong she is, but... c'mon, that's just mean! How about something impressive like Supergal or Superlady?}}
+{{dialogue|Catori|Aright, fine, we'll go with Supergal; but that's how I run my business. You break my machines, you get a nickname. You should know that better than anyone, Goggles.}}
+{{dialogue|Mi-an|Look, I apologized for spilling my Sand Tea, I paid you back, can we please just-}}
+{{dialogue|Catori|In fact, I should come up with something worse considering this is the tenth fricken Punch-o-Tron she's busted!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 3.5 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8199242) to Catori
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S81991_Katuoli_Stand|Action:Meditate_Start)
+
+TRIGGER Procedure 0.0 Step 5.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 5598 starts:
+{{dialogue|Mi-an|Um. About that. President Yan told me to tell you... we can't keep accepting game tokens to repair your machines. Sooo, if you want to commission a new Punch-o-Tron just slap it up on the ol' Commission Board-a-rino... sorry. I'll seeya, bye!}}
+
+TRIGGER Procedure 0.0 Step 5.5 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8199001) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S81991_Player_Stand|LookAtActor:8024)
+Remove behavior CommanderMoveToFlagAndAction (idName: 8199170) from Mi-an
+Mi-an stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 8199173) to Mi-an
+(param: TargetScene:Main|MoveMode:Run|FlagName:S81991_Mian_Stand_End)
+Remove behavior CommanderMoveToFlagAndAction (idName: 8199242) from Catori
+Add behavior CommanderMoveToFlagAndAction (idName: 8199243) to Catori
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S81991_Katuoli_Stand|Action:Meditate_End|Delay:4)
+
+TRIGGER Procedure 0.0 Step 6.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the first option in conversation segment 5599:
+{{dialogue|Catori|Ah? ''Player''? What's the, ah... haps? No commissions today...?}}
+
+*''Who's "Supergal?"'' (No unique dialogue)
+*''Got beef with Yan?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 1682_0 starts:
+{{dialogue|Catori|Eh? You don't know about that family in town? Yeah, there's two of 'em, Supergal and Superdude; they saved a talking fish or got three wishes or... somethin'.}}
+{{dialogue|Catori|The dude I kinda get, but the girl's fifty somethin' kilos and she punches like a freight train. Broke my machine!}}
+{{dialogue|Catori|...Hey, I er, don't suppose you have time to help me out with a little favor... a commission of sorts, but, ah, just between us, see? With payment coming in the form of... non-fungible Golden Goose tokens! Better than smelly ol' Gols, am I right...?}}
+
+*''Don't stress. I can help you out.'' (No unique dialogue)
+*''I have a lot on my plate right now...''
+
+{{dialogue|Catori|indent=true|answer=I have a lot on my plate right now...
+|Ah, shucks. Yeah, I don't blame ya. Let me know if you do end up getting time to help me out. I mean, think of all the fun you could have with a big sack of Golden Goose tokens! Can't really put a price on fun... I mean I do regularly, but yeah...}}
+
+TRIGGER Procedure 0.0 Step 6.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the second option in conversation segment 5599:
+{{dialogue|Catori|Ah? ''Player''? What's the, ah... haps? No commissions today...?}}
+
+*''Who's "Supergal?"'' (No unique dialogue)
+*''Got beef with Yan?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 1683_0 starts:
+{{dialogue|Catori|Yeah, who doesn't have a bone to pick with that guy? I can't prove it yet but I'm pretty sure he cheats at my games... More pressingly, he's just cut off my access to you guys until I can, like, actually pay you. What a cheapskate! Only thing worse than him is Supergal!}}
+{{dialogue|Catori|...Hey, I er, don't suppose you have time to help me out with a little favor... a commission of sorts, but, ah, just between us, see? With payment coming in the form of... non-fungible Golden Goose tokens! Better than smelly ol' Gols, am I right...?}}
+
+*''Don't stress. I can help you out.'' (No unique dialogue)
+*''I have a lot on my plate right now...''
+
+{{dialogue|Catori|indent=true|answer=I have a lot on my plate right now...
+|Ah, shucks. Yeah, I don't blame ya. Let me know if you do end up getting time to help me out. I mean, think of all the fun you could have with a big sack of Golden Goose tokens! Can't really put a price on fun... I mean I do regularly, but yeah...}}
+
+TRIGGER Procedure 0.0 Step 12.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8199001) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8199242) from Catori
+Catori stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8199243) from Catori
+Remove behavior CommanderMoveToFlagAndAction (idName: 8199173) from Mi-an
+Remove behavior CommanderTeleport (idName: 8199172) from Mi-an
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 7.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 5599 starts:
+{{dialogue|Catori|Ah? ''Player''? What's the, ah... haps? No commissions today...?}}
+
+*''Who's "Supergal?"'' (No unique dialogue)
+*''Got beef with Yan?'' (No unique dialogue)
+
+
+TRIGGER Procedure 0.0 Step 8.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1800199
+Remove behavior CommanderMoveToFlagAndAction (idName: 8199001) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8199242) from Catori
+Catori stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8199173) from Mi-an
+Remove behavior CommanderTeleport (idName: 8199172) from Mi-an
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 8.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) The player picks the first option in conversation segment 5603:
+{{dialogue|Catori|...Hey, I er, don't suppose you have time to help me out with a little favor... a commission of sorts, but, ah, just between us, see? With payment coming in the form of... non-fungible Golden Goose tokens! Better than smelly ol' Gols, am I right...?}}
+
+*''Don't stress. I can help you out.'' (No unique dialogue)
+*''I have a lot on my plate right now...'' (No unique dialogue)
+
+(cId 6) The player picks the first option in conversation segment 5603:
+{{dialogue|Catori|...Hey, I er, don't suppose you have time to help me out with a little favor... a commission of sorts, but, ah, just between us, see? With payment coming in the form of... non-fungible Golden Goose tokens! Better than smelly ol' Gols, am I right...?}}
+
+*''Don't stress. I can help you out.'' (No unique dialogue)
+*''I have a lot on my plate right now...'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 5608:
+{{dialogue|Catori|''Player'', so, how about helpin' me repair the machine, and I'll give you some shiny tokens in exchange! Don't think of it as a commission, think of it as one of my games!}}
+
+*''Don't stress. I can help you out.'' (No unique dialogue)
+*''I have a lot on my plate right now...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 1684_0 starts:
+{{dialogue|Catori|Ah, really? You will? That's great! And, er, I won't always have to pay you in tokens, this arrangement is just a temporary one pending, ah, me not being broke anymore.}}
+{{dialogue|Catori|But yeah; when you get time, just check out my machine over at the Game Center. It's the busted one.}}
+{{dialogue|Catori|Maybe you could take a look at it and see what it needs? Probably some materials and then that special little love tap you Builders do. And if it's not too much trouble, maybe reinforce it a bit with higher quality materials? Supergal'll be back...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 10.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800199
+CONDITIONS
+Always:
+ACTIONS
+Run mission Who is Supergal?
+END MISSION 1800199
+
+TRIGGER Procedure 1.0 Step 2.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment 8199Day by 1
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Catori|''Player'', so, how about helpin' me repair the machine, and I'll give you some shiny tokens in exchange! Don't think of it as a commission, think of it as one of my games!}}
+
+*''Don't stress. I can help you out.'' (No unique dialogue)
+*''I have a lot on my plate right now...''
+
+{{dialogue|Catori|indent=true|answer=I have a lot on my plate right now...
+|Ah, shucks. Yeah, I don't blame ya. Let me know if you do end up getting time to help me out. I mean, think of all the fun you could have with a big sack of Golden Goose tokens! Can't really put a price on fun... I mean I do regularly, but yeah...}}
+
+==Rewards==
+{{mission reward
+|npc1 = Catori
+|rp1 = 10
+|npc2 = Heidi
+|rp2 = 10
+|exp = 800
+|reputation = 10
+|gols = None
+|rewards = {{i2|Token}|30}
+}}

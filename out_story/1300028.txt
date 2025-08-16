@@ -1,0 +1,105 @@
+Reading Mission 1300028: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100002
+
+TRIGGER Procedure 0.0 Step 14.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE || compare: 2 | year: 1 | month: 2 | day: 3
+ACTIONS
+Run mission #1300025
+Run mission #1100052
+
+TRIGGER Procedure 0.0 Step 15.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100002
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1300028
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1300028
+CONDITIONS
+Always:
+ACTIONS
+Set Cut to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PLAYER CHOP TREE FALL || order: 0 | isTree: 1
+CONDITIONS
+CHECK NPC IN AREA || sceneInfo: TreeTropByPlayer | flag: 1 | npc: 8000
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 13028 | delayTime: -1 | durationTime: 2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 13028 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_treeCut
+Burgess stands still in Main
+DELAY MASK SET || maskId: 13028 | delayTime: -1 | durationTime: -1 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 13028 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 160_0 starts:
+{{dialogue|Burgess|Hi there, friend! I couldn't help but notice you're doing something illegal! We are {{textcolor|red|not allowed to cut down trees}} near the town.}}
+
+*''I'm sorry, I didn't know.''
+*''I do what I like.''
+
+{{dialogue|Burgess|indent=true|answer=I'm sorry, I didn't know.
+|Oh! Cutting down trees around town can have some seriously negative effects on our environment!}}
+{{dialogue|Burgess|indent=true|answer=I do what I like.
+|Not funny! What you're doing right now can have some serious consequences for our environment!}}
+{{dialogue|Burgess|Seeing as this is your first offence, I'll let it slide... But if I catch you out here chopping down public trees again, well... I'll have no choice but to fine you to the full extent Sandrock nuisancery law allows for!}}
+{{dialogue|Burgess|Worse than that, though: why... if I saw you chopping down trees, I- I {{textcolor|green|don't know if I would want to be your friend anymore}}! I'm sure a lot of people around town would feel the same way...}}
+{{dialogue|Burgess|But don't you worry: you can find {{textcolor|green|wood scrap}} out in the desert, {{textcolor|green|buy imported wood from me}}, even {{textcolor|green|plant your own trees}} on your own property! See? Plenty of ways! So you really have no need to chop these trees down!}}
+{{dialogue|Burgess|That's all, Builder! Conserve water! And don't chop down these trees!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+GUIDE ADD CONTROL || forced: 0 | id: 1082
+CUTSCENE UI STATE EXIT || 
+Burgess stops standing still
+END MISSION 1300028

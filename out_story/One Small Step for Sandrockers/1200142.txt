@@ -1,0 +1,184 @@
+Reading Mission 1200142: One Small Step for Sandrockers
+
+<onlyinclude>{{Infobox mission
+|name = One Small Step for Sandrockers
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from One Small Step for Sandrockers:
+
+TRIGGER Procedure 2.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON REMOVE || missionId: 1200158 | npc: 8006 | missionIcon: 5
+
+TRIGGER Procedure 2.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission One Small Step for Sandrockers
+
+==Conduct==
+
+TRIGGER Procedure 1.0 Step 4.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 0
+ACTIONS
+Mi-an stops standing still
+CUTSCENE UI STATE EXIT || 
+AREA TRIGGER CREATE || transId: 80005435 | id: 21422 | missionId: 1200142 | sceneName: Main | flagName: plantseed_trigger | showOnMap: 1 | mapIcon: MissionArea
+
+TRIGGER Procedure 1.0 Step 5.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 21422
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 21422 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+AREA TRIGGER DELETE || id: 21422
+
+TRIGGER Procedure 1.0 Step 6.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200142
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || id: 21593 | itemType: 0
+SCENEITEM CREATE FLAG || path: MissionPlant_Main_NPCArea_01 | id: 21421 | itemType: 0 | sceneName: Main | flagName: plantseed_area01 | extraParams: 0
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+CHECK WEATHER STATE || weather: 2 | flag: 0
+CHECK WILD RIPE PLANT COUNT || compare: 2 | count: 10 | regionName: MissionPlant_Main
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+Mi-an stands still in Main
+Set CHOICE to 0
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+SCENEITEM DELETE || itemType: 0 | id: 21421
+SCENEITEM CREATE FLAG || itemType: 0 | id: 21422 | path: MissionPlant_Main_NPCArea_02 | sceneName: Main | flagName: plantseed_area02 | extraParams: 0
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 926_0 starts:
+{{dialogue|Mi-an|Hey! Zeke asked me to come get you. Let's go to the field test area right now! I asked him for details but he just said "you'll see."}}
+
+*''Sure, let's go!''
+*''Sorry, I'm a bit busy right now!''
+
+{{dialogue|Mi-an|indent=true|answer=Sure, let's go!
+|I'm so excited! I'll go on ahead. See you there!}}
+{{dialogue|Mi-an|indent=true|answer=Sorry, I'm a bit busy right now!
+|I'm so excited! I'll go on ahead. Come whenever you can!}}
+
+TRIGGER Procedure 2.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+Mi-an stops standing still
+DELAY MASK SET || maskId: 21422 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the first option in conversation segment 3408:
+{{dialogue|Mi-an|Hey! Zeke asked me to come get you. Let's go to the field test area right now! I asked him for details but he just said "you'll see."}}
+
+*''Sure, let's go!'' (No unique dialogue)
+*''Sorry, I'm a bit busy right now!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 1
+
+TRIGGER Procedure 2.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 21422
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 21422 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+{{cutscene|id = 1271}}
+A cutscene CG_FOREST (duration: 0.0) starts playing
+Little Woods - We finally saw the fruits of our efforts, the Little Woods came to life. The biological crusts really were useful! Trudy cried tears of joy as she saw all her work finally come together.
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: plantseed_player
+Zeke stands still in Main
+Trudy stands still in Main
+Mi-an stands still in Main
+
+TRIGGER Procedure 2.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_FOREST | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 3411, 3801, 3802, 3803, 3804 starts:
+{{dialogue|Zeke|They're surviving! We've never seen them grow so big before! It's really working!}}
+{{dialogue|Mi-an|So... what's next?}}
+{{dialogue|Trudy|I don't even know what to think... Do we dare to hope...?}}
+{{dialogue|Trudy|I... I'll think of somethin' once I have calmed down.}}
+{{dialogue|Zeke|And I'm gonna go tell my Pa, he's gonna be ecstatic!}}
+
+TRIGGER Procedure 2.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Trudy stops standing still
+Mi-an stops standing still
+Zeke stops standing still
+CUTSCENE UI STATE EXIT || 
+GLOBAL BLACK BOARD REMOVE || key: getseed
+SUBMIT MISSION 1200158
+END MISSION 1200159
+END MISSION 1200142

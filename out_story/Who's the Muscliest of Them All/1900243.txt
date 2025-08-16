@@ -1,0 +1,273 @@
+Reading Mission 1900243: Who's the Muscliest of Them All
+
+<onlyinclude>{{Infobox mission
+|name = Who's the Muscliest of Them All
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Who's the Muscliest of Them All:
+
+TRIGGER Procedure 1.0 Step 1.2 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 92421 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Pen stands still in Main and looks at Player
+Add behavior CommanderMoveToFlagAndAction (idName: 192423) to Pen
+(param: TargetScene:Main|MoveMode:Walk|FlagName:Ph9242_to|LookAtActor:8000)
+DELAY MASK SET || maskId: 92421 | delayTime: 1.5 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 3.5 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1900242
+CONDITIONS
+Always:
+ACTIONS
+Run mission Who's the Muscliest of Them All
+END MISSION 1900242
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1900243
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Qi===
+
+{{mission_details
+|desc = Since you need an advanced mirror, Pen suggests you go to Qi to get the diagram.
+|details = Talk to Qi
+}}
+Set Z to 0
+Set Mail to 0
+Set eco to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 2267_0 starts:
+{{dialogue|Qi|Greetings, ''Player''. Make any novel scientific discoveries today?}}
+{{dialogue|Qi|Hm? Ah... the homunculus man has once again requested the design for an item far, far beneath the technological requisition standard of anything produced at this Research Center. How troublesome.}}
+{{dialogue|Qi|The last time he asked, I meticulously surveyed the exterior of my building to see if perhaps someone had mistakenly put up a sign reading, "furniture store." As I had originally hypothesized, no such sign existed.}}
+{{dialogue|Qi|The only logical conclusion I've been able to draw based on the available data is that Mr. Pen believes us to be his personal furniture acquisition assistants.}}
+{{dialogue|Qi|Which is particularly perplexing when taking into consideration that there is in fact already in this town a carpenter, albeit of dubious competency... Sometimes I wish that that homunculus man would just-}}
+{{dialogue|Qi|...}}
+{{dialogue|Qi|...Yes, I believe I know a way, with your help, ''Player'', to indeed assure ourselves that we will be making no more mirrors. At least... not for our mutual associate, Mr. Pen.}}
+{{dialogue|Qi|Expect a diagram in your mailbox within a day or so. Thank you for this discussion, ''Player''. It has been most enlightening.}}
+
+*''Sounds good.''
+*''Nothing dangerous, right?''
+*''Care to elaborate?''
+
+{{dialogue|Qi|indent=true|answer=Nothing dangerous, right?
+|Mm. I think, this time, I can honestly answer that with a "no."}}
+{{dialogue|Qi|indent=true|answer=Care to elaborate?
+|We'd best get back to work; homunculus man has already taken up so much of our time. Trust me, ''Player''. Trust the science.}}
+{{dialogue|Qi|Good luck.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Wait for Diagram===
+
+{{mission_details
+|desc = Qi has an idea for the mirror. Wait for his diagram.
+|details = Wait for Diagram
+}}
+Set Mail to 1
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 439
+CONDITIONS
+Always:
+ACTIONS
+===Build Ultratech Mega Mirror 9000===
+
+{{mission_details
+|desc = You've received the diagram, construct the Ultratech Mega Mirror 9000.
+|details = Build Ultratech Mega Mirror 9000
+*{{i2|Ultratech Mega Mirror 9000|0/1}}
+}}
+Set Mail to 2
+
+TRIGGER Procedure 0.0 Step 4.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1900242 | targetId: 2 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+Set Z to 1
+DELAY MASK SET || maskId: 92430 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 92430 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerAction (idName: 92432) to Player
+(param: CMDAction:Hi)
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderBubbleTag (idName: 192430) to Pen
+(param: BubbleTag:Story1900243_8020|BubbleTime:9|minTime:12)
+Remove behavior CommanderMoveToFlagAndAction (idName: 92431) from Pen
+Remove behavior CommanderPlayerAction (idName: 92432) from Player
+BAG MODIFY BY TARGET || missionId: 1900242 | targetId: 2
+SUBMIT MISSION 1900242
+CUTSCENE UI STATE EXIT || 
+STOPWATCH GAME TIME SET || id: 393439 | minute: 25
+STOPWATCH GAME TIME SET || id: 393440 | minute: 35
+
+TRIGGER Procedure 1.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END || order: 0 | result: 1 | missionId: 1200265
+CONDITIONS
+Always:
+ACTIONS
+FAIL MISSION || missionId: 1900242
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1900243
+CONDITIONS
+Check if eco is == 0
+ACTIONS
+The player receives a letter:
+{{mail|438}}
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Qi
+CONDITIONS
+Check if eco is <= (maybe?) 1
+Check if Mail is == 2
+ACTIONS
+(cId 1) A conversation 2271_0 starts:
+{{dialogue|Qi|''Player'', would you mind speeding up production on that mirror? Homunculus man came by and spoke to me. It was awful.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 92430 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Pen stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: P9243
+SCENEITEM CREATE FLAG || itemType: 0 | id: 92439 | path: Ph9242_Mirror | sceneName: Main | flagName: T9243 | extraParams: 0
+SCENEITEM INTERACT SET LOCKER || itemType: 0 | id: 92439 | isAdd: 1
+STOPWATCH REAL TIME SET || sec: 0.4 | id: 292439
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 92430 | delayTime: 0.5 | durationTime: 1 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 6.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8020 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 2272_0 starts:
+{{dialogue|Pen|Skinny... this is glorious. The precision... the craftsmanship... the definition... I mean, just look at that veiny vascularity!}}
+{{dialogue|Pen|You can't possibly know what it's like. To have something you've worked so hard to create, finally be right in front of you. Something made by your own blood, sweat, and tears. To be a creator.}}
+{{dialogue|Pen|...}}
+{{dialogue|Pen|Leave me, Skinny. I... need some time to bask in my glory.}}
+{{dialogue|Pen|You'll get your check... in the... mail...}}
+The conversation ends.
+Set eco to 1
+
+TRIGGER Procedure 1.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if eco is == 1
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 92439
+Run mission The Protector's Weakness
+Run mission Trouble at the Old Dorm
+Remove behavior CommanderBubbleTag (idName: 192430) from Pen
+Pen stops standing still
+END MISSION 1900243
+
+TRIGGER Procedure 1.0 Step 7.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH GAME TIME END || order: 0 | id: 393439
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 92439
+Remove behavior CommanderBubbleTag (idName: 192430) from Pen
+Pen stops standing still
+
+TRIGGER Procedure 1.0 Step 8.0 Order 7 Repeat -1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 92430 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if Mail is == 1
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|439}}
+
+TRIGGER Procedure 2.0 Step 4.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 292439
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 92431) to Pen
+(param: TargetScene:Main|MoveMode:Walk|FlagName:Ph9243_to|LookAtActor:8000)

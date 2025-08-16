@@ -1,0 +1,113 @@
+Reading Mission 1300039: Mining Time!
+
+<onlyinclude>{{Infobox mission
+|name = Mining Time!
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Mining Time!:
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+In a speech bubble:
+{{dialogue|Mi-an|Woohoo! It's mining time!}}
+START MISSION 1300036
+Rocky stops standing still
+Mi-an stops standing still
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1300036
+CONDITIONS
+Always:
+ACTIONS
+Run mission Mining Time!
+END MISSION 1300036
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1300039
+CONDITIONS
+Always:
+ACTIONS
+ACTION MISSION TRACE 1300036
+===Take the Crane Lift===
+
+{{mission_details
+|desc = {{textcolor|green|Take the Crane Lift}} to get to the {{textcolor|green|Eufaula Salvage Abandoned Ruins}}.
+|details = Take the Crane Lift
+}}
+Set STEP to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the VoxelDungeon:
+CONDITIONS
+Check if STEP is == 0
+ACTIONS
+===Collect Ore===
+
+{{mission_details
+|desc = Rocky asked you to collect some ore in the {{textcolor|green|Eufaula Salvage Abandoned Ruins}} for him.
+|details = Collect Ore
+*{{i2|Copper Ore|0/10}}
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1300036 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Rocky===
+
+{{mission_details
+|desc = You have enough Copper Ores that you could give some to Rocky if you wanted.
+|details = Talk to Rocky
+*{{i2|Copper Ore|0/10}}
+*{{i2|Rocky|0/1}}
+}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Rocky
+CONDITIONS
+CHECK PLAYER ITEM || item: 19100003 | itemGrade: -1 | set: 2 | count: 10
+ACTIONS
+(cId 0) A conversation 1301 starts:
+{{dialogue|Rocky|Hey, thanks, Builder! Guess you found it alright down there, heh heh. This little bit will go a long way- here's somethin' for your troubles, like I said, top Gols!}}
+Remove 10 Copper Ore of Default quality (Notify player)
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1300036
+END MISSION 1300039

@@ -1,0 +1,474 @@
+Reading Mission 1800542: Two of a Kind
+
+<onlyinclude>{{Infobox mission
+|name = Two of a Kind
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Two of a Kind:
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Justice
+CONDITIONS
+CHECK PK MATCH IS CHAMPION || isChampion: 0
+CHECK PLAYER PK MATE || state: 0 | npc: 8008
+ACTIONS
+(cId 1) A conversation 8432_0 starts:
+{{dialogue|Justice|''Pet Name''!}}
+{{dialogue|Justice|''Pet Name'', I watched your match! Ain't bad! I feel like you were real close!}}
+{{dialogue|Justice|Let's try and team up together next time! I reckon we'd wipe the floor with them!}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800541
+CONDITIONS
+Always:
+ACTIONS
+Run mission Two of a Kind
+END MISSION 1800541
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800542
+CONDITIONS
+Always:
+ACTIONS
+===Collect the Gift with Justice===
+
+{{mission_details
+|desc = Justice mentions that the gift is custom-made and needs to be picked up from a specific location. Follow him to receive the gift.
+|details = Collect the Gift with Justice
+}}
+AREA TRIGGER CREATE || missionId: 1800541 | id: 85421 | sceneName: Main | flagName: Trigger_85421 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80034745
+ACTION ACTOR ADD FOLLOWER || mActor: 8000 | tActor: 8008 | state: Defense
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 85421
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 85421
+DELAY MASK SET || maskId: 85421 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85421 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Hugo stands still in Main and looks at Justice
+Justice stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8542_0_1
+DELAY MASK SET || maskId: 85421 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85421 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 8437_0 starts:
+{{dialogue|Hugo|Hey, good to see you guys.}}
+{{dialogue|Hugo|Especially you, Justice. Ever since you got married, you're always doing something so urgently, it's hard to catch you anymore.}}
+{{dialogue|Justice|Haha, knock it off, Hugo!}}
+{{dialogue|Hugo|Haha, I just think you two're sweet. I remember one time, little baby Justice'd ran out into the square in his birthday suit, shoutin' about catching all the bad guys, his Ma hot on his heels. Haha, always knew he was gonna be a real good one.}}
+{{dialogue|Hugo|Justice, you got yourself a good one, too. ''Player'' is really somethin' special.}}
+{{dialogue|Justice|Haha, you ain't wrong!}}
+{{dialogue|Justice|So, uh... Hugo... that thing we were talkin' about. Did you finish? I thought we'd come pick it up together.}}
+{{dialogue|Hugo|Yeah, I finished. Let me go get it.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 4.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8542082) to Justice
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8542_8_2|Delay:0.9)
+Add behavior CommanderMoveToFlagAndAction (idName: 8542001) to Player
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8542_0_2|Delay:1.5|LookAtActor:8008)
+Add behavior CommanderTeleport (idName: 8542102) to Hugo
+(param: TargetScene:Smithy|TargetFlag:S8542_10_1|Delay:5.0)
+
+TRIGGER Procedure 0.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 8438_0 starts:
+{{dialogue|Justice|''Pet Name'', can you guess what it is yet?}}
+
+*''Well, we're at Hugo's...''
+*''Weapons!?''
+*''Haha, you're really bad at surprises!''
+
+{{dialogue|Justice|indent=true|answer=Well, we're at Hugo's...
+|Huh!? Ah!}}
+{{dialogue|Justice|indent=true|Haha, I did want to give you a surprise, guess it didn't work out that way haha...}}
+{{dialogue|Justice|indent=true|answer=Weapons!?
+|Haha, you figured it out, huh?}}
+{{dialogue|Justice|indent=true|At Hugo's what else could it be!}}
+{{dialogue|Justice|indent=true|answer=Haha, you're really bad at surprises!
+|Haha, is it that obvious?}}
+{{dialogue|Justice|indent=true|I mean, just 'cause it's a blacksmith's... could be anything! A hammer, some nails...}}
+{{dialogue|Justice|Alright, alright... looks like I got a lot to improve on with my surprises! I'll try a bit harder next time...}}
+{{dialogue|Hugo|Justice, why don't you an' ''Player'' come in an' pick them up?}}
+{{dialogue|Justice|C'mon, hon', let's go in!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85422 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 5.2 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8010 | behaviourName: CommanderTeleport | eventName: Teleported
+CONDITIONS
+Always:
+ACTIONS
+Hugo stands still in Smithy
+Remove behavior CommanderTeleport (idName: 8542102) from Hugo
+
+TRIGGER Procedure 0.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85422 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Smithy | flagName: S8542_0_1
+Remove behavior CommanderMoveToFlagAndAction (idName: 8542001) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8542082) from Justice
+Remove behavior CommanderTeleport (idName: 8542102) from Hugo
+
+TRIGGER Procedure 0.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Smithy:
+CONDITIONS
+Always:
+ACTIONS
+Justice stands still in Smithy
+PLAYER SET POS ROT FLAG || sceneName: Smithy | flagName: S8542_0_1
+DELAY MASK SET || maskId: 85422 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 85421 | path: S8542_Item1 | flagName: S8542_Item1 | extraParams: 0 | sceneName: Smithy
+
+TRIGGER Procedure 0.0 Step 10.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 854231
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 8442_0 starts:
+{{dialogue|Justice|These are custom pistols, made just for us.}}
+{{dialogue|Justice|We're partners... first in the Civil Corps, but now it's different... I-}}
+{{dialogue|Justice|Hey, uh, Hugo. Don't you got something to... hammer?}}
+{{dialogue|Justice|Y'know it's a little... personal.}}
+{{dialogue|Hugo|Huh!? Oh! Oh...}}
+{{dialogue|Hugo|Yeah, where did I put that... uh, nail...}}
+{{dialogue|Hugo|I think it was out here...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 11.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8542001) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 8542082) from Justice
+Hugo stops standing still
+Justice stops standing still
+Hugo stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 8542084) to Justice
+(param: TargetScene:Smithy|MoveMode:Walk|FlagName:S8542_8_2|Delay:0|LookAtActor:8010)
+Add behavior CommanderNPCAction (idName: 8542104) to Hugo
+(param: CMDAction:Thumb|LookAtActor:8008)
+
+TRIGGER Procedure 0.0 Step 12.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8010 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8542105) to Hugo
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8542_10_2|Delay:0.0)
+Add behavior CommanderMoveToFlagAndAction (idName: 8542085) to Justice
+(param: TargetScene:Smithy|MoveMode:Walk|FlagName:S8542_8_3|Delay:1.4|LookAtActor:8000)
+Add behavior CommanderMoveToFlagAndAction (idName: 8542002) to Player
+(param: TargetScene:Smithy|MoveMode:Walk|FlagName:S8542_0_2|Delay:2|LookAtActor:8008)
+Remove behavior CommanderNPCAction (idName: 8542104) from Hugo
+
+TRIGGER Procedure 0.0 Step 13.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 8443_0 starts:
+{{dialogue|Justice|Ahem... These pistols were made just for us.}}
+{{dialogue|Justice|You're the best hand I've ever seen draw. I've never met someone as competent, as caring, as passionate. I never thought I'd meet someone like you.}}
+{{dialogue|Justice|Now, whenever we're out on an adventure, alone or together, we'll be with each other. With this pistol, I'll be there to protect you wherever you are.}}
+{{dialogue|Justice|And when I'm fighting by your side, I'll be able to fight on stronger than ever.}}
+{{dialogue|Justice|You're like the blue one, cool, collected. Haha, I'm the red, a little reckless an' rough. Together we'll keep this town safe.}}
+{{dialogue|Justice|So... do you... do you like it?}}
+
+*''I love it so much!''
+*''But... I like the red one...''
+*''It's pretty good.''
+
+{{dialogue|Justice|indent=true|answer=I love it so much!
+|Phew!}}
+{{dialogue|Justice|indent=true|Remember to bring this with you when you go out on an adventure. I'll bring mine, too. It'll be our treasure.}}
+{{dialogue|Justice|indent=true|answer=But... I like the red one...
+|Ahem... Did I say you were the blue one? Haha, I meant I was the blue one! I musta said it wrong...}}
+{{dialogue|Justice|indent=true|answer=It's pretty good.
+|Alright, well, room for improvement, eh? I'll make sure next time I get you something you absolutely love!}}
+{{dialogue|Justice|''Pet Name'', I just want to say, this kind of thing is important to us Civil Corps folks. Something like this sticks with you for life. Your pistol is an extension of yourself.}}
+{{dialogue|Justice|I hope you feel the same way... haha... Is it wrong of me to say... I want everyone to be jealous of what we've got together!}}
+The conversation ends.
+Set 8542A to 0
+
+TRIGGER Procedure 0.0 Step 16.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+The player interacts (type 2, option 1) with Justice
+
+TRIGGER Procedure 0.0 Step 14.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) The player picks the first option in conversation segment 23536:
+{{dialogue|Justice|So... do you... do you like it?}}
+
+*''I love it so much!'' (No unique dialogue)
+*''But... I like the red one...'' (No unique dialogue)
+*''It's pretty good.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8542A to 1
+
+TRIGGER Procedure 0.0 Step 15.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) The player picks the second option in conversation segment 23536:
+{{dialogue|Justice|So... do you... do you like it?}}
+
+*''I love it so much!'' (No unique dialogue)
+*''But... I like the red one...'' (No unique dialogue)
+*''It's pretty good.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8542A to 2
+
+TRIGGER Procedure 0.0 Step 17.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON INTERACTIVE EXIT || order: 0 | instID: 8008
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 23543, 23544 starts:
+{{dialogue|Justice|Phew, hey, Hugo! Your place is gettin' real hot...}}
+{{dialogue|Justice|''Pet Name'', c'mon, let's put our guns away...}}
+
+TRIGGER Procedure 0.0 Step 18.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Check if 8542A is <= (maybe?) 2
+ACTIONS
+Add 1 Blue Steel of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 18.1 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Check if 8542A is == 2
+ACTIONS
+Add 1 Hot Rod of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 20.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85424 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+SCENEITEM DELETE || itemType: 0 | id: 85421
+
+TRIGGER Procedure 0.0 Step 21.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85424 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8542084) from Justice
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8542_0_1
+Remove behavior CommanderMoveToFlagAndAction (idName: 8542085) from Justice
+Remove behavior CommanderMoveToFlagAndAction (idName: 8542002) from Player
+Justice stops standing still
+
+TRIGGER Procedure 0.0 Step 22.0 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Smithy to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Justice stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8542_0_1
+DELAY MASK SET || maskId: 85424 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 23.0 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Smithy to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 8447_0 starts:
+{{dialogue|Justice|Alright, Hugo, how much do I owe you?}}
+{{dialogue|Hugo|Normally it's extra for a custom job, but I've never worked on a couples set before. So tell you what, how about 2000 Gols even?}}
+
+*''Let me pay!''
+*''Justice, you're too kind...''
+*''Come on, Hugo! It's us!''
+
+{{dialogue|Justice|indent=true|answer=Let me pay!
+|reward={{NPC2|Justice|rp=3}}|Hahaha, no way! It's a gift for you! I can't let you pay.}}
+{{dialogue|Justice|indent=true|C'mon, Hugo, here you go.}}
+{{dialogue|Justice|indent=true|answer=Justice, you're too kind...
+|reward={{NPC2|Justice|rp=3}}|Haha, it's nothin'. Besides, it's important to me.}}
+{{dialogue|Justice|indent=true|Anyway, we're married! Don't be so shy.}}
+{{dialogue|Justice|indent=true|C'mon, Hugo, here you go.}}
+{{dialogue|Justice|indent=true|answer=Come on, Hugo! It's us!
+|reward={{NPC2|Justice|rp=5}}|Yeah, come on, now! It's us, Hugo! Remember? Birthday suit? Bad guys?}}
+{{dialogue|Hugo|indent=true|Haha, alright, well, since it's you two...}}
+{{dialogue|Hugo|indent=true|How about I knock off 200 Gols?}}
+{{dialogue|Justice|indent=true|You're the best, Hugo!}}
+{{dialogue|Justice|Well, hon', I'm gonna head out on patrol. No one's gonna try me with this new shooter! See you at home!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 26.0 Order 25 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Justice stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8542085) from Justice
+Remove behavior CommanderMoveToFlagAndAction (idName: 8542105) from Hugo
+Justice stops standing still
+Justice stops standing still
+CUTSCENE UI STATE EXIT || 
+CAMERA PATH STOP ALL || 
+SUBMIT MISSION 1800541
+END MISSION 1800542
+
+TRIGGER Procedure 0.0 Step 24.0 Order 26 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) The player picks the first option in conversation segment 23546:
+{{dialogue|Hugo|Normally it's extra for a custom job, but I've never worked on a couples set before. So tell you what, how about 2000 Gols even?}}
+
+*''Let me pay!'' (No unique dialogue)
+*''Justice, you're too kind...'' (No unique dialogue)
+*''Come on, Hugo! It's us!'' (No unique dialogue)
+
+(cId 6) The player picks the second option in conversation segment 23546:
+{{dialogue|Hugo|Normally it's extra for a custom job, but I've never worked on a couples set before. So tell you what, how about 2000 Gols even?}}
+
+*''Let me pay!'' (No unique dialogue)
+*''Justice, you're too kind...'' (No unique dialogue)
+*''Come on, Hugo! It's us!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Justice gains 3 favor
+
+TRIGGER Procedure 0.0 Step 25.0 Order 27 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) The player picks the third option in conversation segment 23546:
+{{dialogue|Hugo|Normally it's extra for a custom job, but I've never worked on a couples set before. So tell you what, how about 2000 Gols even?}}
+
+*''Let me pay!'' (No unique dialogue)
+*''Justice, you're too kind...'' (No unique dialogue)
+*''Come on, Hugo! It's us!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Justice gains 5 favor
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 85421
+CONDITIONS
+Always:
+ACTIONS
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8008
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PLAYER DIVORCE || order: 0 | id: 8008
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 85421
+ACTION ACTOR REMOVE FOLLOWER || mActor: 8000 | tActor: 8008
+FAIL MISSION || missionId: 1800541

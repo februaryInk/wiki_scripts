@@ -1,0 +1,608 @@
+Reading Mission 1800510: Flavor on the Sandrock Express
+
+<onlyinclude>{{Infobox mission
+|name = Flavor on the Sandrock Express
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Flavor on the Sandrock Express:
+
+TRIGGER Procedure 0.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if 8509A is == 1
+ACTIONS
+START MISSION 1800509
+
+TRIGGER Procedure 0.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800509
+CONDITIONS
+Always:
+ACTIONS
+Run mission Flavor on the Sandrock Express
+END MISSION 1800509
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800510
+CONDITIONS
+Always:
+ACTIONS
+===Wait Until Tomorrow===
+
+{{mission_details
+|desc = You've arranged to experience and inspect the train with Owen tomorrow, so rest for today.
+|details = Wait Until Tomorrow
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DAY START FOR WEATHER || order: 0 | weather: 2
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: set_weather
+ACTIONS
+UNIQUE ACTION RUN || idStr: set_weather
+WEATHER SET STATE || WeatherState: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+===Go to the Train Station at 17:00PM===
+
+{{mission_details
+|desc = Today is the day to inspect the train with Owen. Prepare and head to the train station on time.
+|details = Go to the Train Station at 17:00PM
+}}
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 17:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1800509 | id: 85101 | sceneName: Main | flagName: Trigger_85101 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+ACTION TRAIN SYNC || 
+TRAIN SET DISABLE || isDisable: 1
+TRAIN SET VISIBLE || set: 0
+
+TRIGGER Procedure 0.0 Step 3.1 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 2:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+TRAIN SET DISABLE || isDisable: 0
+TRAIN SET VISIBLE || set: 1
+AREA TRIGGER DELETE || id: 85101
+The player receives a letter:
+{{mail|822}}
+FAIL MISSION || missionId: 1800509
+
+TRIGGER Procedure 0.0 Step 4.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 85101
+CONDITIONS
+CHECK WEATHER STATE || weather: 2 | flag: 0
+Check if Owen is in town
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 85101
+DELAY MASK SET || maskId: 85101 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 5.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85101 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8510_0_1
+Owen stands still in Main and looks at Player
+SCENEITEM CREATE FLAG || itemType: 0 | id: 85101 | path: S8510_Item1 | sceneName: Main | flagName: DW_Train | extraParams: -1
+DELAY MASK SET || maskId: 85101 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Jensen stands still in Main
+
+TRIGGER Procedure 0.0 Step 6.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85101 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 22926 starts:
+{{dialogue|Owen|Hey, you're here! Let's check out this dining car. All abooaard! ...Always wanted to say that.}}
+
+TRIGGER Procedure 0.0 Step 7.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8510012) to Owen
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S8510_1_1|LookAtActor:8000|Delay:0.2|Action:Show)
+Add behavior CommanderMoveToFlag (idName: 8510001) to Player
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8510_0_2|LookAtActor:8001|Delay:0.1)
+
+TRIGGER Procedure 0.0 Step 8.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85102 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 9.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85102 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8510_0_3
+Owen stands still in Main and looks at Player
+DELAY MASK SET || maskId: 85102 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 11.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 851021
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S8510_0_4
+
+TRIGGER Procedure 0.0 Step 12.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 851022
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 8051_0 starts:
+{{dialogue|Owen|Oh. I guess one detail I might have left out... I redecorated the whole car for us to spend the evening in! Ta-da...!}}
+{{dialogue|Owen|Truth is, I've been working on this for a while... Did a lot of research into what dining cars all over the world look like, Old World and new. This here is kind of a blend of my favorites...}}
+{{dialogue|Owen|Fancier than even the trains down in Atara, if I do say so myself! And, ah... I figured we ought to get a bit of use out of it before we give it away to the world!}}
+{{dialogue|Owen|Oh, and... I guess there might not really be much of anything for you to inspect here. Hope that's alright...}}
+
+*''It's lovely! I really like it, Owen.''
+*''It's dreamy! Like a fairy tale...''
+*''You must've spent a lot on this...''
+*''Owen, I thought this was important...''
+
+{{dialogue|Owen|indent=true|answer=It's lovely! I really like it, Owen.
+|reward={{NPC2|Owen|rp=5}}|You like it? Ah, that's wonderful news; you know, I wasn't so sure...}}
+{{dialogue|Owen|indent=true|answer=It's dreamy! Like a fairy tale...
+|reward={{NPC2|Owen|rp=5}}|Oh... Really? Haha... I didn't expect such a lofty review!}}
+{{dialogue|Owen|indent=true|Well, if this is a fairy tale, I daresay this makes us royalty. Let us find a moment of respite, then, your highness, from the troubles of ruling a kingdom...}}
+{{dialogue|Owen|indent=true|answer=You must've spent a lot on this...
+|reward={{NPC2|Owen|rp=5}}|True, it was a bit of an investment, but... certainly affordable. And this little stunt? Well, I'd spend ten times as much if I knew it'd put a smile on your face...}}
+{{dialogue|Owen|Oh... right, well... That's true, I guess I did make this seem like a job. I'm... sorry to have misled you, but... I just wanted to give you a nice surprise...!}}
+
+*''I admit, it is really nice...''
+*''Fine, I'll stay.''
+*''Sorry, I don't have time for this...''
+
+{{dialogue|Owen|indent=true|answer=I admit, it is really nice...
+|reward={{NPC2|Owen|rp=2}}|You like it? Ah, that's wonderful news; you know, I wasn't so sure...}}
+{{dialogue|Owen|indent=true|answer=Fine, I'll stay.
+|Thank you, ''Player''... You won't regret this; I've pulled out all the stops!}}
+{{dialogue|Owen|indent=true|answer=Sorry, I don't have time for this...
+|Oh. I... I totally understand. You're busy. Sorry to... Sorry to bother you with this.}}
+Set 8510Leave to 0
+
+TRIGGER Procedure 0.0 Step 13.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Check if 8510Leave is == 0
+ACTIONS
+(cId 3) A conversation 8058_3_1 starts:
+{{dialogue|Player|(Owen seems to have worked really hard on this.)}}
+
+*''Is that perfume I smell?''
+*''The carpet is nice and squishy.''
+*''I really enjoy the lighting.''
+*''It's supposed to be tacky, right?''
+*''That's all.'' (No unique dialogue)
+
+{{dialogue|Owen|indent=true|answer=Is that perfume I smell?
+|reward={{NPC2|Owen|rp=1}}|Not far off! It's a special type of incense from Seesai that's meant to sooth and relax the mind... said also to ensure good dreams. I guess let's... see for ourselves tonight...}}
+{{dialogue|Owen|indent=true|answer=The carpet is nice and squishy.
+|reward={{NPC2|Owen|rp=1}}|Yes! Handmade and imported from Barnarock. There's a guy out there; normally you have to wait months to even hear back from him but, well, I pulled a few strings, went through a couple of back channels...}}
+{{dialogue|Owen|indent=true|answer=I really enjoy the lighting.
+|reward={{NPC2|Owen|rp=1}}|Oh yeah? Haha, this lamp here was designed by me! Penciled it out and... well, I can't take all the credit. Gustave, Tallsky's Chief Builder banged it out for me...!}}
+{{dialogue|Owen|indent=true|Haha, I would've gotten you, of course, but I was afraid it might give the game away...}}
+{{dialogue|Owen|indent=true|answer=It's supposed to be tacky, right?
+|Ah... well... "tacky," no... I mean, I was going for a bit lavish so... I mean... Well, hopefully I've kept it just out of range of being "tacky..."}}
+
+TRIGGER Procedure 0.0 Step 31.2 Order 45 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Check if 8510Leave is == 1
+ACTIONS
+DELAY MASK SET || maskId: 85104 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 12.2 Order 43 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the first option in conversation segment 22930:
+{{dialogue|Owen|Oh, and... I guess there might not really be much of anything for you to inspect here. Hope that's alright...}}
+
+*''It's lovely! I really like it, Owen.'' (No unique dialogue)
+*''It's dreamy! Like a fairy tale...'' (No unique dialogue)
+*''You must've spent a lot on this...'' (No unique dialogue)
+*''Owen, I thought this was important...'' (No unique dialogue)
+
+(cId 2) The player picks the second option in conversation segment 22930:
+{{dialogue|Owen|Oh, and... I guess there might not really be much of anything for you to inspect here. Hope that's alright...}}
+
+*''It's lovely! I really like it, Owen.'' (No unique dialogue)
+*''It's dreamy! Like a fairy tale...'' (No unique dialogue)
+*''You must've spent a lot on this...'' (No unique dialogue)
+*''Owen, I thought this was important...'' (No unique dialogue)
+
+(cId 2) The player picks the third option in conversation segment 22930:
+{{dialogue|Owen|Oh, and... I guess there might not really be much of anything for you to inspect here. Hope that's alright...}}
+
+*''It's lovely! I really like it, Owen.'' (No unique dialogue)
+*''It's dreamy! Like a fairy tale...'' (No unique dialogue)
+*''You must've spent a lot on this...'' (No unique dialogue)
+*''Owen, I thought this was important...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Owen gains 5 favor
+
+TRIGGER Procedure 0.0 Step 12.2 Order 53 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the first option in conversation segment 22935:
+{{dialogue|Owen|Oh... right, well... That's true, I guess I did make this seem like a job. I'm... sorry to have misled you, but... I just wanted to give you a nice surprise...!}}
+
+*''I admit, it is really nice...'' (No unique dialogue)
+*''Fine, I'll stay.'' (No unique dialogue)
+*''Sorry, I don't have time for this...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Owen gains 2 favor
+
+TRIGGER Procedure 0.0 Step 12.5 Order 44 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the third option in conversation segment 22935:
+{{dialogue|Owen|Oh... right, well... That's true, I guess I did make this seem like a job. I'm... sorry to have misled you, but... I just wanted to give you a nice surprise...!}}
+
+*''I admit, it is really nice...'' (No unique dialogue)
+*''Fine, I'll stay.'' (No unique dialogue)
+*''Sorry, I don't have time for this...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8510Leave to 1
+
+TRIGGER Procedure 0.0 Step 13.9 Order 46 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 13) A conversation 22944, 22945, 22946 starts:
+{{dialogue|Owen|You know, I think what made me want to do this is... This is the train that brought you to Sandrock, isn't it? It's on these tracks that our lives came together; in a way, if not for this train, we never would've met...}}
+{{dialogue|Owen|Dressing the ol' girl up seemed like the least we could do, eh?}}
+{{dialogue|Owen|Well, darlin'...! Nothin' left to do but take 'er for a test lounge, what do you say?}}
+
+TRIGGER Procedure 0.0 Step 17.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 13) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85103 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 16.0 Order 40 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the first option in conversation segment 22938:
+{{dialogue|Player|(Owen seems to have worked really hard on this.)}}
+
+*''Is that perfume I smell?'' (No unique dialogue)
+*''The carpet is nice and squishy.'' (No unique dialogue)
+*''I really enjoy the lighting.'' (No unique dialogue)
+*''It's supposed to be tacky, right?'' (No unique dialogue)
+*''That's all.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Owen gains 1 favor
+
+TRIGGER Procedure 0.0 Step 16.1 Order 41 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the second option in conversation segment 22938:
+{{dialogue|Player|(Owen seems to have worked really hard on this.)}}
+
+*''Is that perfume I smell?'' (No unique dialogue)
+*''The carpet is nice and squishy.'' (No unique dialogue)
+*''I really enjoy the lighting.'' (No unique dialogue)
+*''It's supposed to be tacky, right?'' (No unique dialogue)
+*''That's all.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Owen gains 1 favor
+
+TRIGGER Procedure 0.0 Step 16.2 Order 42 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the third option in conversation segment 22938:
+{{dialogue|Player|(Owen seems to have worked really hard on this.)}}
+
+*''Is that perfume I smell?'' (No unique dialogue)
+*''The carpet is nice and squishy.'' (No unique dialogue)
+*''I really enjoy the lighting.'' (No unique dialogue)
+*''It's supposed to be tacky, right?'' (No unique dialogue)
+*''That's all.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Owen gains 1 favor
+
+TRIGGER Procedure 0.0 Step 18.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85103 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderDramaWithIndexPlayer (idName: 8510002) to Player
+(param: SeatDramaName:TrainSeat2|TargetScene:Main|DramaIndex:14|TriggerTag:8510SitEat00)
+Add behavior CommanderSit (idName: 8510013) to Owen
+(param: SeatDramaName:TrainSeat1|TargetScene:Main)
+DELAY MASK SET || maskId: 85103 | delayTime: 2 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 20.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 85101
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 22947, 22948 starts:
+{{dialogue|Owen|I tried to get all your favorites; this dish... this is what you usually get when you come out of the mines, right? And this is the drink you always order when you bring friends by, isn't it?}}
+{{dialogue|Owen|Haha, I'm just glad you haven't gotten sick of my cooking yet.}}
+
+TRIGGER Procedure 0.0 Step 21.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add tag "8510SitEat00" to Player
+STOPWATCH REAL TIME SET || id: 85102 | sec: 3
+
+TRIGGER Procedure 0.0 Step 22.0 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 85102
+CONDITIONS
+Always:
+ACTIONS
+(cId 5) A conversation 22949 starts:
+{{dialogue|Owen|And if that day ever comes... don't worry. I'll learn new recipes!}}
+
+TRIGGER Procedure 0.0 Step 23.0 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 5) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 8510231) to Jensen
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8510_23_2|LookAtActor:8001|Delay:0)
+
+TRIGGER Procedure 0.0 Step 25.0 Order 25 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8023 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 6) A conversation 22950, 22951 starts:
+{{dialogue|Jensen|Hello! How's it going in here? Ready to set off?}}
+{{dialogue|Owen|Make it so!}}
+
+TRIGGER Procedure 0.0 Step 26.0 Order 26 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 6) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 8510231) from Jensen
+Add behavior CommanderMoveToFlagAndAction (idName: 8510232) to Jensen
+(param: TargetScene:Main|MoveMode:Run|FlagName:S8510_23_3)
+STOPWATCH REAL TIME SET || id: 85103 | sec: 2
+
+TRIGGER Procedure 0.0 Step 27.0 Order 27 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 85103
+CONDITIONS
+Always:
+ACTIONS
+(cId 7) A conversation 22952 starts:
+{{dialogue|Owen|Wouldn't be the real thing if we weren't in locomotion!}}
+
+TRIGGER Procedure 0.0 Step 28.0 Order 28 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 7) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 5503}}
+A cutscene CG_WINDEVENING (duration: -2.0) starts playing
+Last Train to Highwind - With the sound of a steam whistle, the train slowly left Sandrock. Inside the carriage, Owen and I were sharing a romantic moment in an embrace.
+
+TRIGGER Procedure 0.0 Step 30.0 Order 30 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_WINDEVENING | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 8) A conversation 8063_0 starts:
+{{dialogue|Jensen|Lllladies and gentlemen, this is your conductor speaking; we are now rolling in to faaaabulous Sandrock... Please stay in your seats; do not unfasten your seatbelts until we've come to a complete stop. I will turn this train around...}}
+{{dialogue|Jensen|Er. Oh! Sorry, Owen... ''Player''... you're the only ones who can hear me right now... I, er... You two can get off now. Or... you can stay as long as you want...}}
+{{dialogue|Owen|Aye aye, conductor...}}
+{{dialogue|Owen|Well, dear, what'd you think? Is it just me or did it get a little stuffy in here when we went through the tunnel? Were you alright?}}
+{{dialogue|Owen|Ah, shoot...! I meant to have Jensen take a photo of us as we were going over the canyon...}}
+{{dialogue|Owen|Ah, well. Always next time I suppose... Looks like our ride's over for now.}}
+{{dialogue|Owen|Darlin', I know we both get caught up with work, but... I hope this shows that... even on the job, I'm always thinking of you. And... I'm always going to be there for you.}}
+
+*''Thank you, Owen. This was really moving.''
+*''I'm always thinking of you, too.''
+*''It was all a bit much...''
+
+{{dialogue|Owen|indent=true|answer=Thank you, Owen. This was really moving.
+|Ah? Moving... because we're on a train! Hahah... er- No pun intended, eh...? Well, you don't need to thank me. Sharing moments like this with you... There's just nothing better in this world.}}
+{{dialogue|Owen|indent=true|answer=I'm always thinking of you, too.
+|Thank you, darling... I know you feel the same way. But... it's nice to hear you say it.}}
+{{dialogue|Owen|indent=true|answer=It was all a bit much...
+|Nothing is too much when it comes to you.}}
+{{dialogue|Owen|Hum... I'd hoped today's ride would never end, but I'm afraid that end it must... I'm going to go thank Jensen for being so generous; I'll catch up with you soon.}}
+{{dialogue|Owen|Oh, and why don't you take a few of these furniture pieces with you? I had a few extras made. Love ya!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 30.2 Order 51 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 8) There is a conversation segment (id 22956) that ends:
+{{dialogue|Owen|Well, dear, what'd you think? Is it just me or did it get a little stuffy in here when we went through the tunnel? Were you alright?}}
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 85102 | path: S8510_efx | flagName: S8510_Item2 | extraParams: -1 | sceneName: Main
+STOPWATCH REAL TIME SET || id: 85105 | sec: 2
+
+TRIGGER Procedure 0.0 Step 31.0 Order 32 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 8) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 85104 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 30.8 Order 52 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 85105
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 85102
+
+TRIGGER Procedure 0.0 Step 32.0 Order 31 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85104 | eventType: 1
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderSit (idName: 8510013) from Owen
+Remove behavior CommanderDramaWithIndexPlayer (idName: 8510002) from Player
+CAMERA PATH STOP ALL || 
+CUTSCENE UI STATE EXIT || 
+SCENEITEM DELETE || itemType: 0 | id: 85101
+Remove behavior CommanderMoveToFlagAndAction (idName: 8510232) from Jensen
+TRAIN SET DISABLE || isDisable: 0
+TRAIN SET VISIBLE || set: 1
+Owen stops standing still
+Owen stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8510012) from Owen
+Jensen stops standing still
+DELAY MASK SET || maskId: 85104 | delayTime: 3 | durationTime: 1 | changeType: 1 | curveIndex: 0
+PLAYER SET POS ROT FLAG || flagName: S8510_0_5 | sceneName: Main
+
+TRIGGER Procedure 0.0 Step 36.0 Order 47 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85104 | eventType: 4
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: S8510_0_5 | sceneName: Main
+
+TRIGGER Procedure 0.0 Step 36.2 Order 50 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderDramaWithIndexPlayer | eventName: SitDownFinished
+CONDITIONS
+Always:
+ACTIONS
+Add tag "8510SitEat00" to Player
+STOPWATCH REAL TIME SET || id: 85101 | sec: 3
+
+TRIGGER Procedure 0.0 Step 46.1 Order 49 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85104 | eventType: 5
+CONDITIONS
+Check if 8510Leave is == 1
+ACTIONS
+SUBMIT MISSION 1800509
+END MISSION 1800510
+
+TRIGGER Procedure 0.0 Step 47.0 Order 33 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 85104 | eventType: 5
+CONDITIONS
+Check if 8510Leave is == 0
+ACTIONS
+Add 1 Barnarock Rug of Default quality (Notify player)
+Add 1 Crystal Lamp of Default quality (Notify player)
+SUBMIT MISSION 1800509
+END MISSION 1800510

@@ -1,0 +1,176 @@
+Reading Mission 1100102: Operation De-Geeglate
+
+<onlyinclude>{{Infobox mission
+|name = Operation De-Geeglate
+|image =
+|description = The lizardmen, or Geeglers, as they call themselves, are becoming more and more of a problem. Minister Matilda has tasked the Civil Corps with solving this problem.
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 400
+|reputation = 25
+|gols = 1500
+|npc1 = Justice
+|rp1 = 10
+|npc2 = Heidi
+|rp2 = 10
+|npc3 = Mi-an
+|rp3 = 10
+|npc4 = Unsuur
+|rp4 = 10
+|rewards = {{i2|Flashy Desert Defender Pants}|1}
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100002
+
+TRIGGER Procedure 2.0 Step 5.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Moisture Farm Blues is successfully completed
+ACTIONS
+Run mission The Grass is Greener
+
+TRIGGER Procedure 2.0 Step 9.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if mission Moisture Farm Blues is result 1 flag 1
+ACTIONS
+Run mission Operation De-Geeglate
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100102
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|20}}
+Set SCENE to 0
+Set global blackboard key justicewait with info 1.
+Justice stands still in CivilCorp
+Unsuur stands still in CivilCorp
+Mi-an stands still in CivilCorp
+Heidi stands still in CivilCorp
+DELIVER MISSION 1100102
+AREA TRIGGER CREATE || missionId: 1100102 | id: 11010 | sceneName: Main | flagName: trigger_civilcorp | showOnMap: 1 | mapIcon: MissionArea | transId: 80001618
+ACTION DATE REMOVE FLAG || flag: DATE:EasterEggAfterGH
+AREA TRIGGER DELETE || id: 171592
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1100102
+CONDITIONS
+Always:
+ACTIONS
+Run mission Operation De-Geeglate
+END MISSION 1100102
+
+TRIGGER Procedure 0.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the CivilCorp:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_civilcorp
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_civilcorp
+Set SCENE to 1
+Justice stops standing still
+Unsuur stops standing still
+Mi-an stops standing still
+Heidi stops standing still
+Justice stands still in CivilCorp
+Unsuur stands still in CivilCorp
+Mi-an stands still in CivilCorp
+Heidi stands still in CivilCorp
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the CivilCorp:
+CONDITIONS
+Check if SCENE is == 1
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: CivilCorp | flagName: civil_player
+
+TRIGGER Procedure 1.0 Step 0.5 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the CivilCorp:
+CONDITIONS
+Check if SCENE is == 1
+ACTIONS
+(cId 0) A conversation 636, 637, 1118, 638, 639, 640, 641, 642, 1246_0, 644, 645 starts:
+{{dialogue|Mi-an|Hi ''Player''! You're just in time!}}
+{{dialogue|Justice|Everyone here? I'll get right to the point, we need y'all's help in the upcoming Civil Corps' mission to chase off the Geeglers.}}
+{{dialogue|Justice|Way I figure, taking the bridge into Geegler territory is a bit dangerous; we'd be walkin' into whatever traps they might have set up for us. They'd also see us from a league away.}}
+{{dialogue|Justice|Plus, walkin' over that bridge lately gives me the willies... them Geeglers have been takin' pieces from the bridge for... Peach knows what. I don't think it's very stable right now.}}
+{{dialogue|Justice|Heidi, is there any way we could sneak over on that {{textcolor|green|old trolley system}} behind our office? That way we could get in undetected.}}
+{{dialogue|Heidi|You mean the tram system left over from the early days of Sandrock? The two cables are still there, but we have a couple of problems.}}
+{{dialogue|Heidi|First, there are no tram carts; and second, the trolly engines are broken. Not to mention they're on the other side of the canyon... on top of that, we'll have to check the integrity of the cables...}}
+{{dialogue|Justice|Okay, that was more than two things... but, uh, nevermind that... Sounds to me like the first step is gettin' ourselves some {{textcolor|green|tram carts}}! Builders, can y'all handle that?}}
+{{dialogue|Mi-an|We can each build one tram cart. What do you think, ''Player''?}}
+
+*''No problem at all!''
+*''Sounds pretty hard...''
+
+{{dialogue|Mi-an|indent=true|answer=No problem at all!
+|Yeah! It's our time to shine!}}
+{{dialogue|Mi-an|indent=true|answer=Sounds pretty hard...
+|C'mon, you should believe in yourself! Builders have to have spirit! You've already done so much for this town, this should be nothing for you!}}
+{{dialogue|Mi-an|indent=true|So, we'll each build a carriage, then we can manually pull ourselves over to those engines on the other side and fix 'em up!}}
+{{dialogue|Heidi|I think it's doable. Qi still has some old diagrams from the early days in his collection, let me go check and see if he's got one for the tram cart. I can get back to you on that soon.}}
+{{dialogue|Justice|Yeah, sounds good. Thanks pardners, just let me know when you're done. I hate to rush you, but, well, without the railroad, I don't know how long our water will last. So do try to hurry.}}
+
+TRIGGER Procedure 1.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 11010
+CUTSCENE UI STATE EXIT || 
+Justice stops standing still
+Unsuur stops standing still
+Mi-an stops standing still
+Heidi stops standing still
+Set global blackboard key justicewait with info 2.
+START MISSION 1100102
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 20
+CONDITIONS
+Check if SCENE is == 0
+ACTIONS
+START MISSION 1100102
+
+==Rewards==
+{{mission reward
+|npc1 = Justice
+|rp1 = 10
+|npc2 = Heidi
+|rp2 = 10
+|npc3 = Mi-an
+|rp3 = 10
+|npc4 = Unsuur
+|rp4 = 10
+|exp = 400
+|reputation = 25
+|gols = 1500
+|rewards = {{i2|Flashy Desert Defender Pants}|1}
+}}

@@ -1,0 +1,720 @@
+Reading Mission 1400373: Whisper of the Heart
+
+<onlyinclude>{{Infobox mission
+|name = Whisper of the Heart
+|image =
+|description = Heidi won the preliminary round of the architectural competition, but she doesn't seem too thrilled...
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 1150
+|reputation = None
+|gols = None
+|npc1 = Heidi
+|rp1 = 15
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200124
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 3
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment 1800199 by 1
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check relationship with Heidi is Friend Good
+Check if mission 1700369 is result 1 flag 0
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+Check if Pablo is in town
+ACTIONS
+Run mission Whisper of the Heart
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1400373
+CONDITIONS
+Always:
+ACTIONS
+Set cnt to 0
+Newspaper adds Article content 6024.
+Title: Free Cities Architecture Competition in Full Swing
+The prestigious Vincent Design Institute of Atara is holding an open competition for architectural design. Architects, both amateur and professional, from all over the Free Cities are encouraged to enter, and the winner will receive a grant to actually build the winning design in their hometown!
+In a surprise twist of events, Ms. Verna herself, one of the most recognized architects in the Free Cities, joined the judging at the last moment, raising the stakes that much higher for the leading contestants. "Even my own staff couldn't recognize talent if it bit them on the nose! If you want something done right, do it yourself: story of my life!" said Master Verna modestly on the matter. 
+Ms. Verna then went on to explain that only pieces of "elevated vision" would be considered as the winner. "We want to see if any unknown designers out there have talent for the Deconstructivist style that I have made so very, very famous," she continued.
+Our very own Heidi is participating in this competition, so let's all give her our cheering support if you see her!
+Reported by Ernest
+Set accept to 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 437301
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: 1900393 | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: 1500330 | info: 1 | exist: 0
+Duvos Attacks! is in state 2 with flag 0
+The Battle of Sandrock is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+DELAY MASK SET || maskId: 437302 | delayTime: 0 | durationTime: -2 | changeType: 2 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 437301
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437302 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Pablo stands still in Main
+Rian stands still in Main
+Heidi stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S4373_8000A2
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437302 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 437321) A conversation 17643, 17644 starts:
+{{dialogue|Rian|The Open Architectural Competition has... something something something, blah blah blah... chosen its winners...}}
+{{dialogue|Pablo|Hey, hey, hey, down in front! Ugh, if you must stand in the way, at least read out all the details...! Is Heidi on there?}}
+
+TRIGGER Procedure 0.0 Step 6.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 437321) There is a conversation segment (id 17644) that ends:
+{{dialogue|Pablo|Hey, hey, hey, down in front! Ugh, if you must stand in the way, at least read out all the details...! Is Heidi on there?}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 437354) to Pablo
+(param: TargetScene:Main|MoveMode:Run|FlagName:S4373_8022A1)
+STOPWATCH REAL TIME SET || id: 43731 | sec: 3
+
+TRIGGER Procedure 0.0 Step 6.5 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8022 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+ON STOPWATCH REAL TIME END || order: 0 | id: 43731
+CONDITIONS
+Always:
+ACTIONS
+Pablo stands still in Main
+Pablo stops standing still
+Remove behavior CommanderMoveToFlag (idName: 437354) from Pablo
+(cId 437331) A conversation 17645, 17646, 17647, 17648 starts:
+{{dialogue|Rian|Slow down there, friend-o; reading is a process meant to be enjoyed... savored, even... Anyway... as I was saying... Ahem... something something something... the following architects stood out among the competition...}}
+{{dialogue|Pablo|For the love of all that is texturized, will you just get on with it, man!?}}
+{{dialogue|Rian|Fine, dude. I'll just look for- Oh, hey. Here she is. Number one: Heidi.}}
+{{dialogue|Pablo|Ahhhh! Omigosh omigosh omigosh, Heidi? At the very top of the list...!?}}
+
+TRIGGER Procedure 0.0 Step 8.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 437331) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 437356) to Heidi
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S4373_8009A2)
+STOPWATCH REAL TIME SET || id: 4373204 | sec: 2.5
+
+TRIGGER Procedure 0.0 Step 9.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8009 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Heidi stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 437356) from Heidi
+Heidi stops standing still
+Heidi stands still in Main and looks at Player
+(cId 437322) A conversation 5339_0 starts:
+{{dialogue|Pablo|And there she is! Look out! Hot stuff coming through! Look, Heidi, you've won the first round of this competition. Which means you've basically won the whole thing already. Congratulations! Let's celebrate! ...And prepare...}}
+{{dialogue|Heidi|Oh. Uh. Howdy, folks...?}}
+{{dialogue|Pablo|You do have an outfit for the award ceremony, don't you? Of course you don't. Don't worry, I already have multiple options prepared for just such an occasion...}}
+{{dialogue|Pablo|And when you go up on stage to accept your award, first: thank the Light. Then your parents. Then moi, your inspiration... and then... really stick it to the haters! Everyone who told you you'd never be anybody, "look at me now...!"}}
+{{dialogue|Pablo|Er... look at you now... You know what I mean. Then quickly segue back onto something positive, smile, thank the Light again, aaaand... scene.}}
+{{dialogue|Rian|Yo, Heidi, check it out: here it says if you win you get a bunch of money. Like, a bunch a bunch. What are ya gonna do, huh? What are ya gonna do with the money, Heidi?}}
+{{dialogue|Heidi|Oh, uh... I dunno... It's not cash, it's money for a project...}}
+{{dialogue|Rian|Well, if you don't want it, can I have it...?}}
+{{dialogue|Pablo|Cheer up, girl! I've never seen someone so upset to win a competition they themselves signed up for...!}}
+{{dialogue|Heidi|You're right. I should be excited. Just... eh... maybe the pressure is getting to me. I'd better... go for a walk...}}
+The conversation ends.
+Add behavior NPC_Conversation (idName: 4373503) to Player
+(param: Dialog_TargetID:8009)
+
+TRIGGER Procedure 0.0 Step 16.0 Order 26 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 437322) There is a conversation segment (id 17658) that ends:
+{{dialogue|Heidi|You're right. I should be excited. Just... eh... maybe the pressure is getting to me. I'd better... go for a walk...}}
+CONDITIONS
+Always:
+ACTIONS
+Heidi stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 437359) to Heidi
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S4373_8009A3)
+STOPWATCH REAL TIME SET || id: 4373203 | sec: 2.5
+
+TRIGGER Procedure 0.0 Step 16.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 4373203
+CONDITIONS
+Always:
+ACTIONS
+(cId 437323) A conversation 5340_0 starts:
+{{dialogue|Pablo|That right there, ladies and gentlemen, is the curse of the perfectionist. Even winning isn't enough for our dearest Heidi... How tragic!}}
+The conversation ends.
+Pablo stops standing still
+Rian stops standing still
+Remove behavior NPC_Conversation (idName: 4373503) from Player
+
+TRIGGER Procedure 0.0 Step 17.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 437323) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Pablo stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 437361) to Pablo
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S4373_8022A2)
+
+TRIGGER Procedure 0.0 Step 16.2 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 437303
+CONDITIONS
+Always:
+ACTIONS
+Heidi stops standing still
+
+TRIGGER Procedure 0.0 Step 18.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8022 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 437324) A conversation 17660 starts:
+{{dialogue|Pablo|...Every ounce of beauty she pours into this tedious world of ours is a gasp of pain sighing out through her fingertips... Oh, the humanity...! Oh, the vast reverence of it all...!}}
+
+TRIGGER Procedure 0.0 Step 19.0 Order 28 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 437324) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 437361) from Pablo
+Add behavior CommanderMoveToFlagAndAction (idName: 437362) to Pablo
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S4373_8022A3)
+
+TRIGGER Procedure 0.0 Step 21.0 Order 27 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 437324) There is a conversation segment (id 17661) that ends:
+{{dialogue|Rian|So true. Yeah, I should probably go, too. See ya, ''Player''.}}
+CONDITIONS
+Always:
+ACTIONS
+Rian stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 437363) to Rian
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S4373_8073A2)
+
+TRIGGER Procedure 0.0 Step 20.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 437383
+CONDITIONS
+Always:
+ACTIONS
+(cId 437332) A conversation 17661 starts:
+{{dialogue|Rian|So true. Yeah, I should probably go, too. See ya, ''Player''.}}
+
+TRIGGER Procedure 0.0 Step 21.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: 437332) There is a conversation segment (id 17661) that ends:
+{{dialogue|Rian|So true. Yeah, I should probably go, too. See ya, ''Player''.}}
+CONDITIONS
+Always:
+ACTIONS
+(cId 437325) A conversation 5341_0 starts:
+{{dialogue|Player|(Heidi seems oddly upset. Maybe I should go check on her?)}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 22.0 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 437325) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 437304 | delayTime: 0 | durationTime: 1 | changeType: 2 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 23.0 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437304 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 437362) from Pablo
+Remove behavior CommanderMoveToFlagAndAction (idName: 437363) from Rian
+Pablo stops standing still
+Rian stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 437359) from Heidi
+Heidi stands still in Main
+STOPWATCH REAL TIME SET || id: 437303 | sec: 60
+
+TRIGGER Procedure 0.0 Step 24.0 Order 25 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437304 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+AREA TRIGGER CREATE || missionId: 1400373 | id: 437305 | sceneName: Main | flagName: S4373_TriggerB | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80027810
+DELIVER MISSION 1400373
+START MISSION 1400373
+===Go to Martle's Oasis===
+
+{{mission_details
+|desc = Heidi seems to be a bit down, go to Martle's Oasis to see what's bothering her.
+|details = Go to Martle's Oasis
+*{{i2|Heidi|0/1}}
+}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 437305
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 437307 | delayTime: 0 | durationTime: 1 | changeType: 2 | curveIndex: 0
+AREA TRIGGER DELETE || id: 437305
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437307 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Heidi stops standing still
+Heidi stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: S4373_8000B2
+SCENEITEM CREATE FLAG || itemType: 0 | id: 437312 | path: S4373_Item_WastePaper | sceneName: Main | flagName: S4373_WastePaper | extraParams: 0
+SCENEITEM CREATE FLAG || itemType: 0 | id: 437313 | path: S4373_Item_DrawBoard | sceneName: Main | flagName: S4373_DrawBoard | extraParams: 0
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437307 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 4373201 | sec: 2.5
+STOPWATCH REAL TIME SET || id: 4373202 | sec: 6.5
+
+TRIGGER Procedure 1.0 Step 2.1 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 4373201
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 437314 | path: S4373_Item_WastePaper_Roll | sceneName: Main | flagName: S4373_WastePaper_Roll | extraParams: 0
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAMERA PATH END || order: 0 | id: 437389
+CONDITIONS
+Always:
+ACTIONS
+(cId 437326) A conversation 5342_0 starts:
+{{dialogue|Heidi|Ah, shucks, did I hit you with that? I'm sorry, ''Player''. I was gonna pick it up, too, honest!}}
+{{dialogue|Heidi|Heh, just, eh... feels a little better to crumple 'em up and toss 'em, you know...?}}
+
+*''Not celebrating your win?''
+*''Getting nervous about the next round?''
+*''Everything... okay?''
+
+{{dialogue|Heidi|indent=true|answer=Not celebrating your win?
+|reward={{NPC2|Heidi|rp=2}}|Win? Er, you mean the first round? Uh, yeah, well sure! I always celebrate my wins by... scribbling wildly into my notebook...}}
+{{dialogue|Heidi|indent=true|answer=Getting nervous about the next round?
+|reward={{NPC2|Heidi|rp=3}}|Well... it's not the competition so much that's giving me trouble... It's more so... hm... something else... But don't worry about it! I'm... fine...?}}
+{{dialogue|Heidi|indent=true|answer=Everything... okay?
+|reward={{NPC2|Heidi|rp=2}}|Oh... yeah! Peachy keen! I always celebrate my wins by... scribbling wildly into my notebook...}}
+Remove behavior CommanderMoveToFlag (idName: 437365) from Player
+
+TRIGGER Procedure 1.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 437326) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 437327) A conversation 5346_0 starts:
+{{dialogue|Heidi|Eh, alright, ''Player''. Yeah, I guess I am a bit nerve wracked. Okay, so here's the condensed version of the conundrum...}}
+{{dialogue|Heidi|So, I see this notice go out: architecture competition. I check the grant money, it's a lot. Hosted by the Vincent Design Institute, and I think, "I know exactly what those prudes are into, I bet I can win this thing!"}}
+{{dialogue|Heidi|And you know, in Sandrock we're always hurtin' for funds so... I went for it! I used everything in my arsenal to churn out some fancy looking nonsense I knew they'd go bananas for...}}
+
+*''You'd rub their backs just for a little scratch?''
+*''Hey, whatever it takes to win.''
+
+{{dialogue|Heidi|indent=true|answer=You'd rub their backs just for a little scratch?
+|reward={{NPC2|Heidi|rp=1}}|Well... yeah! Not like I was hurting anybody. On the contrary, in fact! That's... not what I'm upset about anyway. What's got me stressed out is, well, guess who's the main judge for the competition...?}}
+{{dialogue|Heidi|indent=true|answer=Hey, whatever it takes to win.
+|reward={{NPC2|Heidi|rp=2}}|Yeah, right? That money could go a long way here. But... that's not what I'm upset about anyway. What's got me stressed out is, well, guess who's the main judge for the competition...?}}
+{{dialogue|Heidi|Master Verna! I thought she'd be too busy to oversee something like this... So... I was excited, but... well, sure enough...}}
+{{dialogue|Heidi|No sooner than I see my name in the paper, I take a peek in my mailbox and... Here! Have a look for yourself!}}
+The conversation ends.
+Add behavior CommanderMoveToFlagAndAction (idName: 437366) to Heidi
+(param: TargetScene:Main|MoveMode:Walk|FlagName:S4373_8009B2)
+
+TRIGGER Procedure 1.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 437327) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 437328) A conversation 5350_0 starts:
+{{dialogue|Heidi|I thought we'd made peace with me coming home, but now she's clamoring to bring me back and... Ugh, she's just so pushy, you know?}}
+{{dialogue|Heidi|I feel like me being in this competition... it's like I'm proving her right somehow. With all this hanging over me... I can't concentrate. Couldn't win this thing even if I wanted to... And... should I even keep catering to her like this...?}}
+
+*''Be true to yourself! Don't let her get you down!''
+*''Tough call... But it is a lot of money...''
+*''Just win the money and ghost her.''
+
+{{dialogue|Heidi|indent=true|answer=Be true to yourself! Don't let her get you down!
+|reward={{NPC2|Heidi|rp=3}}|Nice to know you've got my back, ''Player''!}}
+{{dialogue|Heidi|indent=true|And you know what...? Maybe... just maybe... getting the spotlight like this is even better than getting the prize! Everyone's going to see my design... Could attract interested parties to invest in something I actually want to have built!}}
+{{dialogue|Heidi|indent=true|answer=Just win the money and ghost her.
+|reward={{NPC2|Heidi|rp=2}}|Hah. Well, I'm afraid that's not quite how it works. The grant money must be used for the project I submit. So if I want to win, I have to play her game... Or...}}
+{{dialogue|Heidi|indent=true|Maybe... just maybe... getting the spotlight is even better than getting the prize! Everyone's going to see my design... Could attract interested parties to invest in something I actually want to have built!}}
+{{dialogue|Heidi|Eh, well... you run into this kind of thing in your line of work, too, yeah?}}
+{{dialogue|Heidi|I mean, do you really think I should design a fancy-schmancy looking building just to win the competition? Is that something we need in Sandrock? Expensive and impractical...?}}
+
+*''I don't think so.''
+*''Yeah, sure, why not? A win's a win.''
+
+{{dialogue|Heidi|indent=true|answer=I don't think so.
+|You're right. ...You're right! If we go too hard on the bells and whistles like she likes, the upkeep on the place is going to be nuts. We'll spend more keeping it intact than it costs to build it in the long run...}}
+{{dialogue|Heidi|indent=true|So that means... even if I win... we lose. I don't need to try to win this thing at all...!}}
+{{dialogue|Heidi|indent=true|answer=Yeah, sure, why not? A win's a win.
+|Eh, well... if we go too hard on the bells and whistles like she likes, the upkeep on the place is going to be nuts. We'll spend more keeping it intact than it costs to build it in the long run...}}
+{{dialogue|Heidi|indent=true|So that means... even if I win... we lose. I don't need to try to win this thing at all...!}}
+
+TRIGGER Procedure 1.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 437328) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 437329) A conversation 5356_0 starts:
+{{dialogue|Heidi|That settles it, then! I'm going all in on my own design, something we really need in Sandrock... That'll send a message!}}
+{{dialogue|Heidi|And who knows, maybe some of the other judges will even get behind me. I mean, my sand-protection tech is nothing to shake a stick at...}}
+{{dialogue|Heidi|Alright, alright! I've got a vision now! One quick lap around town to get the juices flowing and I'll get cracking. Thanks, ''Player''! Talkin' it out with you... really helped!}}
+
+*''Why don't I tag along?''
+*''I'd go with, but I'm kinda busy...''
+
+{{dialogue|Heidi|indent=true|answer=Why don't I tag along?
+|Well... sure! I think that'd be mighty helpful, in fact. Let's walk around and see if we can't come up with an idea that'll blow their socks off!}}
+{{dialogue|Heidi|indent=true|answer=I'd go with, but I'm kinda busy...
+|Sure thing! I'll just be wanderin' around for a bit, come find me if you have any ideas you want to share!}}
+Remove behavior CommanderMoveToFlagAndAction (idName: 437366) from Heidi
+
+TRIGGER Procedure 1.0 Step 7.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 437329) The player picks the first option in conversation segment 17689:
+{{dialogue|Heidi|Alright, alright! I've got a vision now! One quick lap around town to get the juices flowing and I'll get cracking. Thanks, ''Player''! Talkin' it out with you... really helped!}}
+
+*''Why don't I tag along?'' (No unique dialogue)
+*''I'd go with, but I'm kinda busy...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+===Find Inspiration===
+
+{{mission_details
+|desc = It turns out that Heidi is worried about her style going against the judges in the competition. Start your walk at the entrance of town to see if you can find some inspiration.
+|details = Find Inspiration
+*{{i2|Heidi|0/1}}
+}}
+Set accept to 1
+
+TRIGGER Procedure 1.0 Step 7.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 437330) The player picks the first option in conversation segment 17692:
+{{dialogue|Heidi|Hey ''Player'', wanna join me for a stroll before I get started on my design?}}
+
+*''Why don't I tag along?'' (No unique dialogue)
+*''I'd go with, but I'm kinda busy...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+===Find Inspiration===
+
+{{mission_details
+|desc = It turns out that Heidi is worried about her style going against the judges in the competition. Start your walk at the entrance of town to see if you can find some inspiration.
+|details = Find Inspiration
+*{{i2|Heidi|0/1}}
+}}
+Run mission Whisper of the Heart
+END MISSION 1400373
+
+TRIGGER Procedure 1.0 Step 7.5 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 437329) The player picks the second option in conversation segment 17689:
+{{dialogue|Heidi|Alright, alright! I've got a vision now! One quick lap around town to get the juices flowing and I'll get cracking. Thanks, ''Player''! Talkin' it out with you... really helped!}}
+
+*''Why don't I tag along?'' (No unique dialogue)
+*''I'd go with, but I'm kinda busy...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Heidi===
+
+{{mission_details
+|desc = Heidi wanted to discuss some ideas with you. Talk to her when you have some time.
+|details = Talk to Heidi
+}}
+
+TRIGGER Procedure 1.0 Step 8.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 437329) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 437308 | delayTime: 0 | durationTime: 1 | changeType: 2 | curveIndex: 0
+
+TRIGGER Procedure 1.0 Step 9.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437308 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 437312
+SCENEITEM DELETE || itemType: 0 | id: 437313
+SCENEITEM DELETE || itemType: 0 | id: 437314
+CAMERA PATH STOP DEFAULT || id: 437387
+CAMERA PATH STOP DEFAULT || id: 437388
+CAMERA PATH STOP DEFAULT || id: 437389
+
+TRIGGER Procedure 1.0 Step 10.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437308 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Heidi stops standing still
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 1.0 Step 10.1 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 437308 | eventType: 5
+CONDITIONS
+Check if accept is == 1
+ACTIONS
+Run mission Whisper of the Heart
+END MISSION 1400373
+
+TRIGGER Procedure 1.0 Step 20.0 Order 12 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Heidi
+CONDITIONS
+Always:
+ACTIONS
+(cId 437330) A conversation 5359_0 starts:
+{{dialogue|Heidi|Hey ''Player'', wanna join me for a stroll before I get started on my design?}}
+
+*''Why don't I tag along?''
+*''I'd go with, but I'm kinda busy...'' (No unique dialogue)
+
+{{dialogue|Heidi|indent=true|answer=Why don't I tag along?
+|Well... sure! I think that'd be mighty helpful, in fact. Let's walk around and see if we can't come up with an idea that'll blow their socks off!}}
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 19 | id: 437311
+CONDITIONS
+Always:
+ACTIONS
+(cId 437333) A conversation 17832 starts:
+{{dialogue|Player|...}}
+
+TRIGGER Procedure 3.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 17664:
+{{dialogue|Heidi|Heh, just, eh... feels a little better to crumple 'em up and toss 'em, you know...?}}
+
+*''Not celebrating your win?'' (No unique dialogue)
+*''Getting nervous about the next round?'' (No unique dialogue)
+*''Everything... okay?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Heidi gains 2 favor
+
+TRIGGER Procedure 3.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 17664:
+{{dialogue|Heidi|Heh, just, eh... feels a little better to crumple 'em up and toss 'em, you know...?}}
+
+*''Not celebrating your win?'' (No unique dialogue)
+*''Getting nervous about the next round?'' (No unique dialogue)
+*''Everything... okay?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Heidi gains 3 favor
+
+TRIGGER Procedure 3.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the third option in conversation segment 17664:
+{{dialogue|Heidi|Heh, just, eh... feels a little better to crumple 'em up and toss 'em, you know...?}}
+
+*''Not celebrating your win?'' (No unique dialogue)
+*''Getting nervous about the next round?'' (No unique dialogue)
+*''Everything... okay?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Heidi gains 2 favor
+
+TRIGGER Procedure 3.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 17670:
+{{dialogue|Heidi|And you know, in Sandrock we're always hurtin' for funds so... I went for it! I used everything in my arsenal to churn out some fancy looking nonsense I knew they'd go bananas for...}}
+
+*''You'd rub their backs just for a little scratch?'' (No unique dialogue)
+*''Hey, whatever it takes to win.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Heidi gains 1 favor
+
+TRIGGER Procedure 3.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 17670:
+{{dialogue|Heidi|And you know, in Sandrock we're always hurtin' for funds so... I went for it! I used everything in my arsenal to churn out some fancy looking nonsense I knew they'd go bananas for...}}
+
+*''You'd rub their backs just for a little scratch?'' (No unique dialogue)
+*''Hey, whatever it takes to win.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Heidi gains 2 favor
+
+TRIGGER Procedure 3.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 17676:
+{{dialogue|Heidi|I feel like me being in this competition... it's like I'm proving her right somehow. With all this hanging over me... I can't concentrate. Couldn't win this thing even if I wanted to... And... should I even keep catering to her like this...?}}
+
+*''Be true to yourself! Don't let her get you down!'' (No unique dialogue)
+*''Tough call... But it is a lot of money...'' (No unique dialogue)
+*''Just win the money and ghost her.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Heidi gains 3 favor
+
+TRIGGER Procedure 3.0 Step 0.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the third option in conversation segment 17676:
+{{dialogue|Heidi|I feel like me being in this competition... it's like I'm proving her right somehow. With all this hanging over me... I can't concentrate. Couldn't win this thing even if I wanted to... And... should I even keep catering to her like this...?}}
+
+*''Be true to yourself! Don't let her get you down!'' (No unique dialogue)
+*''Tough call... But it is a lot of money...'' (No unique dialogue)
+*''Just win the money and ghost her.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Heidi gains 2 favor
+
+TRIGGER Procedure 3.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if cnt is >= 7
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1400373 | id: 437301 | sceneName: Main | flagName: S4373_TriggerA | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80027810
+SCENEITEM CREATE FLAG || itemType: 19 | id: 437311 | path: S4373_Item_JianZhuDaSaiGongGao | sceneName: Main | flagName: S4373_JianZhuDaSaiGongGao | extraParams: 0
+SCENEITEM INTERACT SET || itemType: 19 | id: 437311 | canInteract: 1
+
+TRIGGER Procedure 10.0 Step 0.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment cnt by 1
+
+==Rewards==
+{{mission reward
+|npc1 = Heidi
+|rp1 = 15
+|exp = 1150
+|reputation = None
+|gols = None
+}}

@@ -1,0 +1,90 @@
+Reading Mission 1100096: Farewell Party
+
+<onlyinclude>{{Infobox mission
+|name = Farewell Party
+|image =
+|description = The stage is ready, don't forget to attend the farewell party for Mason tomorrow morning.
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 100
+|reputation = None
+|gols = None
+|npc1 = -1
+|rp1 = 10
+}}</onlyinclude>
+
+==Overview==
+Run conditions from The Show Must Go On:
+
+TRIGGER Procedure 4.0 Step 8.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8017 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 110094 | sceneName: Main | extraParams: 0 | flagName: wutai | path: ScenItem_WuTai
+(cId 5) A conversation 1128, 1129, 1494, 1495 starts:
+{{dialogue|Mi-an|Ta-daa! This looks great!}}
+{{dialogue|Mi-an|You know what? It feels so nice to work with a really good Builder like you! Can't wait for more projects!}}
+{{dialogue|Mi-an|Well, guess we're done! All that's left to do is inform our good Minister Matilda of our good deed!}}
+{{dialogue|Mi-an|Anyway, do you mind doing the honors and tell her we've finished? I've really gotten behind on my commissions! Thanks!}}
+
+TRIGGER Procedure 4.0 Step 9.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+GROUP 0:
+GLOBAL BLACK BOARD REMOVE || key: WuTaiPartDown
+GLOBAL BLACK BOARD REMOVE || key: WuTaiPartUp
+Run mission Farewell Party
+ACTION MISSION TRACE 1100096
+GLOBAL BLACK BOARD REMOVE || key: miansandstorm
+Remove behavior CommanderNPCAction (idName: 110941) from Mi-an
+Remove behavior CommanderPlayerAction (idName: 10941) from Player
+Remove behavior CommanderNPCAction (idName: 1094) from Mi-an
+GLOBAL BLACK BOARD REMOVE || key: stagereceiveowen
+SUBMIT MISSION 1100093
+
+GROUP 10:
+END MISSION 1100094
+
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100096
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1100096
+START MISSION 1100096
+ACTION MISSION TRACE 1100096
+
+TRIGGER Procedure 0.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1100096
+CONDITIONS
+Always:
+ACTIONS
+Run mission Farewell Party
+END MISSION 1100096
+
+==Rewards==
+{{mission reward
+|npc1 = -1
+|rp1 = 10
+|exp = 100
+|reputation = None
+|gols = None
+}}

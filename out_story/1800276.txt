@@ -1,0 +1,128 @@
+Reading Mission 1800276: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100068
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+The Kidnapping is successfully completed
+ACTIONS
+Run mission #1200201
+
+TRIGGER Procedure 3.0 Step 2.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1800276
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800276
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1800276 | id: 82761 | sceneName: Main | flagName: Trigger_82301 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_saloon
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+ACTIONS
+AREA TRIGGER DELETE || id: 82761
+UNIQUE ACTION RUN || idStr: enter_saloon
+
+TRIGGER Procedure 0.0 Step 3.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM ADD || id: 1 | instId: 82761 | scene: Saloon | flagName: S8276_RNPC1_1 | dailyBehavior: RandomNPC
+NPC RANDOM ADD || id: 2 | instId: 82762 | scene: Saloon | flagName: S8276_RNPC2_1 | dailyBehavior: RandomNPC
+Elsie stands still in Saloon and looks at 82761
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: S8276_0_1
+82761 stands still in Saloon and looks at Elsie
+82762 stands still in Saloon and looks at Elsie
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 6.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 2708_0 starts:
+{{dialogue|Elsie|Y'know, this scent bag uses Yakmel Fur and Yakmel Feces. When ya use it, it gives off a sent similar to a male Yakmel. Next time, jus' keep a little bag on yer body, an' wild Yakmel will keep right away.}}
+{{dialogue|Elsie|But there's a limit to what they'll do, so don't go pokin' around in their faces, they're still gonna boot ya.}}
+{{dialogue|82761|I know, phew, ain't never gonna try to anger one again! I tried to take a picture, it was all fine until the "click," I literally saw its eyes change color...}}
+{{dialogue|Elsie|Yeah, flashin' lights an' sounds'll get them goin' crazy! You're lucky to be unhurt.}}
+{{dialogue|82762|Yeah... we broke our own speed records for sure when we were running away.}}
+{{dialogue|Elsie|Haha, next time try givin' a call like a Rocket Rooster, a quick "squark!" and it'll cause them to disengage! Ever noticed how the Yakmel keep their distance from the birds?}}
+{{dialogue|82761|Well, let me try: "Sguark!" Was that right?}}
+{{dialogue|Elsie|Haha, keep tryin'. If you run into more issues out there, come and find me.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 10.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Elsie gains 5 favor
+CUTSCENE UI STATE EXIT || 
+Elsie stops standing still
+82761 stops standing still
+82762 stops standing still
+
+TRIGGER Procedure 0.0 Step 10.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM REMOVE || id: 82761
+NPC RANDOM REMOVE || id: 82762
+END MISSION 1800276
+
+TRIGGER Procedure 1.0 Step 10.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+We'll Be Ready For 'Em is successfully completed
+ACTIONS
+AREA TRIGGER DELETE || id: 82761
+NPC RANDOM REMOVE || id: 82761
+NPC RANDOM REMOVE || id: 82762
+END MISSION 1800276

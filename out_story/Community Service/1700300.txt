@@ -1,0 +1,331 @@
+Reading Mission 1700300: Community Service
+
+<onlyinclude>{{Infobox mission
+|name = Community Service
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200310
+
+TRIGGER Procedure 2.0 Step 5.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DAY START FOR WEATHER || order: 0 | weather: 2
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: set_weather
+Check if mission 1200290 is result 1 flag 1
+Check if mission Graceful Farewell is result 1 flag 0
+ACTIONS
+UNIQUE ACTION RUN || idStr: set_weather
+WEATHER SET STATE || WeatherState: 0
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE FLAG || days: 6 | flag: DATE:loganinprision | compare: 2
+ACTIONS
+Run mission Community Service
+ACTION DATE REMOVE FLAG || flag: DATE:loganinprision
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700300
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER ONCE CREATE || missionId: 1700300 | id: 173001 | sceneName: Main | showOnMap: 1 | mapIcon: MissionArea | transId: -1 | flagName: LAS_Logan
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 173001
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 173001 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: -2
+Set global blackboard key NoCutSceneObstacle with info 1.
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173001 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Logan stands still in Main
+Haru stands still in Main
+Krystal stands still in Main
+Pebbles stands still in Main
+Arvio stands still in Store
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: LAS_Player3
+DELAY MASK SET || maskId: 173001 | delayTime: 1 | durationTime: 1 | changeType: 1 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173001 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 173001) to Krystal
+(param: TargetScene:Main|FlagName:LAS_Krystal2)
+Add behavior CommanderMoveToFlagAndAction (idName: 173001) to Pebbles
+(param: TargetScene:Main|FlagName:LAS_Pebbles2)
+STOPWATCH REAL TIME SET || id: 173002 | sec: 2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173002 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Krystal stands still in Main
+Pebbles stands still in Main
+Krystal stops standing still
+Pebbles stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 173001) from Krystal
+Remove behavior CommanderMoveToFlagAndAction (idName: 173001) from Pebbles
+DELAY MASK SET || maskId: 173002 | delayTime: 2 | durationTime: 1 | changeType: 1 | curveIndex: -2
+ACTOR FREEZ COLLIDER || npc: 8011 | freezeCollider: 1
+ACTOR FREEZ COLLIDER || npc: 8058 | freezeCollider: 1
+GLOBAL BLACK BOARD REMOVE || key: NoCutSceneObstacle
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173002 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 12055, 12056 starts:
+{{dialogue|Pebbles|Uncy Lo Lo, Uncy Lo Lo!}}
+{{dialogue|Logan|Hey...! C'mere, kiddo.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 173003) to Pebbles
+(param: TargetScene:Main|FlagName:LAS_Pebbles3|MoveMode:Run)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCAction (idName: 173001) to Pebbles
+(param: CMDAction:Hi)
+STOPWATCH REAL TIME SET || id: 173002 | sec: 3
+ACTOR FREEZ COLLIDER || npc: 8058 | freezeCollider: 0
+ACTOR FREEZ COLLIDER || npc: 8011 | freezeCollider: 0
+STOPWATCH REAL TIME SET || sec: 3 | id: 173003
+
+TRIGGER Procedure 0.0 Step 0.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 173001
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 12057, 12058, 12059, 12060, 12061 starts:
+{{dialogue|0|Wheee! Ma, look at me!}}
+{{dialogue|Krystal|Haha... you happy to see your uncle Logan, Pebbles? Ooh, hey look, that skin cream I like is back in stock...}}
+{{dialogue|Haru|I think you'll find this particular blend to be especially restorative. It includes herbs not previously available near Sandrock.}}
+{{dialogue|Krystal|Oh, uh... hey! It's the quiet kid... spoutin' off all sorts of fun facts about skin cream for some reason...!}}
+{{dialogue|Haru|Um. Yes... just trying to help...}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCActionLoop (idName: 173001) from Logan
+Remove behavior CommanderNPCActionLoop (idName: 173001) from Pebbles
+Add behavior CommanderMoveToFlagAndAction (idName: 173001) to Haru
+(param: TargetScene:Main|FlagName:LAS_Haru2|Action:Give)
+STOPWATCH REAL TIME SET || id: 173002 | sec: 4
+
+TRIGGER Procedure 0.0 Step 0.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 173001) from Logan
+Remove behavior CommanderMoveToFlagAndAction (idName: 173002) from Haru
+Arvio stops standing still
+Logan stops standing still
+Haru stops standing still
+CUTSCENE UI STATE EXIT || 
+END MISSION 1700300
+
+TRIGGER Procedure 0.0 Step 0.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 173003
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 173001) to Player
+(param: TargetScene:Main|FlagName:LAS_Player2)
+Remove behavior CommanderMoveToFlagAndAction (idName: 173002) from Haru
+Add behavior CommanderMoveToFlagAndAction (idName: 173002) to Haru
+(param: TargetScene:Main|FlagName:LAS_Haru3)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 173002
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 173002 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8012 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 173001) from Haru
+Add behavior CommanderMoveToFlagAndAction (idName: 173002) to Haru
+(param: TargetScene:Main|FlagName:LAS_Haru3|Action:Give)
+Haru stops standing still
+
+TRIGGER Procedure 0.0 Step 0.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8058 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderNPCActionLoop (idName: 173001) to Logan
+(param: CMDAction:CarryInBreast|LookAtActor:8057)
+Add behavior CommanderNPCActionLoop (idName: 173001) to Pebbles
+(param: CMDAction:CarryInBreast)
+STOPWATCH REAL TIME SET || id: 173001 | sec: 3
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: LAS_Player1
+Remove behavior CommanderMoveToFlag (idName: 173003) from Pebbles
+
+TRIGGER Procedure 0.0 Step 0.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 173002
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 12062, 12063, 12064, 12065 starts:
+{{dialogue|Logan|Hey, Krys, if you're in a buying mood, wanna take this off my hands? Second hand, but still as sharp as the day I bought it. Yours for three hundred Gols.}}
+{{dialogue|Haru|The sword that you used throughout our time as outlaws? You just want to give it away, Logan?}}
+{{dialogue|Logan|That's right, at three hundred I am practically givin' it away! But I'll do you one better anyhow: one fifty! Final offer.}}
+{{dialogue|Krystal|Eh, I dunno, Logan. We usually just get gear for our boys direct through Hugo. Why don't you keep it? C'mon Pebbles, let's go. Say goodbye to your uncle!}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 12066:
+{{dialogue|Logan|What about you, ''Player''? I think you saved my life once or twice back in the ruins, so for you... one hundred Gols, whaddya say?}}
+
+*''Deal!'' (No unique dialogue)
+*''I don't really need it...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Titanium Heavy Sword of Perfect quality (Notify player)
+MONEY PLAYER ADD || money: -100
+
+TRIGGER Procedure 0.0 Step 0.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8058 | behaviourName: CommanderNPCAction | eventName: NPCActionOver
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderNPCAction (idName: 173001) from Pebbles
+Pebbles stops standing still
+Krystal stops standing still
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 3662_0 starts:
+{{dialogue|Logan|What about you, ''Player''? I think you saved my life once or twice back in the ruins, so for you... one hundred Gols, whaddya say?}}
+
+*''Deal!''
+*''I don't really need it...''
+
+{{dialogue|Logan|indent=true|answer=Deal!
+|reward={{i2|Titanium Heavy Sword|1}}|Good! That's that, then.}}
+{{dialogue|Logan|You sure? It's a good sword, ''Player''...}}
+
+*''Well... If you say so!''
+*''Yeah, really don't want it...''
+
+{{dialogue|Logan|indent=true|answer=Well... If you say so!
+|Good! That's that, then.}}
+{{dialogue|Logan|indent=true|answer=Yeah, really don't want it...
+|Suit yourself.}}
+Remove behavior CommanderMoveToFlag (idName: 173001) from Player
+
+TRIGGER Procedure 1.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 173001) to Logan
+(param: TargetScene:Main|FlagName:LAS_Logan2)
+
+TRIGGER Procedure 1.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8011 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 12070, 12071, 12072, 12073, 12074, 12075, 12076, 12077, 12078, 12079, 12080, 12081 starts:
+{{dialogue|Haru|What's gotten into you, Logan? Why the sudden sales pitch? Are we running out of funds?}}
+{{dialogue|Logan|Nah, got plenty. Here, take this. A little something I found stashed away in the house. You're still thinkin' about going to Atara, right?}}
+{{dialogue|Haru|This is... this is a lot of money... why did you have this...?}}
+{{dialogue|Logan|Yep! About a couple years of tuition at the university by my count. Figured it'd be good to keep around for a rainy day...}}
+{{dialogue|Haru|I... don't see myself going to Atara anytime soon. If I did apply, I'm sure I could pay my own way.}}
+{{dialogue|Logan|Fine, then, take it and don't spend it. Do whatever you want with it.}}
+{{dialogue|Haru|H-hey...!}}
+{{dialogue|Logan|C'mon, I said "take it!"}}
+{{dialogue|Haru|I...}}
+{{dialogue|Logan|I'm gonna be huntin' critters here rest of my life I reckon, but you got big things in store for you. Talkin' to Grace, well... Seems like she sees more in you than even I ever did. And you know I don't like bein' outdone...}}
+{{dialogue|Haru|Very well, Logan. I'll hold onto this for us. If it'll make you feel better. But you should know, I don't plan on leaving you and Andy behind any time soon. Certainly not before we're all back on our feet.}}
+{{dialogue|Logan|Eh... money... Just spend it when you got it, we'll always make it back. Kind of a boring topic of conversation if you ask me... C'mon, let's mosey...}}

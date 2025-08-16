@@ -1,0 +1,359 @@
+Reading Mission 1200282: We'll Be Ready For 'Em
+
+<onlyinclude>{{Infobox mission
+|name = We'll Be Ready For 'Em
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from We'll Be Ready For 'Em:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200281
+CONDITIONS
+Always:
+ACTIONS
+DELIVER MISSION 1200281
+START MISSION 1200281
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200281
+CONDITIONS
+Always:
+ACTIONS
+Run mission We'll Be Ready For 'Em
+END MISSION 1200281
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200282
+CONDITIONS
+Always:
+ACTIONS
+===Wait for Diagram===
+
+{{mission_details
+|desc = Wait for Qi's diagram, he needs a bit of time to draw it up for you. To prepare for constructing the Air Cannon, you need an Advanced Assembly Station, you can upgrade it in Heidi's Construction Junction.
+|details = Wait for Diagram
+}}
+NPC ICON ADD || missionId: 1200281 | npc: 8017 | missionIcon: 6
+The player receives a letter:
+{{mail|536}}
+SUBMIT MISSION 1800286
+END MISSION 1800287
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Mi-an
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 3357_0 starts:
+{{dialogue|Mi-an|Hey. I heard the details... never thought I'd see a war this far into the Free Cities. So, I guess us Builders will need to do our part to protect the town...}}
+{{dialogue|Mi-an|And with no Commissioner, I guess it's on us to figure out how we want to do this.}}
+{{dialogue|Mi-an|You know, I did always kind of imagine that one day one of us would be be calling the shots... but... I never imagined it would be like this!}}
+{{dialogue|Mi-an|Well. Co-commissioner! This is it! What do you want me to build?}}
+
+*''Help with materials.''
+*''Help with weapons.''
+*''Help with ammunition.''
+*''I need you on the front line...''
+
+{{dialogue|Mi-an|indent=true|answer=Help with materials.
+|Got it! Yeah, good call! I'm kind of at the top of my game down in the ruins...}}
+{{dialogue|Mi-an|indent=true|answer=Help with weapons.
+|Right. I can do that. I'll talk to Hugo and we'll make sure everyone's got what they need to... stand up to an army...}}
+{{dialogue|Mi-an|indent=true|answer=Help with ammunition.
+|Right. I can do that. I'll talk to Hugo and we'll make sure everyone's got what they need to... stand up to an army...}}
+{{dialogue|Mi-an|indent=true|answer=I need you on the front line...
+|Huh?!}}
+{{dialogue|Mi-an|indent=true|Come on, I'm not half the fighter you are...!  Maybe if they gave me one of the turrets, but...}}
+{{dialogue|Mi-an|indent=true|Tell you what, I'll just check the list of needed materials for all the commissions we've got and just send everything I come up with your way, okay?}}
+{{dialogue|Mi-an|Alright! Let's do this!}}
+{{dialogue|Mi-an|No pressure's gonna stop us!}}
+{{dialogue|Mi-an|Okay! I'm off to my workshop! Good luck, ''Player''!}}
+The conversation ends.
+NPC ICON REMOVE || missionIcon: 6 | npc: 8017 | missionId: 1200281
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200281 | targetId: 3 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Install the Air Cannon===
+
+{{mission_details
+|desc = Take the finished Air Cannon to Martle Square and install it.
+|details = Install the Air Cannon
+*{{i2|Hyper Compressed Air Cannon|0/1}}
+}}
+SCENEITEM CREATE FLAG || itemType: 0 | extraParams: 0 | flagName: turret_turretempty | sceneName: Main | id: 22821 | path: Interact_Aakil1
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 0 | id: 22821 | missionId: 1200281 | iconType: 3
+
+TRIGGER Procedure 1.0 Step 1.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM INTERACT || order: 0 | itemType: 0 | id: 22821
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 10783 starts:
+{{dialogue|0|(Installing the Air Cannon will cause the plot to move forward in a significant way. Make sure you've finished any side-quests you have currently, as they may conflict with what happens next. Install now?)}}
+
+*''Let's do it.'' (No unique dialogue)
+*''(Come back later)'' (No unique dialogue)
+
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the first option in conversation segment 10783:
+{{dialogue|0|(Installing the Air Cannon will cause the plot to move forward in a significant way. Make sure you've finished any side-quests you have currently, as they may conflict with what happens next. Install now?)}}
+
+*''Let's do it.'' (No unique dialogue)
+*''(Come back later)'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 22821
+SCENEITEM CREATE FLAG || itemType: 11 | extraParams: Mission_Item_KongQiPao_0|CreatorItem|14000014_1|1547|Fix|1.4 | flagName: turret_turretempty | sceneName: Main | id: 22821 | path: Mission_hydroponic_empey
+SCENEITEM ADD ICON STACK || add: 1 | itemType: 11 | id: 22821 | missionId: 1200281 | iconType: 3
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SCENEITEM CREATE || order: 0 | actorId: 8000 | itemType: 12 | id: 22821
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 22821 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22821
+CONDITIONS
+Always:
+ACTIONS
+Trudy stands still in Main
+Justice stands still in Main and looks at Player
+Qi stands still in Main and looks at Player
+PLAYER SET POS ROT FLAG || flagName: turret_player1 | sceneName: Main
+DELAY MASK SET || maskId: 22821 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 2.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 5 | maskId: 22821
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 3362_0 starts:
+{{dialogue|Justice|Fantastic. This will be the center piece of our defense.}}
+{{dialogue|Qi|Well done, ''Player''. Also...}}
+{{dialogue|Qi|You'll be the one who will pilot this turret.}}
+
+*''That's what I like to hear!''
+*''Huh? Why me?''
+*''Why not you?''
+
+{{dialogue|Qi|indent=true|answer=That's what I like to hear!
+|Eh? That didn't require as much convincing as I had hypothesized. You truly are brave.}}
+{{dialogue|Qi|I cannot pilot the turret in a real battle. I am... scared.}}
+{{dialogue|Qi|Despite the thousands of hours of combat training I've imagined in my head, I... I've never fought anyone before.}}
+{{dialogue|Qi|The rest of the Civil Corps is incompetent, as well as technologically illiterate. The only one who stands a chance against an army in the turret is you.}}
+The conversation ends.
+
+TRIGGER Procedure 3.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Trudy stops standing still
+Add behavior CommanderMoveToFlagAndAction (idName: 22821) to Trudy
+(param: TargetScene:Main|MoveMode:Run|FlagName:turret_trudy1)
+In a speech bubble:
+{{dialogue|Justice|Hey now...!}}
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the second option in conversation segment 10786:
+{{dialogue|Qi|You'll be the one who will pilot this turret.}}
+
+*''That's what I like to hear!'' (No unique dialogue)
+*''Huh? Why me?'' (No unique dialogue)
+*''Why not you?'' (No unique dialogue)
+
+(cId 2) The player picks the third option in conversation segment 10786:
+{{dialogue|Qi|You'll be the one who will pilot this turret.}}
+
+*''That's what I like to hear!'' (No unique dialogue)
+*''Huh? Why me?'' (No unique dialogue)
+*''Why not you?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Qi gains 2 favor
+
+TRIGGER Procedure 3.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_guildhall
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_guildhall
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 22821
+
+TRIGGER Procedure 3.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8006 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 10791, 10792, 10793 starts:
+{{dialogue|Trudy|How are things going here?}}
+{{dialogue|Qi|We're ready. I've got the defense plan ready to go.}}
+{{dialogue|Trudy|Good, then let's have one last meeting to go over all the plans.}}
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 22822 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 3.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+Always:
+ACTIONS
+Grace stands still in Guildhall and looks at Justice
+Trudy stands still in Guildhall
+Justice stands still in Guildhall and looks at Trudy
+Heidi stands still in Guildhall and looks at Justice
+
+TRIGGER Procedure 3.0 Step 2.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Guildhall:
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 3365_0 starts:
+{{dialogue|Trudy|Welcome, everyone. When I took this job, I never thought I'd be a wartime Mayor. But here we are.}}
+{{dialogue|Trudy|So, tell me about our defenses Sheriff.}}
+{{dialogue|Justice|Yes Ma'am. My plan is to set up a perimeter around Martle Square to draw all enemy fire, while placin' snipers on top of roofs along the Main Street. I'll be placin' our best fighters here.}}
+{{dialogue|Justice|The center piece of our defense will be the Air Cannon Turret developed by Director Qi and ''Player''. We'll be funnelin' enemies towards it. Hopefully it will work as advertised.}}
+{{dialogue|Justice|We'll also man a post by the apartments so we don't get flanked from the back. All civilians will be evacuated to the Temple, as I do not believe the Duvos military will attack that building.}}
+{{dialogue|Justice|That's uh, that's... 'bout it.}}
+{{dialogue|Trudy|That's as a good plan as any; just hope our riders can call in reinforcements before it's too late...}}
+{{dialogue|Trudy|Right... sigh, well, there's nothing left to do other than wait. Everyone, do your best to get some rest.}}
+The conversation ends.
+
+TRIGGER Procedure 5.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON REMOVE || missionIcon: 6 | npc: 8017 | missionId: 1200281
+Trudy stops standing still
+Grace stops standing still
+Justice stops standing still
+Heidi stops standing still
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1200281
+END MISSION 1200282
+
+TRIGGER Procedure 4.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | eventType: 2 | maskId: 22822
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || flagName: turret_guildhall_player | sceneName: Guildhall
+Justice stops standing still
+Qi stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 22821) from Trudy
+DELAY MASK SET || maskId: 22822 | delayTime: 0 | durationTime: 0 | changeType: 1 | curveIndex: 0
+CUTSCENE UI STATE EXIT || 
+AREA TRIGGER CREATE || missionId: 1200281 | id: 22821 | sceneName: Main | flagName: trigger_guildhall | showOnMap: 1 | mapIcon: MissionArea | transId: 80000767
+
+TRIGGER Procedure 6.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 536
+CONDITIONS
+CHECK HOME MACHINE LEVEL || compare: 6 | level: 3 | tag: AssemblyTable
+ACTIONS
+===Upgrade Assembly Station===
+
+{{mission_details
+|desc = You need an Advanced Assembly Station to construct the Air Cannon; you can upgrade it in Heidi's Construction Junction.
+|details = Upgrade Assembly Station
+}}
+
+TRIGGER Procedure 6.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MAIL READ || order: 0 | id: 536
+CONDITIONS
+CHECK HOME MACHINE LEVEL || compare: 2 | level: 3 | tag: AssemblyTable
+ACTIONS
+===Construct the Air Cannon===
+
+{{mission_details
+|desc = On the Assembly Station, make the Air Cannon according to the diagram.
+|details = Construct the Air Cannon
+*{{i2|Hyper Compressed Air Cannon|0/1}}
+}}
+
+TRIGGER Procedure 6.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON HOME ITEM UPGRADE || order: 0 | groupID: 1 | compare: 2 | level: 2
+CONDITIONS
+Always:
+ACTIONS
+===Construct the Air Cannon===
+
+{{mission_details
+|desc = On the Assembly Station, make the Air Cannon according to the diagram.
+|details = Construct the Air Cannon
+*{{i2|Hyper Compressed Air Cannon|0/1}}
+}}

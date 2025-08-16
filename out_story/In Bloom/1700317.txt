@@ -1,0 +1,729 @@
+Reading Mission 1700317: In Bloom
+
+<onlyinclude>{{Infobox mission
+|name = In Bloom
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from In Bloom:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 12897) that ends:
+{{dialogue|Nia|Here. But uh, be careful, though, they're highly experimental and extremely delicate. When you've planted them I'll come and check them out!}}
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1700316
+Add 1 Mysterious Flower Seedlings of Unknown quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700316
+CONDITIONS
+Always:
+ACTIONS
+Run mission In Bloom
+END MISSION 1700316
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700317
+CONDITIONS
+Always:
+ACTIONS
+===Plant Seeds===
+
+{{mission_details
+|desc = Use the seeds Nia gave you in your workshop; take care of them until they bloom.
+|details = Plant Seeds
+}}
+Set NiaCome to 1
+Set choice to 0
+Set global blackboard key NiaFlowerSeed with info 1.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON SEED PLANT || order: 0 | id: 19810071
+CONDITIONS
+Always:
+ACTIONS
+ACTION DATE SET FLAG || flag: DATE:NiaFlower
+===Care for Flowers til they Bloom===
+
+{{mission_details
+|desc = The seeds are growing diligently. All they need is time and care, and soon they will bloom.
+|details = Care for Flowers til they Bloom
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 12909, 12910, 12911, 12912, 12913, 12914 starts:
+{{dialogue|Nia|Did you see?! We did it!}}
+{{dialogue|Nia|The flowers are so beautiful, nestled in their heart-shaped leaves. It's like they're blooming in love.}}
+{{dialogue|Nia|I bred this variety for my final project at university... they're called the "Heart Blossom."}}
+{{dialogue|Nia|Hahaha, my classmates all said it's like the perfect gift for the love of your life... so I wanted to give them to you.}}
+{{dialogue|Nia|Okay, now that we have the flowers... Uhm... I think this might sound a bit random, but could you make me a Swing? Yeah, like an actual Swing, don't ask, just trust me. I've got a diagram and everything all ready for you.}}
+{{dialogue|Nia|It's not a rush or anything, just let me know when you're done!}}
+Nia stops standing still
+Set NiaCome to 3
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Construct Swing===
+
+{{mission_details
+|desc = Nia's flowers have bloomed, and now she wants you to build a Swing with the diagram she gave you. You can construct it on your Assembly Station.
+|details = Construct Swing
+*{{i2|Swing|0/1}}
+}}
+Add 1 Swing of Unknown quality (Notify player)
+Nia stops standing still
+
+TRIGGER Procedure 0.0 Step 0.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 12922) that ends:
+{{dialogue|Nia|...}}
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 173172 | delayTime: 0 | durationTime: 1.5 | changeType: 0 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 12940) that ends:
+{{dialogue|Nia|And from now on, I never want to leave you. Come on, let's take a swing.}}
+(cId: -1) There is a conversation segment (id 12944) that ends:
+{{dialogue|Nia|''Player''... I want to see your face when I wake up in the morning... I want to see you as I close my eyes at night...}}
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 9006}}
+A cutscene CG_FLOWERS (duration: 1.5) starts playing
+Flower Swing - Nia and I shared a wonderful moment on the swing I built for us.
+Remove behavior CommanderMoveToFlagAndActionLoop (idName: 173172) from Player
+
+TRIGGER Procedure 0.0 Step 0.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 173173 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1700316 | canSubmit: 1 | targetId: 4
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Nia===
+
+{{mission_details
+|desc = You've finished the Swing. Show it to Nia.
+|details = Talk to Nia
+*{{i2|Swing|0/1}}
+*{{i2|Nia|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Nia
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1700316 | targetId: 5 | canSubmit: 1
+ACTIONS
+(cId -1) A conversation 12915, 12916, 12917 starts:
+{{dialogue|Nia|Wow! This looks amazing...}}
+{{dialogue|Nia|Hehe, with a Builder like you around we won't need to worry about anything...}}
+{{dialogue|Nia|Come and meet me by the oasis tomorrow... I want to show you something...}}
+===Wait for the Date===
+
+{{mission_details
+|desc = Nia said she had a surprise for you. Meet her tomorrow at Martle's Oasis.
+|details = Wait for the Date
+}}
+BAG MODIFY BY TARGET || missionId: 1700316 | targetId: 5
+
+TRIGGER Procedure 0.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1700316 | id: 173161 | sceneName: Main | flagName: NiaQ4_Nia2 | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: -1
+SCENEITEM CREATE FLAG || itemType: 0 | id: 173171 | path: Mission_NiaSwing | sceneName: Main | flagName: NiaQ4_Swing | extraParams: -1
+===Go to Oasis===
+
+{{mission_details
+|desc = Nia is waiting for you at the oasis to show you a surprise.
+|details = Go to Oasis
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 173161
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 173171 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: -2
+CUTSCENE UI STATE ENTER || 
+AREA TRIGGER DELETE || id: 173161
+
+TRIGGER Procedure 0.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173171 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Nia stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: NiaQ4_Player1
+DELAY MASK SET || maskId: 173171 | delayTime: 0 | durationTime: 2 | changeType: 1 | curveIndex: -2
+UNLOCK NPC MARRIAGE || npc: 8059
+
+TRIGGER Procedure 0.0 Step 0.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173171 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 173171) to Player
+(param: TargetScene:Main|FlagName:NiaQ4_Player2)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 3866_0 starts:
+{{dialogue|Nia|Soo... my Builder... what do you think? Betcha didn't know I was so good at flower arrangement, huh...}}
+
+*''Woah, this is beautiful!''
+*''Is this the "Heart Blossom?"''
+*''Meh. Nia -''
+
+{{dialogue|Nia|indent=true|answer=Woah, this is beautiful!
+|Phew! I'm glad you like it too! I was so nervous...}}
+{{dialogue|Nia|indent=true|When I saw the Heart Blossom blooming, I just knew it would be so beautiful if it was climbing up a swing frame, so I thought of this!}}
+{{dialogue|Nia|indent=true|I grew five seedlings, and gave three to you as a distraction! Then the last two I secretly planted myself...}}
+{{dialogue|Nia|indent=true|Don't worry, I didn't kill the plants or anything! I moved the Heart Blossoms into plant pots, and re-wound them onto the sides of the swings. I attached the flower pots to the sides of the swing, and ta-da! Flowery swing set! Pretty cool, huh?}}
+{{dialogue|Nia|indent=true|When we created the Heart Blossom in the school lab, we split the seeds amongst our group. We all found it so romantic, and made a pact to give it to the most important person in our lives.}}
+{{dialogue|Nia|indent=true|From that moment I knew who I was going to give it to... I just needed to find the right moment.}}
+{{dialogue|Nia|indent=true|But I had a dream recently... we were running together in Highwind, and I fell. When I looked over, you were gone.}}
+{{dialogue|Nia|indent=true|I was so scared... I looked everywhere for you, but I couldn't find you, no matter how hard I tried...}}
+{{dialogue|Nia|indent=true|When I felt the most desperate... when I'd lost my way... I woke up. I realized it was just a dream.}}
+{{dialogue|Nia|indent=true|I realized that no matter how bad my dreams are... you're here.}}
+{{dialogue|Nia|indent=true|I knew that the moment had come. I knew that I wanted to be with you forever. To spend the rest of my life with you...}}
+
+:*''I feel the same way.''
+:*{{flirt}}''I'll always be by your side, marry me...'' (No unique dialogue)
+
+{{dialogue|Nia|indent=double|answer=I feel the same way.
+|reward={{NPC2|Nia|rp=3}}|And that's why I'm so happy to be with you.}}
+{{dialogue|Nia|indent=double|You've been there for me the whole of my life. You were there for me when I fell, when I was in trouble, when I was sad...}}
+{{dialogue|Nia|indent=double|I just feel comfortable when you're here by my side. Together, we're unstoppable!}}
+{{dialogue|Nia|indent=double|So let's take this swing as a symbol! A new chapter in our lives. We'll grow together, like the vines of the Heart Blossom.}}
+{{dialogue|Nia|indent=double|And from now on, I never want to leave you. Come on, let's take a swing.}}
+{{dialogue|Nia|indent=true|answer=Is this the "Heart Blossom?"
+|Haha, that's right! Good eye!}}
+{{dialogue|Nia|indent=true|I grew five seedlings, and gave three to you as a distraction! Then the last two I secretly planted myself...}}
+{{dialogue|Nia|indent=true|Don't worry, I didn't kill the plants or anything! I moved the Heart Blossoms into plant pots, and re-wound them onto the sides of the swings. I attached the flower pots to the sides of the swing, and ta-da! Flowery swing set! Pretty cool, huh?}}
+{{dialogue|Nia|indent=true|When we created the Heart Blossom in the school lab, we split the seeds amongst our group. We all found it so romantic, and made a pact to give it to the most important person in our lives.}}
+{{dialogue|Nia|indent=true|From that moment I knew who I was going to give it to... I just needed to find the right moment.}}
+{{dialogue|Nia|indent=true|But I had a dream recently... we were running together in Highwind, and I fell. When I looked over, you were gone.}}
+{{dialogue|Nia|indent=true|I was so scared... I looked everywhere for you, but I couldn't find you, no matter how hard I tried...}}
+{{dialogue|Nia|indent=true|When I felt the most desperate... when I'd lost my way... I woke up. I realized it was just a dream.}}
+{{dialogue|Nia|indent=true|I realized that no matter how bad my dreams are... you're here.}}
+{{dialogue|Nia|indent=true|I knew that the moment had come. I knew that I wanted to be with you forever. To spend the rest of my life with you...}}
+
+:*''I feel the same way.''
+:*{{flirt}}''I'll always be by your side, marry me...'' (No unique dialogue)
+
+{{dialogue|Nia|indent=double|answer=I feel the same way.
+|reward={{NPC2|Nia|rp=3}}|And that's why I'm so happy to be with you.}}
+{{dialogue|Nia|indent=double|You've been there for me the whole of my life. You were there for me when I fell, when I was in trouble, when I was sad...}}
+{{dialogue|Nia|indent=double|I just feel comfortable when you're here by my side. Together, we're unstoppable!}}
+{{dialogue|Nia|indent=double|So let's take this swing as a symbol! A new chapter in our lives. We'll grow together, like the vines of the Heart Blossom.}}
+{{dialogue|Nia|indent=double|And from now on, I never want to leave you. Come on, let's take a swing.}}
+{{dialogue|Nia|You... don't like it...}}
+{{dialogue|Nia|Ah... I'm sorry, I thought it was a fun surprise...}}
+{{dialogue|Nia|I just... I guess you didn't like it at all...}}
+
+*''I'm kidding, it's amazing!''
+*''Yeah, it's just kind of lame.''
+
+{{dialogue|Nia|indent=true|answer=Yeah, it's just kind of lame.
+|...}}
+{{dialogue|Nia|Hey, don't tease me like that!}}
+{{dialogue|Nia|Phew! I'm glad you like it too! I was so nervous...}}
+{{dialogue|Nia|When I saw the Heart Blossom blooming, I just knew it would be so beautiful if it was climbing up a swing frame, so I thought of this!}}
+{{dialogue|Nia|I grew five seedlings, and gave three to you as a distraction! Then the last two I secretly planted myself...}}
+{{dialogue|Nia|Don't worry, I didn't kill the plants or anything! I moved the Heart Blossoms into plant pots, and re-wound them onto the sides of the swings. I attached the flower pots to the sides of the swing, and ta-da! Flowery swing set! Pretty cool, huh?}}
+{{dialogue|Nia|When we created the Heart Blossom in the school lab, we split the seeds amongst our group. We all found it so romantic, and made a pact to give it to the most important person in our lives.}}
+{{dialogue|Nia|From that moment I knew who I was going to give it to... I just needed to find the right moment.}}
+{{dialogue|Nia|But I had a dream recently... we were running together in Highwind, and I fell. When I looked over, you were gone.}}
+{{dialogue|Nia|I was so scared... I looked everywhere for you, but I couldn't find you, no matter how hard I tried...}}
+{{dialogue|Nia|When I felt the most desperate... when I'd lost my way... I woke up. I realized it was just a dream.}}
+{{dialogue|Nia|I realized that no matter how bad my dreams are... you're here.}}
+{{dialogue|Nia|I knew that the moment had come. I knew that I wanted to be with you forever. To spend the rest of my life with you...}}
+
+*''I feel the same way.''
+*{{flirt}}''I'll always be by your side, marry me...'' (No unique dialogue)
+
+{{dialogue|Nia|indent=true|answer=I feel the same way.
+|reward={{NPC2|Nia|rp=3}}|And that's why I'm so happy to be with you.}}
+{{dialogue|Nia|indent=true|You've been there for me the whole of my life. You were there for me when I fell, when I was in trouble, when I was sad...}}
+{{dialogue|Nia|indent=true|I just feel comfortable when you're here by my side. Together, we're unstoppable!}}
+{{dialogue|Nia|indent=true|So let's take this swing as a symbol! A new chapter in our lives. We'll grow together, like the vines of the Heart Blossom.}}
+{{dialogue|Nia|indent=true|And from now on, I never want to leave you. Come on, let's take a swing.}}
+Remove behavior CommanderMoveToFlag (idName: 173171) from Player
+
+TRIGGER Procedure 0.0 Step 0.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173172 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Nia stops standing still
+SCENEITEM DELETE || itemType: 0 | id: 173171
+DELAY MASK SET || maskId: 173172 | delayTime: 0 | durationTime: 2 | changeType: 1 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173172 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+SUBMIT MISSION 1700316
+END MISSION 1700317
+
+TRIGGER Procedure 0.0 Step 0.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 12935:
+{{dialogue|Nia|I knew that the moment had come. I knew that I wanted to be with you forever. To spend the rest of my life with you...}}
+
+*''I feel the same way.'' (No unique dialogue)
+*{{flirt}}''I'll always be by your side, marry me...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlagAndAction (idName: 173171) to Player
+(param: TargetScene:Main|FlagName:NiaQ4_Player5|Action:Give)
+Set choice to 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndActionLoop | eventName: LoopActionOver
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 3872_0 starts:
+{{dialogue|Nia|I... ''Player'', I love you...}}
+{{dialogue|Nia|Look what you've gone and done... why do you need to be so darn romantic...?}}
+{{dialogue|Nia|I'm not crying, you're crying...! Blah...! I just... I'm just so happy...}}
+{{dialogue|Nia|''Player''... I want to see your face when I wake up in the morning... I want to see you as I close my eyes at night...}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 0.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 9 | name: CG_FLOWERS
+CONDITIONS
+Check if choice is == 1
+ACTIONS
+(cId -1) A conversation 12945, 12946, 12947, 12948 starts:
+{{dialogue|Nia|Seems like we'll be a bit busy now, right? We've got everyone back home to tell... they're going to be so excited.}}
+{{dialogue|Nia|We're going to have to prepare for the wedding soon, too! Although there's so much to do... choosing a date... going to City Hall to register... Urgh! Although I'll do whatever it takes. I want to make it the most perfect day ever!}}
+{{dialogue|Nia|Well... I'll take the ring, you can keep the swing! If you put it in your yard, we can have it as our secret garden!}}
+{{dialogue|Nia|I'm going to go and tell my parents. I'll see you later, Sweetie!}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 19 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+CHECK DATE FLAG || flag: DATE:NiaFlower | compare: 6 | days: 5
+Check if NiaCome is == 1
+ACTIONS
+Nia stops standing still
+Nia stands still in Main
+
+TRIGGER Procedure 0.0 Step 0.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Nia
+CONDITIONS
+CHECK DATE FLAG || flag: DATE:NiaFlower | compare: 3 | days: 1
+Check if NiaCome is == 1
+ACTIONS
+(cId -1) A conversation 12901, 12902 starts:
+{{dialogue|Nia|Looks like it's coming along well... I mean, we are planting it out here in a very dry environment!}}
+{{dialogue|Nia|As long as it's healthy, the pace doesn't really matter.}}
+Nia stops standing still
+
+TRIGGER Procedure 0.0 Step 0.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Nia
+CONDITIONS
+CHECK DATE FLAG || flag: DATE:NiaFlower | compare: 3 | days: 2
+Check if NiaCome is == 1
+ACTIONS
+(cId -1) A conversation 12903, 12904 starts:
+{{dialogue|Nia|These leaves are just so cute... Look at these two here, intertwined... it's a little like us, don't you think?}}
+{{dialogue|Nia|Still, it's growing a little slower than I expected... Hmmm... maybe there's something I can do.}}
+Nia stops standing still
+
+TRIGGER Procedure 0.0 Step 0.0 Order 22 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Nia
+CONDITIONS
+CHECK DATE FLAG || flag: DATE:NiaFlower | compare: 3 | days: 3
+Check if NiaCome is == 1
+ACTIONS
+(cId -1) A conversation 12905, 12906 starts:
+{{dialogue|Nia|Okay, I brought some Sandworms with me and put them into the soil! Hopefully these little guys will help with the soil nutrients a bit.}}
+{{dialogue|Nia|Another couple of days and they should start to bloom.}}
+Nia stops standing still
+
+TRIGGER Procedure 0.0 Step 0.0 Order 23 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Nia
+CONDITIONS
+CHECK DATE FLAG || flag: DATE:NiaFlower | compare: 3 | days: 4
+Check if NiaCome is == 1
+ACTIONS
+(cId -1) A conversation 12907, 12908 starts:
+{{dialogue|Nia|These leaves... no brown... no yellow... Looks like they're doing A-OK!}}
+{{dialogue|Nia|Just need enough light and it'll be blooming in no time! And sunlight is kinda Sandrock's thing, you know?}}
+Nia stops standing still
+
+TRIGGER Procedure 0.0 Step 0.0 Order 24 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173173 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Add 1 Flower Swing of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 25 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173173 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+Nia stands still in Main
+Remove behavior CommanderMoveToFlagAndAction (idName: 173171) from Nia
+Nia stops standing still
+SCENEITEM DELETE || itemType: 0 | id: 173171
+DELAY MASK SET || maskId: 173173 | delayTime: 0 | durationTime: 2 | changeType: 1 | curveIndex: -2
+
+TRIGGER Procedure 0.0 Step 0.0 Order 26 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagAndActionOver
+CONDITIONS
+Always:
+ACTIONS
+STOPWATCH REAL TIME SET || id: 173171 | sec: 0.5
+
+TRIGGER Procedure 0.0 Step 0.0 Order 27 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON STOPWATCH REAL TIME END || order: 0 | id: 173171
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlagAndAction (idName: 173171) from Player
+Add behavior CommanderMoveToFlagAndActionLoop (idName: 173172) to Player
+(param: TargetScene:Main|FlagName:NiaQ4_Player4|Action:Propose_Story)
+Add behavior CommanderMoveToFlagAndAction (idName: 173171) to Nia
+(param: TargetScene:Main|FlagName:NiaQ4_Nia3)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 28 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Always:
+ACTIONS
+Nia stands still in Main
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+
+TRIGGER Procedure 0.0 Step 0.0 Order 30 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON BAG CHANGE || order: 0 | item: 16200036 | changeType: 0 | itemGrade: -1
+CONDITIONS
+Always:
+ACTIONS
+Set NiaCome to 2
+ACTION DATE REMOVE FLAG || flag: DATE:NiaFlower
+GLOBAL BLACK BOARD REMOVE || key: NiaFlowerSeed
+===Talk to Nia===
+
+{{mission_details
+|desc = The mysterious flowers have blossomed! Go tell Nia the good news.
+|details = Talk to Nia
+*{{i2|Nia|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 31 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PLANT SHOVEL || order: 0 | item: 19810071
+CONDITIONS
+Always:
+ACTIONS
+Set NiaCome to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 32 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 9 | name: CG_FLOWERS
+CONDITIONS
+Check if choice is == 0
+ACTIONS
+(cId -1) A conversation 12950, 12951 starts:
+{{dialogue|Nia|Alright, well... I'm going to go back now. I made this swing for you... you can put it in your yard. It'll be like our own little secret garden.}}
+{{dialogue|Nia|Thank you... Every day I spend with you is just... pure joy.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 33 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Nia
+CONDITIONS
+Check if NiaCome is == 2
+ACTIONS
+(cId -1) A conversation 12909, 12910, 12911, 12912, 12913, 12914 starts:
+{{dialogue|Nia|Did you see?! We did it!}}
+{{dialogue|Nia|The flowers are so beautiful, nestled in their heart-shaped leaves. It's like they're blooming in love.}}
+{{dialogue|Nia|I bred this variety for my final project at university... they're called the "Heart Blossom."}}
+{{dialogue|Nia|Hahaha, my classmates all said it's like the perfect gift for the love of your life... so I wanted to give them to you.}}
+{{dialogue|Nia|Okay, now that we have the flowers... Uhm... I think this might sound a bit random, but could you make me a Swing? Yeah, like an actual Swing, don't ask, just trust me. I've got a diagram and everything all ready for you.}}
+{{dialogue|Nia|It's not a rush or anything, just let me know when you're done!}}
+Set NiaCome to 3
+
+TRIGGER Procedure 0.0 Step 0.0 Order 34 Repeat -1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+Nia stops standing still
+
+TRIGGER Procedure 0.0 Step 0.0 Order 35 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 3 | name: CG_FLOWERS
+CONDITIONS
+Check if choice is == 1
+ACTIONS
+SCENEITEM DELETE || itemType: 0 | id: 173171
+
+TRIGGER Procedure 0.0 Step 0.0 Order 36 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_FLOWERS | state: 7
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 173171 | path: Mission_NiaSwing | sceneName: Main | flagName: NiaQ4_Swing | extraParams: -1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 37 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the third option in conversation segment 12918:
+{{dialogue|Nia|Soo... my Builder... what do you think? Betcha didn't know I was so good at flower arrangement, huh...}}
+
+*''Woah, this is beautiful!'' (No unique dialogue)
+*''Is this the "Heart Blossom?"'' (No unique dialogue)
+*''Meh. Nia -'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Nia gains -5 favor
+
+TRIGGER Procedure 0.0 Step 0.0 Order 38 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 12935:
+{{dialogue|Nia|I knew that the moment had come. I knew that I wanted to be with you forever. To spend the rest of my life with you...}}
+
+*''I feel the same way.'' (No unique dialogue)
+*{{flirt}}''I'll always be by your side, marry me...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Nia gains 5 favor
+
+TRIGGER Procedure 0.0 Step 0.0 Order 39 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 12935:
+{{dialogue|Nia|I knew that the moment had come. I knew that I wanted to be with you forever. To spend the rest of my life with you...}}
+
+*''I feel the same way.'' (No unique dialogue)
+*{{flirt}}''I'll always be by your side, marry me...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Nia gains 3 favor
+
+TRIGGER Procedure 0.0 Step 0.0 Order 40 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON PLAYER MARRIAGE || order: 0 | id: -1
+CONDITIONS
+Check relationship with Nia is 6 Mate Unhappy
+ACTIONS
+FAIL MISSION || missionId: 1700316
+END MISSION 1700317
+
+TRIGGER Procedure 0.0 Step 0.0 Order 41 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1200331
+CONDITIONS
+Always:
+ACTIONS
+FAIL MISSION || missionId: 1700316
+END MISSION 1700317
+
+TRIGGER Procedure 0.0 Step 0.0 Order 42 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1700317
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 173161
+UNLOCK NPC MARRIAGE || npc: 8059
+Nia stops standing still
+
+TRIGGER Procedure 0.0 Step 0.0 Order 43 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 20 | maskId: 173173 | eventType: 5
+CONDITIONS
+Check relationship with Nia is 6 Mate Unhappy
+ACTIONS
+ACTION SOCIAL MARRIAGE || npcId: 8059
+
+TRIGGER Procedure 0.0 Step 0.0 Order 44 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 50 | maskId: 173173 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1700316
+
+TRIGGER Procedure 0.0 Step 0.0 Order 45 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Nia
+CONDITIONS
+Always:
+ACTIONS
+(cId 10) A conversation 12949 starts:
+{{dialogue|Nia|That moment is going to be burned into my memory forever... I'm just so happy. I get to be with my best friend... forever.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 46 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+(cId 10) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+END MISSION 1700317
+
+TRIGGER Procedure 0.0 Step 0.0 Order 47 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+CONDITIONS
+CHECK PLAYER ITEM || item: 16200036 | itemGrade: -1 | set: 2 | count: 1
+Check if NiaCome is <= (maybe?) 2
+Check if NiaCome is <= (maybe?) 3
+ACTIONS
+Set NiaCome to 2
+ACTION DATE REMOVE FLAG || flag: DATE:NiaFlower
+GLOBAL BLACK BOARD REMOVE || key: NiaFlowerSeed
+===Talk to Nia===
+
+{{mission_details
+|desc = The mysterious flowers have blossomed! Go tell Nia the good news.
+|details = Talk to Nia
+*{{i2|Nia|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 29 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+Where's Mi-an is in state 1 with flag 0
+The Childhood Friend is in state 1 with flag 0
+Goodbye, Nia is in state 1 with flag 0
+The Kidnapping is in state 1 with flag 0
+CHECK GLOBAL BLACKBOARD || key: musacomes | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: triallogan | info: 1 | exist: 0
+CHECK GLOBAL BLACKBOARD || key: leavehome | info: 1 | exist: 0
+Check if NiaCome is == 2
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home

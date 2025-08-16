@@ -1,0 +1,118 @@
+Reading Mission 1200132: The Desks They are A'Changing
+
+<onlyinclude>{{Infobox mission
+|name = The Desks They are A'Changing
+|image =
+|description = 
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from The Desks They are A'Changing:
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Trudy stops standing still
+START MISSION 1200131
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200131
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Desks They are A'Changing
+END MISSION 1200131
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200132
+CONDITIONS
+Always:
+ACTIONS
+===Build Trudy a Desk===
+
+{{mission_details
+|desc = Matilda loved the desk in front of the Town Hall, and kept it for herself. You need to help Trudy make a new one. The recipe of the Desk can be bought from the Commerce Guild shop.
+|details = Build Trudy a Desk
+*{{i2|Office Chair|0/1}}
+*{{i2|Working Desk|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1200131 | targetId: 1 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Trudy===
+
+{{mission_details
+|desc = The Desk is ready. Bring it to Trudy.
+|details = Talk to Trudy
+*{{i2|Office Chair|0/1}}
+*{{i2|Working Desk|0/1}}
+*{{i2|Trudy|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Trudy
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1200131 | targetId: 2 | canSubmit: 1
+ACTIONS
+(cId 0) A conversation 3247 starts:
+{{dialogue|Trudy|Oh, ''Player'', thank you. I've got lots of things to do, so I'd better get started.}}
+BAG MODIFY BY TARGET || missionId: 1200131 | targetId: 2
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1200131
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || path: Mission_templechair0 | itemType: 0 | id: 21315 | sceneName: Guildhall | flagName: trudycome_chair0 | extraParams: 0
+SCENEITEM CREATE FLAG || path: Mission_templedesk0 | itemType: 0 | id: 21316 | sceneName: Guildhall | flagName: trudycome_desk0 | extraParams: 0
+END MISSION 1200132
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION END BEFORE 1200132
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || path: Mission_templechair0 | itemType: 0 | id: 21315 | sceneName: Guildhall | flagName: trudycome_chair0 | extraParams: 0
+SCENEITEM CREATE FLAG || path: Mission_templedesk0 | itemType: 0 | id: 21316 | sceneName: Guildhall | flagName: trudycome_desk0 | extraParams: 0
+The player receives a letter:
+{{mail|270}}

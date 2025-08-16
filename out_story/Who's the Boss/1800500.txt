@@ -1,0 +1,450 @@
+Reading Mission 1800500: Who's the Boss?
+
+<onlyinclude>{{Infobox mission
+|name = Who's the Boss?
+|image =
+|description = Owen is busy in the kitchen when a customer suddenly arrives. You offer to help but end up having some misunderstandings.
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 1435
+|reputation = None
+|gols = None
+|npc1 = Owen
+|rp1 = 25
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200072
+
+TRIGGER Procedure 3.0 Step 2.0 Order 2 Repeat 6
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Flavor on the Sandrock Express is successfully completed
+
+GROUP 10:
+Flavor on the Sandrock Express has failed
+
+ACTIONS
+Set 1800500 to 0
+
+TRIGGER Procedure 3.0 Step 3.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Check relationship with Owen is Mate Happy
+Check if Owen has favor >= 900
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+CHECK SCENEITEM EXIST || id: 22173 | sceneItemType: 0 | exist: 0
+Check if Owen is in town
+
+GROUP 10:
+Check relationship with Owen is Married
+Check if Owen has favor >= 900
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+CHECK SCENEITEM EXIST || sceneItemType: 0 | id: 22173 | exist: 0
+Check if Owen is in town
+
+ACTIONS
+Run mission Who's the Boss?
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800500
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || id: 85001 | sceneName: Main | flagName: Trigger_Saloon | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 0 | missionId: 1800500
+Set 8500A to 0
+Set global blackboard key 8500Mission with info 0.
+
+TRIGGER Procedure 0.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_saloon
+CHECK GLOBAL BLACKBOARD || key: musacomes | exist: 0 | info: 1
+Check if Owen is in town
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_saloon
+AREA TRIGGER DELETE || id: 85001
+
+TRIGGER Procedure 0.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+NPC RANDOM ADD || id: 1 | instId: 85001 | scene: Saloon | flagName: S8500_R1_1 | dailyBehavior: RandomNPC
+PLAYER SET POS ROT FLAG || sceneName: Saloon | flagName: S8500_0_1
+CUTSCENE UI STATE ENTER || 
+Owen stands still in Saloon
+Grace stands still in Saloon
+85001 stands still in Saloon
+
+TRIGGER Procedure 0.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Saloon:
+CONDITIONS
+Always:
+ACTIONS
+(cId 4) A conversation 22253, 22254, 22256, 22255, 22257 starts:
+{{dialogue|85001|Yo, boss!}}
+{{dialogue|85001|Uh... anybody?}}
+{{dialogue|85001|Nobody's working the till!}}
+{{dialogue|85001|...}}
+{{dialogue|85001|I only had one thing I wanted to do today. Come here and order food. And now I can't do that. Is my life ruined...?}}
+
+TRIGGER Procedure 0.0 Step 5.1 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 4) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveToFlag (idName: 8500002) to Player
+(param: TargetScene:Saloon|MoveMode:Run|FlagName:S8500_0_2|LookAtActor:85001|Delay:0.0)
+
+TRIGGER Procedure 0.0 Step 5.2 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8000 | behaviourName: CommanderMoveToFlag | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 7888_0 starts:
+{{dialogue|Player|(Owen must be busy elsewhere, I could probably help him out.)}}
+
+*''Hey there, what do you need?''
+*''Hello! I'm an owner of this saloon!''
+*''I'm close with the owner; I can help you out.''
+
+{{dialogue|85001|indent=true|answer=Hey there, what do you need?
+|Who are you...?}}
+{{dialogue|85001|indent=true|I'm looking for Owen, do you know him? It's urgent. Oh, he didn't go and fall of a cliff or something, did he? That happens so often around here. I wish we could find out why.}}
+{{dialogue|Player|indent=true|(What should I say?)}}
+
+:*''Hello! I'm an owner of this saloon!''
+:*''I'm close with the owner; I can help you out.''
+
+{{dialogue|85001|indent=double|answer=Hello! I'm an owner of this saloon!
+|You're the owner?}}
+{{dialogue|85001|indent=double|That can't be... I was told that Owen is tall, muscular, and ridiculously good looking. Don't get me wrong, I'd date you in a heartbeat if you asked me, but you simply don't fit that particular description...}}
+{{dialogue|85001|indent=double|answer=I'm close with the owner; I can help you out.
+|You're related or something? You don't look related...}}
+{{dialogue|85001|indent=double|Hm. No, I'm sorry. You won't be able to help me. I need to talk to Owen himself, no one else will do. Maybe if you were his clone... with all of his memories uploaded into your brain... then we could talk. But clearly, you're not. So, yeah...}}
+{{dialogue|85001|indent=true|answer=Hello! I'm an owner of this saloon!
+|You're the owner?}}
+{{dialogue|85001|indent=true|That can't be... I was told that Owen is tall, muscular, and ridiculously good looking. Don't get me wrong, I'd date you in a heartbeat if you asked me, but you simply don't fit that particular description...}}
+{{dialogue|85001|indent=true|answer=I'm close with the owner; I can help you out.
+|You're related or something? You don't look related...}}
+{{dialogue|85001|indent=true|Hm. No, I'm sorry. You won't be able to help me. I need to talk to Owen himself, no one else will do. Maybe if you were his clone... with all of his memories uploaded into your brain... then we could talk. But clearly, you're not. So, yeah...}}
+{{dialogue|85001|Thanks anyway. For trying. I mean. Like... you didn't do anything, but it was clear that you wanted to. And I could totally feel that.}}
+{{dialogue|85001|Oweeeeeen! Mr. Owen! Mr. Boss Owen saloon man, pleaaaaase!}}
+{{dialogue|Owen|Oh...! Be right there!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderMoveToFlag (idName: 8500002) from Player
+Remove behavior CommanderMoveToFlagAndAction (idName: 850011) from 85001
+Add behavior CommanderMoveToFlagAndAction (idName: 8500012) to Owen
+(param: TargetScene:Saloon|MoveMode:Run|FlagName:S8500_1_2|LookAtActor:8000|Delay:0.0)
+Add behavior CommanderMoveToFlagAndAction (idName: 8500002) to Player
+(param: TargetScene:Saloon|MoveMode:Walk|FlagName:S8500_0_3|LookAtActor:8001|Delay:1.0)
+Add behavior CommanderMoveToFlagAndAction (idName: 850012) to 85001
+(param: TargetScene:Saloon|MoveMode:Run|FlagName:S8500_R1_3|LookAtActor:8001|Delay:1.2)
+
+TRIGGER Procedure 0.0 Step 7.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 10 | npc: 8001 | behaviourName: CommanderMoveToFlagAndAction | eventName: MoveToFlagOver
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 7892_0 starts:
+{{dialogue|Owen|Hey, ''Pet Name''! You're not busy today?}}
+
+*''Stopped by to see ya...''
+*''This guy here wants to talk to you.''
+*''You... alright in there?''
+
+{{dialogue|Owen|indent=true|answer=Stopped by to see ya...
+|Hey, thanks! You know just how to brighten my day.}}
+{{dialogue|85001|indent=true|Yo, Owen! I'm in a real dilly of a pickle over here!}}
+{{dialogue|Owen|indent=true|Pickle, eh? That does fall within my particular area of expertise... tell me all about it!}}
+{{dialogue|85001|indent=true|So here's the scoop: my daughter got accepted to Atara U! So we wanna rent this place out and party like it's ninety-nine! We're gonna need three, no, make it two tables!}}
+{{dialogue|Owen|indent=true|That sounds like no pickle at all, sir! Cool as a cucumber, if you ask me. When shall I pencil you in?}}
+{{dialogue|85001|indent=true|Well, here's where the vinegar comes a'splashin' on up in this jar: it needs to be tomorrow! Can you squeeze us in?}}
+{{dialogue|Owen|indent=true|Ooh, that is a bit ofa  brine... But, buddy, guess what? You're in luck! Consider yourself... squozen.}}
+{{dialogue|85001|indent=true|Ah, you're a life saver, Mr. Owen.}}
+{{dialogue|Owen|indent=true|answer=This guy here wants to talk to you.
+|Customer?}}
+{{dialogue|Owen|indent=true|Oh! Right. Of course. How can I help you today, sir?}}
+{{dialogue|85001|indent=true|Yo, Owen! I'm in a real dilly of a pickle over here!}}
+{{dialogue|Owen|indent=true|Pickle, eh? That does fall within my particular area of expertise... tell me all about it!}}
+{{dialogue|85001|indent=true|So here's the scoop: my daughter got accepted to Atara U! So we wanna rent this place out and party like it's ninety-nine! We're gonna need three, no, make it two tables!}}
+{{dialogue|Owen|indent=true|That sounds like no pickle at all, sir! Cool as a cucumber, if you ask me. When shall I pencil you in?}}
+{{dialogue|85001|indent=true|Well, here's where the vinegar comes a'splashin' on up in this jar: it needs to be tomorrow! Can you squeeze us in?}}
+{{dialogue|Owen|indent=true|Ooh, that is a bit ofa  brine... But, buddy, guess what? You're in luck! Consider yourself... squozen.}}
+{{dialogue|85001|indent=true|Ah, you're a life saver, Mr. Owen.}}
+{{dialogue|85001|indent=true|Just now, this person here said they were the boss of this place: what's your take Owen? Identity theft? Or schizophrenic episode?}}
+{{dialogue|Owen|indent=true|answer=You... alright in there?
+|Just in the back sorting through some supplies from the ranch. The way Cooper "labels" things can be... creative.}}
+{{dialogue|Owen|indent=true|But hey, seeing you; that's put my frown upside down.}}
+{{dialogue|85001|indent=true|Yo, Owen! I'm in a real dilly of a pickle over here!}}
+{{dialogue|Owen|indent=true|Pickle, eh? That does fall within my particular area of expertise... tell me all about it!}}
+{{dialogue|85001|indent=true|So here's the scoop: my daughter got accepted to Atara U! So we wanna rent this place out and party like it's ninety-nine! We're gonna need three, no, make it two tables!}}
+{{dialogue|Owen|indent=true|That sounds like no pickle at all, sir! Cool as a cucumber, if you ask me. When shall I pencil you in?}}
+{{dialogue|85001|indent=true|Well, here's where the vinegar comes a'splashin' on up in this jar: it needs to be tomorrow! Can you squeeze us in?}}
+{{dialogue|Owen|indent=true|Ooh, that is a bit ofa  brine... But, buddy, guess what? You're in luck! Consider yourself... squozen.}}
+{{dialogue|85001|indent=true|Ah, you're a life saver, Mr. Owen.}}
+{{dialogue|85001|indent=true|I guess your relative here wanted to help out...? Being related to a master chef doesn't make you a master chef, FYI. I'd maybe get my ducks in a row if I were you, bossman.}}
+{{dialogue|Owen|''Pet Name'', were you trying to help this guy here?}}
+{{dialogue|Owen|Er...}}
+{{dialogue|Owen|Here's the deal, pal... this here's my lawfully wedded partner; the business belongs to both of us, so treat 'em with the same respect you'd treat me, alright?}}
+{{dialogue|85001|Ah, so that's how it is...?}}
+{{dialogue|Owen|Yeah, if you've got a question, you can take it up with either of us.}}
+{{dialogue|85001|Goodness! What a fool I've been!}}
+
+*''You didn't know, it's fine.''
+*''Try being a bit more courteous next time.''
+*''You're lucky I don't ban you from the restaurant.''
+
+{{dialogue|85001|indent=true|answer=You didn't know, it's fine.
+|Ah, you're too kind. Never have I met a pair with such big hearts as yours.}}
+{{dialogue|85001|indent=true|answer=Try being a bit more courteous next time.
+|Oh, oh! Of course! Truly, I apologize, I don't know what came over me...}}
+{{dialogue|85001|indent=true|answer=You're lucky I don't ban you from the restaurant.
+|Oh, please, please, no! Don't do that! I'm already banned from everywhere else! If you turn me away, I'll starve! And my daughter will hate me. More so!}}
+{{dialogue|Owen|indent=true|Er... I think we can let 'em off with a warning, ''Pet Name''...}}
+{{dialogue|85001|indent=true|Whew! Almost ruined my life again!}}
+{{dialogue|85001|Well, with that out of the way, let's talk price...}}
+{{dialogue|Owen|Two or three tables? Why don't we make it simple: just give me a thousand and I'll figure everything out.}}
+{{dialogue|85001|A thousand, huh... My wife only gave me a budget of eight hundred... Can you... as they say... help a brother out?}}
+{{dialogue|Owen|Hm... well... I dunno...}}
+{{dialogue|Owen|Whaddya think, ''Pet Name''? I guess I did leave the door open for negotiation by choosing such an arbitrary price to begin with...}}
+
+*''I'm in a good mood. Sure, eight hundred is fine.''
+*''You are no brother of mine. Full price!''
+*''Hagglers, eh? Price just went up: 1200!''
+*''Booking one day in advance? You're desparate. Make it 1500!''
+
+{{dialogue|85001|indent=true|answer=I'm in a good mood. Sure, eight hundred is fine.
+|reward={{NPC2|Owen|rp=1}}|You two are the bee's knees, I tells ya! Ready at the drop of a hat, and prices so low, I can't afford "not" to rent this place out!}}
+{{dialogue|85001|indent=true|answer=You are no brother of mine. Full price!
+|Yes... I was presumptuous to make an appeal to filial piety. Very well. Your offer is fair.}}
+{{dialogue|85001|indent=true|answer=Hagglers, eh? Price just went up: 1200!
+|Oh, hark! Hoisted by my own petard! Very well, other boss of the saloon; I see you play hard ball. You've got me, I'd do anything to give my daughter this party she deserves. Anything.}}
+{{dialogue|85001|indent=true|You'll have your money; my only fear is what I might have to do to come across that kind of cash by tomorrow...}}
+{{dialogue|85001|indent=true|answer=Booking one day in advance? You're desparate. Make it 1500!
+|Oh, hark! Hoisted by my own petard! Very well, other boss of the saloon; I see you play hard ball. You've got me, I'd do anything to give my daughter this party she deserves. Anything.}}
+{{dialogue|85001|indent=true|You'll have your money; my only fear is what I might have to do to come across that kind of cash by tomorrow...}}
+{{dialogue|85001|With that, I believe our business is concluded. I'm off to make... preparations. See you two tomorrow!}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 8.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+85001 stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 850012) from 85001
+
+TRIGGER Procedure 0.0 Step 9.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 7902_0 starts:
+{{dialogue|Owen|Hm... seems like a lot of people still don't know you're my co-pilot here... Maybe I didn't do a good enough job of getting the word out... I'm sorry about that, ''Pet Name''.}}
+
+*''Doesn't really bother me.''
+*''It's not like the whole world needs to know.''
+*''Better start compensating!''
+
+{{dialogue|Owen|indent=true|answer=Doesn't really bother me.
+|Good of you to say, but... it bothers me.}}
+{{dialogue|Owen|indent=true|I don't want anyone disrespecting you like that guy did, acting like you're just another customer.}}
+{{dialogue|Owen|indent=true|answer=It's not like the whole world needs to know.
+|''Pet Name''... is this... something you're shy about?}}
+{{dialogue|Owen|indent=true|Well, at the very least, people need to know that they can trust you to handle saloon business. Anything they can say to me, they can say to you too.}}
+{{dialogue|Owen|indent=true|answer=Better start compensating!
+|I will. I will make this up to you.}}
+{{dialogue|Owen|Would you like to stand behind the counter more often, ''Pet Name''? That'd be the first step towards getting the right image out there. Plus, well... I'd get to see ya!}}
+
+*''Sure, I'll help out around here more!''
+*''Not a big deal, but sure I'll help!''
+*''Me? Work for you? Pass. I don't care if people see me here either.''
+
+{{dialogue|Owen|indent=true|answer=Me? Work for you? Pass. I don't care if people see me here either.
+|Ah. Well, I didn't quite mean it like that. Sorry, then. I'm sure your workshop keeps you plenty busy. I'll just... keep handling things at the saloon; you don't need to worry about doing anything here.}}
+{{dialogue|Owen|Sounds great, sweetheart.}}
+{{dialogue|Owen|Whenever you're here, I guess, eh... You could help me prep in the kitchen... If you don't mind, the tables could always use a good scrubdown...}}
+
+*''I'll hop right to it!''
+*''Sure thing, just let me know when you need me.''
+
+{{dialogue|Owen|indent=true|answer=I'll hop right to it!
+|Sounds great... "boss!"}}
+{{dialogue|Owen|indent=true|I guess start by just looking around the lobby for any trash or junk, chat people up if it's slow, and, oh, and when the customers leave, they'll settle the bill on the table. Go ahead and grab the Gols, if you would!}}
+{{dialogue|Owen|indent=true|answer=Sure thing, just let me know when you need me.
+|Sounds great... "boss!"}}
+{{dialogue|Owen|indent=true|I guess start by just looking around the lobby for any trash or junk, chat people up if it's slow, and, oh, and when the customers leave, they'll settle the bill on the table. Go ahead and grab the Gols, if you would!}}
+{{dialogue|Owen|indent=true|Oh, and y'know... I could really use your help tomorrow with that customer's banquet. I mean... I'll manage either way. But with you around, it'd be a breeze!}}
+{{dialogue|Owen|indent=true|If you're beat after today, though, I'd understand. Sometimes running this place ain't all it's cracked up to be, heh... Anyway, just something to think on!}}
+DELIVER MISSION 1800500
+
+TRIGGER Procedure 0.0 Step 10.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the first option in conversation segment 22313:
+{{dialogue|Owen|Whenever you're here, I guess, eh... You could help me prep in the kitchen... If you don't mind, the tables could always use a good scrubdown...}}
+
+*''I'll hop right to it!'' (No unique dialogue)
+*''Sure thing, just let me know when you need me.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key 8500Mission with info 1.
+
+TRIGGER Procedure 0.0 Step 10.1 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the second option in conversation segment 22313:
+{{dialogue|Owen|Whenever you're here, I guess, eh... You could help me prep in the kitchen... If you don't mind, the tables could always use a good scrubdown...}}
+
+*''I'll hop right to it!'' (No unique dialogue)
+*''Sure thing, just let me know when you need me.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set global blackboard key 8500Mission with info 2.
+
+TRIGGER Procedure 0.0 Step 10.2 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the third option in conversation segment 22311:
+{{dialogue|Owen|Would you like to stand behind the counter more often, ''Pet Name''? That'd be the first step towards getting the right image out there. Plus, well... I'd get to see ya!}}
+
+*''Sure, I'll help out around here more!'' (No unique dialogue)
+*''Not a big deal, but sure I'll help!'' (No unique dialogue)
+*''Me? Work for you? Pass. I don't care if people see me here either.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8500A to 3
+
+TRIGGER Procedure 0.0 Step 11.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+GROUP 0:
+CHECK GLOBAL BLACKBOARD || info: 1 | key: 8500Mission | exist: 1
+
+GROUP 1:
+CHECK GLOBAL BLACKBOARD || key: 8500Mission | info: 2 | exist: 1
+
+ACTIONS
+START MISSION 1800500
+
+TRIGGER Procedure 0.0 Step 11.1 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Owen stops standing still
+Grace stops standing still
+Remove behavior CommanderMoveToFlagAndAction (idName: 8500012) from Owen
+Remove behavior CommanderMoveToFlagAndAction (idName: 8500002) from Player
+
+TRIGGER Procedure 0.0 Step 11.2 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Check if 8500A is == 3
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: 8500Mission
+CLOSE MISSION || missionId: 1800500
+END MISSION 1800500
+
+TRIGGER Procedure 0.0 Step 11.3 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1800500
+CONDITIONS
+Always:
+ACTIONS
+Run mission Who's the Boss?
+
+TRIGGER Procedure 0.0 Step 12.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+END MISSION 1800500
+
+TRIGGER Procedure 0.0 Step 13.1 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 22299:
+{{dialogue|Owen|Whaddya think, ''Pet Name''? I guess I did leave the door open for negotiation by choosing such an arbitrary price to begin with...}}
+
+*''I'm in a good mood. Sure, eight hundred is fine.'' (No unique dialogue)
+*''You are no brother of mine. Full price!'' (No unique dialogue)
+*''Hagglers, eh? Price just went up: 1200!'' (No unique dialogue)
+*''Booking one day in advance? You're desparate. Make it 1500!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Owen gains 1 favor
+
+==Rewards==
+{{mission reward
+|npc1 = Owen
+|rp1 = 25
+|exp = 1435
+|reputation = None
+|gols = None
+}}
+==Post-conduct==
+
+If the player successfully completes the mission, some of the townsfolk will comment on it:
+
+{{dialogue|85004|Oh, you're ''Player''? I'm so jealous of you and Owen; your love story is a tale for the ages! I on the other hand haven't had a date in over thirty years on account of how utterly repulsive I am. Say, you don't have a twin, do you? I see... twin-zoned again...}}
+{{dialogue|85006|''Player''? You're the other owner of the Blue Moon, right? Oh, no, I can't even decide which of you is more attractive... Sigh... some people really have everything in life. And I hear you're nice people, too. How horrid.}}
+{{dialogue|85009|''Player''! Yeah, of course I know you! You've been my meal ticket ever since ol' Blue Moon Owen went crazy, giving out free meals. Whatever it is you're doing to him, keep doing it!}}

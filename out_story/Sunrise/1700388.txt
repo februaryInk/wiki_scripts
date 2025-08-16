@@ -1,0 +1,435 @@
+Reading Mission 1700388: Sunrise
+
+<onlyinclude>{{Infobox mission
+|name = Sunrise
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Sunrise:
+
+TRIGGER Procedure 0.0 Step 0.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700387
+CONDITIONS
+Always:
+ACTIONS
+===Wait for Tomorrow===
+
+{{mission_details
+|desc = Ginger has decided to hold a picnic to thank you and Dr. Fang. Remember to be on time tomorrow.
+|details = Wait for Tomorrow
+}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DAY START FOR WEATHER || order: 0 | weather: 0
+CONDITIONS
+Always:
+ACTIONS
+WEATHER SET STATE || WeatherState: 0
+===Attend the picnic after 15:00PM===
+
+{{mission_details
+|desc = Today is the day of Ginger's picnic. Meet by the oasis at 15:00PM to attend.
+|details = Attend the picnic after 15:00PM
+}}
+Run mission Sunrise
+END MISSION 1700387
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 14:00 (order: 0):
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || missionId: 1700388 | id: 173881 | sceneName: Main | flagName: GingerPicnic_Trigger | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: 80031223
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 173881
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 173881 | delayTime: 0 | durationTime: 2 | changeType: 0 | curveIndex: -1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700388
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || extraParams: -1 | flagName: default | sceneName: Main | itemType: 0 | id: 173881 | path: GingerPicnic
+Set end to 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173881 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 173881
+Gust stands still in Main
+Ginger stands still in Main
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: GingerPicnic_Player
+Add behavior CommanderSit (idName: 173881) to Ginger
+(param: SeatDramaName:GingerPicnic2|TargetScene:Main)
+Add behavior CommanderSit (idName: 173881) to Gust
+(param: SeatDramaName:GingerPicnic3|TargetScene:Main)
+DELAY MASK SET || maskId: 173881 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+ACTOR FREEZ COLLIDER || npc: 8108 | freezeCollider: 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173881 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 20689 starts:
+{{dialogue|Ginger|''Player'', over here, over here! Come, sit next to me.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderPlayerMoveSit (idName: 173881) to Player
+(param: SeatDramaName:GingerPicnic1|TargetScene:Main)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 20691, 20692, 20693, 20692, 20694, 20695, 20696, 20697, 20692, 20698, 20699, 20700, 20701, 20702, 20703, 20704 starts:
+{{dialogue|X|Squark! Just a young girl...}}
+{{dialogue|CoCo|Coco!}}
+{{dialogue|X|So beautiful! So ill...}}
+{{dialogue|CoCo|Coco!}}
+{{dialogue|X|Brother! So angry! Squark! Squark!}}
+{{dialogue|X|But he loves her...}}
+{{dialogue|X|Fang! Fang heals!}}
+{{dialogue|X|Now she's all better? All better! All better!}}
+{{dialogue|CoCo|Coco!}}
+{{dialogue|Ginger|Haha! Fantastic! X, you're such a storyteller!}}
+{{dialogue|X|Thank you, beautiful lady! Thank you!}}
+{{dialogue|Gust|Like a circus...}}
+{{dialogue|Ginger|So Fang's really not coming, then? What a pity...}}
+{{dialogue|Fang|...Sorry. I'm late.}}
+{{dialogue|Ginger|Dr. Fang!}}
+{{dialogue|Gust|Please take a seat.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderMoveSit (idName: 173881) to Fang
+(param: SeatDramaName:GingerPicnic4|TargetScene:Main)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior CommanderSit (idName: 173881) from Gust
+(cId -1) A conversation 20711, 20712, 20713, 20714, 20715, 20716, 20717, 20718, 20719, 20720, 20721, 20722, 20723, 20724, 20725, 20726 starts:
+{{dialogue|Gust|I'm sorry for how I acted.}}
+{{dialogue|Gust|All you've been doing is trying to save my sister. I... my behavior was unacceptable.}}
+{{dialogue|Fang|It's fine.}}
+{{dialogue|Fang|I understand... your feeling.}}
+{{dialogue|Gust|Dr. Fang, I've prepared a gift for you. It's a token of gratitude... and an apology. Please.}}
+{{dialogue|Gust|And for you, ''Player''. You've helped us a lot. Really.}}
+{{dialogue|Fang|A gift? I can't.}}
+{{dialogue|Gust|...Please, I mean it.}}
+{{dialogue|Fang|It is unethical. I cannot accept gifts.}}
+{{dialogue|Gust|''Player'', how about you?}}
+{{dialogue|Player|(What should I say?)}}
+
+*''Yeah it's unethical for me too. Y'know, as a Builder.'' (No unique dialogue)
+*''Of course I'll accept it!'' (No unique dialogue)
+
+{{dialogue|Gust|Alright, I respect your decision... I won't push you.}}
+{{dialogue|Ginger|Dr. Fang... I'll give you something else instead.}}
+{{dialogue|Ginger|Uncle Rosso gave me this camera... how about we all take a photo together? You can have it to remember us by.}}
+{{dialogue|Fang|...Okay.}}
+{{dialogue|Ginger|''Player'', what do you think? Can you take the photo?}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+ACTION CAPTURE STORY FOCUS MODE || npc: 0 | photoId: 100 | poseIds: 1001 | scene: Main | flagName: GingerPicnic_camera
+
+TRIGGER Procedure 0.0 Step 0.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+DELAY MASK SET || maskId: 173882 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+Remove behavior CommanderMoveSit (idName: 173881) from Fang
+Remove behavior CommanderSit (idName: 173881) from Ginger
+Remove behavior CommanderSit (idName: 173881) from Gust
+Remove behavior CommanderPlayerMoveSit (idName: 173881) from Player
+
+TRIGGER Procedure 0.0 Step 0.0 Order 15 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 20691) that ends:
+{{dialogue|X|Squark! Just a young girl...}}
+CONDITIONS
+Always:
+ACTIONS
+Fang stands still in Main
+
+TRIGGER Procedure 0.0 Step 0.0 Order 21 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 20722) that ends:
+{{dialogue|Gust|Alright, I respect your decision... I won't push you.}}
+CONDITIONS
+Always:
+ACTIONS
+Add behavior CommanderSit (idName: 173881) to Gust
+(param: SeatDramaName:GingerPicnic3|TargetScene:Main)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8000 | behaviourName: CommanderPlayerMoveSit | eventName: SitDownFinished
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 20690 starts:
+{{dialogue|Ginger|What about Dr. Fang? ...Is he really not coming?}}
+X stands still in Main
+CoCo stands still in Main
+
+TRIGGER Procedure 0.0 Step 0.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACTOR BEHAVIOUR EVENT || order: 0 | npc: 8016 | behaviourName: CommanderMoveSit | eventName: SitDownFinished
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 20705, 20706, 20707, 20708, 20709, 20710 starts:
+{{dialogue|Ginger|Brother, don't you have something to say?}}
+{{dialogue|Gust|...?!}}
+{{dialogue|Gust|Ahem, well then, let's start eating. Ginger and I made it ourselves.}}
+{{dialogue|Fang|It tastes nice.}}
+{{dialogue|Gust|Dr. Fang, there's something I want to say to you.}}
+{{dialogue|Fang|Hmm?}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 12 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CAPTURE MODE EXIT || order: 0 | isStory: 1
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 20727, 20728, 20729, 20730, 20731, 20732, 20733, 20734, 20735, 20736, 20737, 20738 starts:
+{{dialogue|Ginger|It's so beautiful!}}
+{{dialogue|Fang|Make sure you take care of yourself.}}
+{{dialogue|Ginger|I will.}}
+{{dialogue|X|No goodbye! Miss you! Miss you!}}
+{{dialogue|Ginger|I will miss you too, X. We'll definitely have a chance to come and visit you again in the future!}}
+{{dialogue|X|Promise! Promise!}}
+{{dialogue|Ginger|It's a promise.}}
+{{dialogue|Gust|Ginger, it's getting late. Let's head back. We have an early train tomorrow, so we can say our farewells now.}}
+{{dialogue|Fang|Have a safe journey.}}
+{{dialogue|Player|(What should I say?)}}
+
+*''Have a safe journey.'' (No unique dialogue)
+*''Goodbye, Ginger, Gust.'' (No unique dialogue)
+
+{{dialogue|Ginger|Goodbye, ''Player'', Dr. Fang. Thank you both. Maybe we'll meet again in the future.}}
+{{dialogue|Gust|Farewell.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173882 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Fang stops standing still
+X stops standing still
+CoCo stops standing still
+ACTOR FREEZ COLLIDER || npc: 8108 | freezeCollider: 0
+DELAY MASK SET || maskId: 173882 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+Ginger stops standing still
+Gust stops standing still
+
+TRIGGER Procedure 0.0 Step 0.0 Order 16 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173882 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1700387
+
+TRIGGER Procedure 0.0 Step 0.0 Order 17 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if end is == 1
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: fangginger
+NPC LEAVE || npc: 8107
+NPC LEAVE || npc: 8108
+The player receives a letter:
+{{mail|801}}
+SCENEITEM DELETE || itemType: 0 | id: 173881
+AREA TRIGGER DELETE || id: 540101
+END MISSION 1500401
+END MISSION 1500402
+
+TRIGGER Procedure 0.0 Step 0.0 Order 18 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Set a to 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 19 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Set a to 1
+
+TRIGGER Procedure 0.0 Step 0.0 Order 20 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|802}}
+END MISSION 1700388
+
+TRIGGER Procedure 0.0 Step 0.0 Order 28 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if end is <= (maybe?) 1
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: fangginger
+AREA TRIGGER DELETE || id: 173881
+NPC LEAVE || npc: 8107
+NPC LEAVE || npc: 8108
+The player receives a letter:
+{{mail|801}}
+SCENEITEM DELETE || itemType: 0 | id: 173881
+END MISSION 1500402
+END MISSION 1500401
+AREA TRIGGER DELETE || id: 540101
+FAIL MISSION || missionId: 1700387
+
+TRIGGER Procedure 0.0 Step 0.0 Order 29 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 20721:
+{{dialogue|Player|(What should I say?)}}
+
+*''Yeah it's unethical for me too. Y'know, as a Builder.'' (No unique dialogue)
+*''Of course I'll accept it!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Fang gains 10 favor
+
+TRIGGER Procedure 0.0 Step 0.0 Order 30 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 20721:
+{{dialogue|Player|(What should I say?)}}
+
+*''Yeah it's unethical for me too. Y'know, as a Builder.'' (No unique dialogue)
+*''Of course I'll accept it!'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Portia T-shirt of Outstanding quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 0.0 Order 31 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Gust
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 21912 starts:
+{{dialogue|Gust|There really are good people everywhere. Thank you. Y'know, Portia isn't bad either...}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 32 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Ginger
+CONDITIONS
+Always:
+ACTIONS
+(cId -1) A conversation 21913 starts:
+{{dialogue|Ginger|Thanks for taking care of me these days... I'll tell Pa and Uncle Russo all about it. They'll be so happy.}}
+
+TRIGGER Procedure 0.0 Step 0.0 Order 33 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DAY START FOR WEATHER || order: 0 | weather: 0
+CONDITIONS
+Always:
+ACTIONS
+WEATHER SET STATE || WeatherState: 0
+
+TRIGGER Procedure 0.0 Step 0.0 Order 34 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 173882 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+Set end to 1

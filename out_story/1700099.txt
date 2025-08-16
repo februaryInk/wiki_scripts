@@ -1,0 +1,116 @@
+Reading Mission 1700099: 
+
+<onlyinclude>{{Infobox mission
+|name = 
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100031
+
+TRIGGER Procedure 2.0 Step 2.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if NOODLES is >= 7
+ACTIONS
+GLOBAL BLACK BOARD REMOVE || key: noodlesfail
+
+TRIGGER Procedure 2.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100031
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1700099
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700099
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER CREATE || id: 170991 | sceneName: Main | flagName: BtB_trigger | showOnMap: 0 | mapIcon: MissionArea | transId: -1 | missionId: 1700099
+Set BRIDGE to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 170991
+CONDITIONS
+Clear the Air is in state 3 with flag 0
+Check if BRIDGE is == 0
+ACTIONS
+AREA TRIGGER DELETE || id: 170991
+Set BRIDGE to 1
+(cId 0) A conversation 2487 starts:
+{{dialogue|-2|The air here is making my head spin... Better not push forward.}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+DELAY MASK SET || maskId: 170991 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 170991 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: BtB_pos
+DELAY MASK SET || maskId: 170991 | delayTime: 1 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 170991 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Set BRIDGE to 0
+AREA TRIGGER CREATE || missionId: 1700099 | id: 170991 | flagName: BtB_trigger | sceneName: Main | showOnMap: 0 | mapIcon: MissionArea | transId: -1
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+ON AREA TRIGGER INTERACT || order: 0 | npc: 8000 | enter: 0 | id: 170991
+CONDITIONS
+Clear the Air is successfully completed
+Check if BRIDGE is == 0
+ACTIONS
+AREA TRIGGER DELETE || id: 170991
+Set BRIDGE to 1
+(cId 0) A conversation 8095 starts:
+{{dialogue|-2|(It's a bit of a wasteland over there... Better not push forward)}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+AFTER DESERIALIZE || order: 0
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Set BRIDGE to 0

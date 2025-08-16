@@ -1,0 +1,216 @@
+Reading Mission 1200102: Classic Projection
+
+<onlyinclude>{{Infobox mission
+|name = Classic Projection
+|image =
+|description = Mi-an found an Old World projector in the ruins. If you repair it, maybe it can be used to watch Old World entertainment.
+|type = Side
+|time =
+|location =
+|characters = [[Mi-an]]
+|condition =
+|details =
+|exp = 1200
+|reputation = 40
+|gols = None
+|npc1 = Mi-an
+|rp1 = 40
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200030
+
+TRIGGER Procedure 0.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check relationship with Owen is 6 Lover
+Check if Mi-an has favor >= 400
+CHECK CAMERA UNLOCK || set: 1
+IS MARRIAGE || isMarriage: 0
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+ACTIONS
+Run mission Once in a Blue Moon
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Check relationship with Mi-an is Lover
+CHECK WEATHER STATE || weather: 0 | flag: 1
+IS MARRIAGE || isMarriage: 0
+Duvos Attacks! is in state 2 with flag 0
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+
+GROUP 10:
+CHECK WEATHER STATE || weather: 0 | flag: 1
+Check relationship with Mi-an is Married
+CHECK GLOBAL BLACKBOARD || key: nomission | info: 1 | exist: 0
+Duvos Attacks! is in state 2 with flag 0
+
+ACTIONS
+Run mission Classic Projection
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1200102
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 0
+Set DAY to 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Mi-an
+CONDITIONS
+Always:
+ACTIONS
+(cId 0) A conversation 562_0 starts:
+{{dialogue|Mi-an|Hey, there, er, co-worker, had a Building proposition for you!}}
+
+*''Just co-worker?''
+*''Uh, yeah?''
+
+{{dialogue|Mi-an|indent=true|answer=Just co-worker?
+|Oh, well, I mean this is kinda work related so I just thought... Uhm, nevermind! Moving on!}}
+{{dialogue|Mi-an|indent=true|answer=Uh, yeah?
+|Am I still supposed to call you 'co-worker?' Am I being too formal? Er, nevermind! Moving on!}}
+{{dialogue|Mi-an|Check this thing out! Dug it up the other day. It says "projector" on the box, but on the inside, everything's smashed to pieces. Who's projecting now, eh, box?}}
+{{dialogue|Mi-an|The stuff inside looks like a machine, I was thinkin' maybe we could fix it up! Whatever it used to be, it's got a light source that I'm guessing is connected to this lens... oh shoot, it's not a beam weapon, is it...?}}
+
+*''What else is in the box?''
+*''Could be dangerous...''
+
+{{dialogue|Mi-an|indent=true|answer=What else is in the box?
+|Ooh, well, there's a manual! I was in a hurry to show this to you so I haven't read it yet...}}
+{{dialogue|Mi-an|indent=true|answer=Could be dangerous...
+|C'mon, the last box I found was fine, and it was way more ominous lookin' than this one! Besides, where's your Builder's sense of scientific curiosity?}}
+{{dialogue|Mi-an|indent=true|Here! I almost forgot, there's a manual that came along with this "projector," let's read it together; I'll bet we can settle whether or not it's a laser pretty quick...}}
+{{dialogue|Mi-an|Woah, this manual has everything! It's basically a functional blueprint from the Old World! Fascinating...}}
+{{dialogue|Mi-an|Let's see here... "Turn on the projector, aim it at a flat surface, adjust the focal length to enhance the image-" Ah hah! See? Not a laser. "Use at night or in low light to ensure image clarity for a better viewing experience."}}
+{{dialogue|Mi-an|So, it can "project" some kind of image onto a screen... I wonder what kind of images are inside this thing? Wanna find out? I can go repair this thing if you'll build us a {{textcolor|green|screen}}! Whaddya say?}}
+
+*''Sure! Let's do it.''
+*''Kinda busy...''
+
+{{dialogue|Mi-an|indent=true|answer=Sure! Let's do it.
+|Cool! There's a diagram for a screen right here in the manual; if only all Old World tech was this easy to figure out, am I right? Here, I'll tear out the page for you. Okay, good luck! Let me know when you're ready for "Project: Project!"}}
+{{dialogue|Mi-an|indent=true|answer=Kinda busy...
+|Er, okay! Well if you get time, let me know. Just thought might be fun making something together... or somethin', but what do I know?}}
+
+TRIGGER Procedure 0.0 Step 4.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) The player picks the first option in conversation segment 2453:
+{{dialogue|Mi-an|So, it can "project" some kind of image onto a screen... I wonder what kind of images are inside this thing? Wanna find out? I can go repair this thing if you'll build us a {{textcolor|green|screen}}! Whaddya say?}}
+
+*''Sure! Let's do it.'' (No unique dialogue)
+*''Kinda busy...'' (No unique dialogue)
+
+(cId -1) The player picks the first option in conversation segment 2456:
+{{dialogue|Mi-an|Want to work together to get that projector going?}}
+
+*''Sure! Let's do it.'' (No unique dialogue)
+*''Kinda busy...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set CHOICE to 1
+
+TRIGGER Procedure 0.0 Step 5.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if CHOICE is == 1
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Mi-an stops standing still
+START MISSION 1200102
+
+TRIGGER Procedure 0.0 Step 6.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1200102
+CONDITIONS
+Always:
+ACTIONS
+Run mission Classic Projection
+END MISSION 1200102
+
+TRIGGER Procedure 1.0 Step 0.0 Order 1 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment DAY by 1
+
+TRIGGER Procedure 1.0 Step 1.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC FAVOR LEVEL CHANGE || order: 0 | npc: 8017 | compare: 6 | level: Lover
+CONDITIONS
+Classic Projection is in state 1 with flag 1
+ACTIONS
+CLOSE MISSION || missionId: 1200102
+
+TRIGGER Procedure 1.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON NPC FAVOR LEVEL CHANGE || order: 0 | npc: 8017 | compare: 6 | level: Lover
+CONDITIONS
+Classic Projection is in state 1 with flag 0
+ACTIONS
+END MISSION 1200102
+
+TRIGGER Procedure 1.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if DAY is >= 5
+ACTIONS
+DELIVER MISSION 1200102
+
+TRIGGER Procedure 1.0 Step 4.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+CUTSCENE UI STATE EXIT || 
+Mi-an stops standing still
+
+The player can begin the mission by speaking to the following character:
+
+{{dialogue|Mi-an|Want to work together to get that projector going?}}
+
+*''Sure! Let's do it.''
+*''Kinda busy...''
+
+{{dialogue|Mi-an|indent=true|answer=Sure! Let's do it.
+|Cool! There's a diagram for a screen right here in the manual; if only all Old World tech was this easy to figure out, am I right? Here, I'll tear out the page for you. Okay, good luck! Let me know when you're ready for "Project: Project!"}}
+{{dialogue|Mi-an|indent=true|answer=Kinda busy...
+|Er, okay! Well if you get time, let me know. Just thought might be fun making something together... or somethin', but what do I know?}}
+
+==Rewards==
+{{mission reward
+|npc1 = Mi-an
+|rp1 = 40
+|exp = 1200
+|reputation = 40
+|gols = None
+}}

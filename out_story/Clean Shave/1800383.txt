@@ -1,0 +1,387 @@
+Reading Mission 1800383: Clean Shave
+
+<onlyinclude>{{Infobox mission
+|name = Clean Shave
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1200332
+
+TRIGGER Procedure 1.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+One Flew Over the Bandit Nest is successfully completed
+Check if Logan has favor >= 600
+Bumpy Date is in state 1 with flag 0
+Bumpy Date is in state 2 with flag 0
+The Outpost is successfully completed
+Cornered Beasts is successfully completed
+Science Project is in state 1 with flag 0
+
+GROUP 10:
+One Flew Over the Bandit Nest has failed
+Bumpy Date is in state 1 with flag 0
+Bumpy Date is in state 2 with flag 0
+Check if Logan has favor >= 600
+The Outpost is successfully completed
+Cornered Beasts is successfully completed
+Science Project is in state 1 with flag 0
+
+ACTIONS
+Run mission Andy's Last Wish
+AREA TRIGGER DELETE || id: 83861
+AREA TRIGGER DELETE || id: 83862
+END MISSION 1800386
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Check relationship with Logan is Lover
+Check if Logan has favor >= 850
+Cornered Beasts is successfully completed
+IS MARRIAGE || isMarriage: 0
+Andy's Last Wish is successfully completed
+Sandrock's Next Top Model is successfully completed
+Check if mission Clean Shave is result 1 flag 0
+
+GROUP 10:
+Andy's Last Wish has failed
+Check relationship with Logan is Lover
+Check if Logan has favor >= 850
+IS MARRIAGE || isMarriage: 0
+Cornered Beasts is successfully completed
+Sandrock's Next Top Model is successfully completed
+Check if mission Clean Shave is result 1 flag 0
+
+GROUP 20:
+Check relationship with Logan is Lover
+Check if Logan has favor >= 850
+IS MARRIAGE || isMarriage: 0
+Cornered Beasts is successfully completed
+Check if mission Andy's Last Wish is result 2 flag 1
+Sandrock's Next Top Model is successfully completed
+Check if mission Clean Shave is result 1 flag 0
+
+ACTIONS
+Run mission Clean Shave
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1800383
+CONDITIONS
+Always:
+ACTIONS
+NPC ICON ADD || missionId: 1800383 | npc: 8011 | missionIcon: 6
+Set 8383A to 0
+Set 8383Once to 0
+Set 8383Day1 to 0
+Set 8383B to 0
+
+TRIGGER Procedure 0.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Logan
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 17240, 5211_0 starts:
+{{dialogue|Logan|Hey, ''Player''. Was jostlin' through some old belongings, found this. My Pa's old shavin' knife...}}
+{{dialogue|Logan|Reckon he'd want me to put it to use. Whiskers gettin' a bit unruly as well if I'm bein' honest... What do you think?}}
+{{dialogue|Player|(This option may change Logan's appearance, please choose carefully!)}}
+
+*''I'll help you do it!''
+*''No, don't! I like it like it is...''
+*''Let me think about it...''
+
+{{dialogue|Logan|indent=true|answer=I'll help you do it!
+|Ah? You ever used a shavin' knife before? Hah... well, shoot, ''Player''. I'll try anything at least once...}}
+{{dialogue|Logan|indent=true|answer=No, don't! I like it like it is...
+|Has been a bit of a hassle when I eat soup, but... it's a sacrifice I'm willing to make for someone as lovely as yourself...}}
+{{dialogue|Logan|indent=true|answer=Let me think about it...
+|You got it, darlin'.}}
+NPC ICON REMOVE || missionId: 1800383 | npc: 8011 | missionIcon: 6
+Set 8383Once to 1
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the first option in conversation segment 17242:
+{{dialogue|Player|(This option may change Logan's appearance, please choose carefully!)}}
+
+*''I'll help you do it!'' (No unique dialogue)
+*''No, don't! I like it like it is...'' (No unique dialogue)
+*''Let me think about it...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8383A to 1
+Set 8383PlayCG to 0
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if 8383A is == 1
+CHECK CURRENT SCENE || name: LoganOldHome | flag: 0
+Check if 8383PlayCG is == 0
+ACTIONS
+DELAY MASK SET || maskId: 83831 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+CUTSCENE UI STATE ENTER || 
+Set 8383PlayCG to 1
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 83831 | eventType: 2
+CONDITIONS
+Always:
+ACTIONS
+PLAYER SET POS ROT FLAG || sceneName: LoganOldHome | flagName: S8383_0_1
+CUTSCENE UI STATE EXIT || 
+DELAY MASK SET || maskId: 83831 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the LoganOldHome:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: enter_loganoldhome
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_loganoldhome
+DELAY MASK SET || maskId: 83831 | delayTime: 0 | durationTime: -2 | changeType: 0 | curveIndex: 0
+
+TRIGGER Procedure 0.0 Step 6.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from -1 to the LoganOldHome:
+CONDITIONS
+Always:
+ACTIONS
+NPC REPLACE SUIT || npcSuitID: 11
+Logan stands still in LoganOldHome and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: LoganOldHome | flagName: S8383_0_1
+DELAY MASK SET || maskId: 83831 | delayTime: 0 | durationTime: -2 | changeType: 1 | curveIndex: 0
+ACTION CUTSCENE START AUDIO TYPE || id: CG_SMOOTHFACE | duration: 0 | audioType: NoTransitionOff
+
+TRIGGER Procedure 0.0 Step 7.0 Order 14 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | state: 7 | name: CG_SMOOTHFACE
+CONDITIONS
+Always:
+ACTIONS
+Logan stands still in LoganOldHome and looks at Player
+PLAYER SET POS ROT FLAG || sceneName: LoganOldHome | flagName: S8383_0_1
+NPC REPLACE SUIT || npcSuitID: 9
+CUTSCENE UI STATE ENTER || 
+
+TRIGGER Procedure 0.0 Step 10.0 Order 7 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_SMOOTHFACE | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 5215_0 starts:
+{{dialogue|Logan|Hey, not bad. And would you look at that, not a scratch. Feel this for yourself, smooth as velvet on a shoeshine.}}
+{{dialogue|Logan|What do you think?}}
+
+*''I like it! Much better!''
+*''I kind of liked the old look better...''
+
+{{dialogue|Logan|indent=true|answer=I like it! Much better!
+|That settles it, then... I'll keep it off from now on. There's no one else I'd rather please...}}
+{{dialogue|Logan|indent=true|answer=I kind of liked the old look better...
+|Zat so... Well, then... Looks like the scruff stays then... once it grows back of course. Happy to do it; there's no one I'd rather please...}}
+Set 8383B to 0
+
+TRIGGER Procedure 0.0 Step 14.0 Order 10 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Check if 8383B is == 1
+ACTIONS
+Logan gains 10 favor
+Logan stops standing still
+CUTSCENE UI STATE EXIT || 
+END MISSION 1800383
+
+TRIGGER Procedure 0.0 Step 15.0 Order 11 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+Check if 8383B is == 2
+ACTIONS
+Logan stops standing still
+Set 8383Day to 0
+CUTSCENE UI STATE EXIT || 
+Logan gains 10 favor
+
+TRIGGER Procedure 0.0 Step 12.0 Order 8 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the first option in conversation segment 17249:
+{{dialogue|Logan|What do you think?}}
+
+*''I like it! Much better!'' (No unique dialogue)
+*''I kind of liked the old look better...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8383B to 1
+
+TRIGGER Procedure 0.0 Step 13.0 Order 9 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the second option in conversation segment 17249:
+{{dialogue|Logan|What do you think?}}
+
+*''I like it! Much better!'' (No unique dialogue)
+*''I kind of liked the old look better...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8383B to 2
+
+TRIGGER Procedure 0.0 Step 16.0 Order 12 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Increment 8383Day by 1
+
+TRIGGER Procedure 0.0 Step 20.0 Order 13 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 8383Day is >= 7
+Check if 8383B is == 2
+ACTIONS
+NPC REPLACE SUIT || npcSuitID: 8
+END MISSION 1800383
+
+TRIGGER Procedure 1.0 Step 1.0 Order 2 Repeat -1
+------------------------------------------------------------
+EVENTS
+On speaking to Logan
+CONDITIONS
+Check if 8383Once is == 0
+ACTIONS
+(cId 2) A conversation 5211_0 starts:
+{{dialogue|Logan|Reckon he'd want me to put it to use. Whiskers gettin' a bit unruly as well if I'm bein' honest... What do you think?}}
+{{dialogue|Player|(This option may change Logan's appearance, please choose carefully!)}}
+
+*''I'll help you do it!''
+*''No, don't! I like it like it is...''
+*''Let me think about it...''
+
+{{dialogue|Logan|indent=true|answer=I'll help you do it!
+|Ah? You ever used a shavin' knife before? Hah... well, shoot, ''Player''. I'll try anything at least once...}}
+{{dialogue|Logan|indent=true|answer=No, don't! I like it like it is...
+|Has been a bit of a hassle when I eat soup, but... it's a sacrifice I'm willing to make for someone as lovely as yourself...}}
+{{dialogue|Logan|indent=true|answer=Let me think about it...
+|You got it, darlin'.}}
+NPC ICON REMOVE || missionId: 1800383 | npc: 8011 | missionIcon: 6
+Set 8383Once to 1
+
+TRIGGER Procedure 1.0 Step 2.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the second option in conversation segment 17242:
+{{dialogue|Player|(This option may change Logan's appearance, please choose carefully!)}}
+
+*''I'll help you do it!'' (No unique dialogue)
+*''No, don't! I like it like it is...'' (No unique dialogue)
+*''Let me think about it...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8383A to 2
+
+TRIGGER Procedure 1.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if 8383A is == 2
+ACTIONS
+END MISSION 1800383
+
+TRIGGER Procedure 1.0 Step 4.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId -1) After the conversation ends:
+CONDITIONS
+Check if 8383A is == 1
+CHECK CURRENT SCENE || flag: 1 | name: LoganOldHome
+Check if 8383PlayCG is == 0
+ACTIONS
+ACTION CUTSCENE START AUDIO TYPE || id: CG_SMOOTHFACE | duration: 1 | audioType: NormalOff
+Set 8383PlayCG to 2
+
+TRIGGER Procedure 2.0 Step 2.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+(cId -1) The player picks the third option in conversation segment 17242:
+{{dialogue|Player|(This option may change Logan's appearance, please choose carefully!)}}
+
+*''I'll help you do it!'' (No unique dialogue)
+*''No, don't! I like it like it is...'' (No unique dialogue)
+*''Let me think about it...'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Set 8383A to 0
+
+TRIGGER Procedure 3.0 Step 1.0 Order 0 Repeat -1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Check if 8383B is == 0
+ACTIONS
+Set 8383Once to 0
+NPC ICON REMOVE || npc: 8011 | missionIcon: 6 | missionId: 1800383
+NPC ICON ADD || missionId: 1800383 | npc: 8011 | missionIcon: 6
+Increment 8383Day1 by 1
+
+TRIGGER Procedure 3.0 Step 3.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+Check if 8383Day1 is >= 5
+Check if 8383A is == 0
+ACTIONS
+END MISSION 1800383

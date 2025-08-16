@@ -1,0 +1,253 @@
+Reading Mission 1700178: Fragrant Memories
+
+<onlyinclude>{{Infobox mission
+|name = Fragrant Memories
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Fragrant Memories:
+
+TRIGGER Procedure 1.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON DELAY MASK EVENT || order: 0 | maskId: 171772 | eventType: 5
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1700177
+CUTSCENE UI STATE EXIT || 
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700177
+CONDITIONS
+Always:
+ACTIONS
+Run mission Fragrant Memories
+END MISSION 1700177
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700178
+CONDITIONS
+Always:
+ACTIONS
+===Talk to the Mysterious Salesman===
+
+{{mission_details
+|desc = Maybe the Mysterious Man has Spicy Bean Paste. Wait for him to come to Sandrock.
+|details = Talk to the Mysterious Salesman
+*{{i2|Mysterious Man|0/1}}
+}}
+Add 1 Mapo Tofu of Default quality (Notify player)
+Set global blackboard key broadbean with info 1.
+
+TRIGGER Procedure 0.0 Step 0.5 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Mysterious Man
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 1281_0 starts:
+{{dialogue|Mysterious Man|Spicy Bean Paste you say... interesting...}}
+{{dialogue|Mysterious Man|My dear Builder friend... you want it for cooking? Let me guess... Mapo Tofu? Haha, well, I love it too! In order to learn to make it, I had to study the art of using the Spicy Bean Paste!}}
+{{dialogue|Mysterious Man|But alas, I didn't come from that direction, I went through the Ethean border with Duvos. I wish I had come directly from Barnarock but... It's a pity, I wish I had brought some extra... but I have none.}}
+{{dialogue|Mysterious Man|Right now, I have but some of the ingredients necessary. Broad Bean Seeds, and Spicy Peppers.}}
+{{dialogue|Mysterious Man|So, are you interested in buying the seeds and peppers? The other ingredients you need are common enough. If you're going to buy these, I'll teach you how to make it free of charge.}}
+The conversation ends.
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Buy Broad Beans===
+
+{{mission_details
+|desc = The Mysterious Man doesn't have any Spicy Bean Paste with him! But he said that if you find him Broad Beans, he can teach you the recipe.
+|details = Buy Broad Beans
+*{{i2|Broad Bean Seeds|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 2.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1700177 | targetId: 2 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Make Spicy Bean Paste===
+
+{{mission_details
+|desc = According to the Mysterious Man, if you grow Broad Beans, then add some Salt and Chili, you can make Spicy Bean Paste at the worktable.
+|details = Make Spicy Bean Paste
+*{{i2|Spicy Bean Paste|0/1}}
+}}
+Add 1 Spicy Bean Paste of Default quality (Notify player)
+
+TRIGGER Procedure 0.0 Step 3.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1700177 | targetId: 3 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Make Mapo Tofu===
+
+{{mission_details
+|desc = Follow X's recipe to make Fang's favorite dish, the famous Mapo Tofu.
+|details = Make Mapo Tofu
+*{{i2|Mapo Tofu|0/1}}
+}}
+
+TRIGGER Procedure 0.0 Step 5.0 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to X
+CONDITIONS
+Always:
+ACTIONS
+(cId 2) A conversation 4462 starts:
+{{dialogue|X|Give Fang!}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON MISSION TARGET CAN SUBMIT || order: 0 | missionId: 1700177 | targetId: 4 | canSubmit: 1
+CONDITIONS
+Always:
+ACTIONS
+===Give Mapo Tofu to Fang===
+
+{{mission_details
+|desc = You have the Mapo Tofu, Fang's favorite food. {{textcolor|green|Put it in your hand}} and go and see him.
+|details = Give Mapo Tofu to Fang
+*{{i2|Mapo Tofu|0/1}}
+}}
+AREA TRIGGER CREATE || missionId: 1700177 | id: 171782 | sceneName: Clinic | flagName: Fragrantmemory_player | showOnMap: 1 | mapIcon: MissionAreaBranch | transId: -1
+
+TRIGGER Procedure 1.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+CHECK TARGET CAN SUBMIT || missionId: 1700177 | targetId: 5 | canSubmit: 1
+CHECK UNIQUE ACTION RUN || idStr: enter_clinic
+ACTIONS
+UNIQUE ACTION RUN || idStr: enter_clinic
+
+TRIGGER Procedure 1.0 Step 1.0 Order 6 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+AREA TRIGGER DELETE || id: 171782
+
+TRIGGER Procedure 1.0 Step 1.5 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from Main to the Clinic:
+CONDITIONS
+Always:
+ACTIONS
+{{cutscene|id = 6020}}
+A cutscene CG_SMELL (duration: 0.0) starts playing
+Mapo Tofu - I showed Fang my cooking skills, he really loved the Seesaian Mapo Tofu I made. Maybe he has some memories attached to it...
+Fang stands still in Clinic
+PLAYER SET POS ROT FLAG || sceneName: Clinic | flagName: Fragrantmemory_player
+
+TRIGGER Procedure 1.0 Step 1.8 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_SMELL | state: 9
+CONDITIONS
+Always:
+ACTIONS
+(cId 3) A conversation 1282_0 starts:
+{{dialogue|Fang|Smells familiar.}}
+{{dialogue|Fang|What... is it?}}
+
+*''A delicious dish.''
+*''X gave me the recipe.''
+
+{{dialogue|Fang|I want to... try.}}
+{{dialogue|Fang|How much? I'll pay.}}
+
+*''It's free, here you go.''
+*''100 Gols.''
+
+{{dialogue|Fang|indent=true|answer=It's free, here you go.
+|I insist.}}
+{{dialogue|Fang|indent=true|Here.}}
+{{dialogue|Fang|Mother... used to make this.}}
+{{dialogue|Fang|Long ago...}}
+The conversation ends.
+
+TRIGGER Procedure 2.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+SUBMIT MISSION 1700177
+Run mission Fragrant Memories
+
+TRIGGER Procedure 1.0 Step 1.8 Order 5 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_SMELL | state: 7
+CONDITIONS
+Always:
+ACTIONS
+SCENEITEM CREATE FLAG || itemType: 0 | id: 171781 | sceneName: Clinic | flagName: Fragrantmemory_dish | extraParams: -1 | path: SceneItem_ToufuMapo
+SCENEITEM CREATE FLAG || itemType: 0 | id: 171782 | sceneName: Clinic | extraParams: -1 | flagName: Fragrantmemory_chair | path: SceneItem_Fangchair
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 3) The player picks the -1 option in conversation segment 4466:
+{{dialogue|Fang|How much? I'll pay.}}
+
+*''It's free, here you go.'' (No unique dialogue)
+*''100 Gols.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Remove 1 Mapo Tofu of Default quality (Notify player)
+MONEY PLAYER ADD || money: 100
+Fang stops standing still
+
+TRIGGER Procedure 2.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+The player receives a letter:
+{{mail|292}}
+SCENEITEM DELETE || itemType: 0 | id: 171781
+SCENEITEM DELETE || itemType: 0 | id: 171782
+END MISSION 1700178

@@ -1,0 +1,128 @@
+Reading Mission 1100083: The Old Man and the Tree
+
+<onlyinclude>{{Infobox mission
+|name = The Old Man and the Tree
+|image =
+|description = Matilda wants you to visit with the man who runs the local Moisture Farm so you can learn about planting your own food.
+|type = Main
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = 300
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from parent mission: 1100002
+
+TRIGGER Procedure 2.0 Step 1.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON CUTSCENE CHANGE || order: 0 | name: CG_POLLUTION | state: 9
+CONDITIONS
+Always:
+ACTIONS
+Run mission #1100075
+
+TRIGGER Procedure 2.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+GROUP 0:
+Check if mission Pitching In is result 2 flag 1
+
+GROUP 10:
+Check if mission Pitching In is result 1 flag 1
+
+GROUP 20:
+Check if mission Pitching In is result 2 flag 1
+
+GROUP 30:
+Pitching In has failed
+
+ACTIONS
+Run mission The Old Man and the Tree
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1100083
+CONDITIONS
+Always:
+ACTIONS
+Set LEAVE to 0
+DELIVER MISSION 1100083
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+CHECK UNIQUE ACTION RUN || idStr: leave_home
+ACTIONS
+UNIQUE ACTION RUN || idStr: leave_home
+Set LEAVE to 1
+Matilda stands still in Main
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the player moves from PlayerHome to the Main:
+CONDITIONS
+Check if LEAVE is == 1
+ACTIONS
+CUTSCENE UI STATE ENTER || 
+PLAYER SET POS ROT FLAG || sceneName: Main | flagName: player_beforehome
+(cId 0) A conversation 1124, 1125, 1126, 1127 starts:
+{{dialogue|Matilda|Good day, ''Player''. How are you?}}
+{{dialogue|Matilda|I just remembered that we haven't introduced you to {{textcolor|green|desert farming}} yet. We have a nice gentleman by the name of Zeke working on {{textcolor|green|a moisture farm north of town}}.}}
+{{dialogue|Matilda|If you want some pointers on farming, you should go talk with him. I've already given him a heads up that you'd be comin'. The farm is a bit far though, so you might fancy {{textcolor|green|taking a Yakmel Cart}}.}}
+{{dialogue|Matilda|Well, I'm on my way to see how Coop's doing, so you have a good day. So long, now!}}
+
+TRIGGER Procedure 1.0 Step 0.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 0) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+START MISSION 1100083
+CUTSCENE UI STATE EXIT || 
+Matilda stops standing still
+Add behavior Story1100083_8018_2 (idName: 20831) to Matilda
+(param: -1)
+Add behavior Story1100083_8003_1 (idName: 20831) to Cooper
+(param: -1)
+
+TRIGGER Procedure 1.0 Step 1.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1100083
+CONDITIONS
+Always:
+ACTIONS
+Run mission The Old Man and the Tree
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Remove behavior Story1100083_8018_2 (idName: 20831) from Matilda
+Remove behavior Story1100083_8003_1 (idName: 20831) from Cooper
+END MISSION 1100083
+
+==Rewards==
+{{mission reward
+|exp = 300
+|reputation = None
+|gols = None
+}}

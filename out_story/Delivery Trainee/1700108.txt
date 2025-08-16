@@ -1,0 +1,188 @@
+Reading Mission 1700108: Delivery Trainee
+
+<onlyinclude>{{Infobox mission
+|name = Delivery Trainee
+|image =
+|description = 
+|type = Side
+|time =
+|location =
+|characters = 
+|condition =
+|details =
+|exp = None
+|reputation = None
+|gols = None
+}}</onlyinclude>
+
+==Overview==
+Run conditions from Delivery Trainee:
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId: -1) There is a conversation segment (id 2518) that ends:
+{{dialogue|Arvio|''Player'' it's imperative you deliver within 24 hours again, don't let the bird kick you out too... By the way, could you also help me check if he's changed his opinion of me or not?}}
+CONDITIONS
+Always:
+ACTIONS
+Add 1 Arvio's Goods of Default quality (Notify player)
+START MISSION 1700107
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+ON ACCEPT MISSION 1700107
+CONDITIONS
+Always:
+ACTIONS
+Run mission Delivery Trainee
+END MISSION 1700107
+
+==Conduct==
+
+TRIGGER Procedure 0.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+MISSION BEGIN 1700108
+CONDITIONS
+Always:
+ACTIONS
+===Deliver to Fang===
+
+{{mission_details
+|desc = Deliver to Fang within 24 hrs.
+|details = Deliver to Fang
+*{{i2|Arvio's Goods|0/1}}
+*{{i2|Fang|0/1}}
+}}
+MISSION TRACE NAVI NPC || isAdd: 1 | missionId: 1700107 | npc: 8016
+NPC ADD TAG || tag: XonFang
+
+TRIGGER Procedure 0.0 Step 1.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Fang
+CONDITIONS
+Always:
+ACTIONS
+(cId 1) A conversation 600_0 starts:
+{{dialogue|X|Delivery! Delivery!}}
+{{dialogue|Fang|... Why... you?}}
+
+*''I'm helping Arvio do deliveries.''
+*''Are you mad at Arvio?''
+
+{{dialogue|X|indent=true|answer=I'm helping Arvio do deliveries.
+|Thank you! Very much!}}
+{{dialogue|Fang|indent=true|answer=Are you mad at Arvio?
+|reward={{NPC2|Arvio|rp=5}}|...}}
+{{dialogue|X|indent=true|Nosy! Nosy!}}
+BAG MODIFY BY TARGET || missionId: 1700107 | targetId: 1
+MISSION TRACE NAVI NPC || isAdd: 0 | missionId: 1700107 | npc: 8016
+
+TRIGGER Procedure 0.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) After the conversation ends:
+CONDITIONS
+Always:
+ACTIONS
+===Talk to Arvio===
+
+{{mission_details
+|desc = The goods have been delivered. Talk with Arvio.
+|details = Talk to Arvio
+}}
+Set global blackboard key deliveryforArvio with info 2.
+NPC REMOVE TAG || tag: XonFang
+
+TRIGGER Procedure 0.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 1) The player picks the second option in conversation segment 2520:
+{{dialogue|Fang|... Why... you?}}
+
+*''I'm helping Arvio do deliveries.'' (No unique dialogue)
+*''Are you mad at Arvio?'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Arvio gains 5 favor
+
+TRIGGER Procedure 0.0 Step 4.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) The player picks the second option in conversation segment 2523:
+{{dialogue|Arvio|How did it go? Did you make the delivery? How about Fang, is my exile still in effect?}}
+
+*''It seems like he's still angry.'' (No unique dialogue)
+*''I forgot to ask.'' (No unique dialogue)
+
+CONDITIONS
+Always:
+ACTIONS
+Arvio gains -5 favor
+
+TRIGGER Procedure 1.0 Step 0.0 Order 0 Repeat 1
+------------------------------------------------------------
+EVENTS
+On speaking to Arvio
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: deliveryforArvio | info: 2 | exist: 1
+ACTIONS
+(cId 2) A conversation 603_0 starts:
+{{dialogue|Arvio|How did it go? Did you make the delivery? How about Fang, is my exile still in effect?}}
+
+*''It seems like he's still angry.''
+*''I forgot to ask.''
+
+{{dialogue|Arvio|indent=true|answer=It seems like he's still angry.
+|Ah, that's disheartening. How can someone resist my charming smile?}}
+{{dialogue|Arvio|indent=true|answer=I forgot to ask.
+|reward={{NPC2|Arvio|rp=-5}}|Huh? Well maybe by the time I make his delivery next week he'll have calmed down! Haha!}}
+{{dialogue|Arvio|By the way, Builder! You can be certain that I haven't forgotten about a reward for your help. But I feel you deserve something particularly special. Let me think on it a while, I'll certainly repay you handsomely.}}
+The conversation ends.
+
+TRIGGER Procedure 1.0 Step 2.0 Order 2 Repeat 1
+------------------------------------------------------------
+EVENTS
+(cId 2) After the conversation ends:
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: deliveryforArvio | info: 2 | exist: 1
+ACTIONS
+SUBMIT MISSION 1700107
+
+TRIGGER Procedure 1.0 Step 1.0 Order 4 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Decrement CD by 1
+
+TRIGGER Procedure 1.0 Step 2.0 Order 1 Repeat 1
+------------------------------------------------------------
+EVENTS
+When the time is 3:00 (order: 0):
+CONDITIONS
+CHECK GLOBAL BLACKBOARD || key: deliveryforArvio | info: 2 | exist: 0
+ACTIONS
+Set global blackboard key deliveryforArvio with info 0.
+BAG MODIFY BY TARGET || missionId: 1700107 | targetId: 1
+FAIL MISSION || missionId: 1700107
+MISSION TRACE NAVI NPC || isAdd: 0 | missionId: 1700107 | npc: 8016
+NPC REMOVE TAG || tag: XonFang
+END MISSION 1700108
+
+TRIGGER Procedure 1.0 Step 3.0 Order 3 Repeat 1
+------------------------------------------------------------
+EVENTS
+At the beginning of the day:
+CONDITIONS
+Always:
+ACTIONS
+Run mission Delivery Expert
+END MISSION 1700108
