@@ -57,10 +57,10 @@ class Asset:
     # MonoBehaviours.
     @property
     def script(self) -> str:
-        assert self.type == 'MonoBehaviour'
-        script_id = self.data['m_Script']['m_PathID']
-        return self.bundle.scripts.get(script_id)
-
+        if self.type == 'MonoBehaviour':
+            script_id = self.data['m_Script']['m_PathID']
+            return self.bundle.scripts.get(script_id)
+        
     # What are we doing with GameObjects?
     @property
     def transform(self) -> Asset:

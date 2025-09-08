@@ -10,11 +10,6 @@ Requires:
 from sandrock         import *
 from sandrock.preproc import get_config_paths
 
-# ------------------------------------------------------------------------------
-
-# I can't find the relationship between a pet NPC and its pet stats in the
-# MonoBehaviour asset files (maybe it's in MonoScripts?), so I'm just going to 
-# hand-code the pet IDs here.
 npc_pet_ids = {
     1: 'Nemo',
     2: 'CoCo',
@@ -567,6 +562,8 @@ buff_operators = {
     'PlusRatio': '+%',
 }
 
+config_paths = get_config_paths()
+
 def find_pet_npc_id(pet_id: int) -> int:
     npc_name = npc_pet_ids.get(pet_id, None)
     if npc_name is None:
@@ -576,11 +573,22 @@ def find_pet_npc_id(pet_id: int) -> int:
         if text.npc(id) == npc_name:
             return (id, 'Npc')
     
-    for id, npc in DesignerConfig.RandomNPCData.items():
-        print(text.npc(id))
+    for id, npc in DesignerConfig.RandomNPCData.items():        
         if text.npc(npc['instanceIds']['x']) == npc_name:
-            return (id, 'RandomNpc')
+            return (id, 'RandomNpc')    
     
+    pet_asset = read_json(config_paths['pet']['PetAsset'])
+    pet_asset_npcs = pet_asset['npcs']
+    pet_asset_monsters = pet_asset['monsters']
+
+    for n in pet_asset_npcs:        
+        if (n['petId'] == pet_id):
+            return (n['npcId'], 'Npc')
+    
+    for m in pet_asset_monsters:                    
+        if(m['petId'] == pet_id):            
+            return (m['randomNpcProtoId'], 'RandomNpc')
+            
     raise ValueError(f'NPC for pet ID {pet_id} not found.')
 
 def find_pet_npc_name_id(pet_id: int) -> str:
@@ -646,7 +654,15 @@ def modify_attachment(attachment: dict) -> dict:
     return attachment
 
 def run() -> None:
-    config_paths = get_config_paths()
+    pet_asset = read_json(config_paths['pet']['PetAsset'])
+    pet_asset_npcs = pet_asset['npcs']
+    pet_asset_monsters = pet_asset['monsters']
+
+    for n in pet_asset_npcs:
+        npc_pet_ids[n['petId']] = text.npc(n['npcId'])
+    
+    for m in pet_asset_monsters:            
+        npc_pet_ids[m['petId']] = text(DesignerConfig.Monster[m['protoId']]['nameId'])
 
     for key, path in config_paths['designer_config'].items():
         for page_name, required_attributes in pages.items():

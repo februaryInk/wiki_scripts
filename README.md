@@ -10,7 +10,7 @@ This is built on [PermDenied's code](https://github.com/cruiseliu/sandrock-scrip
 
 ## Asset Bundles
 
-I'm using AssetStudioModGUI to export game assets, but the tool's output compared to what these scripts seem to expect has necessitated some preparatory steps. I imagine the original author had a more elegant and simpler method, but this is mine.
+I'm using AssetStudioModGUI (https://github.com/aelurum/AssetStudio/releases) to export game assets, but the tool's output compared to what these scripts seem to expect has necessitated some preparatory steps. I imagine the original author had a more elegant and simpler method, but this is mine.
 
 Unless otherwise mentioned, use these settings:
 

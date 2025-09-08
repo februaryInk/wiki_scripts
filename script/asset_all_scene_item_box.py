@@ -21,12 +21,11 @@ class SceneResult(TypedDict):
 Results: TypeAlias = dict[str, SceneResult]
 
 def run() -> None:
-    config_paths = get_config_paths()
     results = {}
-    i = 0
-
+    
     for interest in get_interest_points():
         behav = read_json(interest['behaviour'])
+
         if interest['type'] == 'SceneItemBox' and behav['m_Enabled']:
             update_treasure(results, interest['scene'], behav)
 
