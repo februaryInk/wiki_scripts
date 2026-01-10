@@ -69,11 +69,17 @@ class NewspaperContent:
 
     @cached_property
     def type(self) -> str:
-        return NewspaperContent.types.get(self._data['type'], 'Unknown')
+        # return NewspaperContent.types.get(self._data['type'], 'Unknown')
+        return self._data['type']
+    
+    def print(self) -> None:
+        lines = self.read()
+        for line in lines:
+            print(line)
 
     def read(self) -> None:
         lines = [
-            f'Newspaper adds {self.type} content {self.id}.',
+            f'Newspaper adds content {self.id} of type {self.type}:',
         ]
 
         if self.mission_add_id:
@@ -92,3 +98,13 @@ class NewspaperContent:
             lines.append(f'Image: {self.image}')
 
         return lines
+
+def load_newspaper_contents() -> None:
+    newspaper_contents = {}
+
+    for content_id, content_data in DesignerConfig.NewspaperContent.items():
+        newspaper_contents[content_id] = NewspaperContent(content_id)
+
+    return newspaper_contents
+
+newspaper_contents = load_newspaper_contents()

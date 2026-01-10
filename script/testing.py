@@ -16,7 +16,7 @@ from sandrock.structures.generators import *
 # ------------------------------------------------------------------------------
 
 def run() -> None:
-    # print_scenes()
+    print_scenes()
     # # print_items_with_item_tag(86)
     # # # print_scenes()
     # print_npc_names()
@@ -33,12 +33,10 @@ def run() -> None:
 
     # print('---')
 
-    print_conv_builder(1364)
+    # print_conv_builder(1364)
 
     # GeneratorGroup.print_generators_for_item_id(19210010)
     # GeneratorGroup.print_generators_for_item_id(10000008)
-
-    # print_dialogue('Andy')
 
     # print_npc_names()
 

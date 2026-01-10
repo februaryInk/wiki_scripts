@@ -20,6 +20,7 @@ import urllib.parse
 # that are recorded in Chinese in the XML. Seems like the best way to refer to
 # them on the wiki is to translate these internal names.
 _event_names = {
+    1100046: 'The First Sandstorm', # The First Sandstorm
     1300026: 'Shonash Canyon Bridge Opening Ceremony',
     1300392: 'Take a Guess', # Venti - Take a Guess
     # 1500337: 'A Lifetime of Growing', # Chinese idiom "It takes a hundred years to cultivate a person"; currently considered Builder Cruise x Operation Flowergate post-conduct in wiki.
@@ -44,10 +45,16 @@ _manual_mission_names = {
     1200202: 'Blessing in Disguise', # Post-conduct, Arvio's daily visits
     1200260: 'Look Into It', # Magic Mirror visits
     1200175: 'Relapse', # The doctor cannot heal himself
+    1200309: 'Ghost Recon', # Larry in the clinic
     1300041: text(80001007), # In Trusses We Trust, donated gifts
+    1300394: '"Him"', # Post-conduct
     1500337: 'Builder Cruise x Operation Flowergate', # It takes a hundred years to cultivate a person
+    1500400: '"Him"', # Post-conduct
     1500403: text(80031199), # The Girl with the Umbrella, Ginger's Diary Easter egg
+    1700150: 'Fortress of Sanditude', # Main conduct
     1700391: '"Him"', # Pre-conduct
+    1800263: 'New Coat of Paint', # Post-conduct; Arvio gets Musa's investment
+    1800264: 'New Coat of Paint', # NPCs talk about Arvio's growth
     1800306: 'Sandrock Strikes Back', # Follow-up meeting
     1800519: 'Private Prescription', # Little Fang's Heartfelt Easter egg
     1800537: 'Late Bloomer', # The Continuation of Yimi's Love

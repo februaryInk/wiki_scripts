@@ -40,13 +40,14 @@ _event_talks   = DesignerConfig.EventTalk
 # ------------------------------------------------------------------------------
 
 class Bubble:
-    def __init__(self, speaker_id: int, text_id: int):
+    def __init__(self, speaker_id: int, text_id: int, extra_args: list = []) -> None:
+        self._extra_args: list = extra_args
         self._speaker_id: int = speaker_id
         self._text_id: int = text_id
     
     @property
     def _line(self) -> str:
-        args = ['dialogue', self.speaker_name, self.content]
+        args = ['dialogue', self.speaker_name, *self._extra_args, self.content]
         return '{{' + '|'.join(args) + '}}'
     
     @property
@@ -57,12 +58,15 @@ class Bubble:
     def speaker_name(self) -> str:
         return text.npc(self._speaker_id)
 
-    def read(self) -> list[str]:
-        return [
-            'In a speech bubble:'
-            '',
-            self._line
-        ]
+    def read(self, minimal = False) -> list[str]:
+        if minimal:
+            return [self._line]
+        else:
+            return [
+                'In a speech bubble:',
+                '',
+                self._line
+            ]
 
 class ConvChat:
     def __init__(self, id: int):

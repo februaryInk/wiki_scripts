@@ -8,8 +8,8 @@ items = [
 	"Pet Tail Decoration"
 ]
 
-start = 12700101
-end = 12702902
+start = 12702903
+end = 12702904
 ids = range(start, end)
 
 sprite_bundle = Bundle('uisystem_sprite')

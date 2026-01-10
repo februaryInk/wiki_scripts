@@ -25,7 +25,8 @@ class Asset:
             elif self.type == 'MonoBehaviour':
                 self._data = read_json(self.path)
             else:
-                self._data = read_asset_dump(self.path) 
+                self._data = read_asset_dump(self.path)
+        
         return self._data
 
     # Why do we need this? Ah, for lazy loading the file.

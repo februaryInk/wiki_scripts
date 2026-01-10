@@ -153,7 +153,9 @@ class _IdWeight:
     
     @cached_property
     def probability(self) -> float:
-        return self.weight / self.element.total_weight if self.element.total_weight > 0 else 0.0
+        outer_weight = self.weight / self.element.total_weight if self.element.total_weight > 0 else 0.0
+        
+        return outer_weight
 
 # ------------------------------------------------------------------------------
 
@@ -388,6 +390,16 @@ class Item(_IdWeight):
     @cached_property
     def name(self) -> str:
         return text.item(self.item_id)
+    
+    @cached_property
+    def probability(self) -> float:
+        outer_weight = self.weight / self.element.total_weight if self.element.total_weight > 0 else 0.0
+
+        if self.random_type == 0 and self.min_count == 0 and self.max_count == 1:
+            inner_weight = self.parameters[0]
+            return outer_weight * inner_weight
+        else:
+            return outer_weight
 
     def print(self) -> None:
         print(f'Item {self.id} ({self.item_id}): {self.parameters}')
@@ -435,3 +447,8 @@ class GeneratorGroup:
     
     def print(self) -> None:
         print('\n'.join(self.lines))
+
+    def print_each_element(self) -> None:
+        for i, element in enumerate(self.elements):
+            element.print()
+            print('')

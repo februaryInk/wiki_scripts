@@ -436,6 +436,27 @@ pages = {
         'dropDatas',
         'monsterType'
     ],
+    'AssetNewspaperConfigNewspaper': [
+        'coverId',
+        'contents',
+        'date'
+    ],
+    'AssetNewspaperContentNewspaperContent': [
+        'id',
+        'type',
+        'titleId',
+        'supplement',
+        'contentId',
+        'layouts',
+        'texturePathEN',
+        'pictureShowType',
+        'pictureShowPosition'
+    ],
+    'AssetNewspaperCoverNewspaperCover': [
+        'id',
+        'titleId',
+        'layouts'
+    ],
     'AssetNpcProtoDataNpc': [
         'id',
         'templetID',
@@ -581,7 +602,7 @@ def find_pet_npc_id(pet_id: int) -> int:
         if text.npc(npc['instanceIds']['x']) == npc_name:
             return (id, 'RandomNpc')
     
-    raise ValueError(f'NPC for pet ID {pet_id} not found.')
+    return (None, None)
 
 def find_pet_npc_name_id(pet_id: int) -> str:
     npc_id = find_pet_npc_id(pet_id)

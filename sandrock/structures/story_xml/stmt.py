@@ -42,7 +42,9 @@ _compare_map = {
 }
 
 _weather_map = {
+    0: 'Sunny',
     1: 'Rainy',
+    2: 'Sandstorm',
 }
 
 # -- STMT Class ----------------------------------------------------------------
@@ -493,6 +495,31 @@ class _StmtCheckVar(Stmt):
     def read(self) -> list[str]:
         return [f'Check if {self.name} is {self.compare} {self._ref}']
 
+class _StmtCheckWeatherState(Stmt):
+    _stmt_matches = [
+        'CHECK WEATHER STATE'
+    ]
+
+    def extract_properties(self) -> None:
+        self._flag: int = int(self._stmt.get('flag'))
+        self._weather_id: int = int(self._stmt.get('weather'))
+
+    @property
+    def descriptor(self) -> str:
+        if self._flag == 1:
+            return 'is'
+        elif self._flag == 0:
+            return 'is not'
+        else:
+            return f'unknown flag {self._flag}'
+    
+    @property
+    def weather(self) -> str:
+        return _weather_map.get(self._weather_id, f'Unknown weather {self._weather_id}')
+    
+    def read(self) -> list[str]:
+        return [f'Check if the weather {self.descriptor} {self.weather}']
+
 class _StmtCutsceneStart(Stmt):
     _stmt_matches = [
         'CUTSCENE START'
@@ -636,6 +663,21 @@ class _StmtNpcRemoveIdle(Stmt):
     
     def read(self) -> list[str]:
         return [f'{self.npc_name} stops standing still']
+
+class _StmtOnDayStartForWeather(Stmt):
+    _stmt_matches = [
+        'ON DAY START FOR WEATHER'
+    ]
+
+    def extract_properties(self) -> None:
+        self._weather_id: int = int(self._stmt.get('weather'))
+    
+    @property
+    def weather(self) -> str:
+        return _weather_map.get(self._weather_id, f'Unknown weather {self._weather_id}')
+
+    def read(self) -> list[str]:
+        return [f'At the beginning of a {self.weather} day:']
 
 class _StmtOnEveryDayStart(Stmt):
     _stmt_matches = [
@@ -1110,5 +1152,20 @@ class _StmtUpdateMissionInfo(Stmt):
             lines += [f'*{{{{i2|{self.npc}|0/1}}}}']
         lines += ['}}']
         return lines
+    
+class _StmtWeatherSetState(Stmt):
+    _stmt_matches = [
+        'WEATHER SET STATE'
+    ]
+
+    def extract_properties(self) -> None:
+        self._weather_id: int = int(self._stmt.get('WeatherState'))
+    
+    @property
+    def weather_name(self) -> str:
+        return _weather_map.get(self._weather_id, f'Unknown weather {self._weather_id}')
+    
+    def read(self) -> list[str]:
+        return [f'Set weather to {self.weather_name}']
 
 # ------------------------------------------------------------------------------

@@ -162,6 +162,22 @@ class _TextEngine:
             return cls.text(next((item[field_name] for item in designer_config._data if item['id'] == id_), None), language)
         
         return cls.text(designer_config._data[id_][field_name], language)
+    
+    @classmethod
+    def actor(cls, id_: int) -> str:
+        if id_ in DesignerConfig.Actor:
+            for npc_id, npc_data in DesignerConfig.Npc.items():
+                if npc_data['templetID'] == id_:
+                    return cls.npc(npc_id)
+            for random_npc in DesignerConfig.RandomNPCData:
+                id_low = random_npc['instanceIds']['x']
+                proto_ids = random_npc['protoIds']
+
+                if id_ in proto_ids:
+                    return cls.npc(id_low)
+        else:
+            return id_
+    
 
     @classmethod
     def item(cls, item: int | dict[str, Any], language: str | None = None) -> str:
@@ -178,7 +194,10 @@ class _TextEngine:
 
     @classmethod
     def monster(cls, id_: int) -> str:
-        return cls._designer_config_text('Monster', id_, 'nameId')
+        if id_ in DesignerConfig.Monster:
+            return cls._designer_config_text('Monster', id_, 'nameId')
+        else:
+            return str(id_)
 
     @classmethod
     def npc(cls, id_: int) -> str:
@@ -214,6 +233,16 @@ class _TextEngine:
     def scene(cls, id_: int) -> str:
         scenes = [scene for scene in DesignerConfig.Scene if scene['scene'] == id_]
         return cls.text(scenes[0]['nameId'])
+    
+    @classmethod
+    def social_level(cls, level: int) -> str:
+        social_levels = DesignerConfig.SocialLevel
+        level_data = next((level_data for level_data in social_levels if level_data['level'] == level), None)
+        
+        if level_data:
+            return cls.text(level_data['nameId'])
+        
+        return str(level)
 
     @classmethod
     def store(cls, id_: int) -> str:

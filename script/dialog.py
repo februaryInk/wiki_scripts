@@ -1,24 +1,47 @@
 '''
-Print a character's dialog.
+Print character dialog.
 '''
 
 from __future__ import annotations
 
 from sandrock                         import *
+from sandrock.lib.asset               import Asset, Bundle
 from sandrock.lib.text                import load_text
+from sandrock.structures.characters   import characters
 from sandrock.structures.conversation import *
 from script.structures.generators     import *
 
 # ------------------------------------------------------------------------------
 
-npc_name = 'Andy'
+festival_bundle: Bundle = Bundle(config.assets_root / 'festival')
+
+npc_name = 'Musa'
 
 # ------------------------------------------------------------------------------
 
 def run() -> None:
-    npc_ids = [id for id, npc in DesignerConfig.Npc.items() if text.npc(id) == npc_name]
+    print_pet_dialogs()
 
-    print_introductions()
+def print_festival_dialogs() -> None:
+    festival_asset = next(asset for asset in festival_bundle.behaviours if asset.name == 'FestivalAsset')
+    
+    for festival in festival_asset.data['festivals']:
+        festival_id = festival['festival']
+        print('')
+        print('')
+        print(f'Festival ID {festival_id}: {text(festival["nameId"])}')
+
+        for id, character in characters.items():
+            festival_dialog = character.festival_dialog(festival_id)
+            for line in festival_dialog:
+                print(line)
+        
+        breakpoint()
+
+    # npc_ids = [id for id, npc in DesignerConfig.Npc.items() if text.npc(id) == npc_name]
+
+    # print_introductions()
+    # read_chat_dialogue(npc_ids[0])
 
 def print_introductions() -> None:
     dialog_sets = DesignerConfig.GeneralDialog._data
@@ -42,6 +65,34 @@ def print_introductions() -> None:
             read_conv_segment(segment_id)
 
     print('\n'.join(lines))
+
+def print_pet_dialogs() -> None:
+    print(f'=== Followed by one or two pets ===')
+
+    for id, character in characters.items():
+        pet_one_dialog = character.pets_one_dialog()
+        if pet_one_dialog:
+            print('')
+            for line in pet_one_dialog:
+                print(line)
+
+    print(f'=== Followed by three or more pets ===')
+
+    for id, character in characters.items():
+        pet_three_dialog = character.pets_three_dialog()
+        if pet_three_dialog:
+            print('')
+            for line in pet_three_dialog:
+                print(line)
+    
+    print('=== Special pet reactions ===')
+
+    for id, character in characters.items():
+        pet_special_dialog = character.pet_special_dialog()
+        if pet_special_dialog:
+            print('')
+            for line in pet_special_dialog:
+                print(line)
 
 def read_chat_dialogue(npc_id: int) -> None:
     social_levels = DesignerConfig.SocialLevel
